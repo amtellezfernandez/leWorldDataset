@@ -1,4 +1,4 @@
-# arXiv LaTeX Template
+# WorldEpisode arXiv LaTeX Template
 
 This directory contains the arXiv-ready LaTeX paper source.
 
@@ -33,4 +33,3 @@ pdflatex main.tex
 - `references.bib` is the BibTeX database.
 - Section files live in `sections/`.
 - Generated files such as `.aux`, `.bbl`, `.log`, and `.pdf` should not be committed.
-

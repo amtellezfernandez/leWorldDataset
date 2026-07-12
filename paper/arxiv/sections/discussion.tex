@@ -1,19 +1,26 @@
 \section{Discussion}
 
-\paragraph{Relationship to URDF, MJCF, and USD.}
-The format does not replace robot model files or simulator-native scene formats. It provides the
-portable authoring contract above robot assets and below simulator-specific compilation.
+\paragraph{Not another monolithic binary.}
+WorldEpisode should have a small semantic core and multiple bindings. LeRobot can be the
+policy-training view; Rerun the multirate physical-data view; NCore the sensor/reconstruction
+capture view; MCAP/ROS the raw log view; OpenUSD/SimReady the composed simulation-world view; glTF
+or SPZ the Gaussian asset view; and a reference directory the conformance profile.
 
-\paragraph{Dynamic worlds.}
-The v0.1 norm is static-first. Dynamic behavior can be represented by scenario layers that reference
-the same layout. Future versions may add time-indexed layout tracks if they remain portable and
-schema-validatable.
+\paragraph{Lineage-safe evaluation.}
+Episode-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
+source video, world revision, or generated asset lineage across training and evaluation.
+WorldEpisode should support split constraints such as \texttt{world\_lineage},
+\texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
+\texttt{generated\_asset\_family}.
 
-\paragraph{Registry and integrity.}
-Published layouts may need canonical JSON, digest metadata, signatures, attestations, and SBOM
-references. These can live in a registry envelope rather than in the minimal authored layout.
+\paragraph{Standards alignment.}
+The project should align with standards bodies rather than antagonize them. Static 3D robot-map
+exchange, humanoid dataset lifecycle, OpenLABEL annotation, glTF Gaussian splats, USD composition,
+and NCore capture conventions are all useful neighbors. WorldEpisode is an executable profile and
+bridge across those layers.
 
-\paragraph{Name and scope.}
-The public name is still open. The repository currently uses \emph{leWorldLayout}; a final paper may
-prefer \emph{World Layout} or \emph{Robot World Layout} for clarity.
-
+\paragraph{Reviewer red team.}
+Likely criticisms are predictable: ``this is just USD,'' ``GSDF already combines splats and
+physics,'' ``Rerun already solves robot data,'' or ``a schema is not research.'' The response is to
+ship adapters, conformance fixtures, fault-injection evaluation, replay metrics, and lineage-split
+evidence rather than relying on schema novelty alone.

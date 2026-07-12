@@ -2,53 +2,53 @@
 
 ## Working Title
 
-leWorldLayout: A Portable World Layout Norm for Robot Simulation and Evaluation
+WorldEpisode: A Storage-Neutral Interchange Contract Linking Robot-Learning Episodes to Versioned, Replayable 3D Worlds
 
 ## Claim
 
-Robotics needs a small, validated world-layout contract between robot model files and
-simulator-specific scene formats. The key norm is the separation of authored layout,
-appearance assets, and physics proxies.
+Robotics needs a storage-neutral semantic contract between robot-learning episodes and immutable,
+versioned, replayable 3D worlds. Gaussian splats are an important appearance profile, not the
+normative center.
 
 ## Sections
 
 1. **Introduction**
-   - Robot models travel better than robot-world scenes.
-   - Current simulator-specific scene formats fragment authoring and benchmarks.
-   - State the need for a portable world layout norm.
+   - Robot-learning datasets and scene formats solve different layers.
+   - "LeRobot plus Gaussian splats" is not a safe novelty claim.
+   - State the need for a world-episode interoperability contract.
 
 2. **Requirements**
-   - Simulator agnostic.
-   - Frame explicit.
-   - Asset portable.
-   - Appearance/physics separated.
+   - Storage neutral.
+   - Representation neutral.
+   - Runtime neutral.
+   - Loss explicit.
    - Schema validatable.
-   - Scenario compatible.
+   - Conformance executable.
 
-3. **Format**
-   - Document envelope.
-   - Object model.
-   - Asset references.
-   - Appearance, physics, consistency.
-   - Static layout constraints.
+3. **Five-Graph Model**
+   - Identity graph.
+   - Frame and clock graph.
+   - Representation-role graph.
+   - Temporal state and event graph.
+   - Provenance and derivation graph.
 
-4. **Reference Implementation**
-   - URDF Studio importer/exporter.
-   - Static transfer services.
-   - Validation and schema generation.
-   - Simulator targets.
+4. **Contracts**
+   - Complete action semantics.
+   - Immutable world revisions.
+   - Loss-aware conversion.
+   - Lineage-safe splits.
 
 5. **Evaluation**
-   - Same layout into several simulators.
-   - Invalid-layout rejection tests.
-   - Blender/browser authoring round trip.
-   - Scenario reuse above layout.
+   - Semantic preservation across bindings.
+   - Fault injection for physical-coherence errors.
+   - Cross-simulator replay.
+   - VLA robustness.
+   - Leakage analysis.
 
 6. **Discussion**
-   - Scope boundary with URDF, MJCF, USD, and scenario/task formats.
-   - Registry and digest layer.
-   - Dynamic worlds.
+   - Bindings instead of monolithic storage.
+   - Relationship to LeRobot, Rerun, NCore, MCAP, OpenUSD, glTF, GSDF.
+   - Governance and conformance profiles.
 
 7. **Conclusion**
-   - Layout as a public contract, not a private app export.
-
+   - World-episode semantics as a public executable contract.

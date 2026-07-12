@@ -1,25 +1,34 @@
-\section{Evaluation Plan}
+\section{Conformance and Evaluation}
 
-The paper should evaluate the norm along five axes.
+WorldEpisode should be evaluated as an executable standard, not only as a schema.
 
-\paragraph{Interchange coverage.}
-One layout should transfer into several targets without target-specific authoring. The initial
-targets are MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender.
+\paragraph{RQ1: semantic preservation across bindings.}
+Convert the same dataset through LeRobot, WorldEpisode, Rerun, NCore, MCAP, OpenUSD, and glTF
+Gaussian assets. Measure field retention, semantic retention, deterministic round-trip equality,
+externalized fields, approximated fields, and declared loss.
 
-\paragraph{Validation quality.}
-The validator should reject invalid paths, missing collision proxies for simulator-portable splats,
-ambiguous frame conventions, and non-static timestamps in static layouts.
+\paragraph{RQ2: physical-coherence fault detection.}
+Inject controlled failures: wrong transform direction, millimeters interpreted as meters,
+quaternion-order mismatch, timestamp offset, stale calibration, action frame mislabeled, collision
+mesh scale mismatch, reused entity id, or world revision changed without a new hash. Measure
+validator precision, recall, and diagnosis quality.
 
-\paragraph{Authoring loop.}
-Browser or Blender edits should round-trip back into the same layout contract for object poses,
-dimensions, colors, cameras, and added/deleted world objects.
+\paragraph{RQ3: cross-simulator replay.}
+Replay the same demonstrations in at least two simulators. Measure end-effector RMSE, object
+trajectory RMSE, grasp-state agreement, contact-event precision/recall/F1, final-state pose error,
+task-outcome agreement, and success-rate rank correlation across policy checkpoints.
 
-\paragraph{Benchmark reuse.}
-Scenarios should reference the same layout across simulators, enabling shared initial conditions and
-cross-simulator comparison.
+\paragraph{RQ4: downstream robustness.}
+Train with observations/actions alone, with unstructured 3D side files, and with full WorldEpisode
+identity/world alignment. Evaluate shifted camera extrinsics, unseen viewpoints, object displacement,
+background replacement, distractors, occlusion, lighting changes, novel object instances, and held-out
+worlds.
 
-\paragraph{Ablations.}
-The evaluation should compare flat mesh-only object records against the explicit
-appearance/physics/consistency split, measuring validation failures, transfer ambiguity, and
-adapter-specific exceptions.
+\paragraph{RQ5: lineage-safe splits.}
+Compare random episode splits against task-, world-, entity-, and reconstruction-lineage-disjoint
+splits. A substantial performance drop under lineage-safe splits would show that current dataset
+abstractions overestimate generalization.
 
+The minimum credible reference release should include a small golden conformance corpus: valid
+minimal packages, valid advanced packages, intentionally invalid packages, lossy-conversion examples,
+and cross-simulator replay fixtures.

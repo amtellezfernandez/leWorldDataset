@@ -1,8 +1,9 @@
 \section{Conclusion}
 
-\emph{leWorldLayout} frames robot-world scene layout as a public, portable data contract. The format
-records the authored world around a robot, declares frame and asset semantics, separates appearance
-from physics, and provides a bridge from scene authoring to simulator transfer and scenario-level
-evaluation. The immediate next step is to harden the v0.1 schema and report cross-simulator evidence
-from the URDF Studio reference implementation.
-
+WorldEpisode reframes the opportunity away from ``LeRobot plus Gaussian splats in one file'' and
+toward persistent, verifiable world--episode interoperability. Gaussian splats remain a high-value
+profile, but the durable contribution is a storage-neutral contract for immutable world revisions,
+persistent entity identity, frame and clock graphs, action semantics, representation roles, events,
+provenance, uncertainty, loss-aware conversion, and lineage-safe evaluation. The immediate next step
+is to harden the v0.1 schema, release a validator and golden conformance corpus, and demonstrate
+independent bindings across existing robot-data and 3D-world systems.

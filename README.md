@@ -1,41 +1,44 @@
-# leWorldLayout
+# WorldEpisode
 
-`leWorldLayout` is the paper and specification base for a portable robot-world layout format.
+`WorldEpisode` is the paper and specification base for a storage-neutral interchange contract
+linking robot-learning episodes to immutable, versioned, replayable 3D worlds.
 
-The goal is to make authored robot scenes portable across viewers, simulators, dataset pipelines,
-and benchmark runners without forcing every tool to invent its own scene JSON. The format starts
-from the working World format implemented in URDF Studio, then separates the stable public norm
-from the implementation details.
+The old working directory name is `leWorldLayout`, but the formal standards/paper name should be
+`WorldEpisode`. The goal is not to create another monolithic file format. The goal is to define the
+semantic contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian
+splats, GSDF-style assets, or a reference package layout.
 
 ## Repository Layout
 
-- `paper/arxiv/` - arXiv-ready LaTeX paper template.
+- `paper/arxiv/` - arXiv-ready LaTeX paper source.
 - `paper/` - Markdown paper notes and outline.
-- `spec/` - normative format text.
+- `spec/` - normative specification drafts.
 - `schemas/` - machine-readable JSON Schema drafts.
 - `examples/` - small valid layout examples.
 - `notes/` - research notes, decisions, and open questions.
 
 ## Core Position
 
-A world layout is a simulator-agnostic scene contract:
+WorldEpisode is:
 
-- it names objects, cameras, robot state, and task-time state in one portable document;
-- it stores world-frame poses and dimensions explicitly;
-- it separates appearance assets from physics/collision proxies;
-- it requires portable relative asset references;
-- it is valid as a single JSON file, a folder of JSON plus assets, or an envelope inside a registry.
+- **storage-neutral**: it can be serialized in LeRobot, Rerun, NCore, MCAP, or a reference package;
+- **representation-neutral**: appearance can be Gaussian splats, meshes, NeRFs, point clouds, or future representations;
+- **runtime-neutral**: physical worlds can target Isaac Sim, MuJoCo, SAPIEN, Genesis, or other simulators;
+- **loss-explicit**: conversions may be lossy, but never silently lossy.
 
-This repository should become the paper-facing source of truth for that norm. URDF Studio remains
-the reference implementation and validation workbench.
+Gaussian splats are a high-value profile and demonstration, not the core claim. The stronger claim
+is persistent, verifiable world-episode interoperability.
 
 ## Current Drafts
 
 - [arXiv LaTeX paper](paper/arxiv/main.tex)
 - [Markdown paper notes](paper/le-world-layout.md)
-- [Normative draft spec](spec/le-world-layout-v0.1.md)
-- [JSON Schema draft](schemas/le-world-layout-v0.schema.json)
+- [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
+- [WorldEpisode JSON Schema draft](schemas/worldepisode-core-v0.schema.json)
+- [World layout profile draft](spec/le-world-layout-v0.1.md)
+- [World layout JSON Schema draft](schemas/le-world-layout-v0.schema.json)
 - [Minimal example](examples/minimal-static-world.layout.json)
+- [Minimal WorldEpisode example](examples/minimal.worldepisode.json)
 
 ## Build The Paper
 
@@ -64,5 +67,5 @@ URDF Studio already implements the practical base:
 - `backend/services/world_layout_static_transfer.py`
 - cross-simulator transfer into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender
 
-`leWorldLayout` extracts the interoperable contract and frames it as a format/norm that other
-robotics tools can adopt.
+WorldEpisode extracts the interoperable contract and frames the existing world-layout work as one
+profile within a broader episode-to-world norm.

@@ -1,6 +1,8 @@
 # Implementation Roots
 
-The first `leWorldLayout` draft is derived from the working URDF Studio World implementation.
+The first world-layout profile draft is derived from the working URDF Studio World implementation.
+The formal paper/specification target is now `WorldEpisode`: a storage-neutral contract that binds
+robot-learning episodes to immutable world revisions.
 
 Important source locations in `/home/amdev/studio/urdf-studio`:
 
@@ -18,6 +20,6 @@ Important source locations in `/home/amdev/studio/urdf-studio`:
 Paper positioning:
 
 - URDF Studio is the reference implementation.
-- `leWorldLayout` is the independent norm/specification surface.
+- `leWorldLayout` is a world-layout profile and historical working name.
+- `WorldEpisode` is the independent norm/specification surface.
 - The paper should avoid making the public contract depend on URDF Studio internals.
-

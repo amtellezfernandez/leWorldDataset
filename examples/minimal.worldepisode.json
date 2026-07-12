@@ -1,0 +1,143 @@
+{
+  "schema_version": "worldepisode-0.1",
+  "episode": {
+    "episode_id": "episode_000001",
+    "dataset_id": "worldepisode-rigid-demo",
+    "split": "train",
+    "outcome": "success"
+  },
+  "world_revision": {
+    "world_revision_id": "world_demo_tabletop@sha256:000000",
+    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "uri": "worlds/000000/world.layout.json",
+    "binding": "le-world-layout-v0.1"
+  },
+  "embodiment": {
+    "embodiment_id": "fixed_arm_demo",
+    "urdf_uri": "robots/fixed_arm.urdf",
+    "urdf_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "task": {
+    "task_id": "pick_carton",
+    "instruction": "Pick the carton from the table."
+  },
+  "frame_graph": {
+    "frames": [
+      {
+        "frame_id": "world",
+        "units": "m",
+        "handedness": "right",
+        "up_axis": "z",
+        "convention": "ros-rep-103"
+      },
+      {
+        "frame_id": "tool0",
+        "units": "m",
+        "handedness": "right",
+        "up_axis": "z"
+      }
+    ],
+    "transforms": [
+      {
+        "source_frame": "tool0",
+        "target_frame": "world",
+        "valid_interval": {
+          "start": 0,
+          "end": 30000000000,
+          "clock_id": "episode_time"
+        },
+        "translation_xyz": [0.4, 0.0, 0.3],
+        "quaternion_xyzw": [0, 0, 0, 1]
+      }
+    ]
+  },
+  "clock_graph": {
+    "clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "monotonic_episode",
+        "units": "ns"
+      }
+    ],
+    "mappings": []
+  },
+  "entities": [
+    {
+      "entity_id": "carton_1",
+      "entity_type": "rigid_object",
+      "representations": [
+        {
+          "representation_id": "carton_visual",
+          "role": "appearance",
+          "media_type": "model/gltf-binary",
+          "uri": "assets/carton.glb",
+          "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "coordinate_frame": "world",
+          "valid_interval": {
+            "start": 0,
+            "end": 30000000000,
+            "clock_id": "episode_time"
+          },
+          "license": "CC-BY-4.0"
+        },
+        {
+          "representation_id": "carton_collision",
+          "role": "collision",
+          "media_type": "application/worldepisode-collision-proxy+json",
+          "uri": "assets/carton_collision.json",
+          "content_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "coordinate_frame": "world",
+          "valid_interval": {
+            "start": 0,
+            "end": 30000000000,
+            "clock_id": "episode_time"
+          },
+          "license": "CC-BY-4.0"
+        }
+      ]
+    }
+  ],
+  "action_space": {
+    "channels": [
+      {
+        "name": "eef_delta_xyz",
+        "actuator": "right_arm",
+        "control_mode": "cartesian_position",
+        "parameterization": "delta_xyz",
+        "reference_frame": "tool0",
+        "units": "m",
+        "semantics": "delta",
+        "command_rate_hz": 50,
+        "latency_model": "declared_constant_20ms",
+        "interpolation": "zero_order_hold",
+        "missing_value_policy": "hold_last"
+      }
+    ]
+  },
+  "trace": {
+    "binding": "lerobot-v3",
+    "uri": "episodes/episode_000001/trace.parquet",
+    "content_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "events": [
+    {
+      "event_id": "grasp_1",
+      "event_type": "grasp_established",
+      "clock_id": "episode_time",
+      "timestamp": 12540000000,
+      "entity_ids": ["carton_1"],
+      "confidence": 0.9
+    }
+  ],
+  "world_deltas": [],
+  "provenance": {
+    "source": "demo_capture",
+    "creator": "URDF Studio",
+    "software": "worldepisode draft tools",
+    "license": "CC0-1.0"
+  },
+  "quality": {
+    "conformance_profiles": ["WE-Core", "WE-Rigid-Manipulation"]
+  }
+}
+

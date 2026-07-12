@@ -1,62 +1,41 @@
-\section{The leWorldLayout Format}
+\section{The Five-Graph Model}
 
-The authored document has one primary object, \texttt{world\_layout}, plus optional environment
-metadata. Listing~\ref{lst:minimal-layout} shows the minimal shape.
+\subsection{Identity Graph}
 
-\begin{figure}[t]
-\begin{verbatim}
-{
-  "schema_version": "le-world-layout-0.1",
-  "world_layout": {
-    "name": "desk-setup",
-    "objects": [],
-    "scenario_time_ms": 0,
-    "scenario_duration_ms": 0,
-    "urdf_xml": "<robot name=\"demo\"/>",
-    "joint_positions": {},
-    "cameras": []
-  },
-  "environment": {
-    "frame_convention": "ros-rep-103"
-  }
-}
-\end{verbatim}
-\caption{Minimal \texttt{leWorldLayout} document shape.}
-\label{lst:minimal-layout}
-\end{figure}
+Every physical or logical entity receives a persistent identifier: robot, link, gripper, sensor,
+rigid object, articulated object, fixture, support surface, region, human, light, or semantic group.
+The same \texttt{entity\_id} must be used by segmentation masks, bounding boxes, Gaussian groups,
+render meshes, collision bodies, simulator actors, language references, contact events, object
+trajectories, grasp events, and attachment events.
 
-\subsection{Object Model}
+\subsection{Frame and Clock Graph}
 
-Every object records a stable id, pose, dimensions, type, optional semantic role, optional
-appearance representations, optional physics geometry, and optional consistency metadata linking
-appearance to physics.
+Every spatial value declares source frame, target frame, units, handedness, up axis, transform
+direction, quaternion convention, validity interval, calibration revision, and uncertainty where
+available. Every stream declares a clock domain, device timestamp, host-receive timestamp where
+available, exposure interval for cameras, effective command time for actions, synchronization
+mapping, and estimated offset/drift/error. NCore's explicit pose-graph convention demonstrates the
+kind of rigor WorldEpisode should require across the whole episode~\citep{ncore}.
 
-World objects are represented with three layers:
-\begin{itemize}[leftmargin=*]
-  \item \textbf{identity}: \texttt{id}, \texttt{name}, and optional semantic role;
-  \item \textbf{layout}: \texttt{type}, \texttt{position\_xyz}, \texttt{rotation\_rpy\_rad},
-    \texttt{size\_xyz}, and \texttt{color};
-  \item \textbf{transfer}: \texttt{appearance}, \texttt{physics}, and \texttt{consistency}.
-\end{itemize}
+\subsection{Representation-Role Graph}
 
-\subsection{Appearance and Physics}
+One physical entity can have many representations: Gaussian splat appearance, textured render mesh,
+metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic affordance,
+or learned embedding. Each representation declares its role, media type, URI, content hash,
+coordinate frame, units, validity interval, derivation, uncertainty, and license. The role field is
+essential: a splat may be valid for appearance but invalid for collision.
 
-The central design choice is that appearance does not imply collision. The \texttt{appearance}
-layer stores render and perception representations such as primitives, meshes, and Gaussian splats.
-The \texttt{physics} layer stores collision geometry, mass, inertia, friction, restitution, and
-fixed/collision flags. The \texttt{consistency} layer records how the two correspond, for example
-a hand-authored collider, bounding-box fit, convex decomposition, or unchecked import.
+\subsection{Temporal State and Event Graph}
 
-\subsection{Portable Asset References}
+Episodes should not store only poses. They should record interaction events: contact begin/end,
+grasp establish/release, attachment create/remove, support, containment, articulation state changes,
+spawn/despawn, topology changes, simulator reset, intervention, subgoal completion, and failure
+detection. Each event references entities, time, confidence, source, and optionally evidence.
 
-Every asset reference must be a portable relative path. References may not include URI schemes,
-absolute paths, empty path segments, or \texttt{.}/\texttt{..} traversal. This rule is what lets a
-layout travel as a folder or registry artifact without rewriting paths for each machine.
+\subsection{Provenance and Derivation Graph}
 
-\subsection{Boundary With Scenarios}
-
-A layout is not a task. A scenario references a layout and adds task instruction, role bindings,
-randomization, policy and control timing, success conditions, guards, and evaluation metrics. This
-separation lets the same world support inspection, editing, simulator transfer, dataset packaging,
-and benchmark execution.
-
+Every derived asset should identify source episodes, source sensors and intervals, reconstruction
+algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
+edits, source and output hashes, creator, license, and quality metrics. WorldEpisode should map to
+existing provenance and dataset metadata vocabularies rather than inventing an incompatible
+publication vocabulary.
