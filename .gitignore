@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+dist/
+build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+
