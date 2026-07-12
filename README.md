@@ -9,7 +9,8 @@ from the implementation details.
 
 ## Repository Layout
 
-- `paper/` - paper draft and outline.
+- `paper/arxiv/` - arXiv-ready LaTeX paper template.
+- `paper/` - Markdown paper notes and outline.
 - `spec/` - normative format text.
 - `schemas/` - machine-readable JSON Schema drafts.
 - `examples/` - small valid layout examples.
@@ -30,10 +31,28 @@ the reference implementation and validation workbench.
 
 ## Current Drafts
 
-- [Paper draft](paper/le-world-layout.md)
+- [arXiv LaTeX paper](paper/arxiv/main.tex)
+- [Markdown paper notes](paper/le-world-layout.md)
 - [Normative draft spec](spec/le-world-layout-v0.1.md)
 - [JSON Schema draft](schemas/le-world-layout-v0.schema.json)
 - [Minimal example](examples/minimal-static-world.layout.json)
+
+## Build The Paper
+
+```bash
+cd paper/arxiv
+make
+```
+
+If `latexmk` is unavailable:
+
+```bash
+cd paper/arxiv
+pdflatex main.tex
+bibtex main
+pdflatex main.tex
+pdflatex main.tex
+```
 
 ## Relationship To URDF Studio
 
@@ -47,4 +66,3 @@ URDF Studio already implements the practical base:
 
 `leWorldLayout` extracts the interoperable contract and frames it as a format/norm that other
 robotics tools can adopt.
-

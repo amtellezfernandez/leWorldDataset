@@ -1,0 +1,25 @@
+\section{Evaluation Plan}
+
+The paper should evaluate the norm along five axes.
+
+\paragraph{Interchange coverage.}
+One layout should transfer into several targets without target-specific authoring. The initial
+targets are MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender.
+
+\paragraph{Validation quality.}
+The validator should reject invalid paths, missing collision proxies for simulator-portable splats,
+ambiguous frame conventions, and non-static timestamps in static layouts.
+
+\paragraph{Authoring loop.}
+Browser or Blender edits should round-trip back into the same layout contract for object poses,
+dimensions, colors, cameras, and added/deleted world objects.
+
+\paragraph{Benchmark reuse.}
+Scenarios should reference the same layout across simulators, enabling shared initial conditions and
+cross-simulator comparison.
+
+\paragraph{Ablations.}
+The evaluation should compare flat mesh-only object records against the explicit
+appearance/physics/consistency split, measuring validation failures, transfer ambiguity, and
+adapter-specific exceptions.
+

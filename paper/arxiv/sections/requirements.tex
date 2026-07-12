@@ -1,0 +1,31 @@
+\section{Requirements}
+
+A portable world layout format should satisfy the following requirements.
+
+\paragraph{Simulator agnostic.}
+The document should not name a physics engine as its source of truth. Simulator adapters may
+consume and transform the document, but the authored layout should remain independent of the
+target engine.
+
+\paragraph{Asset portable.}
+All asset references should be relative to the document package and free of machine-specific paths.
+This permits delivery as a single JSON file, a folder, a URL-addressed package, or a registry
+artifact.
+
+\paragraph{Frame explicit.}
+Frame convention should be declared or mapped. Silent assumptions about whether a world follows
+ROS REP-103~\citep{rosrep103}, Z-up, or an authoring-tool convention create transfer bugs that are
+difficult to diagnose.
+
+\paragraph{Appearance and physics separated.}
+Visual assets and simulator collision geometry are related, but they are not the same contract.
+A Gaussian splat may be valid as a perception or rendering asset while requiring a primitive or
+mesh proxy for physics. A high-resolution mesh may require a simplified collision body.
+
+\paragraph{Static first, scenario ready.}
+Static layouts should be simple. Task randomization, success checks, policies, and evaluation
+metrics should live in a scenario layer that references the layout.
+
+\paragraph{Schema validatable.}
+Third-party tools should validate documents without importing a full application. The schema should
+be public and stable enough to serve as a norm.

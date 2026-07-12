@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\title{leWorldLayout: A Portable World Layout Norm for Robot Simulation and Evaluation}
+
+\author{
+  Alba Tellez Fernandez\\
+  URDF Studio\\
+  \texttt{TODO: email}
+  \and
+  TODO: Coauthors\\
+  TODO: Affiliation\\
+  \texttt{TODO: email}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Robotics tools routinely exchange robot models, but they exchange robot-world scenes poorly.
+URDF, MJCF, USD, and simulator-native scene files each capture part of the problem, yet none
+acts as a small, portable, simulator-agnostic layout contract for the authored state surrounding
+a robot: objects, cameras, frame conventions, task-time state, asset references, and the split
+between visual appearance and physical collision. We propose \emph{leWorldLayout}, a JSON world
+layout norm that treats the scene around a robot as a first-class artifact. A layout document
+records static or time-indexed world objects in a declared frame convention, uses portable
+relative asset references, and separates appearance representations from physics geometry so
+that splats, meshes, primitives, and simulator colliders can coexist without ambiguity. We
+describe the contract, its validation rules, and its relationship to scenario and benchmark
+layers. A reference implementation in URDF Studio validates the format and transfers the same
+layout into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender.
+\end{abstract}
+
+\input{sections/introduction}
+\input{sections/requirements}
+\input{sections/format}
+\input{sections/reference_implementation}
+\input{sections/evaluation}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
+

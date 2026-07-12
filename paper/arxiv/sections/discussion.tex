@@ -1,0 +1,19 @@
+\section{Discussion}
+
+\paragraph{Relationship to URDF, MJCF, and USD.}
+The format does not replace robot model files or simulator-native scene formats. It provides the
+portable authoring contract above robot assets and below simulator-specific compilation.
+
+\paragraph{Dynamic worlds.}
+The v0.1 norm is static-first. Dynamic behavior can be represented by scenario layers that reference
+the same layout. Future versions may add time-indexed layout tracks if they remain portable and
+schema-validatable.
+
+\paragraph{Registry and integrity.}
+Published layouts may need canonical JSON, digest metadata, signatures, attestations, and SBOM
+references. These can live in a registry envelope rather than in the minimal authored layout.
+
+\paragraph{Name and scope.}
+The public name is still open. The repository currently uses \emph{leWorldLayout}; a final paper may
+prefer \emph{World Layout} or \emph{Robot World Layout} for clarity.
+

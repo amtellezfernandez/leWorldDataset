@@ -1,0 +1,25 @@
+\section{Introduction}
+
+Robot assets are not enough to reproduce a manipulation scene. A reusable scene also needs
+object identities, semantic roles, poses, dimensions, frame conventions, robot state, cameras,
+asset paths, collision proxies, and a stable envelope for registries, datasets, and benchmark
+tasks.
+
+Existing scene formats are strong inside their own ecosystems but weak as a minimal interchange
+contract. MJCF is practical for MuJoCo~\citep{mujoco}, but it is not a neutral description for
+Blender authoring. USD~\citep{usd} is broad and expressive, but it is too large to be the default
+validation target for small robot-world datasets. URDF~\citep{urdf} gives the robot but not the
+authored world around it. Dataset samples often store enough state to replay one pipeline, but not
+enough to become a public scene norm.
+
+\emph{leWorldLayout} targets the missing middle: a small, inspectable, validated layout document
+that can be consumed by viewers, simulators, dataset builders, scenario runners, and benchmark
+pipelines.
+
+This paper makes four claims:
+\begin{enumerate}[leftmargin=*]
+  \item Robot-world layout should be a public data contract, not a private export format.
+  \item Layout, appearance, and physics should be separate but linked layers.
+  \item Asset references should be portable by construction.
+  \item Scenario and benchmark layers should reference layouts rather than redefining them.
+\end{enumerate}

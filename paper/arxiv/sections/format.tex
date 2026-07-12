@@ -1,0 +1,62 @@
+\section{The leWorldLayout Format}
+
+The authored document has one primary object, \texttt{world\_layout}, plus optional environment
+metadata. Listing~\ref{lst:minimal-layout} shows the minimal shape.
+
+\begin{figure}[t]
+\begin{verbatim}
+{
+  "schema_version": "le-world-layout-0.1",
+  "world_layout": {
+    "name": "desk-setup",
+    "objects": [],
+    "scenario_time_ms": 0,
+    "scenario_duration_ms": 0,
+    "urdf_xml": "<robot name=\"demo\"/>",
+    "joint_positions": {},
+    "cameras": []
+  },
+  "environment": {
+    "frame_convention": "ros-rep-103"
+  }
+}
+\end{verbatim}
+\caption{Minimal \texttt{leWorldLayout} document shape.}
+\label{lst:minimal-layout}
+\end{figure}
+
+\subsection{Object Model}
+
+Every object records a stable id, pose, dimensions, type, optional semantic role, optional
+appearance representations, optional physics geometry, and optional consistency metadata linking
+appearance to physics.
+
+World objects are represented with three layers:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{identity}: \texttt{id}, \texttt{name}, and optional semantic role;
+  \item \textbf{layout}: \texttt{type}, \texttt{position\_xyz}, \texttt{rotation\_rpy\_rad},
+    \texttt{size\_xyz}, and \texttt{color};
+  \item \textbf{transfer}: \texttt{appearance}, \texttt{physics}, and \texttt{consistency}.
+\end{itemize}
+
+\subsection{Appearance and Physics}
+
+The central design choice is that appearance does not imply collision. The \texttt{appearance}
+layer stores render and perception representations such as primitives, meshes, and Gaussian splats.
+The \texttt{physics} layer stores collision geometry, mass, inertia, friction, restitution, and
+fixed/collision flags. The \texttt{consistency} layer records how the two correspond, for example
+a hand-authored collider, bounding-box fit, convex decomposition, or unchecked import.
+
+\subsection{Portable Asset References}
+
+Every asset reference must be a portable relative path. References may not include URI schemes,
+absolute paths, empty path segments, or \texttt{.}/\texttt{..} traversal. This rule is what lets a
+layout travel as a folder or registry artifact without rewriting paths for each machine.
+
+\subsection{Boundary With Scenarios}
+
+A layout is not a task. A scenario references a layout and adds task instruction, role bindings,
+randomization, policy and control timing, success conditions, guards, and evaluation metrics. This
+separation lets the same world support inspection, editing, simulator transfer, dataset packaging,
+and benchmark execution.
+

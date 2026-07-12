@@ -1,0 +1,20 @@
+\section{Reference Implementation}
+
+URDF Studio provides the initial reference implementation. It validates the current World format,
+imports layouts from JSON files, folders, or links, resolves portable asset references, and
+transfers static layouts into multiple downstream targets.
+
+The relevant implementation components are:
+\begin{itemize}[leftmargin=*]
+  \item schema and validator generation from typed backend models;
+  \item browser import/export for world JSON and folders with assets;
+  \item static transfer services for simulator workspaces;
+  \item asset-reference validation shared by frontend and backend paths;
+  \item cross-simulator transfer into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender;
+  \item scenario-level benchmark execution above the layout layer.
+\end{itemize}
+
+The reference implementation is an existence proof, not a dependency requirement. The proposed norm
+is the data contract: other tools should be able to emit and validate the same documents without
+depending on URDF Studio.
+

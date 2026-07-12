@@ -10,6 +10,6 @@ build/
 *.fls
 *.log
 *.out
+*.pdf
 *.run.xml
 *.synctex.gz
-
