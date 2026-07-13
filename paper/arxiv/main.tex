@@ -11,9 +11,47 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{placeins}
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
+\usetikzlibrary{arrows.meta,calc,fit,positioning,shapes.geometric}
+
+\definecolor{weBlue}{HTML}{2563EB}
+\definecolor{weCyan}{HTML}{0891B2}
+\definecolor{weGreen}{HTML}{16A34A}
+\definecolor{weAmber}{HTML}{F59E0B}
+\definecolor{weRose}{HTML}{E11D48}
+\definecolor{weViolet}{HTML}{7C3AED}
+\definecolor{weInk}{HTML}{111827}
+\definecolor{weSlate}{HTML}{64748B}
+\definecolor{wePanel}{HTML}{F8FAFC}
+\definecolor{weLine}{HTML}{CBD5E1}
+
+\tikzset{
+  wecard/.style={
+    rounded corners=4pt,
+    draw=#1,
+    fill=#1!9,
+    very thick,
+    align=center,
+    inner sep=6pt,
+    font=\sffamily\small
+  },
+  wechip/.style={
+    rounded corners=3pt,
+    draw=#1,
+    fill=#1!12,
+    thick,
+    align=center,
+    inner xsep=5pt,
+    inner ysep=3pt,
+    font=\sffamily\scriptsize
+  },
+  wearrow/.style={-{Latex[length=3mm]}, very thick, draw=#1},
+  webar/.style={rounded corners=2pt, draw=none, fill=#1}
+}
 
 \hypersetup{
   colorlinks=true,

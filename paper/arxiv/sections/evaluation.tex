@@ -97,7 +97,61 @@ normalized RMSE rises to 0.363, a \(1.98\times\) increase. This is an offline ac
 benchmark, not a physical rollout claim; the split manifest is directly reusable for native LeRobot
 ACT or Diffusion Policy training.
 
+Figure~\ref{fig:evaluation-dashboard} summarizes the three experiment families whose outcomes
+change when world--episode semantics are made explicit.
+
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[font=\sffamily]
+  \begin{scope}[shift={(0,0)}]
+    \node[wecard=weBlue, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weBlue] at (0,1.12) {Binding Retention};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.45) {native};
+    \fill[webar=weBlue] (0.00,0.35) rectangle (0.50,0.58);
+    \node[anchor=west, font=\sffamily\scriptsize] at (0.60,0.46) {0.26};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.15) {+ sidecar};
+    \fill[webar=weGreen] (0.00,-0.25) rectangle (1.60,-0.02);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.70,-0.14) {1.00};
+    \node[font=\sffamily\scriptsize, text=weSlate, align=center] at (0,-1.05)
+      {LeRobot v3 semantic\\projection};
+  \end{scope}
+
+  \begin{scope}[shift={(5.15,0)}]
+    \node[wecard=weAmber, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weAmber] at (0,1.12) {Replay Timing};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {naive};
+    \fill[webar=weRose] (-0.45,0.42) rectangle (1.45,0.65);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.55,0.53) {4.73};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {aware};
+    \fill[webar=weGreen] (-0.45,-0.18) rectangle (0.30,0.05);
+    \node[anchor=west, font=\sffamily\scriptsize] at (0.40,-0.07) {1.86};
+    \node[wechip=weAmber, fill=weAmber!12] at (0,-0.78) {\(2.54\times\) lower RMSE};
+    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {validation, degrees};
+  \end{scope}
+
+  \begin{scope}[shift={(10.3,0)}]
+    \node[wecard=weRose, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weRose] at (0,1.12) {Scene Leakage};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {random};
+    \fill[webar=weRose] (-0.45,0.42) rectangle (1.30,0.65);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.40,0.53) {1.00};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {disjoint};
+    \fill[webar=weGreen] (-0.45,-0.18) rectangle (-0.41,0.05);
+    \node[anchor=west, font=\sffamily\scriptsize] at (-0.28,-0.07) {0.00};
+    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {BC success \(0.850\to0.000\)};
+    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {world lineage leakage};
+  \end{scope}
+\end{tikzpicture}%
+}
+\caption{Evaluation dashboard for three measured failure modes. WorldEpisode sidecars recover
+semantic retention, timestamp-aware action semantics reduce replay drift, and scene-disjoint split
+manifests expose evaluation leakage.}
+\label{fig:evaluation-dashboard}
+\end{figure}
+
 We generate episodes with world/entity lineage labels and evaluate a memorization policy. A random
 episode split leaks every tested world/entity pair and obtains 1.000 accuracy. World-disjoint and
 entity-disjoint splits have zero measured leakage and reduce memorization accuracy to 0.500 and
 0.562 respectively. This pilot demonstrates why split manifests need lineage constraints.
+\FloatBarrier

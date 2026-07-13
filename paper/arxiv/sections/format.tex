@@ -1,5 +1,44 @@
 \section{The Five-Graph Model}
 
+Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make an episode replayable
+and auditable rather than just stored.
+
+\begin{figure}[t]
+\centering
+\resizebox{0.95\linewidth}{!}{%
+\begin{tikzpicture}[font=\sffamily]
+  \node[wecard=weInk, fill=wePanel, text width=3.75cm, minimum height=1.45cm] (center) at (0,0)
+    {\textbf{Episode--World Binding}\\[2pt]
+     \(W_e(t)=W^{(r)}\oplus\Delta W_e(t)\)};
+
+  \node[wecard=weBlue, text width=3.0cm, minimum height=1.15cm] (identity) at (0,2.55)
+    {\textbf{Identity}\\persistent entities};
+  \node[wecard=weCyan, text width=3.05cm, minimum height=1.15cm] (frame) at (3.35,0.9)
+    {\textbf{Frame + Clock}\\transforms, timing};
+  \node[wecard=weAmber, text width=3.0cm, minimum height=1.15cm] (role) at (2.15,-2.25)
+    {\textbf{Representation Role}\\appearance, physics};
+  \node[wecard=weGreen, text width=3.0cm, minimum height=1.15cm] (event) at (-2.15,-2.25)
+    {\textbf{Temporal Events}\\contact, grasp, deltas};
+  \node[wecard=weRose, text width=3.05cm, minimum height=1.15cm] (prov) at (-3.35,0.9)
+    {\textbf{Provenance}\\lineage, uncertainty};
+
+  \draw[wearrow=weBlue] (identity) -- (center);
+  \draw[wearrow=weCyan] (frame) -- (center);
+  \draw[wearrow=weAmber] (role) -- (center);
+  \draw[wearrow=weGreen] (event) -- (center);
+  \draw[wearrow=weRose] (prov) -- (center);
+
+  \draw[very thick, draw=weLine] (identity) -- (frame) -- (role) -- (event) -- (prov) -- (identity);
+  \node[wechip=weViolet, fill=weViolet!10] at (0,-3.55)
+    {closed references + digest-verified assets + explicit loss reports};
+\end{tikzpicture}%
+}
+\caption{The five-graph model. WorldEpisode makes identity, frames/clocks, representation roles,
+temporal events, and provenance mutually referential so conversion and replay errors become
+detectable instead of hidden.}
+\label{fig:five-graph-model}
+\end{figure}
+
 \subsection{Identity Graph}
 
 Every physical or logical entity receives a persistent identifier: robot, link, gripper, sensor,
