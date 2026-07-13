@@ -21,55 +21,68 @@ conventional split can reward memorizing a background world rather than learning
 manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
 ACT, Diffusion Policy, or another LeRobot-native policy.
 
-Figure~\ref{fig:evaluation-dashboard} summarizes the three experiment families whose outcomes
-change when world--episode semantics are made explicit.
+Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
+families where world--episode semantics alter the outcome.
 
 \begin{figure}[!htbp]
 \centering
-\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[font=\sffamily]
-  \begin{scope}[shift={(0,0)}]
-    \node[wecard=weRose, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weRose] at (0,1.12) {Scene Leakage};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {random};
-    \fill[webar=weRose] (-0.45,0.42) rectangle (1.30,0.65);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.40,0.53) {1.00};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {disjoint};
-    \fill[webar=weGreen] (-0.45,-0.18) rectangle (-0.41,0.05);
-    \node[anchor=west, font=\sffamily\scriptsize] at (-0.28,-0.07) {0.00};
-    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {offline score \(0.850\to0.000\)};
-    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {world lineage leakage};
-  \end{scope}
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=3 by 1, horizontal sep=1.05cm},
+  width=0.32\linewidth,
+  height=4.35cm,
+  ybar,
+  ymin=0,
+  axis x line*=bottom,
+  axis y line*=left,
+  tick align=outside,
+  xtick=data,
+  xtick style={draw=none},
+  ymajorgrids=true,
+  grid style={draw=weLine!55, line width=0.3pt},
+  axis line style={draw=weSlate},
+  tick label style={font=\sffamily\scriptsize},
+  label style={font=\sffamily\scriptsize},
+  title style={font=\sffamily\bfseries\small, align=center},
+  xticklabel style={font=\sffamily\scriptsize, align=center},
+  point meta=y,
+  nodes near coords,
+  nodes near coords={\pgfmathprintnumber[fixed, precision=2]{\pgfplotspointmeta}},
+  nodes near coords style={font=\sffamily\scriptsize, text=weInk},
+  every axis plot/.append style={draw=none}
+]
+  \nextgroupplot[
+    title={(a) Scene-lineage leakage},
+    ylabel={Leakage rate},
+    ymax=1.15,
+    symbolic x coords={Random,Scene-disjoint},
+    enlarge x limits=0.35
+  ]
+    \addplot[fill=weRose!75, bar width=12pt] coordinates {(Random,1.000) (Scene-disjoint,0.000)};
 
-  \begin{scope}[shift={(5.15,0)}]
-    \node[wecard=weAmber, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weAmber] at (0,1.12) {Replay Timing};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {naive};
-    \fill[webar=weRose] (-0.45,0.42) rectangle (1.45,0.65);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.55,0.53) {4.73};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {aware};
-    \fill[webar=weGreen] (-0.45,-0.18) rectangle (0.30,0.05);
-    \node[anchor=west, font=\sffamily\scriptsize] at (0.40,-0.07) {1.86};
-    \node[wechip=weAmber, fill=weAmber!12] at (0,-0.78) {\(2.54\times\) lower RMSE};
-    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {validation, degrees};
-  \end{scope}
+  \nextgroupplot[
+    title={(b) Replay timing error},
+    ylabel={Joint RMSE (deg)},
+    ymax=5.25,
+    symbolic x coords={Command time,Timestamp-aware},
+    xticklabel style={font=\sffamily\scriptsize, align=center, text width=1.65cm},
+    enlarge x limits=0.32
+  ]
+    \addplot[fill=weAmber!85, bar width=12pt] coordinates {(Command time,4.732) (Timestamp-aware,1.862)};
 
-  \begin{scope}[shift={(10.3,0)}]
-    \node[wecard=weBlue, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weBlue] at (0,1.12) {Binding Retention};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.45) {native};
-    \fill[webar=weBlue] (0.00,0.35) rectangle (0.50,0.58);
-    \node[anchor=west, font=\sffamily\scriptsize] at (0.60,0.46) {0.26};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.15) {+ sidecar};
-    \fill[webar=weGreen] (0.00,-0.25) rectangle (1.60,-0.02);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.70,-0.14) {1.00};
-    \node[font=\sffamily\scriptsize, text=weSlate, align=center] at (0,-1.05)
-      {LeRobot v3 semantic\\projection};
-  \end{scope}
-\end{tikzpicture}%
-}
-\caption{Three silent failures become measurable when world--episode semantics are explicit:
-scene leakage, replay timing drift, and native binding loss.}
+  \nextgroupplot[
+    title={(c) LeRobot semantic retention},
+    ylabel={Retained fields},
+    ymax=1.15,
+    symbolic x coords={Native,With sidecar},
+    xticklabel style={font=\sffamily\scriptsize, align=center, text width=1.45cm},
+    enlarge x limits=0.35
+  ]
+    \addplot[fill=weBlue!75, bar width=12pt] coordinates {(Native,0.261) (With sidecar,1.000)};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Quantitative summary of the three measured effects used in the evaluation. Lower is
+better for leakage and replay RMSE; higher is better for semantic retention.}
 \label{fig:evaluation-dashboard}
 \end{figure}
 
