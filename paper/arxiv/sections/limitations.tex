@@ -22,8 +22,9 @@ Torch BC probe, and an ACT/Diffusion gate harness & Stronger policy jobs are pre
 no real-robot or high-fidelity rollout result yet \\
 Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
-Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-servo replay & One trace
-and one MuJoCo adapter; Isaac mapping is emitted but untested \\
+Replay timing & Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, and a
+dependency-free scheduler conformance harness & One trace and one MuJoCo adapter; scheduler
+conformance is not a second physics simulator; Isaac mapping is emitted but untested \\
 Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN &
 One tested minimal MuJoCo adapter; Isaac ready but untested; Genesis/SAPIEN adapters not implemented \\
 USS generality & Deterministic game-engine collision-patch and autonomous-driving clock-domain
@@ -74,8 +75,9 @@ ACT/Diffusion jobs and rollout requirements, but no such policy result is claime
 \paragraph{Replay is not bit-identical physics.}
 WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not
 promise simulator-independent behavior. The reported replay result is a MuJoCo position-servo test
-under declared assumptions. The Isaac mapping is emitted and ready, but intentionally untested in
-this environment.
+under declared assumptions. The replay-adapter harness checks delay, zero-order hold,
+missing-command, and asynchronous queue scheduling, but it is not a physics simulator. The Isaac
+mapping is emitted and ready, but intentionally untested in this environment.
 
 \paragraph{Meta-simulator evidence.}
 The meta-simulator section defines what a compliant runtime adapter must preserve. It does not

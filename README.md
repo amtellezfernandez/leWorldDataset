@@ -15,9 +15,9 @@ GSDF-style assets, game-engine telemetry, autonomous-driving logs, object storag
 package layout. Large corpora are described through a dataset manifest and index layer, not by
 treating a folder tree as the semantic API.
 
-OpenUSD standardizes how a 3D world is composed. USS standardizes how any agent, whether a physical
-robot, a video game character, or an autonomous vehicle, modifies state within that space over time
-without silent data corruption.
+OpenUSD standardizes how the 3D world is composed, but USS standardizes how any agent, whether a
+physical robot, a video game character, or an autonomous vehicle, modifies state within that space
+over time without silent data corruption.
 
 ## Paper
 
@@ -78,6 +78,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
 - [Meta-simulator contract](docs/meta-simulator-contract.md)
 - [USS state-drift pilots](docs/experiments/uss_state_drift_pilots)
+- [Replay adapter conformance](docs/experiments/replay_adapter_conformance)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
@@ -88,6 +89,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
 - [Meta-simulator contract artifacts](docs/experiments/meta_simulator_contract)
 - [USS state-drift pilot artifacts](docs/experiments/uss_state_drift_pilots)
+- [Replay adapter conformance artifacts](docs/experiments/replay_adapter_conformance)
 - [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
@@ -216,6 +218,12 @@ To generate the USS non-robotics state-drift pilots:
 python3 tools/uss_state_drift_pilots.py
 ```
 
+To generate the dependency-free replay adapter conformance checks:
+
+```bash
+python3 tools/replay_adapter_conformance.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -241,6 +249,10 @@ real-to-sim pipelines.
 The meta-simulator contract makes that runtime-neutral: MuJoCo is the current tested minimal replay
 adapter, Isaac is adapter-ready but untested, and Genesis/SAPIEN are explicit adapter-required
 targets. The claim is adapter compliance, not simulator-independent physics.
+The replay adapter conformance harness adds a dependency-free scheduler check for delay,
+zero-order-hold, missing-command, and asynchronous queue semantics. It is not a second physics
+simulator; it keeps runtime adapters honest before a MuJoCo, Isaac, Genesis, or SAPIEN replay is
+trusted.
 The USS state-drift pilots add two lightweight non-robotics checks: a game-engine collision patch
 where a loadable client asset no longer matches the authoritative state, and an autonomous-driving
 clock-domain offset where valid logs produce invalid spatial fusion. These pilots support the USS
@@ -277,6 +289,7 @@ The script writes:
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
+- `docs/experiments/replay_adapter_conformance/*`
 - `docs/experiments/uss_state_drift_pilots/*`
 - `docs/experiments/natural_failure_corpus/*`
 - `docs/experiments/recorded_episodes/*`

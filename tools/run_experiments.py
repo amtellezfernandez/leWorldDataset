@@ -47,6 +47,7 @@ PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
 REALTOSIM_DRIFT_REPORT = RESULTS_DIR / "realtosim_contract_drift" / "contract_drift_report.json"
 META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contract_report.json"
 USS_STATE_DRIFT_REPORT = RESULTS_DIR / "uss_state_drift_pilots" / "state_drift_report.json"
+REPLAY_ADAPTER_CONFORMANCE_REPORT = RESULTS_DIR / "replay_adapter_conformance" / "adapter_conformance_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -583,6 +584,22 @@ def experiment_uss_state_drift_pilots() -> dict[str, Any]:
             "reproduce": "python3 tools/uss_state_drift_pilots.py",
         }
         write_json(USS_STATE_DRIFT_REPORT, report)
+        return report
+
+
+def experiment_replay_adapter_conformance() -> dict[str, Any]:
+    try:
+        from replay_adapter_conformance import build_replay_adapter_conformance
+
+        return build_replay_adapter_conformance(output_dir=RESULTS_DIR / "replay_adapter_conformance")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/replay_adapter_conformance.py",
+        }
+        write_json(REPLAY_ADAPTER_CONFORMANCE_REPORT, report)
         return report
 
 
@@ -1173,6 +1190,7 @@ def write_report(results: dict[str, Any]) -> None:
     realtosim_drift = results["realtosim_contract_drift"]
     meta_sim = results["meta_simulator_contract"]
     uss_pilots = results["uss_state_drift_pilots"]
+    replay_adapter = results["replay_adapter_conformance"]
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
     natural_boundary = (
         "Five-dataset count is met through active LeRobot artifacts plus source-level public "
@@ -1296,6 +1314,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
+| Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
@@ -1427,6 +1446,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 {replay_section}
 
+## Replay Adapter Conformance
+
+- Artifact: `{replay_adapter.get("artifacts", {}).get("report", "docs/experiments/replay_adapter_conformance/adapter_conformance_report.json")}`
+- Status: {replay_adapter.get("status", "unavailable")}
+- Cases: {replay_adapter.get("aggregate", {}).get("case_count", 0)}
+- Naive scheduler failures: {replay_adapter.get("aggregate", {}).get("naive_failures", 0)}
+- Contract-aware passes: {replay_adapter.get("aggregate", {}).get("contract_aware_passes", 0)}
+- Boundary: {replay_adapter.get("claim_boundary", "Scheduler conformance only; not a second physics simulator.")}
+
 ## RQ4: Counterfactual Robustness
 
 - Observations only success: {robust["observations_only_success"]:.3f}
@@ -1473,6 +1501,7 @@ def main() -> int:
         "realtosim_contract_drift": experiment_realtosim_contract_drift(),
         "meta_simulator_contract": experiment_meta_simulator_contract(),
         "uss_state_drift_pilots": experiment_uss_state_drift_pilots(),
+        "replay_adapter_conformance": experiment_replay_adapter_conformance(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1552,6 +1581,15 @@ def main() -> int:
         return 1
     if uss_aggregate.get("uss_detections") != 2 or uss_aggregate.get("uss_corrected_successes") != 2:
         print("USS state-drift pilots did not detect and correct both drift cases.")
+        return 1
+    replay_adapter = results["replay_adapter_conformance"]
+    replay_adapter_aggregate = replay_adapter.get("aggregate", {})
+    if (
+        replay_adapter_aggregate.get("case_count") != 3
+        or replay_adapter_aggregate.get("contract_aware_passes") != 3
+        or replay_adapter_aggregate.get("naive_failures", 0) < 2
+    ):
+        print("Replay adapter conformance did not pass expected scheduler cases.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")

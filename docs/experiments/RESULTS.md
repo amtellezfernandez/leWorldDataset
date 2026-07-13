@@ -19,6 +19,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
+| Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
@@ -188,6 +189,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - MuJoCo replay improvement: 2.19x
 - Isaac adapter ready: True; tested: False
 
+
+## Replay Adapter Conformance
+
+- Artifact: `docs/experiments/replay_adapter_conformance/adapter_conformance_report.json`
+- Status: tested_reference_scheduler_not_physics_simulator
+- Cases: 3
+- Naive scheduler failures: 3
+- Contract-aware passes: 3
+- Boundary: This harness tests timing, queue, interpolation, and missing-command semantics. It is not a second physics simulator and does not replace Isaac/MuJoCo/Genesis replay.
 
 ## RQ4: Counterfactual Robustness
 

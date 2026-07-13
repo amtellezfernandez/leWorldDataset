@@ -57,6 +57,9 @@ The control-replay tool reads the exported LeRobot trajectory, estimates the eff
 delay from action/state alignment, writes the WorldEpisode action contract, executes the tested
 MuJoCo adapter, and emits an Isaac adapter mapping that is ready for an Isaac environment but
 explicitly marked untested in the committed report.
+The replay-adapter conformance tool then runs a dependency-free reference scheduler over delay,
+zero-order-hold, missing-command, and asynchronous queue cases. This checks the timing contract that
+runtime adapters must honor before a simulator-specific replay is trusted.
 
 The repository also emits a meta-simulator adapter report. It defines three compliance layers:
 the invariant interface, asynchronous schema extension, and deterministic replay accountability.

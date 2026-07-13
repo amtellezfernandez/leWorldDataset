@@ -77,6 +77,12 @@ adapter-ready but untested mapping, and Genesis/SAPIEN as adapter-required targe
 scientific step is to run the same WorldEpisode replay contract through a second tested runtime and
 measure cross-simulator drift.
 
+Replay-adapter conformance artifact: `tools/replay_adapter_conformance.py` adds a dependency-free
+reference scheduler for delay, zero-order hold, missing-command, and asynchronous queue semantics.
+It checks whether a runtime adapter honors the action timing contract before it is trusted as a
+replay target. This is scheduler conformance only; it does not replace the second tested simulator
+required for the full cross-simulator replay claim.
+
 ## RQ4: VLA Robustness From World Binding
 
 Train three conditions:

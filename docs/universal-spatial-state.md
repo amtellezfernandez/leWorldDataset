@@ -14,9 +14,9 @@ wrong. Examples include a collision mesh changed by a game-engine patch, an auto
 with an undeclared clock-domain offset, or a robot controller interpreting a policy vector under the
 wrong action semantics.
 
-OpenUSD standardizes how a 3D world is composed. USS standardizes how any agent, whether a physical
-robot, a video game character, or an autonomous vehicle, modifies state within that space over time
-without silent data corruption.
+OpenUSD standardizes how the 3D world is composed, but USS standardizes how any agent, whether a
+physical robot, a video game character, or an autonomous vehicle, modifies state within that space
+over time without silent data corruption.
 
 ## Vocabulary Mapping
 

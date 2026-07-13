@@ -141,6 +141,12 @@ from the same contract, but is not tested in this environment. The failure avoid
 one: blaming a simulator or controller when the dataset never said when the command actually took
 effect.
 
+We also add a dependency-free replay-adapter conformance harness before claiming runtime readiness.
+It tests three scheduler cases: constant frame delay, zero-order hold for missing commands, and
+asynchronous queue selection. In all three cases a naive scheduler fails while the contract-aware
+scheduler matches the expected trace with zero numerical error. This is not a second physics
+simulator; it is a precondition check for simulator adapters.
+
 \paragraph{Case 4: real-to-sim contract drift.}
 Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
 interactive physical assets. WorldEpisode targets the contract between those layers and the source
