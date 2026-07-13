@@ -10,6 +10,10 @@ but it is the executable proof that the standard can be validated, converted, an
 ```bash
 worldepisode validate dataset/
 worldepisode inspect dataset/
+worldepisode index build dataset/
+worldepisode index compact dataset/
+worldepisode resolve asset dataset/ asset_id
+worldepisode resolve shard dataset/ shard_id
 worldepisode diff-world world_a world_b
 worldepisode audit-splits dataset/
 worldepisode report-lineage dataset/
@@ -46,6 +50,25 @@ collision = mug.representation(role="collision")
 report = episode.validate(profile="WE-Rigid-Manipulation")
 ```
 
+For production corpora, `Dataset.open` should read the dataset manifest first and then lazily load
+only the shards selected by indexes and partition keys:
+
+```python
+from worldepisode import Dataset
+
+dataset = Dataset.open("hf://organization/worldepisode-corpus@v2026.07")
+
+for shard in dataset.shards(
+    kind="episode_trace",
+    partition={"robot_family": "so101", "split": "train"},
+):
+    for episode in shard.iter_episodes(columns=["episode_id", "world_revision_id", "action"]):
+        process(episode)
+```
+
+The SDK must be able to answer catalog queries without listing the backing object store or loading
+all episodes into memory.
+
 ## Resolver Contract
 
 Asset resolution is a first-class SDK service:
@@ -66,6 +89,24 @@ Resolvers MUST support deterministic digest verification. They MAY support:
 - IPFS or other content-addressed registries;
 - embedded base64 assets where a profile permits them.
 
+At dataset scale, resolver configuration lives in the dataset manifest. The SDK should respect
+manifest-declared resolver priority, local mirror policy, and cache policy before fetching remote
+assets.
+
+## Dataset-Scale Contract
+
+The SDK should expose:
+
+- `dataset.namespaces()` for globally scoped episode, world, entity, asset, and embodiment IDs;
+- `dataset.shards(kind=..., partition=...)` for partition-pruned lazy access;
+- `dataset.index("world_lineage")` for leakage and split audits;
+- `dataset.resolve_asset(asset_id)` for digest-verified asset lookup;
+- `dataset.version(version_id)` for immutable release snapshots;
+- `dataset.tombstones()` for removals and supersessions.
+
+Opening a production dataset must start from the manifest and its indexes. It must not depend on a
+recursive directory scan.
+
 ## Validator Output
 
 Diagnostics should include requirement id, severity, location, message, and optional repair hint:
@@ -79,4 +120,3 @@ Diagnostics should include requirement id, severity, location, message, and opti
   "hint": "Set semantics to one of delta, absolute, velocity, normalized, or target."
 }
 ```
-

@@ -7,6 +7,12 @@ it records the relationships those containers need in order to agree about the s
 world revision, persistent entities, space/time conventions, action contract, asset roles,
 interaction events, provenance, and split lineage.
 
+The sidecar is not a mandate to package a global robot corpus as millions of small folders. The
+single-episode record is the semantic unit. Production datasets add a manifest layer: globally
+scoped namespaces, URI resolvers, shard catalogs, materialized indexes, split manifests, and
+append-only release snapshots. Opening such a corpus starts from the manifest and its indexes; it
+does not require recursively scanning an object store or loading every episode.
+
 Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset and log containers plug
 in on the left; world assets and replay targets plug in on the right; the WorldEpisode sidecar
 holds the semantics that would otherwise be scattered across undocumented loader assumptions.

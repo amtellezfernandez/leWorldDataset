@@ -34,6 +34,30 @@ Minimum contents:
 - representation records with asset descriptors;
 - provenance for derived assets.
 
+## WE-Dataset-Scale
+
+Purpose: expose large and federated robot corpora without treating a folder tree as the dataset API.
+
+Adds:
+
+- `DATASET.001`
+- `DATASET.002`
+- `DATASET.003`
+- `DATASET.004`
+- `DATASET.005`
+- `ASSET.003`
+- `ASSET.004`
+- `SPLIT.001`
+
+Minimum contents:
+
+- dataset manifest and release version;
+- globally scoped namespaces for episodes, worlds, entities, assets, tasks, and embodiments;
+- resolver registry with deterministic digest verification and mirror priority;
+- shard catalog with schema references, partition keys, row counts, byte sizes, and statistics;
+- materialized indexes for lookup by episode, world lineage, entity, asset digest, split, and time;
+- append-only version snapshots with tombstones or supersession records.
+
 ## WE-Physical-Coherence
 
 Purpose: detect units, transform, timing, and calibration errors that break physical interpretation.
@@ -127,4 +151,3 @@ Minimum contents:
 - generated asset lineage;
 - counterfactual camera/object/background changes;
 - split constraints that can exclude shared world, entity, or reconstruction lineage.
-

@@ -5,7 +5,8 @@ linking robot-learning episodes to immutable, versioned, replayable 3D worlds.
 
 The goal is not to create another monolithic file format. The goal is to define the semantic
 contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian splats,
-GSDF-style assets, or a reference package layout.
+GSDF-style assets, or a reference package layout. Large corpora are described through a dataset
+manifest and index layer, not by treating a folder tree as the semantic API.
 
 ## Paper
 
@@ -33,6 +34,8 @@ WorldEpisode is:
 - **loss-explicit**: conversions may be lossy, but never silently lossy.
 - **resolver-neutral**: assets are portable through URI, media type, digest, and optional mirrors,
   not by forcing every asset into a local folder.
+- **dataset-scale**: production corpora use globally scoped IDs, shard catalogs, materialized
+  indexes, resolver registries, and append-only dataset snapshots.
 
 Gaussian splats are a high-value profile and demonstration, not the core claim. The stronger claim
 is persistent, verifiable world-episode interoperability.
@@ -44,6 +47,7 @@ is persistent, verifiable world-episode interoperability.
 - [Markdown paper notes](paper/le-world-layout.md)
 - [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
 - [WorldEpisode JSON Schema draft](schemas/worldepisode-core-v0.schema.json)
+- [WorldEpisode dataset manifest schema draft](schemas/worldepisode-dataset-v0.schema.json)
 - [Conformance JSON Schema draft](schemas/conformance-requirements-v0.schema.json)
 - [World layout profile draft](spec/le-world-layout-v0.1.md)
 - [World layout JSON Schema draft](schemas/le-world-layout-v0.schema.json)
@@ -54,6 +58,7 @@ is persistent, verifiable world-episode interoperability.
 - [Independent conformance fixtures](conformance/fixtures/independent/manifest.json)
 - [Bindings draft](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
+- [Production-scale dataset architecture](docs/production-scale.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
@@ -66,6 +71,7 @@ is persistent, verifiable world-episode interoperability.
 - [Governance draft](GOVERNANCE.md)
 - [Minimal example](examples/minimal-static-world.layout.json)
 - [Minimal WorldEpisode example](examples/minimal.worldepisode.json)
+- [Scalable corpus manifest example](examples/scalable-corpus.worldepisode-dataset.json)
 
 ## Build The Paper
 

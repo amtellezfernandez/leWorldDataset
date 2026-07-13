@@ -59,6 +59,41 @@
       "targets": ["asset_resolvers", "asset_descriptors"]
     },
     {
+      "id": "DATASET.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Dataset-scale deployments declare a manifest with shard and index catalogs; opening or validating a dataset does not require recursive filesystem scans or object-store listings.",
+      "targets": ["dataset_manifests"]
+    },
+    {
+      "id": "DATASET.002",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every shard and materialized index declares URI, media type, digest, schema reference, partition keys, and row/object counts where available.",
+      "targets": ["shard_catalogs", "index_catalogs"]
+    },
+    {
+      "id": "DATASET.003",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Persistent IDs are globally scoped by declared namespace when crossing dataset boundaries.",
+      "targets": ["namespace_registry", "identifiers"]
+    },
+    {
+      "id": "DATASET.004",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Dataset versions are append-only snapshots; deletion or replacement uses tombstones or supersession records.",
+      "targets": ["version_records"]
+    },
+    {
+      "id": "DATASET.005",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Resolvers declare supported URI schemes, cache policy, and mirror priority for deterministic resolution at scale.",
+      "targets": ["resolver_registry"]
+    },
+    {
       "id": "ACTION.001",
       "level": "MUST",
       "severity": "error",
@@ -135,6 +170,16 @@
       "TRACE.001",
       "PROV.001",
       "CONVERT.001"
+    ],
+    "WE-Dataset-Scale": [
+      "DATASET.001",
+      "DATASET.002",
+      "DATASET.003",
+      "DATASET.004",
+      "DATASET.005",
+      "ASSET.001",
+      "ASSET.002",
+      "SPLIT.001"
     ],
     "WE-Physical-Coherence": [
       "TIME.002",

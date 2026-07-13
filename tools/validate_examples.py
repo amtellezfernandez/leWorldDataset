@@ -12,6 +12,7 @@ import jsonschema
 ROOT = Path(__file__).resolve().parents[1]
 LAYOUT_SCHEMA_PATH = ROOT / "schemas" / "le-world-layout-v0.schema.json"
 WORLDEPISODE_SCHEMA_PATH = ROOT / "schemas" / "worldepisode-core-v0.schema.json"
+WORLDEPISODE_DATASET_SCHEMA_PATH = ROOT / "schemas" / "worldepisode-dataset-v0.schema.json"
 CONFORMANCE_SCHEMA_PATH = ROOT / "schemas" / "conformance-requirements-v0.schema.json"
 EXAMPLES_DIR = ROOT / "examples"
 CONFORMANCE_REQUIREMENTS_PATH = ROOT / "conformance" / "requirements.v0.json"
@@ -25,6 +26,9 @@ def load_json(path: Path) -> object:
 def main() -> int:
     validators = {
         ".layout.json": jsonschema.Draft202012Validator(load_json(LAYOUT_SCHEMA_PATH)),
+        ".worldepisode-dataset.json": jsonschema.Draft202012Validator(
+            load_json(WORLDEPISODE_DATASET_SCHEMA_PATH)
+        ),
         ".worldepisode.json": jsonschema.Draft202012Validator(load_json(WORLDEPISODE_SCHEMA_PATH)),
     }
     failures = 0

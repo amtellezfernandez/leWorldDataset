@@ -1,7 +1,9 @@
 \section{Problem Statement}
 
 WorldEpisode starts from a practical question: what must be known before an episode can be safely
-converted, replayed, augmented, or used for evaluation? A valid package must answer five questions.
+converted, replayed, augmented, or used for evaluation? A valid episode record must answer five
+questions. A production dataset must also answer how those records are named, sharded, indexed,
+resolved, and versioned without turning storage layout into the semantic API.
 
 \paragraph{Which world did this happen in?}
 Each episode references one immutable, content-addressed world revision plus an ordered list of
@@ -34,6 +36,12 @@ Episode-level random splits are not enough when multiple episodes share a recons
 physical object, source capture, calibration, or generated asset lineage. A WorldEpisode split
 manifest can enforce disjointness by world lineage, physical entity, source capture,
 reconstruction run, or generated asset family.
+
+\paragraph{Can this scale past one dataset folder?}
+Large robot corpora require a dataset manifest above the episode records. The manifest declares
+namespaces, resolver priority, shard catalogs, materialized indexes, split catalogs, and append-only
+versions. This lets a reader locate all SO-101 pick-place traces for a world-disjoint split by
+index lookup rather than by crawling storage paths.
 
 The initial profile is intentionally narrow: rigid tabletop manipulation with fixed-base single- or
 dual-arm robots. That bounded domain keeps conformance executable rather than aspirational; later

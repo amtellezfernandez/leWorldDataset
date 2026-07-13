@@ -56,6 +56,16 @@ Severity levels:
 | `ASSET.004` | SHOULD | warning | Remote assets provide at least one local mirror or cache hint for reproducible offline evaluation. | Asset descriptors. |
 | `ASSET.005` | MUST | error | Embedded assets declare encoding, media type, and digest of the decoded bytes. | Embedded asset descriptors. |
 
+## Dataset Scale and Federation
+
+| ID | Level | Severity | Normative Rule | Validation Target |
+|---|---|---|---|---|
+| `DATASET.001` | MUST | error | Dataset-scale deployments declare a manifest with shard and index catalogs; opening or validating a dataset does not require recursive filesystem scans or object-store listings. | Dataset manifests. |
+| `DATASET.002` | MUST | error | Every shard and materialized index declares URI, media type, digest, schema reference, partition keys, and row/object counts where available. | Shard and index catalogs. |
+| `DATASET.003` | MUST | error | Persistent IDs are globally scoped by declared namespace when crossing dataset boundaries. | Namespace registry and identifiers. |
+| `DATASET.004` | MUST | error | Dataset versions are append-only snapshots; deletion or replacement uses tombstones or supersession records. | Version records. |
+| `DATASET.005` | MUST | error | Resolvers declare supported URI schemes, cache policy, and mirror priority for deterministic resolution at scale. | Resolver registry. |
+
 ## Actions
 
 | ID | Level | Severity | Normative Rule | Validation Target |
@@ -87,4 +97,3 @@ Severity levels:
 | `CONVERT.001` | MUST | error | Every conversion emits a machine-readable loss report. | Import/export commands. |
 | `CONVERT.002` | MUST | error | Loss reports classify fields as preserved, externalized, approximated, discarded, or warning. | Conversion reports. |
 | `SPLIT.001` | SHOULD | warning | Dataset splits may enforce world, entity, source-capture, reconstruction-run, generated-asset-family, and site disjointness. | Split manifests. |
-

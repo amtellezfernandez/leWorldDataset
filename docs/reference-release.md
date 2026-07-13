@@ -23,6 +23,26 @@ auditability rather than in raw scene count.
 - at least two simulator exports;
 - world-, entity-, and lineage-disjoint split manifests.
 
+## Production-Scale Release Constraints
+
+The public release should not imply that a dataset is a folder of per-episode packages. It should
+ship:
+
+- one dataset-scale manifest that validates against
+  `schemas/worldepisode-dataset-v0.schema.json`;
+- globally scoped IDs for episodes, worlds, entities, embodiments, tasks, assets, and split
+  manifests;
+- sharded trace, event, provenance, quality, asset-index, and split payloads with declared schema
+  references;
+- materialized indexes for episode lookup, world lineage, entity lookup, asset digest, split
+  membership, time range, and embodiment/task queries;
+- resolver definitions for Hugging Face, object storage, OCI artifacts, local mirrors, and any
+  content-addressed registries used by the release;
+- append-only version snapshots with tombstones or supersession records for corrections.
+
+Small reference packages remain useful as conformance fixtures, but the benchmark release should be
+opened through the manifest and indexes without scanning the backing storage.
+
 ## Release Order
 
 1. Publish the landscape and RFC first: comparison, terminology, problem statement, non-goals,
@@ -43,4 +63,3 @@ auditability rather than in raw scene count.
 - `v0.3-bindings`: LeRobot, Rerun, OpenUSD, glTF Gaussian, and MCAP import/export sketches.
 - `v0.4-corpus`: golden conformance corpus and replay fixtures.
 - `v1.0-rigid-tabletop`: stable rigid tabletop manipulation profile and benchmark release.
-

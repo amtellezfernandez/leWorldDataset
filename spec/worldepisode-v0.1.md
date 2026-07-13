@@ -3,14 +3,15 @@
 Status: draft.
 
 WorldEpisode is a storage-neutral, representation-neutral interchange profile that binds a
-robot-learning episode to an immutable world revision.
+robot-learning episode to an immutable world revision. At dataset scale, it also defines a manifest
+and index layer for sharded corpora.
 
 It does not replace LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF, GSDF, or simulator-native
 formats. It specifies the semantic contract those systems can carry.
 
 ## 1. Core Model
 
-A WorldEpisode record is:
+A WorldEpisode core record describes one episode:
 
 ```text
 E = <M, W, B, K, F, C, O, A, X, V, P, Q>
@@ -54,7 +55,7 @@ Where:
 - `G_T`: temporal state and interaction-event graph.
 - `G_P`: provenance and derivation graph.
 
-A package is valid only if graph references are closed, the base world revision is
+A core episode record is valid only if graph references are closed, the base world revision is
 content-addressed, and every lossy binding emits a conversion report:
 
 ```text
@@ -167,7 +168,35 @@ Every converter SHOULD emit a machine-readable conversion report containing:
 
 Lossy conversion is allowed. Silent lossy conversion is not.
 
-## 6. Conformance Requirements
+## 6. Dataset-Scale Manifest and Sharding
+
+The reference directory layout is a packaging profile for examples, fixtures, and small artifacts.
+It is not the production architecture for large robot datasets.
+
+A WorldEpisode dataset manifest describes the corpus without requiring recursive filesystem scans,
+object-store listings, or eager loading of every episode. It declares:
+
+- dataset identity, release version, and append-only versioning policy;
+- globally scoped namespaces for episodes, worlds, entities, assets, embodiments, tasks, splits,
+  and provenance;
+- URI resolvers, cache policies, and mirror priority;
+- registries for world revisions, entities, embodiments, action spaces, tasks, schemas, provenance,
+  quality records, and conversion reports;
+- sharded payload catalogs with URI, media type, digest, schema reference, partition keys, byte
+  size, row count, and statistics when available;
+- materialized indexes for episode lookup, world lineage, entity lookup, asset digests,
+  split membership, time ranges, and embodiment/task queries;
+- split manifests and append-only release snapshots with tombstones or supersession records.
+
+Persistent identifiers MUST be globally scoped when they cross a dataset boundary. Bindings MAY use
+compact local identifiers inside a shard, but those local identifiers MUST resolve through declared
+namespaces before they are compared with identifiers from another dataset.
+
+Payloads MAY live in LeRobot, Rerun, NCore, MCAP, Parquet/Arrow, OpenUSD, glTF, object storage,
+Hugging Face repositories, OCI artifacts, IPFS, HTTP(S), local mirrors, or other registered storage
+systems. The semantic API is the manifest and its indexes, not the physical folder layout.
+
+## 7. Conformance Requirements
 
 The initial requirement namespace is:
 
@@ -190,10 +219,16 @@ The initial requirement namespace is:
 | `REPLAY.001` | Replay records simulator, version, solver, timestep, materials, and initialization assumptions. |
 | `ASSET.001` | Every asset declares URI, media type, digest, and license when license is known. |
 | `ASSET.002` | Every asset can be resolved deterministically and verified by digest. |
+| `DATASET.001` | Dataset-scale deployments declare a manifest with shard and index catalogs; opening or validating a dataset does not require recursive storage scans. |
+| `DATASET.002` | Every shard and index declares URI, media type, digest, schema reference, partition keys, and row/object counts where available. |
+| `DATASET.003` | Persistent IDs are globally scoped by declared namespace when crossing dataset boundaries. |
+| `DATASET.004` | Dataset versions are append-only snapshots; replacement or removal uses tombstones or supersession records. |
+| `DATASET.005` | Resolvers declare supported URI schemes, cache policy, and mirror priority for deterministic resolution at scale. |
 
-## 7. Initial Profiles
+## 8. Initial Profiles
 
 - `WE-Core`: episode, identity, time, frames, provenance.
+- `WE-Dataset-Scale`: manifest, namespaces, shard catalogs, indexes, resolvers, and append-only snapshots.
 - `WE-Physical-Coherence`: calibrations, units, uncertainty, action timing.
 - `WE-Gaussian-Appearance`: Gaussian representations through glTF/OpenUSD-compatible bindings.
 - `WE-Rigid-Manipulation`: rigid bodies, grippers, contacts, attachments.
