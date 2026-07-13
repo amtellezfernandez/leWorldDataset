@@ -7,21 +7,21 @@ and where did this data come from?
 
 \begin{figure}[t]
 \centering
-\resizebox{0.95\linewidth}{!}{%
+\resizebox{0.90\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weInk, fill=wePanel, text width=3.85cm, minimum height=1.65cm] (center) at (0,0)
+  \node[wecard=weInk, fill=wePanel, font=\sffamily\footnotesize, text width=3.95cm, minimum height=1.55cm] (center) at (0,0)
     {\textbf{Episode--World}\\\textbf{Binding}\\[2pt]
-     base world + ordered deltas};
+     base world\\+ ordered deltas};
 
-  \node[wecard=weBlue, text width=3.0cm, minimum height=1.15cm] (identity) at (0,2.55)
+  \node[wecard=weBlue, font=\sffamily\footnotesize, text width=2.75cm, minimum height=1.0cm] (identity) at (0,2.45)
     {\textbf{Identity}\\persistent entities};
-  \node[wecard=weCyan, text width=3.05cm, minimum height=1.15cm] (frame) at (4.05,0.9)
+  \node[wecard=weCyan, font=\sffamily\footnotesize, text width=2.95cm, minimum height=1.0cm] (frame) at (4.0,0.85)
     {\textbf{Frame + Clock}\\transforms, timing};
-  \node[wecard=weAmber, text width=3.0cm, minimum height=1.15cm] (role) at (2.15,-2.25)
+  \node[wecard=weAmber, font=\sffamily\footnotesize, text width=2.85cm, minimum height=1.0cm] (role) at (2.05,-2.15)
     {\textbf{Representation Role}\\appearance, physics};
-  \node[wecard=weGreen, text width=3.0cm, minimum height=1.15cm] (event) at (-2.15,-2.25)
+  \node[wecard=weGreen, font=\sffamily\footnotesize, text width=2.85cm, minimum height=1.0cm] (event) at (-2.05,-2.15)
     {\textbf{Temporal Events}\\contact, grasp, deltas};
-  \node[wecard=weRose, text width=3.05cm, minimum height=1.15cm] (prov) at (-4.05,0.9)
+  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.95cm, minimum height=1.0cm] (prov) at (-4.0,0.85)
     {\textbf{Provenance}\\lineage, uncertainty};
 
   \draw[wearrow=weBlue] (identity.south) -- (center.north);
@@ -31,7 +31,7 @@ and where did this data come from?
   \draw[wearrow=weRose] (prov.east) -- (center.west);
 
   \draw[very thick, draw=weLine] (identity) -- (frame) -- (role) -- (event) -- (prov) -- (identity);
-  \node[wechip=weViolet, fill=weViolet!10] at (0,-3.55)
+  \node[wechip=weViolet, fill=weViolet!10, font=\sffamily\tiny, text width=6.4cm, minimum height=0.36cm] at (0,-3.35)
     {closed references + digest-verified assets + explicit loss reports};
 \end{tikzpicture}%
 }

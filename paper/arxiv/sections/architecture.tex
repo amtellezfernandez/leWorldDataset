@@ -13,24 +13,24 @@ holds the semantics that would otherwise be scattered across undocumented loader
 
 \begin{figure}[t]
 \centering
-\resizebox{\linewidth}{!}{%
+\resizebox{0.98\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weBlue, text width=2.75cm, minimum height=1.0cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
-  \node[wecard=weCyan, text width=2.75cm, minimum height=1.0cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
-  \node[wecard=weViolet, text width=2.75cm, minimum height=1.0cm] (ncore) at (0,-0.9) {\textbf{NCore}\\sensor calibration};
+  \node[wecard=weBlue, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
+  \node[wecard=weCyan, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
+  \node[wecard=weViolet, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (ncore) at (0,-0.9) {\textbf{NCore}\\sensor calibration};
 
-  \node[wecard=weInk, fill=wePanel, text width=4.05cm, minimum height=3.85cm] (core) at (5.0,0.45) {};
-  \node[font=\sffamily\bfseries\large, text=weInk] at (core.north) [yshift=-0.35cm] {WorldEpisode};
-  \node[font=\sffamily\small, text=weSlate] at (5.0,1.32) {sidecar blueprint};
-  \node[wechip=weBlue] at (3.85,0.65) {identity};
-  \node[wechip=weCyan] at (6.05,0.65) {frames + clocks};
-  \node[wechip=weAmber] at (3.85,-0.05) {action contract};
-  \node[wechip=weGreen] at (6.05,-0.05) {roles + events};
-  \node[wechip=weRose] at (4.85,-0.75) {provenance + lineage};
+  \node[wecard=weInk, fill=wePanel, text width=4.55cm, minimum height=3.65cm] (core) at (5.0,0.45) {};
+  \node[font=\sffamily\bfseries\normalsize, text=weInk] at (core.north) [yshift=-0.32cm] {WorldEpisode};
+  \node[font=\sffamily\scriptsize, text=weSlate] at (5.0,1.33) {sidecar blueprint};
+  \node[wechip=weBlue, font=\sffamily\tiny, text width=1.15cm] at (3.85,0.65) {identity};
+  \node[wechip=weCyan, font=\sffamily\tiny, text width=1.55cm] at (6.05,0.65) {frames + clocks};
+  \node[wechip=weAmber, font=\sffamily\tiny, text width=1.55cm] at (3.85,-0.05) {action contract};
+  \node[wechip=weGreen, font=\sffamily\tiny, text width=1.45cm] at (6.05,-0.05) {roles + events};
+  \node[wechip=weRose, font=\sffamily\tiny, text width=2.2cm] at (4.95,-0.75) {provenance + lineage};
 
-  \node[wecard=weGreen, text width=2.75cm, minimum height=1.0cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
-  \node[wecard=weAmber, text width=2.75cm, minimum height=1.0cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
-  \node[wecard=weRose, text width=2.75cm, minimum height=1.0cm] (sim) at (10.0,-0.9) {\textbf{MuJoCo / Isaac}\\replay targets};
+  \node[wecard=weGreen, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
+  \node[wecard=weAmber, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
+  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{MuJoCo / Isaac}\\replay targets};
 
   \draw[wearrow=weBlue] (lerobot.east) -- ($(core.west)+(0,1.0)$);
   \draw[wearrow=weCyan] (rerun.east) -- (core.west);
@@ -39,8 +39,8 @@ holds the semantics that would otherwise be scattered across undocumented loader
   \draw[wearrow=weAmber] (core.east) -- (gltf.west);
   \draw[wearrow=weRose] ($(core.east)+(0,-1.0)$) -- (sim.west);
 
-  \node[wechip=weInk, fill=wePanel, text width=9.6cm, align=center] at (5,-2.05)
-    {Executable outputs: validator diagnostics \quad conversion-loss reports \quad lineage-safe splits \quad replay assumptions};
+  \node[wechip=weInk, fill=wePanel, font=\sffamily\tiny, text width=10.7cm, minimum height=0.43cm, align=center] at (5,-2.05)
+    {validator diagnostics \(\cdot\) conversion-loss reports \(\cdot\) lineage-safe splits \(\cdot\) replay assumptions};
 \end{tikzpicture}%
 }
 \caption{WorldEpisode is the semantic bridge between robot-learning containers, reconstructed
