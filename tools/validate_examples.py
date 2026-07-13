@@ -12,7 +12,9 @@ import jsonschema
 ROOT = Path(__file__).resolve().parents[1]
 LAYOUT_SCHEMA_PATH = ROOT / "schemas" / "le-world-layout-v0.schema.json"
 WORLDEPISODE_SCHEMA_PATH = ROOT / "schemas" / "worldepisode-core-v0.schema.json"
+CONFORMANCE_SCHEMA_PATH = ROOT / "schemas" / "conformance-requirements-v0.schema.json"
 EXAMPLES_DIR = ROOT / "examples"
+CONFORMANCE_REQUIREMENTS_PATH = ROOT / "conformance" / "requirements.v0.json"
 
 
 def load_json(path: Path) -> object:
@@ -47,6 +49,34 @@ def main() -> int:
                 print(f"  {location}: {error.message}")
         else:
             print(f"OK   {example_path.relative_to(ROOT)}")
+
+    conformance_validator = jsonschema.Draft202012Validator(load_json(CONFORMANCE_SCHEMA_PATH))
+    conformance_payload = load_json(CONFORMANCE_REQUIREMENTS_PATH)
+    conformance_errors = sorted(
+        conformance_validator.iter_errors(conformance_payload),
+        key=lambda error: list(error.path),
+    )
+    if conformance_errors:
+        failures += 1
+        print(f"FAIL {CONFORMANCE_REQUIREMENTS_PATH.relative_to(ROOT)}")
+        for error in conformance_errors:
+            location = ".".join(str(part) for part in error.path) or "<root>"
+            print(f"  {location}: {error.message}")
+    else:
+        requirement_ids = {item["id"] for item in conformance_payload["requirements"]}
+        unknown_profile_refs = {
+            requirement_id
+            for profile_ids in conformance_payload["profiles"].values()
+            for requirement_id in profile_ids
+            if requirement_id not in requirement_ids
+        }
+        if unknown_profile_refs:
+            failures += 1
+            refs = ", ".join(sorted(unknown_profile_refs))
+            print(f"FAIL {CONFORMANCE_REQUIREMENTS_PATH.relative_to(ROOT)}")
+            print(f"  profiles: unknown requirement reference(s): {refs}")
+        else:
+            print(f"OK   {CONFORMANCE_REQUIREMENTS_PATH.relative_to(ROOT)}")
 
     return 1 if failures else 0
 

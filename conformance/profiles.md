@@ -1,0 +1,130 @@
+# WorldEpisode Conformance Profiles
+
+Status: draft.
+
+Profiles are composable. A dataset can claim several profiles if it passes every required rule for
+each claimed profile.
+
+## WE-Core
+
+Purpose: minimal robot-learning episode binding to a versioned world.
+
+Required requirement groups:
+
+- `TIME.001`
+- `FRAME.001`
+- `FRAME.002`
+- `ENTITY.001`
+- `REP.001`
+- `ASSET.001`
+- `ASSET.002`
+- `WORLD.001`
+- `TRACE.001`
+- `PROV.001`
+- `CONVERT.001`
+
+Minimum contents:
+
+- manifest and schema version;
+- one episode id and dataset id;
+- one immutable world revision;
+- one clock domain;
+- one frame graph;
+- persistent entities;
+- representation records with asset descriptors;
+- provenance for derived assets.
+
+## WE-Physical-Coherence
+
+Purpose: detect units, transform, timing, and calibration errors that break physical interpretation.
+
+Adds:
+
+- `TIME.002`
+- `TIME.003`
+- `TIME.004`
+- `FRAME.003`
+- `FRAME.004`
+- `ACTION.001`
+- `ACTION.002`
+- `ACTION.003`
+- `ACTION.004`
+- `QUALITY.001`
+
+Minimum contents:
+
+- clock mappings for multi-clock datasets;
+- transform directions and valid intervals;
+- quaternion convention;
+- calibration revisions or uncertainty for calibrated transforms;
+- full action-channel contract.
+
+## WE-Gaussian-Appearance
+
+Purpose: carry Gaussian-splat appearance without making Gaussian splats the core format.
+
+Adds:
+
+- `REP.002`
+- `REP.003`
+- `ASSET.003`
+- `ASSET.004`
+
+Minimum contents:
+
+- Gaussian representation marked as `appearance`;
+- glTF `KHR_gaussian_splatting`, SPZ, OpenUSD Gaussian schema, or another declared binding;
+- entity mapping between splat groups and persistent entities when object-level identity is claimed;
+- separate collision or geometry representation when replay is claimed.
+
+## WE-Rigid-Manipulation
+
+Purpose: fixed-base single- or dual-arm rigid tabletop manipulation.
+
+Adds:
+
+- `ENTITY.002`
+- `ACTION.005`
+- `TRACE.002`
+- `WORLD.002`
+
+Minimum contents:
+
+- rigid manipulated objects and task-relevant fixtures;
+- gripper semantics if a gripper is present;
+- object poses or deltas when manipulated objects move;
+- contact, grasp, attachment, support, and failure events when known.
+
+## WE-Replay
+
+Purpose: replay demonstrations under declared physical and numerical assumptions.
+
+Adds:
+
+- `REPLAY.001`
+- `REPLAY.002`
+
+Minimum contents:
+
+- simulator target and version;
+- solver, timestep, contact/material assumptions;
+- initialization state;
+- replay tolerance envelope;
+- measured divergence report for each tested runtime.
+
+## WE-Counterfactual
+
+Purpose: support editable worlds and augmentation with explicit lineage.
+
+Adds:
+
+- `PROV.002`
+- `SPLIT.001`
+
+Minimum contents:
+
+- object-level world deltas;
+- generated asset lineage;
+- counterfactual camera/object/background changes;
+- split constraints that can exclude shared world, entity, or reconstruction lineage.
+

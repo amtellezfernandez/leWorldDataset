@@ -14,6 +14,8 @@ splats, GSDF-style assets, or a reference package layout.
 - `paper/` - Markdown paper notes and outline.
 - `spec/` - normative specification drafts.
 - `schemas/` - machine-readable JSON Schema drafts.
+- `conformance/` - requirement IDs, profiles, and fixture plan.
+- `docs/` - bindings, SDK contract, research plan, and reference release plan.
 - `examples/` - small valid layout examples.
 - `notes/` - research notes, decisions, and open questions.
 
@@ -37,8 +39,17 @@ is persistent, verifiable world-episode interoperability.
 - [Markdown paper notes](paper/le-world-layout.md)
 - [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
 - [WorldEpisode JSON Schema draft](schemas/worldepisode-core-v0.schema.json)
+- [Conformance JSON Schema draft](schemas/conformance-requirements-v0.schema.json)
 - [World layout profile draft](spec/le-world-layout-v0.1.md)
 - [World layout JSON Schema draft](schemas/le-world-layout-v0.schema.json)
+- [Conformance requirements](conformance/requirements.md)
+- [Machine-readable requirements](conformance/requirements.v0.json)
+- [Conformance profiles](conformance/profiles.md)
+- [Bindings draft](docs/bindings.md)
+- [Reference SDK contract](docs/sdk.md)
+- [Research plan](docs/research-plan.md)
+- [Reference release plan](docs/reference-release.md)
+- [Governance draft](GOVERNANCE.md)
 - [Minimal example](examples/minimal-static-world.layout.json)
 - [Minimal WorldEpisode example](examples/minimal.worldepisode.json)
 

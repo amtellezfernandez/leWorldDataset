@@ -1,0 +1,152 @@
+{
+  "$schema": "https://worldepisode.org/schemas/conformance-requirements-v0.schema.json",
+  "version": "worldepisode-conformance-0.1",
+  "requirements": [
+    {
+      "id": "TIME.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every temporal stream declares a clock domain.",
+      "targets": ["trace_streams", "event_tables", "sensor_streams", "action_streams"]
+    },
+    {
+      "id": "TIME.002",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every cross-clock mapping declares source clock, target clock, offset, drift model, and estimated error when a cross-clock conversion is used.",
+      "targets": ["clock_graph.mappings"]
+    },
+    {
+      "id": "FRAME.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every spatial value declares coordinate frame and units.",
+      "targets": ["poses", "transforms", "representations", "annotations"]
+    },
+    {
+      "id": "FRAME.002",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every transform declares source-to-target direction and validity interval.",
+      "targets": ["frame_graph.transforms"]
+    },
+    {
+      "id": "ENTITY.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Persistent entities maintain identity across observations, representations, annotations, events, and simulator actors.",
+      "targets": ["entities", "representations", "events", "bindings"]
+    },
+    {
+      "id": "REP.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every representation declares a role.",
+      "targets": ["entities.representations"]
+    },
+    {
+      "id": "ASSET.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every external asset declares URI, media type, digest, and license when license is known.",
+      "targets": ["asset_descriptors"]
+    },
+    {
+      "id": "ASSET.002",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every asset can be resolved deterministically and verified by digest.",
+      "targets": ["asset_resolvers", "asset_descriptors"]
+    },
+    {
+      "id": "ACTION.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every action channel declares control mode, parameterization, frame, and units.",
+      "targets": ["action_space.channels"]
+    },
+    {
+      "id": "ACTION.002",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Command time and effective-time semantics are declared.",
+      "targets": ["action_space.channels", "trace.action_streams"]
+    },
+    {
+      "id": "WORLD.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every world revision is immutable and content-addressed.",
+      "targets": ["world_revision"]
+    },
+    {
+      "id": "TRACE.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every episode references one base world revision and an ordered delta sequence.",
+      "targets": ["episode", "world_revision", "world_deltas"]
+    },
+    {
+      "id": "PROV.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every derived representation records source and transformation provenance.",
+      "targets": ["provenance", "entities.representations"]
+    },
+    {
+      "id": "QUALITY.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Inferred or reconstructed values declare uncertainty and source status.",
+      "targets": ["quality", "transforms", "representations"]
+    },
+    {
+      "id": "CONVERT.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Every conversion emits a machine-readable loss report.",
+      "targets": ["converters"]
+    },
+    {
+      "id": "SPLIT.001",
+      "level": "SHOULD",
+      "severity": "warning",
+      "rule": "Dataset splits may enforce world, entity, source-capture, reconstruction-run, generated-asset-family, and site disjointness.",
+      "targets": ["split_manifests"]
+    },
+    {
+      "id": "REPLAY.001",
+      "level": "MUST",
+      "severity": "error",
+      "rule": "Replay records simulator, version, solver, timestep, materials, initialization assumptions, and tolerance envelope.",
+      "targets": ["replay_manifests"]
+    }
+  ],
+  "profiles": {
+    "WE-Core": [
+      "TIME.001",
+      "FRAME.001",
+      "FRAME.002",
+      "ENTITY.001",
+      "REP.001",
+      "ASSET.001",
+      "ASSET.002",
+      "WORLD.001",
+      "TRACE.001",
+      "PROV.001",
+      "CONVERT.001"
+    ],
+    "WE-Physical-Coherence": [
+      "TIME.002",
+      "ACTION.001",
+      "ACTION.002",
+      "QUALITY.001"
+    ],
+    "WE-Replay": [
+      "REPLAY.001"
+    ],
+    "WE-Counterfactual": [
+      "SPLIT.001"
+    ]
+  }
+}
