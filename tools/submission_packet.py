@@ -161,7 +161,7 @@ def build_packet(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         and not invalid_open_gates
         and not missing_artifacts
         and len(claims) >= 10
-        and len(open_results) >= 5
+        and len(open_results) >= 4
     )
 
     packet = {

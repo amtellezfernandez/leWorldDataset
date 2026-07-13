@@ -117,6 +117,31 @@
   "sample_period_s": 0.03333330154418945,
   "sample_rate_hz": 30.000028610256777,
   "simulators": {
+    "genesis": {
+      "backend": "genesis",
+      "claim_boundary": "Same LeRobot replay trace and action timing contract as MuJoCo, using a minimal Genesis MJCF position-servo adapter. This is still a simple joint replay, not a task-level contact-rich hardware rollout.",
+      "kp": 20.0,
+      "kv": 1.0,
+      "model": "minimal six-joint MJCF position-servo adapter",
+      "naive_command_time": {
+        "final_joint_rmse_deg": 0.3767891535186242,
+        "joint_rmse_deg": 3.42472358784787
+      },
+      "python_executable": "python3",
+      "ready": true,
+      "rmse_improvement_over_naive": 2.1910191616359143,
+      "runtime": {
+        "backend": "cpu",
+        "genesis_version": "1.1.0",
+        "python_executable": "python3"
+      },
+      "tested": true,
+      "timestamp_aware": {
+        "final_joint_rmse_deg": 0.37678914381917183,
+        "joint_rmse_deg": 1.5630733166618296
+      },
+      "timestep_s": 0.03333330154418945
+    },
     "isaac": {
       "adapter_contract": {
         "expected_mapping": [

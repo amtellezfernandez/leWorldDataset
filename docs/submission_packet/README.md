@@ -8,7 +8,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 
 - Paper claims checked: 11
 - Failed checked claims: 0
-- Open results not claimed: 5
+- Open results not claimed: 4
 - Missing required public artifacts: 0
 - Release gate: `python3 tools/release_readiness.py --strict-rfc`
 
@@ -42,7 +42,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | Claim | Pass | Text | Boundary |
 |---|---:|---|---|
 | `CLAIM.LEAKAGE.001` | True | ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split. | Offline action-imitation result; not ACT/Diffusion or physical rollout success. |
-| `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE and tested MuJoCo replay error. | One LeRobot trace and one MuJoCo replay adapter; Isaac is not claimed tested. |
+| `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
 | `CLAIM.ROUNDTRIP.001` | True | Two public LeRobotDataset batches round-trip exactly through WorldEpisode. | Two five-episode batch audits; not full LeRobot coverage. |
 | `CLAIM.BINDING.001` | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
 | `CLAIM.VALIDATOR.001` | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |
@@ -60,7 +60,6 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `POLICY.ROLL.001` | state-of-the-art policy or physical rollout impact | open_not_claimed | At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made. |
 | `BENCH.INFLATE.001` | famous benchmark published scores are inflated | open_not_claimed | The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence. |
 | `NATURAL.001` | natural failure prevalence is maintainer-confirmed | open_not_claimed | A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics. |
-| `SIM.001` | runtime-neutral replay equivalence across simulators | open_not_claimed | Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario. |
 | `ADOPT.001` | mature external standard adoption | open_not_claimed | Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite. |
 
 ## Reproduction Commands

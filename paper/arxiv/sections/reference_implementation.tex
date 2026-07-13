@@ -63,8 +63,8 @@ The split-leakage tool similarly downloads bounded ArmnetBench LeRobot shards, w
 \texttt{world\_lineage} and split-manifest artifacts, and trains an executable BC baseline over the
 real LeRobot tensors.
 The control-replay tool reads the exported LeRobot trajectory, estimates the effective command
-delay from action/state alignment, writes the WorldEpisode action contract, executes the tested
-MuJoCo adapter, and emits an Isaac adapter mapping that is ready for an Isaac environment but
+delay from action/state alignment, writes the WorldEpisode action contract, executes tested MuJoCo
+and Genesis adapters, and emits an Isaac adapter mapping that is ready for an Isaac environment but
 explicitly marked untested in the committed report.
 The replay-adapter conformance tool then runs a dependency-free reference scheduler over delay,
 zero-order-hold, missing-command, and asynchronous queue cases. This checks the timing contract that
@@ -72,7 +72,7 @@ runtime adapters must honor before a simulator-specific replay is trusted.
 
 The repository also emits a meta-simulator adapter report. It defines three compliance layers:
 the invariant interface, asynchronous schema extension, and deterministic replay accountability.
-The report records WorldEpisode's tested MuJoCo replay adapter, URDF Studio's tested
+The report records WorldEpisode's tested MuJoCo and Genesis replay adapters, URDF Studio's tested
 MuJoCo/Genesis episode-backend conformance and one-episode comparison, Isaac as adapter-ready but
 untested, and SAPIEN as adapter-required. This artifact is deliberately an adapter contract rather
 than a claim of equal runtime coverage.

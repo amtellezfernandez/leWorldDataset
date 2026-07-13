@@ -155,40 +155,26 @@ model.
 
 Estimating the effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the
 validation suffix, naive command-time alignment has joint RMSE 4.732 degrees. Timestamp-aware
-alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. In a tested MuJoCo six-joint
-position-servo replay, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay
-has 1.563 degrees, a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping
-from the same contract, but is not tested in this environment. The failure avoided here is a common
-one: blaming a simulator or controller when the dataset never said when the command actually took
-effect.
+alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. We then execute the same
+WorldEpisode action contract through two minimal six-joint position-servo replay adapters. In
+MuJoCo, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
+degrees, a \(2.19\times\) improvement. Genesis same-trace replay gives the same measured profile:
+3.425 degrees under naive command-time replay and 1.563 degrees under timestamp-aware replay, also
+a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping from the same
+contract, but is not tested in this environment. The failure avoided here is a common one: blaming
+a simulator or controller when the dataset never said when the command actually took effect.
 
-We also add a dependency-free replay-adapter conformance harness before claiming runtime readiness.
+We also add a dependency-free replay-adapter conformance harness before trusting additional runtime
+adapters.
 It tests three scheduler cases: constant frame delay, zero-order hold for missing commands, and
 asynchronous queue selection. In all three cases a naive scheduler fails while the contract-aware
-scheduler matches the expected trace with zero numerical error. This is not a second physics
-simulator; it is a precondition check for simulator adapters.
-For second-runtime adapter evidence, we point to URDF Studio: its shared \texttt{SimBackend}
-conformance suite passes for MuJoCo and Genesis, and its one-episode carton-sorting orchestrator
-writes a MuJoCo--Genesis comparison report with matched task success and measured trajectory
-divergence. That companion result supports the meta-simulator contract, but it is not yet the same
-SO-101 LeRobot replay trace rerun in Genesis or Isaac.
-
-\begin{openresult}{same-trace second-runtime replay}
-Status: open. Regenerate the current adapter matrix with
-\texttt{python3 tools/meta\_simulator\_contract.py}. The existing URDF Studio companion smoke test
-can be run with \texttt{cd ../urdf-studio \&\& .venv/bin/python3 -m backend.scripts.scenario\_run
-scenarios/carton\_sorting\_0001 --sim mujoco --sim genesis --out
-/tmp/urdf-studio-cross-sim-smoke --episodes 1}.
-
-Required artifacts: the same SO-101 LeRobot replay trace executed by a second WorldEpisode-native
-simulator adapter, simulator and adapter versions, solver and timestep settings, trajectory RMSE,
-contact/event agreement, declared tolerance envelope, conversion-loss report, and an updated
-\path{docs/experiments/meta_simulator_contract/adapter_contract_report.json}.
-
-Acceptance rule: runtime-neutral replay evidence requires the same LeRobot trace through one
-additional tested simulator adapter. URDF Studio's MuJoCo--Genesis result is companion evidence,
-not closure of this gate.
-\end{openresult}
+scheduler matches the expected trace with zero numerical error. This is a precondition check for
+simulator adapters, not a claim that the simulators have equivalent physics. For broader runtime
+evidence, we also record URDF Studio's shared \texttt{SimBackend} conformance suite for MuJoCo and
+Genesis and its one-episode carton-sorting MuJoCo--Genesis comparison report with matched task
+success and measured trajectory divergence. These results close the narrow same-trace
+second-runtime replay gate for the minimal joint replay profile. They do not claim contact-rich
+task replay, Isaac/SAPIEN execution, or simulator-independent behavior.
 
 \paragraph{Case 4: real-to-sim contract drift.}
 Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from

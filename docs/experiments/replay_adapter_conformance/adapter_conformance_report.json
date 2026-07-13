@@ -79,7 +79,7 @@
       ]
     }
   ],
-  "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a second physics simulator and does not replace Isaac/MuJoCo/Genesis replay.",
+  "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a contact-rich physics rollout and does not replace multi-runtime task replay.",
   "profile": "worldepisode-replay-adapter-conformance-0.1",
   "status": "tested_reference_scheduler_not_physics_simulator"
 }

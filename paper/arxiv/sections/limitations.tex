@@ -24,14 +24,14 @@ run; the compact split packages omit video payloads, so no vision-policy, real-r
 high-fidelity rollout result is claimed yet \\
 Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
-Replay timing & Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, URDF Studio
-MuJoCo/Genesis episode-backend evidence, and a dependency-free scheduler conformance harness & One
-LeRobot trace and one WorldEpisode MuJoCo replay adapter; URDF Studio is a companion
-scenario-backend test, not the same LeRobot replay trace; Isaac mapping is emitted but untested \\
+Replay timing & Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis
+position-servo replay adapters, URDF Studio MuJoCo/Genesis episode-backend evidence, and a
+dependency-free scheduler conformance harness & One LeRobot trace with minimal joint replay
+adapters; no contact-rich task rollout, Isaac runtime result, or SAPIEN runtime result is claimed \\
 Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN
-plus URDF Studio \texttt{SimBackend} conformance and a one-episode MuJoCo--Genesis comparison &
-MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not
-replay-tested in this paper \\
+plus same-trace MuJoCo/Genesis replay evidence, URDF Studio \texttt{SimBackend} conformance, and a
+one-episode MuJoCo--Genesis comparison & MuJoCo and Genesis are tested for the minimal replay
+profile; Isaac and SAPIEN are not replay-tested in this paper, and equal physics is not claimed \\
 USS generality & Deterministic game-engine collision-patch and autonomous-driving clock-domain
 pilots using the same invariant vocabulary & Not measured on production game engines, public AV
 datasets, or fleet logs \\
@@ -82,9 +82,6 @@ dependencies, using \path{tools/famous_benchmark_policy_rerun.py} with
 \texttt{--benchmark droid\_100 --required}, then require
 \texttt{python3 tools/benchmark\_inflation\_gate.py --required}. No benchmark may be described as
 inflated unless this gate records a valid rerun and a measured corrected-score drop.
-\item Second-runtime replay: run the same SO-101 LeRobot replay trace through a Genesis or Isaac
-adapter, then update the meta-simulator report with adapter version, simulator version, trajectory
-RMSE, contact/event agreement, and declared tolerances.
 \item External standard evidence: add maintainer-reviewed diagnostics, an independently written
 reader/exporter, and at least one externally published USS or WorldEpisode-compatible dataset
 before calling the project a mature interoperability standard.
@@ -118,17 +115,19 @@ videos with committed digests.
 
 \paragraph{Replay is not bit-identical physics.}
 WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not
-promise simulator-independent behavior. The reported replay result is a MuJoCo position-servo test
-under declared assumptions. The replay-adapter harness checks delay, zero-order hold,
-missing-command, and asynchronous queue scheduling, but it is not a physics simulator. The Isaac
-mapping is emitted and ready, but intentionally untested in this environment.
+promise simulator-independent behavior. The reported replay result is a same-trace MuJoCo/Genesis
+position-servo test under declared assumptions. The replay-adapter harness checks delay,
+zero-order hold, missing-command, and asynchronous queue scheduling, but it is not a physics
+simulator. Isaac and SAPIEN are intentionally untested in this environment, and no contact-rich
+task rollout result is claimed.
 
 \paragraph{Meta-simulator evidence.}
 The meta-simulator section defines what a compliant runtime adapter must preserve. It does not
 certify that MuJoCo, Isaac, Genesis, SAPIEN, or any other simulator has equivalent physics. Current
-evidence contains one WorldEpisode MuJoCo replay adapter for the LeRobot control trace and a
-separate URDF Studio episode-backend path where MuJoCo and Genesis pass shared conformance tests
-and produce a one-episode comparison report. Isaac and SAPIEN are not replay-tested here.
+evidence contains WorldEpisode MuJoCo and Genesis replay adapters for the same LeRobot control
+trace, plus a separate URDF Studio episode-backend path where MuJoCo and Genesis pass shared
+conformance tests and produce a one-episode comparison report. Isaac and SAPIEN are not
+replay-tested here.
 
 \paragraph{Reference implementation maturity.}
 The converter, validator, and reports are executable, but independent implementations are still

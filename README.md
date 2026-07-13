@@ -332,10 +332,11 @@ The real-to-sim contract-drift ablation shows two proxy failures that visual rec
 cannot prevent: action-interface drift and representation-role drift. It is a controlled proxy, not
 a hardware rollout, but it positions WorldEpisode as the contract layer around Gaussian/OpenUSD
 real-to-sim pipelines.
-The meta-simulator contract makes that runtime-neutral: WorldEpisode has a tested MuJoCo replay
-adapter; URDF Studio separately tests MuJoCo and Genesis as episode backends and writes a
-MuJoCo--Genesis scenario comparison; Isaac is adapter-ready but untested; SAPIEN remains an
-adapter-required target. The claim is adapter compliance, not simulator-independent physics.
+The meta-simulator contract makes that runtime-neutral: WorldEpisode has tested same-trace MuJoCo
+and Genesis replay adapters for the LeRobot control-loop trace; URDF Studio separately tests
+MuJoCo and Genesis as episode backends and writes a MuJoCo--Genesis scenario comparison; Isaac is
+adapter-ready but untested; SAPIEN remains an adapter-required target. The claim is adapter
+compliance, not simulator-independent physics.
 The replay adapter conformance harness adds a dependency-free scheduler check for delay,
 zero-order-hold, missing-command, and asynchronous queue semantics. It is not a second physics
 simulator; it keeps runtime adapters honest before a MuJoCo, Isaac, Genesis, or SAPIEN replay is
@@ -367,10 +368,11 @@ silently invented.
 
 The control-loop replay experiment reads the exported SO-101 LeRobot v3 trajectory, estimates the
 effective action delay from the timestamped action/state streams, writes a WorldEpisode action
-contract, and tests timestamp-aware replay in MuJoCo. In the committed run, the inferred delay is
-four 30 Hz frames (133 ms), validation alignment improves from 4.732 deg to 1.862 deg RMSE, and the
-tested MuJoCo replay improves from 3.425 deg to 1.563 deg RMSE. The Isaac adapter contract is
-emitted and marked ready, but Isaac is intentionally untested here.
+contract, and tests timestamp-aware replay in MuJoCo and Genesis. In the committed run, the
+inferred delay is four 30 Hz frames (133 ms), validation alignment improves from 4.732 deg to
+1.862 deg RMSE, and both tested same-trace replay adapters improve from 3.425 deg to 1.563 deg
+RMSE. The Isaac adapter contract is emitted and marked ready, but Isaac is intentionally untested
+here.
 
 For the lightweight controlled suite without requiring the active LeRobot dependency path:
 

@@ -40,12 +40,12 @@ The generated artifact is:
 
 The current evidence is intentionally scoped:
 
-- MuJoCo: tested minimal six-joint WorldEpisode position-servo replay adapter, plus URDF Studio
-  episode-backend conformance and one carton-sorting scenario run.
+- MuJoCo: tested minimal six-joint WorldEpisode position-servo replay adapter on the same LeRobot
+  trace, plus URDF Studio episode-backend conformance and one carton-sorting scenario run.
 - Isaac Sim: adapter mapping emitted and ready, but untested in this environment.
-- Genesis: tested in URDF Studio as an episode backend using the same `SimBackend` conformance
-  suite and one MuJoCo--Genesis carton-sorting comparison; not yet tested on the WorldEpisode
-  LeRobot control-replay trace.
+- Genesis: tested minimal six-joint WorldEpisode position-servo replay adapter on the same
+  LeRobot trace, plus URDF Studio episode-backend conformance and one MuJoCo--Genesis
+  carton-sorting comparison.
 - SAPIEN: adapter required; no replay runtime result claimed.
 
 URDF Studio evidence recorded in the generated report:

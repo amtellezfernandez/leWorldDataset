@@ -1,8 +1,8 @@
 {
   "aggregate": {
-    "command_count": 9,
-    "gate_count": 5,
-    "open_not_claimed_count": 5
+    "command_count": 7,
+    "gate_count": 4,
+    "open_not_claimed_count": 4
   },
   "artifacts": {
     "json": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
@@ -98,36 +98,6 @@
         "false-positive review records",
         "maintainer agreement, disagreement, or no-response evidence",
         "updated natural failure corpus manifest"
-      ],
-      "status": "open_not_claimed"
-    },
-    {
-      "acceptance_rule": "Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario.",
-      "blocker_id": "SIM.001",
-      "claim": "runtime-neutral replay equivalence across simulators",
-      "commands": [
-        {
-          "command": "python3 tools/meta_simulator_contract.py",
-          "expected_outputs": [
-            "docs/experiments/meta_simulator_contract/adapter_contract_report.json"
-          ],
-          "purpose": "regenerate the current meta-simulator contract report"
-        },
-        {
-          "command": "cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
-          "expected_outputs": [
-            "/tmp/urdf-studio-cross-sim-smoke comparison report"
-          ],
-          "purpose": "run the existing URDF Studio MuJoCo/Genesis companion smoke test"
-        }
-      ],
-      "paper_boundary": "MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or another second WorldEpisode-native simulator adapter.",
-      "required_artifacts": [
-        "same SO-101 LeRobot replay trace executed by a second simulator adapter",
-        "simulator name, version, solver, timestep, and adapter commit",
-        "trajectory RMSE and contact/event agreement",
-        "declared tolerance envelope and conversion-loss report",
-        "updated docs/experiments/meta_simulator_contract/adapter_contract_report.json"
       ],
       "status": "open_not_claimed"
     },

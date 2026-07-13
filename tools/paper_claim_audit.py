@@ -137,10 +137,11 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     replay = results.get("rq3_replay", {})
     alignment = replay.get("alignment", {})
     mujoco = nested(replay, ("simulators", "mujoco"), {})
+    genesis = nested(replay, ("simulators", "genesis"), {})
     claims.append(
         claim_result(
             claim_id="CLAIM.REPLAY.001",
-            claim="Timestamp-aware LeRobot replay reduces joint RMSE and tested MuJoCo replay error.",
+            claim="Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
             evidence_artifacts=["docs/experiments/lerobot_control_replay/control_replay_report.json"],
             paper_patterns=[
                 "four 30 Hz frames",
@@ -149,6 +150,9 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 fmt3(float(alignment.get("validation_timestamp_aware_rmse_deg", -1))),
                 fmt3(float(nested(mujoco, ("naive_command_time", "joint_rmse_deg"), -1))),
                 fmt3(float(nested(mujoco, ("timestamp_aware", "joint_rmse_deg"), -1))),
+                "Genesis same-trace replay",
+                fmt3(float(nested(genesis, ("naive_command_time", "joint_rmse_deg"), -1))),
+                fmt3(float(nested(genesis, ("timestamp_aware", "joint_rmse_deg"), -1))),
                 "Isaac adapter is emitted as a ready mapping",
                 "not tested in this environment",
             ],
@@ -158,6 +162,8 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 and float(alignment.get("validation_improvement_over_naive", 0)) > 2.0
                 and mujoco.get("tested") is True
                 and float(mujoco.get("rmse_improvement_over_naive", 0)) > 2.0
+                and genesis.get("tested") is True
+                and float(genesis.get("rmse_improvement_over_naive", 0)) > 2.0
                 and nested(replay, ("simulators", "isaac", "tested")) is False
             ),
             evidence={
@@ -167,10 +173,15 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 "validation_timestamp_aware_rmse_deg": alignment.get("validation_timestamp_aware_rmse_deg"),
                 "mujoco_naive_rmse_deg": nested(mujoco, ("naive_command_time", "joint_rmse_deg")),
                 "mujoco_timestamp_aware_rmse_deg": nested(mujoco, ("timestamp_aware", "joint_rmse_deg")),
+                "genesis_naive_rmse_deg": nested(genesis, ("naive_command_time", "joint_rmse_deg")),
+                "genesis_timestamp_aware_rmse_deg": nested(genesis, ("timestamp_aware", "joint_rmse_deg")),
                 "isaac_tested": nested(replay, ("simulators", "isaac", "tested")),
             },
             text=text,
-            boundary="One LeRobot trace and one MuJoCo replay adapter; Isaac is not claimed tested.",
+            boundary=(
+                "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; "
+                "Isaac is not claimed tested and contact-rich rollout remains open."
+            ),
         )
     )
 
@@ -437,7 +448,6 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             evidence_artifacts=["docs/experiments/open_reproduction_gates/open_reproduction_gates.json"],
             paper_patterns=[
                 "\\begin{openresult}{ACT/Diffusion and rollout impact}",
-                "\\begin{openresult}{same-trace second-runtime replay}",
                 "\\begin{openresult}{famous-benchmark score-inflation proof}",
                 "\\begin{openresult}{results not claimed in this release}",
                 "Open result, not claimed",
@@ -446,8 +456,8 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             evidence_passed=(
                 open_gates.get("schema") == "worldepisode_open_reproduction_gates_v1"
                 and nested(open_gates, ("validation", "passed")) is True
-                and nested(open_gates, ("aggregate", "gate_count")) == 5
-                and nested(open_gates, ("aggregate", "command_count")) >= 5
+                and nested(open_gates, ("aggregate", "gate_count")) == 4
+                and nested(open_gates, ("aggregate", "command_count")) >= 4
             ),
             evidence={
                 "schema": open_gates.get("schema"),

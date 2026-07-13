@@ -95,38 +95,6 @@ Required artifacts:
 
 Acceptance rule: A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics.
 
-### `SIM.001`
-
-Claim: runtime-neutral replay equivalence across simulators
-
-Status: `open_not_claimed`.
-
-Boundary: MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or another second WorldEpisode-native simulator adapter.
-
-Commands:
-
-- regenerate the current meta-simulator contract report
-
-  ```bash
-  python3 tools/meta_simulator_contract.py
-  ```
-
-- run the existing URDF Studio MuJoCo/Genesis companion smoke test
-
-  ```bash
-  cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1
-  ```
-
-Required artifacts:
-
-- same SO-101 LeRobot replay trace executed by a second simulator adapter
-- simulator name, version, solver, timestep, and adapter commit
-- trajectory RMSE and contact/event agreement
-- declared tolerance envelope and conversion-loss report
-- updated docs/experiments/meta_simulator_contract/adapter_contract_report.json
-
-Acceptance rule: Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario.
-
 ### `ADOPT.001`
 
 Claim: mature external standard adoption

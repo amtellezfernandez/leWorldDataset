@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "78c322c5dde1c9ff03a20ea50ddc89a706828acbf3e45f36936b387b6325796f"
+      "sha256": "40ef9015f3bc528d1bd0c2a12877b7f58dc8ee51ce18bbd525f01c2b6c26c3b3"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "README.md",
-      "sha256": "89d8c2cf9aebc12ab3439c294621769a4828ae07a66649e91329462fb8d26390"
+      "sha256": "0bb8ad516328ee56e71fa12ee4b2fedbb21ba9c84bff9e4dca7a011af426a372"
     },
     {
       "category": "public_evidence",
@@ -70,7 +70,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/main.tex",
-      "sha256": "613c1db32e1068400a0e094e455f19c14aeea416a2370924be5644607dc7c496"
+      "sha256": "9830590b8320692d8a65f8421a6a9d13cfc041f91ceeb68316f537887825aaab"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "051ed305c46e3989ab08790190a0d99ee8b719e50dee4424966d32b8bf389886"
+      "sha256": "870cbf1790e94df435f81cab5f047f5c92613fa84ecfcd8446643d5e036efce6"
     },
     {
       "category": "public_evidence",
@@ -88,7 +88,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "743acf8cc4cae3c044a2c2c55f5cd8a5a2d416554e07f098cd84f79a0b220e29"
+      "sha256": "f5933251d27c68864c544bad2e4a059abac85e0b860e5bf5e23bd31ae76a8c58"
     },
     {
       "category": "public_evidence",
@@ -145,7 +145,7 @@
         "(Partition-pruning query time: )[0-9]+(?:\\.[0-9]+)?( ms)"
       ],
       "path": "docs/experiments/RESULTS.md",
-      "sha256": "1d5e3667decad7543d196d35583bdcdfa952e770e100fc24b37000a769903542"
+      "sha256": "0cba8a4fdf7f2aa39a7e561262113f77a8cbd9c0ea8f58341c7029833be0f5e2"
     },
     {
       "category": "public_evidence",
@@ -156,7 +156,7 @@
         "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
       ],
       "path": "docs/experiments/results.json",
-      "sha256": "08c4f3c8a60e2eef966c1bef8c4fd7e26434fc9c5e83c693d5b9fcfdc656c154"
+      "sha256": "2afa23e0780ce6a9720934d7e6f679a26570a0cafc86708b8306389ceb800dd9"
     },
     {
       "category": "public_evidence",
@@ -187,7 +187,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
-      "sha256": "2b240ed3e37bd762698160867d4735084ba613522c5b7d7df1288e11d1ce379d"
+      "sha256": "6a9b7bf4282bc321a82ba13b5bf67a87c0de4162288f84ac986d88e31116a8ee"
     },
     {
       "category": "public_evidence",
@@ -205,7 +205,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/package_install_smoke/package_install_smoke_report.json",
-      "sha256": "ba70caeaae77daeb72e8ba3c5a9f0832bed8896da01195aba1cddc124d17ac5a"
+      "sha256": "2e7e9f53c4b032bef028d3a5ba4e9a2bbfd0c3f7cdf79674251564ae2f7fba43"
     },
     {
       "category": "public_evidence",
@@ -214,7 +214,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
-      "sha256": "721a98c933c149c48d9f798851b31620996974c157e39c69e21df2c702452ed9"
+      "sha256": "9d1f70f6bf73da32d68eb908f515dc1f7602c303bfda6cd89eec8dc0a2b82f9d"
     },
     {
       "category": "public_evidence",
@@ -259,7 +259,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/lerobot_control_replay/control_replay_report.json",
-      "sha256": "f427aae54e818e64d5e09bd42672cc6a2a9efe835db072e1cb9717b5e180dbe4"
+      "sha256": "2f716ad0ae2cccc5c15329b5e7ad2dbf6fabf9c0c592b01fa6179637b59e1727"
     },
     {
       "category": "public_evidence",
@@ -268,7 +268,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/meta_simulator_contract/adapter_contract_report.json",
-      "sha256": "ee614f647ccfc7130f6e4fa13615b161da16331183c91eda305703c56a40aebb"
+      "sha256": "08834fc9ad47cddfc83b6c20d8ccea7e19c8a728d72749a8206e04f50c47c385"
     },
     {
       "category": "public_evidence",
@@ -313,7 +313,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reviewer-concern-matrix.md",
-      "sha256": "2c173b69d5c3ac320179055c6076231fe2ca176c6f9dfd988f9083c59aa1ccd8"
+      "sha256": "e2b0dbfb74863d5a96c52a4b82b79ce706a6abab354c29b9385da53fd1eb8c39"
     },
     {
       "category": "public_evidence",
@@ -367,7 +367,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/run_experiments.py",
-      "sha256": "651feb2d65a70a20addc552beeab56f63fc71eba775b20fe71a7d79e1dd9d860"
+      "sha256": "d6e8dbd24c0e313ce5833d4c760b0ace68fec25e50e0c586e2bb5ee27aa62c86"
     },
     {
       "category": "release_script",
@@ -376,7 +376,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/open_reproduction_gates.py",
-      "sha256": "2c4260573bdfb89f7e8400994b15df05d7137d5d1090f74732072dc846509a97"
+      "sha256": "963ac258c6da5b0e0b5b6837f4de2f09c27ff9f3a5a59d35d280a6b43ee4d68a"
     },
     {
       "category": "release_script",
@@ -385,7 +385,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_claim_audit.py",
-      "sha256": "64c26114d812370c7eb07d93444a1879c98e197fa1c05c84967b1789befe3dbc"
+      "sha256": "ae0814d108af057875718aeb64701f061772194285137a0b943c9312806e0db4"
     },
     {
       "category": "release_script",
@@ -421,7 +421,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "22357c79fd0b4ba7723b35c6c812b1649fe01b55d4d85f12c9a2e695f4bc3703"
+      "sha256": "a2ab86582a3855b99b2c834ff5aa5eb246dbca07f8de2b40d409ce85fef2c9c5"
     },
     {
       "category": "release_script",
@@ -430,7 +430,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "d4647b458aa25122fe3ec0b44122c7aca456a0889fe2fd8570d57ba1c1c4eea3"
+      "sha256": "b2943ce0ea807e29e9b474e2d10bcea530e6d3618ad9a33f9857f13bffa9e773"
     },
     {
       "category": "release_script",

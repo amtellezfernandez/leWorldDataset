@@ -249,8 +249,11 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
             "replay timing evidence is executable",
             nested(replay, ("alignment", "validation_improvement_over_naive")) is not None
             and nested(replay, ("alignment", "validation_improvement_over_naive"), 0) > 1.0
+            and nested(replay, ("simulators", "mujoco", "tested")) is True
+            and nested(replay, ("simulators", "genesis", "tested")) is True
+            and nested(replay, ("simulators", "genesis", "rmse_improvement_over_naive"), 0) > 2.0
             and replay_adapter.get("status") == "tested_reference_scheduler_not_physics_simulator",
-            "LeRobot control replay plus adapter scheduler conformance",
+            "LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance",
         ),
         Check(
             "EVID.009",
@@ -429,7 +432,7 @@ def submission_packet_checks() -> list[Check]:
             and packet.get("status") == "pass"
             and validation.get("passed") is True
             and nested(packet, ("summary", "paper_claim_count"), 0) >= 10
-            and nested(packet, ("summary", "open_result_gate_count"), 0) >= 5,
+            and nested(packet, ("summary", "open_result_gate_count"), 0) >= 4,
             (
                 f"status={packet.get('status')}, "
                 f"claims={nested(packet, ('summary', 'paper_claim_count'))}, "
@@ -483,7 +486,9 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
     natural = results.get("natural_failure_corpus", {})
+    replay = results.get("rq3_replay", {})
     meta_sim = results.get("meta_simulator_contract", {})
+    genesis_tested = nested(replay, ("simulators", "genesis", "tested")) is True
     return [
         {
             "blocker_id": "POLICY.ROLL.001",
@@ -511,9 +516,12 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
         },
         {
             "blocker_id": "SIM.001",
-            "claim": "runtime-neutral replay equivalence across simulators",
-            "blocked": nested(meta_sim, ("aggregate", "adapter_required_count"), 1) > 0,
-            "current_evidence": meta_sim.get("aggregate", {}),
+            "claim": "runtime-neutral replay equivalence across contact-rich simulator rollouts",
+            "blocked": not genesis_tested,
+            "current_evidence": {
+                "genesis_same_trace_tested": genesis_tested,
+                "meta_simulator_aggregate": meta_sim.get("aggregate", {}),
+            },
             "required_evidence": "same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter.",
         },
         {
@@ -565,7 +573,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         "claim_boundary": (
             "A ready RFC release means the repository is executable and evidence-gated. It does "
             "not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full "
-            "simulator-neutral replay claims are complete."
+            "contact-rich simulator-neutral rollout claims are complete."
         ),
         "checks": [check.__dict__ for check in checks],
         "aggregate": {

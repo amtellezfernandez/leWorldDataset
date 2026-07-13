@@ -17,8 +17,8 @@
       "passed": true
     },
     {
-      "boundary": "One LeRobot trace and one MuJoCo replay adapter; Isaac is not claimed tested.",
-      "claim": "Timestamp-aware LeRobot replay reduces joint RMSE and tested MuJoCo replay error.",
+      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open.",
+      "claim": "Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
       "claim_id": "CLAIM.REPLAY.001",
       "evidence_artifacts": [
         "docs/experiments/lerobot_control_replay/control_replay_report.json"
@@ -194,36 +194,6 @@
         "false-positive review records",
         "maintainer agreement, disagreement, or no-response evidence",
         "updated natural failure corpus manifest"
-      ],
-      "status": "open_not_claimed"
-    },
-    {
-      "acceptance_rule": "Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario.",
-      "blocker_id": "SIM.001",
-      "boundary": "MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or another second WorldEpisode-native simulator adapter.",
-      "claim": "runtime-neutral replay equivalence across simulators",
-      "commands": [
-        {
-          "command": "python3 tools/meta_simulator_contract.py",
-          "expected_outputs": [
-            "docs/experiments/meta_simulator_contract/adapter_contract_report.json"
-          ],
-          "purpose": "regenerate the current meta-simulator contract report"
-        },
-        {
-          "command": "cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
-          "expected_outputs": [
-            "/tmp/urdf-studio-cross-sim-smoke comparison report"
-          ],
-          "purpose": "run the existing URDF Studio MuJoCo/Genesis companion smoke test"
-        }
-      ],
-      "required_artifacts": [
-        "same SO-101 LeRobot replay trace executed by a second simulator adapter",
-        "simulator name, version, solver, timestep, and adapter commit",
-        "trajectory RMSE and contact/event agreement",
-        "declared tolerance envelope and conversion-loss report",
-        "updated docs/experiments/meta_simulator_contract/adapter_contract_report.json"
       ],
       "status": "open_not_claimed"
     },
@@ -414,7 +384,7 @@
   "summary": {
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
-    "open_result_gate_count": 5,
+    "open_result_gate_count": 4,
     "paper_claim_count": 11,
     "results_sections": [
       "baseline_schema_errors",

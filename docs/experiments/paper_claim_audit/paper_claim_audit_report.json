@@ -37,12 +37,14 @@
       "passed": true
     },
     {
-      "boundary": "One LeRobot trace and one MuJoCo replay adapter; Isaac is not claimed tested.",
-      "claim": "Timestamp-aware LeRobot replay reduces joint RMSE and tested MuJoCo replay error.",
+      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open.",
+      "claim": "Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
       "claim_id": "CLAIM.REPLAY.001",
       "evidence": {
         "delay_frames": 4,
         "delay_s": 0.1333332061767578,
+        "genesis_naive_rmse_deg": 3.42472358784787,
+        "genesis_timestamp_aware_rmse_deg": 1.5630733166618296,
         "isaac_tested": false,
         "mujoco_naive_rmse_deg": 3.4247236915825052,
         "mujoco_timestamp_aware_rmse_deg": 1.563073317926787,
@@ -59,6 +61,9 @@
         "133 ms",
         "4.732",
         "1.862",
+        "3.425",
+        "1.563",
+        "Genesis same-trace replay",
         "3.425",
         "1.563",
         "Isaac adapter is emitted as a ready mapping",
@@ -258,9 +263,9 @@
       "claim_id": "CLAIM.OPEN_GATES.001",
       "evidence": {
         "aggregate": {
-          "command_count": 9,
-          "gate_count": 5,
-          "open_not_claimed_count": 5
+          "command_count": 7,
+          "gate_count": 4,
+          "open_not_claimed_count": 4
         },
         "schema": "worldepisode_open_reproduction_gates_v1",
         "validation": {
@@ -275,7 +280,6 @@
       "missing_paper_patterns": [],
       "paper_patterns": [
         "\\begin{openresult}{ACT/Diffusion and rollout impact}",
-        "\\begin{openresult}{same-trace second-runtime replay}",
         "\\begin{openresult}{famous-benchmark score-inflation proof}",
         "\\begin{openresult}{results not claimed in this release}",
         "Open result, not claimed",

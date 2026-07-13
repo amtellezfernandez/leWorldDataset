@@ -15,7 +15,7 @@ This report ties the main quantitative and boundary claims in the paper source t
 | Claim ID | Pass | Claim | Boundary |
 |---|---:|---|---|
 | CLAIM.LEAKAGE.001 | True | ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split. | Offline action-imitation result; not ACT/Diffusion or physical rollout success. |
-| CLAIM.REPLAY.001 | True | Timestamp-aware LeRobot replay reduces joint RMSE and tested MuJoCo replay error. | One LeRobot trace and one MuJoCo replay adapter; Isaac is not claimed tested. |
+| CLAIM.REPLAY.001 | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
 | CLAIM.ROUNDTRIP.001 | True | Two public LeRobotDataset batches round-trip exactly through WorldEpisode. | Two five-episode batch audits; not full LeRobot coverage. |
 | CLAIM.BINDING.001 | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
 | CLAIM.VALIDATOR.001 | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |

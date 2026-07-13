@@ -1358,7 +1358,18 @@ def write_report(results: dict[str, Any]) -> None:
     if replay.get("available"):
         alignment = replay["alignment"]
         mujoco = replay["simulators"]["mujoco"]
+        genesis = replay["simulators"].get("genesis", {})
         isaac = replay["simulators"]["isaac"]
+        genesis_lines = ""
+        if genesis.get("tested"):
+            genesis_lines = (
+                f"- Genesis same-trace replay naive RMSE: "
+                f"{genesis['naive_command_time']['joint_rmse_deg']:.3f} deg\n"
+                f"- Genesis same-trace replay timestamp-aware RMSE: "
+                f"{genesis['timestamp_aware']['joint_rmse_deg']:.3f} deg\n"
+                f"- Genesis same-trace replay improvement: "
+                f"{genesis['rmse_improvement_over_naive']:.2f}x\n"
+            )
         replay_section = f"""## RQ3: LeRobot Control-Loop Replay
 
 - Source trace: `{replay["source_trace"]}`
@@ -1371,6 +1382,7 @@ def write_report(results: dict[str, Any]) -> None:
 - MuJoCo naive replay RMSE: {mujoco["naive_command_time"]["joint_rmse_deg"]:.3f} deg
 - MuJoCo timestamp-aware replay RMSE: {mujoco["timestamp_aware"]["joint_rmse_deg"]:.3f} deg
 - MuJoCo replay improvement: {mujoco["rmse_improvement_over_naive"]:.2f}x
+{genesis_lines.rstrip()}
 - Isaac adapter ready: {isaac["ready"]}; tested: {isaac["tested"]}
 """
     else:
@@ -1386,14 +1398,14 @@ def write_report(results: dict[str, Any]) -> None:
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
-| Replay timing | Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace and one WorldEpisode MuJoCo replay adapter; URDF Studio is companion scenario-backend evidence, not the same LeRobot trace; Isaac mapping is emitted but untested. |
+| Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
-| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, same-trace MuJoCo/Genesis replay evidence, and URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | Prepared audit plus attempted rerun only; `benchmark_inflation_gate` requires a valid benchmark-specific rerun report before any published score is accused of inflation. |
@@ -1671,6 +1683,12 @@ def main() -> int:
         mujoco = replay["simulators"]["mujoco"]
         if mujoco["timestamp_aware"]["joint_rmse_deg"] >= mujoco["naive_command_time"]["joint_rmse_deg"]:
             print("MuJoCo timestamp-aware replay did not improve over naive command-time replay.")
+            return 1
+        genesis = replay["simulators"].get("genesis", {})
+        if genesis.get("tested") and (
+            genesis["timestamp_aware"]["joint_rmse_deg"] >= genesis["naive_command_time"]["joint_rmse_deg"]
+        ):
+            print("Genesis timestamp-aware replay did not improve over naive command-time replay.")
             return 1
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_REPLAY") == "1" and not replay.get("pass"):
         print("Active LeRobot replay experiment is required but did not pass.")

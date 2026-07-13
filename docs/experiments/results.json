@@ -1248,10 +1248,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 142.805,
-      "digest_cache_resolution": 6.007,
-      "partition_pruning_queries": 0.172,
-      "resolver_routing": 58.059
+      "catalog_open_parse_and_index": 119.983,
+      "digest_cache_resolution": 5.539,
+      "partition_pruning_queries": 0.177,
+      "resolver_routing": 57.689
     }
   },
   "independent_fixture_check": {
@@ -2272,7 +2272,7 @@
     "runtime_targets": [
       {
         "adapter_status": "tested_replay_and_urdf_studio_episode_backend",
-        "claim_boundary": "WorldEpisode has one minimal six-joint MuJoCo replay adapter; URDF Studio also tests MuJoCo as an episode backend in the shared scenario runner.",
+        "claim_boundary": "WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace; URDF Studio also tests MuJoCo as an episode backend in the shared scenario runner.",
         "evidence": {
           "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
           "rmse_improvement_over_naive": 2.191019226228591,
@@ -2344,10 +2344,28 @@
         "runtime_id": "isaac_sim"
       },
       {
-        "adapter_status": "tested_urdf_studio_episode_backend",
-        "claim_boundary": "Genesis is tested as a URDF Studio episode backend and in a one-episode MuJoCo/Genesis comparison; no LeRobot control-replay or Isaac/SAPIEN result is claimed.",
+        "adapter_status": "tested_replay_and_urdf_studio_episode_backend",
+        "claim_boundary": "Genesis is tested on the same LeRobot trace with a minimal position-servo adapter and separately as a URDF Studio episode backend. This is not a contact-rich task rollout and does not claim Isaac or SAPIEN coverage.",
         "evidence": {
           "ready": true,
+          "same_trace_replay": {
+            "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+            "claim_boundary": "Same LeRobot replay trace and action timing contract as MuJoCo, using a minimal Genesis MJCF position-servo adapter. This is still a simple joint replay, not a task-level contact-rich hardware rollout.",
+            "naive_command_time": {
+              "final_joint_rmse_deg": 0.3767891535186242,
+              "joint_rmse_deg": 3.42472358784787
+            },
+            "rmse_improvement_over_naive": 2.1910191616359143,
+            "runtime": {
+              "backend": "cpu",
+              "genesis_version": "1.1.0",
+              "python_executable": "python3"
+            },
+            "timestamp_aware": {
+              "final_joint_rmse_deg": 0.37678914381917183,
+              "joint_rmse_deg": 1.5630733166618296
+            }
+          },
           "tested": true,
           "urdf_studio": {
             "code_paths": [
@@ -2397,7 +2415,7 @@
             "source": "URDF Studio sibling implementation"
           }
         },
-        "extension_policy": "URDF Studio compiles the same scenario scene, action interface, episode manifest, and trace/comparison report against Genesis. A WorldEpisode-native Genesis replay of the LeRobot control trace is still future work.",
+        "extension_policy": "WorldEpisode executes the same LeRobot control-replay trace through a minimal Genesis MJCF position-servo adapter. URDF Studio separately compiles the scenario scene, action interface, episode manifest, and trace/comparison report against Genesis.",
         "implemented_layers": [
           "META-SIM.001",
           "META-SIM.003"
@@ -2420,7 +2438,7 @@
     ],
     "status": "runtime_neutral_adapter_contract",
     "urdf_studio_evidence": {
-      "claim_boundary": "URDF Studio proves a shared episode-backend contract and one MuJoCo/Genesis scenario comparison. It does not prove Isaac or SAPIEN replay, and it is not the same as running the LeRobot control-replay trace through Genesis.",
+      "claim_boundary": "URDF Studio proves a shared episode-backend contract and one MuJoCo/Genesis scenario comparison. It does not prove Isaac or SAPIEN replay and is separate from the minimal LeRobot control-replay trace now executed by the WorldEpisode Genesis adapter.",
       "code_paths": [
         "backend/services/sim_backends/base.py",
         "backend/services/sim_backends/mujoco_backend.py",
@@ -2934,7 +2952,7 @@
         ]
       }
     ],
-    "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a second physics simulator and does not replace Isaac/MuJoCo/Genesis replay.",
+    "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a contact-rich physics rollout and does not replace multi-runtime task replay.",
     "profile": "worldepisode-replay-adapter-conformance-0.1",
     "status": "tested_reference_scheduler_not_physics_simulator"
   },
@@ -3439,6 +3457,31 @@
     "sample_period_s": 0.03333330154418945,
     "sample_rate_hz": 30.000028610256777,
     "simulators": {
+      "genesis": {
+        "backend": "genesis",
+        "claim_boundary": "Same LeRobot replay trace and action timing contract as MuJoCo, using a minimal Genesis MJCF position-servo adapter. This is still a simple joint replay, not a task-level contact-rich hardware rollout.",
+        "kp": 20.0,
+        "kv": 1.0,
+        "model": "minimal six-joint MJCF position-servo adapter",
+        "naive_command_time": {
+          "final_joint_rmse_deg": 0.3767891535186242,
+          "joint_rmse_deg": 3.42472358784787
+        },
+        "python_executable": "python3",
+        "ready": true,
+        "rmse_improvement_over_naive": 2.1910191616359143,
+        "runtime": {
+          "backend": "cpu",
+          "genesis_version": "1.1.0",
+          "python_executable": "python3"
+        },
+        "tested": true,
+        "timestamp_aware": {
+          "final_joint_rmse_deg": 0.37678914381917183,
+          "joint_rmse_deg": 1.5630733166618296
+        },
+        "timestep_s": 0.03333330154418945
+      },
       "isaac": {
         "adapter_contract": {
           "expected_mapping": [

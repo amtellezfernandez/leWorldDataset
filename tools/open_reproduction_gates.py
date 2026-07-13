@@ -134,48 +134,6 @@ GATES: list[dict[str, Any]] = [
         ),
     },
     {
-        "blocker_id": "SIM.001",
-        "claim": "runtime-neutral replay equivalence across simulators",
-        "status": "open_not_claimed",
-        "paper_boundary": (
-            "MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but "
-            "the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or "
-            "another second WorldEpisode-native simulator adapter."
-        ),
-        "commands": [
-            {
-                "purpose": "regenerate the current meta-simulator contract report",
-                "command": "python3 tools/meta_simulator_contract.py",
-                "expected_outputs": [
-                    "docs/experiments/meta_simulator_contract/adapter_contract_report.json",
-                ],
-            },
-            {
-                "purpose": "run the existing URDF Studio MuJoCo/Genesis companion smoke test",
-                "command": (
-                    "cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run "
-                    "scenarios/carton_sorting_0001 --sim mujoco --sim genesis "
-                    "--out /tmp/urdf-studio-cross-sim-smoke --episodes 1"
-                ),
-                "expected_outputs": [
-                    "/tmp/urdf-studio-cross-sim-smoke comparison report",
-                ],
-            },
-        ],
-        "required_artifacts": [
-            "same SO-101 LeRobot replay trace executed by a second simulator adapter",
-            "simulator name, version, solver, timestep, and adapter commit",
-            "trajectory RMSE and contact/event agreement",
-            "declared tolerance envelope and conversion-loss report",
-            "updated docs/experiments/meta_simulator_contract/adapter_contract_report.json",
-        ],
-        "acceptance_rule": (
-            "Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace "
-            "through at least one additional tested simulator adapter, not only a separate URDF "
-            "Studio scenario."
-        ),
-    },
-    {
         "blocker_id": "ADOPT.001",
         "claim": "mature external standard adoption",
         "status": "open_not_claimed",
@@ -232,8 +190,8 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     gates = report.get("gates", [])
     if report.get("schema") != SCHEMA:
         errors.append(f"schema must be {SCHEMA}")
-    if len(gates) < 5:
-        errors.append("at least five blocked-claim gates are required")
+    if len(gates) < 4:
+        errors.append("at least four blocked-claim gates are required")
     seen: set[str] = set()
     for gate in gates:
         blocker_id = str(gate.get("blocker_id", ""))
@@ -259,7 +217,6 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     evaluation = PAPER_EVALUATION.read_text(encoding="utf-8") if PAPER_EVALUATION.exists() else ""
     for callout in (
         "\\begin{openresult}{ACT/Diffusion and rollout impact}",
-        "\\begin{openresult}{same-trace second-runtime replay}",
         "\\begin{openresult}{famous-benchmark score-inflation proof}",
     ):
         if callout not in evaluation:

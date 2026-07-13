@@ -72,8 +72,8 @@ URDF_STUDIO_EVIDENCE = {
     },
     "claim_boundary": (
         "URDF Studio proves a shared episode-backend contract and one MuJoCo/Genesis scenario "
-        "comparison. It does not prove Isaac or SAPIEN replay, and it is not the same as running "
-        "the LeRobot control-replay trace through Genesis."
+        "comparison. It does not prove Isaac or SAPIEN replay and is separate from the minimal "
+        "LeRobot control-replay trace now executed by the WorldEpisode Genesis adapter."
     ),
 }
 
@@ -142,6 +142,7 @@ def replay_evidence() -> dict[str, Any]:
         return {"available": False}
     report = load_json(CONTROL_REPLAY_REPORT)
     mujoco = report.get("simulators", {}).get("mujoco", {})
+    genesis = report.get("simulators", {}).get("genesis", {})
     isaac = report.get("simulators", {}).get("isaac", {})
     return {
         "available": bool(report.get("available")),
@@ -150,6 +151,15 @@ def replay_evidence() -> dict[str, Any]:
             "tested": bool(mujoco.get("tested")),
             "rmse_improvement_over_naive": mujoco.get("rmse_improvement_over_naive"),
             "adapter_contract": mujoco.get("adapter_contract", {}),
+        },
+        "genesis": {
+            "tested": bool(genesis.get("tested")),
+            "ready": bool(genesis.get("ready")),
+            "runtime": genesis.get("runtime", {}),
+            "rmse_improvement_over_naive": genesis.get("rmse_improvement_over_naive"),
+            "naive_command_time": genesis.get("naive_command_time", {}),
+            "timestamp_aware": genesis.get("timestamp_aware", {}),
+            "claim_boundary": genesis.get("claim_boundary"),
         },
         "isaac": {
             "ready": bool(isaac.get("ready")),
@@ -166,6 +176,7 @@ def urdf_studio_evidence() -> dict[str, Any]:
 
 def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
     mujoco_evidence = evidence.get("mujoco", {})
+    genesis_evidence = evidence.get("genesis", {})
     isaac_evidence = evidence.get("isaac", {})
     urdf_evidence = evidence.get("urdf_studio", {})
     return [
@@ -191,8 +202,8 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
                 },
             },
             "claim_boundary": (
-                "WorldEpisode has one minimal six-joint MuJoCo replay adapter; URDF Studio also "
-                "tests MuJoCo as an episode backend in the shared scenario runner."
+                "WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace; "
+                "URDF Studio also tests MuJoCo as an episode backend in the shared scenario runner."
             ),
         },
         {
@@ -212,16 +223,29 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
         {
             "runtime_id": "genesis",
             "runtime_family": "parallel_robotics_simulation",
-            "adapter_status": "tested_urdf_studio_episode_backend",
-            "implemented_layers": ["META-SIM.001", "META-SIM.003"],
+            "adapter_status": (
+                "tested_replay_and_urdf_studio_episode_backend"
+                if genesis_evidence.get("tested")
+                else "tested_urdf_studio_episode_backend"
+            ),
+            "implemented_layers": ["META-SIM.001", "META-SIM.003"] if genesis_evidence.get("tested") else [],
             "extension_policy": (
-                "URDF Studio compiles the same scenario scene, action interface, episode manifest, "
-                "and trace/comparison report against Genesis. A WorldEpisode-native Genesis replay "
-                "of the LeRobot control trace is still future work."
+                "WorldEpisode executes the same LeRobot control-replay trace through a minimal "
+                "Genesis MJCF position-servo adapter. URDF Studio separately compiles the scenario "
+                "scene, action interface, episode manifest, and trace/comparison report against "
+                "Genesis."
             ),
             "evidence": {
-                "tested": True,
+                "tested": bool(genesis_evidence.get("tested")),
                 "ready": True,
+                "same_trace_replay": {
+                    "artifact": evidence.get("artifact"),
+                    "runtime": genesis_evidence.get("runtime", {}),
+                    "naive_command_time": genesis_evidence.get("naive_command_time"),
+                    "timestamp_aware": genesis_evidence.get("timestamp_aware"),
+                    "rmse_improvement_over_naive": genesis_evidence.get("rmse_improvement_over_naive"),
+                    "claim_boundary": genesis_evidence.get("claim_boundary"),
+                },
                 "urdf_studio": {
                     "source": urdf_evidence.get("source"),
                     "observed_commit": urdf_evidence.get("observed_commit"),
@@ -231,9 +255,9 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
                 },
             },
             "claim_boundary": (
-                "Genesis is tested as a URDF Studio episode backend and in a one-episode "
-                "MuJoCo/Genesis comparison; no LeRobot control-replay or Isaac/SAPIEN result is "
-                "claimed."
+                "Genesis is tested on the same LeRobot trace with a minimal position-servo adapter "
+                "and separately as a URDF Studio episode backend. This is not a contact-rich task "
+                "rollout and does not claim Isaac or SAPIEN coverage."
             ),
         },
         {

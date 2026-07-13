@@ -75,10 +75,10 @@ extensions without weakening the core episode record. Third, \emph{deterministic
 accountability} records runtime identity, version, solver, timestep, actuator parameters,
 initialization state, command/effective timing, latency, tolerance envelopes, and measured drift.
 
-The current implementation reflects this boundary across two codebases. WorldEpisode has one
-tested MuJoCo replay adapter for the LeRobot control-loop trace. URDF Studio, the companion
-simulator-transfer workbench, implements the same episode-backend idea for MuJoCo and Genesis:
-both backends pass a shared \texttt{SimBackend} conformance suite, and a one-episode
+The current implementation reflects this boundary across two codebases. WorldEpisode has tested
+minimal MuJoCo and Genesis replay adapters for the same LeRobot control-loop trace. URDF Studio,
+the companion simulator-transfer workbench, implements the same episode-backend idea for MuJoCo
+and Genesis: both backends pass a shared \texttt{SimBackend} conformance suite, and a one-episode
 carton-sorting scenario produces a MuJoCo--Genesis comparison report with matching task success
 and measured trajectory divergence. The Isaac mapping is emitted and deployment-guarded but
 untested, and SAPIEN remains guarded rather than replay-tested. The claim is therefore not

@@ -85,17 +85,17 @@ The claim is replay within a declared tolerance envelope, not bit-identical phys
 
 Meta-simulator artifact: `tools/meta_simulator_contract.py` defines the runtime-neutral adapter
 contract. It separates the invariant interface, asynchronous schema extensions, and deterministic
-replay accountability. The current matrix records WorldEpisode's tested MuJoCo replay adapter,
-URDF Studio's tested MuJoCo/Genesis episode-backend conformance and one-episode comparison, Isaac
-as an adapter-ready but untested mapping, and SAPIEN as adapter-required. The next scientific step
-is to run the same WorldEpisode LeRobot replay contract through Genesis, Isaac, or another tested
-runtime and measure cross-simulator drift under the same tolerance envelope.
+replay accountability. The current matrix records WorldEpisode's tested MuJoCo and Genesis replay
+adapters for the same LeRobot trace, URDF Studio's tested MuJoCo/Genesis episode-backend
+conformance and one-episode comparison, Isaac as an adapter-ready but untested mapping, and SAPIEN
+as adapter-required. The next scientific step is contact-rich replay with event agreement, task
+outcome agreement, and declared tolerance envelopes.
 
 Replay-adapter conformance artifact: `tools/replay_adapter_conformance.py` adds a dependency-free
 reference scheduler for delay, zero-order hold, missing-command, and asynchronous queue semantics.
 It checks whether a runtime adapter honors the action timing contract before it is trusted as a
-replay target. This is scheduler conformance only; it does not replace the second tested simulator
-required for the full cross-simulator replay claim.
+replay target. This is scheduler conformance only; it does not replace contact-rich task replay
+evidence required for the broader cross-simulator claim.
 
 ## RQ4: VLA Robustness From World Binding
 

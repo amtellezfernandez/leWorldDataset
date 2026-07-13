@@ -3,8 +3,8 @@
 
 This is not a physics simulator. It is a deterministic control-loop scheduler that checks whether a
 runtime adapter can honor the WorldEpisode action contract: effective timestamps, frame-delay
-latency, zero-order hold, and missing-command policy. It complements the tested MuJoCo replay
-without pretending to be a second physics backend.
+latency, zero-order hold, and missing-command policy. It complements the tested MuJoCo/Genesis
+replay adapters without pretending to be a contact-rich physics rollout.
 """
 
 from __future__ import annotations
@@ -173,15 +173,15 @@ def render_markdown(report: dict[str, Any]) -> str:
 Status: dependency-free scheduler conformance, not a physics simulator.
 
 This artifact checks whether a runtime adapter honors the WorldEpisode action contract before it is
-trusted as a replay target. It complements the MuJoCo replay result but does not claim coverage from
-a second physics simulator.
+trusted as a replay target. It complements the MuJoCo/Genesis replay results but does not claim
+contact-rich task replay coverage.
 
 | Case | Naive RMSE | Contract-Aware RMSE | Contract-Aware Pass |
 |---|---:|---:|---:|
 {chr(10).join(rows)}
 
-Boundary: this is a scheduler and timestamp conformance harness. A second tested physics simulator
-is still required before claiming cross-simulator replay.
+Boundary: this is a scheduler and timestamp conformance harness. Contact-rich task replay is still
+required before claiming broad cross-simulator replay.
 """
 
 
@@ -192,7 +192,7 @@ def build_replay_adapter_conformance(output_dir: Path = DEFAULT_OUTPUT_DIR) -> d
         "status": "tested_reference_scheduler_not_physics_simulator",
         "claim_boundary": (
             "This harness tests timing, queue, interpolation, and missing-command semantics. It is "
-            "not a second physics simulator and does not replace Isaac/MuJoCo/Genesis replay."
+            "not a contact-rich physics rollout and does not replace multi-runtime task replay."
         ),
         "cases": cases,
         "aggregate": {
