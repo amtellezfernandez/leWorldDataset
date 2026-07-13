@@ -19,6 +19,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "release_readiness"
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
+OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -203,6 +204,55 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
     return checks
 
 
+def open_gate_checks(blockers: list[dict[str, Any]]) -> list[Check]:
+    if not OPEN_GATES_JSON.exists():
+        return [
+            Check(
+                "GATE.001",
+                "open reproduction gate index exists",
+                False,
+                f"{rel(OPEN_GATES_JSON)} missing",
+            )
+        ]
+
+    try:
+        gate_report = load_json(OPEN_GATES_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "GATE.001",
+                "open reproduction gate index parses",
+                False,
+                f"{rel(OPEN_GATES_JSON)}: {exc}",
+            )
+        ]
+
+    gates = gate_report.get("gates", [])
+    gate_ids = {str(gate.get("blocker_id", "")) for gate in gates}
+    blocked_ids = {str(item["blocker_id"]) for item in blockers if item.get("blocked")}
+    uncovered = sorted(blocked_ids - gate_ids)
+    commandless = sorted(
+        str(gate.get("blocker_id", ""))
+        for gate in gates
+        if not gate.get("commands") or not gate.get("required_artifacts") or not gate.get("acceptance_rule")
+    )
+    return [
+        Check(
+            "GATE.001",
+            "open reproduction gate index validates",
+            gate_report.get("schema") == "worldepisode_open_reproduction_gates_v1"
+            and nested(gate_report, ("validation", "passed")) is True,
+            f"{rel(OPEN_GATES_JSON)} gates={len(gates)}",
+        ),
+        Check(
+            "GATE.002",
+            "blocked claims have reproduction commands",
+            not uncovered and not commandless,
+            f"uncovered={uncovered}, commandless={commandless}",
+        ),
+    ]
+
+
 def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
@@ -266,6 +316,8 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         *experiment_checks(results),
     ]
     blockers = claim_blockers(results)
+    checks.extend(open_gate_checks(blockers))
+    open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}
     blocking_errors = [check for check in checks if check.severity == "error" and not check.passed]
     warning_failures = [check for check in checks if check.severity != "error" and not check.passed]
     rfc_release_ready = not blocking_errors
@@ -290,6 +342,11 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
             "blocked_stronger_claim_count": sum(1 for item in blockers if item["blocked"]),
         },
         "blocked_stronger_claims": blockers,
+        "open_reproduction_gates": {
+            "artifact": rel(OPEN_GATES_JSON),
+            "aggregate": open_gate_report.get("aggregate", {}),
+            "validation": open_gate_report.get("validation", {}),
+        },
         "wayspan_pattern_reused": {
             "source": "~/sota/wayspan/docs/benchmark_evidence_workflow.md",
             "adapted_principles": [
@@ -324,6 +381,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"| `{item['blocker_id']}` | {item['claim']} | {item['blocked']} | {item['required_evidence']} |"
         for item in report["blocked_stronger_claims"]
     ]
+    open_gates = report.get("open_reproduction_gates", {})
     return f"""# Release Readiness
 
 Status: {report["status"]}.
@@ -333,6 +391,8 @@ RFC release ready: `{report["rfc_release_ready"]}`.
 Full standard ready: `{report["full_standard_ready"]}`.
 
 {report["claim_boundary"]}
+
+Open reproduction gate index: `{open_gates.get("artifact")}`.
 
 This gate adapts the evidence workflow pattern from `~/sota/wayspan`: compact tracked artifacts,
 strict claim gates, and explicit blockers for claims that are not yet proven.

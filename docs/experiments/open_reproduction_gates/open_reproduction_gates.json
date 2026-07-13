@@ -1,0 +1,171 @@
+{
+  "aggregate": {
+    "command_count": 9,
+    "gate_count": 5,
+    "open_not_claimed_count": 5
+  },
+  "artifacts": {
+    "json": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+    "markdown": "docs/experiments/open_reproduction_gates/README.md"
+  },
+  "audit_date": "2026-07-13",
+  "color_policy": {
+    "meaning": "visible boundary for results that are executable but not claimed",
+    "paper_callout": "amber"
+  },
+  "gates": [
+    {
+      "acceptance_rule": "At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made.",
+      "blocker_id": "POLICY.ROLL.001",
+      "claim": "state-of-the-art policy or physical rollout impact",
+      "commands": [
+        {
+          "command": "python3 tools/lerobot_policy_leakage_gate.py",
+          "expected_outputs": [
+            "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+            "docs/experiments/lerobot_policy_gate/train_eval_jobs.json",
+            "docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh"
+          ],
+          "purpose": "regenerate split packages and LeRobot job specs"
+        },
+        {
+          "command": "bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
+          "expected_outputs": [
+            "ACT and Diffusion train metrics for random_episode and scene_disjoint splits",
+            "offline action-evaluation reports",
+            "high-fidelity simulator or physical rollout reports"
+          ],
+          "purpose": "run generated ACT/Diffusion jobs in a LeRobot environment"
+        }
+      ],
+      "paper_boundary": "No ACT, Diffusion Policy, IsaacLab, or hardware success number is claimed until policy metrics and rollout evidence are committed.",
+      "required_artifacts": [
+        "policy checkpoints or immutable checkpoint digests",
+        "train/eval configs and seeds",
+        "offline action metrics for both splits",
+        "rollout traces or videos with content digests",
+        "updated docs/experiments/lerobot_policy_gate/policy_gate_report.json"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
+      "acceptance_rule": "The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.",
+      "blocker_id": "BENCH.INFLATE.001",
+      "claim": "famous benchmark published scores are inflated",
+      "commands": [
+        {
+          "command": "uv run --with pyarrow --with requests --with numpy python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required",
+          "expected_outputs": [
+            "docs/experiments/benchmark_reruns/droid_100/rerun_report.json"
+          ],
+          "purpose": "attempt a targeted DROID-100 subset rerun"
+        },
+        {
+          "command": "python3 tools/benchmark_inflation_gate.py --required",
+          "expected_outputs": [
+            "docs/experiments/benchmark_inflation_gate/gate_report.json"
+          ],
+          "purpose": "enforce the score-inflation proof contract"
+        }
+      ],
+      "paper_boundary": "The paper may call famous benchmarks unaudited with respect to USS controls, but it must not call published scores inflated until a benchmark-specific rerun passes.",
+      "required_artifacts": [
+        "benchmark-specific WorldEpisode conversion",
+        "lineage/timing audit proving the corrected protocol removes the failure",
+        "published or faithful published-protocol policy rerun",
+        "paired corrected evaluation under the same metric",
+        "measured baseline-minus-corrected score drop"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
+      "acceptance_rule": "A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics.",
+      "blocker_id": "NATURAL.001",
+      "claim": "natural failure prevalence is maintainer-confirmed",
+      "commands": [
+        {
+          "command": "python3 tools/run_experiments.py",
+          "expected_outputs": [
+            "docs/experiments/results.json",
+            "docs/experiments/natural_failure_corpus/manifest.json"
+          ],
+          "purpose": "regenerate controlled and natural-source experiment reports"
+        }
+      ],
+      "paper_boundary": "The current natural-source corpus is a scoped evidence corpus, not a prevalence estimate and not maintainer-confirmed bug evidence.",
+      "required_artifacts": [
+        "dataset-specific WorldEpisode manifests for source-level gaps",
+        "false-positive review records",
+        "maintainer agreement, disagreement, or no-response evidence",
+        "updated natural failure corpus manifest"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
+      "acceptance_rule": "Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario.",
+      "blocker_id": "SIM.001",
+      "claim": "runtime-neutral replay equivalence across simulators",
+      "commands": [
+        {
+          "command": "python3 tools/meta_simulator_contract.py",
+          "expected_outputs": [
+            "docs/experiments/meta_simulator_contract/adapter_contract_report.json"
+          ],
+          "purpose": "regenerate the current meta-simulator contract report"
+        },
+        {
+          "command": "cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
+          "expected_outputs": [
+            "/tmp/urdf-studio-cross-sim-smoke comparison report"
+          ],
+          "purpose": "run the existing URDF Studio MuJoCo/Genesis companion smoke test"
+        }
+      ],
+      "paper_boundary": "MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or another second WorldEpisode-native simulator adapter.",
+      "required_artifacts": [
+        "same SO-101 LeRobot replay trace executed by a second simulator adapter",
+        "simulator name, version, solver, timestep, and adapter commit",
+        "trajectory RMSE and contact/event agreement",
+        "declared tolerance envelope and conversion-loss report",
+        "updated docs/experiments/meta_simulator_contract/adapter_contract_report.json"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
+      "acceptance_rule": "Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite.",
+      "blocker_id": "ADOPT.001",
+      "claim": "mature external standard adoption",
+      "commands": [
+        {
+          "command": "python3 tools/cleanroom_conformance_reader.py",
+          "expected_outputs": [
+            "docs/experiments/cleanroom_reader/cleanroom_reader_report.json"
+          ],
+          "purpose": "regenerate the internal clean-room reader evidence"
+        },
+        {
+          "command": "python3 tools/release_readiness.py --strict-rfc",
+          "expected_outputs": [
+            "docs/experiments/release_readiness/release_readiness_report.json"
+          ],
+          "purpose": "check RFC readiness after external evidence is added"
+        }
+      ],
+      "paper_boundary": "The repository contains an internal clean-room reader, but no external independent implementation or externally published compatible dataset is claimed.",
+      "required_artifacts": [
+        "external reader/exporter repository or archived release",
+        "external dataset manifest or conversion report",
+        "conformance-suite output from the external implementation",
+        "license and citation metadata for the external artifact"
+      ],
+      "status": "open_not_claimed"
+    }
+  ],
+  "paper_artifact": "paper/arxiv/sections/limitations.tex",
+  "schema": "worldepisode_open_reproduction_gates_v1",
+  "status": "open_gates_indexed",
+  "validation": {
+    "errors": [],
+    "passed": true
+  }
+}

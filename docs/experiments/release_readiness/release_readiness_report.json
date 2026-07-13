@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 23,
-    "passed_count": 23,
+    "check_count": 25,
+    "passed_count": 25,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -92,7 +92,7 @@
     {
       "boundary": "",
       "check_id": "DOC.004",
-      "evidence": "WorldEpisode.pdf (469581 bytes)",
+      "evidence": "WorldEpisode.pdf (469670 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -116,7 +116,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "docs/experiments/results.json (147869 bytes)",
+      "evidence": "docs/experiments/results.json (147867 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -248,10 +248,38 @@
       "name": "natural failure corpus has scoped evidence",
       "passed": true,
       "severity": "warning"
+    },
+    {
+      "boundary": "",
+      "check_id": "GATE.001",
+      "evidence": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5",
+      "name": "open reproduction gate index validates",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "GATE.002",
+      "evidence": "uncovered=[], commandless=[]",
+      "name": "blocked claims have reproduction commands",
+      "passed": true,
+      "severity": "error"
     }
   ],
   "claim_boundary": "A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full simulator-neutral replay claims are complete.",
   "full_standard_ready": false,
+  "open_reproduction_gates": {
+    "aggregate": {
+      "command_count": 9,
+      "gate_count": 5,
+      "open_not_claimed_count": 5
+    },
+    "artifact": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+    "validation": {
+      "errors": [],
+      "passed": true
+    }
+  },
   "rfc_release_ready": true,
   "schema": "worldepisode_release_readiness_v1",
   "status": "rfc_release_ready",

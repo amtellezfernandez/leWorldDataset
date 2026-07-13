@@ -8,6 +8,8 @@ Full standard ready: `False`.
 
 A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full simulator-neutral replay claims are complete.
 
+Open reproduction gate index: `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
+
 This gate adapts the evidence workflow pattern from `~/sota/wayspan`: compact tracked artifacts,
 strict claim gates, and explicit blockers for claims that are not yet proven.
 
@@ -18,10 +20,10 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.001 | top-level README exists | True | error | README.md (17756 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1236 bytes) |
-| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (469581 bytes) |
+| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (469670 bytes) |
 | DOC.005 | paper source exists | True | error | paper/arxiv/main.tex (5282 bytes) |
 | DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17534 bytes) |
-| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147869 bytes) |
+| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147867 bytes) |
 | DOC.008 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
 | DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (677 bytes) |
 | PKG.001 | pyproject exists | True | error | pyproject.toml (1244 bytes) |
@@ -38,6 +40,8 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | EVID.008 | replay timing evidence is executable | True | error | LeRobot control replay plus adapter scheduler conformance |
 | EVID.009 | real-to-sim and meta-simulator boundaries are explicit | True | error | controlled proxy and runtime-neutral contract, not hardware/Isaac claim |
 | EVID.010 | natural failure corpus has scoped evidence | True | warning | five-dataset count met; maintainer feedback still open |
+| GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5 |
+| GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
 
 ## Blocked Stronger Claims
 

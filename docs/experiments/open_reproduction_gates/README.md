@@ -1,0 +1,163 @@
+# Open Reproduction Gates
+
+Status: `open_gates_indexed`.
+
+These are the results that remain executable but unclaimed. The paper renders the same boundary as an amber callout in the limitations section.
+
+## Gates
+
+### `POLICY.ROLL.001`
+
+Claim: state-of-the-art policy or physical rollout impact
+
+Status: `open_not_claimed`.
+
+Boundary: No ACT, Diffusion Policy, IsaacLab, or hardware success number is claimed until policy metrics and rollout evidence are committed.
+
+Commands:
+
+- regenerate split packages and LeRobot job specs
+
+  ```bash
+  python3 tools/lerobot_policy_leakage_gate.py
+  ```
+
+- run generated ACT/Diffusion jobs in a LeRobot environment
+
+  ```bash
+  bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh
+  ```
+
+Required artifacts:
+
+- policy checkpoints or immutable checkpoint digests
+- train/eval configs and seeds
+- offline action metrics for both splits
+- rollout traces or videos with content digests
+- updated docs/experiments/lerobot_policy_gate/policy_gate_report.json
+
+Acceptance rule: At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made.
+
+### `BENCH.INFLATE.001`
+
+Claim: famous benchmark published scores are inflated
+
+Status: `open_not_claimed`.
+
+Boundary: The paper may call famous benchmarks unaudited with respect to USS controls, but it must not call published scores inflated until a benchmark-specific rerun passes.
+
+Commands:
+
+- attempt a targeted DROID-100 subset rerun
+
+  ```bash
+  uv run --with pyarrow --with requests --with numpy python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required
+  ```
+
+- enforce the score-inflation proof contract
+
+  ```bash
+  python3 tools/benchmark_inflation_gate.py --required
+  ```
+
+Required artifacts:
+
+- benchmark-specific WorldEpisode conversion
+- lineage/timing audit proving the corrected protocol removes the failure
+- published or faithful published-protocol policy rerun
+- paired corrected evaluation under the same metric
+- measured baseline-minus-corrected score drop
+
+Acceptance rule: The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.
+
+### `NATURAL.001`
+
+Claim: natural failure prevalence is maintainer-confirmed
+
+Status: `open_not_claimed`.
+
+Boundary: The current natural-source corpus is a scoped evidence corpus, not a prevalence estimate and not maintainer-confirmed bug evidence.
+
+Commands:
+
+- regenerate controlled and natural-source experiment reports
+
+  ```bash
+  python3 tools/run_experiments.py
+  ```
+
+Required artifacts:
+
+- dataset-specific WorldEpisode manifests for source-level gaps
+- false-positive review records
+- maintainer agreement, disagreement, or no-response evidence
+- updated natural failure corpus manifest
+
+Acceptance rule: A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics.
+
+### `SIM.001`
+
+Claim: runtime-neutral replay equivalence across simulators
+
+Status: `open_not_claimed`.
+
+Boundary: MuJoCo replay and URDF Studio MuJoCo/Genesis companion evidence are reported, but the same LeRobot replay trace has not yet been rerun through Genesis, Isaac, or another second WorldEpisode-native simulator adapter.
+
+Commands:
+
+- regenerate the current meta-simulator contract report
+
+  ```bash
+  python3 tools/meta_simulator_contract.py
+  ```
+
+- run the existing URDF Studio MuJoCo/Genesis companion smoke test
+
+  ```bash
+  cd ../urdf-studio && .venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1
+  ```
+
+Required artifacts:
+
+- same SO-101 LeRobot replay trace executed by a second simulator adapter
+- simulator name, version, solver, timestep, and adapter commit
+- trajectory RMSE and contact/event agreement
+- declared tolerance envelope and conversion-loss report
+- updated docs/experiments/meta_simulator_contract/adapter_contract_report.json
+
+Acceptance rule: Runtime-neutral replay evidence requires the same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter, not only a separate URDF Studio scenario.
+
+### `ADOPT.001`
+
+Claim: mature external standard adoption
+
+Status: `open_not_claimed`.
+
+Boundary: The repository contains an internal clean-room reader, but no external independent implementation or externally published compatible dataset is claimed.
+
+Commands:
+
+- regenerate the internal clean-room reader evidence
+
+  ```bash
+  python3 tools/cleanroom_conformance_reader.py
+  ```
+
+- check RFC readiness after external evidence is added
+
+  ```bash
+  python3 tools/release_readiness.py --strict-rfc
+  ```
+
+Required artifacts:
+
+- external reader/exporter repository or archived release
+- external dataset manifest or conversion report
+- conformance-suite output from the external implementation
+- license and citation metadata for the external artifact
+
+Acceptance rule: Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite.
+
+## Validation
+
+Passed: `True`.

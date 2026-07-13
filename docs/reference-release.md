@@ -5,6 +5,7 @@ Status: evidence-gated RFC release plan.
 The repository now has an executable release-readiness gate:
 
 ```bash
+python3 tools/open_reproduction_gates.py --strict
 python3 tools/release_readiness.py --strict-rfc
 ```
 
@@ -13,6 +14,8 @@ schema/examples, controlled experiments, fail-closed benchmark claims, dataset-s
 clean-room reader evidence. It deliberately does not mark the full standard complete. Stronger
 claims remain blocked until ACT/Diffusion or rollout results, valid famous-benchmark reruns,
 maintainer feedback, external adoption, and broader simulator replay evidence exist.
+Each blocked stronger claim is mapped to a command-backed open reproduction gate in
+`docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
 
 The first release should beat larger real-to-sim datasets in completeness, interoperability, and
 auditability rather than in raw scene count.

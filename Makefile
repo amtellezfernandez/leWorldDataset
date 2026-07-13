@@ -1,4 +1,4 @@
-.PHONY: validate experiments paper readiness check
+.PHONY: validate experiments paper open-gates readiness check
 
 validate:
 	python3 tools/validate_examples.py
@@ -10,7 +10,10 @@ experiments:
 paper:
 	$(MAKE) -C paper/arxiv root-pdf
 
-readiness:
+open-gates:
+	python3 tools/open_reproduction_gates.py --strict
+
+readiness: open-gates
 	python3 tools/release_readiness.py --strict-rfc
 
 check: validate experiments paper readiness
