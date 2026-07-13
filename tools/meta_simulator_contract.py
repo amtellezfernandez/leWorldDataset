@@ -19,6 +19,65 @@ DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "meta_simulator_contract"
 CONTROL_REPLAY_REPORT = ROOT / "docs" / "experiments" / "lerobot_control_replay" / "control_replay_report.json"
 
 
+URDF_STUDIO_EVIDENCE = {
+    "source": "URDF Studio sibling implementation",
+    "repository": "amtellezfernandez/urdf-studio",
+    "local_branch": "paper/cross-sim-benchmark",
+    "observed_commit": "99f1bf0",
+    "observed_on": "2026-07-13",
+    "code_paths": [
+        "backend/services/sim_backends/base.py",
+        "backend/services/sim_backends/mujoco_backend.py",
+        "backend/services/sim_backends/genesis_backend.py",
+        "backend/scripts/scenario_run.py",
+        "backend/tests/test_sim_backend_conformance.py",
+    ],
+    "conformance_smoke": {
+        "command": (
+            ".venv/bin/python3 -m pytest backend/tests/test_sim_backend_conformance.py "
+            "backend/tests/test_scenario_run_orchestrator.py "
+            "backend/tests/test_scenario_runner_mujoco.py "
+            "backend/tests/test_world_layout_transfer_check_script.py"
+        ),
+        "result": "24 passed, 12 warnings in 27.22s",
+        "covered_backends": ["fake", "mujoco", "genesis"],
+    },
+    "cross_sim_smoke": {
+        "command": (
+            ".venv/bin/python3 -m backend.scripts.scenario_run "
+            "scenarios/carton_sorting_0001 --sim mujoco --sim genesis "
+            "--out /tmp/urdf-studio-cross-sim-smoke --episodes 1"
+        ),
+        "schema": "scenario_comparison_report.v1",
+        "scenario_id": "carton_sorting_0001",
+        "backends": ["genesis", "mujoco"],
+        "episodes": 1,
+        "success_agreement_rate": 1.0,
+        "mujoco_success_rate": 1.0,
+        "genesis_success_rate": 1.0,
+        "mean_time_to_success_s": {
+            "mujoco": 4.999999999999671,
+            "genesis": 5.0,
+        },
+        "final_object_pose_delta_m": {
+            "carton_1": 0.059700834823395076,
+        },
+        "final_joint_rmse_rad": 0.050246577859076866,
+        "trajectory_split": {
+            "t_ms": 60,
+            "metric": "joint_rmse_rad",
+            "value": 0.06762661282092075,
+            "threshold": 0.05,
+        },
+    },
+    "claim_boundary": (
+        "URDF Studio proves a shared episode-backend contract and one MuJoCo/Genesis scenario "
+        "comparison. It does not prove Isaac or SAPIEN replay, and it is not the same as running "
+        "the LeRobot control-replay trace through Genesis."
+    ),
+}
+
+
 LAYERS = [
     {
         "layer_id": "META-SIM.001",
@@ -101,22 +160,40 @@ def replay_evidence() -> dict[str, Any]:
     }
 
 
+def urdf_studio_evidence() -> dict[str, Any]:
+    return URDF_STUDIO_EVIDENCE
+
+
 def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
     mujoco_evidence = evidence.get("mujoco", {})
     isaac_evidence = evidence.get("isaac", {})
+    urdf_evidence = evidence.get("urdf_studio", {})
     return [
         {
             "runtime_id": "mujoco",
             "runtime_family": "contact_dynamics",
-            "adapter_status": "tested_minimal_replay_adapter" if mujoco_evidence.get("tested") else "adapter_required",
+            "adapter_status": (
+                "tested_replay_and_urdf_studio_episode_backend"
+                if mujoco_evidence.get("tested")
+                else "urdf_studio_episode_backend_only"
+            ),
             "implemented_layers": ["META-SIM.001", "META-SIM.003"] if mujoco_evidence.get("tested") else [],
             "extension_policy": "core rigid-body replay only in current artifact",
             "evidence": {
                 "artifact": evidence.get("artifact"),
                 "tested": mujoco_evidence.get("tested", False),
                 "rmse_improvement_over_naive": mujoco_evidence.get("rmse_improvement_over_naive"),
+                "urdf_studio": {
+                    "source": urdf_evidence.get("source"),
+                    "observed_commit": urdf_evidence.get("observed_commit"),
+                    "conformance_smoke": urdf_evidence.get("conformance_smoke"),
+                    "cross_sim_smoke": urdf_evidence.get("cross_sim_smoke"),
+                },
             },
-            "claim_boundary": "One minimal six-joint position-servo replay adapter, not broad MuJoCo coverage.",
+            "claim_boundary": (
+                "WorldEpisode has one minimal six-joint MuJoCo replay adapter; URDF Studio also "
+                "tests MuJoCo as an episode backend in the shared scenario runner."
+            ),
         },
         {
             "runtime_id": "isaac_sim",
@@ -135,14 +212,29 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
         {
             "runtime_id": "genesis",
             "runtime_family": "parallel_robotics_simulation",
-            "adapter_status": "adapter_required",
-            "implemented_layers": [],
+            "adapter_status": "tested_urdf_studio_episode_backend",
+            "implemented_layers": ["META-SIM.001", "META-SIM.003"],
             "extension_policy": (
-                "Adapter should compile Genesis scene synthesis, asset roles, actions, and replay "
-                "assumptions against the same three meta-simulator layers."
+                "URDF Studio compiles the same scenario scene, action interface, episode manifest, "
+                "and trace/comparison report against Genesis. A WorldEpisode-native Genesis replay "
+                "of the LeRobot control trace is still future work."
             ),
-            "evidence": {"tested": False, "ready": False},
-            "claim_boundary": "No Genesis adapter or runtime result is claimed.",
+            "evidence": {
+                "tested": True,
+                "ready": True,
+                "urdf_studio": {
+                    "source": urdf_evidence.get("source"),
+                    "observed_commit": urdf_evidence.get("observed_commit"),
+                    "code_paths": urdf_evidence.get("code_paths"),
+                    "conformance_smoke": urdf_evidence.get("conformance_smoke"),
+                    "cross_sim_smoke": urdf_evidence.get("cross_sim_smoke"),
+                },
+            },
+            "claim_boundary": (
+                "Genesis is tested as a URDF Studio episode backend and in a one-episode "
+                "MuJoCo/Genesis comparison; no LeRobot control-replay or Isaac/SAPIEN result is "
+                "claimed."
+            ),
         },
         {
             "runtime_id": "sapien",
@@ -205,6 +297,7 @@ assumptions, then its dataset export is not replay-safe under the WorldEpisode p
 
 def build_meta_simulator_contract(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     evidence = replay_evidence()
+    evidence["urdf_studio"] = urdf_studio_evidence()
     targets = target_rows(evidence)
     tested = sum(1 for target in targets if target["adapter_status"].startswith("tested"))
     ready_untested = sum(1 for target in targets if target["adapter_status"] == "adapter_contract_ready_untested")
@@ -215,6 +308,7 @@ def build_meta_simulator_contract(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict
             "The report defines adapter compliance. It does not claim equivalent physics or tested "
             "runtime results for every simulator."
         ),
+        "urdf_studio_evidence": evidence["urdf_studio"],
         "layers": LAYERS,
         "runtime_targets": targets,
         "aggregate": {

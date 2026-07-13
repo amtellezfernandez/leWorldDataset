@@ -18,9 +18,9 @@ invariants and emits replay/loss evidence.
 
 | Runtime | Adapter Status | Implemented Layers | Claim Boundary |
 |---|---|---|---|
-| mujoco | tested_minimal_replay_adapter | META-SIM.001, META-SIM.003 | One minimal six-joint position-servo replay adapter, not broad MuJoCo coverage. |
+| mujoco | tested_replay_and_urdf_studio_episode_backend | META-SIM.001, META-SIM.003 | WorldEpisode has one minimal six-joint MuJoCo replay adapter; URDF Studio also tests MuJoCo as an episode backend in the shared scenario runner. |
 | isaac_sim | adapter_contract_ready_untested | META-SIM.001, META-SIM.003 | Adapter mapping only; no Isaac runtime result is claimed. |
-| genesis | adapter_required | none | No Genesis adapter or runtime result is claimed. |
+| genesis | tested_urdf_studio_episode_backend | META-SIM.001, META-SIM.003 | Genesis is tested as a URDF Studio episode backend and in a one-episode MuJoCo/Genesis comparison; no LeRobot control-replay or Isaac/SAPIEN result is claimed. |
 | sapien | adapter_required | none | No SAPIEN adapter or runtime result is claimed. |
 
 ## Rule

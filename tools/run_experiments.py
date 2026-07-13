@@ -1349,14 +1349,14 @@ def write_report(results: dict[str, Any]) -> None:
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
-| Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
+| Replay timing | Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace and one WorldEpisode MuJoCo replay adapter; URDF Studio is companion scenario-backend evidence, not the same LeRobot trace; Isaac mapping is emitted but untested. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
-| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
@@ -1650,7 +1650,11 @@ def main() -> int:
     if meta_aggregate.get("runtime_target_count") != 4 or meta_aggregate.get("compliance_layer_count") != 3:
         print("Meta-simulator contract matrix is incomplete.")
         return 1
-    if meta_aggregate.get("tested_adapter_count") != 1 or meta_aggregate.get("ready_untested_adapter_count") != 1:
+    if (
+        meta_aggregate.get("tested_adapter_count") != 2
+        or meta_aggregate.get("ready_untested_adapter_count") != 1
+        or meta_aggregate.get("adapter_required_count") != 1
+    ):
         print("Meta-simulator contract evidence boundary changed unexpectedly.")
         return 1
     uss_pilots = results["uss_state_drift_pilots"]

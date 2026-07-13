@@ -148,6 +148,11 @@ It tests three scheduler cases: constant frame delay, zero-order hold for missin
 asynchronous queue selection. In all three cases a naive scheduler fails while the contract-aware
 scheduler matches the expected trace with zero numerical error. This is not a second physics
 simulator; it is a precondition check for simulator adapters.
+For second-runtime adapter evidence, we point to URDF Studio: its shared \texttt{SimBackend}
+conformance suite passes for MuJoCo and Genesis, and its one-episode carton-sorting orchestrator
+writes a MuJoCo--Genesis comparison report with matched task success and measured trajectory
+divergence. That companion result supports the meta-simulator contract, but it is not yet the same
+SO-101 LeRobot replay trace rerun in Genesis or Isaac.
 
 \paragraph{Case 4: real-to-sim contract drift.}
 Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
