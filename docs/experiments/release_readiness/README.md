@@ -19,15 +19,15 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (19500 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (20056 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1245 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (10281 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (478332 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (479077 bytes) |
 | DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (5365 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17509 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (149935 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17852 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180605 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1402 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
@@ -40,6 +40,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | EVID.002 | active LeRobot round trips are exact | True | error | two pinned public LeRobot batch reports with zero source-native errors |
 | EVID.003 | scene leakage result is measured | True | error | random=1.0, disjoint=0.0, drop=0.85 |
 | EVID.004 | ACT/Diffusion gate is explicit and not overclaimed | True | warning | policy jobs and compact split packages exist; metrics are not claimed |
+| EVID.011 | temporal policy baseline is measured | True | error | random=0.925, scene=0.42, drop=0.5050000000000001 |
 | EVID.005 | famous benchmark inflation gate is fail-closed | True | error | reruns=1, valid=0, claims=0 |
 | EVID.006 | dataset-scale manifest and generated catalog checks pass | True | error | dataset manifest audit plus generated billion-episode-capacity catalog benchmark |
 | EVID.007 | clean-room reader consumes public schema/fixtures | True | error | status=pass, recall=1.0 |
@@ -48,10 +49,10 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | EVID.010 | natural failure corpus has scoped evidence | True | warning | five-dataset count met; maintainer feedback still open |
 | GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=4 |
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
-| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0 |
+| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=12, failed=0 |
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=46, normalized=4 |
-| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=11, open_gates=4 |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=48, normalized=4 |
+| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=12, open_gates=4 |
 
 ## Blocked Stronger Claims
 

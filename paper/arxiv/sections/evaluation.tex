@@ -41,6 +41,14 @@ conventional split can reward memorizing a background world rather than learning
 manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
 ACT, Diffusion Policy, or another LeRobot-native policy.
 
+To verify that the split packages are executable beyond the original MLP probe, we also run a
+closed-form temporal ridge baseline over the committed compact LeRobot state/action packages. The
+baseline uses a three-frame state history and no video. It reaches 0.925 offline success on the
+random episode split and 0.420 on the scene-disjoint split, a 0.505 success-rate drop, while mean
+episode normalized RMSE rises from 0.157 to 0.255. This is still not ACT or Diffusion and not a
+rollout result, but it shows that the leakage penalty survives a second temporal policy-style
+baseline executed directly on the packaged LeRobot splits.
+
 To keep that stronger claim from being implied before it is measured, the repository also emits an
 ACT/Diffusion gate from the same split manifest. The gate writes train/test episode allowlists,
 four virtual split manifests with 27 digest-verified source files, four compact physical LeRobot

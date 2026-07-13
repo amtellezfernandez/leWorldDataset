@@ -30,6 +30,7 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "conformance/requirements.v0.json",
     "conformance/projections/uss-core-23.v0.json",
     "docs/experiments/results.json",
+    "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "docs/experiments/package_install_smoke/package_install_smoke_report.json",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
@@ -49,6 +50,10 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "regenerate controlled experiment evidence",
         "command": "python3 tools/run_experiments.py",
+    },
+    {
+        "name": "regenerate measured temporal policy baseline",
+        "command": "uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict",
     },
     {
         "name": "validate open unclaimed-result gates",

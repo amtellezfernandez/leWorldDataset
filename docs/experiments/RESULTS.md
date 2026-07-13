@@ -16,7 +16,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
@@ -103,6 +103,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Physical package frames: 241470
 - Ready to execute in this environment: False
 
+## Temporal Policy Baseline on LeRobot Split Packages
+
+- Artifact: `docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json`
+- Status: measured_offline_temporal_baseline
+- Random episode offline success: 0.925
+- Scene-disjoint offline success: 0.420
+- Success-rate drop: 0.505
+- Scene/random nRMSE ratio: 1.62x
+- Boundary: Measured offline temporal state/action baseline over committed compact LeRobot split packages. This is not ACT, Diffusion Policy, a vision-policy result, a simulator rollout, or a physical-robot rollout.
+
 ## Famous Benchmark Call-Out Audit
 
 - Artifact: `docs/experiments/benchmark_callout_audit/benchmark_callout_report.json`
@@ -152,8 +162,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588169
-- Catalog open, parse, and index: 119.983 ms
-- Partition-pruning query time: 0.177 ms
+- Catalog open, parse, and index: 138.155 ms
+- Partition-pruning query time: 0.156 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0

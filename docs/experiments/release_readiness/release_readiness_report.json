@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 4,
     "blocking_error_count": 0,
-    "check_count": 33,
-    "passed_count": 33,
+    "check_count": 34,
+    "passed_count": 34,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -16,7 +16,17 @@
       "blocked": true,
       "blocker_id": "POLICY.ROLL.001",
       "claim": "state-of-the-art policy or physical rollout impact",
-      "current_evidence": "ready_not_executed",
+      "current_evidence": {
+        "act_diffusion_gate": "ready_not_executed",
+        "temporal_policy_baseline": {
+          "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+          "random_episode_nrmse_mean": 0.1572614852380231,
+          "random_episode_success_rate": 0.925,
+          "scene_disjoint_nrmse_mean": 0.25457434248891586,
+          "scene_disjoint_success_rate": 0.42,
+          "success_rate_drop": 0.5050000000000001
+        }
+      },
       "required_evidence": "ACT or Diffusion Policy metrics plus high-fidelity simulator or hardware rollout reports."
     },
     {
@@ -71,7 +81,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (19500 bytes)",
+      "evidence": "README.md (20056 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -111,7 +121,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (478332 bytes)",
+      "evidence": "WorldEpisode.pdf (479077 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -127,7 +137,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (17509 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (17852 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -135,7 +145,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (149935 bytes)",
+      "evidence": "docs/experiments/results.json (180605 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -238,6 +248,14 @@
     },
     {
       "boundary": "",
+      "check_id": "EVID.011",
+      "evidence": "random=0.925, scene=0.42, drop=0.5050000000000001",
+      "name": "temporal policy baseline is measured",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
       "check_id": "EVID.005",
       "evidence": "reruns=1, valid=0, claims=0",
       "name": "famous benchmark inflation gate is fail-closed",
@@ -303,7 +321,7 @@
     {
       "boundary": "",
       "check_id": "CLAIM.001",
-      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=12, failed=0",
       "name": "paper claims are evidence-backed",
       "passed": true,
       "severity": "error"
@@ -319,7 +337,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=46, normalized=4",
+      "evidence": "status=pass, entries=48, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
@@ -327,7 +345,7 @@
     {
       "boundary": "",
       "check_id": "SUBMIT.001",
-      "evidence": "status=pass, claims=11, open_gates=4",
+      "evidence": "status=pass, claims=12, open_gates=4",
       "name": "submission packet validates",
       "passed": true,
       "severity": "error"
@@ -349,11 +367,11 @@
   },
   "paper_claim_audit": {
     "aggregate": {
-      "claim_count": 11,
+      "claim_count": 12,
       "failed_claim_ids": [],
       "failed_count": 0,
       "missing_paper_pattern_count": 0,
-      "passed_count": 11
+      "passed_count": 12
     },
     "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "status": "pass"

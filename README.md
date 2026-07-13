@@ -214,6 +214,12 @@ To prepare the stronger ACT/Diffusion leakage gate from the same split manifest:
 python3 tools/lerobot_policy_leakage_gate.py
 ```
 
+To regenerate the measured temporal policy baseline over the compact LeRobot split packages:
+
+```bash
+uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict
+```
+
 To generate the source-level call-out audit over famous public robot-learning benchmarks:
 
 ```bash
@@ -316,6 +322,10 @@ WorldEpisode-style `world_lineage` hashes for task-scene/camera-layout groups, c
 episode split against a scene-disjoint split, and trains the same Torch MLP behavioral-cloning
 baseline on both. In the committed run, the random split leaks all test scene lineages and obtains
 0.850 offline BC success; the scene-disjoint split has zero lineage leakage and drops to 0.000.
+The committed compact LeRobot split packages are also executed by a temporal ridge state/action
+baseline with a three-frame state history: random-episode success is 0.925, scene-disjoint success
+is 0.420, and the success-rate drop is 0.505. This remains a low-dimensional offline result, not
+ACT, Diffusion, vision-policy, simulator, or hardware evidence.
 The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs,
 episode allowlists, virtual split manifests, compact physical state/action LeRobot split packages,
 and high-fidelity/physical rollout requirements; it is intentionally marked open until real

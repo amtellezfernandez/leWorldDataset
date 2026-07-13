@@ -225,6 +225,41 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
         )
     )
 
+    temporal_policy = results.get("lerobot_temporal_policy_baseline", {})
+    temporal_aggregate = temporal_policy.get("aggregate", {})
+    claims.append(
+        claim_result(
+            claim_id="CLAIM.TEMPORAL_POLICY.001",
+            claim="Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+            evidence_artifacts=[
+                "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+            ],
+            paper_patterns=[
+                "temporal ridge",
+                fmt3(float(temporal_aggregate.get("random_episode_success_rate", -1))),
+                fmt3(float(temporal_aggregate.get("scene_disjoint_success_rate", -1))),
+                fmt3(float(temporal_aggregate.get("success_rate_drop", -1))),
+                "not ACT or Diffusion",
+            ],
+            evidence_passed=(
+                temporal_policy.get("status") == "measured_offline_temporal_baseline"
+                and temporal_aggregate.get("random_episode_success_rate") == 0.925
+                and temporal_aggregate.get("scene_disjoint_success_rate") == 0.42
+                and float(temporal_aggregate.get("success_rate_drop", 0)) > 0.5
+            ),
+            evidence={
+                "random_episode_success_rate": temporal_aggregate.get("random_episode_success_rate"),
+                "scene_disjoint_success_rate": temporal_aggregate.get("scene_disjoint_success_rate"),
+                "success_rate_drop": temporal_aggregate.get("success_rate_drop"),
+                "episode_nrmse_ratio_scene_over_random": temporal_aggregate.get(
+                    "episode_nrmse_ratio_scene_over_random"
+                ),
+            },
+            text=text,
+            boundary="Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
+        )
+    )
+
     bindings = results.get("rq1_binding_retention", {}).get("bindings", [])
     non_reference = [item for item in bindings if item.get("binding") != "worldepisode-reference"]
     min_native = min(float(item.get("native_retention", 0)) for item in non_reference)

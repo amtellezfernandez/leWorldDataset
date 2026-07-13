@@ -6,7 +6,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 
 ## Summary
 
-- Paper claims checked: 11
+- Paper claims checked: 12
 - Failed checked claims: 0
 - Open results not claimed: 4
 - Missing required public artifacts: 0
@@ -27,6 +27,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `conformance/requirements.v0.json` | True | True |
 | `conformance/projections/uss-core-23.v0.json` | True | True |
 | `docs/experiments/results.json` | True | True |
+| `docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json` | True | True |
 | `docs/experiments/paper_claim_audit/paper_claim_audit_report.json` | True | True |
 | `docs/experiments/package_install_smoke/package_install_smoke_report.json` | True | True |
 | `docs/experiments/open_reproduction_gates/open_reproduction_gates.json` | True | True |
@@ -44,6 +45,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `CLAIM.LEAKAGE.001` | True | ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split. | Offline action-imitation result; not ACT/Diffusion or physical rollout success. |
 | `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
 | `CLAIM.ROUNDTRIP.001` | True | Two public LeRobotDataset batches round-trip exactly through WorldEpisode. | Two five-episode batch audits; not full LeRobot coverage. |
+| `CLAIM.TEMPORAL_POLICY.001` | True | Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation. | Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout. |
 | `CLAIM.BINDING.001` | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
 | `CLAIM.VALIDATOR.001` | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |
 | `CLAIM.NATURAL.001` | True | Pilot natural-source corpus records 19 cases across five public robot-learning datasets. | Scoped natural-source corpus, not maintainer-confirmed prevalence. |
@@ -68,6 +70,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 |---|---|
 | validate schemas, examples, and Python tools | `make validate` |
 | regenerate controlled experiment evidence | `python3 tools/run_experiments.py` |
+| regenerate measured temporal policy baseline | `uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict` |
 | validate open unclaimed-result gates | `python3 tools/open_reproduction_gates.py --strict` |
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |
 | generate this submission packet | `python3 tools/submission_packet.py --strict` |

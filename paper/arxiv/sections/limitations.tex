@@ -18,10 +18,10 @@ because the paper argues for a semantic contract, not for a finished benchmark s
 Claim area & Current evidence & Boundary \\
 \midrule
 Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable
-Torch BC probe, an ACT/Diffusion gate harness, and four compact digest-verified LeRobot
-state/action split packages totaling 241{,}470 frames & Stronger policy jobs are prepared but not
-run; the compact split packages omit video payloads, so no vision-policy, real-robot, or
-high-fidelity rollout result is claimed yet \\
+Torch BC probe, a measured temporal ridge state/action baseline, an ACT/Diffusion gate harness, and
+four compact digest-verified LeRobot state/action split packages totaling 241{,}470 frames &
+Stronger ACT/Diffusion jobs are prepared but not run; the compact split packages omit video
+payloads, so no vision-policy, real-robot, or high-fidelity rollout result is claimed yet \\
 Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
 Replay timing & Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis
@@ -106,12 +106,14 @@ The ArmnetBench experiment is an offline behavioral-cloning audit, not a physica
 value is that it demonstrates how random episode splits can leak world lineage and inflate
 evaluation, not that it measures real-robot success directly. The current baseline is an executable
 Torch MLP probe over LeRobot tensors; ACT and Diffusion Policy should be run on the committed split
-manifest before claiming impact on common LeRobot training recipes. The repository now emits those
-ACT/Diffusion jobs, compact state/action LeRobot split packages, and rollout requirements, but no
-such policy result is claimed here. The split packages verify 27 cached source files, preserve
-state/action/timestamp rows, and remap episode/index fields into contiguous local LeRobot folders;
-they intentionally omit video payloads, so a vision-policy result still requires mirrored source
-videos with committed digests.
+manifest before claiming impact on common LeRobot training recipes. The repository now also
+measures a temporal ridge baseline over the committed compact packages; it drops from 0.925 random
+episode offline success to 0.420 scene-disjoint success, but remains a low-dimensional offline
+state/action result. The repository emits ACT/Diffusion jobs, compact state/action LeRobot split
+packages, and rollout requirements, but no ACT/Diffusion policy result is claimed here. The split
+packages verify 27 cached source files, preserve state/action/timestamp rows, and remap
+episode/index fields into contiguous local LeRobot folders; they intentionally omit video payloads,
+so a vision-policy result still requires mirrored source videos with committed digests.
 
 \paragraph{Replay is not bit-identical physics.}
 WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not

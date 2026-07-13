@@ -178,6 +178,7 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
     secondary = nested(results, ("lerobot_active_roundtrip", "secondary_batch_roundtrips"), [])
     leakage = nested(results, ("lerobot_scene_leakage", "summary"), {})
     policy_gate = results.get("lerobot_policy_gate", {})
+    temporal_policy = results.get("lerobot_temporal_policy_baseline", {})
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     natural = results.get("natural_failure_corpus", {})
     dataset_scale = results.get("dataset_scale_audit", {})
@@ -222,6 +223,19 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
             and nested(policy_gate, ("physical_split_packages", "package_count"), 0) >= 4,
             "policy jobs and compact split packages exist; metrics are not claimed",
             severity="warning",
+        ),
+        Check(
+            "EVID.011",
+            "temporal policy baseline is measured",
+            temporal_policy.get("status") == "measured_offline_temporal_baseline"
+            and nested(temporal_policy, ("aggregate", "random_episode_success_rate")) == 0.925
+            and nested(temporal_policy, ("aggregate", "scene_disjoint_success_rate")) == 0.42
+            and nested(temporal_policy, ("aggregate", "success_rate_drop"), 0) > 0.5,
+            (
+                f"random={nested(temporal_policy, ('aggregate', 'random_episode_success_rate'))}, "
+                f"scene={nested(temporal_policy, ('aggregate', 'scene_disjoint_success_rate'))}, "
+                f"drop={nested(temporal_policy, ('aggregate', 'success_rate_drop'))}"
+            ),
         ),
         Check(
             "EVID.005",
@@ -485,6 +499,7 @@ def release_manifest_checks() -> list[Check]:
 def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
+    temporal_policy = results.get("lerobot_temporal_policy_baseline", {})
     natural = results.get("natural_failure_corpus", {})
     replay = results.get("rq3_replay", {})
     meta_sim = results.get("meta_simulator_contract", {})
@@ -494,7 +509,10 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
             "blocker_id": "POLICY.ROLL.001",
             "claim": "state-of-the-art policy or physical rollout impact",
             "blocked": policy_gate.get("gate_satisfied") is not True,
-            "current_evidence": policy_gate.get("status"),
+            "current_evidence": {
+                "act_diffusion_gate": policy_gate.get("status"),
+                "temporal_policy_baseline": temporal_policy.get("aggregate", {}),
+            },
             "required_evidence": "ACT or Diffusion Policy metrics plus high-fidelity simulator or hardware rollout reports.",
         },
         {

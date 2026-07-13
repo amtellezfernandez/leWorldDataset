@@ -6,7 +6,7 @@ The repository may call itself an evidence-gated RFC release with open reproduct
 
 ## Summary
 
-- Scanned paths: 44
+- Scanned paths: 47
 - Banned patterns: 17
 - Missing paths: 0
 - Violations: 0

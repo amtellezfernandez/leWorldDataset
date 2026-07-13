@@ -36,6 +36,15 @@
       "passed": true
     },
     {
+      "boundary": "Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
+      "claim": "Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+      "claim_id": "CLAIM.TEMPORAL_POLICY.001",
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+      ],
+      "passed": true
+    },
+    {
       "boundary": "Pilot projection score, not a universal storage-format ranking.",
       "claim": "Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections.",
       "claim_id": "CLAIM.BINDING.001",
@@ -241,6 +250,10 @@
       "name": "regenerate controlled experiment evidence"
     },
     {
+      "command": "uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict",
+      "name": "regenerate measured temporal policy baseline"
+    },
+    {
       "command": "python3 tools/open_reproduction_gates.py --strict",
       "name": "validate open unclaimed-result gates"
     },
@@ -336,6 +349,11 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json"
     },
     {
@@ -385,7 +403,7 @@
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
     "open_result_gate_count": 4,
-    "paper_claim_count": 11,
+    "paper_claim_count": 12,
     "results_sections": [
       "baseline_schema_errors",
       "baseline_semantic_errors",
@@ -400,6 +418,7 @@
       "lerobot_public_sample",
       "lerobot_scene_leakage",
       "lerobot_style_episode_set",
+      "lerobot_temporal_policy_baseline",
       "meta_simulator_contract",
       "natural_failure_corpus",
       "preflight_validator",

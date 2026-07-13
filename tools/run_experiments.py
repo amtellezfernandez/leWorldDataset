@@ -42,6 +42,7 @@ RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
+TEMPORAL_POLICY_REPORT = RESULTS_DIR / "lerobot_temporal_policy_baseline" / "temporal_policy_report.json"
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
 BENCHMARK_INFLATION_GATE_REPORT = RESULTS_DIR / "benchmark_inflation_gate" / "gate_report.json"
 PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
@@ -428,6 +429,34 @@ def experiment_lerobot_policy_gate() -> dict[str, Any]:
         }
         write_json(POLICY_GATE_REPORT, report)
         return report
+
+
+def experiment_lerobot_temporal_policy_baseline() -> dict[str, Any]:
+    if os.environ.get("WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE") == "1":
+        try:
+            from lerobot_temporal_policy_baseline import build_report
+
+            return build_report(output_dir=RESULTS_DIR / "lerobot_temporal_policy_baseline")
+        except Exception as exc:  # noqa: BLE001 - make required runs fail explicitly below.
+            report = {
+                "available": False,
+                "pass": False,
+                "reason": str(exc),
+                "reproduce": (
+                    "uv run --with pyarrow --with numpy python "
+                    "tools/lerobot_temporal_policy_baseline.py --strict"
+                ),
+            }
+            write_json(TEMPORAL_POLICY_REPORT, report)
+            return report
+    if TEMPORAL_POLICY_REPORT.exists():
+        return load_json(TEMPORAL_POLICY_REPORT)
+    return {
+        "available": False,
+        "pass": False,
+        "reason": "No committed temporal policy baseline report exists yet.",
+        "reproduce": "uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict",
+    }
 
 
 def experiment_benchmark_callout_audit() -> dict[str, Any]:
@@ -1254,6 +1283,7 @@ def write_report(results: dict[str, Any]) -> None:
     active_lerobot = results["lerobot_active_roundtrip"]
     scene_leakage = results["lerobot_scene_leakage"]
     policy_gate = results["lerobot_policy_gate"]
+    temporal_policy = results["lerobot_temporal_policy_baseline"]
     benchmark_callout = results["benchmark_callout_audit"]
     benchmark_inflation = results["benchmark_inflation_gate"]
     preflight_result = results["preflight_validator"]
@@ -1396,7 +1426,7 @@ def write_report(results: dict[str, Any]) -> None:
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
@@ -1456,6 +1486,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Physical source files verified: {policy_gate.get("physical_split_packages", {}).get("source_files_verified", False)}
 - Physical package frames: {policy_gate.get("physical_split_packages", {}).get("total_output_frames", 0)}
 - Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
+
+## Temporal Policy Baseline on LeRobot Split Packages
+
+- Artifact: `{temporal_policy.get("artifacts", {}).get("json", "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json")}`
+- Status: {temporal_policy.get("status", "unavailable")}
+- Random episode offline success: {temporal_policy.get("aggregate", {}).get("random_episode_success_rate", 0):.3f}
+- Scene-disjoint offline success: {temporal_policy.get("aggregate", {}).get("scene_disjoint_success_rate", 0):.3f}
+- Success-rate drop: {temporal_policy.get("aggregate", {}).get("success_rate_drop", 0):.3f}
+- Scene/random nRMSE ratio: {temporal_policy.get("aggregate", {}).get("episode_nrmse_ratio_scene_over_random", 0):.2f}x
+- Boundary: {temporal_policy.get("claim_boundary", "No temporal policy baseline result is available.")}
 
 ## Famous Benchmark Call-Out Audit
 
@@ -1640,6 +1680,7 @@ def main() -> int:
         "lerobot_active_roundtrip": experiment_lerobot_active_roundtrip(),
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
+        "lerobot_temporal_policy_baseline": experiment_lerobot_temporal_policy_baseline(),
         "benchmark_callout_audit": experiment_benchmark_callout_audit(),
         "benchmark_inflation_gate": experiment_benchmark_inflation_gate(),
         "preflight_validator": experiment_preflight_validator(),
@@ -1732,6 +1773,18 @@ def main() -> int:
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_POLICY_GATE") == "1" and not policy_gate.get("pass"):
         print("ACT/Diffusion policy leakage gate is required but did not pass.")
         return 1
+    temporal_policy = results["lerobot_temporal_policy_baseline"]
+    if (
+        os.environ.get("WORLDEPISODE_REQUIRE_TEMPORAL_POLICY_BASELINE") == "1"
+        and temporal_policy.get("status") != "measured_offline_temporal_baseline"
+    ):
+        print("Temporal policy baseline is required but unavailable.")
+        return 1
+    if temporal_policy.get("status") == "measured_offline_temporal_baseline":
+        aggregate = temporal_policy.get("aggregate", {})
+        if aggregate.get("success_rate_drop", 0) <= 0:
+            print("Temporal policy baseline did not drop under scene-disjoint evaluation.")
+            return 1
     preflight_result = results["preflight_validator"]
     if not preflight_result.get("pass"):
         print("Preflight validator regression failed.")

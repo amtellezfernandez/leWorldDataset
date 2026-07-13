@@ -1,10 +1,10 @@
 {
   "aggregate": {
-    "claim_count": 11,
+    "claim_count": 12,
     "failed_claim_ids": [],
     "failed_count": 0,
     "missing_paper_pattern_count": 0,
-    "passed_count": 11
+    "passed_count": 12
   },
   "artifacts": {
     "json": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
@@ -95,6 +95,30 @@
         "1,935",
         "maximum absolute error 0.0",
         "source-absent rather than guessed"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
+      "claim": "Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+      "claim_id": "CLAIM.TEMPORAL_POLICY.001",
+      "evidence": {
+        "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+        "random_episode_success_rate": 0.925,
+        "scene_disjoint_success_rate": 0.42,
+        "success_rate_drop": 0.5050000000000001
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "temporal ridge",
+        "0.925",
+        "0.420",
+        "0.505",
+        "not ACT or Diffusion"
       ],
       "passed": true
     },

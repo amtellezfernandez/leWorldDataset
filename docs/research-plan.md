@@ -126,6 +126,10 @@ asset families leak across train and evaluation.
 Current executable artifact: `tools/lerobot_scene_leakage_experiment.py` runs this audit on
 `armnet/armnetbench_v01_lerobot_so101`, derives `world_lineage` hashes for task-scene/camera-layout
 groups, and compares random-episode against scene-disjoint splits with a Torch MLP BC baseline.
+`tools/lerobot_temporal_policy_baseline.py` then executes a temporal ridge state/action baseline on
+the committed compact LeRobot packages, dropping from 0.925 random-episode success to 0.420
+scene-disjoint success. ACT/Diffusion and rollout claims remain gated by
+`tools/lerobot_policy_leakage_gate.py`.
 
 Scale-out artifact: `tools/benchmark_callout_audit.py` creates a source-level audit over Open
 X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. That artifact identifies which famous
