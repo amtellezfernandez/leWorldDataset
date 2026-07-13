@@ -92,7 +92,7 @@
     {
       "boundary": "",
       "check_id": "DOC.004",
-      "evidence": "WorldEpisode.pdf (467233 bytes)",
+      "evidence": "WorldEpisode.pdf (469581 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -100,7 +100,7 @@
     {
       "boundary": "",
       "check_id": "DOC.005",
-      "evidence": "paper/arxiv/main.tex (4793 bytes)",
+      "evidence": "paper/arxiv/main.tex (5282 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"

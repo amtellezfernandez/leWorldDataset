@@ -61,6 +61,35 @@ federation are measured \\
 \end{tabular}
 \end{table}
 
+\FloatBarrier
+
+\begin{openresult}{results not claimed in this draft}
+The artifact keeps unfinished claims executable instead of hiding them. The current RFC release gate
+is:
+\texttt{python3 tools/release\_readiness.py --strict-rfc}. The full-standard gate is:
+\texttt{python3 tools/release\_readiness.py --strict-full}. The latter is expected to fail until
+all open gates below are backed by committed reports.
+
+\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=3pt]
+\item ACT/Diffusion leakage: run
+\texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}, then execute
+\path{docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh}. A paper update must commit
+the policy metrics, rollout traces or videos, and updated
+\path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+\item Famous-benchmark inflation: run the targeted DROID subset rerun with optional Arrow/HTTP
+dependencies, using \path{tools/famous_benchmark_policy_rerun.py} with
+\texttt{--benchmark droid\_100 --required}, then require
+\texttt{python3 tools/benchmark\_inflation\_gate.py --required}. No benchmark may be described as
+inflated unless this gate records a valid rerun and a measured corrected-score drop.
+\item Second-runtime replay: run the same SO-101 LeRobot replay trace through a Genesis or Isaac
+adapter, then update the meta-simulator report with adapter version, simulator version, trajectory
+RMSE, contact/event agreement, and declared tolerances.
+\item External standard evidence: add maintainer-reviewed diagnostics, an independently written
+reader/exporter, and at least one externally published USS or WorldEpisode-compatible dataset
+before calling the project a mature interoperability standard.
+\end{itemize}
+\end{openresult}
+
 \paragraph{Manipulation scope.}
 The current profile targets rigid tabletop manipulation with fixed-base single- or dual-arm robots.
 Humanoids, locomotion, deformables, fluids, and multi-agent environments require later profiles and

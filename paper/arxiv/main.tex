@@ -33,6 +33,25 @@
 \definecolor{wePanel}{HTML}{F8FAFC}
 \definecolor{weLine}{HTML}{CBD5E1}
 
+\newsavebox{\openresultbox}
+\newenvironment{openresult}[1]{%
+  \par\medskip\noindent
+  \begingroup
+  \setlength{\fboxsep}{8pt}%
+  \begin{lrbox}{\openresultbox}%
+  \begin{minipage}{0.93\linewidth}
+  \textbf{\textcolor{weAmber!85!black}{Open reproduction gate: #1}}\par\smallskip
+  \small
+  \setlength{\parskip}{3pt}
+  \setlength{\parindent}{0pt}
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \noindent\fcolorbox{weAmber!85!black}{weAmber!8}{\usebox{\openresultbox}}%
+  \endgroup
+  \par\medskip
+}
+
 \tikzset{
   wecard/.style={
     rounded corners=4pt,
