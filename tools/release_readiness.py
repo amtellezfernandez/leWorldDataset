@@ -116,6 +116,7 @@ def ci_checks() -> list[Check]:
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
         "python tools/release_readiness.py --strict-rfc",
+        "python tools/artifact_freshness.py --strict",
     ]
     missing = [command for command in required_commands if command not in text]
     return [

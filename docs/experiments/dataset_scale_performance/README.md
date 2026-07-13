@@ -16,10 +16,10 @@ It does not materialize episode rows or payload bytes.
 
 | Operation | Milliseconds |
 |---|---:|
-| Catalog open, parse, and index | 141.540 |
-| Partition-pruning queries | 0.194 |
-| Digest-cache resolution | 6.293 |
-| Resolver routing | 58.946 |
+| Catalog open, parse, and index | 140.053 |
+| Partition-pruning queries | 0.162 |
+| Digest-cache resolution | 6.751 |
+| Resolver routing | 56.061 |
 
 ## Partition Pruning
 

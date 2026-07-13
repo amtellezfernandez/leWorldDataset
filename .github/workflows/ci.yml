@@ -37,3 +37,6 @@ jobs:
 
       - name: Check RFC release readiness
         run: python tools/release_readiness.py --strict-rfc
+
+      - name: Check generated artifact freshness
+        run: python tools/artifact_freshness.py --strict

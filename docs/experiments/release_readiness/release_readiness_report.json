@@ -68,7 +68,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (18388 bytes)",
+      "evidence": "README.md (18517 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -116,7 +116,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "docs/experiments/results.json (147867 bytes)",
+      "evidence": "docs/experiments/results.json (147868 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -132,7 +132,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": ".github/workflows/ci.yml (891 bytes)",
+      "evidence": ".github/workflows/ci.yml (998 bytes)",
       "name": "CI workflow exists",
       "passed": true,
       "severity": "error"

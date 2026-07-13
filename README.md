@@ -93,6 +93,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Famous benchmark inflation-gate artifacts](docs/experiments/benchmark_inflation_gate)
 - [Open reproduction gate artifacts](docs/experiments/open_reproduction_gates)
 - [Paper claim audit artifacts](docs/experiments/paper_claim_audit)
+- Generated artifact freshness gate: `python3 tools/artifact_freshness.py --strict`
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
 - [Meta-simulator contract artifacts](docs/experiments/meta_simulator_contract)
 - [USS state-drift pilot artifacts](docs/experiments/uss_state_drift_pilots)
@@ -164,6 +165,7 @@ WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
 python3 tools/release_readiness.py --strict-rfc
+python3 tools/artifact_freshness.py --strict
 ```
 
 If this Python environment does not include `pip`, use `uv`:

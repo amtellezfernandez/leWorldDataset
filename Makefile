@@ -1,4 +1,4 @@
-.PHONY: validate experiments paper open-gates paper-claims readiness check
+.PHONY: validate experiments paper open-gates paper-claims readiness freshness check
 
 validate:
 	python3 tools/validate_examples.py
@@ -18,5 +18,8 @@ paper-claims:
 
 readiness: open-gates paper-claims
 	python3 tools/release_readiness.py --strict-rfc
+
+freshness:
+	python3 tools/artifact_freshness.py --strict
 
 check: validate experiments paper readiness
