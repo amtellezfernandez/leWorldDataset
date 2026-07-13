@@ -4,7 +4,7 @@ The first world-layout profile draft is derived from the working URDF Studio Wor
 The formal paper/specification target is now `WorldEpisode`: a storage-neutral contract that binds
 robot-learning episodes to immutable world revisions.
 
-Important source locations in `/home/amdev/studio/urdf-studio`:
+Important source locations in the sibling `urdf-studio` repository:
 
 - `docs/specs/WORLD_FORMAT.md` - prose reference for the current World format.
 - `docs/specs/world-v1.schema.json` - generated public schema.

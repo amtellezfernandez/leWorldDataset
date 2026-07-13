@@ -1,4 +1,9 @@
-# leWorldLayout: A Portable World Layout Norm for Robot Simulation and Evaluation
+# leWorldLayout Legacy Profile Notes
+
+`leWorldLayout` is retained as a legacy world-layout profile and implementation root for
+WorldEpisode. It is not the public paper category. The public paper and specification name is
+`WorldEpisode`: a storage-neutral interchange contract linking robot-learning episodes to immutable,
+versioned, replayable 3D worlds.
 
 ## Abstract
 
@@ -6,13 +11,12 @@ Robotics tools routinely exchange robot models, but they exchange robot-world sc
 URDF, MJCF, USD, and simulator-native scene files each capture part of the problem, yet none acts
 as a small, portable, simulator-agnostic layout contract for the authored state surrounding a robot:
 objects, cameras, frame conventions, task-time state, asset references, and the split between visual
-appearance and physical collision. We propose `leWorldLayout`, a JSON world layout norm that treats
-the scene around a robot as a first-class artifact. A layout document records static or time-indexed
-world objects in a declared frame convention, uses deterministic asset descriptors, and separates
+appearance and physical collision. The `leWorldLayout` profile records static or time-indexed world
+objects in a declared frame convention, uses deterministic asset descriptors, and separates
 appearance representations from physics geometry so that splats, meshes, primitives, and simulator
-colliders can coexist without ambiguity. We describe the contract, its validation rules, and its
-relationship to scenario and benchmark layers. A reference implementation in URDF Studio validates
-the format and transfers the same layout into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender.
+colliders can coexist without ambiguity. In the WorldEpisode architecture, this profile is one
+possible world-revision binding. A reference implementation in URDF Studio validates the profile and
+transfers the same layout into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender.
 
 ## 1. Motivation
 
@@ -32,8 +36,8 @@ but too broad to be a lightweight validation target for small robot-world datase
 robot but not the authored world around it. Dataset samples often store enough state to replay one
 pipeline but not enough to be a public scene norm.
 
-`leWorldLayout` targets the missing middle: a small, inspectable, validated layout document that
-can be consumed by many downstream tools.
+The profile targets the missing middle: a small, inspectable, validated layout document that can be
+consumed by many downstream tools.
 
 ## 2. Thesis
 
@@ -85,7 +89,8 @@ World objects should be represented with three layers:
 
 The important design choice is that appearance does not imply collision. A Gaussian splat may be a
 useful visual/perception asset and still be invalid as simulator geometry. A mesh may be visually
-accurate and still require a simplified collision proxy. `leWorldLayout` makes this split explicit.
+accurate and still require a simplified collision proxy. The layout profile makes this split
+explicit.
 
 ## 5. Relationship To Scenarios
 
@@ -128,7 +133,7 @@ The paper should evaluate:
 
 ## 8. Claimed Contributions
 
-- A compact world layout norm for robot-world scene interchange.
+- A compact world-layout profile for robot-world scene interchange inside WorldEpisode.
 - A validated appearance/physics split for meshes, primitives, and splats.
 - A deterministic asset-resolution rule suitable for files, folders, links, object storage,
   Hugging Face repositories, OCI artifacts, IPFS, and registries.
@@ -137,7 +142,6 @@ The paper should evaluate:
 
 ## 9. Open Questions
 
-- Should the public name be `leWorldLayout`, `World Layout`, or `Robot World Layout`?
 - Which frame convention identifiers should be mandatory in v0.1?
 - Should dynamic layouts live in this spec or only in a scenario layer?
 - Which fields should be required for publication versus allowed for local drafts?

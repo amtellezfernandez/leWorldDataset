@@ -3,10 +3,14 @@
 `WorldEpisode` is the paper and specification base for a storage-neutral interchange contract
 linking robot-learning episodes to immutable, versioned, replayable 3D worlds.
 
-The old working directory name is `leWorldLayout`, but the formal standards/paper name should be
-`WorldEpisode`. The goal is not to create another monolithic file format. The goal is to define the
-semantic contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian
-splats, GSDF-style assets, or a reference package layout.
+The goal is not to create another monolithic file format. The goal is to define the semantic
+contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian splats,
+GSDF-style assets, or a reference package layout.
+
+## Paper
+
+- [WorldEpisode.pdf](WorldEpisode.pdf)
+- [arXiv LaTeX source](paper/arxiv/main.tex)
 
 ## Repository Layout
 
@@ -35,6 +39,7 @@ is persistent, verifiable world-episode interoperability.
 
 ## Current Drafts
 
+- [Paper PDF](WorldEpisode.pdf)
 - [arXiv LaTeX paper](paper/arxiv/main.tex)
 - [Markdown paper notes](paper/le-world-layout.md)
 - [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
@@ -57,7 +62,7 @@ is persistent, verifiable world-episode interoperability.
 
 ```bash
 cd paper/arxiv
-make
+make root-pdf
 ```
 
 If `latexmk` is unavailable:
@@ -82,3 +87,8 @@ URDF Studio already implements the practical base:
 
 WorldEpisode extracts the interoperable contract and frames the existing world-layout work as one
 profile within a broader episode-to-world norm.
+
+## License
+
+Specification text, schemas, examples, and paper-adjacent documentation are released under CC0 1.0
+Universal. Dataset assets and future SDK code should declare their own licenses.

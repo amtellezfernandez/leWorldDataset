@@ -7,8 +7,10 @@ dump.
 
 ## Licensing
 
-- SDK and validator code: Apache-2.0 by default.
-- Specification text, examples, and paper-adjacent documentation: CC-BY-4.0 by default.
+- Specification text, schemas, examples, and paper-adjacent documentation in this repository: CC0
+  1.0 Universal, as declared in `LICENSE`.
+- Future SDK and validator implementation code: Apache-2.0 by default unless a file states
+  otherwise.
 - Dataset assets: explicit per-asset license in the asset descriptor.
 
 ## Process
@@ -30,4 +32,3 @@ Before claiming standard status, the project should have:
 - at least one external dataset that passes a published profile;
 - maintainers from more than one institution;
 - public conversion-loss reports for every reference adapter.
-

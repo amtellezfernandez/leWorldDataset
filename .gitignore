@@ -11,5 +11,6 @@ build/
 *.log
 *.out
 *.pdf
+!/WorldEpisode.pdf
 *.run.xml
 *.synctex.gz
