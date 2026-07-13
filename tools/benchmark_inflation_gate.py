@@ -141,10 +141,28 @@ def validate_rerun_report(path: Path, benchmark_ids: set[str]) -> dict[str, Any]
         errors.append("split_or_timing_audit must report baseline_lineage_overlap or timestamp_or_latency_fixed")
     if corrected_overlap is not None and corrected_overlap > 0:
         errors.append("corrected_lineage_overlap must be zero when provided")
+    lineage_source = payload.get("split_or_timing_audit", {}).get("lineage_source", {})
+    lineage_sufficient = isinstance(lineage_source, dict) and (
+        lineage_source.get("sufficient_for_score_inflation_claim") is True
+    )
+    if baseline_overlap is not None and not timing_fixed and not lineage_sufficient:
+        errors.append(
+            "lineage_source.sufficient_for_score_inflation_claim must be true for split-leakage "
+            "inflation claims"
+        )
 
     protocol = payload.get("published_protocol", {})
     if not isinstance(protocol, dict) or not protocol.get("name") or not protocol.get("source"):
         errors.append("published_protocol must name the protocol and source")
+    protocol_sufficient = isinstance(protocol, dict) and (
+        protocol.get("published_leaderboard_reproduction") is True
+        or protocol.get("faithful_published_protocol_reproduction") is True
+    )
+    if not protocol_sufficient:
+        errors.append(
+            "published_protocol must mark published_leaderboard_reproduction or "
+            "faithful_published_protocol_reproduction true"
+        )
 
     policy = payload.get("policy", {})
     if not isinstance(policy, dict) or not policy.get("name") or not policy.get("implementation"):
@@ -180,6 +198,8 @@ def validate_rerun_report(path: Path, benchmark_ids: set[str]) -> dict[str, Any]
         "corrected_score": corrected_score,
         "score_drop": score_drop,
         "measured_inflation": measured_inflation,
+        "lineage_source_sufficient": lineage_sufficient,
+        "published_protocol_sufficient": protocol_sufficient,
         "claim_boundary": (
             "Valid rerun evidence can support an inflation claim only for this benchmark, policy, "
             "protocol, subset, metric, and seed set."

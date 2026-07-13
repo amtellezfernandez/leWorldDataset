@@ -50,61 +50,58 @@ families where explicit state semantics alter the outcome.
 
 \begin{figure}[!htbp]
 \centering
-\begin{tikzpicture}
-\begin{groupplot}[
-  group style={group size=3 by 1, horizontal sep=1.05cm},
-  width=0.32\linewidth,
-  height=4.35cm,
-  ybar,
-  ymin=0,
-  axis x line*=bottom,
-  axis y line*=left,
-  tick align=outside,
-  xtick=data,
-  xtick style={draw=none},
-  ymajorgrids=true,
-  grid style={draw=weLine!55, line width=0.3pt},
-  axis line style={draw=weSlate},
-  tick label style={font=\sffamily\scriptsize},
-  label style={font=\sffamily\scriptsize},
-  title style={font=\sffamily\bfseries\small, align=center},
-  xticklabel style={font=\sffamily\scriptsize, align=center},
-  point meta=y,
-  nodes near coords,
-  nodes near coords={\pgfmathprintnumber[fixed, precision=2]{\pgfplotspointmeta}},
-  nodes near coords style={font=\sffamily\scriptsize, text=weInk},
-  every axis plot/.append style={draw=none}
-]
-  \nextgroupplot[
-    title={(a) Scene-lineage leakage},
-    ylabel={Leakage rate},
-    ymax=1.15,
-    symbolic x coords={Random,Scene-disjoint},
-    enlarge x limits=0.35
-  ]
-    \addplot[fill=weRose!75, bar width=12pt] coordinates {(Random,1.000) (Scene-disjoint,0.000)};
+\resizebox{0.98\linewidth}{!}{%
+\begin{tikzpicture}[font=\sffamily]
+  \def\panelw{3.72}
+  \def\panelh{3.05}
 
-  \nextgroupplot[
-    title={(b) Replay timing error},
-    ylabel={Joint RMSE (deg)},
-    ymax=5.25,
-    symbolic x coords={Command time,Timestamp-aware},
-    xticklabel style={font=\sffamily\scriptsize, align=center, text width=1.65cm},
-    enlarge x limits=0.32
-  ]
-    \addplot[fill=weAmber!85, bar width=12pt] coordinates {(Command time,4.732) (Timestamp-aware,1.862)};
+  \draw[rounded corners=5pt, draw=weRose!70, fill=weRose!5, line width=0.8pt]
+    (0,0) rectangle (\panelw,\panelh);
+  \node[anchor=west, font=\bfseries\scriptsize, text=weRose, text width=3.25cm] at (0.18,2.78)
+    {(a) Leakage};
+  \node[font=\bfseries\Large, text=weRose] at (0.88,2.05) {1.00};
+  \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {random\\leakage};
+  \draw[wearrow=weRose] (1.45,2.05) -- (2.22,2.05);
+  \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {0.00};
+  \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {scene\\disjoint};
+  \draw[webar=weRose!75] (0.58,0.55) rectangle (1.18,1.38);
+  \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,0.58);
+  \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
+  \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {leaked lineages removed};
 
-  \nextgroupplot[
-    title={(c) LeRobot semantic retention},
-    ylabel={Retained fields},
-    ymax=1.15,
-    symbolic x coords={Native,With sidecar},
-    xticklabel style={font=\sffamily\scriptsize, align=center, text width=1.45cm},
-    enlarge x limits=0.35
-  ]
-    \addplot[fill=weBlue!75, bar width=12pt] coordinates {(Native,0.261) (With sidecar,1.000)};
-\end{groupplot}
-\end{tikzpicture}
+  \begin{scope}[xshift=4.18cm]
+    \draw[rounded corners=5pt, draw=weAmber!75, fill=weAmber!6, line width=0.8pt]
+      (0,0) rectangle (\panelw,\panelh);
+    \node[anchor=west, font=\bfseries\scriptsize, text=weAmber!90!black, text width=3.25cm] at (0.18,2.78)
+      {(b) Replay error};
+    \node[font=\bfseries\Large, text=weAmber!90!black] at (0.88,2.05) {4.73};
+    \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {command\\time};
+    \draw[wearrow=weAmber] (1.45,2.05) -- (2.22,2.05);
+    \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {1.86};
+    \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {timestamp\\aware};
+    \draw[webar=weAmber!85] (0.58,0.55) rectangle (1.18,1.42);
+    \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,0.89);
+    \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
+    \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {2.54\(\times\) lower joint RMSE};
+  \end{scope}
+
+  \begin{scope}[xshift=8.36cm]
+    \draw[rounded corners=5pt, draw=weBlue!70, fill=weBlue!5, line width=0.8pt]
+      (0,0) rectangle (\panelw,\panelh);
+    \node[anchor=west, font=\bfseries\scriptsize, text=weBlue, text width=3.25cm] at (0.18,2.78)
+      {(c) Retention};
+    \node[font=\bfseries\Large, text=weBlue] at (0.88,2.05) {0.26};
+    \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {native\\fields};
+    \draw[wearrow=weBlue] (1.45,2.05) -- (2.22,2.05);
+    \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {1.00};
+    \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {with\\sidecar};
+    \draw[webar=weBlue!75] (0.58,0.55) rectangle (1.18,0.77);
+    \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,1.38);
+    \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
+    \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {sidecar restores projection};
+  \end{scope}
+\end{tikzpicture}%
+}
 \caption{Quantitative summary of the three measured effects used in the evaluation. Lower is
 better for leakage and replay RMSE; higher is better for semantic retention.}
 \label{fig:evaluation-dashboard}
@@ -232,8 +229,11 @@ WorldEpisode and rerunning a published policy protocol under lineage-disjoint sp
 timestamp-aware replay. To make that boundary executable, we add a separate inflation-proof gate:
 it requires a benchmark-specific WorldEpisode conversion, lineage/timing audit, published-policy
 rerun, corrected evaluation, and measured score drop before any famous benchmark can be labeled
-inflated. The current gate finds zero committed DROID, BridgeData V2, Open X-Embodiment, LIBERO,
-or CALVIN rerun reports and therefore records zero measured famous-benchmark inflation claims.
+inflated. We also add a targeted DROID-100 LeRobot-subset rerun tool that downloads pinned public
+Parquet shards, builds a WorldEpisode evidence package, compares random and lineage-disjoint
+splits, and runs a deterministic offline state-action policy. The gate records one attempted DROID
+subset rerun report, zero valid famous-benchmark rerun reports, and zero measured
+famous-benchmark inflation claims in this draft.
 
 \paragraph{Case 8: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only

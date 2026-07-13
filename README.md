@@ -205,6 +205,13 @@ To generate the source-level call-out audit over famous public robot-learning be
 python3 tools/benchmark_callout_audit.py
 ```
 
+To attempt a benchmark-specific DROID subset conversion and offline policy rerun:
+
+```bash
+uv run --with pyarrow --with requests --with numpy \
+  python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required
+```
+
 To enforce the stronger score-inflation claim gate:
 
 ```bash
@@ -277,8 +284,10 @@ so vision-policy claims require mirrored video assets with digests.
 The famous benchmark call-out audit applies the same requirement lens to Open X-Embodiment, DROID,
 BridgeData V2, LIBERO, and CALVIN. It flags missing public leakage/timing controls, but does not
 claim a benchmark score is inflated until a measured rerun exists. The separate
-benchmark-inflation gate currently records zero valid famous-benchmark rerun reports and zero
-measured famous-benchmark inflation claims.
+benchmark-inflation gate currently records one attempted DROID subset rerun artifact, zero valid
+famous-benchmark rerun reports, and zero measured famous-benchmark inflation claims. The attempted
+DROID run is fail-closed in this checkout because Hugging Face DNS resolution failed before the
+required Parquet shards could be fetched.
 The real-to-sim contract-drift ablation shows two proxy failures that visual reconstruction alone
 cannot prevent: action-interface drift and representation-role drift. It is a controlled proxy, not
 a hardware rollout, but it positions WorldEpisode as the contract layer around Gaussian/OpenUSD

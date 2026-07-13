@@ -28,7 +28,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `uss-core-23` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
-| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN plus an executable inflation-proof gate. | Prepared audit only; `benchmark_inflation_gate` found no committed famous-benchmark rerun report, so no published score is accused of inflation. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | Prepared audit plus attempted rerun only; `benchmark_inflation_gate` requires a valid benchmark-specific rerun report before any published score is accused of inflation. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 
 
@@ -116,7 +116,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Artifact: `docs/experiments/benchmark_inflation_gate/gate_report.json`
 - Status: measured_famous_benchmark_inflation_not_proven
 - Required tests: 5
-- Rerun reports committed: 0
+- Rerun reports committed: 1
 - Valid rerun reports: 0
 - Measured famous-benchmark inflation claims: 0
 - Ready for inflation claim: False
@@ -152,8 +152,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588169
-- Catalog open, parse, and index: 166.921 ms
-- Partition-pruning query time: 0.290 ms
+- Catalog open, parse, and index: 200.554 ms
+- Partition-pruning query time: 0.267 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0

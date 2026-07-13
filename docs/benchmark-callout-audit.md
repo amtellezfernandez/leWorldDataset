@@ -21,6 +21,8 @@ The generated artifact is:
 The inflation-proof gate is separate:
 
 ```bash
+uv run --with pyarrow --with requests --with numpy \
+  python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required
 python3 tools/benchmark_inflation_gate.py
 python3 tools/benchmark_inflation_gate.py --required
 ```
@@ -28,8 +30,10 @@ python3 tools/benchmark_inflation_gate.py --required
 The default command records the current evidence state in
 `docs/experiments/benchmark_inflation_gate/gate_report.json`. The `--required` form returns
 non-zero unless at least one famous benchmark has a valid WorldEpisode conversion, split/timing
-audit, and policy rerun report. In the current repository this required gate correctly fails:
-there are zero committed DROID, BridgeData V2, Open X-Embodiment, LIBERO, or CALVIN rerun reports.
+audit, and policy rerun report. In the current repository this required gate correctly fails. There
+is one attempted DROID subset rerun artifact, but it is invalid because Hugging Face DNS resolution
+failed before the pinned Parquet shards could be fetched. There are still zero valid DROID,
+BridgeData V2, Open X-Embodiment, LIBERO, or CALVIN rerun reports.
 
 The current top-five source-level audit covers:
 

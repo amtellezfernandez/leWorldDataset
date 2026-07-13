@@ -20,7 +20,7 @@ split/timing audit, and a policy rerun under the corrected protocol.
 
 | Benchmark | Valid | Score Drop | Measured Inflation | Report |
 |---|---:|---:|---:|---|
-| none | false | n/a | false | no rerun reports committed |
+| droid | False | None | False | docs/experiments/benchmark_reruns/droid_100/rerun_report.json |
 
 ## Current Policy
 
