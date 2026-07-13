@@ -76,18 +76,19 @@ scene leakage, replay timing drift, and native binding loss.}
 \paragraph{Case 2: the converter that refuses to invent missing physics.}
 To test an actual LeRobotDataset rather than only a capability model, we implement
 \(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
-on episode 0 of the pinned public SO-101 dataset
+on a five-episode batch from the pinned public SO-101 dataset
 \path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace}. The converter downloads
 the real Parquet metadata and data shards, builds a schema-valid WorldEpisode manifest and sidecar,
 exports a compact LeRobotDataset v3 package, reads it back, and asserts exact equality.
 
-This is a smoke test for active conversion on a real public dataset, not a coverage claim for all
-LeRobot datasets. The round trip preserves 303 rows of six-dimensional action tensors, 303 state
-rows, 303 sample timestamps, and two camera video timestamp ranges with maximum absolute error 0.0.
-It also preserves three physical-frame records through the sidecar. More importantly, it does not
-fake missing semantics: camera extrinsics, robot/world calibration, action units, and controller
-latency are reported as source-absent rather than guessed. This is the difference between a
-convenient conversion and an auditable one.
+This is a batch audit for active conversion on one real public dataset, not a coverage claim for all
+LeRobot datasets. Across episodes 0--4, the round trip preserves 1,197 rows of six-dimensional
+action tensors, 1,197 state rows, sample timestamps, frame indices, episode indices, global sample
+indices, task indices, and two camera video timestamp ranges with maximum absolute error 0.0. It
+also preserves three physical-frame records through the sidecar. More importantly, it does not fake
+missing semantics: camera extrinsics, robot/world calibration, action units, and controller latency
+are reported as source-absent rather than guessed. This is the difference between a convenient
+conversion and an auditable one.
 
 \paragraph{Case 3: the replay that drifted because time was underspecified.}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:

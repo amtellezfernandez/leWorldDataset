@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPO_ID = "lerobot/svla_so101_pickplace"
 DEFAULT_REVISION = "f641879e22172be7e8161d5e6c1503c2d2feb657"
 DEFAULT_EPISODE_INDEX = 0
+DEFAULT_BATCH_EPISODE_INDICES = (0, 1, 2, 3, 4)
 DEFAULT_CACHE_DIR = ROOT / ".cache" / "worldepisode" / "lerobot"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "lerobot_worldepisode_roundtrip"
 SOURCE_PATHS = (
@@ -536,7 +537,7 @@ def worldepisode_to_lerobot(
     pq.write_table(task_table, export_dir / "meta" / "tasks.parquet")
 
     episode_values = dict(source.episode_metadata)
-    episode_values["episode_index"] = 0
+    episode_values["episode_index"] = source.episode_index
     episode_values["dataset_from_index"] = 0
     episode_values["dataset_to_index"] = len(package.trace["timestamp"])
     episode_values["length"] = len(package.trace["timestamp"])
@@ -549,8 +550,8 @@ def worldepisode_to_lerobot(
             "observation.state": pa.array(package.trace["observation.state"], type=pa.list_(pa.float32())),
             "timestamp": pa.array(package.trace["timestamp"], type=pa.float32()),
             "frame_index": pa.array(package.trace["frame_index"], type=pa.int64()),
-            "episode_index": pa.array([0] * len(package.trace["timestamp"]), type=pa.int64()),
-            "index": pa.array(list(range(len(package.trace["timestamp"]))), type=pa.int64()),
+            "episode_index": pa.array(package.trace["episode_index"], type=pa.int64()),
+            "index": pa.array(package.trace["index"], type=pa.int64()),
             "task_index": pa.array(package.trace["task_index"], type=pa.int64()),
         }
     )
@@ -592,7 +593,7 @@ def worldepisode_to_lerobot(
         exported_files,
         source.repo_id,
         source.revision,
-        episode_index=0,
+        episode_index=source.episode_index,
     )
 
 
@@ -611,6 +612,13 @@ def compare_native_roundtrip(
         "max_abs_action_error": float_max_abs_error(source.rows["action"], exported.rows["action"]),
         "max_abs_state_error": float_max_abs_error(source.rows["observation.state"], exported.rows["observation.state"]),
         "max_abs_timestamp_error": float_max_abs_error(source.rows["timestamp"], exported.rows["timestamp"]),
+        "max_abs_frame_index_error": float_max_abs_error(source.rows["frame_index"], exported.rows["frame_index"]),
+        "max_abs_episode_index_error": float_max_abs_error(
+            source.rows["episode_index"],
+            exported.rows["episode_index"],
+        ),
+        "max_abs_index_error": float_max_abs_error(source.rows["index"], exported.rows["index"]),
+        "max_abs_task_index_error": float_max_abs_error(source.rows["task_index"], exported.rows["task_index"]),
         "max_abs_video_timestamp_error": float_max_abs_error(
             source.video_timestamp_ranges,
             exported.video_timestamp_ranges,
@@ -636,6 +644,10 @@ def compare_native_roundtrip(
         metrics["max_abs_action_error"] == 0.0
         and metrics["max_abs_state_error"] == 0.0
         and metrics["max_abs_timestamp_error"] == 0.0
+        and metrics["max_abs_frame_index_error"] == 0.0
+        and metrics["max_abs_episode_index_error"] == 0.0
+        and metrics["max_abs_index_error"] == 0.0
+        and metrics["max_abs_task_index_error"] == 0.0
         and metrics["max_abs_video_timestamp_error"] == 0.0
         and metrics["physical_frames_preserved"]
         and not metrics["discarded_fields"]
@@ -696,6 +708,27 @@ def write_artifacts(
     return roundtrip_report
 
 
+def run_one_roundtrip(
+    source_files: dict[str, dict[str, Any]],
+    output_dir: Path,
+    repo_id: str,
+    revision: str,
+    episode_index: int,
+) -> dict[str, Any]:
+    source = load_lerobot_episode(source_files, repo_id, revision, episode_index)
+    package = lerobot_to_worldepisode(source)
+    validate_worldepisode_manifest(package.manifest)
+    exported = worldepisode_to_lerobot(package, source, output_dir / "exported_lerobot_v3")
+    metrics = compare_native_roundtrip(source, exported, package)
+    report = write_artifacts(output_dir, source, package, exported, metrics)
+    if not metrics["pass"]:
+        raise AssertionError(
+            f"LeRobot -> WorldEpisode -> LeRobot round-trip did not preserve required fields "
+            f"for episode {episode_index}"
+        )
+    return report
+
+
 def run_roundtrip_experiment(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     cache_dir: Path = DEFAULT_CACHE_DIR,
@@ -711,15 +744,98 @@ def run_roundtrip_experiment(
         cache_dir=cache_dir,
         max_download_bytes=max_download_mb * 1024 * 1024,
     )
-    source = load_lerobot_episode(source_files, repo_id, revision, episode_index)
-    package = lerobot_to_worldepisode(source)
-    validate_worldepisode_manifest(package.manifest)
-    exported = worldepisode_to_lerobot(package, source, output_dir / "exported_lerobot_v3")
-    metrics = compare_native_roundtrip(source, exported, package)
-    report = write_artifacts(output_dir, source, package, exported, metrics)
-    if not metrics["pass"]:
-        raise AssertionError("LeRobot -> WorldEpisode -> LeRobot round-trip did not preserve required fields")
-    return report
+    return run_one_roundtrip(source_files, output_dir, repo_id, revision, episode_index)
+
+
+def run_batch_roundtrip_experiment(
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    cache_dir: Path = DEFAULT_CACHE_DIR,
+    repo_id: str = DEFAULT_REPO_ID,
+    revision: str = DEFAULT_REVISION,
+    episode_indices: tuple[int, ...] = DEFAULT_BATCH_EPISODE_INDICES,
+    max_download_mb: int = 2,
+) -> dict[str, Any]:
+    if not episode_indices:
+        raise ValueError("at least one episode index is required for batch round-trip")
+    require_pyarrow()
+    source_files = download_source_files(
+        repo_id=repo_id,
+        revision=revision,
+        cache_dir=cache_dir,
+        max_download_bytes=max_download_mb * 1024 * 1024,
+    )
+    reports = []
+    for episode_index in episode_indices:
+        episode_output_dir = output_dir / "batch" / f"episode_{episode_index:06d}"
+        reports.append(
+            run_one_roundtrip(
+                source_files=source_files,
+                output_dir=episode_output_dir,
+                repo_id=repo_id,
+                revision=revision,
+                episode_index=episode_index,
+            )
+        )
+
+    metric_keys = (
+        "max_abs_action_error",
+        "max_abs_state_error",
+        "max_abs_timestamp_error",
+        "max_abs_frame_index_error",
+        "max_abs_episode_index_error",
+        "max_abs_index_error",
+        "max_abs_task_index_error",
+        "max_abs_video_timestamp_error",
+    )
+    aggregate = {
+        "available": True,
+        "pass": all(report["pass"] for report in reports),
+        "repo_id": repo_id,
+        "revision": revision,
+        "episode_indices": list(episode_indices),
+        "episode_count": len(reports),
+        "total_action_rows": sum(report["metrics"]["action_rows"] for report in reports),
+        "total_state_rows": sum(report["metrics"]["state_rows"] for report in reports),
+        "max_errors": {
+            key: max(report["metrics"][key] for report in reports)
+            for key in metric_keys
+        },
+        "all_physical_frames_preserved": all(
+            report["metrics"]["physical_frames_preserved"]
+            for report in reports
+        ),
+        "discarded_fields": sorted(
+            {
+                field
+                for report in reports
+                for field in report["metrics"]["discarded_fields"]
+            }
+        ),
+        "reports": [
+            str((output_dir / "batch" / f"episode_{report['episode_index']:06d}" / "roundtrip_report.json").relative_to(ROOT))
+            for report in reports
+        ],
+    }
+    aggregate["pass"] = (
+        aggregate["pass"]
+        and all(value == 0.0 for value in aggregate["max_errors"].values())
+        and aggregate["all_physical_frames_preserved"]
+        and not aggregate["discarded_fields"]
+    )
+    write_json(output_dir / "batch_roundtrip_report.json", aggregate)
+    if not aggregate["pass"]:
+        raise AssertionError("batch LeRobot round-trip did not preserve required fields")
+    return aggregate
+
+
+def parse_episode_indices(value: str) -> tuple[int, ...]:
+    indices = []
+    for item in value.split(","):
+        stripped = item.strip()
+        if not stripped:
+            continue
+        indices.append(int(stripped))
+    return tuple(indices)
 
 
 def unavailable_report(error: Exception) -> dict[str, Any]:
@@ -739,6 +855,11 @@ def main() -> int:
     parser.add_argument("--repo-id", default=DEFAULT_REPO_ID)
     parser.add_argument("--revision", default=DEFAULT_REVISION)
     parser.add_argument("--episode-index", type=int, default=DEFAULT_EPISODE_INDEX)
+    parser.add_argument(
+        "--batch-episode-indices",
+        default="",
+        help="optional comma-separated episode indices for a batch round-trip report",
+    )
     parser.add_argument("--max-download-mb", type=int, default=2)
     parser.add_argument("--required", action="store_true", help="return non-zero if the active experiment cannot run")
     args = parser.parse_args()
@@ -752,6 +873,15 @@ def main() -> int:
             episode_index=args.episode_index,
             max_download_mb=args.max_download_mb,
         )
+        if args.batch_episode_indices:
+            report["batch_roundtrip"] = run_batch_roundtrip_experiment(
+                output_dir=args.output_dir,
+                cache_dir=args.cache_dir,
+                repo_id=args.repo_id,
+                revision=args.revision,
+                episode_indices=parse_episode_indices(args.batch_episode_indices),
+                max_download_mb=args.max_download_mb,
+            )
     except RoundTripUnavailable as exc:
         report = unavailable_report(exc)
         write_json(args.output_dir / "roundtrip_report.json", report)

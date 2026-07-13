@@ -1,0 +1,34 @@
+{
+  "episode_index": 0,
+  "repo_id": "lerobot/svla_so101_pickplace",
+  "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+  "source_dataset_total_episodes": 50,
+  "source_dataset_total_frames": 11939,
+  "source_files": {
+    "data/chunk-000/file-000.parquet": {
+      "bytes": 369943,
+      "sha256": "579ad57e2454359fa9f2c0e83525991bd2e0305b7b2914d0b1181da3c6ad9949",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/data/chunk-000/file-000.parquet"
+    },
+    "meta/episodes/chunk-000/file-000.parquet": {
+      "bytes": 72560,
+      "sha256": "191998bffd2680c477a4000270cf943bc423ba5fb54ee8b8244b57db062c5209",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/episodes/chunk-000/file-000.parquet"
+    },
+    "meta/info.json": {
+      "bytes": 3401,
+      "sha256": "254909942a6cbfb4692a239e4d0aa5c68ec8eb16f81b6593985ea7f2bb2823e3",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/info.json"
+    },
+    "meta/stats.json": {
+      "bytes": 5914,
+      "sha256": "4ae86bed785e0f98914812e87736e216139a22b43cf2b990e68384d85168c3c8",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/stats.json"
+    },
+    "meta/tasks.parquet": {
+      "bytes": 2246,
+      "sha256": "1040cdef3328ec4376587152647df8e725e80a04210c426f891719e691c88533",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/tasks.parquet"
+    }
+  }
+}

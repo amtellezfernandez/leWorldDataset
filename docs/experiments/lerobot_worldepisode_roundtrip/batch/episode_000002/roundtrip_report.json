@@ -1,0 +1,49 @@
+{
+  "artifacts": {
+    "conversion_report": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+    "exported_lerobot_v3": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3",
+    "source_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/source_manifest.json",
+    "worldepisode_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/worldepisode.manifest.json",
+    "worldepisode_sidecar": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/worldepisode.sidecar.json"
+  },
+  "available": true,
+  "episode_index": 2,
+  "explicitly_tracked_source_absent_fields": [
+    "camera extrinsics",
+    "robot/world calibration transform",
+    "action units",
+    "controller latency model"
+  ],
+  "metrics": {
+    "action_rows": 230,
+    "action_tensor_sha256": "9016d22f3e4de757be4184b923a5c40fb7446c388643a7c7f9debcc1ab8bc3c9",
+    "action_width": 6,
+    "discarded_fields": [],
+    "max_abs_action_error": 0.0,
+    "max_abs_episode_index_error": 0.0,
+    "max_abs_frame_index_error": 0.0,
+    "max_abs_index_error": 0.0,
+    "max_abs_state_error": 0.0,
+    "max_abs_task_index_error": 0.0,
+    "max_abs_timestamp_error": 0.0,
+    "max_abs_video_timestamp_error": 0.0,
+    "pass": true,
+    "physical_frame_records": 3,
+    "physical_frames_preserved": true,
+    "physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+    "roundtrip_action_tensor_sha256": "9016d22f3e4de757be4184b923a5c40fb7446c388643a7c7f9debcc1ab8bc3c9",
+    "roundtrip_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+    "roundtrip_timestamp_sha256": "d8e3205b2bdf406586b2698f64c48841c351349f5bc2e5da5228c9268f95c913",
+    "roundtrip_video_timestamp_sha256": "2ccee856be0c1da00f7b26137464b5d65303efb7714bb351c80fd617447760f5",
+    "source_absent_fields_tracked": 4,
+    "state_rows": 230,
+    "timestamp_count": 230,
+    "timestamp_sha256": "d8e3205b2bdf406586b2698f64c48841c351349f5bc2e5da5228c9268f95c913",
+    "video_streams": 2,
+    "video_timestamp_sha256": "2ccee856be0c1da00f7b26137464b5d65303efb7714bb351c80fd617447760f5",
+    "worldepisode_sidecar_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272"
+  },
+  "pass": true,
+  "repo_id": "lerobot/svla_so101_pickplace",
+  "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+}

@@ -1,0 +1,33 @@
+{
+  "episode_index": 3,
+  "export_dir": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3",
+  "files": {
+    "data/chunk-000/file-000.parquet": {
+      "bytes": 11666,
+      "sha256": "17d604e5b7afdd18676076e9cc30bd3497a15dfef91c58b27edf1423d359342c",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/data/chunk-000/file-000.parquet"
+    },
+    "meta/episodes/chunk-000/file-000.parquet": {
+      "bytes": 29365,
+      "sha256": "95d6a0ffa08536f1f8d4b13e0d95e09af8d94099f45f0aa09c36231f076af10f",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet"
+    },
+    "meta/info.json": {
+      "bytes": 2610,
+      "sha256": "cb8f6d46acb214990c4e2ef7c5567195dd9e14d2c4c49761ca979c2c42e250aa",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/info.json"
+    },
+    "meta/stats.json": {
+      "bytes": 4238,
+      "sha256": "971deb8ff98314df6cd873f2613dcd4cb3d6dba6138e8bc4e3d1adc08193c96c",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/stats.json"
+    },
+    "meta/tasks.parquet": {
+      "bytes": 973,
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/tasks.parquet"
+    }
+  },
+  "repo_id": "lerobot/svla_so101_pickplace",
+  "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+}

@@ -33,6 +33,7 @@ INDEPENDENT_FIXTURE_DIR = ROOT / "conformance" / "fixtures" / "independent"
 RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
+ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 
@@ -441,7 +442,10 @@ def experiment_lerobot_active_roundtrip() -> dict[str, Any]:
     try:
         from lerobot_worldepisode_roundtrip import RoundTripUnavailable, run_roundtrip_experiment, unavailable_report
 
-        return run_roundtrip_experiment()
+        report = run_roundtrip_experiment()
+        if ROUNDTRIP_BATCH_REPORT.exists():
+            report["batch_roundtrip"] = load_json(ROUNDTRIP_BATCH_REPORT)
+        return report
     except RoundTripUnavailable as exc:
         return unavailable_report(exc)
     except Exception as exc:  # noqa: BLE001 - report reproducibility blockers without hiding them.
@@ -832,6 +836,23 @@ def write_report(results: dict[str, Any]) -> None:
     scene_leakage = results["lerobot_scene_leakage"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
+        batch = active_lerobot.get("batch_roundtrip")
+        batch_lines = ""
+        if batch and batch.get("available"):
+            batch_lines = (
+                f"- Batch report: {batch['episode_count']} episodes, "
+                f"{batch['total_action_rows']} action rows, "
+                f"max action/state/timestamp/video errors = "
+                f"{batch['max_errors']['max_abs_action_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_state_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_timestamp_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_video_timestamp_error']:.1f}\n"
+                f"- Batch source-index errors: frame/episode/global/task = "
+                f"{batch['max_errors']['max_abs_frame_index_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_episode_index_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_index_error']:.1f}/"
+                f"{batch['max_errors']['max_abs_task_index_error']:.1f}\n"
+            )
         active_section = f"""## Active LeRobot -> WorldEpisode -> LeRobot Round-Trip
 
 - Source: `{active_lerobot["repo_id"]}@{active_lerobot["revision"]}`
@@ -846,6 +867,7 @@ def write_report(results: dict[str, Any]) -> None:
 - Max absolute video timestamp error: {active_metrics["max_abs_video_timestamp_error"]:.1f}
 - Explicitly tracked source-absent fields: {active_metrics["source_absent_fields_tracked"]}
 - Discarded fields: {len(active_metrics["discarded_fields"])}
+{batch_lines}
 """
     else:
         active_section = f"""## Active LeRobot -> WorldEpisode -> LeRobot Round-Trip
@@ -911,7 +933,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
-| Conversion | Pinned LeRobotDataset v3 episode round trip with exact tensor and timestamp equality. | One dataset and one episode; broader dataset coverage remains future work. |
+| Conversion | Pinned LeRobotDataset v3 five-episode batch round trip with exact tensor, index, and timestamp equality. | One dataset; broader dataset coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |

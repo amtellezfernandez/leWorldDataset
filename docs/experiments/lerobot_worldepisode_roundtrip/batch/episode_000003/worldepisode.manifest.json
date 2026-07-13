@@ -1,0 +1,142 @@
+{
+  "action_space": {
+    "channels": [
+      {
+        "actuator": "so100_follower",
+        "command_rate_hz": 30,
+        "command_timestamp_semantics": "LeRobot timestamp column is preserved as command sample time",
+        "control_mode": "joint_position",
+        "effective_timestamp_semantics": "source does not declare controller latency; effective time is source-absent",
+        "interpolation": "source_absent",
+        "latency_model": "source_absent",
+        "missing_value_policy": "source_absent",
+        "name": "joint_position_vector",
+        "parameterization": "absolute_joint_vector",
+        "reference_frame": "so100_follower_joint_space",
+        "semantics": "absolute",
+        "units": "source_undocumented_position_units"
+      }
+    ]
+  },
+  "clock_graph": {
+    "clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "lerobot_timestamp",
+        "units": "s"
+      }
+    ],
+    "mappings": []
+  },
+  "embodiment": {
+    "embodiment_id": "so100_follower"
+  },
+  "entities": [
+    {
+      "entity_id": "so100_follower",
+      "entity_type": "robot",
+      "representations": [
+        {
+          "asset": {
+            "license": "Apache-2.0",
+            "media_type": "application/json",
+            "mirrors": [
+              "meta/info.json"
+            ],
+            "sha256": "254909942a6cbfb4692a239e4d0aa5c68ec8eb16f81b6593985ea7f2bb2823e3",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/info.json"
+          },
+          "coordinate_frame": "so100_follower_joint_space",
+          "license": "Apache-2.0",
+          "representation_id": "so100_follower_lerobot_schema",
+          "role": "semantics",
+          "valid_interval": {
+            "clock_id": "episode_time",
+            "end": 6.066666603088379,
+            "start": 0
+          }
+        }
+      ]
+    }
+  ],
+  "episode": {
+    "dataset_id": "lerobot/svla_so101_pickplace",
+    "episode_id": "lerobot_svla_so101_pickplace_episode_000003",
+    "outcome": "source_not_annotated",
+    "split": "train"
+  },
+  "events": [],
+  "frame_graph": {
+    "frames": [
+      {
+        "convention": "lerobot-source-joint-vector",
+        "frame_id": "so100_follower_joint_space",
+        "units": "rad"
+      },
+      {
+        "convention": "dataset-indexed-observation-frame",
+        "frame_id": "so100_follower_dataset_clock_frame",
+        "units": "m"
+      }
+    ],
+    "transforms": []
+  },
+  "provenance": {
+    "creator": "WorldEpisode active LeRobot converter",
+    "license": "Apache-2.0 source dataset; derived metadata CC0-1.0",
+    "software": "tools/lerobot_worldepisode_roundtrip.py",
+    "source": "lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657"
+  },
+  "quality": {
+    "conformance_profiles": [
+      "WE-Core"
+    ],
+    "source_absent_fields": [
+      "camera extrinsics",
+      "robot/world calibration transform",
+      "action units",
+      "controller latency model"
+    ],
+    "source_native_fields_preserved": [
+      "action",
+      "observation.state",
+      "timestamp",
+      "frame_index",
+      "episode_index",
+      "index",
+      "task_index",
+      "video timestamp ranges"
+    ]
+  },
+  "schema_version": "worldepisode-0.1",
+  "task": {
+    "instruction": "pink lego brick into the transparent box",
+    "task_id": "source_task_0"
+  },
+  "trace": {
+    "asset": {
+      "license": "Apache-2.0",
+      "media_type": "application/vnd.apache.parquet",
+      "mirrors": [
+        "data/chunk-000/file-000.parquet"
+      ],
+      "sha256": "579ad57e2454359fa9f2c0e83525991bd2e0305b7b2914d0b1181da3c6ad9949",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/data/chunk-000/file-000.parquet"
+    },
+    "binding": "lerobot-v3"
+  },
+  "world_deltas": [],
+  "world_revision": {
+    "asset": {
+      "license": "Apache-2.0",
+      "media_type": "application/json",
+      "mirrors": [
+        "meta/info.json"
+      ],
+      "sha256": "254909942a6cbfb4692a239e4d0aa5c68ec8eb16f81b6593985ea7f2bb2823e3",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/info.json"
+    },
+    "binding": "lerobot-v3-source-metadata",
+    "world_revision_id": "lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/metadata@sha256:254909942a6cbfb4692a239e4d0aa5c68ec8eb16f81b6593985ea7f2bb2823e3"
+  }
+}
