@@ -77,6 +77,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Clean-room reader artifacts](docs/experiments/cleanroom_reader)
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
+- [Famous benchmark inflation proof gate](docs/experiments/benchmark_inflation_gate)
 - [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
 - [Meta-simulator contract](docs/meta-simulator-contract.md)
 - [USS state-drift pilots](docs/experiments/uss_state_drift_pilots)
@@ -88,6 +89,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
 - [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
+- [Famous benchmark inflation-gate artifacts](docs/experiments/benchmark_inflation_gate)
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
 - [Meta-simulator contract artifacts](docs/experiments/meta_simulator_contract)
 - [USS state-drift pilot artifacts](docs/experiments/uss_state_drift_pilots)
@@ -202,6 +204,16 @@ To generate the source-level call-out audit over famous public robot-learning be
 python3 tools/benchmark_callout_audit.py
 ```
 
+To enforce the stronger score-inflation claim gate:
+
+```bash
+python3 tools/benchmark_inflation_gate.py
+python3 tools/benchmark_inflation_gate.py --required
+```
+
+The required form is expected to fail until a famous benchmark has a committed WorldEpisode
+conversion, split/timing audit, and policy rerun report.
+
 To generate the controlled real-to-sim contract-drift ablation:
 
 ```bash
@@ -256,7 +268,9 @@ requirements; it is intentionally marked open until real ACT/Diffusion metrics a
 are committed.
 The famous benchmark call-out audit applies the same requirement lens to Open X-Embodiment, DROID,
 BridgeData V2, LIBERO, and CALVIN. It flags missing public leakage/timing controls, but does not
-claim a benchmark score is inflated until a measured rerun exists.
+claim a benchmark score is inflated until a measured rerun exists. The separate
+benchmark-inflation gate currently records zero valid famous-benchmark rerun reports and zero
+measured famous-benchmark inflation claims.
 The real-to-sim contract-drift ablation shows two proxy failures that visual reconstruction alone
 cannot prevent: action-interface drift and representation-role drift. It is a controlled proxy, not
 a hardware rollout, but it positions WorldEpisode as the contract layer around Gaussian/OpenUSD

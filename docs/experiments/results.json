@@ -695,6 +695,7 @@
     },
     "profile": "worldepisode-famous-benchmark-callout-0.1",
     "required_next_steps": [
+      "pass tools/benchmark_inflation_gate.py --required before claiming score inflation",
       "convert each benchmark into a WorldEpisode dataset manifest or sidecar",
       "derive or import world_lineage identifiers from scene, environment, asset, or capture metadata",
       "audit official train/eval splits for world, entity, source-capture, and asset-lineage leakage",
@@ -703,6 +704,62 @@
     ],
     "scope": "source_level_public_metadata_audit",
     "status": "prepared_not_measured"
+  },
+  "benchmark_inflation_gate": {
+    "aggregate": {
+      "audited_benchmark_count": 5,
+      "measured_inflation_claims": 0,
+      "minimum_score_drop_for_inflation": 0.05,
+      "ready_for_inflation_claim": false,
+      "rerun_report_count": 0,
+      "valid_rerun_report_count": 0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/benchmark_inflation_gate/README.md",
+      "report": "docs/experiments/benchmark_inflation_gate/gate_report.json"
+    },
+    "audit_date": "2026-07-13",
+    "audited_benchmark_ids": [
+      "open_x_embodiment",
+      "droid",
+      "bridgedata_v2",
+      "libero",
+      "calvin"
+    ],
+    "callout_report": "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json",
+    "claim_boundary": "This gate only counts benchmark-score inflation when a benchmark-specific conversion, split/timing audit, and policy rerun report pass. Source-level metadata gaps do not count as score-inflation evidence.",
+    "current_claim_policy": "The paper may call famous benchmarks unaudited with respect to WorldEpisode controls, but must not call their scores inflated until this gate has at least one measured inflation claim.",
+    "profile": "worldepisode-famous-benchmark-inflation-gate-0.1",
+    "required_tests": [
+      {
+        "evidence": "A WorldEpisode manifest/sidecar for the benchmark subset, plus conversion report with loss accounting and source data revision.",
+        "name": "benchmark_specific_worldepisode_conversion",
+        "test_id": "BENCH-INFLATE.001"
+      },
+      {
+        "evidence": "A split or replay audit showing the original protocol leaks world/entity/source lineage or omits timing semantics, and the corrected protocol removes that failure.",
+        "name": "lineage_or_timing_audit",
+        "test_id": "BENCH-INFLATE.002"
+      },
+      {
+        "evidence": "A rerun of a published policy protocol or faithful reproduction, with policy code, configuration, seeds, and evaluation command recorded.",
+        "name": "published_protocol_rerun",
+        "test_id": "BENCH-INFLATE.003"
+      },
+      {
+        "evidence": "The same policy evaluated under the corrected lineage-disjoint split or timestamp-aware replay with the same metric and tolerance envelope.",
+        "name": "paired_corrected_evaluation",
+        "test_id": "BENCH-INFLATE.004"
+      },
+      {
+        "evidence": "A positive baseline-minus-corrected score drop with enough seeds or paired episodes to support the claim being made.",
+        "name": "measured_score_delta",
+        "test_id": "BENCH-INFLATE.005"
+      }
+    ],
+    "rerun_dir": "docs/experiments/benchmark_reruns",
+    "rerun_reports": [],
+    "status": "measured_famous_benchmark_inflation_not_proven"
   },
   "cleanroom_reader": {
     "aggregate": {

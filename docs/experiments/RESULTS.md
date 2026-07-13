@@ -28,7 +28,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `uss-core-23` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
-| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN plus an executable inflation-proof gate. | Prepared audit only; `benchmark_inflation_gate` found no committed famous-benchmark rerun report, so no published score is accused of inflation. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 
 
@@ -107,6 +107,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Benchmarks: 5
 - Benchmarks with high-severity open controls: 5
 - Measured inflation claims in this audit: 0
+
+## Famous Benchmark Inflation Proof Gate
+
+- Artifact: `docs/experiments/benchmark_inflation_gate/gate_report.json`
+- Status: measured_famous_benchmark_inflation_not_proven
+- Required tests: 5
+- Rerun reports committed: 0
+- Valid rerun reports: 0
+- Measured famous-benchmark inflation claims: 0
+- Ready for inflation claim: False
 
 ## Single-Line Preflight Validator
 

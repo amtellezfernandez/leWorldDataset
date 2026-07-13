@@ -692,6 +692,7 @@
   },
   "profile": "worldepisode-famous-benchmark-callout-0.1",
   "required_next_steps": [
+    "pass tools/benchmark_inflation_gate.py --required before claiming score inflation",
     "convert each benchmark into a WorldEpisode dataset manifest or sidecar",
     "derive or import world_lineage identifiers from scene, environment, asset, or capture metadata",
     "audit official train/eval splits for world, entity, source-capture, and asset-lineage leakage",

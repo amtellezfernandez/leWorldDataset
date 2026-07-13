@@ -225,7 +225,11 @@ five benchmarks have at least one high-severity open control; the three real-rob
 five each in the current source-level audit. This is a call-out target list, not a claim that their
 published scores are inflated. The stronger claim requires converting each benchmark into
 WorldEpisode and rerunning a published policy protocol under lineage-disjoint splits or
-timestamp-aware replay.
+timestamp-aware replay. To make that boundary executable, we add a separate inflation-proof gate:
+it requires a benchmark-specific WorldEpisode conversion, lineage/timing audit, published-policy
+rerun, corrected evaluation, and measured score drop before any famous benchmark can be labeled
+inflated. The current gate finds zero committed DROID, BridgeData V2, Open X-Embodiment, LIBERO,
+or CALVIN rerun reports and therefore records zero measured famous-benchmark inflation claims.
 
 \paragraph{Case 8: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only

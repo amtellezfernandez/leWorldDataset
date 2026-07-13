@@ -33,3 +33,7 @@ The explosive ArmnetBench result remains the measured leakage case in this repos
 five-benchmark audit is the next target list: each benchmark should be converted into a
 WorldEpisode manifest, validated for the checks above, and rerun under lineage-disjoint splits or
 timestamp-aware replay before making any stronger claim.
+
+The stronger claim is enforced by `tools/benchmark_inflation_gate.py`. Until
+`docs/experiments/benchmark_inflation_gate/gate_report.json` contains a valid rerun report, the
+paper must treat these benchmarks as unaudited rather than inflated.

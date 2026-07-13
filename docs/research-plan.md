@@ -132,6 +132,13 @@ action timing contracts, and replay/loss reports. The next experiment is to conv
 a time into a WorldEpisode manifest and rerun a published policy protocol under the corrected split
 or timing contract.
 
+Inflation-proof gate: `tools/benchmark_inflation_gate.py` is the hard blocker for any claim that a
+famous benchmark score is inflated. It requires a benchmark-specific WorldEpisode conversion,
+lineage/timing audit, published-policy rerun, corrected evaluation, and measured score drop. The
+current gate has zero rerun reports and therefore zero measured famous-benchmark inflation claims;
+`python3 tools/benchmark_inflation_gate.py --required` should fail until real rerun artifacts are
+committed.
+
 Real-to-sim artifact: `tools/realtosim_contract_drift.py` adds a controlled proxy for the
 Gaussian/OpenUSD hype cycle. It shows that a drifted action interface can succeed in simulation and
 fail under the deployment controller, and that an appearance-only reconstruction can succeed in

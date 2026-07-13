@@ -18,6 +18,19 @@ The generated artifact is:
 - `docs/experiments/benchmark_callout_audit/benchmark_callout_report.json`;
 - `docs/experiments/benchmark_callout_audit/README.md`.
 
+The inflation-proof gate is separate:
+
+```bash
+python3 tools/benchmark_inflation_gate.py
+python3 tools/benchmark_inflation_gate.py --required
+```
+
+The default command records the current evidence state in
+`docs/experiments/benchmark_inflation_gate/gate_report.json`. The `--required` form returns
+non-zero unless at least one famous benchmark has a valid WorldEpisode conversion, split/timing
+audit, and policy rerun report. In the current repository this required gate correctly fails:
+there are zero committed DROID, BridgeData V2, Open X-Embodiment, LIBERO, or CALVIN rerun reports.
+
 The current top-five source-level audit covers:
 
 - Open X-Embodiment / RT-X;
@@ -38,4 +51,4 @@ The audit checks whether public metadata exposes:
 The result is a target list, not an accusation. A benchmark is called out when public metadata does
 not expose enough information to audit leakage or timing. A benchmark is only called inflated after
 the corresponding policy protocol is rerun under lineage-disjoint splits or timestamp-aware replay
-and the score changes.
+and the score changes. The proof gate enforces that distinction.

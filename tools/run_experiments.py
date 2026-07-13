@@ -43,6 +43,7 @@ SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.j
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
+BENCHMARK_INFLATION_GATE_REPORT = RESULTS_DIR / "benchmark_inflation_gate" / "gate_report.json"
 PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
 REALTOSIM_DRIFT_REPORT = RESULTS_DIR / "realtosim_contract_drift" / "contract_drift_report.json"
 META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contract_report.json"
@@ -441,6 +442,22 @@ def experiment_benchmark_callout_audit() -> dict[str, Any]:
             "reproduce": "python3 tools/benchmark_callout_audit.py",
         }
         write_json(BENCHMARK_CALLOUT_REPORT, report)
+        return report
+
+
+def experiment_benchmark_inflation_gate() -> dict[str, Any]:
+    try:
+        from benchmark_inflation_gate import build_benchmark_inflation_gate
+
+        return build_benchmark_inflation_gate(output_dir=RESULTS_DIR / "benchmark_inflation_gate")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/benchmark_inflation_gate.py",
+        }
+        write_json(BENCHMARK_INFLATION_GATE_REPORT, report)
         return report
 
 
@@ -1220,6 +1237,7 @@ def write_report(results: dict[str, Any]) -> None:
     scene_leakage = results["lerobot_scene_leakage"]
     policy_gate = results["lerobot_policy_gate"]
     benchmark_callout = results["benchmark_callout_audit"]
+    benchmark_inflation = results["benchmark_inflation_gate"]
     preflight_result = results["preflight_validator"]
     realtosim_drift = results["realtosim_contract_drift"]
     meta_sim = results["meta_simulator_contract"]
@@ -1359,7 +1377,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
-| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN plus an executable inflation-proof gate. | Prepared audit only; `benchmark_inflation_gate` found no committed famous-benchmark rerun report, so no published score is accused of inflation. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 """
     report = f"""# USS / WorldEpisode Controlled Experiment Results
@@ -1412,6 +1430,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Benchmarks: {benchmark_callout.get("aggregate", {}).get("benchmark_count", 0)}
 - Benchmarks with high-severity open controls: {benchmark_callout.get("aggregate", {}).get("benchmarks_with_high_severity_open_controls", 0)}
 - Measured inflation claims in this audit: {benchmark_callout.get("aggregate", {}).get("measured_inflation_claims", 0)}
+
+## Famous Benchmark Inflation Proof Gate
+
+- Artifact: `{benchmark_inflation.get("artifacts", {}).get("report", "docs/experiments/benchmark_inflation_gate/gate_report.json")}`
+- Status: {benchmark_inflation.get("status", "unavailable")}
+- Required tests: {len(benchmark_inflation.get("required_tests", []))}
+- Rerun reports committed: {benchmark_inflation.get("aggregate", {}).get("rerun_report_count", 0)}
+- Valid rerun reports: {benchmark_inflation.get("aggregate", {}).get("valid_rerun_report_count", 0)}
+- Measured famous-benchmark inflation claims: {benchmark_inflation.get("aggregate", {}).get("measured_inflation_claims", 0)}
+- Ready for inflation claim: {benchmark_inflation.get("aggregate", {}).get("ready_for_inflation_claim", False)}
 
 ## Single-Line Preflight Validator
 
@@ -1565,6 +1593,7 @@ def main() -> int:
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
         "benchmark_callout_audit": experiment_benchmark_callout_audit(),
+        "benchmark_inflation_gate": experiment_benchmark_inflation_gate(),
         "preflight_validator": experiment_preflight_validator(),
         "realtosim_contract_drift": experiment_realtosim_contract_drift(),
         "meta_simulator_contract": experiment_meta_simulator_contract(),
@@ -1616,6 +1645,13 @@ def main() -> int:
     scene_leakage = results["lerobot_scene_leakage"]
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_LEAKAGE") == "1" and not scene_leakage.get("pass"):
         print("Active LeRobot scene leakage experiment is required but did not pass.")
+        return 1
+    benchmark_inflation = results["benchmark_inflation_gate"]
+    if (
+        os.environ.get("WORLDEPISODE_REQUIRE_BENCHMARK_INFLATION") == "1"
+        and not benchmark_inflation.get("aggregate", {}).get("ready_for_inflation_claim")
+    ):
+        print("Famous-benchmark inflation evidence is required but no measured rerun claim exists.")
         return 1
     policy_gate = results["lerobot_policy_gate"]
     policy_materialization = policy_gate.get("materialized_split_manifests", {})
