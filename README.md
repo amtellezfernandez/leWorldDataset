@@ -93,6 +93,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Famous benchmark inflation-gate artifacts](docs/experiments/benchmark_inflation_gate)
 - [Open reproduction gate artifacts](docs/experiments/open_reproduction_gates)
 - [Paper claim audit artifacts](docs/experiments/paper_claim_audit)
+- [Digest release manifest](docs/release_manifest)
 - [Reviewer submission packet](docs/submission_packet)
 - Generated artifact freshness gate: `python3 tools/artifact_freshness.py --strict`
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
@@ -165,6 +166,7 @@ python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/release_manifest.py --strict
 python3 tools/submission_packet.py --strict
 python3 tools/release_readiness.py --strict-rfc
 python3 tools/artifact_freshness.py --strict
@@ -243,6 +245,7 @@ To run the public RFC release gate:
 ```bash
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/release_manifest.py --strict
 python3 tools/submission_packet.py --strict
 python3 tools/release_readiness.py --strict-rfc
 ```
@@ -254,6 +257,8 @@ cross-simulator replay.
 `tools/open_reproduction_gates.py` indexes every stronger result that is intentionally not claimed
 yet and records the commands needed to produce the missing evidence. `tools/paper_claim_audit.py`
 checks the main numerical and boundary claims in the paper against committed experiment artifacts.
+`tools/release_manifest.py` records SHA-256 digests for stable public evidence and normalized
+SHA-256 digests for timing-jitter reports.
 `tools/submission_packet.py` renders the reviewer-facing packet tying measured claims, open results,
 required artifacts, and reproduction commands together.
 

@@ -21,6 +21,7 @@ DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "release_readiness"
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
 PAPER_CLAIM_AUDIT_JSON = ROOT / "docs" / "experiments" / "paper_claim_audit" / "paper_claim_audit_report.json"
+RELEASE_MANIFEST_JSON = ROOT / "docs" / "release_manifest" / "release_manifest.json"
 SUBMISSION_PACKET_JSON = ROOT / "docs" / "submission_packet" / "submission_packet.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
@@ -116,6 +117,7 @@ def ci_checks() -> list[Check]:
         "python tools/run_experiments.py",
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
+        "python tools/release_manifest.py --strict",
         "python tools/submission_packet.py --strict",
         "python tools/release_readiness.py --strict-rfc",
         "python tools/artifact_freshness.py --strict",
@@ -359,6 +361,46 @@ def submission_packet_checks() -> list[Check]:
     ]
 
 
+def release_manifest_checks() -> list[Check]:
+    if not RELEASE_MANIFEST_JSON.exists():
+        return [
+            Check(
+                "MANIFEST.001",
+                "release manifest exists",
+                False,
+                f"{rel(RELEASE_MANIFEST_JSON)} missing",
+            )
+        ]
+    try:
+        manifest = load_json(RELEASE_MANIFEST_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "MANIFEST.001",
+                "release manifest parses",
+                False,
+                f"{rel(RELEASE_MANIFEST_JSON)}: {exc}",
+            )
+        ]
+    validation = manifest.get("validation", {})
+    return [
+        Check(
+            "MANIFEST.001",
+            "release manifest validates",
+            manifest.get("schema") == "worldepisode_release_manifest_v1"
+            and manifest.get("status") == "pass"
+            and validation.get("passed") is True
+            and nested(manifest, ("aggregate", "entry_count"), 0) >= 30
+            and nested(manifest, ("aggregate", "normalized_digest_count"), 0) >= 4,
+            (
+                f"status={manifest.get('status')}, "
+                f"entries={nested(manifest, ('aggregate', 'entry_count'))}, "
+                f"normalized={nested(manifest, ('aggregate', 'normalized_digest_count'))}"
+            ),
+        )
+    ]
+
+
 def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
@@ -425,6 +467,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     blockers = claim_blockers(results)
     checks.extend(open_gate_checks(blockers))
     checks.extend(paper_claim_checks())
+    checks.extend(release_manifest_checks())
     checks.extend(submission_packet_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}
     paper_claim_report = load_json(PAPER_CLAIM_AUDIT_JSON) if PAPER_CLAIM_AUDIT_JSON.exists() else {}

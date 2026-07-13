@@ -26,6 +26,8 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `docs/experiments/results.json` | True | True |
 | `docs/experiments/paper_claim_audit/paper_claim_audit_report.json` | True | True |
 | `docs/experiments/open_reproduction_gates/open_reproduction_gates.json` | True | True |
+| `docs/release_manifest/release_manifest.json` | True | True |
+| `docs/release_manifest/README.md` | True | True |
 | `docs/experiments/release_readiness/release_readiness_report.json` | True | True |
 | `docs/reviewer-concern-matrix.md` | True | True |
 | `GOVERNANCE.md` | True | True |
@@ -65,6 +67,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | regenerate controlled experiment evidence | `python3 tools/run_experiments.py` |
 | validate open unclaimed-result gates | `python3 tools/open_reproduction_gates.py --strict` |
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |
+| build digest release manifest | `python3 tools/release_manifest.py --strict` |
 | generate this submission packet | `python3 tools/submission_packet.py --strict` |
 | check RFC release readiness | `python3 tools/release_readiness.py --strict-rfc` |
 | reject stale generated artifacts | `python3 tools/artifact_freshness.py --strict` |

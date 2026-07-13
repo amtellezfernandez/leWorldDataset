@@ -29,6 +29,8 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "docs/experiments/results.json",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+    "docs/release_manifest/release_manifest.json",
+    "docs/release_manifest/README.md",
     "docs/experiments/release_readiness/release_readiness_report.json",
     "docs/reviewer-concern-matrix.md",
     "GOVERNANCE.md",
@@ -51,6 +53,10 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "audit paper claims against evidence",
         "command": "python3 tools/paper_claim_audit.py --strict",
+    },
+    {
+        "name": "build digest release manifest",
+        "command": "python3 tools/release_manifest.py --strict",
     },
     {
         "name": "generate this submission packet",

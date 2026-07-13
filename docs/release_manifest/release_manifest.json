@@ -1,0 +1,393 @@
+{
+  "aggregate": {
+    "empty_count": 0,
+    "entry_count": 39,
+    "missing_count": 0,
+    "normalized_digest_count": 4,
+    "public_evidence_count": 30,
+    "release_script_count": 9
+  },
+  "artifacts": {
+    "json": "docs/release_manifest/release_manifest.json",
+    "markdown": "docs/release_manifest/README.md"
+  },
+  "audit_date": "2026-07-13",
+  "claim_boundary": "Exact digests are used for stable artifacts. Timing-jitter reports are hashed after normalizing only wall-clock benchmark timing values.",
+  "entries": [
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "WorldEpisode.pdf",
+      "sha256": "b169f8cf188b00ac338b80e2133ab8431771d0271df884226cd62c76d79bb236"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "README.md",
+      "sha256": "313305883327715cc2b9860b29e9bcad4ba60539c28cb3f8326f10bb4cf014b9"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "paper/arxiv/main.tex",
+      "sha256": "8dff57d97d0708f7634508634d2e9f216bf9dde993aaa6e1414d870fac68d70a"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "paper/arxiv/sections/evaluation.tex",
+      "sha256": "82ea5dfebd8a2f292161ee71e7a8bfc5ae804ac2730b1334b33eed2e89a8a55e"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "paper/arxiv/sections/limitations.tex",
+      "sha256": "4361ede816f65f0909bf5a474cf82547b014eb28f4c15e37c2301f0740c1fa33"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "schemas/worldepisode-core-v0.schema.json",
+      "sha256": "cd5267981d158f8e626c166588406f5efb7b543b54761d6614edf5da773844d8"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "schemas/worldepisode-dataset-v0.schema.json",
+      "sha256": "5fdf414453b47295676ec5160c8fc832d30e756bcaabb3153c5d0515a14938d7"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "schemas/conformance-requirements-v0.schema.json",
+      "sha256": "5006b25cf7c3e2cb38ad33d5e342546ac56ee2f558cc6c22ce4480185eb3204b"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "conformance/requirements.v0.json",
+      "sha256": "787a5bb7e07779a93f84b96fcc770110a5dd6d2a03c07c26e3c71b431e797d0e"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "conformance/projections/uss-core-23.v0.json",
+      "sha256": "220cad062113bfea4dd9c86cd12c45745ab4a238acceaf721a290a9e24d107cc"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "normalized",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [
+        "(Catalog open, parse, and index: )[0-9]+(?:\\.[0-9]+)?( ms)",
+        "(Partition-pruning query time: )[0-9]+(?:\\.[0-9]+)?( ms)"
+      ],
+      "path": "docs/experiments/RESULTS.md",
+      "sha256": "1d5e3667decad7543d196d35583bdcdfa952e770e100fc24b37000a769903542"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "normalized",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [
+        "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
+      ],
+      "path": "docs/experiments/results.json",
+      "sha256": "1d36d1a94be9973517fc6d79c8e04467ddba1774066aa44368c9a777b779ca98"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "normalized",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [
+        "(\\| (Catalog open, parse, and index|Partition-pruning queries|Digest-cache resolution|Resolver routing) \\| )[0-9]+(?:\\.[0-9]+)?( \\|)"
+      ],
+      "path": "docs/experiments/dataset_scale_performance/README.md",
+      "sha256": "943173b82eec97639389a40b8d28201eaeb14bb147348340b390450c0f1cc0e3"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "normalized",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [
+        "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
+      ],
+      "path": "docs/experiments/dataset_scale_performance/performance_report.json",
+      "sha256": "48293944cf0e21b19bd44f7036328f401c7c9e0912c45e7c96866853bbe1da34"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
+      "sha256": "46e7ff9d77a9bf5675a106ee824d9ab62b6d14e0717e5deb0e5cb3eb457350aa"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+      "sha256": "721a98c933c149c48d9f798851b31620996974c157e39c69e21df2c702452ed9"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_inflation_gate/gate_report.json",
+      "sha256": "1a7ff1c3d96cc5e713d339ddb9022081ffbd5581bf886a047eb75e9db4c1086c"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+      "sha256": "5ffe5fd924814d5930c72091dacba7334073bd479ebd1d5e98e8f8b0302e39ec"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
+      "sha256": "37449c7b32f10cb7564ac3f290a12144be19d9cbdd4dfc5caff706c5959c1779"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json",
+      "sha256": "41f5fe7bebf87093ce21ba57ac4aa60173040c4897cf8a2d288f3e9e6d4a8218"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+      "sha256": "f427aae54e818e64d5e09bd42672cc6a2a9efe835db072e1cb9717b5e180dbe4"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/meta_simulator_contract/adapter_contract_report.json",
+      "sha256": "ee614f647ccfc7130f6e4fa13615b161da16331183c91eda305703c56a40aebb"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/realtosim_contract_drift/contract_drift_report.json",
+      "sha256": "f79a1a31658a0e3bd0baf98a69c290c8776caae4c64b3d3909a0d53987dda08e"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/cleanroom_reader/cleanroom_reader_report.json",
+      "sha256": "9ad13a25c61b1bca2f067a9f205cd79c34a47836f46410139733c4be593dafd4"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/preflight/preflight_report.json",
+      "sha256": "4447b5c3faccca8a985df7124c33600d79c9ace29ad04d1a530a91f186900de1"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/natural_failure_corpus/manifest.json",
+      "sha256": "af79dfde34d015d9eea024ecdc29b140a53ab550b10431ef720b3b1c7c14264f"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/reviewer-concern-matrix.md",
+      "sha256": "80332526df815eccb37bbdf5d9262f50e56450a0d9b0d035564d0798108ee4ea"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/reference-release.md",
+      "sha256": "6599c4af16075d099710d5418530b36cfffd2dc85417471ea6876ec7305854e8"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "GOVERNANCE.md",
+      "sha256": "44145db7a041ebfef890f5a43370884ef4466cd09267574c446a96c87a92c121"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "CITATION.cff",
+      "sha256": "9a0c9bde871ab55aae085ba8b4c2ac8b82aaa5494568863c2826b646373fa48e"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": ".github/workflows/ci.yml",
+      "sha256": "8afa7a7b5bd082a59b48cb66eab22cd6e0878fcba9a11561e83bf6175aa074ab"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "Makefile",
+      "sha256": "2df903c1b28848f48f1626fb630429f965846f07058dd6acbd53031bb2cf855e"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/run_experiments.py",
+      "sha256": "4f1a93a2cc77145b8d742710b513d304a1d44910f6f2e506d9c1c8f850c6b758"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/open_reproduction_gates.py",
+      "sha256": "97956c41d25bc0960b67f9de0873f2c1b70a3b11565e2b28f27cfb155d2b3521"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/paper_claim_audit.py",
+      "sha256": "fa788d5cc2d6893338c21eb3045ab1eeabd9a5be2299bcb7e24cbfa1559b1780"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/release_manifest.py",
+      "sha256": "9249827657d04adc05658859427b5f58b3b0a181fc7eb8cae21950cefea8f6b8"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/submission_packet.py",
+      "sha256": "4f6f6e3b584ca21b03ae559aaf743622466d09aef1d59e775f4dde1dd312411b"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/release_readiness.py",
+      "sha256": "32e426dc68a4c55406eb94ddab522c4ac9fb13ea6152d840a5dc51db1b2d3324"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/artifact_freshness.py",
+      "sha256": "872fb2ac81b56cfce49dcc7fd3073edf5f3b0d9e0da57b778e18fda60dbf50af"
+    }
+  ],
+  "hash_algorithm": "sha256",
+  "schema": "worldepisode_release_manifest_v1",
+  "status": "pass",
+  "validation": {
+    "duplicate_paths": [],
+    "empty": [],
+    "missing": [],
+    "normalized_paths": [
+      "docs/experiments/RESULTS.md",
+      "docs/experiments/results.json",
+      "docs/experiments/dataset_scale_performance/README.md",
+      "docs/experiments/dataset_scale_performance/performance_report.json"
+    ],
+    "passed": true
+  }
+}

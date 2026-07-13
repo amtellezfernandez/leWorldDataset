@@ -35,6 +35,9 @@ jobs:
       - name: Check paper claims against evidence
         run: python tools/paper_claim_audit.py --strict
 
+      - name: Build release manifest
+        run: python tools/release_manifest.py --strict
+
       - name: Build submission packet
         run: python tools/submission_packet.py --strict
 

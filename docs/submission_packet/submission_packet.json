@@ -279,6 +279,10 @@
       "name": "audit paper claims against evidence"
     },
     {
+      "command": "python3 tools/release_manifest.py --strict",
+      "name": "build digest release manifest"
+    },
+    {
       "command": "python3 tools/submission_packet.py --strict",
       "name": "generate this submission packet"
     },
@@ -341,6 +345,16 @@
       "exists": true,
       "nonempty": true,
       "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/release_manifest/release_manifest.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/release_manifest/README.md"
     },
     {
       "exists": true,
