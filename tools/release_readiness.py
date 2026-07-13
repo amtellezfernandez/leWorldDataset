@@ -106,6 +106,28 @@ def package_checks() -> list[Check]:
     return checks
 
 
+def ci_checks() -> list[Check]:
+    workflow = ROOT / ".github" / "workflows" / "ci.yml"
+    if not workflow.exists():
+        return [Check("CI.001", "CI workflow runs evidence gates", False, f"{rel(workflow)} missing")]
+    text = workflow.read_text(encoding="utf-8")
+    required_commands = [
+        "python tools/run_experiments.py",
+        "python tools/open_reproduction_gates.py --strict",
+        "python tools/paper_claim_audit.py --strict",
+        "python tools/release_readiness.py --strict-rfc",
+    ]
+    missing = [command for command in required_commands if command not in text]
+    return [
+        Check(
+            "CI.001",
+            "CI workflow runs evidence gates",
+            not missing,
+            f"missing={missing}",
+        )
+    ]
+
+
 def experiment_checks(results: dict[str, Any]) -> list[Check]:
     active_roundtrip = nested(results, ("lerobot_active_roundtrip", "batch_roundtrip"), {})
     secondary = nested(results, ("lerobot_active_roundtrip", "secondary_batch_roundtrips"), [])
@@ -353,6 +375,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         file_check("DOC.007", "controlled results exist", "docs/experiments/results.json", min_bytes=10_000),
         file_check("DOC.008", "public citation metadata exists", "CITATION.cff", min_bytes=100),
         file_check("DOC.009", "CI workflow exists", ".github/workflows/ci.yml", min_bytes=200),
+        *ci_checks(),
         *package_checks(),
         *experiment_checks(results),
     ]

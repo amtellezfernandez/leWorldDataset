@@ -29,5 +29,11 @@ jobs:
       - name: Regenerate controlled experiment summary
         run: python tools/run_experiments.py
 
+      - name: Check open reproduction gates
+        run: python tools/open_reproduction_gates.py --strict
+
+      - name: Check paper claims against evidence
+        run: python tools/paper_claim_audit.py --strict
+
       - name: Check RFC release readiness
         run: python tools/release_readiness.py --strict-rfc

@@ -19,7 +19,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (17756 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (18388 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1236 bytes) |
 | DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (469670 bytes) |
@@ -27,7 +27,8 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17534 bytes) |
 | DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147867 bytes) |
 | DOC.008 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
-| DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (677 bytes) |
+| DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (891 bytes) |
+| CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
 | PKG.001 | pyproject exists | True | error | pyproject.toml (1244 bytes) |
 | PKG.002 | package metadata parses | True | error | name='worldepisode', version='0.1.0' |
 | PKG.003 | console script is exposed | True | error | worldepisode='worldepisode.cli:main' |

@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 26,
-    "passed_count": 26,
+    "check_count": 27,
+    "passed_count": 27,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -68,7 +68,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (17756 bytes)",
+      "evidence": "README.md (18388 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -132,8 +132,16 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": ".github/workflows/ci.yml (677 bytes)",
+      "evidence": ".github/workflows/ci.yml (891 bytes)",
       "name": "CI workflow exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "CI.001",
+      "evidence": "missing=[]",
+      "name": "CI workflow runs evidence gates",
       "passed": true,
       "severity": "error"
     },
