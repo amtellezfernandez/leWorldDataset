@@ -22,7 +22,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
-| Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
+| Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
@@ -144,6 +144,20 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Asset-digest index: True
 - Split manifest shard: True
 - Boundary: This audit validates catalog invariants for scalable manifests. It is not a billion-episode latency, cache, or federation benchmark.
+
+## Dataset-Scale Performance Benchmark
+
+- Artifact: `docs/experiments/dataset_scale_performance/performance_report.json`
+- Status: pass
+- Trace shards: 32768
+- Described episode capacity: 1073741824
+- JSON catalog bytes opened: 24588169
+- Catalog open, parse, and index: 166.921 ms
+- Partition-pruning query time: 0.290 ms
+- Max pruning reduction ratio: 9.155e-05
+- Digest-cache hit rate: 0.749992
+- Missing resolver count: 0
+- Boundary: This benchmark measures catalog-side behavior for a generated billion-episode-capacity descriptor set. It does not materialize a billion episode rows, load payload bytes, measure network storage, or prove multi-institution production throughput.
 
 ## Clean-Room Reader Check
 

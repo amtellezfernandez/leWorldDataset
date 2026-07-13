@@ -211,9 +211,12 @@ To address production scale, we audit the dataset manifest in
 three resolver schemes, three registries, three shards, two indexes, one append-only version, and
 nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
 It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
-split-manifest shard. This is a catalog-invariant check, not a billion-episode performance result,
-but it makes the scale claim executable: opening a corpus starts from the manifest and indexes
-rather than from recursive storage discovery.
+split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
+describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
+and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
+and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
+the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
+recursive storage discovery.
 
 \paragraph{Case 7: the famous benchmarks that still need call-out audits.}
 The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a

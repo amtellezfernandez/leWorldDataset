@@ -50,6 +50,7 @@ META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contr
 USS_STATE_DRIFT_REPORT = RESULTS_DIR / "uss_state_drift_pilots" / "state_drift_report.json"
 REPLAY_ADAPTER_CONFORMANCE_REPORT = RESULTS_DIR / "replay_adapter_conformance" / "adapter_conformance_report.json"
 DATASET_SCALE_AUDIT_REPORT = RESULTS_DIR / "dataset_scale_audit" / "scale_audit_report.json"
+DATASET_SCALE_PERFORMANCE_REPORT = RESULTS_DIR / "dataset_scale_performance" / "performance_report.json"
 CLEANROOM_READER_REPORT = RESULTS_DIR / "cleanroom_reader" / "cleanroom_reader_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
@@ -635,6 +636,23 @@ def experiment_dataset_scale_audit() -> dict[str, Any]:
             "reproduce": "python3 tools/dataset_scale_audit.py",
         }
         write_json(DATASET_SCALE_AUDIT_REPORT, report)
+        return report
+
+
+def experiment_dataset_scale_performance() -> dict[str, Any]:
+    try:
+        from dataset_scale_performance import benchmark_scale_performance
+
+        return benchmark_scale_performance(output_dir=RESULTS_DIR / "dataset_scale_performance")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "pass": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/dataset_scale_performance.py",
+        }
+        write_json(DATASET_SCALE_PERFORMANCE_REPORT, report)
         return report
 
 
@@ -1244,6 +1262,7 @@ def write_report(results: dict[str, Any]) -> None:
     uss_pilots = results["uss_state_drift_pilots"]
     replay_adapter = results["replay_adapter_conformance"]
     dataset_scale = results["dataset_scale_audit"]
+    dataset_scale_perf = results["dataset_scale_performance"]
     cleanroom_reader = results["cleanroom_reader"]
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
     natural_boundary = (
@@ -1371,7 +1390,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
-| Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
+| Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, plus URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis have tested URDF Studio episode-backend evidence; Isaac and SAPIEN are not replay-tested here. |
@@ -1467,6 +1486,20 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Asset-digest index: {dataset_scale.get("aggregate", {}).get("has_asset_digest_index", False)}
 - Split manifest shard: {dataset_scale.get("aggregate", {}).get("has_split_manifest_shard", False)}
 - Boundary: {dataset_scale.get("claim_boundary", "Catalog invariant audit only; not a billion-episode performance benchmark.")}
+
+## Dataset-Scale Performance Benchmark
+
+- Artifact: `{dataset_scale_perf.get("artifacts", {}).get("report", "docs/experiments/dataset_scale_performance/performance_report.json")}`
+- Status: {dataset_scale_perf.get("status", "unavailable")}
+- Trace shards: {dataset_scale_perf.get("generated_catalog", {}).get("trace_shard_count", 0)}
+- Described episode capacity: {dataset_scale_perf.get("generated_catalog", {}).get("described_episode_capacity", 0)}
+- JSON catalog bytes opened: {dataset_scale_perf.get("generated_catalog", {}).get("json_catalog_bytes", 0)}
+- Catalog open, parse, and index: {dataset_scale_perf.get("timings_ms", {}).get("catalog_open_parse_and_index", 0.0):.3f} ms
+- Partition-pruning query time: {dataset_scale_perf.get("timings_ms", {}).get("partition_pruning_queries", 0.0):.3f} ms
+- Max pruning reduction ratio: {dataset_scale_perf.get("partition_pruning", {}).get("max_reduction_ratio", 0.0)}
+- Digest-cache hit rate: {dataset_scale_perf.get("digest_cache", {}).get("cache_hit_rate", 0.0)}
+- Missing resolver count: {dataset_scale_perf.get("resolver_routing", {}).get("missing_resolver_count", 0)}
+- Boundary: {dataset_scale_perf.get("claim_boundary", "Catalog-side benchmark only.")}
 
 ## Clean-Room Reader Check
 
@@ -1603,6 +1636,7 @@ def main() -> int:
         "uss_state_drift_pilots": experiment_uss_state_drift_pilots(),
         "replay_adapter_conformance": experiment_replay_adapter_conformance(),
         "dataset_scale_audit": experiment_dataset_scale_audit(),
+        "dataset_scale_performance": experiment_dataset_scale_performance(),
         "cleanroom_reader": experiment_cleanroom_reader(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
@@ -1736,6 +1770,25 @@ def main() -> int:
         or not dataset_scale_aggregate.get("has_split_manifest_shard")
     ):
         print("Dataset-scale manifest audit is missing required production catalog invariants.")
+        return 1
+    dataset_scale_perf = results["dataset_scale_performance"]
+    scale_catalog = dataset_scale_perf.get("generated_catalog", {})
+    scale_partition = dataset_scale_perf.get("partition_pruning", {})
+    scale_cache = dataset_scale_perf.get("digest_cache", {})
+    scale_resolver = dataset_scale_perf.get("resolver_routing", {})
+    if not dataset_scale_perf.get("pass"):
+        print("Dataset-scale performance benchmark failed.")
+        return 1
+    if (
+        scale_catalog.get("described_episode_capacity", 0) < 1_000_000_000
+        or scale_catalog.get("trace_shard_count", 0) < 32768
+        or not scale_partition.get("all_queries_pruned")
+        or scale_partition.get("max_reduction_ratio", 1.0) >= 0.01
+        or scale_cache.get("digest_mismatches", 1) != 0
+        or scale_cache.get("cache_hit_rate", 0.0) < 0.70
+        or scale_resolver.get("missing_resolver_count", 1) != 0
+    ):
+        print("Dataset-scale performance benchmark is missing required catalog behavior.")
         return 1
     cleanroom_reader = results["cleanroom_reader"]
     cleanroom_aggregate = cleanroom_reader.get("aggregate", {})

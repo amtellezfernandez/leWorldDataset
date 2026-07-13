@@ -8,7 +8,7 @@ because the paper argues for a semantic contract, not for a finished benchmark s
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
 \caption{What the current evidence supports, and what it does not yet support.}
 \label{tab:evidence-boundaries}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}
@@ -51,10 +51,11 @@ Adoption & Public schema, installable local preflight package, validator, fixtur
 files, and an internal clean-room reader that does not import the reference SDK & No PyPI release,
 upstream LeRobot/Rerun integration, external independent implementation, or external dataset release
 yet \\
-Scale architecture & Dataset manifest schema, scalable example, and executable audit for
-namespaces, resolvers, digest-addressed assets, shard/index references, split manifests, and
-append-only versions & No benchmark yet for billion-episode catalog latency, distributed cache
-behavior, or federation across institutions \\
+Scale architecture & Dataset manifest schema, scalable example, executable audit, and a generated
+32{,}768-shard catalog benchmark describing 1{,}073{,}741{,}824 episodes for open/index latency,
+partition pruning, digest-cache behavior, and resolver routing & Catalog-side benchmark only; no
+billion episode rows, payload bytes, distributed storage, concurrent readers, or institutional
+federation are measured \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -113,10 +114,12 @@ current claim is friction reduction in the reference implementation, not ecosyst
 \paragraph{Dataset-scale performance.}
 The specification separates the core episode record from a dataset-scale manifest with namespaces,
 shards, indexes, resolvers, and append-only snapshots. That design prevents the standard from being
-defined around a local folder layout. The current audit makes the catalog invariants executable, but
-it is not yet a measured distributed-systems result. A production paper should benchmark
-catalog-open latency, partition pruning, asset cache hit rates, and validation throughput on much
-larger corpora.
+defined around a local folder layout. The current audit makes the catalog invariants executable,
+and the scale-performance benchmark opens and indexes a generated 32{,}768-shard descriptor catalog
+with 1{,}073{,}741{,}824 described episodes, then measures partition pruning, digest-cache
+resolution, and resolver routing. This is still not a measured distributed-systems result: it does
+not materialize the episode rows, load payload bytes, test concurrent readers, measure cache
+eviction, or exercise federation across institutions.
 
 \paragraph{Famous benchmark call-out scope.}
 The audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN is a source-level

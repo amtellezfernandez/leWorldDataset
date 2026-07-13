@@ -45,7 +45,10 @@ role, action timing, frame/clock, split-lineage, and conversion-loss controls. T
 semantic audit a pre-training check rather than a separate post-hoc documentation exercise.
 The dataset-scale audit checks the separate corpus manifest for namespace uniqueness, resolver
 coverage, digest-addressed assets, local mirrors, shard/index references, required lineage and
-asset-digest indexes, split-manifest presence, and append-only version structure.
+asset-digest indexes, split-manifest presence, and append-only version structure. A companion
+scale-performance benchmark generates a 32{,}768-shard descriptor catalog with 1{,}073{,}741{,}824
+described episodes and measures catalog open/indexing, partition pruning, digest-cache resolution,
+and resolver routing without materializing payload rows.
 The clean-room reader check intentionally does not import the \texttt{worldepisode} package. It
 uses the published JSON Schema and separately implemented requirement checks to parse the minimal
 example and fixture corpus, providing an internal sanity check for independent implementability.

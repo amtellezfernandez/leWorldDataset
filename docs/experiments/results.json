@@ -1104,6 +1104,133 @@
     "schema": "schemas/worldepisode-dataset-v0.schema.json",
     "status": "pass"
   },
+  "dataset_scale_performance": {
+    "artifacts": {
+      "markdown": "docs/experiments/dataset_scale_performance/README.md",
+      "report": "docs/experiments/dataset_scale_performance/performance_report.json"
+    },
+    "claim_boundary": "This benchmark measures catalog-side behavior for a generated billion-episode-capacity descriptor set. It does not materialize a billion episode rows, load payload bytes, measure network storage, or prove multi-institution production throughput.",
+    "digest_cache": {
+      "asset_descriptor_count": 32779,
+      "cache_hit_count": 24584,
+      "cache_hit_rate": 0.749992,
+      "cache_miss_count": 8195,
+      "digest_mismatches": 0
+    },
+    "generated_catalog": {
+      "asset_descriptor_count": 32779,
+      "config_sha256": "e651c7a2632b64bfc88df515b82830b6d22bebcd18936f3c9139d31b09110e5b",
+      "described_episode_capacity": 1073741824,
+      "episodes_materialized": 0,
+      "index_count": 3,
+      "json_catalog_bytes": 24588169,
+      "registry_count": 6,
+      "resolver_count": 5,
+      "sha256": "11a190f76a6b5c29401aee5e6fd07952ac94ce7a91a117ee8920a081ac65e861",
+      "total_shard_count": 32769,
+      "trace_shard_count": 32768
+    },
+    "partition_pruning": {
+      "all_queries_pruned": true,
+      "max_candidate_shards": 3,
+      "max_reduction_ratio": 9.155e-05,
+      "queries": [
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "so101",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "train",
+          "task_id": "task_00",
+          "world_lineage_bucket": "0000"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_07",
+          "world_lineage_bucket": "0007"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_19",
+          "world_lineage_bucket": "0013"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_31",
+          "world_lineage_bucket": "001f"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_11",
+          "world_lineage_bucket": "002b"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "test",
+          "task_id": "task_07",
+          "world_lineage_bucket": "0047"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_31",
+          "world_lineage_bucket": "007f"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "test",
+          "task_id": "task_27",
+          "world_lineage_bucket": "00fb"
+        }
+      ],
+      "query_count": 8
+    },
+    "pass": true,
+    "profile": "worldepisode-dataset-scale-performance-0.1",
+    "resolver_routing": {
+      "missing_resolver_count": 0,
+      "missing_resolver_examples": [],
+      "scheme_counts": {
+        "hf": 6558,
+        "ipfs": 6555,
+        "oci": 6555,
+        "relative": 6555,
+        "s3": 6556
+      }
+    },
+    "status": "pass",
+    "timings_ms": {
+      "catalog_open_parse_and_index": 166.921,
+      "digest_cache_resolution": 8.488,
+      "partition_pruning_queries": 0.29,
+      "resolver_routing": 61.892
+    }
+  },
   "independent_fixture_check": {
     "available": true,
     "cases": [

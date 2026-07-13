@@ -57,8 +57,10 @@ closed on missing physical-semantics controls.
 Dataset-scale artifact: `tools/dataset_scale_audit.py` validates
 `examples/scalable-corpus.worldepisode-dataset.json` for namespace uniqueness, resolver coverage,
 digest-addressed assets, local mirrors, shard/index references, required lineage/digest indexes,
-split-manifest presence, and append-only version structure. It is a catalog invariant audit, not a
-distributed performance benchmark.
+split-manifest presence, and append-only version structure. `tools/dataset_scale_performance.py`
+adds a generated 32,768-shard catalog benchmark with 1,073,741,824 described episodes, measuring
+catalog open/indexing, partition pruning, digest-cache resolution, and resolver routing. This is
+still catalog-side evidence, not distributed object-store or payload-throughput evidence.
 
 Clean-room reader artifact: `tools/cleanroom_conformance_reader.py` parses the public schema,
 summarizes the minimal example, and checks the pilot plus independent fixture manifests without

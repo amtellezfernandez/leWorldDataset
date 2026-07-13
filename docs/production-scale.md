@@ -50,7 +50,19 @@ python3 tools/dataset_scale_audit.py
 It writes `docs/experiments/dataset_scale_audit/scale_audit_report.json` and checks resolver
 coverage, digest-addressed assets, optional local mirrors, shard/index references, required
 world-lineage and asset-digest indexes, split-manifest presence, and append-only version structure.
-This is a catalog-invariant audit, not a distributed latency or cache benchmark.
+This is a catalog-invariant audit.
+
+The generated catalog-side performance benchmark is:
+
+```bash
+python3 tools/dataset_scale_performance.py
+```
+
+It writes `docs/experiments/dataset_scale_performance/performance_report.json`, generates a
+32,768-shard descriptor catalog with 1,073,741,824 described episodes, and measures catalog
+open/indexing, partition pruning, digest-cache resolution, and resolver routing. It does not
+materialize episode rows, load payload bytes, measure object-store throughput, or test federation
+across institutions.
 
 ## ID Scope
 

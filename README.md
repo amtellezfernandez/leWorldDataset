@@ -74,6 +74,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Reference SDK contract](docs/sdk.md)
 - [Production-scale dataset architecture](docs/production-scale.md)
 - [Dataset-scale manifest audit artifacts](docs/experiments/dataset_scale_audit)
+- [Dataset-scale performance benchmark](docs/experiments/dataset_scale_performance)
 - [Clean-room reader artifacts](docs/experiments/cleanroom_reader)
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
@@ -238,6 +239,12 @@ To audit the production-scale dataset manifest:
 python3 tools/dataset_scale_audit.py
 ```
 
+To benchmark generated catalog-side scale behavior:
+
+```bash
+python3 tools/dataset_scale_performance.py
+```
+
 To run the internal clean-room reader check:
 
 ```bash
@@ -290,8 +297,11 @@ clock-domain offset where valid logs produce invalid spatial fusion. These pilot
 vocabulary claim only; they are not production game-engine or AV benchmark results.
 The dataset-scale audit validates the scalable corpus manifest: namespaces, resolver coverage for
 asset URI schemes, digest-addressed assets with mirrors, shard/index references, split-manifest
-presence, world-lineage and asset-digest indexes, and append-only version structure. It is a catalog
-invariant check, not a billion-episode throughput benchmark.
+presence, world-lineage and asset-digest indexes, and append-only version structure. The
+dataset-scale performance benchmark then generates a 32,768-shard catalog describing
+1,073,741,824 episodes and measures catalog open/indexing, partition pruning, digest-cache
+resolution, and resolver routing. It is still catalog-side evidence; it does not materialize a
+billion episode rows or measure network storage.
 The clean-room reader check parses the public schema and fixture corpus without importing the
 `worldepisode` package. It demonstrates that the public artifacts are readable outside the reference
 SDK path, but it is not an external implementation or adoption claim.
@@ -328,6 +338,7 @@ The script writes:
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
 - `docs/experiments/dataset_scale_audit/*`
+- `docs/experiments/dataset_scale_performance/*`
 - `docs/experiments/cleanroom_reader/*`
 - `docs/experiments/replay_adapter_conformance/*`
 - `docs/experiments/uss_state_drift_pilots/*`
