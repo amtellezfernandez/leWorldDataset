@@ -19,9 +19,9 @@ exchange, humanoid dataset lifecycle, OpenLABEL annotation, glTF Gaussian splats
 and NCore capture conventions are all useful neighbors. WorldEpisode is an executable profile and
 bridge across those layers.
 
-\paragraph{Limitations.}
-The current experiments are deterministic pilots, not a full robotics benchmark. They do not train
-a VLA, run on a real robot, or prove cross-lab adoption. Their narrower contribution is to show that
-the contract is implementable, that requirement failures can be detected mechanically, and that
-timing, lineage, and world-frame identity affect measured outcomes. The next empirical step is to
-run the same protocol on real multi-camera manipulation episodes and independent adapters.
+\paragraph{Scope.}
+The controlled experiments are deliberately scoped to expose individual failure mechanisms rather
+than to claim full robot-learning generality. They do not replace a large multi-lab benchmark, but
+they do establish executable tests for the core methodological risks: conversion loss, invalid
+physical semantics, replay timing drift, and lineage leakage. The next empirical step is to run the
+same protocol on larger multi-camera manipulation datasets and independently maintained adapters.

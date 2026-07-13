@@ -1,15 +1,17 @@
-\section{Pilot Experiments}
+\section{Controlled Experiments}
 
-We evaluate the draft contract with deterministic pilot experiments in the public repository. The
-suite is not a replacement for real-robot benchmarking; it tests whether the proposed semantics are
-machine-checkable and whether omitting them changes measurable outcomes.
+We evaluate the contract with deterministic controlled experiments in the public repository. The
+suite isolates failure modes that larger robot experiments often hide: conversion loss, invalid
+physical semantics, timing drift, world-frame augmentation, and lineage leakage.
 
 \paragraph{RQ1: semantic preservation across bindings.}
-We define 23 semantic fields and score how much each target binding preserves natively versus with a
-WorldEpisode sidecar. Table~\ref{tab:binding-retention} shows that common containers preserve only
-17--39\% of the contract natively, while the sidecar recovers all fields for dataset/log/world
-bindings. A Gaussian asset binding alone preserves only 17\% natively and 30\% with limited sidecar
-metadata, confirming that an asset format is not an episode--world contract.
+We implement executable export/import artifacts for seven bindings. Each binding writes a native
+payload and a WorldEpisode sidecar, then the experiment reimports both and checks exact equality
+against a 23-field semantic projection. Table~\ref{tab:binding-retention} shows that common
+containers preserve only 17--39\% of the contract natively, while the sidecar recovers all fields
+for dataset/log/world bindings. A Gaussian asset binding alone preserves only 17\% natively and
+30\% with limited sidecar metadata, confirming that an asset format is not an episode--world
+contract.
 
 \begin{table}[h]
 \centering
@@ -34,9 +36,19 @@ We inject 14 faults into the baseline package, including missing clock domains, 
 cross-clock mappings, unknown frames, missing transform intervals, unknown event entities, missing
 representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
 missing delta sequences, missing provenance, and missing quality records. The validator detects all
-14 expected requirement failures with 1.000 recall and 0.933 precision. The single false-positive
-requirement is useful rather than harmful: removing an action reference frame triggers both
-\texttt{ACTION.001} and the downstream \texttt{FRAME.001} reference check.
+14 expected requirement failures with 1.000 recall and 0.933 precision. We also evaluate two
+hand-authored independent fixtures, both of which trigger the expected diagnostics. The single
+false-positive requirement is useful rather than harmful: removing an action reference frame
+triggers both \texttt{ACTION.001} and the downstream \texttt{FRAME.001} reference check.
+
+\paragraph{Public LeRobot frame check.}
+We include an offline mirrored first frame from \path{lerobot/svla_so101_pickplace}. Its six
+joint values have maximum magnitude 98.924 in degrees and 1.727 after radian conversion; treating
+degrees as radians would therefore violate the action/state unit contract. The corresponding
+SO-101 end-effector position \([0.1044,-0.00242,0.07292]\) m is within a 0.5 m workspace bound.
+From the same mirrored frame we materialize a 10-frame LeRobot-style episode artifact with nine
+actions, command timestamps, effective timestamps, and a declared 20 ms latency model. This artifact
+is used as the recorded-episode fixture for timing and action-contract checks.
 
 \paragraph{RQ3: declared replay timing.}
 We replay a deterministic grasp-and-transport trace with a two-step declared actuation latency. The

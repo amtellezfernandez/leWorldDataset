@@ -20,6 +20,24 @@ graph, \(C\) clocks, \(O\) persistent entities and representations, \(A\) action
 \(X\) synchronized trace, \(V\) world deltas and events, \(P\) provenance, and \(Q\) quality and
 uncertainty records.
 
+Equivalently, each episode induces a coupled graph object:
+\begin{equation}
+G_E = (G_I, G_{FC}, G_R, G_T, G_P),
+\end{equation}
+where \(G_I\) is persistent entity identity, \(G_{FC}\) is the frame/clock graph, \(G_R\) maps
+entities to representation roles and assets, \(G_T\) records temporal state and interaction events,
+and \(G_P\) records provenance and derivation. A package is valid only if every edge crossing these
+graphs resolves to a declared node and every lossy projection into a binding emits a loss report:
+\begin{equation}
+\mathrm{valid}(E) \Leftrightarrow
+\mathrm{closed}(G_E) \land \mathrm{hashed}(W^{(r)}) \land
+\forall b \in B,\ \exists L_b .
+\end{equation}
+Here \(\mathrm{closed}(G_E)\) means that entity, frame, clock, action, asset, and event references
+are total over the declared graphs; \(\mathrm{hashed}(W^{(r)})\) means the base world revision is
+content-addressed; and \(L_b\) is a machine-readable report of preserved, externalized,
+approximated, and discarded semantics for binding \(b\).
+
 Version 1 is intentionally narrow: rigid tabletop manipulation with fixed-base single- or dual-arm
 robots. Humanoids, locomotion, deformables, fluids, and multi-agent worlds are later profiles. This
 keeps conformance executable rather than aspirational.

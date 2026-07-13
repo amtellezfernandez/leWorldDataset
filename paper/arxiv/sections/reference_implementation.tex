@@ -25,10 +25,11 @@ conversion.
 
 \subsection{Implementation Artifact}
 
-The repository contains a JSON Schema, a machine-readable conformance requirement file, a semantic
-validator, and a deterministic experiment runner. The validator emits stable requirement identifiers
-such as \texttt{TIME.001}, \texttt{FRAME.002}, and \texttt{ASSET.002}. The experiment runner uses the
-minimal WorldEpisode package as a baseline, injects controlled faults, evaluates declared binding
-capabilities, and writes reproducible result artifacts. URDF Studio remains the initial
-implementation root, but the contract is represented independently in the public schema and
-validator.
+We implement the contract as four executable components: a JSON Schema for structural validity, a
+machine-readable conformance requirement file, a semantic validator, and a round-trip experiment
+runner. The validator maps each diagnostic to a stable requirement identifier such as
+\texttt{TIME.001}, \texttt{FRAME.002}, or \texttt{ASSET.002}. The experiment runner takes a
+WorldEpisode package, exports binding-native artifacts plus sidecars, reimports them, compares a
+semantic projection, injects controlled faults, and writes reproducible result artifacts. URDF Studio
+remains the initial implementation root, but the contract is represented independently in the public
+schema and validator.

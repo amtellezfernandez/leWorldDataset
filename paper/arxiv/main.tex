@@ -22,7 +22,7 @@
   urlcolor=blue
 }
 
-\title{WorldEpisode: An Executable Interchange Contract Linking Robot-Learning Episodes to Versioned, Replayable 3D Worlds}
+\title{WorldEpisode: Diagnosing and Correcting Hidden World--Episode Failures in Robot-Learning Datasets}
 
 \author{
   Alba Tellez Fernandez\\
@@ -39,23 +39,24 @@
 \maketitle
 
 \begin{abstract}
-Robot-learning datasets standardize observation--action trajectories, while 3D scene formats
-standardize visual and physical assets. However, the correspondence between an episode and the
-world in which it occurred remains encoded through dataset-specific assumptions, preventing reliable
-reconstruction, replay, conversion, counterfactual augmentation, and leakage-safe evaluation. We
-introduce \emph{WorldEpisode}, a storage- and representation-neutral interchange profile that binds
-robot-learning episodes to immutable world revisions through explicit clocks and coordinate frames,
-persistent entity identity, fully specified action semantics, multi-representation asset roles,
-interaction events, provenance, and uncertainty. WorldEpisode does not replace existing containers
-or scene formats; it provides bindings for LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF
-Gaussian splats, and simulator-specific world targets. We implement a draft validator and
-deterministic pilot suite that measures semantic retention across seven bindings, injects fourteen
-physical-coherence faults, compares declared-latency replay against naive command-time replay, tests
-lineage-safe split leakage, and evaluates a synthetic counterfactual-augmentation task. The pilot
-suite detects all injected fault classes, improves replay RMSE by \(3.6\times\) over naive timing,
-and exposes perfect leakage in random episode splits. These results do not replace large real-robot
-evaluation, but they establish that the proposed contract is executable and that its missing
-semantics affect measurable outcomes.
+Robot-learning datasets increasingly combine recorded actions, multimodal observations,
+reconstructed scenes, and simulator exports, yet the semantic relationship between an episode and
+the world in which it occurred is usually implicit. This creates hidden methodological failures:
+trajectory replay drifts when command timing and frame semantics are underspecified, and evaluation
+splits leak when episodes share reconstructed worlds, physical entities, or asset lineage. We
+introduce \emph{WorldEpisode}, a formal, storage-neutral semantic contract that binds robot-learning
+episodes to immutable world revisions through five coupled graphs: identity, frame/clock,
+representation-role, temporal event/state, and provenance/derivation. The contract is not a
+replacement for LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, or glTF Gaussian splats; it specifies
+the invariants those systems must preserve to support reproducible replay, conversion, and
+evaluation. We implement executable round-trip binding artifacts, a semantic validator, an
+independent fixture set, and controlled experiments. Across seven bindings, native containers
+preserve only 17--39\% of the semantic contract, while WorldEpisode sidecars recover the complete
+contract for dataset/log/world bindings. The validator detects all 14 injected fault classes and all
+hand-authored independent fixture failures. Declared actuation latency reduces replay RMSE by
+\(3.6\times\) over naive command-time replay, and lineage-aware splits reduce memorization leakage
+from 1.000 to 0.000. These results show that world--episode semantics are not documentation
+overhead; they are measurable controls for robot-learning validity.
 \end{abstract}
 
 \input{sections/introduction}

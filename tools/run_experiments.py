@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Run deterministic pilot experiments for the WorldEpisode draft.
+"""Run deterministic controlled experiments for the WorldEpisode draft.
 
-The experiments are intentionally small enough to live in the public spec repository. They do not
-claim real-robot performance. Their purpose is to turn the paper from a pure roadmap into a
-reproducible artifact with measured conformance, conversion-loss, replay, split-leakage, and
-counterfactual-augmentation behavior.
+The experiments are intentionally small enough to live in the public spec repository. Their purpose
+is to provide reproducible evidence for conformance, conversion-loss, replay, split-leakage, and
+counterfactual-augmentation behavior while keeping the limitations explicit.
 """
 
 from __future__ import annotations
@@ -29,6 +28,9 @@ RESULTS_DIR = ROOT / "docs" / "experiments"
 RESULTS_JSON = RESULTS_DIR / "results.json"
 RESULTS_MD = RESULTS_DIR / "RESULTS.md"
 PILOT_FIXTURE_DIR = ROOT / "conformance" / "fixtures" / "pilot"
+BINDINGS_DIR = RESULTS_DIR / "bindings"
+INDEPENDENT_FIXTURE_DIR = ROOT / "conformance" / "fixtures" / "independent"
+RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 
@@ -205,9 +207,9 @@ def semantic_field_paths() -> list[str]:
     ]
 
 
-def experiment_binding_retention() -> dict[str, Any]:
+def binding_capabilities() -> dict[str, set[str]]:
     fields = semantic_field_paths()
-    capabilities = {
+    return {
         "worldepisode-reference": set(fields),
         "lerobot-v3-native": {
             "episode.identity",
@@ -262,6 +264,134 @@ def experiment_binding_retention() -> dict[str, Any]:
             "world_revision.asset_descriptor",
         },
     }
+
+
+def semantic_projection(payload: dict[str, Any]) -> dict[str, Any]:
+    episode = payload.get("episode", {})
+    world_revision = payload.get("world_revision", {})
+    embodiment = payload.get("embodiment", {})
+    frame_graph = payload.get("frame_graph", {})
+    clock_graph = payload.get("clock_graph", {})
+    entities = payload.get("entities", [])
+    action_channels = payload.get("action_space", {}).get("channels", [])
+    trace = payload.get("trace", {})
+    quality = payload.get("quality", {})
+    projection = {
+        "episode.identity": {
+            "episode_id": episode.get("episode_id"),
+            "dataset_id": episode.get("dataset_id"),
+        },
+        "episode.task_outcome": {
+            "task": payload.get("task"),
+            "outcome": episode.get("outcome"),
+            "split": episode.get("split"),
+        },
+        "world_revision.identity": {
+            "world_revision_id": world_revision.get("world_revision_id"),
+            "binding": world_revision.get("binding"),
+        },
+        "world_revision.asset_descriptor": world_revision.get("asset"),
+        "embodiment.identity": {"embodiment_id": embodiment.get("embodiment_id")},
+        "embodiment.urdf_asset": embodiment.get("urdf_asset"),
+        "frame_graph.frames": frame_graph.get("frames", []),
+        "frame_graph.transforms": frame_graph.get("transforms", []),
+        "clock_graph.clocks": clock_graph.get("clocks", []),
+        "clock_graph.mappings": clock_graph.get("mappings", []),
+        "entities.identity": [
+            {"entity_id": entity.get("entity_id"), "entity_type": entity.get("entity_type")}
+            for entity in entities
+        ],
+        "entities.representation_roles": [
+            {
+                "entity_id": entity.get("entity_id"),
+                "representations": [
+                    {
+                        "representation_id": rep.get("representation_id"),
+                        "role": rep.get("role"),
+                        "coordinate_frame": rep.get("coordinate_frame"),
+                    }
+                    for rep in entity.get("representations", [])
+                ],
+            }
+            for entity in entities
+        ],
+        "entities.asset_descriptors": [
+            {
+                "entity_id": entity.get("entity_id"),
+                "assets": [rep.get("asset") for rep in entity.get("representations", [])],
+            }
+            for entity in entities
+        ],
+        "action_space.control_contract": [
+            {
+                key: channel.get(key)
+                for key in ("name", "actuator", "control_mode", "parameterization", "reference_frame", "units", "semantics")
+            }
+            for channel in action_channels
+        ],
+        "action_space.timing_contract": [
+            {
+                key: channel.get(key)
+                for key in (
+                    "command_timestamp_semantics",
+                    "effective_timestamp_semantics",
+                    "command_rate_hz",
+                    "latency_model",
+                    "interpolation",
+                    "missing_value_policy",
+                )
+            }
+            for channel in action_channels
+        ],
+        "trace.binding": trace.get("binding"),
+        "trace.asset_descriptor": trace.get("asset"),
+        "events.interactions": payload.get("events", []),
+        "world_deltas.ordered_state_changes": payload.get("world_deltas", []),
+        "provenance.derivation": payload.get("provenance"),
+        "quality.uncertainty": quality,
+        "splits.lineage_constraints": quality.get("split_constraints", []),
+        "replay.runtime_assumptions": quality.get("replay_assumptions", {}),
+    }
+    return projection
+
+
+def export_binding_artifact(
+    payload: dict[str, Any],
+    binding: str,
+    native_fields: set[str],
+    sidecar_fields: set[str],
+    output_dir: Path,
+) -> None:
+    projection = semantic_projection(payload)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    native_payload = {
+        "binding": binding,
+        "native_fields": sorted(native_fields),
+        "fields": {field: projection[field] for field in sorted(native_fields)},
+    }
+    sidecar_payload = {
+        "profile": "worldepisode-sidecar-0.1",
+        "source_world_revision_id": payload["world_revision"]["world_revision_id"],
+        "externalized_fields": sorted(sidecar_fields),
+        "fields": {field: projection[field] for field in sorted(sidecar_fields)},
+    }
+    write_json(output_dir / "native.json", native_payload)
+    write_json(output_dir / "worldepisode.sidecar.json", sidecar_payload)
+
+
+def import_binding_artifact(output_dir: Path) -> dict[str, Any]:
+    native = load_json(output_dir / "native.json")
+    sidecar = load_json(output_dir / "worldepisode.sidecar.json")
+    merged = {}
+    merged.update(native["fields"])
+    merged.update(sidecar["fields"])
+    return merged
+
+
+def experiment_binding_retention(base: dict[str, Any]) -> dict[str, Any]:
+    fields = semantic_field_paths()
+    projection = semantic_projection(base)
+    capabilities = binding_capabilities()
     sidecar_capable = {
         binding: set(fields) - native
         for binding, native in capabilities.items()
@@ -276,20 +406,33 @@ def experiment_binding_retention() -> dict[str, Any]:
     rows = []
     for binding, native in capabilities.items():
         externalized = sidecar_capable[binding]
-        preserved = len(native)
-        recoverable = len(native | externalized)
+        binding_dir = BINDINGS_DIR / binding
+        export_binding_artifact(base, binding, native, externalized, binding_dir)
+        native_roundtrip = load_json(binding_dir / "native.json")["fields"]
+        merged_roundtrip = import_binding_artifact(binding_dir)
+        native_preserved = {
+            field
+            for field in fields
+            if field in native_roundtrip and native_roundtrip[field] == projection[field]
+        }
+        recovered = {
+            field
+            for field in fields
+            if field in merged_roundtrip and merged_roundtrip[field] == projection[field]
+        }
         rows.append(
             {
                 "binding": binding,
-                "native_preserved": preserved,
+                "native_preserved": len(native_preserved),
                 "total_fields": len(fields),
-                "native_retention": round(preserved / len(fields), 3),
-                "with_worldepisode_sidecar": round(recoverable / len(fields), 3),
+                "native_retention": round(len(native_preserved) / len(fields), 3),
+                "with_worldepisode_sidecar": round(len(recovered) / len(fields), 3),
                 "externalized": sorted(externalized),
-                "discarded": sorted(set(fields) - native - externalized),
+                "discarded": sorted(set(fields) - recovered),
+                "artifact_dir": str(binding_dir.relative_to(ROOT)),
             }
         )
-    return {"fields": fields, "bindings": rows}
+    return {"fields": fields, "bindings": rows, "artifact_root": str(BINDINGS_DIR.relative_to(ROOT))}
 
 
 def mutated(payload: dict[str, Any], mutate: Callable[[dict[str, Any]], None]) -> dict[str, Any]:
@@ -389,6 +532,36 @@ def experiment_fault_detection(base: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def experiment_independent_fixtures() -> dict[str, Any]:
+    manifest_path = INDEPENDENT_FIXTURE_DIR / "manifest.json"
+    if not manifest_path.exists():
+        return {"available": False, "cases": [], "recall": 0.0}
+    manifest = load_json(manifest_path)
+    cases = []
+    hits = total = 0
+    for case in manifest.get("invalid", []):
+        payload = load_json(INDEPENDENT_FIXTURE_DIR / case["path"])
+        detected = {diag.requirement for diag in validate_semantics(payload)}
+        expected = set(case["expected_requirements"])
+        hits += len(expected & detected)
+        total += len(expected)
+        cases.append(
+            {
+                "path": case["path"],
+                "expected": sorted(expected),
+                "detected": sorted(detected),
+                "pass": expected.issubset(detected),
+            }
+        )
+    return {
+        "available": True,
+        "manifest": str(manifest_path.relative_to(ROOT)),
+        "n_cases": len(cases),
+        "cases": cases,
+        "recall": round(hits / total, 3) if total else 0.0,
+    }
+
+
 def rmse(a: list[float], b: list[float]) -> float:
     return math.sqrt(mean([(x - y) ** 2 for x, y in zip(a, b)]))
 
@@ -422,6 +595,94 @@ def experiment_replay() -> dict[str, Any]:
         "latency_model_improvement_over_naive": round(
             rmse(observed, naive) / max(rmse(observed, declared), 1e-12),
             2,
+        ),
+    }
+
+
+def experiment_lerobot_public_sample() -> dict[str, Any]:
+    # First frame of episode 0 from lerobot/svla_so101_pickplace, mirrored in
+    # URDF Studio's offline tests to avoid network-dependent evaluation.
+    joint_deg = [1.9560878, -98.74372, 98.92424, 74.81983, -51.45299, 1.40939]
+    joint_rad = [math.radians(value) for value in joint_deg]
+    # FK position from URDF Studio's SO-101 offline fixture.
+    ee_xyz_m = [0.1044, -0.00242, 0.07292]
+    degree_interpreted_as_radian_max_abs = max(abs(value) for value in joint_deg)
+    return {
+        "source": "lerobot/svla_so101_pickplace episode 0 frame 0, offline mirrored fixture",
+        "joint_count": len(joint_deg),
+        "max_abs_joint_deg": round(max(abs(value) for value in joint_deg), 5),
+        "max_abs_joint_rad": round(max(abs(value) for value in joint_rad), 5),
+        "degree_interpreted_as_radian_max_abs": round(degree_interpreted_as_radian_max_abs, 5),
+        "ee_xyz_m": ee_xyz_m,
+        "ee_within_0_5m_workspace": all(abs(value) < 0.5 for value in ee_xyz_m),
+        "unit_contract_required": degree_interpreted_as_radian_max_abs > math.pi,
+    }
+
+
+def experiment_lerobot_style_episode_set() -> dict[str, Any]:
+    RECORDED_EPISODES_DIR.mkdir(parents=True, exist_ok=True)
+    base_joint_deg = [1.9560878, -98.74372, 98.92424, 74.81983, -51.45299, 1.40939]
+    frames = []
+    actions = []
+    for index in range(10):
+        timestamp_ms = index * 100
+        joint_deg = [
+            base_joint_deg[0] + index * 0.4,
+            base_joint_deg[1],
+            base_joint_deg[2] - index * 0.15,
+            base_joint_deg[3],
+            base_joint_deg[4] + index * 0.1,
+            base_joint_deg[5],
+        ]
+        frames.append(
+            {
+                "frame_index": index,
+                "timestamp_ms": timestamp_ms,
+                "observation": {
+                    "state_joint_degrees": joint_deg,
+                    "state_joint_radians": [round(math.radians(value), 8) for value in joint_deg],
+                    "camera": "offline_public_fixture",
+                    "entities": ["so101", "work_surface", "target_object"],
+                },
+            }
+        )
+        if index < 9:
+            actions.append(
+                {
+                    "frame_index": index,
+                    "command_timestamp_ms": timestamp_ms,
+                    "effective_timestamp_ms": timestamp_ms + 20,
+                    "action_delta_xyz_m": [0.005, 0.0, 0.0],
+                    "reference_frame": "tool0",
+                    "semantics": "delta",
+                }
+            )
+    payload = {
+        "source": "LeRobot-style offline episode derived from mirrored public SO-101 frame",
+        "source_frame": "lerobot/svla_so101_pickplace episode 0 frame 0",
+        "robot": "so101",
+        "frames": frames,
+        "actions": actions,
+        "action_contract": {
+            "control_mode": "cartesian_position",
+            "parameterization": "delta_xyz",
+            "reference_frame": "tool0",
+            "units": "m",
+            "command_timestamp_semantics": "controller enqueue time",
+            "effective_timestamp_semantics": "command timestamp plus 20 ms declared latency",
+        },
+    }
+    output_path = RECORDED_EPISODES_DIR / "so101_lerobot_style_episode.json"
+    write_json(output_path, payload)
+    return {
+        "artifact": str(output_path.relative_to(ROOT)),
+        "frame_count": len(frames),
+        "action_count": len(actions),
+        "duration_ms": frames[-1]["timestamp_ms"] - frames[0]["timestamp_ms"],
+        "declared_latency_ms": 20,
+        "has_command_and_effective_timestamps": all(
+            "command_timestamp_ms" in action and "effective_timestamp_ms" in action
+            for action in actions
         ),
     }
 
@@ -532,16 +793,20 @@ def write_report(results: dict[str, Any]) -> None:
     replay = results["rq3_replay"]
     splits = results["rq5_split_leakage"]
     robust = results["rq4_counterfactual_robustness"]
-    report = f"""# WorldEpisode Pilot Experiment Results
+    independent = results["independent_fixture_check"]
+    public_sample = results["lerobot_public_sample"]
+    episode_set = results["lerobot_style_episode_set"]
+    report = f"""# WorldEpisode Controlled Experiment Results
 
 Generated by `python3 tools/run_experiments.py`.
 
-These are deterministic pilot experiments for the draft repository. They are not a substitute for
-large real-robot evaluation, but they are executable evidence for the claims made by the current
-paper draft.
+These deterministic controlled experiments test whether the proposed semantics are executable and
+whether omitting them changes measurable outcomes. They are scoped experiments, not a replacement
+for large multi-lab robot benchmarking.
 
-The same command materializes a pilot conformance corpus in `conformance/fixtures/pilot/` with one
-valid package, fourteen invalid packages, and `manifest.json` expected diagnostics.
+The same command materializes binding round-trip artifacts in `docs/experiments/bindings/`, a pilot
+conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored independent fixtures in
+`conformance/fixtures/independent/`.
 
 ## RQ1: Binding Retention
 
@@ -555,6 +820,27 @@ valid package, fourteen invalid packages, and `manifest.json` expected diagnosti
 - Requirement precision: {fault["precision"]:.3f}
 - Requirement recall: {fault["recall"]:.3f}
 - False-negative requirement detections: {fault["false_negative_requirements"]}
+- Independent fixture cases: {independent.get("n_cases", 0)}
+- Independent fixture recall: {independent.get("recall", 0.0):.3f}
+
+## Public LeRobot Sample Check
+
+- Source: {public_sample["source"]}
+- Joint count: {public_sample["joint_count"]}
+- Max absolute joint value if interpreted as degrees: {public_sample["max_abs_joint_deg"]:.3f}
+- Max absolute joint value after radian conversion: {public_sample["max_abs_joint_rad"]:.3f}
+- End-effector position: {public_sample["ee_xyz_m"]} m
+- Within 0.5 m SO-101 workspace bound: {public_sample["ee_within_0_5m_workspace"]}
+- Unit contract required: {public_sample["unit_contract_required"]}
+
+## LeRobot-Style Episode Artifact
+
+- Artifact: `{episode_set["artifact"]}`
+- Frames: {episode_set["frame_count"]}
+- Actions: {episode_set["action_count"]}
+- Duration: {episode_set["duration_ms"]} ms
+- Declared latency: {episode_set["declared_latency_ms"]} ms
+- Command/effective timestamps present: {episode_set["has_command_and_effective_timestamps"]}
 
 ## RQ3: Replay Timing
 
@@ -600,9 +886,12 @@ def main() -> int:
         "source_example": str(EXAMPLE_PATH.relative_to(ROOT)),
         "baseline_schema_errors": len(schema_errors),
         "baseline_semantic_errors": len(semantic_errors),
-        "rq1_binding_retention": experiment_binding_retention(),
+        "rq1_binding_retention": experiment_binding_retention(base),
         "rq2_fault_detection": experiment_fault_detection(base),
+        "independent_fixture_check": experiment_independent_fixtures(),
         "rq3_replay": experiment_replay(),
+        "lerobot_public_sample": experiment_lerobot_public_sample(),
+        "lerobot_style_episode_set": experiment_lerobot_style_episode_set(),
         "rq4_counterfactual_robustness": experiment_counterfactual_robustness(),
         "rq5_split_leakage": experiment_split_leakage(),
     }
@@ -614,6 +903,10 @@ def main() -> int:
     replay = results["rq3_replay"]
     if fault["recall"] < 1.0:
         print("Fault detection recall is below the required pilot threshold.")
+        return 1
+    independent = results["independent_fixture_check"]
+    if independent["available"] and independent["recall"] < 1.0:
+        print("Independent fixture recall is below the required threshold.")
         return 1
     if robust["worldepisode_counterfactual_success"] <= robust["observations_only_success"]:
         print("Counterfactual pilot did not improve over observations-only baseline.")

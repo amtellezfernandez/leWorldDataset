@@ -40,6 +40,31 @@ W_e(t) = W^(r) + Delta W_e(t)
 where `W^(r)` is an immutable, content-addressed world revision and `Delta W_e(t)` is the ordered
 sequence of episode-specific state changes in a declared clock domain.
 
+Each episode also induces a coupled graph object:
+
+```text
+G_E = (G_I, G_FC, G_R, G_T, G_P)
+```
+
+Where:
+
+- `G_I`: persistent entity identity graph.
+- `G_FC`: frame and clock graph.
+- `G_R`: representation-role graph mapping entities to assets and roles.
+- `G_T`: temporal state and interaction-event graph.
+- `G_P`: provenance and derivation graph.
+
+A package is valid only if graph references are closed, the base world revision is
+content-addressed, and every lossy binding emits a conversion report:
+
+```text
+valid(E) iff closed(G_E) and hashed(W^(r)) and for every binding b there exists L_b
+```
+
+`closed(G_E)` means every entity, frame, clock, action, asset, event, and provenance reference
+resolves to a declared node. `L_b` records preserved, externalized, approximated, and discarded
+semantics for binding `b`.
+
 ## 2. Five Graphs
 
 ### 2.1 Identity Graph

@@ -1,0 +1,108 @@
+{
+  "externalized_fields": [
+    "action_space.control_contract",
+    "action_space.timing_contract",
+    "clock_graph.clocks",
+    "clock_graph.mappings",
+    "embodiment.urdf_asset",
+    "episode.identity",
+    "episode.task_outcome",
+    "events.interactions",
+    "provenance.derivation",
+    "quality.uncertainty",
+    "splits.lineage_constraints",
+    "trace.asset_descriptor",
+    "trace.binding",
+    "world_deltas.ordered_state_changes"
+  ],
+  "fields": {
+    "action_space.control_contract": [
+      {
+        "actuator": "right_arm",
+        "control_mode": "cartesian_position",
+        "name": "eef_delta_xyz",
+        "parameterization": "delta_xyz",
+        "reference_frame": "tool0",
+        "semantics": "delta",
+        "units": "m"
+      }
+    ],
+    "action_space.timing_contract": [
+      {
+        "command_rate_hz": 50,
+        "command_timestamp_semantics": "sample timestamp is controller command enqueue time in episode_time",
+        "effective_timestamp_semantics": "effective actuation time is command timestamp plus declared_constant_20ms latency",
+        "interpolation": "zero_order_hold",
+        "latency_model": "declared_constant_20ms",
+        "missing_value_policy": "hold_last"
+      }
+    ],
+    "clock_graph.clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "monotonic_episode",
+        "units": "ns"
+      }
+    ],
+    "clock_graph.mappings": [],
+    "embodiment.urdf_asset": {
+      "license": "Apache-2.0",
+      "media_type": "application/vnd.ros.urdf+xml",
+      "mirrors": [
+        "robots/fixed_arm.urdf"
+      ],
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "uri": "oci://registry.example.org/worldepisode/robots/fixed_arm:1.0"
+    },
+    "episode.identity": {
+      "dataset_id": "worldepisode-rigid-demo",
+      "episode_id": "episode_000001"
+    },
+    "episode.task_outcome": {
+      "outcome": "success",
+      "split": "train",
+      "task": {
+        "instruction": "Pick the carton from the table.",
+        "task_id": "pick_carton"
+      }
+    },
+    "events.interactions": [
+      {
+        "clock_id": "episode_time",
+        "confidence": 0.9,
+        "entity_ids": [
+          "carton_1"
+        ],
+        "event_id": "grasp_1",
+        "event_type": "grasp_established",
+        "timestamp": 12540000000
+      }
+    ],
+    "provenance.derivation": {
+      "creator": "URDF Studio",
+      "license": "CC0-1.0",
+      "software": "worldepisode draft tools",
+      "source": "demo_capture"
+    },
+    "quality.uncertainty": {
+      "conformance_profiles": [
+        "WE-Core",
+        "WE-Rigid-Manipulation"
+      ]
+    },
+    "splits.lineage_constraints": [],
+    "trace.asset_descriptor": {
+      "license": "CC-BY-4.0",
+      "media_type": "application/vnd.apache.parquet",
+      "mirrors": [
+        "episodes/episode_000001/trace.parquet"
+      ],
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "uri": "ipfs://bafybeigdyrzt4v3exampletrace"
+    },
+    "trace.binding": "lerobot-v3",
+    "world_deltas.ordered_state_changes": []
+  },
+  "profile": "worldepisode-sidecar-0.1",
+  "source_world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

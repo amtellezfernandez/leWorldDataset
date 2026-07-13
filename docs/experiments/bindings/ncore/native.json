@@ -1,0 +1,77 @@
+{
+  "binding": "ncore",
+  "fields": {
+    "clock_graph.clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "monotonic_episode",
+        "units": "ns"
+      }
+    ],
+    "clock_graph.mappings": [],
+    "embodiment.identity": {
+      "embodiment_id": "fixed_arm_demo"
+    },
+    "frame_graph.frames": [
+      {
+        "convention": "ros-rep-103",
+        "frame_id": "world",
+        "handedness": "right",
+        "units": "m",
+        "up_axis": "z"
+      },
+      {
+        "frame_id": "tool0",
+        "handedness": "right",
+        "units": "m",
+        "up_axis": "z"
+      }
+    ],
+    "frame_graph.transforms": [
+      {
+        "quaternion_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "source_frame": "tool0",
+        "target_frame": "world",
+        "translation_xyz": [
+          0.4,
+          0.0,
+          0.3
+        ],
+        "valid_interval": {
+          "clock_id": "episode_time",
+          "end": 30000000000,
+          "start": 0
+        }
+      }
+    ],
+    "provenance.derivation": {
+      "creator": "URDF Studio",
+      "license": "CC0-1.0",
+      "software": "worldepisode draft tools",
+      "source": "demo_capture"
+    },
+    "trace.asset_descriptor": {
+      "license": "CC-BY-4.0",
+      "media_type": "application/vnd.apache.parquet",
+      "mirrors": [
+        "episodes/episode_000001/trace.parquet"
+      ],
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "uri": "ipfs://bafybeigdyrzt4v3exampletrace"
+    }
+  },
+  "native_fields": [
+    "clock_graph.clocks",
+    "clock_graph.mappings",
+    "embodiment.identity",
+    "frame_graph.frames",
+    "frame_graph.transforms",
+    "provenance.derivation",
+    "trace.asset_descriptor"
+  ]
+}

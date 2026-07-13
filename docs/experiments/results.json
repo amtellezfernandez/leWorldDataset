@@ -1,9 +1,65 @@
 {
   "baseline_schema_errors": 0,
   "baseline_semantic_errors": 0,
+  "independent_fixture_check": {
+    "available": true,
+    "cases": [
+      {
+        "detected": [
+          "TIME.001",
+          "TRACE.001",
+          "WORLD.001"
+        ],
+        "expected": [
+          "TIME.001",
+          "TRACE.001",
+          "WORLD.001"
+        ],
+        "pass": true,
+        "path": "invalid/no_clock_no_world.worldepisode.json"
+      },
+      {
+        "detected": [
+          "ACTION.002"
+        ],
+        "expected": [
+          "ACTION.002"
+        ],
+        "pass": true,
+        "path": "invalid/action_missing_timing.worldepisode.json"
+      }
+    ],
+    "manifest": "conformance/fixtures/independent/manifest.json",
+    "n_cases": 2,
+    "recall": 1.0
+  },
+  "lerobot_public_sample": {
+    "degree_interpreted_as_radian_max_abs": 98.92424,
+    "ee_within_0_5m_workspace": true,
+    "ee_xyz_m": [
+      0.1044,
+      -0.00242,
+      0.07292
+    ],
+    "joint_count": 6,
+    "max_abs_joint_deg": 98.92424,
+    "max_abs_joint_rad": 1.72655,
+    "source": "lerobot/svla_so101_pickplace episode 0 frame 0, offline mirrored fixture",
+    "unit_contract_required": true
+  },
+  "lerobot_style_episode_set": {
+    "action_count": 9,
+    "artifact": "docs/experiments/recorded_episodes/so101_lerobot_style_episode.json",
+    "declared_latency_ms": 20,
+    "duration_ms": 900,
+    "frame_count": 10,
+    "has_command_and_effective_timestamps": true
+  },
   "rq1_binding_retention": {
+    "artifact_root": "docs/experiments/bindings",
     "bindings": [
       {
+        "artifact_dir": "docs/experiments/bindings/worldepisode-reference",
         "binding": "worldepisode-reference",
         "discarded": [],
         "externalized": [],
@@ -13,6 +69,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/lerobot-v3-native",
         "binding": "lerobot-v3-native",
         "discarded": [],
         "externalized": [
@@ -40,6 +97,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/rerun-rrd",
         "binding": "rerun-rrd",
         "discarded": [],
         "externalized": [
@@ -65,6 +123,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/ncore",
         "binding": "ncore",
         "discarded": [],
         "externalized": [
@@ -91,6 +150,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/mcap-ros2",
         "binding": "mcap-ros2",
         "discarded": [],
         "externalized": [
@@ -118,6 +178,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/openusd-simready",
         "binding": "openusd-simready",
         "discarded": [],
         "externalized": [
@@ -142,6 +203,7 @@
         "with_worldepisode_sidecar": 1.0
       },
       {
+        "artifact_dir": "docs/experiments/bindings/gltf-gaussian-asset",
         "binding": "gltf-gaussian-asset",
         "discarded": [
           "action_space.control_contract",

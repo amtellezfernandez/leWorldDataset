@@ -1,20 +1,29 @@
 \section{Introduction}
 
-Robot-learning datasets and 3D scene formats are improving quickly, but they solve different
-problems. LeRobot-style datasets focus on efficient observation--action episodes. Rerun provides a
-physical-data layer and storage target for multimodal recordings. NCore documents explicit pose
-graphs and sensor conventions. OpenUSD, SimReady, glTF, and simulator-native formats describe
-composed worlds and assets. Gaussian splats are also moving into standard asset containers through
-glTF's \texttt{KHR\_gaussian\_splatting} extension~\citep{khronos_gs, gltf_gs}. Recent
-real-to-sim systems such as RoboSnap and DROID-Sim show that Gaussian-splat environments can support
-trajectory replay, synthetic data generation, and policy evaluation at dataset scale~\citep{robosnap}.
+Robot-learning evaluation increasingly depends on a chain of conversions: recorded episodes become
+training datasets, reconstructed scenes become simulator assets, simulator rollouts become
+benchmark results, and generated counterfactuals become data augmentation. The chain is only as
+scientific as its hidden alignment assumptions. A camera transform with the wrong direction, an
+action stream interpreted in the wrong frame, a command timestamp treated as an actuation timestamp,
+or a train/test split that shares the same reconstructed world can change a conclusion without
+changing a dataset's apparent file validity.
+
+Existing formats solve important pieces of this chain. LeRobot-style datasets focus on efficient
+observation--action episodes. Rerun provides a physical-data layer and storage target for multimodal
+recordings. NCore documents explicit pose graphs and sensor conventions. OpenUSD, SimReady, glTF,
+and simulator-native formats describe composed worlds and assets. Gaussian splats are also moving
+into standard asset containers through glTF's \texttt{KHR\_gaussian\_splatting}
+extension~\citep{khronos_gs, gltf_gs}. Recent real-to-sim systems such as RoboSnap and DROID-Sim
+show that Gaussian-splat environments can support trajectory replay, synthetic data generation, and
+policy evaluation at dataset scale~\citep{robosnap}.
 
 This landscape rules out a weak framing: WorldEpisode is not the first format that connects robot
 data and Gaussian-splat worlds. That space is already occupied by asset standards and method papers.
 The remaining opening is the contract connecting all of them: the persistent, auditable binding
 between a robot-learning episode and the versioned world in which it occurred.
 
-WorldEpisode targets that missing semantic layer. It is:
+WorldEpisode targets that missing semantic layer. The contribution is a formal semantic contract,
+not a wrapper around existing libraries. It is:
 \begin{itemize}[leftmargin=*]
   \item \textbf{storage-neutral}: serializable through LeRobot, Rerun, NCore, MCAP, or a reference package;
   \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, and future assets;
@@ -25,7 +34,6 @@ WorldEpisode targets that missing semantic layer. It is:
 The paper's core claim is therefore not a new monolithic file format. It is an executable
 interchange profile for world--episode semantics: identity, frames, clocks, action contracts,
 representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits. The
-current artifact includes a JSON Schema, semantic validator, conversion-retention model, and
-deterministic pilot experiments. The experiments are deliberately small; their role is to test
-whether the proposed semantics are machine-checkable and empirically consequential before scaling to
-real-robot benchmarks.
+current artifact includes a JSON Schema, semantic validator, round-trip binding artifacts,
+hand-authored independent fixtures, a mirrored public LeRobot frame check, and controlled
+experiments for replay drift, leakage, and counterfactual augmentation.
