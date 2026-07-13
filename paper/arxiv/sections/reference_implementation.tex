@@ -30,9 +30,11 @@ machine-readable conformance requirement file, an installable semantic validator
 experiment runner. The validator maps each diagnostic to a stable requirement identifier such as
 \texttt{TIME.001}, \texttt{FRAME.002}, or \texttt{ASSET.002}. The experiment runner takes a
 WorldEpisode package, exports binding-native artifacts plus sidecars, reimports them, compares a
-semantic projection, injects controlled faults, and writes reproducible result artifacts. URDF Studio
-remains the initial implementation root, but the contract is represented independently in the public
-schema and validator.
+versioned semantic projection, injects controlled faults, and writes reproducible result artifacts.
+The projection itself is published as \path{conformance/projections/uss-core-23.v0.json} and
+validated against \path{schemas/semantic-projection-v0.schema.json}. URDF Studio remains the initial
+implementation root, but the contract is represented independently in the public schema and
+validator.
 
 The validator is packaged as \texttt{worldepisode}. A blocking preflight can be run from the shell
 with \texttt{worldepisode preflight <dataset-or-manifest>} or from a training script with a single

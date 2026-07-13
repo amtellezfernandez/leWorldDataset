@@ -26,6 +26,11 @@ LeRobot <-> WorldEpisode <-> Rerun
 Measure field retention, semantic retention, deterministic round-trip equality, externalized fields,
 approximated fields, discarded fields, and declared conversion loss.
 
+Current executable artifact: `conformance/projections/uss-core-23.v0.json` externalizes the
+23-field semantic projection and pilot binding capability model used by
+`tools/run_experiments.py`. The profile is schema-validated and maps each field to conformance
+requirements. It remains a pilot projection until reviewed or reimplemented independently.
+
 ## RQ2: Physical-Coherence Fault Detection
 
 Inject controlled failures:

@@ -5,6 +5,26 @@ Status: draft.
 Profiles are composable. A dataset can claim several profiles if it passes every required rule for
 each claimed profile.
 
+## USS-Core-23 Semantic Projection
+
+Purpose: make the binding-retention experiment auditable by publishing the exact semantic fields
+and pilot binding capability model used in the paper.
+
+Artifact:
+
+- `conformance/projections/uss-core-23.v0.json`
+- `schemas/semantic-projection-v0.schema.json`
+
+Scope:
+
+- 23 semantic fields used by the executable binding-retention artifacts;
+- field-to-requirement mappings;
+- native-field and sidecar-field assumptions for each pilot binding.
+
+Boundary: this is a versioned pilot projection, not a universal score of LeRobot, Rerun, NCore,
+MCAP, OpenUSD, glTF, or future bindings. It should become normative only after external review or
+independent implementation feedback.
+
 ## WE-Core
 
 Purpose: minimal robot-learning episode binding to a versioned world.

@@ -1,0 +1,275 @@
+{
+  "binding_models": [
+    {
+      "binding": "worldepisode-reference",
+      "claim_boundary": "Reference package model for this conformance profile, not a claim about every future USS binding.",
+      "description": "Native reference profile carries the full semantic projection.",
+      "native_fields": [
+        "episode.identity",
+        "episode.task_outcome",
+        "world_revision.identity",
+        "world_revision.asset_descriptor",
+        "embodiment.identity",
+        "embodiment.urdf_asset",
+        "frame_graph.frames",
+        "frame_graph.transforms",
+        "clock_graph.clocks",
+        "clock_graph.mappings",
+        "entities.identity",
+        "entities.representation_roles",
+        "entities.asset_descriptors",
+        "action_space.control_contract",
+        "action_space.timing_contract",
+        "trace.binding",
+        "trace.asset_descriptor",
+        "events.interactions",
+        "world_deltas.ordered_state_changes",
+        "provenance.derivation",
+        "quality.uncertainty",
+        "splits.lineage_constraints",
+        "replay.runtime_assumptions"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "lerobot-v3-native",
+      "claim_boundary": "Pilot model of public LeRobotDataset v3 metadata used in this repository; not a complete judgment of all LeRobot extensions.",
+      "description": "Policy-training table view with episode/task, clocks, action tensors, and trace storage.",
+      "native_fields": [
+        "episode.identity",
+        "episode.task_outcome",
+        "clock_graph.clocks",
+        "action_space.control_contract",
+        "trace.binding",
+        "trace.asset_descriptor"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "rerun-rrd",
+      "claim_boundary": "Pilot model of fields represented in the controlled Rerun binding artifact, not a universal Rerun capability score.",
+      "description": "Multirate physical-data recording view with frames, clocks, entities, traces, and events.",
+      "native_fields": [
+        "episode.identity",
+        "frame_graph.frames",
+        "frame_graph.transforms",
+        "clock_graph.clocks",
+        "clock_graph.mappings",
+        "entities.identity",
+        "trace.binding",
+        "events.interactions"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "ncore",
+      "claim_boundary": "Pilot model based on public NCore capture and pose-graph scope; not a claim that NCore could not be extended.",
+      "description": "Sensor and reconstruction capture view with embodiment, frames, clocks, assets, and provenance.",
+      "native_fields": [
+        "embodiment.identity",
+        "frame_graph.frames",
+        "frame_graph.transforms",
+        "clock_graph.clocks",
+        "clock_graph.mappings",
+        "trace.asset_descriptor",
+        "provenance.derivation"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "mcap-ros2",
+      "claim_boundary": "Pilot model of common ROS2/MCAP logs; schemas can carry more when explicitly authored.",
+      "description": "Raw robotics log view with episode messages, transforms, clocks, actions, and trace streams.",
+      "native_fields": [
+        "episode.identity",
+        "frame_graph.frames",
+        "frame_graph.transforms",
+        "clock_graph.clocks",
+        "action_space.control_contract",
+        "trace.binding"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "openusd-simready",
+      "claim_boundary": "Pilot model of scene composition and simulation asset metadata; not an action/task dataset profile.",
+      "description": "Composed simulation-world view with world assets, entities, representation roles, frames, and replay assumptions.",
+      "native_fields": [
+        "world_revision.identity",
+        "world_revision.asset_descriptor",
+        "embodiment.identity",
+        "entities.identity",
+        "entities.representation_roles",
+        "entities.asset_descriptors",
+        "frame_graph.frames",
+        "frame_graph.transforms",
+        "replay.runtime_assumptions"
+      ],
+      "sidecar_policy": "all_missing"
+    },
+    {
+      "binding": "gltf-gaussian-asset",
+      "claim_boundary": "Asset binding only; it is intentionally not an episode, task, action, clock, split, or replay contract.",
+      "description": "Portable Gaussian appearance asset view with entity and asset representation metadata.",
+      "native_fields": [
+        "entities.identity",
+        "entities.representation_roles",
+        "entities.asset_descriptors",
+        "world_revision.asset_descriptor"
+      ],
+      "sidecar_fields": [
+        "world_revision.identity",
+        "provenance.derivation",
+        "quality.uncertainty"
+      ],
+      "sidecar_policy": "listed_only"
+    }
+  ],
+  "claim_boundary": "This profile is a versioned pilot projection for binding-retention experiments. It is not a universal score of any external format and should be revised through external review before becoming normative.",
+  "field_count": 23,
+  "fields": [
+    {
+      "description": "Dataset and episode identifiers that bind samples to one record.",
+      "label": "Episode identity",
+      "path": "episode.identity",
+      "requirement_ids": ["TRACE.001"]
+    },
+    {
+      "description": "Task, outcome, and split labels used for training and evaluation.",
+      "label": "Task and outcome",
+      "path": "episode.task_outcome",
+      "requirement_ids": ["TRACE.001", "SPLIT.001"]
+    },
+    {
+      "description": "Immutable content-addressed world or state revision identity.",
+      "label": "World revision identity",
+      "path": "world_revision.identity",
+      "requirement_ids": ["WORLD.001"]
+    },
+    {
+      "description": "Resolvable and digest-verifiable asset descriptor for the base world revision.",
+      "label": "World asset descriptor",
+      "path": "world_revision.asset_descriptor",
+      "requirement_ids": ["WORLD.001", "ASSET.001", "ASSET.002"]
+    },
+    {
+      "description": "Robot or agent embodiment identifier.",
+      "label": "Embodiment identity",
+      "path": "embodiment.identity",
+      "requirement_ids": ["ENTITY.001"]
+    },
+    {
+      "description": "Resolvable and digest-verifiable robot embodiment asset such as URDF.",
+      "label": "Embodiment URDF asset",
+      "path": "embodiment.urdf_asset",
+      "requirement_ids": ["ASSET.001", "ASSET.002"]
+    },
+    {
+      "description": "Declared coordinate frames used by spatial values.",
+      "label": "Frame declarations",
+      "path": "frame_graph.frames",
+      "requirement_ids": ["FRAME.001"]
+    },
+    {
+      "description": "Transform directions, units, and validity intervals between frames.",
+      "label": "Frame transforms",
+      "path": "frame_graph.transforms",
+      "requirement_ids": ["FRAME.002"]
+    },
+    {
+      "description": "Clock domains for streams and events.",
+      "label": "Clock declarations",
+      "path": "clock_graph.clocks",
+      "requirement_ids": ["TIME.001"]
+    },
+    {
+      "description": "Cross-clock synchronization mappings with offset, drift, and error.",
+      "label": "Clock mappings",
+      "path": "clock_graph.mappings",
+      "requirement_ids": ["TIME.002"]
+    },
+    {
+      "description": "Persistent entity identifiers and entity types.",
+      "label": "Entity identity",
+      "path": "entities.identity",
+      "requirement_ids": ["ENTITY.001"]
+    },
+    {
+      "description": "Representation-role assignments for each entity.",
+      "label": "Representation roles",
+      "path": "entities.representation_roles",
+      "requirement_ids": ["REP.001"]
+    },
+    {
+      "description": "Asset descriptors attached to entity representations.",
+      "label": "Entity asset descriptors",
+      "path": "entities.asset_descriptors",
+      "requirement_ids": ["ASSET.001", "ASSET.002"]
+    },
+    {
+      "description": "Control mode, parameterization, frame, units, and action semantics.",
+      "label": "Action control contract",
+      "path": "action_space.control_contract",
+      "requirement_ids": ["ACTION.001"]
+    },
+    {
+      "description": "Command/effective timestamp semantics, latency, interpolation, and missing-value policy.",
+      "label": "Action timing contract",
+      "path": "action_space.timing_contract",
+      "requirement_ids": ["ACTION.002"]
+    },
+    {
+      "description": "Trace storage binding and stream linkage.",
+      "label": "Trace binding",
+      "path": "trace.binding",
+      "requirement_ids": ["TRACE.001"]
+    },
+    {
+      "description": "Trace data asset descriptor.",
+      "label": "Trace asset descriptor",
+      "path": "trace.asset_descriptor",
+      "requirement_ids": ["ASSET.001", "ASSET.002"]
+    },
+    {
+      "description": "Contact, grasp, support, intervention, and related interaction events.",
+      "label": "Interaction events",
+      "path": "events.interactions",
+      "requirement_ids": ["TRACE.001", "ENTITY.001"]
+    },
+    {
+      "description": "Ordered episode/state deltas from the base world revision.",
+      "label": "Ordered state changes",
+      "path": "world_deltas.ordered_state_changes",
+      "requirement_ids": ["TRACE.001", "WORLD.001"]
+    },
+    {
+      "description": "Source and transformation provenance for derived assets and records.",
+      "label": "Derivation provenance",
+      "path": "provenance.derivation",
+      "requirement_ids": ["PROV.001"]
+    },
+    {
+      "description": "Uncertainty, source status, split constraints, and replay quality records.",
+      "label": "Quality and uncertainty",
+      "path": "quality.uncertainty",
+      "requirement_ids": ["QUALITY.001"]
+    },
+    {
+      "description": "Lineage constraints used to prevent split leakage.",
+      "label": "Split lineage constraints",
+      "path": "splits.lineage_constraints",
+      "requirement_ids": ["SPLIT.001"]
+    },
+    {
+      "description": "Runtime, solver, timestep, initialization, and tolerance assumptions for replay.",
+      "label": "Replay assumptions",
+      "path": "replay.runtime_assumptions",
+      "requirement_ids": ["REPLAY.001"]
+    }
+  ],
+  "profile_id": "uss-core-23",
+  "schema_version": "semantic-projection-v0",
+  "scope": "Pilot semantic projection used to measure binding retention for the USS / WorldEpisode draft.",
+  "status": "draft",
+  "version": "0.1.0"
+}

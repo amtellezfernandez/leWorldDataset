@@ -19,7 +19,7 @@ the claim at the same scope as the evidence.
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
 | Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
 | Real-to-sim relevance is not concrete. | `tools/realtosim_contract_drift.py` now runs two controlled ablations: action contract drift and representation-role drift. Both succeed in the drifted simulator, fail under deployment proxies, and pass with the WorldEpisode contract. | Mitigated as a controlled proxy. The paper must not call this a RoboSnap/DROID-Sim hardware result. | Run the same checks on a real reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another public real-to-sim pipeline. |
-| Binding-retention metric looks subjective. | Predeclared 23-field semantic projection stored in `tools/run_experiments.py` and `docs/experiments/results.json`; native and sidecar artifacts checked by reimport. | Mitigated by scope. The paper calls it a pilot projection, not a universal score. | Publish the projection as a versioned conformance profile and obtain external review or an independent implementation. |
+| Binding-retention metric looks subjective. | Versioned `conformance/projections/uss-core-23.v0.json` profile, `schemas/semantic-projection-v0.schema.json`, generated native/sidecar artifacts, and runner validation against field and requirement references. | Mitigated by artifact. The paper can cite a versioned pilot projection, not a universal score. | Obtain external review or an independent implementation that accepts or revises the projection. |
 | "Why not just USD/ROS/Rerun?" | Architecture and bindings show native containers as targets/views; sidecar captures action/task/lineage/replay semantics not owned by a single container. | Mitigated. Paper explicitly avoids replacement framing. | Demonstrate a round trip through at least two independently maintained native containers with loss reports. |
 | No independent adoption. | Public schema, governance draft, fixtures, examples, and artifacts exist. | Open. Limitations state no independent implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
 | Too broad for version 1. | Paper and spec scope v0 to rigid tabletop manipulation with fixed-base single- or dual-arm robots. | Mitigated. Limitations table names unsupported domains. | Keep humanoids, locomotion, deformables, fluids, and multi-agent support out of v0 conformance claims. |
@@ -101,7 +101,16 @@ the claim at the same scope as the evidence.
      maintained outside this repository.
    - Claim unlocked: USS is empirically useful outside robotics, not only a general vocabulary.
 
-8. **Independent implementation gate**
+8. **Semantic projection review gate**
+   - Input: `conformance/projections/uss-core-23.v0.json`.
+   - Current output: versioned profile, schema validation, field-to-requirement mapping, and
+     executable binding-retention artifacts.
+   - Remaining output: external review or independently authored binding model that accepts,
+     revises, or challenges the field set and native capability assumptions.
+   - Claim unlocked: the binding-retention profile is an externally reviewed conformance view, not
+     only the authors' pilot scoring model.
+
+9. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.

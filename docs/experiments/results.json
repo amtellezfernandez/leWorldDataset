@@ -2248,7 +2248,17 @@
       "quality.uncertainty",
       "splits.lineage_constraints",
       "replay.runtime_assumptions"
-    ]
+    ],
+    "projection_profile": {
+      "artifact": "conformance/projections/uss-core-23.v0.json",
+      "binding_model_count": 7,
+      "claim_boundary": "This profile is a versioned pilot projection for binding-retention experiments. It is not a universal score of any external format and should be revised through external review before becoming normative.",
+      "field_count": 23,
+      "profile_id": "uss-core-23",
+      "schema": "schemas/semantic-projection-v0.schema.json",
+      "status": "draft",
+      "version": "0.1.0"
+    }
   },
   "rq2_fault_detection": {
     "cases": [

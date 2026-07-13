@@ -24,12 +24,17 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
-| Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
+| Binding retention | Versioned `uss-core-23` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 
 
 ## RQ1: Binding Retention
+
+- Projection profile: `conformance/projections/uss-core-23.v0.json`
+- Projection schema: `schemas/semantic-projection-v0.schema.json`
+- Projection version: 0.1.0 (23 fields, 7 binding models)
+- Boundary: This profile is a versioned pilot projection for binding-retention experiments. It is not a universal score of any external format and should be revised through external review before becoming normative.
 
 | Binding | Native Retention | With WorldEpisode Sidecar | Discarded Fields |
 |---|---:|---:|---:|

@@ -5,6 +5,9 @@ Status: draft.
 WorldEpisode defines semantics first and storage second. Bindings describe how the semantic contract
 is represented in existing containers, logs, scene formats, or dataset packages.
 
+The pilot binding-retention table is scored against the versioned `uss-core-23` projection in
+`conformance/projections/uss-core-23.v0.json`, not against an implicit field list hidden in code.
+
 ## Binding Principles
 
 - Bindings MUST preserve requirement IDs and profile claims.

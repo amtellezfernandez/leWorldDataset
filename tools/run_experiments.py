@@ -29,6 +29,9 @@ from worldepisode.validator import validate_semantics
 
 EXAMPLE_PATH = ROOT / "examples" / "minimal.worldepisode.json"
 SCHEMA_PATH = ROOT / "schemas" / "worldepisode-core-v0.schema.json"
+CONFORMANCE_REQUIREMENTS_PATH = ROOT / "conformance" / "requirements.v0.json"
+SEMANTIC_PROJECTION_SCHEMA_PATH = ROOT / "schemas" / "semantic-projection-v0.schema.json"
+SEMANTIC_PROJECTION_PROFILE_PATH = ROOT / "conformance" / "projections" / "uss-core-23.v0.json"
 RESULTS_DIR = ROOT / "docs" / "experiments"
 RESULTS_JSON = RESULTS_DIR / "results.json"
 RESULTS_MD = RESULTS_DIR / "RESULTS.md"
@@ -65,91 +68,85 @@ def validate_schema(payload: dict[str, Any]) -> list[str]:
     return [error.message for error in validator.iter_errors(payload)]
 
 
-def semantic_field_paths() -> list[str]:
-    return [
-        "episode.identity",
-        "episode.task_outcome",
-        "world_revision.identity",
-        "world_revision.asset_descriptor",
-        "embodiment.identity",
-        "embodiment.urdf_asset",
-        "frame_graph.frames",
-        "frame_graph.transforms",
-        "clock_graph.clocks",
-        "clock_graph.mappings",
-        "entities.identity",
-        "entities.representation_roles",
-        "entities.asset_descriptors",
-        "action_space.control_contract",
-        "action_space.timing_contract",
-        "trace.binding",
-        "trace.asset_descriptor",
-        "events.interactions",
-        "world_deltas.ordered_state_changes",
-        "provenance.derivation",
-        "quality.uncertainty",
-        "splits.lineage_constraints",
-        "replay.runtime_assumptions",
-    ]
+def semantic_projection_profile() -> dict[str, Any]:
+    profile = load_json(SEMANTIC_PROJECTION_PROFILE_PATH)
+    schema_validator = jsonschema.Draft202012Validator(load_json(SEMANTIC_PROJECTION_SCHEMA_PATH))
+    schema_errors = sorted(schema_validator.iter_errors(profile), key=lambda error: list(error.path))
+    if schema_errors:
+        messages = []
+        for error in schema_errors:
+            location = ".".join(str(part) for part in error.path) or "<root>"
+            messages.append(f"{location}: {error.message}")
+        raise ValueError("semantic projection profile failed schema validation: " + "; ".join(messages))
+
+    fields = [field["path"] for field in profile["fields"]]
+    duplicate_fields = sorted({field for field in fields if fields.count(field) > 1})
+    if duplicate_fields:
+        raise ValueError(f"semantic projection profile has duplicate field path(s): {duplicate_fields}")
+    if profile["field_count"] != len(fields):
+        raise ValueError(
+            "semantic projection profile field_count does not match fields length: "
+            f"{profile['field_count']} != {len(fields)}"
+        )
+
+    requirement_ids = {item["id"] for item in load_json(CONFORMANCE_REQUIREMENTS_PATH)["requirements"]}
+    unknown_requirements = sorted(
+        {
+            requirement_id
+            for field in profile["fields"]
+            for requirement_id in field["requirement_ids"]
+            if requirement_id not in requirement_ids
+        }
+    )
+    if unknown_requirements:
+        raise ValueError(
+            "semantic projection profile references unknown requirement id(s): "
+            + ", ".join(unknown_requirements)
+        )
+
+    field_set = set(fields)
+    binding_names = [binding["binding"] for binding in profile["binding_models"]]
+    duplicate_bindings = sorted({binding for binding in binding_names if binding_names.count(binding) > 1})
+    if duplicate_bindings:
+        raise ValueError(f"semantic projection profile has duplicate binding model(s): {duplicate_bindings}")
+
+    bad_refs = []
+    for binding in profile["binding_models"]:
+        for field in [*binding.get("native_fields", []), *binding.get("sidecar_fields", [])]:
+            if field not in field_set:
+                bad_refs.append(f"{binding['binding']}:{field}")
+        if binding["sidecar_policy"] == "listed_only" and "sidecar_fields" not in binding:
+            bad_refs.append(f"{binding['binding']}:listed_only_without_sidecar_fields")
+    if bad_refs:
+        raise ValueError("semantic projection profile has unknown field reference(s): " + ", ".join(bad_refs))
+
+    return profile
 
 
-def binding_capabilities() -> dict[str, set[str]]:
-    fields = semantic_field_paths()
+def semantic_field_paths(profile: dict[str, Any] | None = None) -> list[str]:
+    selected = profile if profile is not None else semantic_projection_profile()
+    return [field["path"] for field in selected["fields"]]
+
+
+def binding_capabilities(profile: dict[str, Any] | None = None) -> dict[str, set[str]]:
+    selected = profile if profile is not None else semantic_projection_profile()
     return {
-        "worldepisode-reference": set(fields),
-        "lerobot-v3-native": {
-            "episode.identity",
-            "episode.task_outcome",
-            "clock_graph.clocks",
-            "action_space.control_contract",
-            "trace.binding",
-            "trace.asset_descriptor",
-        },
-        "rerun-rrd": {
-            "episode.identity",
-            "frame_graph.frames",
-            "frame_graph.transforms",
-            "clock_graph.clocks",
-            "clock_graph.mappings",
-            "entities.identity",
-            "trace.binding",
-            "events.interactions",
-        },
-        "ncore": {
-            "embodiment.identity",
-            "frame_graph.frames",
-            "frame_graph.transforms",
-            "clock_graph.clocks",
-            "clock_graph.mappings",
-            "trace.asset_descriptor",
-            "provenance.derivation",
-        },
-        "mcap-ros2": {
-            "episode.identity",
-            "frame_graph.frames",
-            "frame_graph.transforms",
-            "clock_graph.clocks",
-            "action_space.control_contract",
-            "trace.binding",
-        },
-        "openusd-simready": {
-            "world_revision.identity",
-            "world_revision.asset_descriptor",
-            "embodiment.identity",
-            "entities.identity",
-            "entities.representation_roles",
-            "entities.asset_descriptors",
-            "frame_graph.frames",
-            "frame_graph.transforms",
-            "replay.runtime_assumptions",
-        },
-        "gltf-gaussian-asset": {
-            "entities.identity",
-            "entities.representation_roles",
-            "entities.asset_descriptors",
-            "world_revision.asset_descriptor",
-        },
+        binding["binding"]: set(binding.get("native_fields", []))
+        for binding in selected["binding_models"]
     }
+
+
+def binding_sidecar_fields(profile: dict[str, Any] | None = None) -> dict[str, set[str]]:
+    selected = profile if profile is not None else semantic_projection_profile()
+    fields = set(semantic_field_paths(selected))
+    sidecars = {}
+    for binding in selected["binding_models"]:
+        native = set(binding.get("native_fields", []))
+        if binding["sidecar_policy"] == "all_missing":
+            sidecars[binding["binding"]] = fields - native
+        else:
+            sidecars[binding["binding"]] = set(binding.get("sidecar_fields", []))
+    return sidecars
 
 
 def semantic_projection(payload: dict[str, Any]) -> dict[str, Any]:
@@ -275,19 +272,17 @@ def import_binding_artifact(output_dir: Path) -> dict[str, Any]:
 
 
 def experiment_binding_retention(base: dict[str, Any]) -> dict[str, Any]:
-    fields = semantic_field_paths()
+    profile = semantic_projection_profile()
+    fields = semantic_field_paths(profile)
     projection = semantic_projection(base)
-    capabilities = binding_capabilities()
-    sidecar_capable = {
-        binding: set(fields) - native
-        for binding, native in capabilities.items()
-        if binding != "gltf-gaussian-asset"
-    }
-    sidecar_capable["gltf-gaussian-asset"] = {
-        "world_revision.identity",
-        "provenance.derivation",
-        "quality.uncertainty",
-    }
+    missing_projection_fields = sorted(set(fields) - set(projection))
+    if missing_projection_fields:
+        raise ValueError(
+            "semantic projection profile contains field(s) not emitted by semantic_projection(): "
+            + ", ".join(missing_projection_fields)
+        )
+    capabilities = binding_capabilities(profile)
+    sidecar_capable = binding_sidecar_fields(profile)
 
     rows = []
     for binding, native in capabilities.items():
@@ -318,7 +313,21 @@ def experiment_binding_retention(base: dict[str, Any]) -> dict[str, Any]:
                 "artifact_dir": str(binding_dir.relative_to(ROOT)),
             }
         )
-    return {"fields": fields, "bindings": rows, "artifact_root": str(BINDINGS_DIR.relative_to(ROOT))}
+    return {
+        "projection_profile": {
+            "profile_id": profile["profile_id"],
+            "version": profile["version"],
+            "status": profile["status"],
+            "artifact": str(SEMANTIC_PROJECTION_PROFILE_PATH.relative_to(ROOT)),
+            "schema": str(SEMANTIC_PROJECTION_SCHEMA_PATH.relative_to(ROOT)),
+            "field_count": profile["field_count"],
+            "binding_model_count": len(profile["binding_models"]),
+            "claim_boundary": profile["claim_boundary"],
+        },
+        "fields": fields,
+        "bindings": rows,
+        "artifact_root": str(BINDINGS_DIR.relative_to(ROOT)),
+    }
 
 
 def committed_lerobot_roundtrip_report() -> dict[str, Any] | None:
@@ -1091,6 +1100,7 @@ def write_report(results: dict[str, Any]) -> None:
     realtosim_drift = results["realtosim_contract_drift"]
     meta_sim = results["meta_simulator_contract"]
     uss_pilots = results["uss_state_drift_pilots"]
+    projection_profile = results["rq1_binding_retention"]["projection_profile"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1212,7 +1222,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
-| Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
+| Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 """
@@ -1233,6 +1243,11 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 {evidence_boundaries}
 
 ## RQ1: Binding Retention
+
+- Projection profile: `{projection_profile["artifact"]}`
+- Projection schema: `{projection_profile["schema"]}`
+- Projection version: {projection_profile["version"]} ({projection_profile["field_count"]} fields, {projection_profile["binding_model_count"]} binding models)
+- Boundary: {projection_profile["claim_boundary"]}
 
 | Binding | Native Retention | With WorldEpisode Sidecar | Discarded Fields |
 |---|---:|---:|---:|

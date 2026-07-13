@@ -67,6 +67,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Conformance requirements](conformance/requirements.md)
 - [Machine-readable requirements](conformance/requirements.v0.json)
 - [Conformance profiles](conformance/profiles.md)
+- [USS-Core-23 semantic projection](conformance/projections/uss-core-23.v0.json)
 - [Pilot conformance corpus](conformance/fixtures/pilot/manifest.json)
 - [Independent conformance fixtures](conformance/fixtures/independent/manifest.json)
 - [Bindings draft](docs/bindings.md)
