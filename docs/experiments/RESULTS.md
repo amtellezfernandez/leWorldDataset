@@ -22,6 +22,22 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | openusd-simready | 0.391 | 1.000 | 0 |
 | gltf-gaussian-asset | 0.174 | 0.304 | 16 |
 
+## Active LeRobot -> WorldEpisode -> LeRobot Round-Trip
+
+- Source: `lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657`
+- Episode: 0
+- Exported LeRobot v3 package: `docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3`
+- Action tensor rows x width: 303 x 6
+- Video streams with timestamp ranges: 2
+- Physical frame records preserved through sidecar: True
+- Max absolute action error: 0.0
+- Max absolute state error: 0.0
+- Max absolute timestamp error: 0.0
+- Max absolute video timestamp error: 0.0
+- Explicitly tracked source-absent fields: 4
+- Discarded fields: 0
+
+
 ## RQ2: Fault Detection
 
 - Cases: 14

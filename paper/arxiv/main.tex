@@ -49,11 +49,16 @@ episodes to immutable world revisions through five coupled graphs: identity, fra
 representation-role, temporal event/state, and provenance/derivation. The contract is not a
 replacement for LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, or glTF Gaussian splats; it specifies
 the invariants those systems must preserve to support reproducible replay, conversion, and
-evaluation. We implement executable round-trip binding artifacts, a semantic validator, an
-independent fixture set, and controlled experiments. Across seven bindings, native containers
-preserve only 17--39\% of the semantic contract, while WorldEpisode sidecars recover the complete
-contract for dataset/log/world bindings. The validator detects all 14 injected fault classes and all
-hand-authored independent fixture failures. Declared actuation latency reduces replay RMSE by
+evaluation. We implement executable round-trip binding artifacts, an active public
+LeRobotDataset-to-WorldEpisode-to-LeRobotDataset conversion, a semantic validator, an independent
+fixture set, and controlled experiments. Across seven bindings, native containers preserve only
+17--39\% of the semantic contract, while WorldEpisode sidecars recover the complete contract for
+dataset/log/world bindings. On a pinned public SO-101 LeRobotDataset v3 episode, the active
+converter preserves 303 six-dimensional action rows, state rows, sample timestamps, two video
+timestamp ranges, and derived physical-frame records with zero measured numerical loss while
+explicitly reporting source-absent camera extrinsics, action units, and latency semantics. The
+validator detects all 14 injected fault classes and all hand-authored independent fixture failures.
+Declared actuation latency reduces replay RMSE by
 \(3.6\times\) over naive command-time replay, and lineage-aware splits reduce memorization leakage
 from 1.000 to 0.000. These results show that world--episode semantics are not documentation
 overhead; they are measurable controls for robot-learning validity.

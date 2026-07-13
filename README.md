@@ -56,6 +56,7 @@ is persistent, verifiable world-episode interoperability.
 - [Reference SDK contract](docs/sdk.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
+- [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Governance draft](GOVERNANCE.md)
@@ -82,6 +83,27 @@ pdflatex main.tex
 ## Reproduce Controlled Results
 
 ```bash
+python3 -m pip install -r requirements-experiments.txt
+WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
+```
+
+For only the active public LeRobot conversion:
+
+```bash
+python3 -m pip install -r requirements-experiments.txt
+python3 tools/lerobot_worldepisode_roundtrip.py --required
+```
+
+The active converter downloads bounded metadata/data shards from
+`lerobot/svla_so101_pickplace`, converts episode 0 through
+`LeRobotDataset v3 -> WorldEpisode -> LeRobotDataset v3`, exports a small LeRobot v3 package, and
+asserts zero numerical loss for action tensors, state tensors, timestamps, and video timestamp
+ranges. LeRobot source fields that are absent, such as camera extrinsics and controller latency, are
+reported explicitly rather than silently invented.
+
+For the lightweight controlled suite without requiring the active LeRobot dependency path:
+
+```bash
 python3 tools/run_experiments.py
 ```
 
@@ -90,6 +112,7 @@ The script writes:
 - `docs/experiments/results.json`
 - `docs/experiments/RESULTS.md`
 - `docs/experiments/bindings/*`
+- `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/recorded_episodes/*`
 - `conformance/fixtures/pilot/*`
 

@@ -33,6 +33,51 @@
     "n_cases": 2,
     "recall": 1.0
   },
+  "lerobot_active_roundtrip": {
+    "artifacts": {
+      "conversion_report": "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
+      "exported_lerobot_v3": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3",
+      "source_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/source_manifest.json",
+      "worldepisode_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/worldepisode.manifest.json",
+      "worldepisode_sidecar": "docs/experiments/lerobot_worldepisode_roundtrip/worldepisode.sidecar.json"
+    },
+    "available": true,
+    "episode_index": 0,
+    "explicitly_tracked_source_absent_fields": [
+      "camera extrinsics",
+      "robot/world calibration transform",
+      "action units",
+      "controller latency model"
+    ],
+    "metrics": {
+      "action_rows": 303,
+      "action_tensor_sha256": "b17a728f3c71760fb21414c10b3cc37dbfcaffe236b098bae5d17950e2d1b546",
+      "action_width": 6,
+      "discarded_fields": [],
+      "max_abs_action_error": 0.0,
+      "max_abs_state_error": 0.0,
+      "max_abs_timestamp_error": 0.0,
+      "max_abs_video_timestamp_error": 0.0,
+      "pass": true,
+      "physical_frame_records": 3,
+      "physical_frames_preserved": true,
+      "physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+      "roundtrip_action_tensor_sha256": "b17a728f3c71760fb21414c10b3cc37dbfcaffe236b098bae5d17950e2d1b546",
+      "roundtrip_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+      "roundtrip_timestamp_sha256": "24bc09d4e0486288c6527f07e1b0e1a2a84c691a398c2a7cb8a9a169d96fb0f0",
+      "roundtrip_video_timestamp_sha256": "6290ea27d159c0269b2678cf4a918d6bfcec181bf1bf0cfdefc374e38dc02c4a",
+      "source_absent_fields_tracked": 4,
+      "state_rows": 303,
+      "timestamp_count": 303,
+      "timestamp_sha256": "24bc09d4e0486288c6527f07e1b0e1a2a84c691a398c2a7cb8a9a169d96fb0f0",
+      "video_streams": 2,
+      "video_timestamp_sha256": "6290ea27d159c0269b2678cf4a918d6bfcec181bf1bf0cfdefc374e38dc02c4a",
+      "worldepisode_sidecar_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272"
+    },
+    "pass": true,
+    "repo_id": "lerobot/svla_so101_pickplace",
+    "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+  },
   "lerobot_public_sample": {
     "degree_interpreted_as_radian_max_abs": 98.92424,
     "ee_within_0_5m_workspace": true,

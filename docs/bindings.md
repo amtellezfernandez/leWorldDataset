@@ -30,6 +30,16 @@ is represented in existing containers, logs, scene formats, or dataset packages.
 | MLCommons Croissant | Dataset discovery and loading | metadata, distributions, loading records | physical semantics, world deltas, replay and conversion diagnostics |
 | W3C PROV-O | Provenance graph | entities, activities, agents, derivation relationships | robotics-specific action/world/replay semantics |
 
+## Active LeRobot v3 Converter
+
+The repository includes an executable converter at `tools/lerobot_worldepisode_roundtrip.py`.
+It downloads bounded shards from the pinned public dataset
+`lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657`, converts episode 0 through
+`LeRobotDataset v3 -> WorldEpisode -> LeRobotDataset v3`, exports a compact LeRobot v3 package, and
+asserts zero numerical loss for action tensors, state tensors, sample timestamps, and video
+timestamp ranges. Source semantics absent from LeRobot, including camera extrinsics, action units,
+robot/world calibration, and controller latency, are tracked in the conversion report.
+
 ## Loss Report Shape
 
 Converters should produce a report similar to:

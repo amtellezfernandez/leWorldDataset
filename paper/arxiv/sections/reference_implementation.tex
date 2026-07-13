@@ -33,3 +33,10 @@ WorldEpisode package, exports binding-native artifacts plus sidecars, reimports 
 semantic projection, injects controlled faults, and writes reproducible result artifacts. URDF Studio
 remains the initial implementation root, but the contract is represented independently in the public
 schema and validator.
+
+The repository also includes an active LeRobotDataset v3 converter. It downloads bounded Parquet
+and metadata shards from the pinned public \path{lerobot/svla_so101_pickplace} SO-101 dataset,
+constructs a schema-valid WorldEpisode manifest and sidecar, exports a small LeRobotDataset v3
+package, reads that package back, and asserts equality of source-native tensors and timestamp
+records. Source fields that LeRobot does not declare, such as camera extrinsics and controller
+latency, are not guessed; they are emitted in the conversion report as explicitly source-absent.

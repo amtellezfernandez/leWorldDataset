@@ -32,6 +32,19 @@ glTF Gaussian asset & 0.174 & 0.304 \\
 \end{tabular}
 \end{table}
 
+\paragraph{Active public LeRobot round-trip.}
+To test an actual LeRobotDataset rather than only a capability model, we implement
+\(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
+on episode 0 of the pinned public SO-101 dataset
+\path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace}. The converter downloads
+the real Parquet metadata and data shards, builds a schema-valid WorldEpisode manifest and sidecar,
+exports a compact LeRobotDataset v3 package, reads it back, and asserts exact equality. The episode
+contains 303 rows of six-dimensional action tensors, 303 state rows, 303 sample timestamps, and two
+camera video timestamp ranges. The measured maximum absolute error is 0.0 for actions, states,
+sample timestamps, and video timestamp ranges. Three physical-frame records are preserved through
+the sidecar. Four source-absent semantics are explicitly reported rather than guessed: camera
+extrinsics, robot/world calibration, action units, and controller latency. No fields are discarded.
+
 \paragraph{RQ2: physical-coherence fault detection.}
 We inject 14 faults into the baseline package, including missing clock domains, incomplete
 cross-clock mappings, unknown frames, missing transform intervals, unknown event entities, missing
@@ -42,7 +55,7 @@ hand-authored independent fixtures, both of which trigger the expected diagnosti
 false-positive requirement is useful rather than harmful: removing an action reference frame
 triggers both \texttt{ACTION.001} and the downstream \texttt{FRAME.001} reference check.
 
-\paragraph{Public LeRobot frame check.}
+\paragraph{Additional LeRobot unit sanity check.}
 We include an offline mirrored first frame from \path{lerobot/svla_so101_pickplace}. Its six
 joint values have maximum magnitude 98.924 in degrees and 1.727 after radian conversion; treating
 degrees as radians would therefore violate the action/state unit contract. The corresponding
