@@ -63,9 +63,11 @@ the claim at the same scope as the evidence.
    - Current output: `docs/experiments/natural_failure_corpus/manifest.json` records 19
      natural-source cases across five public datasets: `lerobot/svla_so101_pickplace`,
      `lerobot/pusht`, `armnet/armnetbench_v01_lerobot_so101`, DROID, and BridgeData V2.
-   - Remaining output: maintainer feedback or explicit disagreement records, plus dataset-specific
-     WorldEpisode manifests for source-level DROID and BridgeData V2 metadata gaps if making
-     stronger benchmark claims.
+   - Current diagnostics: `docs/experiments/natural_failure_corpus/dataset_diagnostics.json` and
+     per-dataset reports cover all 19 cases; DROID and BridgeData V2 remain source-level-only.
+   - Remaining output: maintainer feedback or explicit disagreement records, false-positive review,
+     plus dataset-specific WorldEpisode manifests for source-level DROID and BridgeData V2 metadata
+     gaps if making stronger benchmark claims.
    - Claim unlocked: conformance catches real dataset problems, not only injected faults.
 
 4. **Famous benchmark call-out gate**

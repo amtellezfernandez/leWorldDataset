@@ -73,6 +73,16 @@
       "passed": true
     },
     {
+      "boundary": "Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence.",
+      "claim": "Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+      "claim_id": "CLAIM.NATURAL_DIAGNOSTICS.001",
+      "evidence_artifacts": [
+        "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+        "docs/experiments/natural_failure_corpus/README.md"
+      ],
+      "passed": true
+    },
+    {
       "boundary": "Deterministic pilots, not production game or AV dataset results.",
       "claim": "Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
       "claim_id": "CLAIM.USS.001",
@@ -184,7 +194,7 @@
       "status": "open_not_claimed"
     },
     {
-      "acceptance_rule": "A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics.",
+      "acceptance_rule": "Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps.",
       "blocker_id": "NATURAL.001",
       "boundary": "The current natural-source corpus is a scoped evidence corpus, not a prevalence estimate and not maintainer-confirmed bug evidence.",
       "claim": "natural failure prevalence is maintainer-confirmed",
@@ -193,12 +203,14 @@
           "command": "python3 tools/run_experiments.py",
           "expected_outputs": [
             "docs/experiments/results.json",
-            "docs/experiments/natural_failure_corpus/manifest.json"
+            "docs/experiments/natural_failure_corpus/manifest.json",
+            "docs/experiments/natural_failure_corpus/dataset_diagnostics.json"
           ],
           "purpose": "regenerate controlled and natural-source experiment reports"
         }
       ],
       "required_artifacts": [
+        "dataset-specific diagnostic reports for representative diagnostics",
         "dataset-specific WorldEpisode manifests for source-level gaps",
         "false-positive review records",
         "maintainer agreement, disagreement, or no-response evidence",
@@ -403,7 +415,7 @@
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
     "open_result_gate_count": 4,
-    "paper_claim_count": 12,
+    "paper_claim_count": 13,
     "results_sections": [
       "baseline_schema_errors",
       "baseline_semantic_errors",

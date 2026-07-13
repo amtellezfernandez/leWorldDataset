@@ -1248,10 +1248,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 138.155,
-      "digest_cache_resolution": 6.27,
-      "partition_pruning_queries": 0.156,
-      "resolver_routing": 55.97
+      "catalog_open_parse_and_index": 142.539,
+      "digest_cache_resolution": 5.599,
+      "partition_pruning_queries": 0.164,
+      "resolver_routing": 57.396
     }
   },
   "independent_fixture_check": {
@@ -3477,11 +3477,15 @@
     }
   },
   "natural_failure_corpus": {
+    "active_dataset_report_count": 3,
     "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
     "available": true,
     "case_count": 19,
     "dataset_count": 5,
     "dataset_count_gate_satisfied": true,
+    "dataset_diagnostics_artifact": "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+    "dataset_report_count": 5,
+    "dataset_specific_diagnostics_ready": true,
     "evidence_tiers": {
       "active_lerobot_conversion_reports": 2,
       "active_lerobot_scene_leakage_audit": 1,
@@ -3503,7 +3507,8 @@
       "SPLIT.001": 3,
       "TRACE.001": 2,
       "WORLD.001": 2
-    }
+    },
+    "source_level_only_report_count": 2
   },
   "preflight_validator": {
     "artifact": "docs/experiments/preflight/preflight_report.json",

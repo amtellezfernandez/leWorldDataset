@@ -103,6 +103,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
+- [Natural-source dataset diagnostics](docs/experiments/natural_failure_corpus/dataset_diagnostics.json)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Release readiness gate](docs/experiments/release_readiness)

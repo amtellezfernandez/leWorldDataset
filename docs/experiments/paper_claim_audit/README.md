@@ -6,8 +6,8 @@ This report ties the main quantitative and boundary claims in the paper source t
 
 ## Summary
 
-- Claims checked: 12
-- Passed: 12
+- Claims checked: 13
+- Passed: 13
 - Failed: 0
 
 ## Claims
@@ -21,6 +21,7 @@ This report ties the main quantitative and boundary claims in the paper source t
 | CLAIM.BINDING.001 | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
 | CLAIM.VALIDATOR.001 | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |
 | CLAIM.NATURAL.001 | True | Pilot natural-source corpus records 19 cases across five public robot-learning datasets. | Scoped natural-source corpus, not maintainer-confirmed prevalence. |
+| CLAIM.NATURAL_DIAGNOSTICS.001 | True | Natural-source corpus has dataset-specific diagnostic reports for all five datasets. | Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence. |
 | CLAIM.USS.001 | True | Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
 | CLAIM.REALTOSIM.001 | True | Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode. | Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun. |
 | CLAIM.SCALE.001 | True | Generated catalog benchmark describes a billion-episode-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |

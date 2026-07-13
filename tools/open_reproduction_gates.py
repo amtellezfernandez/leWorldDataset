@@ -119,18 +119,21 @@ GATES: list[dict[str, Any]] = [
                 "expected_outputs": [
                     "docs/experiments/results.json",
                     "docs/experiments/natural_failure_corpus/manifest.json",
+                    "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
                 ],
             }
         ],
         "required_artifacts": [
+            "dataset-specific diagnostic reports for representative diagnostics",
             "dataset-specific WorldEpisode manifests for source-level gaps",
             "false-positive review records",
             "maintainer agreement, disagreement, or no-response evidence",
             "updated natural failure corpus manifest",
         ],
         "acceptance_rule": (
-            "A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or "
-            "dataset-specific conversion reports for representative diagnostics."
+            "Dataset-specific diagnostic reports support representative diagnostics only. A "
+            "prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, "
+            "false-positive review, and pinned conversions for source-level benchmark gaps."
         ),
     },
     {

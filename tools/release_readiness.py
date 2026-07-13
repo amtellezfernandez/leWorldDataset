@@ -281,8 +281,14 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
             "natural failure corpus has scoped evidence",
             natural.get("dataset_count", 0) >= 5
             and natural.get("dataset_count_gate_satisfied") is True
+            and natural.get("dataset_specific_diagnostics_ready") is True
+            and natural.get("dataset_report_count") == natural.get("dataset_count")
             and natural.get("maintainer_feedback_satisfied") is False,
-            "five-dataset count met; maintainer feedback still open",
+            (
+                f"datasets={natural.get('dataset_count')}, reports={natural.get('dataset_report_count')}, "
+                f"source_level_only={natural.get('source_level_only_report_count')}; "
+                "maintainer feedback still open"
+            ),
             severity="warning",
         ),
     ]
@@ -528,9 +534,12 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
             "blocked": natural.get("maintainer_feedback_satisfied") is not True,
             "current_evidence": {
                 "dataset_count": natural.get("dataset_count"),
+                "dataset_report_count": natural.get("dataset_report_count"),
+                "dataset_specific_diagnostics_ready": natural.get("dataset_specific_diagnostics_ready"),
+                "source_level_only_report_count": natural.get("source_level_only_report_count"),
                 "maintainer_feedback_satisfied": natural.get("maintainer_feedback_satisfied"),
             },
-            "required_evidence": "maintainer agreement/disagreement records or dataset-specific conversion reports.",
+            "required_evidence": "maintainer agreement/disagreement records for prevalence; pinned dataset-specific conversions for source-level benchmark gaps.",
         },
         {
             "blocker_id": "SIM.001",

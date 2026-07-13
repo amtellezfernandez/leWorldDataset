@@ -49,9 +49,12 @@
       "claim": "natural failure prevalence is maintainer-confirmed",
       "current_evidence": {
         "dataset_count": 5,
-        "maintainer_feedback_satisfied": false
+        "dataset_report_count": 5,
+        "dataset_specific_diagnostics_ready": true,
+        "maintainer_feedback_satisfied": false,
+        "source_level_only_report_count": 2
       },
-      "required_evidence": "maintainer agreement/disagreement records or dataset-specific conversion reports."
+      "required_evidence": "maintainer agreement/disagreement records for prevalence; pinned dataset-specific conversions for source-level benchmark gaps."
     },
     {
       "blocked": false,
@@ -81,7 +84,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (20056 bytes)",
+      "evidence": "README.md (20161 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -121,7 +124,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (479295 bytes)",
+      "evidence": "WorldEpisode.pdf (479557 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -137,7 +140,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (17852 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18067 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -145,7 +148,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (180605 bytes)",
+      "evidence": "docs/experiments/results.json (180869 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -297,7 +300,7 @@
     {
       "boundary": "",
       "check_id": "EVID.010",
-      "evidence": "five-dataset count met; maintainer feedback still open",
+      "evidence": "datasets=5, reports=5, source_level_only=2; maintainer feedback still open",
       "name": "natural failure corpus has scoped evidence",
       "passed": true,
       "severity": "warning"
@@ -321,7 +324,7 @@
     {
       "boundary": "",
       "check_id": "CLAIM.001",
-      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=12, failed=0",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=13, failed=0",
       "name": "paper claims are evidence-backed",
       "passed": true,
       "severity": "error"
@@ -337,7 +340,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=48, normalized=4",
+      "evidence": "status=pass, entries=55, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
@@ -345,7 +348,7 @@
     {
       "boundary": "",
       "check_id": "SUBMIT.001",
-      "evidence": "status=pass, claims=12, open_gates=4",
+      "evidence": "status=pass, claims=13, open_gates=4",
       "name": "submission packet validates",
       "passed": true,
       "severity": "error"
@@ -367,11 +370,11 @@
   },
   "paper_claim_audit": {
     "aggregate": {
-      "claim_count": 12,
+      "claim_count": 13,
       "failed_claim_ids": [],
       "failed_count": 0,
       "missing_paper_pattern_count": 0,
-      "passed_count": 12
+      "passed_count": 13
     },
     "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "status": "pass"

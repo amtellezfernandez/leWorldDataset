@@ -16,4 +16,4 @@ This smoke test proves local wheel build/install, package data inclusion, CLI en
 ## Wheel
 
 - File: `worldepisode-0.1.0-py3-none-any.whl`
-- Size bytes: `23783`
+- Size bytes: `23802`

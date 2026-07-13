@@ -119,9 +119,9 @@
   },
   "status": "pass",
   "timings_ms": {
-    "catalog_open_parse_and_index": 138.155,
-    "digest_cache_resolution": 6.27,
-    "partition_pruning_queries": 0.156,
-    "resolver_routing": 55.97
+    "catalog_open_parse_and_index": 142.539,
+    "digest_cache_resolution": 5.599,
+    "partition_pruning_queries": 0.164,
+    "resolver_routing": 57.396
   }
 }

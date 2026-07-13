@@ -6,7 +6,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 
 ## Summary
 
-- Paper claims checked: 12
+- Paper claims checked: 13
 - Failed checked claims: 0
 - Open results not claimed: 4
 - Missing required public artifacts: 0
@@ -49,6 +49,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `CLAIM.BINDING.001` | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
 | `CLAIM.VALIDATOR.001` | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |
 | `CLAIM.NATURAL.001` | True | Pilot natural-source corpus records 19 cases across five public robot-learning datasets. | Scoped natural-source corpus, not maintainer-confirmed prevalence. |
+| `CLAIM.NATURAL_DIAGNOSTICS.001` | True | Natural-source corpus has dataset-specific diagnostic reports for all five datasets. | Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence. |
 | `CLAIM.USS.001` | True | Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
 | `CLAIM.REALTOSIM.001` | True | Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode. | Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun. |
 | `CLAIM.SCALE.001` | True | Generated catalog benchmark describes a billion-episode-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |
@@ -61,7 +62,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 |---|---|---|---|
 | `POLICY.ROLL.001` | state-of-the-art policy or physical rollout impact | open_not_claimed | At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made. |
 | `BENCH.INFLATE.001` | famous benchmark published scores are inflated | open_not_claimed | The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence. |
-| `NATURAL.001` | natural failure prevalence is maintainer-confirmed | open_not_claimed | A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics. |
+| `NATURAL.001` | natural failure prevalence is maintainer-confirmed | open_not_claimed | Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps. |
 | `ADOPT.001` | mature external standard adoption | open_not_claimed | Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite. |
 
 ## Reproduction Commands

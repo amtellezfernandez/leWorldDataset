@@ -37,7 +37,8 @@ pilots using the same invariant vocabulary & Not measured on production game eng
 datasets, or fleet logs \\
 Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
 pilot natural-source corpus over five public datasets & Five-dataset count is met through active
-LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback yet \\
+LeRobot artifacts plus source-level public benchmark metadata; dataset-specific diagnostic reports
+now cover all cases, but no maintainer feedback is recorded yet \\
 Binding retention & Versioned \texttt{uss-core-23} semantic projection checked by executable
 artifacts & Pilot projection; not a universal score of each storage format \\
 Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
@@ -175,6 +176,8 @@ The injected conformance faults prove that requirements are executable and diagn
 pilot natural-source corpus adds 19 cases from five public robot-learning datasets, but it still
 does not prove prevalence in the wild. Two datasets are active LeRobot conversion audits, one is an
 active LeRobot scene-leakage audit, and two are source-level public metadata audits from the
-benchmark call-out list. A stronger version of this paper should convert those source-level gaps
-into dataset-specific WorldEpisode manifests, report false-positive review, and record whether
-dataset maintainers agree with representative diagnostics.
+benchmark call-out list. The repository now writes dataset-specific diagnostic reports for all five
+datasets, with DROID and BridgeData V2 explicitly marked source-level-only. A stronger version of
+this paper should convert those source-level gaps into dataset-specific WorldEpisode manifests,
+report false-positive review, and record whether dataset maintainers agree with representative
+diagnostics.

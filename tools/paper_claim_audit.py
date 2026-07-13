@@ -357,6 +357,38 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             boundary="Scoped natural-source corpus, not maintainer-confirmed prevalence.",
         )
     )
+    claims.append(
+        claim_result(
+            claim_id="CLAIM.NATURAL_DIAGNOSTICS.001",
+            claim="Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+            evidence_artifacts=[
+                "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+                "docs/experiments/natural_failure_corpus/README.md",
+            ],
+            paper_patterns=[
+                "dataset-specific diagnostic reports",
+                "source-level-only",
+                "not claimed as maintainer-confirmed",
+            ],
+            evidence_passed=(
+                natural.get("dataset_specific_diagnostics_ready") is True
+                and natural.get("dataset_report_count") == natural.get("dataset_count") == 5
+                and natural.get("case_count") == 19
+                and natural.get("source_level_only_report_count") == 2
+                and natural.get("maintainer_feedback_satisfied") is False
+            ),
+            evidence={
+                "dataset_specific_diagnostics_ready": natural.get("dataset_specific_diagnostics_ready"),
+                "dataset_report_count": natural.get("dataset_report_count"),
+                "dataset_count": natural.get("dataset_count"),
+                "case_count": natural.get("case_count"),
+                "source_level_only_report_count": natural.get("source_level_only_report_count"),
+                "maintainer_feedback_satisfied": natural.get("maintainer_feedback_satisfied"),
+            },
+            text=text,
+            boundary="Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence.",
+        )
+    )
 
     state = results.get("uss_state_drift_pilots", {})
     state_agg = state.get("aggregate", {})

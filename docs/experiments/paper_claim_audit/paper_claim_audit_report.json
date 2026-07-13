@@ -1,10 +1,10 @@
 {
   "aggregate": {
-    "claim_count": 12,
+    "claim_count": 13,
     "failed_claim_ids": [],
     "failed_count": 0,
     "missing_paper_pattern_count": 0,
-    "passed_count": 12
+    "passed_count": 13
   },
   "artifacts": {
     "json": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
@@ -186,6 +186,31 @@
       "paper_patterns": [
         "records 19 observed",
         "five public robot-learning datasets",
+        "not claimed as maintainer-confirmed"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence.",
+      "claim": "Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+      "claim_id": "CLAIM.NATURAL_DIAGNOSTICS.001",
+      "evidence": {
+        "case_count": 19,
+        "dataset_count": 5,
+        "dataset_report_count": 5,
+        "dataset_specific_diagnostics_ready": true,
+        "maintainer_feedback_satisfied": false,
+        "source_level_only_report_count": 2
+      },
+      "evidence_artifacts": [
+        "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+        "docs/experiments/natural_failure_corpus/README.md"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "dataset-specific diagnostic reports",
+        "source-level-only",
         "not claimed as maintainer-confirmed"
       ],
       "passed": true

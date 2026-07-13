@@ -58,6 +58,8 @@ SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
 )
 NATURAL_FAILURE_DIR = RESULTS_DIR / "natural_failure_corpus"
+NATURAL_FAILURE_DATASET_DIR = NATURAL_FAILURE_DIR / "datasets"
+NATURAL_FAILURE_DIAGNOSTICS = NATURAL_FAILURE_DIR / "dataset_diagnostics.json"
 
 
 def load_json(path: Path) -> Any:
@@ -66,7 +68,13 @@ def load_json(path: Path) -> Any:
 
 
 def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
 
 
 def validate_schema(payload: dict[str, Any]) -> list[str]:
@@ -828,6 +836,187 @@ def experiment_independent_fixtures() -> dict[str, Any]:
     }
 
 
+def natural_dataset_slug(repo_id: str, revision: str) -> str:
+    base = f"{repo_id}__{revision[:12]}"
+    slug = re.sub(r"[^A-Za-z0-9]+", "_", base).strip("_").lower()
+    return slug or "dataset"
+
+
+def count_case_requirements(cases: list[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for case in cases:
+        for requirement in case.get("requirement_ids", []):
+            counts[requirement] = counts.get(requirement, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def natural_evidence_status(evidence_type: str) -> tuple[str, str, list[str]]:
+    if evidence_type == "active_lerobot_conversion_reports":
+        return (
+            "active_worldepisode_conversion_reports",
+            "sampled episodes were converted through the active LeRobot-to-WorldEpisode pipeline",
+            [
+                "mirror more episodes if claiming full-dataset coverage",
+                "request maintainer review of representative diagnostics",
+            ],
+        )
+    if evidence_type == "active_lerobot_scene_leakage_audit":
+        return (
+            "active_lineage_split_audit",
+            "lineage split behavior was measured from the committed LeRobot audit artifact",
+            [
+                "run policy evaluations beyond the offline probes before making rollout claims",
+                "request maintainer review of the split-lineage grouping",
+            ],
+        )
+    if evidence_type == "source_level_public_metadata_audit":
+        return (
+            "source_level_public_metadata_only",
+            "public materials were audited, but no benchmark-specific WorldEpisode conversion is committed",
+            [
+                "convert a pinned subset into a WorldEpisode manifest",
+                "run false-positive review against source maintainers or dataset experts",
+                "do not claim score inflation without a published-protocol rerun",
+            ],
+        )
+    return (
+        "unknown_evidence_tier",
+        "evidence tier is not recognized by the natural failure diagnostics generator",
+        ["classify this dataset evidence tier before using it in paper claims"],
+    )
+
+
+def write_natural_failure_dataset_diagnostics(manifest: dict[str, Any]) -> dict[str, Any]:
+    cases_by_dataset: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for case in manifest.get("cases", []):
+        key = (case["repo_id"], case["revision"])
+        cases_by_dataset.setdefault(key, []).append(case)
+
+    dataset_reports: list[dict[str, Any]] = []
+    for dataset in sorted(manifest.get("datasets", []), key=lambda item: item["repo_id"]):
+        repo_id = dataset["repo_id"]
+        revision = dataset["revision"]
+        key = (repo_id, revision)
+        dataset_cases = sorted(cases_by_dataset.get(key, []), key=lambda item: item["case_id"])
+        conversion_status, evidence_strength, next_steps = natural_evidence_status(dataset.get("evidence_type", ""))
+        slug = natural_dataset_slug(repo_id, revision)
+        report_path = NATURAL_FAILURE_DATASET_DIR / f"{slug}.json"
+        relative_report_path = str(report_path.relative_to(ROOT))
+        report = {
+            "schema": "worldepisode_natural_failure_dataset_report_v1",
+            "repo_id": repo_id,
+            "revision": revision,
+            "source_profile": dataset.get("source_profile"),
+            "evidence_type": dataset.get("evidence_type"),
+            "conversion_status": conversion_status,
+            "evidence_strength": evidence_strength,
+            "case_count": len(dataset_cases),
+            "requirement_counts": count_case_requirements(dataset_cases),
+            "source_absent_fields": dataset.get("source_absent_fields", {}),
+            "observed_episode_indices": dataset.get("episode_indices", []),
+            "observed_episode_count": len(dataset.get("episode_indices", [])),
+            "action_rows": dataset.get("action_rows"),
+            "state_rows": dataset.get("state_rows"),
+            "evidence_files": dataset.get("evidence_files", []),
+            "warnings": dataset.get("warnings", []),
+            "cases": dataset_cases,
+            "maintainer_feedback": {
+                "status": "not_requested",
+                "satisfied": False,
+            },
+            "claim_boundary": (
+                "Dataset-specific diagnostic report, not maintainer-confirmed prevalence. "
+                "Source-level-only reports are evidence of missing public controls, not measured "
+                "benchmark score inflation."
+            ),
+            "next_steps": next_steps,
+        }
+        write_json(report_path, report)
+        dataset_reports.append(
+            {
+                "repo_id": repo_id,
+                "revision": revision,
+                "report": relative_report_path,
+                "evidence_type": dataset.get("evidence_type"),
+                "conversion_status": conversion_status,
+                "case_count": len(dataset_cases),
+                "requirement_counts": report["requirement_counts"],
+            }
+        )
+
+    active_report_count = sum(
+        1
+        for report in dataset_reports
+        if report["conversion_status"] in {"active_worldepisode_conversion_reports", "active_lineage_split_audit"}
+    )
+    source_level_only_count = sum(
+        1 for report in dataset_reports if report["conversion_status"] == "source_level_public_metadata_only"
+    )
+    total_cases = sum(report["case_count"] for report in dataset_reports)
+    diagnostics_ready = (
+        len(dataset_reports) == manifest.get("dataset_count")
+        and total_cases == manifest.get("case_count")
+        and len(dataset_reports) > 0
+    )
+    index = {
+        "schema": "worldepisode_natural_failure_dataset_diagnostics_v1",
+        "available": diagnostics_ready,
+        "artifact": str(NATURAL_FAILURE_DIAGNOSTICS.relative_to(ROOT)),
+        "generated_from": manifest.get("artifact"),
+        "dataset_report_count": len(dataset_reports),
+        "case_count": total_cases,
+        "active_dataset_report_count": active_report_count,
+        "source_level_only_report_count": source_level_only_count,
+        "dataset_specific_diagnostics_ready": diagnostics_ready,
+        "maintainer_feedback_satisfied": manifest.get("full_gate", {}).get("maintainer_feedback_satisfied") is True,
+        "full_gate_satisfied": False,
+        "claim_boundary": (
+            "All five datasets have dataset-specific diagnostic reports. This improves auditability, "
+            "but it is not a prevalence estimate and it is not maintainer-confirmed bug evidence."
+        ),
+        "remaining_for_prevalence_claim": [
+            "record maintainer agreement, disagreement, or no-response evidence",
+            "convert source-level DROID and BridgeData V2 gaps into pinned WorldEpisode manifests",
+            "run false-positive review before using the corpus as prevalence evidence",
+        ],
+        "reports": dataset_reports,
+    }
+    write_json(NATURAL_FAILURE_DIAGNOSTICS, index)
+
+    rows = "\n".join(
+        "| {repo_id} | {conversion_status} | {case_count} | `{report}` |".format(**report)
+        for report in dataset_reports
+    )
+    readme = f"""# Natural Failure Corpus Dataset Diagnostics
+
+Status: `dataset_specific_diagnostics_ready`.
+
+These reports materialize the pilot natural-source corpus by dataset. They are intended for
+reviewer audit and maintainer follow-up. They are not prevalence estimates, maintainer-confirmed
+bug records, or benchmark score-inflation evidence.
+
+| Dataset | Evidence Status | Cases | Report |
+| --- | --- | ---: | --- |
+{rows}
+
+Summary:
+
+- Dataset reports: {index["dataset_report_count"]}
+- Cases covered: {index["case_count"]}
+- Active LeRobot reports: {index["active_dataset_report_count"]}
+- Source-level-only reports: {index["source_level_only_report_count"]}
+- Maintainer feedback satisfied: {index["maintainer_feedback_satisfied"]}
+
+Remaining for stronger claims:
+
+- Record maintainer agreement, disagreement, or no-response evidence.
+- Convert source-level DROID and BridgeData V2 gaps into pinned WorldEpisode manifests.
+- Run false-positive review before using the corpus as prevalence evidence.
+"""
+    write_text(NATURAL_FAILURE_DIR / "README.md", readme)
+    return index
+
+
 def experiment_natural_failure_corpus() -> dict[str, Any]:
     """Aggregate naturally observed source omissions from committed public-dataset artifacts.
 
@@ -1041,13 +1230,19 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
     }
     NATURAL_FAILURE_DIR.mkdir(parents=True, exist_ok=True)
     write_json(NATURAL_FAILURE_DIR / "manifest.json", manifest)
+    diagnostics = write_natural_failure_dataset_diagnostics(manifest)
     return {
         "available": manifest["available"],
         "artifact": manifest["artifact"],
+        "dataset_diagnostics_artifact": diagnostics["artifact"],
         "dataset_count": manifest["dataset_count"],
         "case_count": manifest["case_count"],
         "requirement_counts": manifest["requirement_counts"],
         "evidence_tiers": manifest["evidence_tiers"],
+        "dataset_report_count": diagnostics["dataset_report_count"],
+        "active_dataset_report_count": diagnostics["active_dataset_report_count"],
+        "source_level_only_report_count": diagnostics["source_level_only_report_count"],
+        "dataset_specific_diagnostics_ready": diagnostics["dataset_specific_diagnostics_ready"],
         "dataset_count_gate_satisfied": manifest["full_gate"]["dataset_count_gate_satisfied"],
         "maintainer_feedback_satisfied": manifest["full_gate"]["maintainer_feedback_satisfied"],
         "full_gate_satisfied": manifest["full_gate"]["satisfied"],
@@ -1297,7 +1492,8 @@ def write_report(results: dict[str, Any]) -> None:
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
     natural_boundary = (
         "Five-dataset count is met through active LeRobot artifacts plus source-level public "
-        "benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet."
+        "benchmark metadata. Dataset-specific diagnostic reports cover every case, but source-level "
+        "benchmark cases still need pinned conversions and maintainer review before prevalence claims."
         if natural.get("dataset_count_gate_satisfied")
         else "Natural corpus is still below the five-dataset gate and has no maintainer feedback yet."
     )
@@ -1605,6 +1801,10 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Natural-source corpus: {natural["dataset_count"]} public datasets, {natural["case_count"]} cases
 - Natural-source evidence tiers: {", ".join(f"{key}={value}" for key, value in natural.get("evidence_tiers", {}).items())}
 - Natural-source artifact: `{natural["artifact"]}`
+- Natural-source dataset diagnostics: `{natural.get("dataset_diagnostics_artifact", "docs/experiments/natural_failure_corpus/dataset_diagnostics.json")}`
+- Natural-source dataset reports: {natural.get("dataset_report_count", 0)} reports covering {natural.get("case_count", 0)} cases
+- Natural-source source-level-only reports: {natural.get("source_level_only_report_count", 0)}
+- Natural-source dataset-specific diagnostics ready: {natural.get("dataset_specific_diagnostics_ready", False)}
 - Natural-source dataset-count gate satisfied: {natural.get("dataset_count_gate_satisfied", False)}
 - Natural-source maintainer-feedback gate satisfied: {natural.get("maintainer_feedback_satisfied", False)}
 - Full natural-corpus gate satisfied: {natural["full_gate_satisfied"]}

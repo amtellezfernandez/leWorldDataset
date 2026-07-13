@@ -20,7 +20,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
-| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
+| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata. Dataset-specific diagnostic reports cover every case, but source-level benchmark cases still need pinned conversions and maintainer review before prevalence claims. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
@@ -162,8 +162,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588169
-- Catalog open, parse, and index: 138.155 ms
-- Partition-pruning query time: 0.156 ms
+- Catalog open, parse, and index: 142.539 ms
+- Partition-pruning query time: 0.164 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0
@@ -221,6 +221,10 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Natural-source corpus: 5 public datasets, 19 cases
 - Natural-source evidence tiers: active_lerobot_conversion_reports=2, active_lerobot_scene_leakage_audit=1, source_level_public_metadata_audit=2
 - Natural-source artifact: `docs/experiments/natural_failure_corpus/manifest.json`
+- Natural-source dataset diagnostics: `docs/experiments/natural_failure_corpus/dataset_diagnostics.json`
+- Natural-source dataset reports: 5 reports covering 19 cases
+- Natural-source source-level-only reports: 2
+- Natural-source dataset-specific diagnostics ready: True
 - Natural-source dataset-count gate satisfied: True
 - Natural-source maintainer-feedback gate satisfied: False
 - Full natural-corpus gate satisfied: False

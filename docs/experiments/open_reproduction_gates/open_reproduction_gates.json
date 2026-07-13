@@ -79,7 +79,7 @@
       "status": "open_not_claimed"
     },
     {
-      "acceptance_rule": "A prevalence or maintainer-confirmed claim requires recorded maintainer feedback or dataset-specific conversion reports for representative diagnostics.",
+      "acceptance_rule": "Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps.",
       "blocker_id": "NATURAL.001",
       "claim": "natural failure prevalence is maintainer-confirmed",
       "commands": [
@@ -87,13 +87,15 @@
           "command": "python3 tools/run_experiments.py",
           "expected_outputs": [
             "docs/experiments/results.json",
-            "docs/experiments/natural_failure_corpus/manifest.json"
+            "docs/experiments/natural_failure_corpus/manifest.json",
+            "docs/experiments/natural_failure_corpus/dataset_diagnostics.json"
           ],
           "purpose": "regenerate controlled and natural-source experiment reports"
         }
       ],
       "paper_boundary": "The current natural-source corpus is a scoped evidence corpus, not a prevalence estimate and not maintainer-confirmed bug evidence.",
       "required_artifacts": [
+        "dataset-specific diagnostic reports for representative diagnostics",
         "dataset-specific WorldEpisode manifests for source-level gaps",
         "false-positive review records",
         "maintainer agreement, disagreement, or no-response evidence",

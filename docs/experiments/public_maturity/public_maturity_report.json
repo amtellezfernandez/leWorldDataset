@@ -2,7 +2,7 @@
   "aggregate": {
     "banned_pattern_count": 17,
     "missing_path_count": 0,
-    "scanned_path_count": 47,
+    "scanned_path_count": 50,
     "violation_count": 0
   },
   "artifacts": {
@@ -41,6 +41,9 @@
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "docs/experiments/open_reproduction_gates/README.md",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+    "docs/experiments/natural_failure_corpus/README.md",
+    "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+    "docs/experiments/natural_failure_corpus/manifest.json",
     "docs/submission_packet/README.md",
     "docs/submission_packet/submission_packet.json",
     "paper/arxiv/main.tex",

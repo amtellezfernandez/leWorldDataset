@@ -222,6 +222,9 @@ scene-lineage leakage. The DROID and BridgeData V2 cases are source-level public
 selected from the famous-benchmark call-out audit. These are not claimed as maintainer-confirmed
 dataset bugs or measured score-inflation results; they are naturally occurring source omissions,
 metadata gaps, or evaluation risks that a WorldEpisode audit must make explicit.
+The runner also emits dataset-specific diagnostic reports for all five datasets; the DROID and
+BridgeData V2 reports are explicitly marked source-level-only until pinned WorldEpisode conversions
+and false-positive review are available.
 
 The same validator is exposed as a pre-training command rather than only as an experiment script.
 The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid
