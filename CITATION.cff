@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use Universal Spatial State or WorldEpisode in academic work, please cite this software release and the accompanying paper."
+title: "Universal Spatial State / WorldEpisode"
+authors:
+  - family-names: "Tellez Fernandez"
+    given-names: "Alba"
+repository-code: "https://github.com/amtellezfernandez/leWorldDataset"
+license: "Apache-2.0"
+version: "0.1.0"
+date-released: "2026-07-13"
+type: software

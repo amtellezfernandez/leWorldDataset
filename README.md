@@ -100,6 +100,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
+- [Release readiness gate](docs/experiments/release_readiness)
 - [Governance draft](GOVERNANCE.md)
 - [Minimal example](examples/minimal-static-world.layout.json)
 - [Minimal WorldEpisode example](examples/minimal.worldepisode.json)
@@ -158,6 +159,7 @@ should be reported without failing the command.
 ```bash
 python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
+python3 tools/release_readiness.py --strict-rfc
 ```
 
 If this Python environment does not include `pip`, use `uv`:
@@ -227,6 +229,16 @@ To generate the controlled real-to-sim contract-drift ablation:
 ```bash
 python3 tools/realtosim_contract_drift.py
 ```
+
+To run the public RFC release gate:
+
+```bash
+python3 tools/release_readiness.py --strict-rfc
+```
+
+The gate currently passes the executable RFC-release checks and still blocks full standard claims
+such as ACT/Diffusion rollout impact, famous-benchmark inflation, external adoption, and full
+cross-simulator replay.
 
 To generate the runtime-neutral simulator adapter contract:
 

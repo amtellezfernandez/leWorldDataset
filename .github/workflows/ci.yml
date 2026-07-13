@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package
+        run: python -m pip install -e .
+
+      - name: Validate examples and compile tools
+        run: make validate
+
+      - name: Regenerate controlled experiment summary
+        run: python tools/run_experiments.py
+
+      - name: Check RFC release readiness
+        run: python tools/release_readiness.py --strict-rfc

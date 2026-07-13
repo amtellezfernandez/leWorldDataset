@@ -1,6 +1,18 @@
 # Reference Release Plan
 
-Status: draft.
+Status: evidence-gated RFC release plan.
+
+The repository now has an executable release-readiness gate:
+
+```bash
+python3 tools/release_readiness.py --strict-rfc
+```
+
+The current gate passes the RFC-release checks: package metadata, public docs, paper artifact,
+schema/examples, controlled experiments, fail-closed benchmark claims, dataset-scale evidence, and
+clean-room reader evidence. It deliberately does not mark the full standard complete. Stronger
+claims remain blocked until ACT/Diffusion or rollout results, valid famous-benchmark reruns,
+maintainer feedback, external adoption, and broader simulator replay evidence exist.
 
 The first release should beat larger real-to-sim datasets in completeness, interoperability, and
 auditability rather than in raw scene count.
