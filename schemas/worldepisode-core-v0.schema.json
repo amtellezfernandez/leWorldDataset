@@ -260,7 +260,17 @@
     "actionChannel": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "actuator", "control_mode", "parameterization", "reference_frame", "units", "semantics"],
+      "required": [
+        "name",
+        "actuator",
+        "control_mode",
+        "parameterization",
+        "reference_frame",
+        "units",
+        "semantics",
+        "command_timestamp_semantics",
+        "effective_timestamp_semantics"
+      ],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
         "actuator": { "type": "string", "minLength": 1 },
@@ -269,6 +279,8 @@
         "reference_frame": { "type": "string", "minLength": 1 },
         "units": { "type": "string", "minLength": 1 },
         "semantics": { "type": "string", "enum": ["absolute", "delta", "velocity", "normalized"] },
+        "command_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "effective_timestamp_semantics": { "type": "string", "minLength": 1 },
         "command_rate_hz": { "type": "number" },
         "latency_model": { "type": "string" },
         "interpolation": { "type": "string" },

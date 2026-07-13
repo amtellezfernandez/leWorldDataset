@@ -7,7 +7,7 @@
     "outcome": "success"
   },
   "world_revision": {
-    "world_revision_id": "world_demo_tabletop@sha256:000000",
+    "world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000",
     "asset": {
       "uri": "hf://organization/worldepisode-rigid-demo/worlds/000000/world.layout.json",
       "media_type": "application/vnd.worldepisode.layout+json",
@@ -133,6 +133,8 @@
         "reference_frame": "tool0",
         "units": "m",
         "semantics": "delta",
+        "command_timestamp_semantics": "sample timestamp is controller command enqueue time in episode_time",
+        "effective_timestamp_semantics": "effective actuation time is command timestamp plus declared_constant_20ms latency",
         "command_rate_hz": 50,
         "latency_model": "declared_constant_20ms",
         "interpolation": "zero_order_hold",

@@ -18,34 +18,17 @@ datasets to prove that they refer to the same world without relying on filenames
 
 \subsection{Loss-Aware Conversion}
 
-WorldEpisode should support many bindings, but it should not promise impossible universal
-losslessness. Every converter emits a machine-readable report listing preserved, externalized,
-approximated, discarded, and warning fields. The standard permits lossy conversion; it forbids
-silent lossy conversion.
+WorldEpisode supports many bindings, but it does not promise impossible universal losslessness.
+Every converter emits a machine-readable report listing preserved, externalized, approximated,
+discarded, and warning fields. The standard permits lossy conversion; it forbids silent lossy
+conversion.
 
-\subsection{Reference SDK}
+\subsection{Implementation Artifact}
 
-The reference release should feel like infrastructure:
-\begin{verbatim}
-worldepisode validate dataset/
-worldepisode inspect dataset/
-worldepisode diff-world world_a world_b
-worldepisode audit-splits dataset/
-worldepisode report-lineage dataset/
-worldepisode replay-check episode_id
-worldepisode import lerobot ...
-worldepisode import ncore ...
-worldepisode import mcap ...
-worldepisode import gsdf ...
-worldepisode export lerobot ...
-worldepisode export rerun ...
-worldepisode export usd ...
-worldepisode export gltf ...
-worldepisode conversion-report report.json
-\end{verbatim}
-
-The validator should use stable requirement identifiers, profile claims, and machine-readable
-diagnostics. Golden fixtures should include valid minimal packages, valid advanced packages,
-intentionally invalid packages, lossy-conversion examples, and cross-simulator replay fixtures.
-URDF Studio can remain the initial validation and simulator-transfer workbench, but the contract
-must be implementable independently.
+The repository contains a JSON Schema, a machine-readable conformance requirement file, a semantic
+validator, and a deterministic experiment runner. The validator emits stable requirement identifiers
+such as \texttt{TIME.001}, \texttt{FRAME.002}, and \texttt{ASSET.002}. The experiment runner uses the
+minimal WorldEpisode package as a baseline, injects controlled faults, evaluates declared binding
+capabilities, and writes reproducible result artifacts. URDF Studio remains the initial
+implementation root, but the contract is represented independently in the public schema and
+validator.

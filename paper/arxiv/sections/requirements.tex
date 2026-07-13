@@ -20,12 +20,12 @@ graph, \(C\) clocks, \(O\) persistent entities and representations, \(A\) action
 \(X\) synchronized trace, \(V\) world deltas and events, \(P\) provenance, and \(Q\) quality and
 uncertainty records.
 
-Version 1 should be intentionally narrow: rigid tabletop manipulation with fixed-base single- or
-dual-arm robots. Humanoids, locomotion, deformables, fluids, and multi-agent worlds should be later
-profiles. This keeps conformance executable rather than aspirational.
+Version 1 is intentionally narrow: rigid tabletop manipulation with fixed-base single- or dual-arm
+robots. Humanoids, locomotion, deformables, fluids, and multi-agent worlds are later profiles. This
+keeps conformance executable rather than aspirational.
 
-WorldEpisode should reuse existing standards rather than replacing them. USD~\citep{usd} can carry
-composed simulation worlds, glTF can carry Gaussian appearance assets~\citep{gltf_gs}, NCore can
-carry capture and pose-graph conventions~\citep{ncore}, Rerun can carry physical-data recordings
-with column chunks~\citep{rerun}, and ROS/MCAP can carry logs. WorldEpisode specifies the semantic
-relationships those bindings must preserve.
+WorldEpisode reuses existing standards rather than replacing them. USD~\citep{usd} carries composed
+simulation worlds, glTF carries Gaussian appearance assets~\citep{gltf_gs}, NCore carries capture
+and pose-graph conventions~\citep{ncore}, Rerun carries physical-data recordings with column
+chunks~\citep{rerun}, and ROS/MCAP carries logs. WorldEpisode specifies the semantic relationships
+those bindings must preserve.

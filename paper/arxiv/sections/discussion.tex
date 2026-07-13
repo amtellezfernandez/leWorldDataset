@@ -1,26 +1,27 @@
 \section{Discussion}
 
 \paragraph{Not another monolithic binary.}
-WorldEpisode should have a small semantic core and multiple bindings. LeRobot can be the
-policy-training view; Rerun the multirate physical-data view; NCore the sensor/reconstruction
-capture view; MCAP/ROS the raw log view; OpenUSD/SimReady the composed simulation-world view; glTF
-or SPZ the Gaussian asset view; and a reference directory the conformance profile.
+WorldEpisode has a small semantic core and multiple bindings. LeRobot is the policy-training view;
+Rerun is the multirate physical-data view; NCore is the sensor/reconstruction capture view;
+MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed simulation-world view; glTF or SPZ is
+the Gaussian asset view; and a reference directory is the conformance profile.
 
 \paragraph{Lineage-safe evaluation.}
 Episode-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
 source video, world revision, or generated asset lineage across training and evaluation.
-WorldEpisode should support split constraints such as \texttt{world\_lineage},
+WorldEpisode supports split constraints such as \texttt{world\_lineage},
 \texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
 \texttt{generated\_asset\_family}.
 
 \paragraph{Standards alignment.}
-The project should align with standards bodies rather than antagonize them. Static 3D robot-map
+The project aligns with standards bodies rather than antagonizing them. Static 3D robot-map
 exchange, humanoid dataset lifecycle, OpenLABEL annotation, glTF Gaussian splats, USD composition,
 and NCore capture conventions are all useful neighbors. WorldEpisode is an executable profile and
 bridge across those layers.
 
-\paragraph{Reviewer red team.}
-Likely criticisms are predictable: ``this is just USD,'' ``GSDF already combines splats and
-physics,'' ``Rerun already solves robot data,'' or ``a schema is not research.'' The response is to
-ship adapters, conformance fixtures, fault-injection evaluation, replay metrics, and lineage-split
-evidence rather than relying on schema novelty alone.
+\paragraph{Limitations.}
+The current experiments are deterministic pilots, not a full robotics benchmark. They do not train
+a VLA, run on a real robot, or prove cross-lab adoption. Their narrower contribution is to show that
+the contract is implementable, that requirement failures can be detected mechanically, and that
+timing, lineage, and world-frame identity affect measured outcomes. The next empirical step is to
+run the same protocol on real multi-camera manipulation episodes and independent adapters.

@@ -1,0 +1,396 @@
+{
+  "baseline_schema_errors": 0,
+  "baseline_semantic_errors": 0,
+  "rq1_binding_retention": {
+    "bindings": [
+      {
+        "binding": "worldepisode-reference",
+        "discarded": [],
+        "externalized": [],
+        "native_preserved": 23,
+        "native_retention": 1.0,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "lerobot-v3-native",
+        "discarded": [],
+        "externalized": [
+          "action_space.timing_contract",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "events.interactions",
+          "frame_graph.frames",
+          "frame_graph.transforms",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 6,
+        "native_retention": 0.261,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "rerun-rrd",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.representation_roles",
+          "episode.task_outcome",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 8,
+        "native_retention": 0.348,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "ncore",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.binding",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 7,
+        "native_retention": 0.304,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "mcap-ros2",
+        "discarded": [],
+        "externalized": [
+          "action_space.timing_contract",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "episode.task_outcome",
+          "events.interactions",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 6,
+        "native_retention": 0.261,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "openusd-simready",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "clock_graph.clocks",
+          "clock_graph.mappings",
+          "embodiment.urdf_asset",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "trace.binding",
+          "world_deltas.ordered_state_changes"
+        ],
+        "native_preserved": 9,
+        "native_retention": 0.391,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "binding": "gltf-gaussian-asset",
+        "discarded": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "clock_graph.clocks",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "frame_graph.frames",
+          "frame_graph.transforms",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "trace.binding",
+          "world_deltas.ordered_state_changes"
+        ],
+        "externalized": [
+          "provenance.derivation",
+          "quality.uncertainty",
+          "world_revision.identity"
+        ],
+        "native_preserved": 4,
+        "native_retention": 0.174,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 0.304
+      }
+    ],
+    "fields": [
+      "episode.identity",
+      "episode.task_outcome",
+      "world_revision.identity",
+      "world_revision.asset_descriptor",
+      "embodiment.identity",
+      "embodiment.urdf_asset",
+      "frame_graph.frames",
+      "frame_graph.transforms",
+      "clock_graph.clocks",
+      "clock_graph.mappings",
+      "entities.identity",
+      "entities.representation_roles",
+      "entities.asset_descriptors",
+      "action_space.control_contract",
+      "action_space.timing_contract",
+      "trace.binding",
+      "trace.asset_descriptor",
+      "events.interactions",
+      "world_deltas.ordered_state_changes",
+      "provenance.derivation",
+      "quality.uncertainty",
+      "splits.lineage_constraints",
+      "replay.runtime_assumptions"
+    ]
+  },
+  "rq2_fault_detection": {
+    "cases": [
+      {
+        "case": "TIME.001_missing_clock_domain",
+        "detected": [
+          "TIME.001"
+        ],
+        "expected": [
+          "TIME.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "TIME.002_mapping_without_drift_or_error",
+        "detected": [
+          "TIME.002"
+        ],
+        "expected": [
+          "TIME.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "FRAME.001_unknown_representation_frame",
+        "detected": [
+          "FRAME.001"
+        ],
+        "expected": [
+          "FRAME.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "FRAME.002_missing_transform_interval",
+        "detected": [
+          "FRAME.002"
+        ],
+        "expected": [
+          "FRAME.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ENTITY.001_unknown_event_entity",
+        "detected": [
+          "ENTITY.001"
+        ],
+        "expected": [
+          "ENTITY.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "REP.001_missing_representation_role",
+        "detected": [
+          "REP.001"
+        ],
+        "expected": [
+          "REP.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ASSET.001_bad_digest",
+        "detected": [
+          "ASSET.001"
+        ],
+        "expected": [
+          "ASSET.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ASSET.002_digest_mismatch",
+        "detected": [
+          "ASSET.002"
+        ],
+        "expected": [
+          "ASSET.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ACTION.001_missing_action_frame",
+        "detected": [
+          "ACTION.001",
+          "FRAME.001"
+        ],
+        "expected": [
+          "ACTION.001"
+        ],
+        "false_positive_requirements": [
+          "FRAME.001"
+        ],
+        "pass": true
+      },
+      {
+        "case": "ACTION.002_missing_effective_time",
+        "detected": [
+          "ACTION.002"
+        ],
+        "expected": [
+          "ACTION.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "WORLD.001_non_content_addressed_world",
+        "detected": [
+          "WORLD.001"
+        ],
+        "expected": [
+          "WORLD.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "TRACE.001_missing_delta_sequence",
+        "detected": [
+          "TRACE.001"
+        ],
+        "expected": [
+          "TRACE.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "PROV.001_missing_provenance",
+        "detected": [
+          "PROV.001"
+        ],
+        "expected": [
+          "PROV.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "QUALITY.001_missing_quality",
+        "detected": [
+          "QUALITY.001"
+        ],
+        "expected": [
+          "QUALITY.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      }
+    ],
+    "false_negative_requirements": 0,
+    "false_positive_requirements": 1,
+    "n_cases": 14,
+    "precision": 0.933,
+    "recall": 1.0,
+    "true_positive_requirements": 14
+  },
+  "rq3_replay": {
+    "alternate_engine_rmse": 0.00668,
+    "declared_latency_rmse": 0.00395,
+    "latency_model_improvement_over_naive": 3.6,
+    "naive_command_time_rmse": 0.01422,
+    "steps": 40
+  },
+  "rq4_counterfactual_robustness": {
+    "observations_only_success": 0.292,
+    "test_cases": 120,
+    "unstructured_3d_side_files_success": 0.342,
+    "worldepisode_counterfactual_success": 0.592
+  },
+  "rq5_split_leakage": {
+    "entity_disjoint_split": {
+      "accuracy": 0.562,
+      "leakage_rate": 0.0
+    },
+    "random_episode_split": {
+      "accuracy": 1.0,
+      "leakage_rate": 1.0
+    },
+    "world_disjoint_split": {
+      "accuracy": 0.5,
+      "leakage_rate": 0.0
+    }
+  },
+  "source_example": "examples/minimal.worldepisode.json"
+}

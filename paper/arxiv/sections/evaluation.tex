@@ -1,34 +1,58 @@
-\section{Conformance and Evaluation}
+\section{Pilot Experiments}
 
-WorldEpisode should be evaluated as an executable standard, not only as a schema.
+We evaluate the draft contract with deterministic pilot experiments in the public repository. The
+suite is not a replacement for real-robot benchmarking; it tests whether the proposed semantics are
+machine-checkable and whether omitting them changes measurable outcomes.
 
 \paragraph{RQ1: semantic preservation across bindings.}
-Convert the same dataset through LeRobot, WorldEpisode, Rerun, NCore, MCAP, OpenUSD, and glTF
-Gaussian assets. Measure field retention, semantic retention, deterministic round-trip equality,
-externalized fields, approximated fields, and declared loss.
+We define 23 semantic fields and score how much each target binding preserves natively versus with a
+WorldEpisode sidecar. Table~\ref{tab:binding-retention} shows that common containers preserve only
+17--39\% of the contract natively, while the sidecar recovers all fields for dataset/log/world
+bindings. A Gaussian asset binding alone preserves only 17\% natively and 30\% with limited sidecar
+metadata, confirming that an asset format is not an episode--world contract.
+
+\begin{table}[h]
+\centering
+\caption{Semantic field retention in the pilot binding model.}
+\label{tab:binding-retention}
+\begin{tabular}{lrr}
+\toprule
+Binding & Native & With WorldEpisode \\
+\midrule
+LeRobot v3 & 0.261 & 1.000 \\
+Rerun RRD & 0.348 & 1.000 \\
+NCore & 0.304 & 1.000 \\
+MCAP/ROS2 & 0.261 & 1.000 \\
+OpenUSD/SimReady & 0.391 & 1.000 \\
+glTF Gaussian asset & 0.174 & 0.304 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{RQ2: physical-coherence fault detection.}
-Inject controlled failures: wrong transform direction, millimeters interpreted as meters,
-quaternion-order mismatch, timestamp offset, stale calibration, action frame mislabeled, collision
-mesh scale mismatch, reused entity id, or world revision changed without a new hash. Measure
-validator precision, recall, and diagnosis quality.
+We inject 14 faults into the baseline package, including missing clock domains, incomplete
+cross-clock mappings, unknown frames, missing transform intervals, unknown event entities, missing
+representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
+missing delta sequences, missing provenance, and missing quality records. The validator detects all
+14 expected requirement failures with 1.000 recall and 0.933 precision. The single false-positive
+requirement is useful rather than harmful: removing an action reference frame triggers both
+\texttt{ACTION.001} and the downstream \texttt{FRAME.001} reference check.
 
-\paragraph{RQ3: cross-simulator replay.}
-Replay the same demonstrations in at least two simulators. Measure end-effector RMSE, object
-trajectory RMSE, grasp-state agreement, contact-event precision/recall/F1, final-state pose error,
-task-outcome agreement, and success-rate rank correlation across policy checkpoints.
+\paragraph{RQ3: declared replay timing.}
+We replay a deterministic grasp-and-transport trace with a two-step declared actuation latency. The
+declared-latency replay obtains object-trajectory RMSE \(0.00395\), while naive command-time replay
+obtains RMSE \(0.01422\), a \(3.6\times\) improvement. A second engine parameterization under the
+same declared assumptions obtains RMSE \(0.00668\), illustrating replay within a tolerance envelope
+rather than bit-identical physics.
 
-\paragraph{RQ4: downstream robustness.}
-Train with observations/actions alone, with unstructured 3D side files, and with full WorldEpisode
-identity/world alignment. Evaluate shifted camera extrinsics, unseen viewpoints, object displacement,
-background replacement, distractors, occlusion, lighting changes, novel object instances, and held-out
-worlds.
+\paragraph{RQ4: synthetic counterfactual robustness.}
+We evaluate a shifted-camera/object-displacement regression task. Observations-only nearest-neighbor
+control succeeds on 0.292 of shifted test cases. Adding unstructured 3D side information increases
+success to 0.342. WorldEpisode-style world-frame identity and counterfactual camera augmentation
+increase success to 0.592 over 120 deterministic test cases.
 
 \paragraph{RQ5: lineage-safe splits.}
-Compare random episode splits against task-, world-, entity-, and reconstruction-lineage-disjoint
-splits. A substantial performance drop under lineage-safe splits would show that current dataset
-abstractions overestimate generalization.
-
-The minimum credible reference release should include a small golden conformance corpus: valid
-minimal packages, valid advanced packages, intentionally invalid packages, lossy-conversion examples,
-and cross-simulator replay fixtures.
+We generate episodes with world/entity lineage labels and evaluate a memorization policy. A random
+episode split leaks every tested world/entity pair and obtains 1.000 accuracy. World-disjoint and
+entity-disjoint splits have zero measured leakage and reduce memorization accuracy to 0.500 and
+0.562 respectively. This pilot demonstrates why split manifests need lineage constraints.

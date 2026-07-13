@@ -15,7 +15,7 @@ direction, quaternion convention, validity interval, calibration revision, and u
 available. Every stream declares a clock domain, device timestamp, host-receive timestamp where
 available, exposure interval for cameras, effective command time for actions, synchronization
 mapping, and estimated offset/drift/error. NCore's explicit pose-graph convention demonstrates the
-kind of rigor WorldEpisode should require across the whole episode~\citep{ncore}.
+kind of rigor WorldEpisode requires across the whole episode~\citep{ncore}.
 
 \subsection{Representation-Role Graph}
 
@@ -30,15 +30,15 @@ folder. The role field is essential: a splat may be valid for appearance but inv
 
 \subsection{Temporal State and Event Graph}
 
-Episodes should not store only poses. They should record interaction events: contact begin/end,
+Episodes do not store only poses. They record interaction events: contact begin/end,
 grasp establish/release, attachment create/remove, support, containment, articulation state changes,
 spawn/despawn, topology changes, simulator reset, intervention, subgoal completion, and failure
 detection. Each event references entities, time, confidence, source, and optionally evidence.
 
 \subsection{Provenance and Derivation Graph}
 
-Every derived asset should identify source episodes, source sensors and intervals, reconstruction
+Every derived asset identifies source episodes, source sensors and intervals, reconstruction
 algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
-edits, source and output hashes, creator, license, and quality metrics. WorldEpisode should map to
+edits, source and output hashes, creator, license, and quality metrics. WorldEpisode maps to
 existing provenance and dataset metadata vocabularies rather than inventing an incompatible
 publication vocabulary.

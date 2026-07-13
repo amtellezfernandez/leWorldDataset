@@ -18,8 +18,8 @@ GSDF-style assets, or a reference package layout.
 - `paper/` - Markdown paper notes and outline.
 - `spec/` - normative specification drafts.
 - `schemas/` - machine-readable JSON Schema drafts.
-- `conformance/` - requirement IDs, profiles, and fixture plan.
-- `docs/` - bindings, SDK contract, research plan, and reference release plan.
+- `conformance/` - requirement IDs, profiles, and pilot fixture corpus.
+- `docs/` - bindings, SDK contract, pilot results, research plan, and reference release plan.
 - `examples/` - small valid layout examples.
 - `notes/` - research notes, decisions, and open questions.
 
@@ -50,8 +50,10 @@ is persistent, verifiable world-episode interoperability.
 - [Conformance requirements](conformance/requirements.md)
 - [Machine-readable requirements](conformance/requirements.v0.json)
 - [Conformance profiles](conformance/profiles.md)
+- [Pilot conformance corpus](conformance/fixtures/pilot/manifest.json)
 - [Bindings draft](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
+- [Pilot experiment results](docs/experiments/RESULTS.md)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Governance draft](GOVERNANCE.md)
@@ -74,6 +76,17 @@ bibtex main
 pdflatex main.tex
 pdflatex main.tex
 ```
+
+## Reproduce Pilot Results
+
+```bash
+python3 tools/run_experiments.py
+```
+
+The script writes:
+
+- `docs/experiments/results.json`
+- `docs/experiments/RESULTS.md`
 
 ## Relationship To URDF Studio
 

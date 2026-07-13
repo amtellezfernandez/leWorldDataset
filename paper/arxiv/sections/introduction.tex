@@ -9,10 +9,10 @@ glTF's \texttt{KHR\_gaussian\_splatting} extension~\citep{khronos_gs, gltf_gs}. 
 real-to-sim systems such as RoboSnap and DROID-Sim show that Gaussian-splat environments can support
 trajectory replay, synthetic data generation, and policy evaluation at dataset scale~\citep{robosnap}.
 
-This landscape makes one framing unsafe: WorldEpisode should not claim to be the first format that
-connects robot data and Gaussian-splat worlds. That space is already occupied by asset standards and
-method papers. The remaining opening is the contract connecting all of them: the persistent,
-auditable binding between a robot-learning episode and the versioned world in which it occurred.
+This landscape rules out a weak framing: WorldEpisode is not the first format that connects robot
+data and Gaussian-splat worlds. That space is already occupied by asset standards and method papers.
+The remaining opening is the contract connecting all of them: the persistent, auditable binding
+between a robot-learning episode and the versioned world in which it occurred.
 
 WorldEpisode targets that missing semantic layer. It is:
 \begin{itemize}[leftmargin=*]
@@ -24,4 +24,8 @@ WorldEpisode targets that missing semantic layer. It is:
 
 The paper's core claim is therefore not a new monolithic file format. It is an executable
 interchange profile for world--episode semantics: identity, frames, clocks, action contracts,
-representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits.
+representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits. The
+current artifact includes a JSON Schema, semantic validator, conversion-retention model, and
+deterministic pilot experiments. The experiments are deliberately small; their role is to test
+whether the proposed semantics are machine-checkable and empirically consequential before scaling to
+real-robot benchmarks.
