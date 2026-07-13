@@ -1248,10 +1248,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 140.053,
-      "digest_cache_resolution": 6.751,
-      "partition_pruning_queries": 0.162,
-      "resolver_routing": 56.061
+      "catalog_open_parse_and_index": 166.96,
+      "digest_cache_resolution": 6.821,
+      "partition_pruning_queries": 0.191,
+      "resolver_routing": 67.473
     }
   },
   "independent_fixture_check": {

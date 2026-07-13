@@ -152,8 +152,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588169
-- Catalog open, parse, and index: 140.053 ms
-- Partition-pruning query time: 0.162 ms
+- Catalog open, parse, and index: 166.960 ms
+- Partition-pruning query time: 0.191 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0

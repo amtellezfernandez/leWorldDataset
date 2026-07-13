@@ -116,7 +116,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "docs/experiments/results.json (147868 bytes)",
+      "evidence": "docs/experiments/results.json (147867 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
