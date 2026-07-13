@@ -8,11 +8,14 @@ action stream interpreted in the wrong frame, a command timestamp treated as an 
 or a train/test split that shares the same reconstructed world can change a conclusion without
 changing a dataset's apparent file validity.
 
-Existing formats solve important pieces of this chain. LeRobot-style datasets focus on efficient
-observation--action episodes. Rerun provides a physical-data layer and storage target for multimodal
-recordings. NCore documents explicit pose graphs and sensor conventions. OpenUSD, SimReady, glTF,
-and simulator-native formats describe composed worlds and assets. Gaussian splats are also moving
-into standard asset containers through glTF's \texttt{KHR\_gaussian\_splatting}
+Existing formats solve important pieces of this chain. The LeRobot library vertically integrates
+robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
+deployment~\citep{lerobot}. The current LeRobotDataset v3 layout stores high-frequency states,
+actions, and timestamps in Parquet, visual streams in MP4 shards, and episode indexing in metadata
+rather than filenames~\citep{lerobot_v3}. Rerun provides a physical-data layer and storage target
+for multimodal recordings. NCore documents explicit pose graphs and sensor conventions. OpenUSD,
+SimReady, glTF, and simulator-native formats describe composed worlds and assets. Gaussian splats
+are also moving into standard asset containers through glTF's \texttt{KHR\_gaussian\_splatting}
 extension~\citep{khronos_gs, gltf_gs}. Recent real-to-sim systems such as RoboSnap and DROID-Sim
 show that Gaussian-splat environments can support trajectory replay, synthetic data generation, and
 policy evaluation at dataset scale~\citep{robosnap}.
@@ -25,7 +28,7 @@ between a robot-learning episode and the versioned world in which it occurred.
 WorldEpisode targets that missing semantic layer. The contribution is a formal semantic contract,
 not a wrapper around existing libraries. It is:
 \begin{itemize}[leftmargin=*]
-  \item \textbf{storage-neutral}: serializable through LeRobot, Rerun, NCore, MCAP, or a reference package;
+  \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, or a reference package;
   \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, and future assets;
   \item \textbf{runtime-neutral}: transferable to Isaac Sim, MuJoCo, SAPIEN, Genesis, and other simulators;
   \item \textbf{loss-explicit}: conversions may be lossy, but never silently lossy.

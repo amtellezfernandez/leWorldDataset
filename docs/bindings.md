@@ -19,7 +19,7 @@ is represented in existing containers, logs, scene formats, or dataset packages.
 
 | Binding | Primary Role | Preserved Natively | Common Sidecars or Reports |
 |---|---|---|---|
-| LeRobotDataset v3 | Policy-training view | episode metadata, observations, actions, timestamps, media streams | world revision, entity graph, action semantics beyond native schema, provenance, split-lineage constraints |
+| LeRobotDataset v3 | Policy-training view | Parquet state/action/timestamp rows, MP4 camera streams, episode metadata, task records, schema/statistics metadata | world revision, entity graph, representation roles, action semantics beyond the native training schema, provenance, split-lineage constraints |
 | Rerun `.rrd` | Multirate physical-data view | time-indexed streams, transforms, annotations, visualization/query data | conformance profile claims, conversion-loss report, persistent world revision manifest |
 | NVIDIA NCore | Sensor and reconstruction capture | sensor models, calibrations, pose graphs, transform conventions | action/task/outcome semantics, world deltas, learning split lineage |
 | MCAP / ROS 2 | Raw robotics logs | timestamped messages, transforms, schemas, robot telemetry | immutable world revision, entity-role graph, action normalization, provenance graph |
@@ -47,4 +47,3 @@ Converters should produce a report similar to:
 ```
 
 Lossy conversion is acceptable only when the loss is declared.
-
