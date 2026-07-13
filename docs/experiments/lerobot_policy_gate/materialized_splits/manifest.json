@@ -1,0 +1,32 @@
+{
+  "all_membership_counts_match": true,
+  "all_train_test_overlaps_zero": true,
+  "claim_boundary": "Virtual manifests make split materialization deterministic for LeRobot-native policy jobs. They do not replace committed train/eval metrics or physical rollout reports.",
+  "manifest_count": 4,
+  "profile": "worldepisode-lerobot-split-materialization-0.1",
+  "source_file_count": 27,
+  "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+  "status": "virtual_materialization_manifests_ready",
+  "target_datasets": [
+    {
+      "partition": "train",
+      "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+      "split_name": "random_episode"
+    },
+    {
+      "partition": "test",
+      "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+      "split_name": "random_episode"
+    },
+    {
+      "partition": "train",
+      "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+      "split_name": "scene_disjoint"
+    },
+    {
+      "partition": "test",
+      "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+      "split_name": "scene_disjoint"
+    }
+  ]
+}

@@ -37,10 +37,12 @@ ACT, Diffusion Policy, or another LeRobot-native policy.
 
 To keep that stronger claim from being implied before it is measured, the repository also emits an
 ACT/Diffusion gate from the same split manifest. The gate writes train/test episode allowlists,
-four LeRobot-native training jobs (\texttt{act} and \texttt{diffusion} on random and scene-disjoint
+four virtual split materialization manifests with 27 digest-verified source files, four
+LeRobot-native training jobs (\texttt{act} and \texttt{diffusion} on random and scene-disjoint
 splits), required offline action-evaluation reports, and a high-fidelity simulator or physical
 rollout contract. The gate is intentionally open in this draft; no ACT, Diffusion Policy, IsaacLab,
-or hardware success number is claimed.
+or hardware success number is claimed, and the virtual manifests are not physical copies of every
+payload shard and video.
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
 families where explicit state semantics alter the outcome.

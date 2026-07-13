@@ -8,6 +8,16 @@ Diffusion checkpoints, offline action-evaluation reports, and rollout reports ar
 
 Source split manifest: `docs/experiments/lerobot_scene_leakage/split_manifest.json`
 
+## Split Materialization
+
+- Manifest: `docs/experiments/lerobot_policy_gate/materialized_splits/manifest.json`
+- Virtual split datasets: 4
+- Source files with digest descriptors: 27
+- Train/test overlaps are zero: True
+- Episode counts match split manifest: True
+
+Boundary: Virtual manifests make split materialization deterministic for LeRobot-native policy jobs. They do not replace committed train/eval metrics or physical rollout reports.
+
 ## Jobs
 
 | Job | Policy | Split | Materialized train dataset |

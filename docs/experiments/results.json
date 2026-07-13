@@ -1206,15 +1206,20 @@
   "lerobot_policy_gate": {
     "artifacts": {
       "jobs": "docs/experiments/lerobot_policy_gate/train_eval_jobs.json",
+      "materialized_split_manifest": "docs/experiments/lerobot_policy_gate/materialized_splits/manifest.json",
       "random_episode_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/split_episodes.json",
       "random_episode_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "random_episode_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_test.lerobot_split_manifest.json",
       "random_episode_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "random_episode_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_train.lerobot_split_manifest.json",
       "report": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
       "rollout_contract": "docs/experiments/lerobot_policy_gate/rollout_contract.json",
       "run_script": "docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
       "scene_disjoint_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/split_episodes.json",
       "scene_disjoint_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
-      "scene_disjoint_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json"
+      "scene_disjoint_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_test.lerobot_split_manifest.json",
+      "scene_disjoint_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "scene_disjoint_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_train.lerobot_split_manifest.json"
     },
     "available": true,
     "closure_required": [
@@ -1519,6 +1524,38 @@
         }
       }
     ],
+    "materialized_split_manifests": {
+      "all_membership_counts_match": true,
+      "all_train_test_overlaps_zero": true,
+      "claim_boundary": "Virtual manifests make split materialization deterministic for LeRobot-native policy jobs. They do not replace committed train/eval metrics or physical rollout reports.",
+      "manifest_count": 4,
+      "profile": "worldepisode-lerobot-split-materialization-0.1",
+      "source_file_count": 27,
+      "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+      "status": "virtual_materialization_manifests_ready",
+      "target_datasets": [
+        {
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "split_name": "random_episode"
+        },
+        {
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "split_name": "random_episode"
+        },
+        {
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+          "split_name": "scene_disjoint"
+        },
+        {
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "split_name": "scene_disjoint"
+        }
+      ]
+    },
     "pass": false,
     "policies": [
       "act",

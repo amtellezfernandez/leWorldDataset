@@ -1400,6 +1400,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Gate satisfied: {policy_gate.get("pass", False)}
 - Policies: {", ".join(policy_gate.get("policies", []))}
 - Jobs prepared: {len(policy_gate.get("jobs", []))}
+- Virtual split datasets: {policy_gate.get("materialized_split_manifests", {}).get("manifest_count", 0)}
+- Split source files with digests: {policy_gate.get("materialized_split_manifests", {}).get("source_file_count", 0)}
+- Split train/test overlap zero: {policy_gate.get("materialized_split_manifests", {}).get("all_train_test_overlaps_zero", False)}
 - Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
 
 ## Famous Benchmark Call-Out Audit
@@ -1615,6 +1618,15 @@ def main() -> int:
         print("Active LeRobot scene leakage experiment is required but did not pass.")
         return 1
     policy_gate = results["lerobot_policy_gate"]
+    policy_materialization = policy_gate.get("materialized_split_manifests", {})
+    if policy_gate.get("available") and (
+        policy_materialization.get("manifest_count") != 4
+        or policy_materialization.get("source_file_count", 0) < 1
+        or not policy_materialization.get("all_train_test_overlaps_zero")
+        or not policy_materialization.get("all_membership_counts_match")
+    ):
+        print("ACT/Diffusion policy gate split materialization manifests are incomplete.")
+        return 1
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_POLICY_GATE") == "1" and not policy_gate.get("pass"):
         print("ACT/Diffusion policy leakage gate is required but did not pass.")
         return 1

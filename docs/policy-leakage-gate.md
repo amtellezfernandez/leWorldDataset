@@ -17,6 +17,8 @@ and writes:
 - `docs/experiments/lerobot_policy_gate/policy_gate_report.json`;
 - ACT and Diffusion training jobs in `train_eval_jobs.json`;
 - train/test episode allowlists for the random and scene-disjoint splits;
+- virtual split materialization manifests in `materialized_splits/`, with source file digests and
+  split-membership hashes;
 - a rollout contract requiring high-fidelity simulation or physical robot evaluation;
 - `run_lerobot_policy_jobs.sh`, which contains the LeRobot `lerobot-train` commands.
 
@@ -35,3 +37,7 @@ environment.
 This is not a completed empirical result. It is the executable gate that prevents the paper from
 overclaiming the MLP leakage result as if it already covered ACT, Diffusion Policy, IsaacLab, or
 hardware rollouts.
+
+The materialization manifests are also bounded: they fix source integrity and episode membership
+for the split datasets, but they are not committed physical copies of every LeRobot payload shard
+and video.

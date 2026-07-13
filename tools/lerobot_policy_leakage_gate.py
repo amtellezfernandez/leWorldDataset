@@ -9,6 +9,7 @@ exact artifacts required before the paper can claim ACT/Diffusion or rollout evi
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import os
@@ -53,6 +54,14 @@ def sanitize(value: str) -> str:
 
 def shell_join(command: list[str]) -> str:
     return " ".join(subprocess.list2cmdline([part]) for part in command)
+
+
+def canonical_json_bytes(payload: Any) -> bytes:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+
+
+def sha256_payload(payload: Any) -> str:
+    return hashlib.sha256(canonical_json_bytes(payload)).hexdigest()
 
 
 def detect_environment() -> dict[str, Any]:
@@ -111,6 +120,132 @@ def write_allowlists(output_dir: Path, split_name: str, split: dict[str, Any]) -
         "train": rel(train_path),
         "test": rel(test_path),
         "combined": rel(both_path),
+    }
+
+
+def split_partition_manifest(
+    split_manifest: dict[str, Any],
+    leakage_report: dict[str, Any],
+    split_name: str,
+    split: dict[str, Any],
+    partition: str,
+) -> dict[str, Any]:
+    episode_indices = split[f"{partition}_episodes"]
+    source_files = leakage_report.get("source_files", {})
+    total_source_bytes = sum(int(descriptor.get("bytes", 0)) for descriptor in source_files.values())
+    return {
+        "profile": "worldepisode-virtual-lerobot-split-0.1",
+        "status": "virtual_materialization_manifest",
+        "source_dataset": {
+            "repo_id": split_manifest["repo_id"],
+            "revision": split_manifest["revision"],
+        },
+        "target_dataset": {
+            "repo_id": materialized_repo_id(split_manifest["repo_id"], split_name, partition),
+            "split_name": split_name,
+            "partition": partition,
+        },
+        "episode_filter": {
+            "field": "episode_index",
+            "episode_count": len(episode_indices),
+            "episode_indices": episode_indices,
+            "episode_indices_sha256": sha256_payload(episode_indices),
+        },
+        "lineage_controls": {
+            "world_lineage_field": split_manifest.get("world_lineage_field", "world_lineage"),
+            "leakage_rate": split["leakage_rate"],
+            "train_world_lineage_count": split["train_world_lineage_count"],
+            "test_world_lineage_count": split["test_world_lineage_count"],
+            "test_leaked_episode_count": split["test_leaked_episode_count"],
+            "heldout_task_indices": split.get("heldout_task_indices", []),
+        },
+        "source_files": source_files,
+        "source_file_count": len(source_files),
+        "source_total_bytes": total_source_bytes,
+        "construction": {
+            "mode": "filter_source_lerobot_v3_by_episode_index",
+            "preserve_fields": [
+                "action",
+                "observation.state",
+                "timestamp",
+                "frame_index",
+                "episode_index",
+                "task_index",
+                "video timestamp ranges",
+            ],
+            "copy_policy": (
+                "Copy LeRobot v3 rows whose episode_index is listed in episode_filter. Preserve "
+                "native tensors, timestamps, metadata, and video references without augmentation."
+            ),
+            "integrity_policy": (
+                "Verify every source file against its declared sha256 before copying or linking. "
+                "The split membership digest must match episode_indices_sha256."
+            ),
+        },
+        "claim_boundary": (
+            "This is a virtual materialization manifest. It fixes split membership and source "
+            "integrity for ACT/Diffusion jobs, but it is not a committed physical copy of all "
+            "LeRobot payload shards and videos."
+        ),
+    }
+
+
+def write_materialized_split_manifests(
+    output_dir: Path,
+    split_manifest_path: Path,
+    split_manifest: dict[str, Any],
+    leakage_report: dict[str, Any],
+) -> dict[str, Any]:
+    materialized_dir = output_dir / "materialized_splits"
+    manifests: list[dict[str, Any]] = []
+    artifacts: dict[str, str] = {}
+    for split_name, split in sorted(split_manifest["splits"].items()):
+        train_episodes = set(split["train_episodes"])
+        test_episodes = set(split["test_episodes"])
+        overlap = sorted(train_episodes & test_episodes)
+        for partition in ("train", "test"):
+            manifest = split_partition_manifest(
+                split_manifest=split_manifest,
+                leakage_report=leakage_report,
+                split_name=split_name,
+                split=split,
+                partition=partition,
+            )
+            manifest["membership_invariants"] = {
+                "train_test_overlap_count": len(overlap),
+                "train_test_overlap": overlap,
+                "split_episode_count_matches": manifest["episode_filter"]["episode_count"]
+                == int(split[f"{partition}_count"]),
+            }
+            path = materialized_dir / f"{split_name}_{partition}.lerobot_split_manifest.json"
+            write_json(path, manifest)
+            artifacts[f"{split_name}_{partition}_materialization"] = rel(path)
+            manifests.append(manifest)
+
+    summary = {
+        "profile": "worldepisode-lerobot-split-materialization-0.1",
+        "status": "virtual_materialization_manifests_ready",
+        "source_split_manifest": rel(split_manifest_path),
+        "manifest_count": len(manifests),
+        "source_file_count": len(leakage_report.get("source_files", {})),
+        "target_datasets": [manifest["target_dataset"] for manifest in manifests],
+        "all_membership_counts_match": all(
+            manifest["membership_invariants"]["split_episode_count_matches"] for manifest in manifests
+        ),
+        "all_train_test_overlaps_zero": all(
+            manifest["membership_invariants"]["train_test_overlap_count"] == 0 for manifest in manifests
+        ),
+        "claim_boundary": (
+            "Virtual manifests make split materialization deterministic for LeRobot-native policy "
+            "jobs. They do not replace committed train/eval metrics or physical rollout reports."
+        ),
+    }
+    summary_path = materialized_dir / "manifest.json"
+    write_json(summary_path, summary)
+    artifacts["materialized_split_manifest"] = rel(summary_path)
+    return {
+        "summary": summary,
+        "artifacts": artifacts,
     }
 
 
@@ -185,7 +320,12 @@ def make_jobs(
     ]
 
     for split_name, split in sorted(split_manifest["splits"].items()):
-        split_artifacts.update({f"{split_name}_{key}": value for key, value in write_allowlists(output_dir, split_name, split).items()})
+        split_artifacts.update(
+            {
+                f"{split_name}_{key}": value
+                for key, value in write_allowlists(output_dir, split_name, split).items()
+            }
+        )
         train_repo = materialized_repo_id(repo_id, split_name, "train")
         test_repo = materialized_repo_id(repo_id, split_name, "test")
         for policy in policies:
@@ -364,6 +504,13 @@ def build_policy_gate(
         wandb=wandb,
         rollout_episodes=rollout_episodes,
     )
+    materialization = write_materialized_split_manifests(
+        output_dir=output_dir,
+        split_manifest_path=split_manifest_path,
+        split_manifest=split_manifest,
+        leakage_report=leakage_report,
+    )
+    artifacts.update(materialization["artifacts"])
     environment = detect_environment()
     result_files = existing_result_files(jobs)
     ready_to_execute = bool(environment["lerobot_train"]) and environment["lerobot_importable"]
@@ -393,6 +540,7 @@ def build_policy_gate(
         "environment": environment,
         "ready_to_execute": ready_to_execute,
         "jobs": jobs,
+        "materialized_split_manifests": materialization["summary"],
         "rollout_contract": rollout_contract,
         "result_files_present": result_files,
         "executions": executions,
@@ -425,6 +573,7 @@ def render_readme(report: dict[str, Any]) -> str:
         f"| `{job['job_id']}` | `{job['policy_type']}` | `{job['split']}` | `{job['materialized_datasets_required']['train_repo_id']}` |"
         for job in report["jobs"]
     )
+    materialization = report["materialized_split_manifests"]
     return f"""# LeRobot ACT/Diffusion Leakage Gate
 
 Status: {report["status"]}
@@ -434,6 +583,16 @@ tested with stronger LeRobot-native policies. It is intentionally not marked clo
 Diffusion checkpoints, offline action-evaluation reports, and rollout reports are present.
 
 Source split manifest: `{report["source_split_manifest"]}`
+
+## Split Materialization
+
+- Manifest: `{report["artifacts"]["materialized_split_manifest"]}`
+- Virtual split datasets: {materialization["manifest_count"]}
+- Source files with digest descriptors: {materialization["source_file_count"]}
+- Train/test overlaps are zero: {materialization["all_train_test_overlaps_zero"]}
+- Episode counts match split manifest: {materialization["all_membership_counts_match"]}
+
+Boundary: {materialization["claim_boundary"]}
 
 ## Jobs
 

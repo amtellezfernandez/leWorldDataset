@@ -95,6 +95,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Gate satisfied: False
 - Policies: act, diffusion
 - Jobs prepared: 4
+- Virtual split datasets: 4
+- Split source files with digests: 27
+- Split train/test overlap zero: True
 - Ready to execute in this environment: False
 
 ## Famous Benchmark Call-Out Audit
