@@ -1680,16 +1680,30 @@
   "natural_failure_corpus": {
     "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
     "available": true,
-    "case_count": 9,
-    "dataset_count": 3,
+    "case_count": 19,
+    "dataset_count": 5,
+    "dataset_count_gate_satisfied": true,
+    "evidence_tiers": {
+      "active_lerobot_conversion_reports": 2,
+      "active_lerobot_scene_leakage_audit": 1,
+      "source_level_public_metadata_audit": 2
+    },
     "full_gate_satisfied": false,
+    "maintainer_feedback_satisfied": false,
     "requirement_counts": {
-      "ACTION.001": 2,
-      "ACTION.002": 2,
-      "ACTION.004": 2,
+      "ACTION.001": 4,
+      "ACTION.002": 4,
+      "ACTION.004": 4,
+      "CONVERT.001": 2,
+      "DATASET.003": 2,
+      "ENTITY.001": 2,
       "FRAME.001": 4,
       "FRAME.002": 4,
-      "SPLIT.001": 1
+      "REP.001": 2,
+      "REPLAY.001": 2,
+      "SPLIT.001": 3,
+      "TRACE.001": 2,
+      "WORLD.001": 2
     }
   },
   "preflight_validator": {

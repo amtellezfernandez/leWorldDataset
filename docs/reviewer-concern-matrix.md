@@ -15,7 +15,7 @@ the claim at the same scope as the evidence.
 | Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Isaac mapping emitted but untested. | Mitigated by scope. Limitations state one trace, one MuJoCo adapter, Isaac untested. | Run at least two trajectories, a second robot/dataset, and an Isaac or second-simulator replay with declared tolerance envelopes. |
 | Runtime-neutral claim overstates evidence. | `tools/meta_simulator_contract.py` defines three adapter compliance layers and reports MuJoCo tested, Isaac ready/untested, Genesis and SAPIEN adapter-required. | Mitigated by scope. The paper can claim a meta-simulator adapter contract, not equal evidence across engines. | Run the same replay/contract-drift checks through a second tested simulator adapter. |
 | USS generality is overbroad. | `tools/uss_state_drift_pilots.py` emits deterministic game-engine collision-patch and autonomous-driving clock-domain pilots, while robotics remains the deep stress test. | Mitigated as framing only. The paper can claim USS vocabulary generalizes, not that production game/AV systems have been benchmarked. | Run at least one public game/simulation telemetry corpus or AV log through a USS adapter and report measured drift diagnostics. |
-| Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over three public LeRobot-format datasets with nine cases. | Mitigated but not closed. Evaluation and limitations distinguish the pilot corpus from a full prevalence survey. | Extend to at least five public datasets and record maintainer agreement/disagreement with representative diagnostics. |
+| Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over five public datasets with 19 cases. | Mitigated further. Dataset-count gate is met, while maintainer feedback and dataset-specific conversions remain open. | Record maintainer agreement/disagreement for representative diagnostics and convert source-level metadata gaps into dataset-specific manifests where stronger claims are needed. |
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
 | Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
 | Real-to-sim relevance is not concrete. | `tools/realtosim_contract_drift.py` now runs two controlled ablations: action contract drift and representation-role drift. Both succeed in the drifted simulator, fail under deployment proxies, and pass with the WorldEpisode contract. | Mitigated as a controlled proxy. The paper must not call this a RoboSnap/DROID-Sim hardware result. | Run the same checks on a real reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another public real-to-sim pipeline. |
@@ -55,11 +55,12 @@ the claim at the same scope as the evidence.
    - Input: at least five public robot-learning datasets.
    - Required output: requirement failure counts, example diagnostics, false-positive review, and
      maintainer feedback when available.
-   - Current output: `docs/experiments/natural_failure_corpus/manifest.json` records nine
-     natural-source cases across `lerobot/svla_so101_pickplace`, `lerobot/pusht`, and
-     `armnet/armnetbench_v01_lerobot_so101`.
-   - Remaining output: at least two more public datasets plus maintainer feedback or explicit
-     disagreement records.
+   - Current output: `docs/experiments/natural_failure_corpus/manifest.json` records 19
+     natural-source cases across five public datasets: `lerobot/svla_so101_pickplace`,
+     `lerobot/pusht`, `armnet/armnetbench_v01_lerobot_so101`, DROID, and BridgeData V2.
+   - Remaining output: maintainer feedback or explicit disagreement records, plus dataset-specific
+     WorldEpisode manifests for source-level DROID and BridgeData V2 metadata gaps if making
+     stronger benchmark claims.
    - Claim unlocked: conformance catches real dataset problems, not only injected faults.
 
 4. **Famous benchmark call-out gate**

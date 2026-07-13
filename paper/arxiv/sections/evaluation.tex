@@ -170,12 +170,15 @@ after radian conversion. Treating those degree values as radians would violate t
 unit contract even though the tensor shape is valid.
 
 To move beyond synthetic mutations, the experiment runner also writes a pilot natural-source corpus
-from committed public LeRobot artifacts. Across \path{lerobot/svla_so101_pickplace},
-\path{lerobot/pusht}, and \path{armnet/armnetbench_v01_lerobot_so101}, it records nine observed
-cases: source-absent camera extrinsics, robot/world calibration transforms, action units,
-controller-latency models, and a random episode split with measured scene-lineage leakage. These are
-not claimed as maintainer-confirmed dataset bugs; they are naturally occurring source omissions or
-evaluation risks that a WorldEpisode audit must make explicit.
+from committed public LeRobot artifacts and selected source-level public benchmark metadata. Across
+\path{lerobot/svla_so101_pickplace}, \path{lerobot/pusht},
+\path{armnet/armnetbench_v01_lerobot_so101}, DROID, and BridgeData V2, it records 19 observed
+cases. The active LeRobot evidence covers source-absent camera extrinsics, robot/world calibration
+transforms, action units, controller-latency models, and a random episode split with measured
+scene-lineage leakage. The DROID and BridgeData V2 cases are source-level public evidence gaps
+selected from the famous-benchmark call-out audit. These are not claimed as maintainer-confirmed
+dataset bugs or measured score-inflation results; they are naturally occurring source omissions,
+metadata gaps, or evaluation risks that a WorldEpisode audit must make explicit.
 
 The same validator is exposed as a pre-training command rather than only as an experiment script.
 The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid

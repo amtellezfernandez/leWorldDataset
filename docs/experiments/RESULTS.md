@@ -19,7 +19,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
-| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
+| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
@@ -148,8 +148,11 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - False-negative requirement detections: 0
 - Independent fixture cases: 2
 - Independent fixture recall: 1.000
-- Natural-source corpus: 3 public datasets, 9 cases
+- Natural-source corpus: 5 public datasets, 19 cases
+- Natural-source evidence tiers: active_lerobot_conversion_reports=2, active_lerobot_scene_leakage_audit=1, source_level_public_metadata_audit=2
 - Natural-source artifact: `docs/experiments/natural_failure_corpus/manifest.json`
+- Natural-source dataset-count gate satisfied: True
+- Natural-source maintainer-feedback gate satisfied: False
 - Full natural-corpus gate satisfied: False
 
 ## Public LeRobot Sample Check

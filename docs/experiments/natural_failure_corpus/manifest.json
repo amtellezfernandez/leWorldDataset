@@ -1,7 +1,7 @@
 {
   "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
   "available": true,
-  "case_count": 9,
+  "case_count": 19,
   "cases": [
     {
       "case_id": "armnet__armnetbench_v01_lerobot_so101::random_episode_scene_lineage_leakage",
@@ -18,6 +18,188 @@
         "SPLIT.001"
       ],
       "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "case_id": "benchmark__bridgedata_v2::WE-CALLOUT.001",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "BridgeData V2 public materials: environment_metadata_exists_but_lineage_disjoint_split_evidence_missing.",
+      "observed_episodes": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "repo_id": "benchmark/bridgedata_v2",
+      "requirement_ids": [
+        "SPLIT.001",
+        "DATASET.003"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__bridgedata_v2::WE-CALLOUT.002",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "BridgeData V2 public materials: missing_public_content_addressed_world_revision_evidence.",
+      "observed_episodes": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "repo_id": "benchmark/bridgedata_v2",
+      "requirement_ids": [
+        "WORLD.001",
+        "TRACE.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__bridgedata_v2::WE-CALLOUT.003",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "BridgeData V2 public materials: missing_public_cross_representation_entity_identity_evidence.",
+      "observed_episodes": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "repo_id": "benchmark/bridgedata_v2",
+      "requirement_ids": [
+        "ENTITY.001",
+        "REP.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__bridgedata_v2::WE-CALLOUT.004",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "BridgeData V2 public materials: missing_public_command_effective_latency_contract_evidence.",
+      "observed_episodes": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "repo_id": "benchmark/bridgedata_v2",
+      "requirement_ids": [
+        "ACTION.001",
+        "ACTION.002",
+        "ACTION.004"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__bridgedata_v2::WE-CALLOUT.006",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "BridgeData V2 public materials: missing_public_loss_report_and_replay_tolerance_evidence.",
+      "observed_episodes": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "repo_id": "benchmark/bridgedata_v2",
+      "requirement_ids": [
+        "REPLAY.001",
+        "CONVERT.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__droid::WE-CALLOUT.001",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "DROID public materials: partial_scene_metadata_expected_but_lineage_disjoint_split_evidence_missing.",
+      "observed_episodes": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "repo_id": "benchmark/droid",
+      "requirement_ids": [
+        "SPLIT.001",
+        "DATASET.003"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__droid::WE-CALLOUT.002",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "DROID public materials: missing_public_content_addressed_world_revision_evidence.",
+      "observed_episodes": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "repo_id": "benchmark/droid",
+      "requirement_ids": [
+        "WORLD.001",
+        "TRACE.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__droid::WE-CALLOUT.003",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "DROID public materials: missing_public_cross_representation_entity_identity_evidence.",
+      "observed_episodes": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "repo_id": "benchmark/droid",
+      "requirement_ids": [
+        "ENTITY.001",
+        "REP.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__droid::WE-CALLOUT.004",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "DROID public materials: missing_public_command_effective_latency_contract_evidence.",
+      "observed_episodes": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "repo_id": "benchmark/droid",
+      "requirement_ids": [
+        "ACTION.001",
+        "ACTION.002",
+        "ACTION.004"
+      ],
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_id": "benchmark__droid::WE-CALLOUT.006",
+      "claim_boundary": "Source-level public evidence gap, not a maintainer-confirmed bug and not a measured score-inflation claim.",
+      "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_gap",
+      "maintainer_feedback": "not_requested",
+      "observation": "DROID public materials: missing_public_loss_report_and_replay_tolerance_evidence.",
+      "observed_episodes": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "repo_id": "benchmark/droid",
+      "requirement_ids": [
+        "REPLAY.001",
+        "CONVERT.001"
+      ],
+      "revision": "source-level-audit-2026-07-13"
     },
     {
       "case_id": "lerobot__pusht::action_units",
@@ -186,7 +368,7 @@
       "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
     }
   ],
-  "dataset_count": 3,
+  "dataset_count": 5,
   "datasets": [
     {
       "action_rows": null,
@@ -201,6 +383,42 @@
       "source_profile": "lerobot-v3",
       "state_rows": null,
       "teleoperated_reference_episodes": 400,
+      "warnings": []
+    },
+    {
+      "action_rows": null,
+      "code_or_data_url": "https://github.com/rail-berkeley/bridge_data_v2",
+      "episode_indices": [],
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_audit",
+      "repo_id": "benchmark/bridgedata_v2",
+      "revision": "source-level-audit-2026-07-13",
+      "scale_public_claim": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+      "selected_from": "famous_benchmark_callout_audit",
+      "source_absent_fields": {},
+      "source_profile": "real_robot_low_cost_manipulation",
+      "source_url": "https://rail-berkeley.github.io/bridgedata/",
+      "state_rows": null,
+      "warnings": []
+    },
+    {
+      "action_rows": null,
+      "code_or_data_url": "https://github.com/droid-dataset/droid",
+      "episode_indices": [],
+      "evidence_files": [
+        "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+      ],
+      "evidence_type": "source_level_public_metadata_audit",
+      "repo_id": "benchmark/droid",
+      "revision": "source-level-audit-2026-07-13",
+      "scale_public_claim": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+      "selected_from": "famous_benchmark_callout_audit",
+      "source_absent_fields": {},
+      "source_profile": "real_robot_in_the_wild_manipulation",
+      "source_url": "https://droid-dataset.github.io/",
+      "state_rows": null,
       "warnings": []
     },
     {
@@ -290,22 +508,36 @@
       ]
     }
   ],
+  "evidence_tiers": {
+    "active_lerobot_conversion_reports": 2,
+    "active_lerobot_scene_leakage_audit": 1,
+    "source_level_public_metadata_audit": 2
+  },
   "full_gate": {
+    "dataset_count_gate_satisfied": true,
+    "maintainer_feedback_satisfied": false,
     "remaining": [
-      "audit at least two additional public robot-learning datasets",
-      "request or record maintainer agreement/disagreement for representative diagnostics"
+      "request or record maintainer agreement/disagreement for representative diagnostics",
+      "convert source-level metadata-gap cases into dataset-specific manifests where stronger claims are needed"
     ],
     "required_public_datasets": 5,
     "requires_maintainer_feedback": true,
     "satisfied": false
   },
   "requirement_counts": {
-    "ACTION.001": 2,
-    "ACTION.002": 2,
-    "ACTION.004": 2,
+    "ACTION.001": 4,
+    "ACTION.002": 4,
+    "ACTION.004": 4,
+    "CONVERT.001": 2,
+    "DATASET.003": 2,
+    "ENTITY.001": 2,
     "FRAME.001": 4,
     "FRAME.002": 4,
-    "SPLIT.001": 1
+    "REP.001": 2,
+    "REPLAY.001": 2,
+    "SPLIT.001": 3,
+    "TRACE.001": 2,
+    "WORLD.001": 2
   },
-  "scope": "pilot natural-source-omission corpus from committed public LeRobot artifacts"
+  "scope": "pilot natural-source corpus from committed public LeRobot artifacts plus selected source-level public benchmark metadata audits"
 }

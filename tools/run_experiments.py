@@ -717,7 +717,8 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
     """Aggregate naturally observed source omissions from committed public-dataset artifacts.
 
     These cases are not synthetic mutations of a valid WorldEpisode package. They are source-absent
-    semantics and split-lineage failures observed while auditing public LeRobot-format datasets.
+    semantics, split-lineage failures, and source-level public metadata gaps observed while auditing
+    public robot-learning datasets.
     """
 
     field_requirements = {
@@ -819,6 +820,57 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
                 }
             )
 
+    benchmark_path = BENCHMARK_CALLOUT_REPORT
+    if benchmark_path.exists():
+        benchmark_report = load_json(benchmark_path)
+        selected_benchmarks = {"droid", "bridgedata_v2"}
+        for benchmark in benchmark_report.get("benchmarks", []):
+            if benchmark.get("benchmark_id") not in selected_benchmarks:
+                continue
+            repo_id = f"benchmark/{benchmark['benchmark_id']}"
+            revision = f"source-level-audit-{benchmark_report.get('audit_date', 'unknown')}"
+            key = (repo_id, revision)
+            evidence_file = str(benchmark_path.relative_to(ROOT))
+            datasets[key] = {
+                "repo_id": repo_id,
+                "revision": revision,
+                "source_profile": benchmark.get("domain"),
+                "evidence_type": "source_level_public_metadata_audit",
+                "episode_indices": set(),
+                "action_rows": None,
+                "state_rows": None,
+                "source_absent_fields": {},
+                "warnings": set(),
+                "evidence_files": [evidence_file],
+                "source_url": benchmark.get("source_url"),
+                "code_or_data_url": benchmark.get("code_or_data_url"),
+                "scale_public_claim": benchmark.get("scale_public_claim"),
+                "selected_from": "famous_benchmark_callout_audit",
+            }
+            for finding in benchmark.get("findings", []):
+                if finding.get("severity") != "high":
+                    continue
+                cases.append(
+                    {
+                        "case_id": f"{repo_id.replace('/', '__')}::{finding['check_id']}",
+                        "repo_id": repo_id,
+                        "revision": revision,
+                        "observation": (
+                            f"{benchmark['name']} public materials: {finding['finding']}."
+                        ),
+                        "requirement_ids": finding.get("requirement_ids", []),
+                        "evidence_type": "source_level_public_metadata_gap",
+                        "observed_episodes": benchmark.get("scale_public_claim"),
+                        "evidence_files": [evidence_file],
+                        "diagnostic_status": "requires_dataset_specific_worldepisode_audit",
+                        "maintainer_feedback": "not_requested",
+                        "claim_boundary": (
+                            "Source-level public evidence gap, not a maintainer-confirmed bug and "
+                            "not a measured score-inflation claim."
+                        ),
+                    }
+                )
+
     normalized_datasets = []
     for dataset in datasets.values():
         normalized = dict(dataset)
@@ -835,22 +887,40 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
         for requirement in case["requirement_ids"]:
             requirement_counts[requirement] = requirement_counts.get(requirement, 0) + 1
 
+    dataset_count_gate_satisfied = len(normalized_datasets) >= 5
+    maintainer_feedback_satisfied = False
     manifest = {
         "available": bool(cases),
-        "scope": "pilot natural-source-omission corpus from committed public LeRobot artifacts",
+        "scope": (
+            "pilot natural-source corpus from committed public LeRobot artifacts plus selected "
+            "source-level public benchmark metadata audits"
+        ),
         "artifact": str((NATURAL_FAILURE_DIR / "manifest.json").relative_to(ROOT)),
         "dataset_count": len(normalized_datasets),
         "case_count": len(cases),
         "requirement_counts": dict(sorted(requirement_counts.items())),
         "datasets": sorted(normalized_datasets, key=lambda item: item["repo_id"]),
         "cases": sorted(cases, key=lambda item: item["case_id"]),
+        "evidence_tiers": {
+            "active_lerobot_conversion_reports": sum(
+                1 for dataset in normalized_datasets if dataset.get("evidence_type") == "active_lerobot_conversion_reports"
+            ),
+            "active_lerobot_scene_leakage_audit": sum(
+                1 for dataset in normalized_datasets if dataset.get("evidence_type") == "active_lerobot_scene_leakage_audit"
+            ),
+            "source_level_public_metadata_audit": sum(
+                1 for dataset in normalized_datasets if dataset.get("evidence_type") == "source_level_public_metadata_audit"
+            ),
+        },
         "full_gate": {
             "required_public_datasets": 5,
             "requires_maintainer_feedback": True,
-            "satisfied": False,
+            "dataset_count_gate_satisfied": dataset_count_gate_satisfied,
+            "maintainer_feedback_satisfied": maintainer_feedback_satisfied,
+            "satisfied": dataset_count_gate_satisfied and maintainer_feedback_satisfied,
             "remaining": [
-                "audit at least two additional public robot-learning datasets",
                 "request or record maintainer agreement/disagreement for representative diagnostics",
+                "convert source-level metadata-gap cases into dataset-specific manifests where stronger claims are needed",
             ],
         },
     }
@@ -862,6 +932,9 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
         "dataset_count": manifest["dataset_count"],
         "case_count": manifest["case_count"],
         "requirement_counts": manifest["requirement_counts"],
+        "evidence_tiers": manifest["evidence_tiers"],
+        "dataset_count_gate_satisfied": manifest["full_gate"]["dataset_count_gate_satisfied"],
+        "maintainer_feedback_satisfied": manifest["full_gate"]["maintainer_feedback_satisfied"],
         "full_gate_satisfied": manifest["full_gate"]["satisfied"],
     }
 
@@ -1101,6 +1174,12 @@ def write_report(results: dict[str, Any]) -> None:
     meta_sim = results["meta_simulator_contract"]
     uss_pilots = results["uss_state_drift_pilots"]
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
+    natural_boundary = (
+        "Five-dataset count is met through active LeRobot artifacts plus source-level public "
+        "benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet."
+        if natural.get("dataset_count_gate_satisfied")
+        else "Natural corpus is still below the five-dataset gate and has no maintainer feedback yet."
+    )
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1217,7 +1296,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
-| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
+| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
@@ -1321,7 +1400,10 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Independent fixture cases: {independent.get("n_cases", 0)}
 - Independent fixture recall: {independent.get("recall", 0.0):.3f}
 - Natural-source corpus: {natural["dataset_count"]} public datasets, {natural["case_count"]} cases
+- Natural-source evidence tiers: {", ".join(f"{key}={value}" for key, value in natural.get("evidence_tiers", {}).items())}
 - Natural-source artifact: `{natural["artifact"]}`
+- Natural-source dataset-count gate satisfied: {natural.get("dataset_count_gate_satisfied", False)}
+- Natural-source maintainer-feedback gate satisfied: {natural.get("maintainer_feedback_satisfied", False)}
 - Full natural-corpus gate satisfied: {natural["full_gate_satisfied"]}
 
 ## Public LeRobot Sample Check
