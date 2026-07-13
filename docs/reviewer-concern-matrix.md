@@ -8,7 +8,7 @@ the claim at the same scope as the evidence.
 
 | Concern | Current evidence | Current paper status | Remaining closure gate |
 |---|---|---|---|
-| "This is only infrastructure." | Five-graph contract, conformance requirements, validators, binding artifacts, leakage/replay/conversion experiments. | Mitigated. Discussion frames the contribution as falsifiable invariants rather than an SDK. | Independent adapter or dataset using the invariants without relying on the original implementation. |
+| "This is only infrastructure." | Five-graph contract, conformance requirements, validators, binding artifacts, leakage/replay/conversion experiments, and an internal clean-room reader that does not import the reference SDK. | Mitigated. Discussion frames the contribution as falsifiable invariants rather than an SDK. | External independent adapter or dataset using the invariants without relying on the original implementation. |
 | Offline leakage is not real robot success. | ArmnetBench LeRobot audit over 400 teleoperated reference episodes; random split leakage 1.000; scene-disjoint leakage 0.000; Torch BC probe drops 0.850 to 0.000 offline score; ACT/Diffusion gate now emits LeRobot-native jobs and rollout requirements. | Mitigated by scope. Abstract, evaluation, and limitations call this an offline imitation probe and mark the stronger policy gate open. | Materialize the split datasets, run ACT/Diffusion jobs, then evaluate in high-fidelity simulation or on hardware. |
 | LeRobot round trip is too small. | Active pinned batch round trips over `lerobot/svla_so101_pickplace` and `lerobot/pusht`, episodes 0--4 each; 1,935 action/state rows; action/state/timestamp/index/video timestamp max error 0.0; source-absent fields tracked. | Closed for current scope. Evaluation calls this a two-dataset batch audit, not broad LeRobot coverage. | Extend only if claiming broad LeRobot coverage beyond the current paper scope. |
 | Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors plus `tools/lerobot_policy_leakage_gate.py`, which prepares ACT and Diffusion Policy jobs for the same split manifest. | Mitigated but open. The paper avoids claiming state-of-the-art policy impact. | Run the generated ACT/Diffusion jobs and commit train, offline eval, and rollout reports. |
@@ -22,7 +22,7 @@ the claim at the same scope as the evidence.
 | Real-to-sim relevance is not concrete. | `tools/realtosim_contract_drift.py` now runs two controlled ablations: action contract drift and representation-role drift. Both succeed in the drifted simulator, fail under deployment proxies, and pass with the WorldEpisode contract. | Mitigated as a controlled proxy. The paper must not call this a RoboSnap/DROID-Sim hardware result. | Run the same checks on a real reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another public real-to-sim pipeline. |
 | Binding-retention metric looks subjective. | Versioned `conformance/projections/uss-core-23.v0.json` profile, `schemas/semantic-projection-v0.schema.json`, generated native/sidecar artifacts, and runner validation against field and requirement references. | Mitigated by artifact. The paper can cite a versioned pilot projection, not a universal score. | Obtain external review or an independent implementation that accepts or revises the projection. |
 | "Why not just USD/ROS/Rerun?" | Architecture and bindings show native containers as targets/views; sidecar captures action/task/lineage/replay semantics not owned by a single container. | Mitigated. Paper explicitly avoids replacement framing. | Demonstrate a round trip through at least two independently maintained native containers with loss reports. |
-| No independent adoption. | Public schema, governance draft, fixtures, examples, and artifacts exist. | Open. Limitations state no independent implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
+| No independent adoption. | Public schema, governance draft, fixtures, examples, artifacts, and `tools/cleanroom_conformance_reader.py`, an internal reader that checks fixtures without importing `worldepisode`. | Open. Limitations state no external implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
 | Too broad for version 1. | Paper and spec scope v0 to rigid tabletop manipulation with fixed-base single- or dual-arm robots. | Mitigated. Limitations table names unsupported domains. | Keep humanoids, locomotion, deformables, fluids, and multi-agent support out of v0 conformance claims. |
 
 ## Next Empirical Gates
@@ -127,6 +127,10 @@ the claim at the same scope as the evidence.
 
 10. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
+   - Current output: `docs/experiments/cleanroom_reader/cleanroom_reader_report.json` shows that an
+     internal clean-room reader can parse the public schema, summarize the minimal example, and catch
+     all expected requirement IDs in pilot and independent fixtures without importing the reference
+     SDK.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.
    - Claim unlocked: the project begins to act like an interoperability profile rather than a

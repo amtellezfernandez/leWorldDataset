@@ -191,6 +191,11 @@ The preflight regression covers four cases: a valid WorldEpisode manifest passes
 WorldEpisode fixture fails, a native LeRobot v3 folder without a WorldEpisode sidecar fails closed,
 and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the intended usage
 pattern for labs: run one blocking line before launching a multi-day policy training job.
+To reduce single-implementation risk, we also run an internal clean-room reader that does not import
+the \texttt{worldepisode} package. It parses the public schema, summarizes the minimal example, and
+catches all 18 expected requirement instances across 17 pilot and independently authored fixtures
+with 1.000 recall. This is not external adoption, but it verifies that the public artifacts are
+readable outside the reference SDK path.
 
 \paragraph{Case 6: the corpus that should not require a filesystem crawl.}
 To address production scale, we audit the dataset manifest in

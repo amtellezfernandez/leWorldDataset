@@ -23,6 +23,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
+| Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
@@ -127,6 +128,18 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Asset-digest index: True
 - Split manifest shard: True
 - Boundary: This audit validates catalog invariants for scalable manifests. It is not a billion-episode latency, cache, or federation benchmark.
+
+## Clean-Room Reader Check
+
+- Artifact: `docs/experiments/cleanroom_reader/cleanroom_reader_report.json`
+- Status: pass
+- Fixture sets: 2
+- Cases: 17
+- Expected requirements: 18
+- Hit requirements: 18
+- Recall: 1.000
+- False-positive requirements: 11
+- Boundary: This is an internal clean-room reader check. It demonstrates that the public schema and fixtures can be consumed without the reference SDK, but it is not an external implementation or independent adoption.
 
 ## Real-to-Sim Contract Drift
 

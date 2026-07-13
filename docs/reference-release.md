@@ -57,6 +57,11 @@ opened through the manifest and indexes without scanning the backing storage.
 7. Measure adoption with independent implementations, external datasets, adapter usage,
    conformance-suite usage, benchmark submissions, and RFC participation.
 
+The internal clean-room reader at `tools/cleanroom_conformance_reader.py` is a useful pre-release
+sanity check because it consumes the public schema and fixtures without importing the reference SDK.
+It does not replace step 4; an external reader/exporter or external compatible dataset is still
+required before claiming independent implementation.
+
 ## Initial Repository Milestones
 
 - `v0.1-rfc`: paper draft, schemas, examples, requirements, and profile definitions.

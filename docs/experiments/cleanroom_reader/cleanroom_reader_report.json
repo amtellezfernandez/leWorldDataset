@@ -1,0 +1,309 @@
+{
+  "aggregate": {
+    "case_count": 17,
+    "expected_requirement_count": 18,
+    "false_positive_requirement_count": 11,
+    "fixture_set_count": 2,
+    "hit_requirement_count": 18,
+    "recall": 1.0
+  },
+  "artifacts": {
+    "markdown": "docs/experiments/cleanroom_reader/README.md",
+    "report": "docs/experiments/cleanroom_reader/cleanroom_reader_report.json"
+  },
+  "claim_boundary": "This is an internal clean-room reader check. It demonstrates that the public schema and fixtures can be consumed without the reference SDK, but it is not an external implementation or independent adoption.",
+  "fixture_sets": [
+    {
+      "case_count": 15,
+      "cases": [
+        {
+          "detected": [],
+          "expected": [],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "valid/minimal.worldepisode.json",
+          "section": "valid"
+        },
+        {
+          "detected": [
+            "SCHEMA.001",
+            "TIME.001"
+          ],
+          "expected": [
+            "TIME.001"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/TIME.001_missing_clock_domain.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "TIME.002"
+          ],
+          "expected": [
+            "TIME.002"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/TIME.002_mapping_without_drift_or_error.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "FRAME.001"
+          ],
+          "expected": [
+            "FRAME.001"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/FRAME.001_unknown_representation_frame.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "FRAME.002",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "FRAME.002"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/FRAME.002_missing_transform_interval.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ENTITY.001"
+          ],
+          "expected": [
+            "ENTITY.001"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/ENTITY.001_unknown_event_entity.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "REP.001",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "REP.001"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/REP.001_missing_representation_role.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ASSET.001",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "ASSET.001"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/ASSET.001_bad_digest.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ASSET.002",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "ASSET.002"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/ASSET.002_digest_mismatch.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ACTION.001",
+            "FRAME.001",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "ACTION.001"
+          ],
+          "false_positive_requirements": [
+            "FRAME.001",
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/ACTION.001_missing_action_frame.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ACTION.002",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "ACTION.002"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/ACTION.002_missing_effective_time.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "WORLD.001"
+          ],
+          "expected": [
+            "WORLD.001"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/WORLD.001_non_content_addressed_world.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "TRACE.001"
+          ],
+          "expected": [
+            "TRACE.001"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/TRACE.001_missing_delta_sequence.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "PROV.001",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "PROV.001"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/PROV.001_missing_provenance.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "QUALITY.001"
+          ],
+          "expected": [
+            "QUALITY.001"
+          ],
+          "false_positive_requirements": [],
+          "fixture_set": "pilot",
+          "pass": true,
+          "path": "invalid/QUALITY.001_missing_quality.worldepisode.json",
+          "section": "invalid"
+        }
+      ],
+      "expected_requirement_count": 14,
+      "false_positive_requirement_count": 9,
+      "hit_requirement_count": 14,
+      "manifest": "conformance/fixtures/pilot/manifest.json",
+      "pass": true,
+      "recall": 1.0
+    },
+    {
+      "case_count": 2,
+      "cases": [
+        {
+          "detected": [
+            "SCHEMA.001",
+            "TIME.001",
+            "TRACE.001",
+            "WORLD.001"
+          ],
+          "expected": [
+            "TIME.001",
+            "TRACE.001",
+            "WORLD.001"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "independent",
+          "pass": true,
+          "path": "invalid/no_clock_no_world.worldepisode.json",
+          "section": "invalid"
+        },
+        {
+          "detected": [
+            "ACTION.002",
+            "SCHEMA.001"
+          ],
+          "expected": [
+            "ACTION.002"
+          ],
+          "false_positive_requirements": [
+            "SCHEMA.001"
+          ],
+          "fixture_set": "independent",
+          "pass": true,
+          "path": "invalid/action_missing_timing.worldepisode.json",
+          "section": "invalid"
+        }
+      ],
+      "expected_requirement_count": 4,
+      "false_positive_requirement_count": 2,
+      "hit_requirement_count": 4,
+      "manifest": "conformance/fixtures/independent/manifest.json",
+      "pass": true,
+      "recall": 1.0
+    }
+  ],
+  "minimal_example": "examples/minimal.worldepisode.json",
+  "minimal_summary": {
+    "action_channel_count": 1,
+    "asset_count": 5,
+    "clock_count": 1,
+    "dataset_id": "worldepisode-rigid-demo",
+    "delta_count": 0,
+    "entity_count": 1,
+    "episode_id": "episode_000001",
+    "event_count": 1,
+    "frame_count": 2,
+    "world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "pass": true,
+  "profile": "worldepisode-cleanroom-reader-0.1",
+  "schema": "schemas/worldepisode-core-v0.schema.json",
+  "status": "pass"
+}

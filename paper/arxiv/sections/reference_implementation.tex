@@ -46,6 +46,9 @@ semantic audit a pre-training check rather than a separate post-hoc documentatio
 The dataset-scale audit checks the separate corpus manifest for namespace uniqueness, resolver
 coverage, digest-addressed assets, local mirrors, shard/index references, required lineage and
 asset-digest indexes, split-manifest presence, and append-only version structure.
+The clean-room reader check intentionally does not import the \texttt{worldepisode} package. It
+uses the published JSON Schema and separately implemented requirement checks to parse the minimal
+example and fixture corpus, providing an internal sanity check for independent implementability.
 
 The repository also includes an active LeRobotDataset v3 converter. It downloads bounded Parquet
 and metadata shards from the pinned public \path{lerobot/svla_so101_pickplace} SO-101 dataset,

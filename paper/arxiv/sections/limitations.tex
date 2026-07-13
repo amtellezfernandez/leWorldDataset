@@ -41,9 +41,10 @@ and reruns are still required \\
 Real-to-sim drift & Controlled action-contract and representation-role ablations where drifted
 contracts succeed in simulation and fail under deployment proxies & Deterministic proxy; not a
 RoboSnap/DROID-Sim rerun or physical hardware deployment \\
-Adoption & Public schema, installable local preflight package, validator, fixtures, and governance
-files & No PyPI release, upstream LeRobot/Rerun integration, independent implementation, or external
-dataset release yet \\
+Adoption & Public schema, installable local preflight package, validator, fixtures, governance
+files, and an internal clean-room reader that does not import the reference SDK & No PyPI release,
+upstream LeRobot/Rerun integration, external independent implementation, or external dataset release
+yet \\
 Scale architecture & Dataset manifest schema, scalable example, and executable audit for
 namespaces, resolvers, digest-addressed assets, shard/index references, split manifests, and
 append-only versions & No benchmark yet for billion-episode catalog latency, distributed cache
@@ -88,9 +89,10 @@ adapter-required entries for Genesis and SAPIEN.
 
 \paragraph{Reference implementation maturity.}
 The converter, validator, and reports are executable, but independent implementations are still
-needed before the project should be treated as a mature interoperability standard. The next
-empirical step is to run the same protocol on larger multi-camera manipulation datasets and
-externally maintained adapters.
+needed before the project should be treated as a mature interoperability standard. The clean-room
+reader reduces the risk that the fixtures only work through the reference SDK, but it is still an
+internal artifact. The next empirical step is to run the same protocol on larger multi-camera
+manipulation datasets and externally maintained adapters.
 
 \paragraph{Preflight distribution.}
 The repository packages a local \texttt{worldepisode} preflight CLI and Python API, but it is not

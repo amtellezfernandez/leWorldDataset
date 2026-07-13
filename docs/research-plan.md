@@ -60,6 +60,11 @@ digest-addressed assets, local mirrors, shard/index references, required lineage
 split-manifest presence, and append-only version structure. It is a catalog invariant audit, not a
 distributed performance benchmark.
 
+Clean-room reader artifact: `tools/cleanroom_conformance_reader.py` parses the public schema,
+summarizes the minimal example, and checks the pilot plus independent fixture manifests without
+importing the reference `worldepisode` package. This reduces single-codebase risk but does not
+replace an external independent implementation.
+
 ## RQ3: Cross-Simulator Replay
 
 Replay the same demonstrations in at least two simulators.

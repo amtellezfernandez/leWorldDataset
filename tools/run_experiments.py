@@ -49,6 +49,7 @@ META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contr
 USS_STATE_DRIFT_REPORT = RESULTS_DIR / "uss_state_drift_pilots" / "state_drift_report.json"
 REPLAY_ADAPTER_CONFORMANCE_REPORT = RESULTS_DIR / "replay_adapter_conformance" / "adapter_conformance_report.json"
 DATASET_SCALE_AUDIT_REPORT = RESULTS_DIR / "dataset_scale_audit" / "scale_audit_report.json"
+CLEANROOM_READER_REPORT = RESULTS_DIR / "cleanroom_reader" / "cleanroom_reader_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -617,6 +618,22 @@ def experiment_dataset_scale_audit() -> dict[str, Any]:
             "reproduce": "python3 tools/dataset_scale_audit.py",
         }
         write_json(DATASET_SCALE_AUDIT_REPORT, report)
+        return report
+
+
+def experiment_cleanroom_reader() -> dict[str, Any]:
+    try:
+        from cleanroom_conformance_reader import build_cleanroom_reader_report
+
+        return build_cleanroom_reader_report(output_dir=RESULTS_DIR / "cleanroom_reader")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/cleanroom_conformance_reader.py",
+        }
+        write_json(CLEANROOM_READER_REPORT, report)
         return report
 
 
@@ -1209,6 +1226,7 @@ def write_report(results: dict[str, Any]) -> None:
     uss_pilots = results["uss_state_drift_pilots"]
     replay_adapter = results["replay_adapter_conformance"]
     dataset_scale = results["dataset_scale_audit"]
+    cleanroom_reader = results["cleanroom_reader"]
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
     natural_boundary = (
         "Five-dataset count is met through active LeRobot artifacts plus source-level public "
@@ -1336,6 +1354,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
+| Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
@@ -1414,6 +1433,18 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Asset-digest index: {dataset_scale.get("aggregate", {}).get("has_asset_digest_index", False)}
 - Split manifest shard: {dataset_scale.get("aggregate", {}).get("has_split_manifest_shard", False)}
 - Boundary: {dataset_scale.get("claim_boundary", "Catalog invariant audit only; not a billion-episode performance benchmark.")}
+
+## Clean-Room Reader Check
+
+- Artifact: `{cleanroom_reader.get("artifacts", {}).get("report", "docs/experiments/cleanroom_reader/cleanroom_reader_report.json")}`
+- Status: {cleanroom_reader.get("status", "unavailable")}
+- Fixture sets: {cleanroom_reader.get("aggregate", {}).get("fixture_set_count", 0)}
+- Cases: {cleanroom_reader.get("aggregate", {}).get("case_count", 0)}
+- Expected requirements: {cleanroom_reader.get("aggregate", {}).get("expected_requirement_count", 0)}
+- Hit requirements: {cleanroom_reader.get("aggregate", {}).get("hit_requirement_count", 0)}
+- Recall: {cleanroom_reader.get("aggregate", {}).get("recall", 0.0):.3f}
+- False-positive requirements: {cleanroom_reader.get("aggregate", {}).get("false_positive_requirement_count", 0)}
+- Boundary: {cleanroom_reader.get("claim_boundary", "Internal clean-room artifact only; not external adoption.")}
 
 ## Real-to-Sim Contract Drift
 
@@ -1537,6 +1568,7 @@ def main() -> int:
         "uss_state_drift_pilots": experiment_uss_state_drift_pilots(),
         "replay_adapter_conformance": experiment_replay_adapter_conformance(),
         "dataset_scale_audit": experiment_dataset_scale_audit(),
+        "cleanroom_reader": experiment_cleanroom_reader(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1638,6 +1670,14 @@ def main() -> int:
         or not dataset_scale_aggregate.get("has_split_manifest_shard")
     ):
         print("Dataset-scale manifest audit is missing required production catalog invariants.")
+        return 1
+    cleanroom_reader = results["cleanroom_reader"]
+    cleanroom_aggregate = cleanroom_reader.get("aggregate", {})
+    if not cleanroom_reader.get("pass"):
+        print("Clean-room reader check failed.")
+        return 1
+    if cleanroom_aggregate.get("case_count", 0) < 1 or cleanroom_aggregate.get("recall", 0.0) < 1.0:
+        print("Clean-room reader did not catch all expected fixture requirements.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")
