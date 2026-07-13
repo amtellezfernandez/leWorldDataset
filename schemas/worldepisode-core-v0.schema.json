@@ -77,6 +77,34 @@
       "type": "string",
       "pattern": "^sha256:[a-f0-9]{64}$"
     },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "assetDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "media_type", "sha256"],
+      "properties": {
+        "uri": { "type": "string", "minLength": 1 },
+        "media_type": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mirrors": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "embedded": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["encoding", "data"],
+          "properties": {
+            "encoding": { "type": "string", "enum": ["base64"] },
+            "data": { "type": "string", "minLength": 1 }
+          }
+        },
+        "license": { "type": "string" }
+      }
+    },
     "episode": {
       "type": "object",
       "additionalProperties": false,
@@ -91,11 +119,10 @@
     "worldRevision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["world_revision_id", "content_hash", "uri"],
+      "required": ["world_revision_id", "asset"],
       "properties": {
         "world_revision_id": { "type": "string", "minLength": 1 },
-        "content_hash": { "$ref": "#/$defs/hash" },
-        "uri": { "type": "string", "minLength": 1 },
+        "asset": { "$ref": "#/$defs/assetDescriptor" },
         "binding": { "type": "string" }
       }
     },
@@ -105,8 +132,7 @@
       "required": ["embodiment_id"],
       "properties": {
         "embodiment_id": { "type": "string", "minLength": 1 },
-        "urdf_uri": { "type": "string" },
-        "urdf_hash": { "$ref": "#/$defs/hash" }
+        "urdf_asset": { "$ref": "#/$defs/assetDescriptor" }
       }
     },
     "frameGraph": {
@@ -204,16 +230,14 @@
     "representation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["representation_id", "role", "media_type", "uri", "content_hash"],
+      "required": ["representation_id", "role", "asset"],
       "properties": {
         "representation_id": { "type": "string", "minLength": 1 },
         "role": {
           "type": "string",
           "enum": ["appearance", "geometry", "collision", "semantics", "learned"]
         },
-        "media_type": { "type": "string", "minLength": 1 },
-        "uri": { "type": "string", "minLength": 1 },
-        "content_hash": { "$ref": "#/$defs/hash" },
+        "asset": { "$ref": "#/$defs/assetDescriptor" },
         "coordinate_frame": { "type": "string" },
         "valid_interval": { "$ref": "#/$defs/interval" },
         "derivation": { "type": "string" },
@@ -254,11 +278,10 @@
     "trace": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["binding", "uri", "content_hash"],
+      "required": ["binding", "asset"],
       "properties": {
         "binding": { "type": "string", "minLength": 1 },
-        "uri": { "type": "string", "minLength": 1 },
-        "content_hash": { "$ref": "#/$defs/hash" }
+        "asset": { "$ref": "#/$defs/assetDescriptor" }
       }
     },
     "event": {
@@ -321,4 +344,3 @@
     }
   }
 }
-

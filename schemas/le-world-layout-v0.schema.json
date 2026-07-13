@@ -102,7 +102,7 @@
           "type": "string"
         },
         "asset_ref": {
-          "$ref": "#/$defs/portableAssetRef"
+          "$ref": "#/$defs/assetReference"
         },
         "appearance": {
           "$ref": "#/$defs/appearance"
@@ -115,17 +115,43 @@
         }
       }
     },
-    "portableAssetRef": {
+    "sha256": {
       "type": "string",
-      "minLength": 1,
-      "not": {
-        "anyOf": [
-          { "pattern": "^/" },
-          { "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:" },
-          { "pattern": "(^|/)\\.($|/)" },
-          { "pattern": "(^|/)\\.\\.($|/)" },
-          { "pattern": "//" }
-        ]
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "assetReference": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/assetDescriptor"
+        }
+      ]
+    },
+    "assetDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "media_type", "sha256"],
+      "properties": {
+        "uri": { "type": "string", "minLength": 1 },
+        "media_type": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mirrors": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "embedded": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["encoding", "data"],
+          "properties": {
+            "encoding": { "type": "string", "enum": ["base64"] },
+            "data": { "type": "string", "minLength": 1 }
+          }
+        },
+        "license": { "type": "string" }
       }
     },
     "appearance": {
@@ -153,7 +179,7 @@
           "enum": ["primitive", "mesh", "splat"]
         },
         "asset_ref": {
-          "$ref": "#/$defs/portableAssetRef"
+          "$ref": "#/$defs/assetReference"
         },
         "scale_xyz": {
           "$ref": "#/$defs/vec3"
@@ -217,7 +243,7 @@
           "minimum": 0
         },
         "asset_ref": {
-          "$ref": "#/$defs/portableAssetRef"
+          "$ref": "#/$defs/assetReference"
         },
         "scale_xyz": {
           "$ref": "#/$defs/vec3"
@@ -249,4 +275,3 @@
     }
   }
 }
-

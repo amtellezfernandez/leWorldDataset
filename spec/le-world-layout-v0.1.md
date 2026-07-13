@@ -65,7 +65,7 @@ include:
 
 - `id`: representation id.
 - `kind`: `primitive`, `mesh`, or `splat`.
-- `asset_ref`: required for `mesh` and `splat`.
+- `asset_ref`: required for `mesh` and `splat`; MAY be a URI string or an asset descriptor object.
 - `scale_xyz`: optional per-axis scale.
 - `semantic_role`: optional free-form tag.
 
@@ -105,17 +105,38 @@ explicitly marked non-colliding.
 - `status`: `valid`, `warning`, `missing`, or `unchecked`.
 - `metrics`: optional object.
 
-## 7. Asset References
+## 7. Asset Resolution
 
-Every asset reference MUST be a portable relative path:
+World layout assets MUST NOT be limited to relative paths. A valid asset reference MAY use:
 
-- no leading slash;
-- no URI scheme such as `http://`, `https://`, or `file://`;
-- no `.` or `..` path segments;
-- no empty path segments;
-- forward slashes are preferred.
+- a path relative to the package root;
+- an HTTPS URL;
+- a Hugging Face repository URI such as `hf://organization/dataset/path`;
+- object storage such as `s3://bucket/key` or compatible schemes;
+- OCI artifact references;
+- IPFS or other content-addressed registry URIs;
+- an embedded payload when the profile permits it.
 
-This rule applies to:
+Portability depends on deterministic resolution and digest verification, not on forcing every
+asset into one folder. The normative asset descriptor shape is:
+
+```json
+{
+  "uri": "hf://organization/dataset/assets/world_001.spz",
+  "sha256": "a821000000000000000000000000000000000000000000000000000000000000",
+  "media_type": "model/vnd.spz",
+  "mirrors": [
+    "assets/world_001.spz"
+  ]
+}
+```
+
+`mirrors[]` MAY contain local relative mirrors or alternate resolvers. A consumer MUST verify that
+the resolved bytes match `sha256` before treating the asset as the declared representation. Inline
+assets MAY be represented with `embedded` metadata, but profiles SHOULD restrict embedded payloads
+to small assets or metadata fixtures.
+
+The rule applies to:
 
 - top-level `asset_ref`;
 - `mesh.asset_ref`, `mesh.path`, `mesh.uri`, `mesh.filename`;
@@ -127,15 +148,16 @@ This rule applies to:
 A layout MAY be delivered as:
 
 - a single JSON file;
-- a folder containing the JSON file plus relative assets;
+- a folder containing the JSON file plus mirrored assets;
 - a URL whose relative asset references resolve against the document URL;
+- remote resolvers such as Hugging Face, object storage, OCI, or IPFS;
 - a registry envelope containing the same `world_layout`.
 
-Consumers MUST resolve relative references against the document package root, not against the
-consumer machine's current working directory.
+Consumers MUST resolve relative mirrors against the document package root, not against the consumer
+machine's current working directory. Remote URI schemes MUST be resolved by their declared binding
+or rejected with a deterministic diagnostic.
 
 ## 9. Compatibility With Existing URDF Studio World Format
 
 URDF Studio's `world_layout`, `world`, and `world_snapshot` payloads are the current implementation
 base. `leWorldLayout` v0.1 preserves that practical shape while naming the public norm separately.
-

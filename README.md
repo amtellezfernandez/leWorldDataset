@@ -25,6 +25,8 @@ WorldEpisode is:
 - **representation-neutral**: appearance can be Gaussian splats, meshes, NeRFs, point clouds, or future representations;
 - **runtime-neutral**: physical worlds can target Isaac Sim, MuJoCo, SAPIEN, Genesis, or other simulators;
 - **loss-explicit**: conversions may be lossy, but never silently lossy.
+- **resolver-neutral**: assets are portable through URI, media type, digest, and optional mirrors,
+  not by forcing every asset into a local folder.
 
 Gaussian splats are a high-value profile and demonstration, not the core claim. The stronger claim
 is persistent, verifiable world-episode interoperability.

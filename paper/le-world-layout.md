@@ -8,7 +8,7 @@ as a small, portable, simulator-agnostic layout contract for the authored state 
 objects, cameras, frame conventions, task-time state, asset references, and the split between visual
 appearance and physical collision. We propose `leWorldLayout`, a JSON world layout norm that treats
 the scene around a robot as a first-class artifact. A layout document records static or time-indexed
-world objects in a declared frame convention, uses portable relative asset references, and separates
+world objects in a declared frame convention, uses deterministic asset descriptors, and separates
 appearance representations from physics geometry so that splats, meshes, primitives, and simulator
 colliders can coexist without ambiguity. We describe the contract, its validation rules, and its
 relationship to scenario and benchmark layers. A reference implementation in URDF Studio validates
@@ -40,8 +40,8 @@ can be consumed by many downstream tools.
 A portable world layout format should be:
 
 1. **Simulator-agnostic**: the document should not name a physics engine as its source of truth.
-2. **Asset-portable**: all asset references must be relative, local to the document package, and
-   free of machine-specific paths or network-only assumptions.
+2. **Asset-portable**: all assets must declare a URI, media type, digest, and optional mirrors so
+   consumers can resolve and verify bytes deterministically across local and remote storage.
 3. **Frame-explicit**: frame convention must be declared or mappable, not silently inferred.
 4. **Appearance/physics separated**: visual assets and simulation geometry are related but not the
    same contract.
@@ -130,7 +130,8 @@ The paper should evaluate:
 
 - A compact world layout norm for robot-world scene interchange.
 - A validated appearance/physics split for meshes, primitives, and splats.
-- A portable asset-reference rule suitable for files, folders, links, and registries.
+- A deterministic asset-resolution rule suitable for files, folders, links, object storage,
+  Hugging Face repositories, OCI artifacts, IPFS, and registries.
 - A reference implementation and cross-simulator transfer path in URDF Studio.
 - A bridge between scene authoring and scenario-level robot evaluation.
 
@@ -141,4 +142,3 @@ The paper should evaluate:
 - Should dynamic layouts live in this spec or only in a scenario layer?
 - Which fields should be required for publication versus allowed for local drafts?
 - How strict should the paper be about JSON canonicalization and registry digests?
-

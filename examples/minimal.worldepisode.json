@@ -8,14 +8,28 @@
   },
   "world_revision": {
     "world_revision_id": "world_demo_tabletop@sha256:000000",
-    "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
-    "uri": "worlds/000000/world.layout.json",
+    "asset": {
+      "uri": "hf://organization/worldepisode-rigid-demo/worlds/000000/world.layout.json",
+      "media_type": "application/vnd.worldepisode.layout+json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "mirrors": [
+        "worlds/000000/world.layout.json"
+      ],
+      "license": "CC-BY-4.0"
+    },
     "binding": "le-world-layout-v0.1"
   },
   "embodiment": {
     "embodiment_id": "fixed_arm_demo",
-    "urdf_uri": "robots/fixed_arm.urdf",
-    "urdf_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    "urdf_asset": {
+      "uri": "oci://registry.example.org/worldepisode/robots/fixed_arm:1.0",
+      "media_type": "application/vnd.ros.urdf+xml",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mirrors": [
+        "robots/fixed_arm.urdf"
+      ],
+      "license": "Apache-2.0"
+    }
   },
   "task": {
     "task_id": "pick_carton",
@@ -69,9 +83,15 @@
         {
           "representation_id": "carton_visual",
           "role": "appearance",
-          "media_type": "model/gltf-binary",
-          "uri": "assets/carton.glb",
-          "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "asset": {
+            "uri": "hf://organization/worldepisode-rigid-demo/assets/carton.glb",
+            "media_type": "model/gltf-binary",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "mirrors": [
+              "assets/carton.glb"
+            ],
+            "license": "CC-BY-4.0"
+          },
           "coordinate_frame": "world",
           "valid_interval": {
             "start": 0,
@@ -83,9 +103,15 @@
         {
           "representation_id": "carton_collision",
           "role": "collision",
-          "media_type": "application/worldepisode-collision-proxy+json",
-          "uri": "assets/carton_collision.json",
-          "content_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "asset": {
+            "uri": "s3://worldepisode-demo/assets/carton_collision.json",
+            "media_type": "application/worldepisode-collision-proxy+json",
+            "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "mirrors": [
+              "assets/carton_collision.json"
+            ],
+            "license": "CC-BY-4.0"
+          },
           "coordinate_frame": "world",
           "valid_interval": {
             "start": 0,
@@ -116,8 +142,15 @@
   },
   "trace": {
     "binding": "lerobot-v3",
-    "uri": "episodes/episode_000001/trace.parquet",
-    "content_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+    "asset": {
+      "uri": "ipfs://bafybeigdyrzt4v3exampletrace",
+      "media_type": "application/vnd.apache.parquet",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mirrors": [
+        "episodes/episode_000001/trace.parquet"
+      ],
+      "license": "CC-BY-4.0"
+    }
   },
   "events": [
     {
@@ -140,4 +173,3 @@
     "conformance_profiles": ["WE-Core", "WE-Rigid-Manipulation"]
   }
 }
-

@@ -65,6 +65,7 @@ Avoid:
 3. Cross-representation entity identity.
 4. Loss-aware conversion reports.
 5. Lineage-safe dataset splits.
+6. Deterministic asset resolution by URI, media type, digest, and optional mirrors.
 
 ## Initial Scope
 
@@ -82,4 +83,3 @@ profiles.
 | "NCore already has sensors and pose graphs." | Reuse NCore conventions; add action, task, outcome, physical-role, world-revision, and split-lineage semantics. |
 | "A schema is not research." | Include conversion-fidelity experiments, validator fault injection, cross-simulator replay, leakage analysis, and downstream policy results. |
 | "The scope is impossible." | Restrict v1 to rigid tabletop manipulation and make other domains profiles. |
-

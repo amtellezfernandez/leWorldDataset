@@ -62,15 +62,21 @@ One entity MAY have many representations. Each representation MUST declare:
 - `representation_id`
 - `entity_id`
 - `role`
-- `media_type`
-- `uri`
-- `content_hash`
+- `asset.uri`
+- `asset.media_type`
+- `asset.sha256`
 - `coordinate_frame`
 - `units`
 - `valid_interval`
 - `derivation`
 - `uncertainty`
 - `license`
+
+`asset.uri` MAY be a relative path, HTTPS URL, Hugging Face repository URI, object-storage URI,
+OCI artifact URI, IPFS/content-addressed registry URI, or another registered resolver scheme.
+Portability depends on deterministic resolution plus digest verification, not on forcing every
+asset to live inside a local folder. `asset.mirrors[]` MAY provide local relative mirrors or
+alternate resolvers. `asset.embedded` MAY carry small inline assets when a profile permits it.
 
 Representation roles include `appearance`, `geometry`, `collision`, `semantics`, and `learned`.
 Gaussian splats are an appearance role unless paired with an explicit physics proxy.
@@ -151,7 +157,8 @@ The initial requirement namespace is:
 | `CONVERT.001` | Every conversion emits a machine-readable loss report. |
 | `SPLIT.001` | Dataset splits may enforce world, entity, and derivation-lineage disjointness. |
 | `REPLAY.001` | Replay records simulator, version, solver, timestep, materials, and initialization assumptions. |
-| `ASSET.001` | Every external asset declares content hash, media type, and license. |
+| `ASSET.001` | Every asset declares URI, media type, digest, and license when license is known. |
+| `ASSET.002` | Every asset can be resolved deterministically and verified by digest. |
 
 ## 7. Initial Profiles
 
@@ -163,4 +170,3 @@ The initial requirement namespace is:
 - `WE-Counterfactual`: entity-level decomposition and editable world deltas.
 
 Version 1 should target rigid tabletop manipulation with fixed-base single- or dual-arm robots.
-

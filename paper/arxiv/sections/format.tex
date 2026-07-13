@@ -21,9 +21,12 @@ kind of rigor WorldEpisode should require across the whole episode~\citep{ncore}
 
 One physical entity can have many representations: Gaussian splat appearance, textured render mesh,
 metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic affordance,
-or learned embedding. Each representation declares its role, media type, URI, content hash,
-coordinate frame, units, validity interval, derivation, uncertainty, and license. The role field is
-essential: a splat may be valid for appearance but invalid for collision.
+or learned embedding. Each representation declares its role and an asset descriptor: URI, media
+type, SHA-256 digest, optional mirrors, optional embedded payload metadata, coordinate frame, units,
+validity interval, derivation, uncertainty, and license. The URI may be relative, HTTP(S),
+Hugging Face, object storage, OCI, IPFS, or another registered resolver. Portability comes from
+deterministic resolution and digest verification, not from requiring every asset to live in one
+folder. The role field is essential: a splat may be valid for appearance but invalid for collision.
 
 \subsection{Temporal State and Event Graph}
 
