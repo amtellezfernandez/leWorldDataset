@@ -99,39 +99,41 @@
 \maketitle
 
 \begin{abstract}
-Valid spatial-data files can still describe the wrong experiment. A robot command stream may load
-successfully while being replayed at the wrong effective time; a train/test split may report strong
-policy performance while reusing the same physical scene lineage; a simulator asset may render
-correctly while referring to a stale state revision, frame convention, or digest. We call this
-failure mode \emph{silent state drift}: structural validation passes, but the behavioral state being
-trained, replayed, or deployed no longer matches the state the experiment claims to evaluate.
+Spatial datasets often fail without becoming unreadable. A robot trajectory can deserialize while
+commands are replayed at the wrong effective time; a benchmark split can report strong policy
+performance while the same scene lineage appears in both train and test; a simulator asset can render
+while its collision role, frame convention, or content digest no longer matches the state being
+evaluated. We define this failure class as \emph{silent state drift}: the files are structurally
+valid, but the behavioral state of the experiment has changed.
 
-We introduce \emph{Universal Spatial State} (USS), a storage-, representation-, and runtime-neutral
-contract for auditing this drift. USS does not replace OpenUSD, LeRobotDataset, Rerun, MCAP, NCore,
-game telemetry, or autonomous-driving logs. Instead, it specifies the invariants those containers
-must preserve: persistent identity, immutable state revisions, explicit frame and clock graphs,
-representation roles, action and transition semantics, temporal events, provenance, uncertainty,
-asset digests, and lineage-aware splits. \emph{WorldEpisode} is the robotics reference profile used
-to make USS executable on real LeRobot traces, reconstructed-world assets, conversion reports, and
-simulator adapters.
+This paper argues that silent state drift is a missing-invariant problem, not a missing-container
+problem. We introduce \emph{Universal Spatial State} (USS), a sidecar contract that binds interactive
+spatial data to immutable state revisions through persistent identity, explicit frame and clock
+graphs, representation roles, transition and action semantics, temporal events, provenance,
+uncertainty, asset digests, and lineage-aware splits. USS is storage-, representation-, and
+runtime-neutral: it is meant to constrain what LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, glTF,
+game telemetry, autonomous-driving logs, and simulator adapters must preserve, not replace those
+systems. \emph{WorldEpisode} is the robotics reference profile that makes the USS contract executable
+for robot-learning episodes, reconstructed worlds, converters, validators, and replay targets.
 
-We evaluate WorldEpisode by converting common hidden assumptions into measurable failure tests. On
-ArmnetBench's public SO-101 LeRobot release, random episode splitting leaks every tested world
-lineage and yields 0.850 offline behavioral-cloning success; a scene-disjoint split reduces leakage
-to zero (0.000) and the same probe to 0.000. On a real SO-101 trajectory, the inferred four-frame, 133 ms
-action delay reduces validation joint RMSE from 4.732 to 1.862 degrees when modeled explicitly. The
-same timestamp-aware contract reduces tested MuJoCo replay RMSE from 3.425 to 1.563 degrees and
-Genesis same-trace replay RMSE from 3.425 to 1.563 degrees. An active
-LeRobotDataset-to-WorldEpisode-to-LeRobotDataset converter preserves ten episodes across two public
-datasets, 1,935 state/action rows, timestamps, video timestamp ranges, and physical-frame records
-with maximum numerical error 0.0 while recording source-absent semantics as explicit loss. The
-validator detects all 14 injected fault classes and the independent fixture failures.
+We evaluate the contract by turning three hidden assumptions into falsifiable tests on real robotics
+artifacts. First, on ArmnetBench's public SO-101 LeRobot release, a random episode split leaks every
+tested world lineage and gives an offline behavioral-cloning probe 0.850 success; a scene-disjoint
+split reduces leakage to zero (0.000) and the same probe to 0.000. A measured temporal state/action
+baseline over compact LeRobot split packages similarly drops from 0.925 to 0.420. Second, on a real SO-101
+trajectory, explicitly modeling the inferred four-frame, 133 ms actuation delay reduces validation
+joint RMSE from 4.732 to 1.862 degrees, and the same timestamp-aware contract reduces same-trace
+MuJoCo and Genesis replay RMSE from 3.425 to 1.563 degrees. Third, an active
+LeRobotDataset-to-WorldEpisode-to-LeRobotDataset round trip over ten public episodes preserves 1,935
+state/action rows, timestamps, video timestamp ranges, and physical-frame records with maximum
+numerical error 0.0 while recording source-absent semantics as explicit loss; the validator detects
+all 14 injected fault classes and the independent fixture failures.
 
-The contribution is a tested state-integrity layer for behavioral validity, not another monolithic
-file format. The current evidence remains deliberately scoped: ACT/Diffusion rollouts, famous
-benchmark score-inflation proofs, contact-rich multi-simulator task replay, Isaac/SAPIEN execution,
-external adoption, and production game or autonomous-driving audits are kept as open gates rather
-than claimed outcomes.
+The contribution is therefore a tested state-integrity layer for behavioral validity. The paper does
+not claim a universal file format, simulator-independent physics, or benchmark score inflation
+without reruns. Stronger ACT/Diffusion rollouts, famous-benchmark reruns, contact-rich
+multi-simulator replay, Isaac/SAPIEN execution, external adoption, and production game or
+autonomous-driving audits remain explicit open gates.
 \end{abstract}
 
 \input{sections/introduction}

@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "e88b143bb68ad516612c2037fb89911ae2dda4ad80da3357e275099ade2b40d1"
+      "sha256": "2fb3486b60e0ef3a1f5158bd4cd66cc01baeab5871671b7a4e2f65e9d1fa1f4d"
     },
     {
       "category": "public_evidence",
@@ -70,7 +70,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/main.tex",
-      "sha256": "9830590b8320692d8a65f8421a6a9d13cfc041f91ceeb68316f537887825aaab"
+      "sha256": "ba32ee52767a8f614ffb8ffaca2e36b46a427edae083a6a17553ec5c77073fa2"
     },
     {
       "category": "public_evidence",

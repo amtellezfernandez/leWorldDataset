@@ -19,12 +19,12 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
-| `WorldEpisode.pdf` | public_evidence | exact | `e88b143bb68ad516` |
+| `WorldEpisode.pdf` | public_evidence | exact | `2fb3486b60e0ef3a` |
 | `README.md` | public_evidence | exact | `ea4bf4d6d13c5bdf` |
 | `spec/worldepisode-v0.1.md` | public_evidence | exact | `dc6a0126ee7621ba` |
 | `spec/le-world-layout-v0.1.md` | public_evidence | exact | `bfb612a8c1300c0b` |
 | `paper/le-world-layout.md` | public_evidence | exact | `51549aaafa85c61e` |
-| `paper/arxiv/main.tex` | public_evidence | exact | `9830590b8320692d` |
+| `paper/arxiv/main.tex` | public_evidence | exact | `ba32ee52767a8f61` |
 | `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `a4266109d19ae8f9` |
 | `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `b06bc9090f83a2ae` |
 | `schemas/worldepisode-core-v0.schema.json` | public_evidence | exact | `ee02649c28fb1c67` |
