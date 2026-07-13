@@ -42,48 +42,6 @@ WorldEpisode is:
   \item \textbf{loss-explicit}: conversions may be lossy, but never silently lossy.
 \end{itemize}
 
-Figure~\ref{fig:worldepisode-bridge} summarizes the intended relationship: WorldEpisode sits
-between existing dataset/log containers and world/simulator assets as a semantic contract, not as a
-replacement storage engine.
-
-\begin{figure}[t]
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weBlue, text width=2.75cm, minimum height=1.0cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
-  \node[wecard=weCyan, text width=2.75cm, minimum height=1.0cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
-  \node[wecard=weViolet, text width=2.75cm, minimum height=1.0cm] (ncore) at (0,-0.9) {\textbf{NCore}\\sensor calibration};
-
-  \node[wecard=weInk, fill=wePanel, text width=4.05cm, minimum height=3.85cm] (core) at (5.0,0.45) {};
-  \node[font=\sffamily\bfseries\large, text=weInk] at (core.north) [yshift=-0.35cm] {WorldEpisode};
-  \node[font=\sffamily\small, text=weSlate] at (5.0,1.32) {storage-neutral semantic contract};
-  \node[wechip=weBlue] at (3.85,0.65) {identity};
-  \node[wechip=weCyan] at (6.05,0.65) {frames + clocks};
-  \node[wechip=weAmber] at (3.85,-0.05) {action contract};
-  \node[wechip=weGreen] at (6.05,-0.05) {roles + events};
-  \node[wechip=weRose] at (4.85,-0.75) {provenance + lineage};
-
-  \node[wecard=weGreen, text width=2.75cm, minimum height=1.0cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
-  \node[wecard=weAmber, text width=2.75cm, minimum height=1.0cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
-  \node[wecard=weRose, text width=2.75cm, minimum height=1.0cm] (sim) at (10.0,-0.9) {\textbf{MuJoCo / Isaac}\\replay targets};
-
-  \draw[wearrow=weBlue] (lerobot.east) -- ($(core.west)+(0,1.0)$);
-  \draw[wearrow=weCyan] (rerun.east) -- (core.west);
-  \draw[wearrow=weViolet] (ncore.east) -- ($(core.west)+(0,-1.0)$);
-  \draw[wearrow=weGreen] ($(core.east)+(0,1.0)$) -- (usd.west);
-  \draw[wearrow=weAmber] (core.east) -- (gltf.west);
-  \draw[wearrow=weRose] ($(core.east)+(0,-1.0)$) -- (sim.west);
-
-  \node[wechip=weInk, fill=wePanel, text width=9.6cm, align=center] at (5,-2.05)
-    {Executable outputs: validator diagnostics \quad conversion-loss reports \quad lineage-safe splits \quad replay assumptions};
-\end{tikzpicture}%
-}
-\caption{WorldEpisode is the semantic bridge between robot-learning containers, reconstructed
-world assets, and simulator targets. It preserves the world--episode contract without replacing
-the storage formats on either side.}
-\label{fig:worldepisode-bridge}
-\end{figure}
-
 The paper's core claim is therefore not a new monolithic file format. It is an executable
 interchange profile for world--episode semantics: identity, frames, clocks, action contracts,
 representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits. The

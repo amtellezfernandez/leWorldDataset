@@ -1,4 +1,4 @@
-\section{The Five-Graph Model}
+\section{Five Questions, Five Graphs}
 
 Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make an episode replayable
 and auditable rather than just stored. Each graph answers a question that appears during debugging:
@@ -9,26 +9,26 @@ and where did this data come from?
 \centering
 \resizebox{0.95\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weInk, fill=wePanel, text width=3.75cm, minimum height=1.45cm] (center) at (0,0)
-    {\textbf{Episode--World Binding}\\[2pt]
+  \node[wecard=weInk, fill=wePanel, text width=3.85cm, minimum height=1.65cm] (center) at (0,0)
+    {\textbf{Episode--World}\\\textbf{Binding}\\[2pt]
      base world + ordered deltas};
 
   \node[wecard=weBlue, text width=3.0cm, minimum height=1.15cm] (identity) at (0,2.55)
     {\textbf{Identity}\\persistent entities};
-  \node[wecard=weCyan, text width=3.05cm, minimum height=1.15cm] (frame) at (3.35,0.9)
+  \node[wecard=weCyan, text width=3.05cm, minimum height=1.15cm] (frame) at (4.05,0.9)
     {\textbf{Frame + Clock}\\transforms, timing};
   \node[wecard=weAmber, text width=3.0cm, minimum height=1.15cm] (role) at (2.15,-2.25)
     {\textbf{Representation Role}\\appearance, physics};
   \node[wecard=weGreen, text width=3.0cm, minimum height=1.15cm] (event) at (-2.15,-2.25)
     {\textbf{Temporal Events}\\contact, grasp, deltas};
-  \node[wecard=weRose, text width=3.05cm, minimum height=1.15cm] (prov) at (-3.35,0.9)
+  \node[wecard=weRose, text width=3.05cm, minimum height=1.15cm] (prov) at (-4.05,0.9)
     {\textbf{Provenance}\\lineage, uncertainty};
 
-  \draw[wearrow=weBlue] (identity) -- (center);
-  \draw[wearrow=weCyan] (frame) -- (center);
-  \draw[wearrow=weAmber] (role) -- (center);
-  \draw[wearrow=weGreen] (event) -- (center);
-  \draw[wearrow=weRose] (prov) -- (center);
+  \draw[wearrow=weBlue] (identity.south) -- (center.north);
+  \draw[wearrow=weCyan] (frame.west) -- (center.east);
+  \draw[wearrow=weAmber] (role.north west) -- (center.south east);
+  \draw[wearrow=weGreen] (event.north east) -- (center.south west);
+  \draw[wearrow=weRose] (prov.east) -- (center.west);
 
   \draw[very thick, draw=weLine] (identity) -- (frame) -- (role) -- (event) -- (prov) -- (identity);
   \node[wechip=weViolet, fill=weViolet!10] at (0,-3.55)
