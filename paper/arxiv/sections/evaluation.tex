@@ -1,18 +1,136 @@
 \section{Controlled Experiments}
 
-We evaluate the contract with deterministic controlled experiments in the public repository. The
-suite isolates failure modes that larger robot experiments often hide: conversion loss, invalid
-physical semantics, timing drift, world-frame augmentation, and lineage leakage.
+The experiments are written as failure investigations rather than as isolated unit tests. Each one
+starts from a failure mode that can make a robot-learning result look better, cleaner, or more
+reproducible than it really is.
 
-\paragraph{RQ1: semantic preservation across bindings.}
-We implement executable export/import artifacts for seven bindings. Each binding writes a native
-payload and a WorldEpisode sidecar, then the experiment reimports both and checks exact equality
-against a 23-field semantic projection. Table~\ref{tab:binding-retention} shows that common
-containers preserve only 17--39\% of the contract natively, while the sidecar recovers all fields
-for dataset/log/world bindings. A Gaussian asset binding alone preserves only 17\% natively and
-30\% with limited sidecar metadata, confirming that an asset format is not an episode--world
-contract. The LeRobot binding targets the current v3 storage layout rather than the initial dataset
-format described when the LeRobot library paper was submitted~\citep{lerobot,lerobot_v3}.
+\paragraph{Case 1: the split that faked success.}
+The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
+reason. We audit ArmnetBench v0.1's single-arm SO-101 LeRobot release~\citep{armnetbench_lerobot_so101}
+by deriving eight WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene and
+camera-layout group. A standard random episode split trains on 320 episodes, tests on 80, and leaks
+all test scene lineages into training. The same Torch MLP state-action behavioral-cloning baseline
+then reaches 0.850 offline imitation success under a fixed normalized-RMSE tolerance of 0.25.
+
+When the split is made scene-disjoint, the apparent success disappears. The held-out eye-drop scene
+lineages have zero overlap with training, the test set contains 100 episodes, and offline BC success
+drops to 0.000. Mean episode normalized RMSE rises from 0.183 to 0.363, a \(1.98\times\) increase.
+This is an offline action-imitation benchmark, not a physical rollout claim, but it exposes the
+scientific risk: a conventional split can reward memorizing a background world rather than learning
+a transferable manipulation behavior.
+
+Figure~\ref{fig:evaluation-dashboard} summarizes the three experiment families whose outcomes
+change when world--episode semantics are made explicit.
+
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[font=\sffamily]
+  \begin{scope}[shift={(0,0)}]
+    \node[wecard=weRose, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weRose] at (0,1.12) {Scene Leakage};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {random};
+    \fill[webar=weRose] (-0.45,0.42) rectangle (1.30,0.65);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.40,0.53) {1.00};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {disjoint};
+    \fill[webar=weGreen] (-0.45,-0.18) rectangle (-0.41,0.05);
+    \node[anchor=west, font=\sffamily\scriptsize] at (-0.28,-0.07) {0.00};
+    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {BC success \(0.850\to0.000\)};
+    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {world lineage leakage};
+  \end{scope}
+
+  \begin{scope}[shift={(5.15,0)}]
+    \node[wecard=weAmber, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weAmber] at (0,1.12) {Replay Timing};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {naive};
+    \fill[webar=weRose] (-0.45,0.42) rectangle (1.45,0.65);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.55,0.53) {4.73};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {aware};
+    \fill[webar=weGreen] (-0.45,-0.18) rectangle (0.30,0.05);
+    \node[anchor=west, font=\sffamily\scriptsize] at (0.40,-0.07) {1.86};
+    \node[wechip=weAmber, fill=weAmber!12] at (0,-0.78) {\(2.54\times\) lower RMSE};
+    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {validation, degrees};
+  \end{scope}
+
+  \begin{scope}[shift={(10.3,0)}]
+    \node[wecard=weBlue, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
+    \node[font=\sffamily\bfseries, text=weBlue] at (0,1.12) {Binding Retention};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.45) {native};
+    \fill[webar=weBlue] (0.00,0.35) rectangle (0.50,0.58);
+    \node[anchor=west, font=\sffamily\scriptsize] at (0.60,0.46) {0.26};
+    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.15) {+ sidecar};
+    \fill[webar=weGreen] (0.00,-0.25) rectangle (1.60,-0.02);
+    \node[anchor=west, font=\sffamily\scriptsize] at (1.70,-0.14) {1.00};
+    \node[font=\sffamily\scriptsize, text=weSlate, align=center] at (0,-1.05)
+      {LeRobot v3 semantic\\projection};
+  \end{scope}
+\end{tikzpicture}%
+}
+\caption{Three silent failures become measurable when world--episode semantics are explicit:
+scene leakage, replay timing drift, and native binding loss.}
+\label{fig:evaluation-dashboard}
+\end{figure}
+
+\paragraph{Case 2: the converter that refuses to invent missing physics.}
+To test an actual LeRobotDataset rather than only a capability model, we implement
+\(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
+on episode 0 of the pinned public SO-101 dataset
+\path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace}. The converter downloads
+the real Parquet metadata and data shards, builds a schema-valid WorldEpisode manifest and sidecar,
+exports a compact LeRobotDataset v3 package, reads it back, and asserts exact equality.
+
+The round trip preserves 303 rows of six-dimensional action tensors, 303 state rows, 303 sample
+timestamps, and two camera video timestamp ranges with maximum absolute error 0.0. It also preserves
+three physical-frame records through the sidecar. More importantly, it does not fake missing
+semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
+reported as source-absent rather than guessed. This is the difference between a convenient
+conversion and an auditable one.
+
+\paragraph{Case 3: the replay that drifted because time was underspecified.}
+LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
+commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}. On
+the public SO-101 trajectory, WorldEpisode records policy-output, enqueue, queue-consume, and
+motor-receive timestamp semantics, plus zero-order-hold interpolation and a constant-frame latency
+model.
+
+Estimating the effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the
+validation suffix, naive command-time alignment has joint RMSE 4.732 degrees. Timestamp-aware
+alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. In a tested MuJoCo six-joint
+position-servo replay, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay
+has 1.563 degrees, a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping
+from the same contract, but is not tested in this environment. The failure avoided here is a common
+one: blaming a simulator or controller when the dataset never said when the command actually took
+effect.
+
+\paragraph{Case 4: the validator that catches physically impossible packages.}
+We inject 14 faults into the baseline package: missing clock domains, incomplete cross-clock
+mappings, unknown frames, missing transform intervals, unknown event entities, missing
+representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
+missing delta sequences, missing provenance, and missing quality records. The validator detects all
+14 expected requirement failures with 1.000 recall and 0.933 precision. Two hand-authored
+independent fixtures also trigger the expected diagnostics. The single false-positive requirement is
+useful rather than harmful: removing an action reference frame triggers both \texttt{ACTION.001} and
+the downstream \texttt{FRAME.001} reference check.
+
+The same suite includes a simple unit sanity check from \path{lerobot/svla_so101_pickplace}. The
+first mirrored SO-101 frame has six joint values with maximum magnitude 98.924 in degrees and 1.727
+after radian conversion. Treating those degree values as radians would violate the action/state
+unit contract even though the tensor shape is valid.
+
+\paragraph{Case 5: augmentation that uses the world rather than a side file.}
+We evaluate a shifted-camera/object-displacement regression task. Observations-only
+nearest-neighbor control succeeds on 0.292 of shifted test cases. Adding unstructured 3D side
+information increases success to 0.342. WorldEpisode-style world-frame identity and counterfactual
+camera augmentation increase success to 0.592 over 120 deterministic test cases.
+
+\paragraph{Binding retention.}
+The same executable artifacts measure how much of the semantic contract is preserved by native
+containers alone. Each binding writes a native payload and a WorldEpisode sidecar, then the
+experiment reimports both and checks exact equality against a 23-field semantic projection.
+Table~\ref{tab:binding-retention} shows that common containers preserve only 17--39\% of the
+contract natively, while the sidecar recovers all fields for dataset/log/world bindings. A Gaussian
+asset binding alone preserves only 17\% natively and 30\% with limited sidecar metadata, confirming
+that an asset format is not an episode--world contract.
 
 \begin{table}[h]
 \centering
@@ -32,126 +150,9 @@ glTF Gaussian asset & 0.174 & 0.304 \\
 \end{tabular}
 \end{table}
 
-\paragraph{Active public LeRobot round-trip.}
-To test an actual LeRobotDataset rather than only a capability model, we implement
-\(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
-on episode 0 of the pinned public SO-101 dataset
-\path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace}. The converter downloads
-the real Parquet metadata and data shards, builds a schema-valid WorldEpisode manifest and sidecar,
-exports a compact LeRobotDataset v3 package, reads it back, and asserts exact equality. The episode
-contains 303 rows of six-dimensional action tensors, 303 state rows, 303 sample timestamps, and two
-camera video timestamp ranges. The measured maximum absolute error is 0.0 for actions, states,
-sample timestamps, and video timestamp ranges. Three physical-frame records are preserved through
-the sidecar. Four source-absent semantics are explicitly reported rather than guessed: camera
-extrinsics, robot/world calibration, action units, and controller latency. No fields are discarded.
-
-\paragraph{RQ2: physical-coherence fault detection.}
-We inject 14 faults into the baseline package, including missing clock domains, incomplete
-cross-clock mappings, unknown frames, missing transform intervals, unknown event entities, missing
-representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
-missing delta sequences, missing provenance, and missing quality records. The validator detects all
-14 expected requirement failures with 1.000 recall and 0.933 precision. We also evaluate two
-hand-authored independent fixtures, both of which trigger the expected diagnostics. The single
-false-positive requirement is useful rather than harmful: removing an action reference frame
-triggers both \texttt{ACTION.001} and the downstream \texttt{FRAME.001} reference check.
-
-\paragraph{Additional LeRobot unit sanity check.}
-We include an offline mirrored first frame from \path{lerobot/svla_so101_pickplace}. Its six
-joint values have maximum magnitude 98.924 in degrees and 1.727 after radian conversion; treating
-degrees as radians would therefore violate the action/state unit contract. The corresponding
-SO-101 end-effector position \([0.1044,-0.00242,0.07292]\) m is within a 0.5 m workspace bound.
-From the same mirrored frame we materialize a 10-frame LeRobot-style episode artifact with nine
-actions, command timestamps, effective timestamps, and a declared 20 ms latency model. This artifact
-is used as the recorded-episode fixture for timing and action-contract checks.
-
-\paragraph{RQ3: LeRobot control-loop replay.}
-We ground the action contract in the LeRobot control loop, where policy inference may run
-asynchronously from a fixed-rate low-level controller and commands may be queued, chunked,
-interpolated, or consumed later~\citep{lerobot}. On the public SO-101 LeRobot trajectory used
-above, WorldEpisode records policy-output, enqueue, queue-consume, and motor-receive timestamp
-semantics, plus zero-order-hold interpolation and a constant-frame latency model. Estimating the
-effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the validation
-suffix, naive command-time alignment has joint RMSE 4.732 degrees, while timestamp-aware alignment
-has 1.862 degrees, a \(2.54\times\) improvement. In a tested MuJoCo six-joint position-servo
-replay, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
-degrees, a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping from the
-same contract, but is not tested in this environment.
-
-\paragraph{RQ4: synthetic counterfactual robustness.}
-We evaluate a shifted-camera/object-displacement regression task. Observations-only nearest-neighbor
-control succeeds on 0.292 of shifted test cases. Adding unstructured 3D side information increases
-success to 0.342. WorldEpisode-style world-frame identity and counterfactual camera augmentation
-increase success to 0.592 over 120 deterministic test cases.
-
-\paragraph{RQ5: lineage-safe splits.}
-We also run a public LeRobot split audit on ArmnetBench v0.1's single-arm SO-101 LeRobot
-release~\citep{armnetbench_lerobot_so101}. From the dataset metadata we derive eight
-WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene/camera-layout group. We
-train the same Torch MLP state-action behavioral-cloning baseline on two splits of the 400
-teleoperated reference demonstrations. A random episode split trains on 320 episodes, tests on 80,
-and leaks all test scene lineages into training. It obtains 0.850 offline BC imitation success under
-a fixed normalized-RMSE tolerance of 0.25, with mean episode normalized RMSE 0.183. The
-scene-disjoint split holds out the two eye-drop scene lineages, trains on 300 episodes, tests on
-100, and has zero lineage leakage. Its offline BC success drops to 0.000 and mean episode
-normalized RMSE rises to 0.363, a \(1.98\times\) increase. This is an offline action-imitation
-benchmark, not a physical rollout claim; the split manifest is directly reusable for native LeRobot
-ACT or Diffusion Policy training.
-
-Figure~\ref{fig:evaluation-dashboard} summarizes the three experiment families whose outcomes
-change when world--episode semantics are made explicit.
-
-\begin{figure}[!htbp]
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[font=\sffamily]
-  \begin{scope}[shift={(0,0)}]
-    \node[wecard=weBlue, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weBlue] at (0,1.12) {Binding Retention};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.45) {native};
-    \fill[webar=weBlue] (0.00,0.35) rectangle (0.50,0.58);
-    \node[anchor=west, font=\sffamily\scriptsize] at (0.60,0.46) {0.26};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.15) {+ sidecar};
-    \fill[webar=weGreen] (0.00,-0.25) rectangle (1.60,-0.02);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.70,-0.14) {1.00};
-    \node[font=\sffamily\scriptsize, text=weSlate, align=center] at (0,-1.05)
-      {LeRobot v3 semantic\\projection};
-  \end{scope}
-
-  \begin{scope}[shift={(5.15,0)}]
-    \node[wecard=weAmber, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weAmber] at (0,1.12) {Replay Timing};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {naive};
-    \fill[webar=weRose] (-0.45,0.42) rectangle (1.45,0.65);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.55,0.53) {4.73};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {aware};
-    \fill[webar=weGreen] (-0.45,-0.18) rectangle (0.30,0.05);
-    \node[anchor=west, font=\sffamily\scriptsize] at (0.40,-0.07) {1.86};
-    \node[wechip=weAmber, fill=weAmber!12] at (0,-0.78) {\(2.54\times\) lower RMSE};
-    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {validation, degrees};
-  \end{scope}
-
-  \begin{scope}[shift={(10.3,0)}]
-    \node[wecard=weRose, fill=wePanel, text width=4.15cm, minimum height=3.0cm] at (0,0) {};
-    \node[font=\sffamily\bfseries, text=weRose] at (0,1.12) {Scene Leakage};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,0.52) {random};
-    \fill[webar=weRose] (-0.45,0.42) rectangle (1.30,0.65);
-    \node[anchor=west, font=\sffamily\scriptsize] at (1.40,0.53) {1.00};
-    \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {disjoint};
-    \fill[webar=weGreen] (-0.45,-0.18) rectangle (-0.41,0.05);
-    \node[anchor=west, font=\sffamily\scriptsize] at (-0.28,-0.07) {0.00};
-    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {BC success \(0.850\to0.000\)};
-    \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {world lineage leakage};
-  \end{scope}
-\end{tikzpicture}%
-}
-\caption{Evaluation dashboard for three measured failure modes. WorldEpisode sidecars recover
-semantic retention, timestamp-aware action semantics reduce replay drift, and scene-disjoint split
-manifests expose evaluation leakage.}
-\label{fig:evaluation-dashboard}
-\end{figure}
-
-We generate episodes with world/entity lineage labels and evaluate a memorization policy. A random
-episode split leaks every tested world/entity pair and obtains 1.000 accuracy. World-disjoint and
-entity-disjoint splits have zero measured leakage and reduce memorization accuracy to 0.500 and
-0.562 respectively. This pilot demonstrates why split manifests need lineage constraints.
+Finally, we generate episodes with world/entity lineage labels and evaluate a memorization policy.
+A random episode split leaks every tested world/entity pair and obtains 1.000 accuracy.
+World-disjoint and entity-disjoint splits have zero measured leakage and reduce memorization
+accuracy to 0.500 and 0.562 respectively. This pilot demonstrates why split manifests need lineage
+constraints beyond the public ArmnetBench audit above.
 \FloatBarrier

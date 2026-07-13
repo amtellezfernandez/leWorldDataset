@@ -1,7 +1,9 @@
 \section{The Five-Graph Model}
 
 Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make an episode replayable
-and auditable rather than just stored.
+and auditable rather than just stored. Each graph answers a question that appears during debugging:
+what object is this, where and when is it, what is the asset safe to do, what physically happened,
+and where did this data come from?
 
 \begin{figure}[t]
 \centering
@@ -9,7 +11,7 @@ and auditable rather than just stored.
 \begin{tikzpicture}[font=\sffamily]
   \node[wecard=weInk, fill=wePanel, text width=3.75cm, minimum height=1.45cm] (center) at (0,0)
     {\textbf{Episode--World Binding}\\[2pt]
-     \(W_e(t)=W^{(r)}\oplus\Delta W_e(t)\)};
+     base world + ordered deltas};
 
   \node[wecard=weBlue, text width=3.0cm, minimum height=1.15cm] (identity) at (0,2.55)
     {\textbf{Identity}\\persistent entities};
@@ -39,24 +41,28 @@ detectable instead of hidden.}
 \label{fig:five-graph-model}
 \end{figure}
 
-\subsection{Identity Graph}
+\subsection{What object am I looking at?}
 
 Every physical or logical entity receives a persistent identifier: robot, link, gripper, sensor,
 rigid object, articulated object, fixture, support surface, region, human, light, or semantic group.
 The same \texttt{entity\_id} must be used by segmentation masks, bounding boxes, Gaussian groups,
 render meshes, collision bodies, simulator actors, language references, contact events, object
-trajectories, grasp events, and attachment events.
+trajectories, grasp events, and attachment events. The real-world fix is simple: if a language
+command says ``pick up the mug,'' the perception mask, the simulator object, and the collision
+proxy must identify the same mug.
 
-\subsection{Frame and Clock Graph}
+\subsection{Where is it, and exactly when?}
 
 Every spatial value declares source frame, target frame, units, handedness, up axis, transform
 direction, quaternion convention, validity interval, calibration revision, and uncertainty where
 available. Every stream declares a clock domain, device timestamp, host-receive timestamp where
 available, exposure interval for cameras, effective command time for actions, synchronization
 mapping, and estimated offset/drift/error. NCore's explicit pose-graph convention demonstrates the
-kind of rigor WorldEpisode requires across the whole episode~\citep{ncore}.
+kind of rigor WorldEpisode requires across the whole episode~\citep{ncore}. This graph is what
+turns a suspicious replay from ``the policy is bad'' into a diagnosable offset, transform direction,
+or unit error.
 
-\subsection{Representation-Role Graph}
+\subsection{What is this asset safe to be used for?}
 
 One physical entity can have many representations: Gaussian splat appearance, textured render mesh,
 metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic affordance,
@@ -65,19 +71,23 @@ type, SHA-256 digest, optional mirrors, optional embedded payload metadata, coor
 validity interval, derivation, uncertainty, and license. The URI may be relative, HTTP(S),
 Hugging Face, object storage, OCI, IPFS, or another registered resolver. Portability comes from
 deterministic resolution and digest verification, not from requiring every asset to live in one
-folder. The role field is essential: a splat may be valid for appearance but invalid for collision.
+folder. The role field is essential: a splat may be valid for appearance but invalid for collision,
+while a simplified proxy may be valid for collision but unsuitable for visual training.
 
-\subsection{Temporal State and Event Graph}
+\subsection{Did the robot actually grab the object?}
 
 Episodes do not store only poses. They record interaction events: contact begin/end,
 grasp establish/release, attachment create/remove, support, containment, articulation state changes,
 spawn/despawn, topology changes, simulator reset, intervention, subgoal completion, and failure
-detection. Each event references entities, time, confidence, source, and optionally evidence.
+detection. Each event references entities, time, confidence, source, and optionally evidence. This
+turns raw coordinate streams into physical milestones such as ``contact established,'' ``object
+dropped,'' or ``intervention occurred.''
 
-\subsection{Provenance and Derivation Graph}
+\subsection{Where did this data come from?}
 
 Every derived asset identifies source episodes, source sensors and intervals, reconstruction
 algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
 edits, source and output hashes, creator, license, and quality metrics. WorldEpisode maps to
 existing provenance and dataset metadata vocabularies rather than inventing an incompatible
-publication vocabulary.
+publication vocabulary. This graph lets a split avoid putting the same reconstructed room, capture
+session, or generated asset family on both sides of evaluation.

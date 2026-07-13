@@ -1,5 +1,12 @@
 \section{Discussion}
 
+\paragraph{Why this is not only infrastructure.}
+The experiments show three ways a result can be wrong while the files are valid: a split can leak
+world lineage, replay can drift because control timing is underspecified, and conversion can discard
+physical semantics that the target container has no native place to store. WorldEpisode is useful
+only because these failures are observable and testable. The sidecar is the mechanism; the
+scientific claim is that explicit world--episode semantics change what a robotics result means.
+
 \paragraph{Not another monolithic binary.}
 WorldEpisode has a small semantic core and multiple bindings. LeRobotDataset v3 is the
 policy-training view; Rerun is the multirate physical-data view; NCore is the sensor/reconstruction capture view;

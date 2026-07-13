@@ -1,49 +1,40 @@
 \section{Problem Statement and Scope}
 
-WorldEpisode binds an episode to a world revision. The base state is:
-\begin{equation}
-  W_e(t) = W^{(r)} \oplus \Delta W_e(t),
-\end{equation}
-where \(W^{(r)}\) is an immutable, content-addressed world revision, \(\Delta W_e(t)\) is the
-ordered sequence of episode-specific state changes, \(e\) is a robot-learning episode, and \(t\) is
-expressed in an explicitly declared clock domain.
+WorldEpisode starts from a practical question: what must be known before an episode can be safely
+converted, replayed, augmented, or used for evaluation? A valid package must answer five questions.
 
-An episode is modeled as:
-\begin{equation}
-E =
-\langle
-M, W^{(r)}, B, K, F, C, O, A, X, V, P, Q
-\rangle ,
-\end{equation}
-where \(M\) is the manifest, \(B\) the embodiment, \(K\) task/outcome semantics, \(F\) the frame
-graph, \(C\) clocks, \(O\) persistent entities and representations, \(A\) action-space contract,
-\(X\) synchronized trace, \(V\) world deltas and events, \(P\) provenance, and \(Q\) quality and
-uncertainty records.
+\paragraph{Which world did this happen in?}
+Each episode references one immutable, content-addressed world revision plus an ordered list of
+episode-specific deltas. Changing geometry, metric scale, calibration, collision proxies, physical
+parameters, entity decomposition, object identity, or task-relevant fixtures creates a new world
+revision. This prevents two datasets from silently using the same filename for different physical
+worlds, or different filenames for the same world.
 
-Equivalently, each episode induces a coupled graph object:
-\begin{equation}
-G_E = (G_I, G_{FC}, G_R, G_T, G_P),
-\end{equation}
-where \(G_I\) is persistent entity identity, \(G_{FC}\) is the frame/clock graph, \(G_R\) maps
-entities to representation roles and assets, \(G_T\) records temporal state and interaction events,
-and \(G_P\) records provenance and derivation. A package is valid only if every edge crossing these
-graphs resolves to a declared node and every lossy projection into a binding emits a loss report:
-\begin{equation}
-\mathrm{valid}(E) \Leftrightarrow
-\mathrm{closed}(G_E) \land \mathrm{hashed}(W^{(r)}) \land
-\forall b \in B,\ \exists L_b .
-\end{equation}
-Here \(\mathrm{closed}(G_E)\) means that entity, frame, clock, action, asset, and event references
-are total over the declared graphs; \(\mathrm{hashed}(W^{(r)})\) means the base world revision is
-content-addressed; and \(L_b\) is a machine-readable report of preserved, externalized,
-approximated, and discarded semantics for binding \(b\).
+\paragraph{What did the robot see and touch?}
+Objects, robot links, sensors, fixtures, support surfaces, semantic regions, and generated assets
+must have persistent identifiers. A mug in a segmentation mask, a Gaussian group, a collision mesh,
+a simulator actor, a language annotation, and a contact event should resolve to the same entity
+when they refer to the same physical object.
+
+\paragraph{Where and when did it happen?}
+Spatial values declare their frames, units, transform direction, validity interval, and calibration
+revision. Streams declare clock domains, timestamps, synchronization mappings, and timing error
+where available. Actions declare command time and effective motor time rather than assuming those
+are the same instant.
+
+\paragraph{What was preserved or lost during conversion?}
+WorldEpisode reuses existing standards rather than replacing them. USD~\citep{usd} carries composed
+simulation worlds, glTF carries Gaussian appearance assets~\citep{gltf_gs}, NCore carries capture
+and pose-graph conventions~\citep{ncore}, Rerun carries physical-data recordings with column
+chunks~\citep{rerun}, and ROS/MCAP carries logs. A converter may externalize or approximate fields,
+but it must emit a machine-readable loss report instead of silently discarding semantics.
+
+\paragraph{Can the evaluation split leak?}
+Episode-level random splits are not enough when multiple episodes share a reconstructed room,
+physical object, source capture, calibration, or generated asset lineage. A WorldEpisode split
+manifest can enforce disjointness by world lineage, physical entity, source capture,
+reconstruction run, or generated asset family.
 
 Version 1 is intentionally narrow: rigid tabletop manipulation with fixed-base single- or dual-arm
 robots. Humanoids, locomotion, deformables, fluids, and multi-agent worlds are later profiles. This
 keeps conformance executable rather than aspirational.
-
-WorldEpisode reuses existing standards rather than replacing them. USD~\citep{usd} carries composed
-simulation worlds, glTF carries Gaussian appearance assets~\citep{gltf_gs}, NCore carries capture
-and pose-graph conventions~\citep{ncore}, Rerun carries physical-data recordings with column
-chunks~\citep{rerun}, and ROS/MCAP carries logs. WorldEpisode specifies the semantic relationships
-those bindings must preserve.
