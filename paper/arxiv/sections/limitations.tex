@@ -23,8 +23,9 @@ Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips 
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
 Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-servo replay & One trace
 and one MuJoCo adapter; Isaac mapping is emitted but untested \\
-Validation & Fourteen injected requirement faults plus two independent hand-authored fixtures &
-Controlled faults; no survey of naturally occurring third-party dataset bugs yet \\
+Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
+pilot natural-source corpus over three public datasets & Natural corpus is below the five-dataset
+gate and has no maintainer feedback yet \\
 Binding retention & Predeclared 23-field semantic projection checked by executable artifacts & Pilot
 projection; not a universal score of each storage format \\
 Adoption & Public schema, validator, fixtures, and governance files & No independent implementation
@@ -58,7 +59,8 @@ empirical step is to run the same protocol on larger multi-camera manipulation d
 externally maintained adapters.
 
 \paragraph{Natural failure corpus.}
-The injected conformance faults prove that requirements are executable and diagnosable. They do not
-yet prove prevalence in the wild. A stronger version of this paper should report real faults found
-across multiple public datasets, how often each requirement fails, and whether dataset maintainers
-agree with the diagnostics.
+The injected conformance faults prove that requirements are executable and diagnosable. The current
+pilot natural-source corpus adds nine cases from three public LeRobot-format datasets, but it still
+does not prove prevalence in the wild. A stronger version of this paper should extend the audit to at
+least five public datasets, report how often each requirement fails, and record whether dataset
+maintainers agree with representative diagnostics.

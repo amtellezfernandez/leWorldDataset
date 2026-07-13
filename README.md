@@ -60,6 +60,7 @@ is persistent, verifiable world-episode interoperability.
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
+- [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Governance draft](GOVERNANCE.md)
@@ -167,6 +168,7 @@ The script writes:
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
+- `docs/experiments/natural_failure_corpus/*`
 - `docs/experiments/recorded_episodes/*`
 - `conformance/fixtures/pilot/*`
 

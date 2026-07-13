@@ -8,7 +8,8 @@ for large multi-lab robot benchmarking.
 
 The same command materializes binding round-trip artifacts in `docs/experiments/bindings/`, a pilot
 conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored independent fixtures in
-`conformance/fixtures/independent/`.
+`conformance/fixtures/independent/`. It also writes the pilot natural-source corpus in
+`docs/experiments/natural_failure_corpus/`.
 
 ## Evidence Boundaries
 
@@ -17,7 +18,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
-| Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
+| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 
@@ -39,6 +40,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Source: `lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657`
 - Episode: 0
 - Exported LeRobot v3 package: `docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3`
+- Artifact source: committed pinned active-run report reused by the default deterministic suite.
 - Action tensor rows x width: 303 x 6
 - Video streams with timestamp ranges: 2
 - Physical frame records preserved through sidecar: True
@@ -80,6 +82,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - False-negative requirement detections: 0
 - Independent fixture cases: 2
 - Independent fixture recall: 1.000
+- Natural-source corpus: 3 public datasets, 9 cases
+- Natural-source artifact: `docs/experiments/natural_failure_corpus/manifest.json`
+- Full natural-corpus gate satisfied: False
 
 ## Public LeRobot Sample Check
 

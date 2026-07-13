@@ -1,0 +1,311 @@
+{
+  "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
+  "available": true,
+  "case_count": 9,
+  "cases": [
+    {
+      "case_id": "armnet__armnetbench_v01_lerobot_so101::random_episode_scene_lineage_leakage",
+      "diagnostic_status": "lineage_disjoint_split_required_for_valid_evaluation",
+      "evidence_files": [
+        "docs/experiments/lerobot_scene_leakage/leakage_report.json"
+      ],
+      "evidence_type": "natural_split_lineage_leakage",
+      "maintainer_feedback": "not_requested",
+      "observation": "A standard random episode split leaks all tested world-lineage groups (leakage rate 1.000).",
+      "observed_episodes": 400,
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "requirement_ids": [
+        "SPLIT.001"
+      ],
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "case_id": "lerobot__pusht::action_units",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing action units.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/pusht",
+      "requirement_ids": [
+        "ACTION.001"
+      ],
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "case_id": "lerobot__pusht::camera_extrinsics",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing camera extrinsics.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/pusht",
+      "requirement_ids": [
+        "FRAME.001",
+        "FRAME.002"
+      ],
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "case_id": "lerobot__pusht::controller_latency_model",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing controller latency model.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/pusht",
+      "requirement_ids": [
+        "ACTION.002",
+        "ACTION.004"
+      ],
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "case_id": "lerobot__pusht::robot/world_calibration_transform",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing robot/world calibration transform.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/pusht",
+      "requirement_ids": [
+        "FRAME.001",
+        "FRAME.002"
+      ],
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "case_id": "lerobot__svla_so101_pickplace::action_units",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing action units.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "requirement_ids": [
+        "ACTION.001"
+      ],
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "case_id": "lerobot__svla_so101_pickplace::camera_extrinsics",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing camera extrinsics.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "requirement_ids": [
+        "FRAME.001",
+        "FRAME.002"
+      ],
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "case_id": "lerobot__svla_so101_pickplace::controller_latency_model",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing controller latency model.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "requirement_ids": [
+        "ACTION.002",
+        "ACTION.004"
+      ],
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "case_id": "lerobot__svla_so101_pickplace::robot/world_calibration_transform",
+      "diagnostic_status": "source_absent_not_invented_by_converter",
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "natural_source_absence",
+      "maintainer_feedback": "not_requested",
+      "observation": "Native LeRobot source is missing robot/world calibration transform.",
+      "observed_episodes": 5,
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "requirement_ids": [
+        "FRAME.001",
+        "FRAME.002"
+      ],
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    }
+  ],
+  "dataset_count": 3,
+  "datasets": [
+    {
+      "action_rows": null,
+      "episode_indices": [],
+      "evidence_files": [
+        "docs/experiments/lerobot_scene_leakage/leakage_report.json"
+      ],
+      "evidence_type": "active_lerobot_scene_leakage_audit",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_absent_fields": {},
+      "source_profile": "lerobot-v3",
+      "state_rows": null,
+      "teleoperated_reference_episodes": 400,
+      "warnings": []
+    },
+    {
+      "action_rows": 738,
+      "episode_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "active_lerobot_conversion_reports",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "source_absent_fields": {
+        "action units": [
+          "ACTION.001"
+        ],
+        "camera extrinsics": [
+          "FRAME.001",
+          "FRAME.002"
+        ],
+        "controller latency model": [
+          "ACTION.002",
+          "ACTION.004"
+        ],
+        "robot/world calibration transform": [
+          "FRAME.001",
+          "FRAME.002"
+        ]
+      },
+      "source_profile": "lerobot-v3",
+      "state_rows": 738,
+      "warnings": [
+        "The public LeRobot source declares camera streams but not camera extrinsics.",
+        "The public LeRobot source declares joint component names but not action units or controller latency."
+      ]
+    },
+    {
+      "action_rows": 1197,
+      "episode_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "evidence_files": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/conversion_report.json"
+      ],
+      "evidence_type": "active_lerobot_conversion_reports",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "source_absent_fields": {
+        "action units": [
+          "ACTION.001"
+        ],
+        "camera extrinsics": [
+          "FRAME.001",
+          "FRAME.002"
+        ],
+        "controller latency model": [
+          "ACTION.002",
+          "ACTION.004"
+        ],
+        "robot/world calibration transform": [
+          "FRAME.001",
+          "FRAME.002"
+        ]
+      },
+      "source_profile": "lerobot-v3",
+      "state_rows": 1197,
+      "warnings": [
+        "The public LeRobot source declares camera streams but not camera extrinsics.",
+        "The public LeRobot source declares joint component names but not action units or controller latency."
+      ]
+    }
+  ],
+  "full_gate": {
+    "remaining": [
+      "audit at least two additional public robot-learning datasets",
+      "request or record maintainer agreement/disagreement for representative diagnostics"
+    ],
+    "required_public_datasets": 5,
+    "requires_maintainer_feedback": true,
+    "satisfied": false
+  },
+  "requirement_counts": {
+    "ACTION.001": 2,
+    "ACTION.002": 2,
+    "ACTION.004": 2,
+    "FRAME.001": 4,
+    "FRAME.002": 4,
+    "SPLIT.001": 1
+  },
+  "scope": "pilot natural-source-omission corpus from committed public LeRobot artifacts"
+}

@@ -37,6 +37,7 @@ ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
 )
+NATURAL_FAILURE_DIR = RESULTS_DIR / "natural_failure_corpus"
 
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 
@@ -441,23 +442,41 @@ def experiment_binding_retention(base: dict[str, Any]) -> dict[str, Any]:
     return {"fields": fields, "bindings": rows, "artifact_root": str(BINDINGS_DIR.relative_to(ROOT))}
 
 
+def committed_lerobot_roundtrip_report() -> dict[str, Any] | None:
+    report_path = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "roundtrip_report.json"
+    if not report_path.exists():
+        return None
+    report = load_json(report_path)
+    if ROUNDTRIP_BATCH_REPORT.exists():
+        report["batch_roundtrip"] = load_json(ROUNDTRIP_BATCH_REPORT)
+    secondary_reports = []
+    for path in SECONDARY_ROUNDTRIP_BATCH_REPORTS:
+        if path.exists():
+            secondary = load_json(path)
+            secondary["artifact"] = str(path.relative_to(ROOT))
+            secondary_reports.append(secondary)
+    if secondary_reports:
+        report["secondary_batch_roundtrips"] = secondary_reports
+    return report
+
+
 def experiment_lerobot_active_roundtrip() -> dict[str, Any]:
     try:
         from lerobot_worldepisode_roundtrip import RoundTripUnavailable, run_roundtrip_experiment, unavailable_report
 
         report = run_roundtrip_experiment()
-        if ROUNDTRIP_BATCH_REPORT.exists():
-            report["batch_roundtrip"] = load_json(ROUNDTRIP_BATCH_REPORT)
-        secondary_reports = []
-        for path in SECONDARY_ROUNDTRIP_BATCH_REPORTS:
-            if path.exists():
-                secondary = load_json(path)
-                secondary["artifact"] = str(path.relative_to(ROOT))
-                secondary_reports.append(secondary)
-        if secondary_reports:
-            report["secondary_batch_roundtrips"] = secondary_reports
+        committed = committed_lerobot_roundtrip_report()
+        if committed:
+            report["batch_roundtrip"] = committed.get("batch_roundtrip")
+            report["secondary_batch_roundtrips"] = committed.get("secondary_batch_roundtrips", [])
         return report
     except RoundTripUnavailable as exc:
+        if os.environ.get("WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT") != "1":
+            committed = committed_lerobot_roundtrip_report()
+            if committed:
+                committed["reused_committed_artifact"] = True
+                committed["active_rerun_unavailable"] = str(exc)
+                return committed
         return unavailable_report(exc)
     except Exception as exc:  # noqa: BLE001 - report reproducibility blockers without hiding them.
         raise RuntimeError("active LeRobot round-trip failed") from exc
@@ -615,6 +634,159 @@ def experiment_independent_fixtures() -> dict[str, Any]:
         "n_cases": len(cases),
         "cases": cases,
         "recall": round(hits / total, 3) if total else 0.0,
+    }
+
+
+def experiment_natural_failure_corpus() -> dict[str, Any]:
+    """Aggregate naturally observed source omissions from committed public-dataset artifacts.
+
+    These cases are not synthetic mutations of a valid WorldEpisode package. They are source-absent
+    semantics and split-lineage failures observed while auditing public LeRobot-format datasets.
+    """
+
+    field_requirements = {
+        "camera extrinsics": ["FRAME.001", "FRAME.002"],
+        "robot/world calibration transform": ["FRAME.001", "FRAME.002"],
+        "action units": ["ACTION.001"],
+        "controller latency model": ["ACTION.002", "ACTION.004"],
+    }
+    datasets: dict[tuple[str, str], dict[str, Any]] = {}
+
+    conversion_paths = sorted(
+        [
+            *RESULTS_DIR.glob("lerobot_worldepisode_roundtrip/batch/episode_*/conversion_report.json"),
+            *RESULTS_DIR.glob("lerobot_worldepisode_roundtrip_pusht/batch/episode_*/conversion_report.json"),
+        ]
+    )
+    for path in conversion_paths:
+        report = load_json(path)
+        repo_id = report["source_repo_id"]
+        revision = report["source_revision"]
+        key = (repo_id, revision)
+        dataset = datasets.setdefault(
+            key,
+            {
+                "repo_id": repo_id,
+                "revision": revision,
+                "source_profile": report.get("source_profile"),
+                "evidence_type": "active_lerobot_conversion_reports",
+                "episode_indices": set(),
+                "action_rows": 0,
+                "state_rows": 0,
+                "source_absent_fields": {},
+                "warnings": set(),
+                "evidence_files": [],
+            },
+        )
+        dataset["episode_indices"].add(report["episode_index"])
+        dataset["action_rows"] += report.get("metrics", {}).get("action_rows", 0)
+        dataset["state_rows"] += report.get("metrics", {}).get("state_rows", 0)
+        dataset["evidence_files"].append(str(path.relative_to(ROOT)))
+        dataset["warnings"].update(report.get("warnings", []))
+        for field in report.get("source_absent", []):
+            dataset["source_absent_fields"].setdefault(field, set()).update(field_requirements.get(field, []))
+
+    cases = []
+    for dataset in datasets.values():
+        for field, requirements in sorted(dataset["source_absent_fields"].items()):
+            cases.append(
+                {
+                    "case_id": f"{dataset['repo_id'].replace('/', '__')}::{field.replace(' ', '_')}",
+                    "repo_id": dataset["repo_id"],
+                    "revision": dataset["revision"],
+                    "observation": f"Native LeRobot source is missing {field}.",
+                    "requirement_ids": sorted(requirements),
+                    "evidence_type": "natural_source_absence",
+                    "observed_episodes": len(dataset["episode_indices"]),
+                    "evidence_files": dataset["evidence_files"],
+                    "diagnostic_status": "source_absent_not_invented_by_converter",
+                    "maintainer_feedback": "not_requested",
+                }
+            )
+
+    leakage_path = SCENE_LEAKAGE_REPORT
+    if leakage_path.exists():
+        leakage = load_json(leakage_path)
+        if leakage.get("available"):
+            repo_id = leakage["repo_id"]
+            revision = leakage["revision"]
+            key = (repo_id, revision)
+            datasets[key] = {
+                "repo_id": repo_id,
+                "revision": revision,
+                "source_profile": "lerobot-v3",
+                "evidence_type": "active_lerobot_scene_leakage_audit",
+                "episode_indices": set(),
+                "action_rows": None,
+                "state_rows": None,
+                "source_absent_fields": {},
+                "warnings": set(),
+                "evidence_files": [str(leakage_path.relative_to(ROOT))],
+                "teleoperated_reference_episodes": leakage.get("dataset", {}).get("teleoperated_reference_episodes"),
+            }
+            random_split = leakage["splits"]["random_episode"]
+            cases.append(
+                {
+                    "case_id": f"{repo_id.replace('/', '__')}::random_episode_scene_lineage_leakage",
+                    "repo_id": repo_id,
+                    "revision": revision,
+                    "observation": (
+                        "A standard random episode split leaks all tested world-lineage groups "
+                        f"(leakage rate {random_split['leakage_rate']:.3f})."
+                    ),
+                    "requirement_ids": ["SPLIT.001"],
+                    "evidence_type": "natural_split_lineage_leakage",
+                    "observed_episodes": leakage.get("dataset", {}).get("teleoperated_reference_episodes"),
+                    "evidence_files": [str(leakage_path.relative_to(ROOT))],
+                    "diagnostic_status": "lineage_disjoint_split_required_for_valid_evaluation",
+                    "maintainer_feedback": "not_requested",
+                }
+            )
+
+    normalized_datasets = []
+    for dataset in datasets.values():
+        normalized = dict(dataset)
+        normalized["episode_indices"] = sorted(normalized.pop("episode_indices", []))
+        normalized["warnings"] = sorted(normalized.pop("warnings", []))
+        normalized["source_absent_fields"] = {
+            field: sorted(requirements)
+            for field, requirements in sorted(normalized["source_absent_fields"].items())
+        }
+        normalized_datasets.append(normalized)
+
+    requirement_counts: dict[str, int] = {}
+    for case in cases:
+        for requirement in case["requirement_ids"]:
+            requirement_counts[requirement] = requirement_counts.get(requirement, 0) + 1
+
+    manifest = {
+        "available": bool(cases),
+        "scope": "pilot natural-source-omission corpus from committed public LeRobot artifacts",
+        "artifact": str((NATURAL_FAILURE_DIR / "manifest.json").relative_to(ROOT)),
+        "dataset_count": len(normalized_datasets),
+        "case_count": len(cases),
+        "requirement_counts": dict(sorted(requirement_counts.items())),
+        "datasets": sorted(normalized_datasets, key=lambda item: item["repo_id"]),
+        "cases": sorted(cases, key=lambda item: item["case_id"]),
+        "full_gate": {
+            "required_public_datasets": 5,
+            "requires_maintainer_feedback": True,
+            "satisfied": False,
+            "remaining": [
+                "audit at least two additional public robot-learning datasets",
+                "request or record maintainer agreement/disagreement for representative diagnostics",
+            ],
+        },
+    }
+    NATURAL_FAILURE_DIR.mkdir(parents=True, exist_ok=True)
+    write_json(NATURAL_FAILURE_DIR / "manifest.json", manifest)
+    return {
+        "available": manifest["available"],
+        "artifact": manifest["artifact"],
+        "dataset_count": manifest["dataset_count"],
+        "case_count": manifest["case_count"],
+        "requirement_counts": manifest["requirement_counts"],
+        "full_gate_satisfied": manifest["full_gate"]["satisfied"],
     }
 
 
@@ -841,6 +1013,7 @@ def write_report(results: dict[str, Any]) -> None:
     splits = results["rq5_split_leakage"]
     robust = results["rq4_counterfactual_robustness"]
     independent = results["independent_fixture_check"]
+    natural = results["natural_failure_corpus"]
     public_sample = results["lerobot_public_sample"]
     episode_set = results["lerobot_style_episode_set"]
     active_lerobot = results["lerobot_active_roundtrip"]
@@ -848,6 +1021,11 @@ def write_report(results: dict[str, Any]) -> None:
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
+        reuse_line = ""
+        if active_lerobot.get("reused_committed_artifact"):
+            reuse_line = (
+                "- Artifact source: committed pinned active-run report reused by the default deterministic suite.\n"
+            )
         batch_lines = ""
         if batch and batch.get("available"):
             batch_lines = (
@@ -878,7 +1056,7 @@ def write_report(results: dict[str, Any]) -> None:
 - Source: `{active_lerobot["repo_id"]}@{active_lerobot["revision"]}`
 - Episode: {active_lerobot["episode_index"]}
 - Exported LeRobot v3 package: `{active_lerobot["artifacts"]["exported_lerobot_v3"]}`
-- Action tensor rows x width: {active_metrics["action_rows"]} x {active_metrics["action_width"]}
+{reuse_line}- Action tensor rows x width: {active_metrics["action_rows"]} x {active_metrics["action_width"]}
 - Video streams with timestamp ranges: {active_metrics["video_streams"]}
 - Physical frame records preserved through sidecar: {active_metrics["physical_frames_preserved"]}
 - Max absolute action error: {active_metrics["max_abs_action_error"]:.1f}
@@ -949,14 +1127,14 @@ def write_report(results: dict[str, Any]) -> None:
 - Reason: {replay.get("reason", "unknown")}
 - Reproduce: `{replay.get("reproduce", "python3 tools/lerobot_control_replay_experiment.py --required")}`
 """
-    evidence_boundaries = """## Evidence Boundaries
+    evidence_boundaries = f"""## Evidence Boundaries
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
-| Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
+| Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 """
@@ -970,7 +1148,8 @@ for large multi-lab robot benchmarking.
 
 The same command materializes binding round-trip artifacts in `docs/experiments/bindings/`, a pilot
 conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored independent fixtures in
-`conformance/fixtures/independent/`.
+`conformance/fixtures/independent/`. It also writes the pilot natural-source corpus in
+`docs/experiments/natural_failure_corpus/`.
 
 {evidence_boundaries}
 
@@ -992,6 +1171,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - False-negative requirement detections: {fault["false_negative_requirements"]}
 - Independent fixture cases: {independent.get("n_cases", 0)}
 - Independent fixture recall: {independent.get("recall", 0.0):.3f}
+- Natural-source corpus: {natural["dataset_count"]} public datasets, {natural["case_count"]} cases
+- Natural-source artifact: `{natural["artifact"]}`
+- Full natural-corpus gate satisfied: {natural["full_gate_satisfied"]}
 
 ## Public LeRobot Sample Check
 
@@ -1056,6 +1238,7 @@ def main() -> int:
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
+        "natural_failure_corpus": experiment_natural_failure_corpus(),
         "rq3_replay": experiment_replay(),
         "lerobot_public_sample": experiment_lerobot_public_sample(),
         "lerobot_style_episode_set": experiment_lerobot_style_episode_set(),

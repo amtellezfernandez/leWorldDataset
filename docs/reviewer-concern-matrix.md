@@ -13,7 +13,7 @@ the claim at the same scope as the evidence.
 | LeRobot round trip is too small. | Active pinned batch round trips over `lerobot/svla_so101_pickplace` and `lerobot/pusht`, episodes 0--4 each; 1,935 action/state rows; action/state/timestamp/index/video timestamp max error 0.0; source-absent fields tracked. | Closed for current scope. Evaluation calls this a two-dataset batch audit, not broad LeRobot coverage. | Extend only if claiming broad LeRobot coverage beyond the current paper scope. |
 | Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors. | Mitigated by scope. The paper avoids claiming state-of-the-art policy impact. | Repeat leakage experiment with LeRobot-native ACT and Diffusion Policy using the same split manifest. |
 | Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Isaac mapping emitted but untested. | Mitigated by scope. Limitations state one trace, one MuJoCo adapter, Isaac untested. | Run at least two trajectories, a second robot/dataset, and an Isaac or second-simulator replay with declared tolerance envelopes. |
-| Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures. | Partially mitigated. Limitations identify need for natural failure corpus. | Audit several public datasets for naturally occurring faults and report maintainers' agreement/disagreement with diagnostics. |
+| Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over three public LeRobot-format datasets with nine cases. | Mitigated but not closed. Evaluation and limitations distinguish the pilot corpus from a full prevalence survey. | Extend to at least five public datasets and record maintainer agreement/disagreement with representative diagnostics. |
 | Binding-retention metric looks subjective. | Predeclared 23-field semantic projection stored in `tools/run_experiments.py` and `docs/experiments/results.json`; native and sidecar artifacts checked by reimport. | Mitigated by scope. The paper calls it a pilot projection, not a universal score. | Publish the projection as a versioned conformance profile and obtain external review or an independent implementation. |
 | "Why not just USD/ROS/Rerun?" | Architecture and bindings show native containers as targets/views; sidecar captures action/task/lineage/replay semantics not owned by a single container. | Mitigated. Paper explicitly avoids replacement framing. | Demonstrate a round trip through at least two independently maintained native containers with loss reports. |
 | No independent adoption. | Public schema, governance draft, fixtures, examples, and artifacts exist. | Open. Limitations state no independent implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
@@ -46,6 +46,11 @@ the claim at the same scope as the evidence.
    - Input: at least five public robot-learning datasets.
    - Required output: requirement failure counts, example diagnostics, false-positive review, and
      maintainer feedback when available.
+   - Current output: `docs/experiments/natural_failure_corpus/manifest.json` records nine
+     natural-source cases across `lerobot/svla_so101_pickplace`, `lerobot/pusht`, and
+     `armnet/armnetbench_v01_lerobot_so101`.
+   - Remaining output: at least two more public datasets plus maintainer feedback or explicit
+     disagreement records.
    - Claim unlocked: conformance catches real dataset problems, not only injected faults.
 
 4. **Second replay backend gate**

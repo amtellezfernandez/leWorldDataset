@@ -135,6 +135,14 @@ first mirrored SO-101 frame has six joint values with maximum magnitude 98.924 i
 after radian conversion. Treating those degree values as radians would violate the action/state
 unit contract even though the tensor shape is valid.
 
+To move beyond synthetic mutations, the experiment runner also writes a pilot natural-source corpus
+from committed public LeRobot artifacts. Across \path{lerobot/svla_so101_pickplace},
+\path{lerobot/pusht}, and \path{armnet/armnetbench_v01_lerobot_so101}, it records nine observed
+cases: source-absent camera extrinsics, robot/world calibration transforms, action units,
+controller-latency models, and a random episode split with measured scene-lineage leakage. These are
+not claimed as maintainer-confirmed dataset bugs; they are naturally occurring source omissions or
+evaluation risks that a WorldEpisode audit must make explicit.
+
 \paragraph{Case 5: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
 nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding

@@ -34,6 +34,7 @@
     "recall": 1.0
   },
   "lerobot_active_roundtrip": {
+    "active_rerun_unavailable": "pyarrow is required for the active LeRobot round-trip. Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt` or run through `uv run --with-requirements requirements-experiments.txt`.",
     "artifacts": {
       "conversion_report": "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
       "exported_lerobot_v3": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3",
@@ -115,6 +116,7 @@
     },
     "pass": true,
     "repo_id": "lerobot/svla_so101_pickplace",
+    "reused_committed_artifact": true,
     "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
     "secondary_batch_roundtrips": [
       {
@@ -467,6 +469,21 @@
     "duration_ms": 900,
     "frame_count": 10,
     "has_command_and_effective_timestamps": true
+  },
+  "natural_failure_corpus": {
+    "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
+    "available": true,
+    "case_count": 9,
+    "dataset_count": 3,
+    "full_gate_satisfied": false,
+    "requirement_counts": {
+      "ACTION.001": 2,
+      "ACTION.002": 2,
+      "ACTION.004": 2,
+      "FRAME.001": 4,
+      "FRAME.002": 4,
+      "SPLIT.001": 1
+    }
   },
   "rq1_binding_retention": {
     "artifact_root": "docs/experiments/bindings",
