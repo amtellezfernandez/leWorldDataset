@@ -43,6 +43,9 @@ folders and Rerun \texttt{.rrd} recordings are recognized directly; without a Wo
 manifest or sidecar, they fail closed on missing world revision, entity identity, representation
 role, action timing, frame/clock, split-lineage, and conversion-loss controls. This makes the
 semantic audit a pre-training check rather than a separate post-hoc documentation exercise.
+The dataset-scale audit checks the separate corpus manifest for namespace uniqueness, resolver
+coverage, digest-addressed assets, local mirrors, shard/index references, required lineage and
+asset-digest indexes, split-manifest presence, and append-only version structure.
 
 The repository also includes an active LeRobotDataset v3 converter. It downloads bounded Parquet
 and metadata shards from the pinned public \path{lerobot/svla_so101_pickplace} SO-101 dataset,

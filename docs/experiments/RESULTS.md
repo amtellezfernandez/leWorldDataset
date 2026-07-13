@@ -22,6 +22,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata; no maintainer feedback or dataset-specific benchmark conversion yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
+| Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
@@ -111,6 +112,21 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Python API: `from worldepisode import preflight_lerobot; preflight_lerobot(path).raise_if_failed()`
 - Cases: 4
 - Gate satisfied: True
+
+## Dataset-Scale Manifest Audit
+
+- Artifact: `docs/experiments/dataset_scale_audit/scale_audit_report.json`
+- Status: pass
+- Manifest: `examples/scalable-corpus.worldepisode-dataset.json`
+- Namespaces/resolvers/registries/shards/indexes/versions: 5/3/3/3/2/1
+- Asset descriptors: 9
+- Assets with local mirrors: 9
+- Local mirror entries: 9
+- Asset URI schemes: hf, oci, s3
+- World-lineage index: True
+- Asset-digest index: True
+- Split manifest shard: True
+- Boundary: This audit validates catalog invariants for scalable manifests. It is not a billion-episode latency, cache, or federation benchmark.
 
 ## Real-to-Sim Contract Drift
 

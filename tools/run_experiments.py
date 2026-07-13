@@ -48,6 +48,7 @@ REALTOSIM_DRIFT_REPORT = RESULTS_DIR / "realtosim_contract_drift" / "contract_dr
 META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contract_report.json"
 USS_STATE_DRIFT_REPORT = RESULTS_DIR / "uss_state_drift_pilots" / "state_drift_report.json"
 REPLAY_ADAPTER_CONFORMANCE_REPORT = RESULTS_DIR / "replay_adapter_conformance" / "adapter_conformance_report.json"
+DATASET_SCALE_AUDIT_REPORT = RESULTS_DIR / "dataset_scale_audit" / "scale_audit_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -600,6 +601,22 @@ def experiment_replay_adapter_conformance() -> dict[str, Any]:
             "reproduce": "python3 tools/replay_adapter_conformance.py",
         }
         write_json(REPLAY_ADAPTER_CONFORMANCE_REPORT, report)
+        return report
+
+
+def experiment_dataset_scale_audit() -> dict[str, Any]:
+    try:
+        from dataset_scale_audit import audit_dataset_manifest
+
+        return audit_dataset_manifest(output_dir=RESULTS_DIR / "dataset_scale_audit")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/dataset_scale_audit.py",
+        }
+        write_json(DATASET_SCALE_AUDIT_REPORT, report)
         return report
 
 
@@ -1191,6 +1208,7 @@ def write_report(results: dict[str, Any]) -> None:
     meta_sim = results["meta_simulator_contract"]
     uss_pilots = results["uss_state_drift_pilots"]
     replay_adapter = results["replay_adapter_conformance"]
+    dataset_scale = results["dataset_scale_audit"]
     projection_profile = results["rq1_binding_retention"]["projection_profile"]
     natural_boundary = (
         "Five-dataset count is met through active LeRobot artifacts plus source-level public "
@@ -1317,6 +1335,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
+| Dataset scale | Executable dataset manifest audit checks namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, and append-only versions. | Catalog invariant audit only; not a billion-episode latency, cache, or federation benchmark. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
@@ -1380,6 +1399,21 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Python API: `from worldepisode import preflight_lerobot; preflight_lerobot(path).raise_if_failed()`
 - Cases: {len(preflight_result.get("cases", []))}
 - Gate satisfied: {preflight_result.get("pass", False)}
+
+## Dataset-Scale Manifest Audit
+
+- Artifact: `{dataset_scale.get("artifacts", {}).get("report", "docs/experiments/dataset_scale_audit/scale_audit_report.json")}`
+- Status: {dataset_scale.get("status", "unavailable")}
+- Manifest: `{dataset_scale.get("manifest", "examples/scalable-corpus.worldepisode-dataset.json")}`
+- Namespaces/resolvers/registries/shards/indexes/versions: {dataset_scale.get("aggregate", {}).get("namespace_count", 0)}/{dataset_scale.get("aggregate", {}).get("resolver_count", 0)}/{dataset_scale.get("aggregate", {}).get("registry_count", 0)}/{dataset_scale.get("aggregate", {}).get("shard_count", 0)}/{dataset_scale.get("aggregate", {}).get("index_count", 0)}/{dataset_scale.get("aggregate", {}).get("version_count", 0)}
+- Asset descriptors: {dataset_scale.get("aggregate", {}).get("asset_descriptor_count", 0)}
+- Assets with local mirrors: {dataset_scale.get("aggregate", {}).get("assets_with_local_mirrors", 0)}
+- Local mirror entries: {dataset_scale.get("aggregate", {}).get("local_mirror_count", 0)}
+- Asset URI schemes: {", ".join(dataset_scale.get("aggregate", {}).get("asset_uri_schemes", []))}
+- World-lineage index: {dataset_scale.get("aggregate", {}).get("has_world_lineage_index", False)}
+- Asset-digest index: {dataset_scale.get("aggregate", {}).get("has_asset_digest_index", False)}
+- Split manifest shard: {dataset_scale.get("aggregate", {}).get("has_split_manifest_shard", False)}
+- Boundary: {dataset_scale.get("claim_boundary", "Catalog invariant audit only; not a billion-episode performance benchmark.")}
 
 ## Real-to-Sim Contract Drift
 
@@ -1502,6 +1536,7 @@ def main() -> int:
         "meta_simulator_contract": experiment_meta_simulator_contract(),
         "uss_state_drift_pilots": experiment_uss_state_drift_pilots(),
         "replay_adapter_conformance": experiment_replay_adapter_conformance(),
+        "dataset_scale_audit": experiment_dataset_scale_audit(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1590,6 +1625,19 @@ def main() -> int:
         or replay_adapter_aggregate.get("naive_failures", 0) < 2
     ):
         print("Replay adapter conformance did not pass expected scheduler cases.")
+        return 1
+    dataset_scale = results["dataset_scale_audit"]
+    dataset_scale_aggregate = dataset_scale.get("aggregate", {})
+    if not dataset_scale.get("pass"):
+        print("Dataset-scale manifest audit failed.")
+        return 1
+    if (
+        dataset_scale_aggregate.get("asset_descriptor_count", 0) < 1
+        or not dataset_scale_aggregate.get("has_world_lineage_index")
+        or not dataset_scale_aggregate.get("has_asset_digest_index")
+        or not dataset_scale_aggregate.get("has_split_manifest_shard")
+    ):
+        print("Dataset-scale manifest audit is missing required production catalog invariants.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")

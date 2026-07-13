@@ -17,6 +17,7 @@ the claim at the same scope as the evidence.
 | USS generality is overbroad. | `tools/uss_state_drift_pilots.py` emits deterministic game-engine collision-patch and autonomous-driving clock-domain pilots, while robotics remains the deep stress test. | Mitigated as framing only. The paper can claim USS vocabulary generalizes, not that production game/AV systems have been benchmarked. | Run at least one public game/simulation telemetry corpus or AV log through a USS adapter and report measured drift diagnostics. |
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over five public datasets with 19 cases. | Mitigated further. Dataset-count gate is met, while maintainer feedback and dataset-specific conversions remain open. | Record maintainer agreement/disagreement for representative diagnostics and convert source-level metadata gaps into dataset-specific manifests where stronger claims are needed. |
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
+| Dataset design will not scale. | `schemas/worldepisode-dataset-v0.schema.json`, `examples/scalable-corpus.worldepisode-dataset.json`, and `tools/dataset_scale_audit.py` validate namespaces, resolver coverage, digest-addressed assets, shard/index references, split manifests, lineage/digest indexes, and append-only snapshots. | Mitigated as catalog design. The paper can claim executable scale-manifest invariants, not measured billion-episode performance. | Benchmark catalog-open latency, partition pruning, cache behavior, and federated resolver behavior on a much larger corpus. |
 | Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
 | Real-to-sim relevance is not concrete. | `tools/realtosim_contract_drift.py` now runs two controlled ablations: action contract drift and representation-role drift. Both succeed in the drifted simulator, fail under deployment proxies, and pass with the WorldEpisode contract. | Mitigated as a controlled proxy. The paper must not call this a RoboSnap/DROID-Sim hardware result. | Run the same checks on a real reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another public real-to-sim pipeline. |
 | Binding-retention metric looks subjective. | Versioned `conformance/projections/uss-core-23.v0.json` profile, `schemas/semantic-projection-v0.schema.json`, generated native/sidecar artifacts, and runner validation against field and requirement references. | Mitigated by artifact. The paper can cite a versioned pilot projection, not a universal score. | Obtain external review or an independent implementation that accepts or revises the projection. |
@@ -85,7 +86,17 @@ the claim at the same scope as the evidence.
      metrics as the MuJoCo report.
    - Claim unlocked: replay assumptions transfer across more than one tested runtime.
 
-6. **Real-to-sim reconstructed-scene gate**
+6. **Dataset-scale performance gate**
+   - Input: `examples/scalable-corpus.worldepisode-dataset.json` and a larger generated or public
+     dataset catalog.
+   - Current output: `docs/experiments/dataset_scale_audit/scale_audit_report.json` validates the
+     current scale manifest for resolver coverage, digest-addressed assets, shard/index references,
+     split manifests, lineage/digest indexes, and append-only snapshots.
+   - Remaining output: benchmark catalog-open latency, partition pruning, digest-cache hit rates,
+     and federated resolver behavior at much larger scale.
+   - Claim unlocked: the manifest design is not only structurally scalable, but operationally fast.
+
+7. **Real-to-sim reconstructed-scene gate**
    - Input: one public reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another Gaussian/OpenUSD
      real-to-sim pipeline.
    - Current output: `docs/experiments/realtosim_contract_drift/contract_drift_report.json`
@@ -96,7 +107,7 @@ the claim at the same scope as the evidence.
    - Claim unlocked: WorldEpisode prevents drift in a real reconstructed-scene pipeline, not only a
      controlled proxy.
 
-7. **USS non-robotics evidence gate**
+8. **USS non-robotics evidence gate**
    - Input: one public game/simulation telemetry corpus or one public autonomous-driving log with
      enough metadata to test state revision, asset digest, frame/clock, and transition invariants.
    - Current output: `docs/experiments/uss_state_drift_pilots/state_drift_report.json` records two
@@ -105,7 +116,7 @@ the claim at the same scope as the evidence.
      maintained outside this repository.
    - Claim unlocked: USS is empirically useful outside robotics, not only a general vocabulary.
 
-8. **Semantic projection review gate**
+9. **Semantic projection review gate**
    - Input: `conformance/projections/uss-core-23.v0.json`.
    - Current output: versioned profile, schema validation, field-to-requirement mapping, and
      executable binding-retention artifacts.
@@ -114,7 +125,7 @@ the claim at the same scope as the evidence.
    - Claim unlocked: the binding-retention profile is an externally reviewed conformance view, not
      only the authors' pilot scoring model.
 
-9. **Independent implementation gate**
+10. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.

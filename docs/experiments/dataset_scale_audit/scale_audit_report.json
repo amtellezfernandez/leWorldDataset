@@ -1,0 +1,34 @@
+{
+  "aggregate": {
+    "asset_descriptor_count": 9,
+    "asset_uri_schemes": [
+      "hf",
+      "oci",
+      "s3"
+    ],
+    "assets_with_local_mirrors": 9,
+    "error_count": 0,
+    "has_asset_digest_index": true,
+    "has_split_manifest_shard": true,
+    "has_world_lineage_index": true,
+    "index_count": 2,
+    "local_mirror_count": 9,
+    "namespace_count": 5,
+    "registry_count": 3,
+    "resolver_count": 3,
+    "shard_count": 3,
+    "version_count": 1,
+    "warning_count": 0
+  },
+  "artifacts": {
+    "markdown": "docs/experiments/dataset_scale_audit/README.md",
+    "report": "docs/experiments/dataset_scale_audit/scale_audit_report.json"
+  },
+  "claim_boundary": "This audit validates catalog invariants for scalable manifests. It is not a billion-episode latency, cache, or federation benchmark.",
+  "diagnostics": [],
+  "manifest": "examples/scalable-corpus.worldepisode-dataset.json",
+  "pass": true,
+  "profile": "worldepisode-dataset-scale-audit-0.1",
+  "schema": "schemas/worldepisode-dataset-v0.schema.json",
+  "status": "pass"
+}

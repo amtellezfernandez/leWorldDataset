@@ -54,6 +54,12 @@ as a single blocking line before a costly training job. The committed regression
 an invalid fixture fails, and native LeRobot/Rerun artifacts without a WorldEpisode sidecar fail
 closed on missing physical-semantics controls.
 
+Dataset-scale artifact: `tools/dataset_scale_audit.py` validates
+`examples/scalable-corpus.worldepisode-dataset.json` for namespace uniqueness, resolver coverage,
+digest-addressed assets, local mirrors, shard/index references, required lineage/digest indexes,
+split-manifest presence, and append-only version structure. It is a catalog invariant audit, not a
+distributed performance benchmark.
+
 ## RQ3: Cross-Simulator Replay
 
 Replay the same demonstrations in at least two simulators.

@@ -41,6 +41,17 @@ The example
 [`examples/scalable-corpus.worldepisode-dataset.json`](../examples/scalable-corpus.worldepisode-dataset.json)
 shows the intended layout.
 
+The executable audit is:
+
+```bash
+python3 tools/dataset_scale_audit.py
+```
+
+It writes `docs/experiments/dataset_scale_audit/scale_audit_report.json` and checks resolver
+coverage, digest-addressed assets, optional local mirrors, shard/index references, required
+world-lineage and asset-digest indexes, split-manifest presence, and append-only version structure.
+This is a catalog-invariant audit, not a distributed latency or cache benchmark.
+
 ## ID Scope
 
 Local names such as `mug_017` or `episode_000421` are not sufficient across world-scale robot

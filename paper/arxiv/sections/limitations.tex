@@ -44,9 +44,10 @@ RoboSnap/DROID-Sim rerun or physical hardware deployment \\
 Adoption & Public schema, installable local preflight package, validator, fixtures, and governance
 files & No PyPI release, upstream LeRobot/Rerun integration, independent implementation, or external
 dataset release yet \\
-Scale architecture & Dataset manifest schema, scalable example, and production requirements for
-shards, indexes, resolvers, and append-only versions & No benchmark yet for billion-episode
-catalog latency, distributed cache behavior, or federation across institutions \\
+Scale architecture & Dataset manifest schema, scalable example, and executable audit for
+namespaces, resolvers, digest-addressed assets, shard/index references, split manifests, and
+append-only versions & No benchmark yet for billion-episode catalog latency, distributed cache
+behavior, or federation across institutions \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -99,9 +100,10 @@ current claim is friction reduction in the reference implementation, not ecosyst
 \paragraph{Dataset-scale performance.}
 The specification separates the core episode record from a dataset-scale manifest with namespaces,
 shards, indexes, resolvers, and append-only snapshots. That design prevents the standard from being
-defined around a local folder layout, but it is not yet a measured distributed-systems result. A
-production paper should benchmark catalog-open latency, partition pruning, asset cache hit rates,
-and validation throughput on much larger corpora.
+defined around a local folder layout. The current audit makes the catalog invariants executable, but
+it is not yet a measured distributed-systems result. A production paper should benchmark
+catalog-open latency, partition pruning, asset cache hit rates, and validation throughput on much
+larger corpora.
 
 \paragraph{Famous benchmark call-out scope.}
 The audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN is a source-level

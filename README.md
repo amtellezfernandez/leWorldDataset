@@ -73,6 +73,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Bindings draft](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
 - [Production-scale dataset architecture](docs/production-scale.md)
+- [Dataset-scale manifest audit artifacts](docs/experiments/dataset_scale_audit)
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
 - [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
@@ -218,6 +219,12 @@ To generate the USS non-robotics state-drift pilots:
 python3 tools/uss_state_drift_pilots.py
 ```
 
+To audit the production-scale dataset manifest:
+
+```bash
+python3 tools/dataset_scale_audit.py
+```
+
 To generate the dependency-free replay adapter conformance checks:
 
 ```bash
@@ -257,6 +264,10 @@ The USS state-drift pilots add two lightweight non-robotics checks: a game-engin
 where a loadable client asset no longer matches the authoritative state, and an autonomous-driving
 clock-domain offset where valid logs produce invalid spatial fusion. These pilots support the USS
 vocabulary claim only; they are not production game-engine or AV benchmark results.
+The dataset-scale audit validates the scalable corpus manifest: namespaces, resolver coverage for
+asset URI schemes, digest-addressed assets with mirrors, shard/index references, split-manifest
+presence, world-lineage and asset-digest indexes, and append-only version structure. It is a catalog
+invariant check, not a billion-episode throughput benchmark.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through
@@ -289,6 +300,7 @@ The script writes:
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
+- `docs/experiments/dataset_scale_audit/*`
 - `docs/experiments/replay_adapter_conformance/*`
 - `docs/experiments/uss_state_drift_pilots/*`
 - `docs/experiments/natural_failure_corpus/*`

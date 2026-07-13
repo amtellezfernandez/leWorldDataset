@@ -192,7 +192,17 @@ WorldEpisode fixture fails, a native LeRobot v3 folder without a WorldEpisode si
 and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the intended usage
 pattern for labs: run one blocking line before launching a multi-day policy training job.
 
-\paragraph{Case 6: the famous benchmarks that still need call-out audits.}
+\paragraph{Case 6: the corpus that should not require a filesystem crawl.}
+To address production scale, we audit the dataset manifest in
+\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
+three resolver schemes, three registries, three shards, two indexes, one append-only version, and
+nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
+It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
+split-manifest shard. This is a catalog-invariant check, not a billion-episode performance result,
+but it makes the scale claim executable: opening a corpus starts from the manifest and indexes
+rather than from recursive storage discovery.
+
+\paragraph{Case 7: the famous benchmarks that still need call-out audits.}
 The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
 source-level call-out audit over five famous public robot-learning benchmarks: Open
 X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
@@ -205,7 +215,7 @@ published scores are inflated. The stronger claim requires converting each bench
 WorldEpisode and rerunning a published policy protocol under lineage-disjoint splits or
 timestamp-aware replay.
 
-\paragraph{Case 7: augmentation that uses the world rather than a side file.}
+\paragraph{Case 8: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
 nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
 unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame
