@@ -22,8 +22,8 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.001 | top-level README exists | True | error | README.md (19224 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1236 bytes) |
-| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (479120 bytes) |
-| DOC.005 | paper source exists | True | error | paper/arxiv/main.tex (5291 bytes) |
+| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (479221 bytes) |
+| DOC.005 | paper source exists | True | error | paper/arxiv/main.tex (5328 bytes) |
 | DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17534 bytes) |
 | DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147868 bytes) |
 | DOC.008 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
