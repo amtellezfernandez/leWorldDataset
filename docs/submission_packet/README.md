@@ -28,6 +28,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `conformance/projections/uss-core-23.v0.json` | True | True |
 | `docs/experiments/results.json` | True | True |
 | `docs/experiments/paper_claim_audit/paper_claim_audit_report.json` | True | True |
+| `docs/experiments/package_install_smoke/package_install_smoke_report.json` | True | True |
 | `docs/experiments/open_reproduction_gates/open_reproduction_gates.json` | True | True |
 | `docs/release_manifest/release_manifest.json` | True | True |
 | `docs/release_manifest/README.md` | True | True |
@@ -72,6 +73,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |
 | generate this submission packet | `python3 tools/submission_packet.py --strict` |
 | audit public maturity language | `python3 tools/public_maturity_audit.py --strict` |
+| smoke-test wheel install | `python3 tools/package_install_smoke.py --strict` |
 | build digest release manifest | `python3 tools/release_manifest.py --strict` |
 | verify committed release manifest | `python3 tools/release_manifest.py --verify --strict` |
 | check RFC release readiness | `python3 tools/release_readiness.py --strict-rfc` |

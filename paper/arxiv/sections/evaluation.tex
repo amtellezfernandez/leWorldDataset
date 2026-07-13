@@ -304,8 +304,9 @@ world revision and asset descriptor, embodiment identity and URDF asset, frames/
 clocks/mappings, entity identity/roles/assets, action control and timing contracts, trace binding
 and asset descriptor, events, ordered deltas, provenance, quality, split lineage, and replay
 assumptions. This is an executable pilot projection, not a universal score of each format's value.
-Table~\ref{tab:binding-retention} shows that common containers preserve 17--39\% of this projection
-natively, while the sidecar recovers all fields for the tested dataset/log/world bindings. A
+Across seven pilot bindings, Table~\ref{tab:binding-retention} shows that common
+containers preserve 17--39\% of this projection natively, while WorldEpisode sidecars recover that
+projection for the tested dataset/log/world bindings. A
 Gaussian asset binding alone preserves 17\% natively and 30\% with limited sidecar metadata,
 confirming that an asset format is not an episode--world contract.
 

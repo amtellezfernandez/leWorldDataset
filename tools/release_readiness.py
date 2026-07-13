@@ -22,6 +22,9 @@ RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
 PAPER_CLAIM_AUDIT_JSON = ROOT / "docs" / "experiments" / "paper_claim_audit" / "paper_claim_audit_report.json"
 PUBLIC_MATURITY_JSON = ROOT / "docs" / "experiments" / "public_maturity" / "public_maturity_report.json"
+PACKAGE_INSTALL_SMOKE_JSON = (
+    ROOT / "docs" / "experiments" / "package_install_smoke" / "package_install_smoke_report.json"
+)
 RELEASE_MANIFEST_JSON = ROOT / "docs" / "release_manifest" / "release_manifest.json"
 SUBMISSION_PACKET_JSON = ROOT / "docs" / "submission_packet" / "submission_packet.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
@@ -106,6 +109,40 @@ def package_checks() -> list[Check]:
             ),
         ]
     )
+    if PACKAGE_INSTALL_SMOKE_JSON.exists():
+        try:
+            smoke = load_json(PACKAGE_INSTALL_SMOKE_JSON)
+            checks.append(
+                Check(
+                    "PKG.005",
+                    "wheel install smoke passes",
+                    smoke.get("schema") == "worldepisode_package_install_smoke_v1"
+                    and smoke.get("status") == "pass"
+                    and nested(smoke, ("checks", "wheel_built")) is True
+                    and nested(smoke, ("checks", "installed_non_editable")) is True
+                    and nested(smoke, ("checks", "cli_preflight_passed")) is True
+                    and nested(smoke, ("checks", "api_preflight_passed")) is True,
+                    f"{rel(PACKAGE_INSTALL_SMOKE_JSON)} wheel={nested(smoke, ('wheel', 'filename'))}",
+                )
+            )
+        except (OSError, json.JSONDecodeError) as exc:
+            checks.append(
+                Check(
+                    "PKG.005",
+                    "wheel install smoke parses",
+                    False,
+                    f"{rel(PACKAGE_INSTALL_SMOKE_JSON)}: {exc}",
+                )
+            )
+    else:
+        checks.append(
+            Check(
+                "PKG.005",
+                "wheel install smoke exists",
+                False,
+                f"{rel(PACKAGE_INSTALL_SMOKE_JSON)} missing",
+            )
+        )
     return checks
 
 
@@ -119,6 +156,7 @@ def ci_checks() -> list[Check]:
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
         "python tools/public_maturity_audit.py --strict",
+        "python tools/package_install_smoke.py --strict",
         "python tools/release_manifest.py --verify --strict",
         "python tools/submission_packet.py --strict",
         "python tools/release_readiness.py --strict-rfc",

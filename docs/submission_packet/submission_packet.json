@@ -287,6 +287,10 @@
       "name": "audit public maturity language"
     },
     {
+      "command": "python3 tools/package_install_smoke.py --strict",
+      "name": "smoke-test wheel install"
+    },
+    {
       "command": "python3 tools/release_manifest.py --strict",
       "name": "build digest release manifest"
     },
@@ -363,6 +367,11 @@
       "exists": true,
       "nonempty": true,
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/package_install_smoke/package_install_smoke_report.json"
     },
     {
       "exists": true,

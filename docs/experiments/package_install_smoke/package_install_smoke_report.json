@@ -1,0 +1,93 @@
+{
+  "artifacts": {
+    "json": "docs/experiments/package_install_smoke/package_install_smoke_report.json",
+    "markdown": "docs/experiments/package_install_smoke/README.md"
+  },
+  "audit_date": "2026-07-13",
+  "build_backend": "uv",
+  "checks": {
+    "api_preflight_passed": true,
+    "cli_preflight_passed": true,
+    "installed_non_editable": true,
+    "wheel_built": true
+  },
+  "claim_boundary": "This smoke test proves local wheel build/install, package data inclusion, CLI entry point, and Python API preflight. It is not a PyPI release or upstream LeRobot/Rerun integration claim.",
+  "commands": [
+    {
+      "command": [
+        "uv",
+        "build",
+        "--wheel",
+        "--out-dir",
+        "$TMPDIR/wheels"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "isode.egg-info/PKG-INFO\nwriting dependency_links to worldepisode.egg-info/dependency_links.txt\nwriting entry points to worldepisode.egg-info/entry_points.txt\nwriting requirements to worldepisode.egg-info/requires.txt\nwriting top-level names to worldepisode.egg-info/top_level.txt\nreading manifest file 'worldepisode.egg-info/SOURCES.txt'\nadding license file 'LICENSE'\nwriting manifest file 'worldepisode.egg-info/SOURCES.txt'\ncopying worldepisode/py.typed -> build/lib/worldepisode\ncopying worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/le-world-layout-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-core-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/conformance-requirements-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/conformance-requirements-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/le-world-layout-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-core-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/lib/worldepisode/schemas\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_lib\ncreating build/bdist.linux-x86_64/wheel\ncreating build/bdist.linux-x86_64/wheel/worldepisode\ncopying build/lib/worldepisode/py.typed -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/__init__.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/validator.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/__main__.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/preflight.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/cli.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncreating build/bdist.linux-x86_64/wheel/worldepisode/schemas\ncopying build/lib/worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/le-world-layout-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/__init__.py -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/worldepisode-core-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/conformance-requirements-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\nrunning install_egg_info\nCopying worldepisode.egg-info to build/bdist.linux-x86_64/wheel/./worldepisode-0.1.0-py3.12.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/worldepisode-0.1.0.dist-info/WHEEL\ncreating '$TMPDIR/wheels/.tmp-<build>/worldepisode-0.1.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'worldepisode/__init__.py'\nadding 'worldepisode/__main__.py'\nadding 'worldepisode/cli.py'\nadding 'worldepisode/preflight.py'\nadding 'worldepisode/py.typed'\nadding 'worldepisode/validator.py'\nadding 'worldepisode/schemas/__init__.py'\nadding 'worldepisode/schemas/conformance-requirements-v0.schema.json'\nadding 'worldepisode/schemas/le-world-layout-v0.schema.json'\nadding 'worldepisode/schemas/worldepisode-core-v0.schema.json'\nadding 'worldepisode/schemas/worldepisode-dataset-v0.schema.json'\nadding 'worldepisode-0.1.0.dist-info/licenses/LICENSE'\nadding 'worldepisode-0.1.0.dist-info/METADATA'\nadding 'worldepisode-0.1.0.dist-info/WHEEL'\nadding 'worldepisode-0.1.0.dist-info/entry_points.txt'\nadding 'worldepisode-0.1.0.dist-info/top_level.txt'\nadding 'worldepisode-0.1.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built $TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "uv",
+        "venv",
+        "--python",
+        "/usr/bin/python3",
+        "--system-site-packages",
+        "$TMPDIR/venv"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: $TMPDIR/venv\nActivate with: source $TMPDIR/venv/bin/activate\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "$TMPDIR/venv/bin/python",
+        "--no-deps",
+        "$TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "Using Python 3.12.3 environment at: $TMPDIR/venv\nResolved 1 package in <duration>\nPrepared 1 package in <duration>\nInstalled 1 package in <duration>\n + worldepisode==0.1.0 (from file://$TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl)\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$TMPDIR/venv/bin/worldepisode",
+        "preflight",
+        "$REPO/examples/minimal.worldepisode.json",
+        "--json"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"counts\": {\n    \"error\": 0,\n    \"info\": 0,\n    \"warning\": 0\n  },\n  \"diagnostics\": [],\n  \"fail_on\": \"warning\",\n  \"kind\": \"worldepisode\",\n  \"ok\": true,\n  \"summary\": {\n    \"document_kind\": \"worldepisode\"\n  },\n  \"target\": \"$REPO/examples/minimal.worldepisode.json\"\n}\n"
+    },
+    {
+      "command": [
+        "$TMPDIR/venv/bin/python",
+        "-c",
+        "from importlib.resources import files; from worldepisode import preflight; schema = files('worldepisode').joinpath('schemas/worldepisode-core-v0.schema.json'); report = preflight('examples/minimal.worldepisode.json'); assert schema.is_file(); assert not report.has_failures(); print(schema.name)"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "worldepisode-core-v0.schema.json\n"
+    }
+  ],
+  "python": {
+    "executable": "/usr/bin/python3",
+    "version": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]"
+  },
+  "schema": "worldepisode_package_install_smoke_v1",
+  "status": "pass",
+  "wheel": {
+    "built": true,
+    "filename": "worldepisode-0.1.0-py3-none-any.whl",
+    "size_bytes": 23580
+  }
+}

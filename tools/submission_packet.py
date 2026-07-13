@@ -31,6 +31,7 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "conformance/projections/uss-core-23.v0.json",
     "docs/experiments/results.json",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
+    "docs/experiments/package_install_smoke/package_install_smoke_report.json",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
     "docs/release_manifest/release_manifest.json",
     "docs/release_manifest/README.md",
@@ -64,6 +65,10 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "audit public maturity language",
         "command": "python3 tools/public_maturity_audit.py --strict",
+    },
+    {
+        "name": "smoke-test wheel install",
+        "command": "python3 tools/package_install_smoke.py --strict",
     },
     {
         "name": "build digest release manifest",

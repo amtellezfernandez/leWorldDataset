@@ -41,6 +41,9 @@ jobs:
       - name: Check public maturity language
         run: python tools/public_maturity_audit.py --strict
 
+      - name: Smoke-test wheel install
+        run: python tools/package_install_smoke.py --strict
+
       - name: Verify release manifest
         run: python tools/release_manifest.py --verify --strict
 

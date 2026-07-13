@@ -166,6 +166,7 @@ python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/package_install_smoke.py --strict
 python3 tools/submission_packet.py --strict
 python3 tools/public_maturity_audit.py --strict
 python3 tools/release_manifest.py --strict
@@ -247,6 +248,7 @@ To run the public RFC release gate:
 ```bash
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/package_install_smoke.py --strict
 python3 tools/submission_packet.py --strict
 python3 tools/public_maturity_audit.py --strict
 python3 tools/release_manifest.py --verify --strict

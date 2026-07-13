@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 32,
-    "passed_count": 32,
+    "check_count": 33,
+    "passed_count": 33,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -68,7 +68,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (19322 bytes)",
+      "evidence": "README.md (19418 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -108,7 +108,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (479236 bytes)",
+      "evidence": "WorldEpisode.pdf (479990 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -116,7 +116,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "paper/arxiv/main.tex (5328 bytes)",
+      "evidence": "paper/arxiv/main.tex (5615 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"
@@ -148,7 +148,7 @@
     {
       "boundary": "",
       "check_id": "DOC.011",
-      "evidence": ".github/workflows/ci.yml (1302 bytes)",
+      "evidence": ".github/workflows/ci.yml (1402 bytes)",
       "name": "CI workflow exists",
       "passed": true,
       "severity": "error"
@@ -164,7 +164,7 @@
     {
       "boundary": "",
       "check_id": "PKG.001",
-      "evidence": "pyproject.toml (1244 bytes)",
+      "evidence": "pyproject.toml (1177 bytes)",
       "name": "pyproject exists",
       "passed": true,
       "severity": "error"
@@ -190,6 +190,14 @@
       "check_id": "PKG.004",
       "evidence": "license and authors present in pyproject.toml",
       "name": "license and authors are declared",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.005",
+      "evidence": "docs/experiments/package_install_smoke/package_install_smoke_report.json wheel=worldepisode-0.1.0-py3-none-any.whl",
+      "name": "wheel install smoke passes",
       "passed": true,
       "severity": "error"
     },
@@ -308,7 +316,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=44, normalized=4",
+      "evidence": "status=pass, entries=46, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"

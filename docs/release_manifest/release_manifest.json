@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 44,
+    "entry_count": 46,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 34,
-    "release_script_count": 10
+    "public_evidence_count": 35,
+    "release_script_count": 11
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "aae72da63f39b2ecb7208eae7a0ffe06e7f38eb7287a6f1dab01a32920db38da"
+      "sha256": "78c322c5dde1c9ff03a20ea50ddc89a706828acbf3e45f36936b387b6325796f"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "README.md",
-      "sha256": "ac3516f5a7c78cbd50d0503a87b04d63cc92d082b167fe6b1985adfe7d9dd1d6"
+      "sha256": "89d8c2cf9aebc12ab3439c294621769a4828ae07a66649e91329462fb8d26390"
     },
     {
       "category": "public_evidence",
@@ -70,7 +70,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/main.tex",
-      "sha256": "76bfff546d9430f95af5971a450898b01f3c4b85c5344e8df39c3823a41ea03d"
+      "sha256": "613c1db32e1068400a0e094e455f19c14aeea416a2370924be5644607dc7c496"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "65639ae5cf0b5bcac17c395ecf3a5aff6d5a5317f067c2cff037dbc938491ddc"
+      "sha256": "051ed305c46e3989ab08790190a0d99ee8b719e50dee4424966d32b8bf389886"
     },
     {
       "category": "public_evidence",
@@ -197,6 +197,15 @@
       "normalizers_applied": [],
       "path": "docs/experiments/public_maturity/public_maturity_report.json",
       "sha256": "6823f9f886f2f1b08eb4a2040f6de3c4367dbcbe0a58a67888aad7b0ae6c0206"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/package_install_smoke/package_install_smoke_report.json",
+      "sha256": "ba70caeaae77daeb72e8ba3c5a9f0832bed8896da01195aba1cddc124d17ac5a"
     },
     {
       "category": "public_evidence",
@@ -340,7 +349,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": ".github/workflows/ci.yml",
-      "sha256": "db1f9a8068ad8130958198bb5deacf027ebc5b58e00005ebf6f3dd33946001b5"
+      "sha256": "cee51b9a483411b0a5a9c705403589f659e56768e0ac40d3069fa0a42f93da89"
     },
     {
       "category": "release_script",
@@ -393,8 +402,17 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "tools/package_install_smoke.py",
+      "sha256": "3a71a0846173ff5f5074b42137185fe6e3448926da3ae3e75f8af8e7b1b3860e"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "24a10c5ee11c072823ebf139f2addccf6c837cbaea1195c569b9316ce11156fc"
+      "sha256": "72298554500062779e2b2322a2515c475f8edbdd9940d7a528ab45ddb0ad99d8"
     },
     {
       "category": "release_script",
@@ -403,7 +421,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "eef9127c7d4d25a79bcaef085f04c71e2b7dd0a7992fedec8ab83de668ad88c4"
+      "sha256": "22357c79fd0b4ba7723b35c6c812b1649fe01b55d4d85f12c9a2e695f4bc3703"
     },
     {
       "category": "release_script",
@@ -412,7 +430,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "4161cc29ba209781a1412817c35d0b78e768b5e9864d0fe6486bd3b7ae66ec06"
+      "sha256": "d4647b458aa25122fe3ec0b44122c7aca456a0889fe2fd8570d57ba1c1c4eea3"
     },
     {
       "category": "release_script",
