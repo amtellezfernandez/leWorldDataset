@@ -18,6 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "open_reproduction_gates"
 PAPER_LIMITATIONS = ROOT / "paper" / "arxiv" / "sections" / "limitations.tex"
+PAPER_EVALUATION = ROOT / "paper" / "arxiv" / "sections" / "evaluation.tex"
 SCHEMA = "worldepisode_open_reproduction_gates_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -255,6 +256,14 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     paper = PAPER_LIMITATIONS.read_text(encoding="utf-8") if PAPER_LIMITATIONS.exists() else ""
     if "\\begin{openresult}{results not claimed in this draft}" not in paper:
         errors.append("paper limitations section must include the amber open-result callout")
+    evaluation = PAPER_EVALUATION.read_text(encoding="utf-8") if PAPER_EVALUATION.exists() else ""
+    for callout in (
+        "\\begin{openresult}{ACT/Diffusion and rollout impact}",
+        "\\begin{openresult}{same-trace second-runtime replay}",
+        "\\begin{openresult}{famous-benchmark score-inflation proof}",
+    ):
+        if callout not in evaluation:
+            errors.append(f"paper evaluation section must include {callout}")
     return errors
 
 
@@ -268,6 +277,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
             "meaning": "visible boundary for results that are executable but not claimed",
         },
         "paper_artifact": rel(PAPER_LIMITATIONS),
+        "paper_artifacts": [rel(PAPER_EVALUATION), rel(PAPER_LIMITATIONS)],
         "gates": GATES,
         "aggregate": {
             "gate_count": len(GATES),
@@ -297,7 +307,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         (
             "These are the results that remain executable but unclaimed. The paper renders the same "
-            "boundary as an amber callout in the limitations section."
+            "boundary as amber callouts in the evaluation and limitations sections."
         ),
         "",
         "## Gates",

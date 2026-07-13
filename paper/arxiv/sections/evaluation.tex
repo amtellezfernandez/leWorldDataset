@@ -6,6 +6,12 @@ or more reproducible than it really is. Robotics provides the deep measured stre
 deterministic USS pilots check that the same state-invariant vocabulary also applies outside robot
 episodes.
 
+\paragraph{How to read amber boxes.}
+Amber boxes mark work that is executable but not counted as a paper result. Each box states the
+exact command path, required artifacts, and acceptance rule needed before the corresponding claim
+can move from ``open'' to ``measured.'' These boxes are intentionally visible in the PDF so a reader
+can reproduce or close the missing evidence without reading the repository internals.
+
 \paragraph{Case 0: the valid file with the wrong live state.}
 USS is evaluated outside robotics with two deliberately small pilots. In the game-engine collision
 case, a client can still load an old arena collision asset, but an authoritative patch moves the
@@ -44,6 +50,21 @@ action-evaluation reports, and a high-fidelity simulator or physical rollout con
 intentionally open in this draft; no ACT, Diffusion Policy, IsaacLab, or hardware success number is
 claimed, and the compact packages omit video payloads until source videos are mirrored with
 committed digests.
+
+\begin{openresult}{ACT/Diffusion and rollout impact}
+Status: open. To close this gate, first regenerate the split packages and LeRobot job specs with
+\texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}. Then run the generated jobs with
+\texttt{bash docs/experiments/lerobot\_policy\_gate/run\_lerobot\_policy\_jobs.sh} inside a
+LeRobot training environment.
+
+Required artifacts: policy checkpoint digests, train/eval configs and seeds, offline action
+metrics for random and scene-disjoint splits, rollout traces or videos with content digests, and an
+updated \path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+
+Acceptance rule: at least one ACT or Diffusion Policy run must report both split protocols, and at
+least one simulator or physical rollout report must use the same split manifest. Until then, the
+paper claims only the offline Torch probe and the prepared gate.
+\end{openresult}
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
 families where explicit state semantics alter the outcome.
@@ -152,6 +173,23 @@ writes a MuJoCo--Genesis comparison report with matched task success and measure
 divergence. That companion result supports the meta-simulator contract, but it is not yet the same
 SO-101 LeRobot replay trace rerun in Genesis or Isaac.
 
+\begin{openresult}{same-trace second-runtime replay}
+Status: open. Regenerate the current adapter matrix with
+\texttt{python3 tools/meta\_simulator\_contract.py}. The existing URDF Studio companion smoke test
+can be run with \texttt{cd ../urdf-studio \&\& .venv/bin/python3 -m backend.scripts.scenario\_run
+scenarios/carton\_sorting\_0001 --sim mujoco --sim genesis --out
+/tmp/urdf-studio-cross-sim-smoke --episodes 1}.
+
+Required artifacts: the same SO-101 LeRobot replay trace executed by a second WorldEpisode-native
+simulator adapter, simulator and adapter versions, solver and timestep settings, trajectory RMSE,
+contact/event agreement, declared tolerance envelope, conversion-loss report, and an updated
+\path{docs/experiments/meta_simulator_contract/adapter_contract_report.json}.
+
+Acceptance rule: runtime-neutral replay evidence requires the same LeRobot trace through one
+additional tested simulator adapter. URDF Studio's MuJoCo--Genesis result is companion evidence,
+not closure of this gate.
+\end{openresult}
+
 \paragraph{Case 4: real-to-sim contract drift.}
 Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
 interactive physical assets. WorldEpisode targets the contract between those layers and the source
@@ -234,6 +272,21 @@ Parquet shards, builds a WorldEpisode evidence package, compares random and line
 splits, and runs a deterministic offline state-action policy. The gate records one attempted DROID
 subset rerun report, zero valid famous-benchmark rerun reports, and zero measured
 famous-benchmark inflation claims in this draft.
+
+\begin{openresult}{famous-benchmark score-inflation proof}
+Status: open. A targeted DROID subset rerun can be attempted with
+\texttt{uv run --with pyarrow --with requests --with numpy python
+tools/famous\_benchmark\_policy\_rerun.py --benchmark droid\_100 --required}. The proof contract is
+then enforced with \texttt{python3 tools/benchmark\_inflation\_gate.py --required}.
+
+Required artifacts: benchmark-specific WorldEpisode conversion, lineage/timing audit, faithful
+published-protocol policy rerun, paired corrected evaluation under the same metric, and a measured
+baseline-minus-corrected score drop.
+
+Acceptance rule: the gate must contain at least one valid rerun report with
+\texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
+controls, not evidence that published scores are inflated.
+\end{openresult}
 
 \paragraph{Case 8: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only

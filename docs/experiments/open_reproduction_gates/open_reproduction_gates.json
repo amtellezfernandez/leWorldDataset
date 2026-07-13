@@ -162,6 +162,10 @@
     }
   ],
   "paper_artifact": "paper/arxiv/sections/limitations.tex",
+  "paper_artifacts": [
+    "paper/arxiv/sections/evaluation.tex",
+    "paper/arxiv/sections/limitations.tex"
+  ],
   "schema": "worldepisode_open_reproduction_gates_v1",
   "status": "open_gates_indexed",
   "validation": {

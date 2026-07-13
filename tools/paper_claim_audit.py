@@ -436,7 +436,11 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             claim="Open results are visibly and machine-readably marked as not claimed.",
             evidence_artifacts=["docs/experiments/open_reproduction_gates/open_reproduction_gates.json"],
             paper_patterns=[
+                "\\begin{openresult}{ACT/Diffusion and rollout impact}",
+                "\\begin{openresult}{same-trace second-runtime replay}",
+                "\\begin{openresult}{famous-benchmark score-inflation proof}",
                 "\\begin{openresult}{results not claimed in this draft}",
+                "Open result, not claimed",
                 "open_reproduction_gates.json",
             ],
             evidence_passed=(

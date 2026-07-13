@@ -274,7 +274,11 @@
       "evidence_passed": true,
       "missing_paper_patterns": [],
       "paper_patterns": [
+        "\\begin{openresult}{ACT/Diffusion and rollout impact}",
+        "\\begin{openresult}{same-trace second-runtime replay}",
+        "\\begin{openresult}{famous-benchmark score-inflation proof}",
         "\\begin{openresult}{results not claimed in this draft}",
+        "Open result, not claimed",
         "open_reproduction_gates.json"
       ],
       "passed": true

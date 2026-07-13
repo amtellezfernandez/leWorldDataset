@@ -2,7 +2,7 @@
 
 Status: `open_gates_indexed`.
 
-These are the results that remain executable but unclaimed. The paper renders the same boundary as an amber callout in the limitations section.
+These are the results that remain executable but unclaimed. The paper renders the same boundary as amber callouts in the evaluation and limitations sections.
 
 ## Gates
 
