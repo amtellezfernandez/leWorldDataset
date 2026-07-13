@@ -61,7 +61,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | Gate | Claim | Status | Acceptance Rule |
 |---|---|---|---|
 | `POLICY.ROLL.001` | state-of-the-art policy or physical rollout impact | open_not_claimed | At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made. |
-| `BENCH.INFLATE.001` | famous benchmark published scores are inflated | open_not_claimed | The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence. |
+| `BENCH.INFLATE.001` | famous benchmark published scores are inflated | open_not_claimed | The gate must contain at least one inflation-proof valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence. |
 | `NATURAL.001` | natural failure prevalence is maintainer-confirmed | open_not_claimed | Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps. |
 | `ADOPT.001` | mature external standard adoption | open_not_claimed | Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite. |
 

@@ -19,10 +19,13 @@ import hashlib
 import json
 import math
 import random
+import shutil
+import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import numpy as np
 import requests
@@ -142,14 +145,96 @@ def hf_uri(repo_id: str, revision: str, path: str) -> str:
     return f"hf://{repo_id}@{revision}/{path}"
 
 
+def resolve_host_with_doh(hostname: str) -> list[str]:
+    """Resolve a hostname through DNS-over-HTTPS when the local resolver is unavailable."""
+    try:
+        import urllib3
+
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    except (ImportError, AttributeError):
+        pass
+    resolvers = [
+        (
+            "https://1.1.1.1/dns-query",
+            {"accept": "application/dns-json", "host": "cloudflare-dns.com"},
+        ),
+        (
+            "https://8.8.8.8/resolve",
+            {"host": "dns.google"},
+        ),
+    ]
+    addresses: list[str] = []
+    for endpoint, headers in resolvers:
+        try:
+            response = requests.get(
+                endpoint,
+                params={"name": hostname, "type": "A"},
+                headers=headers,
+                timeout=20,
+                verify=False,
+            )
+            response.raise_for_status()
+            payload = response.json()
+        except (requests.RequestException, ValueError):
+            continue
+        for answer in payload.get("Answer", []):
+            if answer.get("type") == 1 and isinstance(answer.get("data"), str):
+                addresses.append(answer["data"])
+    return sorted(set(addresses))
+
+
+def download_with_resolved_host(url: str, output_path: Path) -> list[str]:
+    parsed = urlparse(url)
+    hostname = parsed.hostname
+    if not hostname:
+        return ["fallback skipped: URL has no hostname"]
+    curl = shutil.which("curl")
+    if curl is None:
+        return ["fallback skipped: curl is not installed"]
+    addresses = resolve_host_with_doh(hostname)
+    if not addresses:
+        return [f"fallback skipped: DNS-over-HTTPS returned no A records for {hostname}"]
+
+    errors: list[str] = []
+    tmp_path = output_path.with_suffix(output_path.suffix + ".tmp")
+    for address in addresses:
+        command = [
+            curl,
+            "--fail",
+            "--location",
+            "--silent",
+            "--show-error",
+            "--connect-timeout",
+            "30",
+            "--max-time",
+            "180",
+            "--resolve",
+            f"{hostname}:443:{address}",
+            url,
+            "--output",
+            str(tmp_path),
+        ]
+        result = subprocess.run(command, text=True, capture_output=True, check=False)
+        if result.returncode == 0 and tmp_path.exists() and tmp_path.stat().st_size > 0:
+            tmp_path.replace(output_path)
+            return []
+        errors.append(
+            f"curl --resolve {hostname}:443:{address} exited {result.returncode}: "
+            f"{(result.stderr or result.stdout).strip()[:400]}"
+        )
+        tmp_path.unlink(missing_ok=True)
+    return errors
+
+
 def download_file(repo_id: str, revision: str, remote_path: str, cache_root: Path) -> dict[str, Any]:
     local_path = cache_root / repo_id.replace("/", "__") / revision / remote_path
     local_path.parent.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
     if not local_path.exists():
+        url = hf_url(repo_id, revision, remote_path)
         for attempt in range(1, 6):
             try:
-                response = requests.get(hf_url(repo_id, revision, remote_path), timeout=120)
+                response = requests.get(url, timeout=120)
                 response.raise_for_status()
                 local_path.write_bytes(response.content)
                 break
@@ -157,6 +242,10 @@ def download_file(repo_id: str, revision: str, remote_path: str, cache_root: Pat
                 errors.append(f"attempt {attempt}: {type(exc).__name__}: {exc}")
                 time.sleep(min(2 * attempt, 10))
         else:
+            fallback_errors = download_with_resolved_host(url, local_path)
+            if fallback_errors:
+                errors.extend(fallback_errors)
+        if not local_path.exists():
             raise RerunUnavailable(f"could not download {remote_path}: " + " | ".join(errors))
     return {
         "uri": hf_uri(repo_id, revision, remote_path),

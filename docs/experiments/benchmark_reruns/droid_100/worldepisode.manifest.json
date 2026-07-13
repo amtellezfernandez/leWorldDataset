@@ -1,0 +1,59 @@
+{
+  "asset_resolution": {
+    "policy": "uri_digest_optional_local_mirror",
+    "source_files": {
+      "data/chunk-000/file-000.parquet": {
+        "bytes": 2696695,
+        "local_mirror": ".cache/worldepisode/famous_benchmark_reruns/lerobot__droid_100/87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/data/chunk-000/file-000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-000.parquet",
+        "sha256": "8ce5831e998d9e9b1d743fe42f91dbb654e4172069354de50aa0de874b3bebc8",
+        "uri": "hf://lerobot/droid_100@87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/data/chunk-000/file-000.parquet"
+      },
+      "meta/episodes/chunk-000/file-000.parquet": {
+        "bytes": 137686,
+        "local_mirror": ".cache/worldepisode/famous_benchmark_reruns/lerobot__droid_100/87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/episodes/chunk-000/file-000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/episodes/chunk-000/file-000.parquet",
+        "sha256": "a22cd872be7140555b7f8dfa6c34ff64642b0308d933c9aa658a89b69746fbbb",
+        "uri": "hf://lerobot/droid_100@87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/episodes/chunk-000/file-000.parquet"
+      },
+      "meta/info.json": {
+        "bytes": 3183,
+        "local_mirror": ".cache/worldepisode/famous_benchmark_reruns/lerobot__droid_100/87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/info.json",
+        "media_type": "application/json",
+        "path": "meta/info.json",
+        "sha256": "6718973f1f5a5ca76cfdfdddafc177da83636d1a38e50aedca37c090991d5d78",
+        "uri": "hf://lerobot/droid_100@87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/info.json"
+      },
+      "meta/tasks.parquet": {
+        "bytes": 3939,
+        "local_mirror": ".cache/worldepisode/famous_benchmark_reruns/lerobot__droid_100/87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/tasks.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/tasks.parquet",
+        "sha256": "c4c787266cddb69cf90814ff6cfb9da7478176f6a219090a1502d6ffa908a9bf",
+        "uri": "hf://lerobot/droid_100@87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/meta/tasks.parquet"
+      }
+    }
+  },
+  "benchmark_id": "droid",
+  "claim_boundary": "Small public DROID LeRobot mirror. This is a bounded offline state/action rerun, not a reproduction of a DROID leaderboard or a hardware rollout.",
+  "dataset": {
+    "fps": 15,
+    "robot_type": "unknown",
+    "total_episodes": 100,
+    "total_frames": 32212
+  },
+  "lineage_source": {
+    "column": "task_index + task text + camera feature schema",
+    "kind": "task_camera_schema_proxy",
+    "reason": "The mirrored public metadata did not expose a distinct physical scene, site, or capture-lineage column. The corrected split is therefore a proxy stress test, not proof of scene-leakage inflation in the original benchmark.",
+    "sufficient_for_score_inflation_claim": false
+  },
+  "profile": "worldepisode-famous-benchmark-subset-0.1",
+  "source_dataset": {
+    "name": "DROID 100 LeRobot subset",
+    "repo_id": "lerobot/droid_100",
+    "revision": "87301a2d2e99340e2010c9ef0f1d8e780b08aaf9"
+  }
+}

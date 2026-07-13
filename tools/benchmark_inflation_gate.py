@@ -120,6 +120,7 @@ def validate_rerun_report(path: Path, benchmark_ids: set[str]) -> dict[str, Any]
         }
 
     benchmark_id = str(payload.get("benchmark_id", ""))
+    executed = payload.get("available") is True
     if payload.get("schema") != RERUN_SCHEMA:
         errors.append(f"schema must be {RERUN_SCHEMA}")
     if benchmark_id not in benchmark_ids:
@@ -192,6 +193,7 @@ def validate_rerun_report(path: Path, benchmark_ids: set[str]) -> dict[str, Any]
     return {
         "path": str(path.relative_to(ROOT)),
         "benchmark_id": benchmark_id,
+        "executed": executed,
         "valid": not errors,
         "errors": errors,
         "baseline_score": baseline_score,
@@ -216,6 +218,7 @@ def build_benchmark_inflation_gate(
     reruns = [validate_rerun_report(path, set(benchmark_ids)) for path in rerun_paths]
     measured = [item for item in reruns if item.get("measured_inflation")]
     valid = [item for item in reruns if item.get("valid")]
+    executed = [item for item in reruns if item.get("executed")]
     report = {
         "profile": PROFILE,
         "audit_date": AUDIT_DATE,
@@ -233,6 +236,7 @@ def build_benchmark_inflation_gate(
         "aggregate": {
             "audited_benchmark_count": len(benchmark_ids),
             "rerun_report_count": len(reruns),
+            "executed_rerun_report_count": len(executed),
             "valid_rerun_report_count": len(valid),
             "measured_inflation_claims": len(measured),
             "ready_for_inflation_claim": bool(measured),
@@ -261,8 +265,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     rerun_rows = []
     for rerun in report["rerun_reports"]:
         rerun_rows.append(
-            "| {benchmark} | {valid} | {drop} | {inflation} | {path} |".format(
+            "| {benchmark} | {executed} | {valid} | {drop} | {inflation} | {path} |".format(
                 benchmark=rerun.get("benchmark_id", "unknown"),
+                executed=rerun.get("executed"),
                 valid=rerun.get("valid"),
                 drop=rerun.get("score_drop"),
                 inflation=rerun.get("measured_inflation"),
@@ -270,7 +275,7 @@ def render_markdown(report: dict[str, Any]) -> str:
             )
         )
     if not rerun_rows:
-        rerun_rows.append("| none | false | n/a | false | no rerun reports committed |")
+        rerun_rows.append("| none | false | false | n/a | false | no rerun reports committed |")
     return f"""# Famous Benchmark Inflation Proof Gate
 
 Status: {report["status"]}.
@@ -287,8 +292,8 @@ split/timing audit, and a policy rerun under the corrected protocol.
 
 ## Rerun Reports
 
-| Benchmark | Valid | Score Drop | Measured Inflation | Report |
-|---|---:|---:|---:|---|
+| Benchmark | Executed | Inflation-Proof Valid | Score Drop | Measured Inflation | Report |
+|---|---:|---:|---:|---:|---|
 {chr(10).join(rerun_rows)}
 
 ## Current Policy
@@ -316,6 +321,7 @@ def main() -> int:
                 "status": report["status"],
                 "audited_benchmark_count": report["aggregate"]["audited_benchmark_count"],
                 "rerun_report_count": report["aggregate"]["rerun_report_count"],
+                "executed_rerun_report_count": report["aggregate"]["executed_rerun_report_count"],
                 "valid_rerun_report_count": report["aggregate"]["valid_rerun_report_count"],
                 "measured_inflation_claims": report["aggregate"]["measured_inflation_claims"],
                 "artifacts": report["artifacts"],

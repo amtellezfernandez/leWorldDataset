@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 55,
+    "entry_count": 61,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 43,
-    "release_script_count": 12
+    "public_evidence_count": 48,
+    "release_script_count": 13
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "152b928b169d7c587a30a010db220592987bf537ea471e4b4f5b82a4773195e5"
+      "sha256": "0a853ddf0e8c503d88174a9892850bb14ee922112b75b82fcaf89f450e1ae716"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "d9417dd94116ac65d38dbfec04bcaefacd51e40c5a982088c9e39cf3ebeba21c"
+      "sha256": "e9880fdfb0fc68b86598c4aeee4abbbda51be0689b42be4ebaa0082a40b77c1c"
     },
     {
       "category": "public_evidence",
@@ -88,7 +88,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "f3c6389a277cc7dd31db7526ff44ba40e7cbadc7bb8b6f664d1ec050ce9a6fe5"
+      "sha256": "eeef822939c5f3833bdd88dd53246f533e8af68a19c7115af0a031e391160afd"
     },
     {
       "category": "public_evidence",
@@ -145,7 +145,7 @@
         "(Partition-pruning query time: )[0-9]+(?:\\.[0-9]+)?( ms)"
       ],
       "path": "docs/experiments/RESULTS.md",
-      "sha256": "a457844874e221ea082718c15e361ab25dcfb51c5334f5824dd607aed25308f6"
+      "sha256": "2a79dab29e345a8a5beab7d12cd2c6b5f6c807327c3ec182090e46cd17dd959e"
     },
     {
       "category": "public_evidence",
@@ -156,7 +156,7 @@
         "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
       ],
       "path": "docs/experiments/results.json",
-      "sha256": "50974712d73274c6081be7f56413191ab63820fa22fbc9b17849af0532899782"
+      "sha256": "9ad887c897e0775caffa83b624c6d2ae1368e79bc1bd985c1105cd66ec3664d6"
     },
     {
       "category": "public_evidence",
@@ -187,7 +187,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
-      "sha256": "f97d47ad3faa9eeed3cc83014d00660236412b41389ef98fb8b7d864ba8522f2"
+      "sha256": "ba121338e5658ed17064cdf22710e2ebf4a58cb3720f57daac61b39537bef149"
     },
     {
       "category": "public_evidence",
@@ -214,7 +214,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
-      "sha256": "7465122b4c59b937222ddd8b56d92b42e7e97bc93d394b936c0b3d0d2420bc69"
+      "sha256": "1d3a2fc9e9201d3596f48df7d7b4bf9ed17d62ffb05737013a00df0c64c4d11f"
     },
     {
       "category": "public_evidence",
@@ -223,7 +223,52 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/benchmark_inflation_gate/gate_report.json",
-      "sha256": "1a7ff1c3d96cc5e713d339ddb9022081ffbd5581bf886a047eb75e9db4c1086c"
+      "sha256": "db940893a05e95e9fed133ac4fc80d33f48c0be969a8cdc6caadb43b1ab6d596"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
+      "sha256": "e717fa79695d880a012f930e3b76ec6989c4764280e5b3976081523debbe6e18"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_reruns/droid_100/conversion_report.json",
+      "sha256": "a89360586e63ff861105de31d86facc880d740b3973b1776ebfa9f4a26e389c0"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_reruns/droid_100/lineage_manifest.json",
+      "sha256": "c8e54a23e714e23f9f5a02a64bf89a2b8c640316f5376927b4c10de9bef64791"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_reruns/droid_100/split_manifest.json",
+      "sha256": "62c6d72a0a8bcb1fe020fd3ccab01ae603126f07e1acfce8fc7343fc98b46248"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/benchmark_reruns/droid_100/worldepisode.manifest.json",
+      "sha256": "fcf78b7baf2f2617f647662073ff4ffc0fe3a8df5d82dc82c5b311646de5eba8"
     },
     {
       "category": "public_evidence",
@@ -385,7 +430,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reviewer-concern-matrix.md",
-      "sha256": "240076eac8c104c72bcf0fa296fff27f27d2f9074b13d1a2d29d10e1779c49ea"
+      "sha256": "d236ed2ada5576f89fbb19f31c367ad12b8b31d8a2462660c8cbb3de180eab24"
     },
     {
       "category": "public_evidence",
@@ -394,7 +439,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reference-release.md",
-      "sha256": "a17c16840efc720f681b9169d6ff520342aca505cdcfc6b541612da74e579c5b"
+      "sha256": "855a4016ea702867753f36730e298bfe42b4c4c99500ae79083c9f18a7edacd8"
     },
     {
       "category": "public_evidence",
@@ -439,7 +484,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/run_experiments.py",
-      "sha256": "699be7b57a4f9a3c28f1f77a94b05135865658a5993759432106d163ef814e68"
+      "sha256": "c28fc6a19e3aef73c52960528ba2ce331412964063e6b9884fffefd2e48a4749"
     },
     {
       "category": "release_script",
@@ -448,7 +493,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/open_reproduction_gates.py",
-      "sha256": "83bec55a0253d83dae08d6737a6464e89c558895ad11675a1a46aac8b11a59b1"
+      "sha256": "3be95b9add207c045233b945f5be2e9395feb5d756b184938e19bff7a44cc679"
     },
     {
       "category": "release_script",
@@ -457,7 +502,16 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_claim_audit.py",
-      "sha256": "75c0d83212ad495e38d7bcff158f0ffd5412ddf7d4045fe2a91785d6bf45fa79"
+      "sha256": "d2dc1c4cb33a33db218d3551a7f373f2000cec19ae3d509e81a4f8e39633a23f"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/famous_benchmark_policy_rerun.py",
+      "sha256": "378481f06aa4d9c346cab7a48cb4bb27082b9f15f0c4fbf294bc83e199bf9aed"
     },
     {
       "category": "release_script",
@@ -493,7 +547,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "cbe5b727196d8b7510ea1bebfd86693cbc063168bb820b8c8a8ce3b3ad042e2e"
+      "sha256": "528354712b57a6629245bb8d0e21649c298aea74e3128f3535c688dee4c3bc58"
     },
     {
       "category": "release_script",

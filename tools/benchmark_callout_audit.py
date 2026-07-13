@@ -348,8 +348,8 @@ WorldEpisode manifest, validated for the checks above, and rerun under lineage-d
 timestamp-aware replay before making any stronger claim.
 
 The stronger claim is enforced by `tools/benchmark_inflation_gate.py`. Until
-`docs/experiments/benchmark_inflation_gate/gate_report.json` contains a valid rerun report, the
-paper must treat these benchmarks as unaudited rather than inflated.
+`docs/experiments/benchmark_inflation_gate/gate_report.json` contains an inflation-proof valid
+rerun report, the paper must treat these benchmarks as unaudited rather than inflated.
 
 The first targeted rerun harness is `tools/famous_benchmark_policy_rerun.py --benchmark droid_100`.
 It is allowed to fail closed when the pinned public shards cannot be fetched, when only proxy

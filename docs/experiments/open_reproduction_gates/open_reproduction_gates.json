@@ -49,7 +49,7 @@
       "status": "open_not_claimed"
     },
     {
-      "acceptance_rule": "The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.",
+      "acceptance_rule": "The gate must contain at least one inflation-proof valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.",
       "blocker_id": "BENCH.INFLATE.001",
       "claim": "famous benchmark published scores are inflated",
       "commands": [

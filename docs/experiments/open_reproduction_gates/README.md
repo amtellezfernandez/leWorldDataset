@@ -68,7 +68,7 @@ Required artifacts:
 - paired corrected evaluation under the same metric
 - measured baseline-minus-corrected score drop
 
-Acceptance rule: The gate must contain at least one valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.
+Acceptance rule: The gate must contain at least one inflation-proof valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.
 
 ### `NATURAL.001`
 

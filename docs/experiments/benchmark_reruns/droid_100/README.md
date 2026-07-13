@@ -2,7 +2,7 @@
 
 Benchmark: `droid`.
 
-Available: `False`.
+Available: `True`.
 
 This artifact is the benchmark-specific evidence record consumed by
 `tools/benchmark_inflation_gate.py`. It is fail-closed: unavailable data, proxy lineage, or a
@@ -10,18 +10,12 @@ non-published policy protocol must not unlock a published-score inflation claim.
 
 ## Result
 
-- Baseline score: `None`
-- Corrected score: `None`
-- Score drop: `None`
-- Lineage source: `None`
-- Lineage sufficient for score-inflation claim: `None`
+- Baseline score: `0.4958081537296595`
+- Corrected score: `0.515540983544114`
+- Score drop: `-0.019732829814454567`
+- Lineage source: `task_camera_schema_proxy`
+- Lineage sufficient for score-inflation claim: `False`
 
 ## Boundary
 
-No benchmark inflation claim is supported because the rerun did not execute.
-
-Unavailable reason:
-
-```text
-pyarrow is required to read public LeRobot parquet shards. Reproduce with `uv run --with pyarrow --with requests --with numpy python tools/famous_benchmark_policy_rerun.py --required`.
-```
+Small public DROID LeRobot mirror. This is a bounded offline state/action rerun, not a reproduction of a DROID leaderboard or a hardware rollout. The report is valid evidence for this subset and metric only. It is not a published-score inflation claim unless the strict proof gate accepts it.

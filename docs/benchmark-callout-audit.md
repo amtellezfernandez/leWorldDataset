@@ -31,9 +31,11 @@ The default command records the current evidence state in
 `docs/experiments/benchmark_inflation_gate/gate_report.json`. The `--required` form returns
 non-zero unless at least one famous benchmark has a valid WorldEpisode conversion, split/timing
 audit, and policy rerun report. In the current repository this required gate correctly fails. There
-is one attempted DROID subset rerun artifact, but it is invalid because the local rerun environment
-could not satisfy the public-data/dependency path before the pinned Parquet shards were read. There
-are still zero valid DROID, BridgeData V2, Open X-Embodiment, LIBERO, or CALVIN rerun reports.
+is one executed DROID subset rerun over pinned public LeRobot shards, but it is not
+inflation-proof: the lineage source is a task/camera-schema proxy, the policy protocol is a bounded
+offline probe rather than a published leaderboard reproduction, and the corrected proxy split does
+not reduce the score. There are still zero inflation-proof DROID, BridgeData V2,
+Open X-Embodiment, LIBERO, or CALVIN rerun reports.
 
 The current top-five source-level audit covers:
 

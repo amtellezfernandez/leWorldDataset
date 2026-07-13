@@ -1634,7 +1634,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, same-trace MuJoCo/Genesis replay evidence, and URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
 | USS generality | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
-| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | Prepared audit plus attempted rerun only; `benchmark_inflation_gate` requires a valid benchmark-specific rerun report before any published score is accused of inflation. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | One bounded DROID subset rerun executes, but it is not inflation-proof; `benchmark_inflation_gate` requires an inflation-proof valid benchmark-specific rerun report before any published score is accused of inflation. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 """
     report = f"""# USS / WorldEpisode Controlled Experiment Results
@@ -1707,7 +1707,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Status: {benchmark_inflation.get("status", "unavailable")}
 - Required tests: {len(benchmark_inflation.get("required_tests", []))}
 - Rerun reports committed: {benchmark_inflation.get("aggregate", {}).get("rerun_report_count", 0)}
-- Valid rerun reports: {benchmark_inflation.get("aggregate", {}).get("valid_rerun_report_count", 0)}
+- Executed rerun reports: {benchmark_inflation.get("aggregate", {}).get("executed_rerun_report_count", 0)}
+- Inflation-proof valid rerun reports: {benchmark_inflation.get("aggregate", {}).get("valid_rerun_report_count", 0)}
 - Measured famous-benchmark inflation claims: {benchmark_inflation.get("aggregate", {}).get("measured_inflation_claims", 0)}
 - Ready for inflation claim: {benchmark_inflation.get("aggregate", {}).get("ready_for_inflation_claim", False)}
 

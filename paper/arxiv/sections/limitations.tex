@@ -44,7 +44,7 @@ artifacts & Pilot projection; not a universal score of each storage format \\
 Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
 LIBERO, and CALVIN, plus a targeted DROID subset rerun tool and a separate inflation-proof gate &
 Missing public controls are not measured score inflation; the proof gate currently has one
-attempted DROID subset rerun report, zero valid famous-benchmark rerun reports, and zero measured
+executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
 inflation claims \\
 Real-to-sim drift & Controlled action-contract and representation-role ablations where drifted
 contracts succeed in simulation and fail under deployment proxies & Deterministic proxy; not a
@@ -82,7 +82,8 @@ the policy metrics, rollout traces or videos, and updated
 dependencies, using \path{tools/famous_benchmark_policy_rerun.py} with
 \texttt{--benchmark droid\_100 --required}, then require
 \texttt{python3 tools/benchmark\_inflation\_gate.py --required}. No benchmark may be described as
-inflated unless this gate records a valid rerun and a measured corrected-score drop.
+inflated unless this gate records an inflation-proof valid rerun and a measured corrected-score
+drop.
 \item External standard evidence: add maintainer-reviewed diagnostics, an independently written
 reader/exporter, and at least one externally published USS or WorldEpisode-compatible dataset
 before calling the project a mature interoperability standard.
@@ -160,9 +161,11 @@ metadata audit. It identifies where public materials do not expose the controls 
 world-lineage leakage, action latency, or replay loss. It does not prove any published benchmark
 score is inflated. That claim requires a benchmark-specific WorldEpisode conversion and a measured
 policy rerun. The repository now makes that requirement executable with a targeted DROID subset
-rerun tool and a separate proof gate. In the current artifact, one DROID subset rerun was
-attempted, zero valid famous-benchmark rerun reports are committed, and zero score-inflation claims
-are measured.
+rerun tool and a separate proof gate. In the current artifact, one bounded DROID subset rerun
+executes on pinned public LeRobot data, but its lineage source is only a task/camera-schema proxy,
+it is not a published leaderboard reproduction, and its corrected proxy split does not reduce the
+offline score. Thus zero inflation-proof famous-benchmark rerun reports are committed and zero
+score-inflation claims are measured.
 
 \paragraph{Real-to-sim drift scope.}
 The contract-drift experiment isolates two real-to-sim failure mechanisms: action-interface drift

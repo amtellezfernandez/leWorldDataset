@@ -35,6 +35,7 @@
       "claim": "famous benchmark published scores are inflated",
       "current_evidence": {
         "audited_benchmark_count": 5,
+        "executed_rerun_report_count": 1,
         "measured_inflation_claims": 0,
         "minimum_score_drop_for_inflation": 0.05,
         "ready_for_inflation_claim": false,
@@ -124,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (459782 bytes)",
+      "evidence": "WorldEpisode.pdf (460282 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -140,7 +141,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18142 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18127 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -148,7 +149,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (180869 bytes)",
+      "evidence": "docs/experiments/results.json (180739 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -340,7 +341,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=55, normalized=4",
+      "evidence": "status=pass, entries=61, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"

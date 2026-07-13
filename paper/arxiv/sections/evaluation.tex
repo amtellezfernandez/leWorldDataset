@@ -268,9 +268,12 @@ it requires a benchmark-specific WorldEpisode conversion, lineage/timing audit, 
 rerun, corrected evaluation, and measured score drop before any famous benchmark can be labeled
 inflated. We also add a targeted DROID-100 LeRobot-subset rerun tool that downloads pinned public
 Parquet shards, builds a WorldEpisode evidence package, compares random and lineage-disjoint
-splits, and runs a deterministic offline state-action policy. The gate records one attempted DROID
-subset rerun report, zero valid famous-benchmark rerun reports, and zero measured
-famous-benchmark inflation claims in this release.
+splits, and runs a deterministic offline state-action policy. In the current run, that DROID subset
+tool executes over 100 public episodes and 32{,}212 frames. Its lineage source is only a
+task/camera-schema proxy, not a physical scene identifier; the corrected proxy split scores
+0.516 versus 0.496 for the random split, so the measured score drop is negative. The proof gate
+therefore records one executed DROID subset rerun, zero inflation-proof famous-benchmark rerun
+reports, and zero measured famous-benchmark inflation claims in this release.
 
 \begin{openresult}{famous-benchmark score-inflation proof}
 Status: open. A targeted DROID subset rerun can be attempted with
@@ -282,7 +285,7 @@ Required artifacts: benchmark-specific WorldEpisode conversion, lineage/timing a
 published-protocol policy rerun, paired corrected evaluation under the same metric, and a measured
 baseline-minus-corrected score drop.
 
-Acceptance rule: the gate must contain at least one valid rerun report with
+Acceptance rule: the gate must contain at least one inflation-proof valid rerun report with
 \texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
 controls, not evidence that published scores are inflated.
 \end{openresult}

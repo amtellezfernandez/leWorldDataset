@@ -24,10 +24,10 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1245 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (10281 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (459782 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (460282 bytes) |
 | DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (5590 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18142 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180869 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18127 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180739 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1402 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
@@ -51,7 +51,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
 | CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=13, failed=0 |
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=55, normalized=4 |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=61, normalized=4 |
 | SUBMIT.001 | submission packet validates | True | error | status=pass, claims=13, open_gates=4 |
 
 ## Blocked Stronger Claims

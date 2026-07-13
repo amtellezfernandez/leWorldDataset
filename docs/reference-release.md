@@ -13,7 +13,7 @@ python3 tools/release_readiness.py --strict-rfc
 The current gate passes the RFC-release checks: package metadata, public docs, paper artifact,
 schema/examples, controlled experiments, fail-closed benchmark claims, dataset-scale evidence, and
 clean-room reader evidence. It deliberately does not mark the full standard complete. Stronger
-claims remain blocked until ACT/Diffusion or rollout results, valid famous-benchmark reruns,
+claims remain blocked until ACT/Diffusion or rollout results, inflation-proof famous-benchmark reruns,
 maintainer feedback, external adoption, and broader simulator replay evidence exist.
 Each blocked stronger claim is mapped to a command-backed open reproduction gate in
 `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.

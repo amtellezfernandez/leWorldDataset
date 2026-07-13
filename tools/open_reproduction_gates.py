@@ -100,8 +100,9 @@ GATES: list[dict[str, Any]] = [
             "measured baseline-minus-corrected score drop",
         ],
         "acceptance_rule": (
-            "The gate must contain at least one valid rerun report with measured_inflation=true. "
-            "Source-level metadata gaps alone are not score-inflation evidence."
+            "The gate must contain at least one inflation-proof valid rerun report with "
+            "measured_inflation=true. Source-level metadata gaps alone are not score-inflation "
+            "evidence."
         ),
     },
     {

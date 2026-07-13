@@ -141,11 +141,12 @@ or timing contract.
 Inflation-proof gate: `tools/benchmark_inflation_gate.py` is the hard blocker for any claim that a
 famous benchmark score is inflated. It requires a benchmark-specific WorldEpisode conversion,
 lineage/timing audit, published-policy rerun, corrected evaluation, and measured score drop. The
-current gate has one attempted DROID subset rerun report, zero valid famous-benchmark rerun
-reports, and therefore zero measured famous-benchmark inflation claims. The attempted DROID run is
-fail-closed because the local rerun environment could not satisfy the public-data/dependency path
-before the pinned Parquet shards were read. `python3 tools/benchmark_inflation_gate.py --required`
-should fail until real rerun artifacts are committed.
+current gate has one executed DROID subset rerun report, zero inflation-proof famous-benchmark rerun
+reports, and therefore zero measured famous-benchmark inflation claims. The DROID run is
+fail-closed for the inflation claim because the lineage source is only a task/camera-schema proxy,
+the protocol is not a published leaderboard reproduction, and the corrected proxy split does not
+reduce the offline score. `python3 tools/benchmark_inflation_gate.py --required` should fail until
+inflation-proof rerun artifacts are committed.
 
 Real-to-sim artifact: `tools/realtosim_contract_drift.py` adds a controlled proxy for the
 Gaussian/OpenUSD hype cycle. It shows that a drifted action interface can succeed in simulation and

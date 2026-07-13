@@ -709,6 +709,7 @@
   "benchmark_inflation_gate": {
     "aggregate": {
       "audited_benchmark_count": 5,
+      "executed_rerun_report_count": 1,
       "measured_inflation_claims": 0,
       "minimum_score_drop_for_inflation": 0.05,
       "ready_for_inflation_claim": false,
@@ -761,24 +762,21 @@
     "rerun_dir": "docs/experiments/benchmark_reruns",
     "rerun_reports": [
       {
-        "baseline_score": null,
+        "baseline_score": 0.4958081537296595,
         "benchmark_id": "droid",
         "claim_boundary": "Valid rerun evidence can support an inflation claim only for this benchmark, policy, protocol, subset, metric, and seed set.",
-        "corrected_score": null,
+        "corrected_score": 0.515540983544114,
         "errors": [
-          "worldepisode_conversion.pass must be true",
-          "worldepisode_conversion must name manifest and conversion_report artifacts",
-          "split_or_timing_audit.pass must be true",
-          "split_or_timing_audit must report baseline_lineage_overlap or timestamp_or_latency_fixed",
+          "lineage_source.sufficient_for_score_inflation_claim must be true for split-leakage inflation claims",
           "published_protocol must mark published_leaderboard_reproduction or faithful_published_protocol_reproduction true",
-          "evaluation must include numeric baseline_score and corrected_score",
-          "evaluation.seed_count must be at least 1"
+          "baseline_score must be greater than corrected_score for inflation"
         ],
+        "executed": true,
         "lineage_source_sufficient": false,
         "measured_inflation": false,
         "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
         "published_protocol_sufficient": false,
-        "score_drop": null,
+        "score_drop": -0.019732829814454567,
         "valid": false
       }
     ],
@@ -1248,10 +1246,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 142.539,
-      "digest_cache_resolution": 5.599,
-      "partition_pruning_queries": 0.164,
-      "resolver_routing": 57.396
+      "catalog_open_parse_and_index": 152.972,
+      "digest_cache_resolution": 8.587,
+      "partition_pruning_queries": 0.175,
+      "resolver_routing": 57.092
     }
   },
   "independent_fixture_check": {

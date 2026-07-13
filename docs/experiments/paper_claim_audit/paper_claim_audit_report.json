@@ -290,6 +290,7 @@
       "claim_id": "CLAIM.BENCHMARK_BOUNDARY.001",
       "evidence": {
         "audited_benchmark_count": 5,
+        "executed_rerun_report_count": 1,
         "measured_inflation_claims": 0,
         "ready_for_inflation_claim": false,
         "valid_rerun_report_count": 0
@@ -300,7 +301,8 @@
       "evidence_passed": true,
       "missing_paper_patterns": [],
       "paper_patterns": [
-        "zero valid famous-benchmark rerun reports",
+        "one executed DROID subset rerun",
+        "zero inflation-proof famous-benchmark rerun reports",
         "zero measured",
         "not a claim that their published scores are inflated"
       ],

@@ -488,17 +488,21 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             claim="Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
             evidence_artifacts=["docs/experiments/benchmark_inflation_gate/gate_report.json"],
             paper_patterns=[
-                "zero valid famous-benchmark rerun reports",
+                "one executed DROID subset rerun",
+                "zero inflation-proof famous-benchmark rerun reports",
                 "zero measured",
                 "not a claim that their published scores are inflated",
             ],
             evidence_passed=(
                 nested(bench_gate, ("aggregate", "audited_benchmark_count")) == 5
+                and nested(bench_gate, ("aggregate", "executed_rerun_report_count")) >= 1
+                and nested(bench_gate, ("aggregate", "valid_rerun_report_count")) == 0
                 and nested(bench_gate, ("aggregate", "measured_inflation_claims")) == 0
                 and nested(bench_gate, ("aggregate", "ready_for_inflation_claim")) is False
             ),
             evidence={
                 "audited_benchmark_count": nested(bench_gate, ("aggregate", "audited_benchmark_count")),
+                "executed_rerun_report_count": nested(bench_gate, ("aggregate", "executed_rerun_report_count")),
                 "valid_rerun_report_count": nested(bench_gate, ("aggregate", "valid_rerun_report_count")),
                 "measured_inflation_claims": nested(bench_gate, ("aggregate", "measured_inflation_claims")),
                 "ready_for_inflation_claim": nested(bench_gate, ("aggregate", "ready_for_inflation_claim")),
