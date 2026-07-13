@@ -9,15 +9,17 @@ The most dangerous failure is not a crash; it is a benchmark that looks successf
 reason. We audit ArmnetBench v0.1's single-arm SO-101 LeRobot release~\citep{armnetbench_lerobot_so101}
 by deriving eight WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene and
 camera-layout group. A standard random episode split trains on 320 episodes, tests on 80, and leaks
-all test scene lineages into training. The same Torch MLP state-action behavioral-cloning baseline
+all test scene lineages into training. The same Torch MLP state-action behavioral-cloning probe
 then reaches 0.850 offline imitation success under a fixed normalized-RMSE tolerance of 0.25.
 
 When the split is made scene-disjoint, the apparent success disappears. The held-out eye-drop scene
 lineages have zero overlap with training, the test set contains 100 episodes, and offline BC success
 drops to 0.000. Mean episode normalized RMSE rises from 0.183 to 0.363, a \(1.98\times\) increase.
-This is an offline action-imitation benchmark, not a physical rollout claim, but it exposes the
-scientific risk: a conventional split can reward memorizing a background world rather than learning
-a transferable manipulation behavior.
+This is an offline action-imitation benchmark, not a physical rollout claim or a claim about
+state-of-the-art LeRobot policies. Its purpose is narrower and diagnostic: it exposes that a
+conventional split can reward memorizing a background world rather than learning a transferable
+manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
+ACT, Diffusion Policy, or another LeRobot-native policy.
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the three experiment families whose outcomes
 change when world--episode semantics are made explicit.
@@ -35,7 +37,7 @@ change when world--episode semantics are made explicit.
     \node[anchor=west, font=\sffamily\scriptsize] at (-1.85,-0.08) {disjoint};
     \fill[webar=weGreen] (-0.45,-0.18) rectangle (-0.41,0.05);
     \node[anchor=west, font=\sffamily\scriptsize] at (-0.28,-0.07) {0.00};
-    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {BC success \(0.850\to0.000\)};
+    \node[wechip=weRose, fill=weRose!10] at (0,-0.78) {offline score \(0.850\to0.000\)};
     \node[font=\sffamily\scriptsize, text=weSlate] at (0,-1.15) {world lineage leakage};
   \end{scope}
 
@@ -79,12 +81,13 @@ on episode 0 of the pinned public SO-101 dataset
 the real Parquet metadata and data shards, builds a schema-valid WorldEpisode manifest and sidecar,
 exports a compact LeRobotDataset v3 package, reads it back, and asserts exact equality.
 
-The round trip preserves 303 rows of six-dimensional action tensors, 303 state rows, 303 sample
-timestamps, and two camera video timestamp ranges with maximum absolute error 0.0. It also preserves
-three physical-frame records through the sidecar. More importantly, it does not fake missing
-semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
-reported as source-absent rather than guessed. This is the difference between a convenient
-conversion and an auditable one.
+This is a smoke test for active conversion on a real public dataset, not a coverage claim for all
+LeRobot datasets. The round trip preserves 303 rows of six-dimensional action tensors, 303 state
+rows, 303 sample timestamps, and two camera video timestamp ranges with maximum absolute error 0.0.
+It also preserves three physical-frame records through the sidecar. More importantly, it does not
+fake missing semantics: camera extrinsics, robot/world calibration, action units, and controller
+latency are reported as source-absent rather than guessed. This is the difference between a
+convenient conversion and an auditable one.
 
 \paragraph{Case 3: the replay that drifted because time was underspecified.}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
@@ -119,18 +122,23 @@ unit contract even though the tensor shape is valid.
 
 \paragraph{Case 5: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
-nearest-neighbor control succeeds on 0.292 of shifted test cases. Adding unstructured 3D side
-information increases success to 0.342. WorldEpisode-style world-frame identity and counterfactual
-camera augmentation increase success to 0.592 over 120 deterministic test cases.
+nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
+unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame
+identity and counterfactual camera augmentation increase proxy success to 0.592 over 120
+deterministic test cases.
 
 \paragraph{Binding retention.}
 The same executable artifacts measure how much of the semantic contract is preserved by native
 containers alone. Each binding writes a native payload and a WorldEpisode sidecar, then the
-experiment reimports both and checks exact equality against a 23-field semantic projection.
-Table~\ref{tab:binding-retention} shows that common containers preserve only 17--39\% of the
-contract natively, while the sidecar recovers all fields for dataset/log/world bindings. A Gaussian
-asset binding alone preserves only 17\% natively and 30\% with limited sidecar metadata, confirming
-that an asset format is not an episode--world contract.
+experiment reimports both and checks exact equality against a predeclared 23-field semantic
+projection: episode identity/task outcome, world revision and asset descriptor, embodiment identity
+and URDF asset, frames/transforms, clocks/mappings, entity identity/roles/assets, action control and
+timing contracts, trace binding and asset descriptor, events, ordered deltas, provenance, quality,
+split lineage, and replay assumptions. This is an executable pilot projection, not a universal score
+of each format's value. Table~\ref{tab:binding-retention} shows that common containers preserve
+17--39\% of this projection natively, while the sidecar recovers all fields for the tested
+dataset/log/world bindings. A Gaussian asset binding alone preserves 17\% natively and 30\% with
+limited sidecar metadata, confirming that an asset format is not an episode--world contract.
 
 \begin{table}[htbp]
 \centering

@@ -7,8 +7,8 @@ converted, replayed, augmented, or used for evaluation? A valid package must ans
 Each episode references one immutable, content-addressed world revision plus an ordered list of
 episode-specific deltas. Changing geometry, metric scale, calibration, collision proxies, physical
 parameters, entity decomposition, object identity, or task-relevant fixtures creates a new world
-revision. This prevents two datasets from silently using the same filename for different physical
-worlds, or different filenames for the same world.
+revision. This makes it detectable when two datasets silently use the same filename for different
+physical worlds, or different filenames for the same world.
 
 \paragraph{What did the robot see and touch?}
 Objects, robot links, sensors, fixtures, support surfaces, semantic regions, and generated assets

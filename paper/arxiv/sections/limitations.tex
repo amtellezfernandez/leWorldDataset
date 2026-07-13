@@ -3,6 +3,36 @@
 The current evidence is deliberately scoped. It is meant to expose hidden failure mechanisms, not
 to claim full robot-learning generality.
 
+Table~\ref{tab:evidence-boundaries} states the boundary of each empirical claim. This is important
+because the paper argues for a semantic contract, not for a finished benchmark suite.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{What the current evidence supports, and what it does not yet support.}
+\label{tab:evidence-boundaries}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}
+                >{\raggedright\arraybackslash}p{0.43\linewidth}
+                >{\raggedright\arraybackslash}p{0.32\linewidth}@{}}
+\toprule
+Claim area & Current evidence & Boundary \\
+\midrule
+Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable
+Torch BC probe & Offline imitation proxy; no real-robot rollout or ACT/Diffusion result \\
+Conversion & Pinned LeRobotDataset v3 episode round trip with exact tensor and timestamp equality &
+One dataset and one episode; broader dataset coverage remains future work \\
+Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-servo replay & One trace
+and one MuJoCo adapter; Isaac mapping is emitted but untested \\
+Validation & Fourteen injected requirement faults plus two independent hand-authored fixtures &
+Controlled faults; no survey of naturally occurring third-party dataset bugs yet \\
+Binding retention & Predeclared 23-field semantic projection checked by executable artifacts & Pilot
+projection; not a universal score of each storage format \\
+Adoption & Public schema, validator, fixtures, and governance files & No independent implementation
+or external dataset release yet \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \paragraph{Manipulation scope.}
 The current profile targets rigid tabletop manipulation with fixed-base single- or dual-arm robots.
 Humanoids, locomotion, deformables, fluids, and multi-agent environments require later profiles and
@@ -11,7 +41,9 @@ new conformance fixtures.
 \paragraph{Offline leakage result.}
 The ArmnetBench experiment is an offline behavioral-cloning audit, not a physical rollout. Its
 value is that it demonstrates how random episode splits can leak world lineage and inflate
-evaluation, not that it measures real-robot success directly.
+evaluation, not that it measures real-robot success directly. The current baseline is an executable
+Torch MLP probe over LeRobot tensors; ACT and Diffusion Policy should be run on the committed split
+manifest before claiming impact on common LeRobot training recipes.
 
 \paragraph{Replay is not bit-identical physics.}
 WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not
@@ -24,3 +56,9 @@ The converter, validator, and reports are executable, but independent implementa
 needed before the project should be treated as a mature interoperability standard. The next
 empirical step is to run the same protocol on larger multi-camera manipulation datasets and
 externally maintained adapters.
+
+\paragraph{Natural failure corpus.}
+The injected conformance faults prove that requirements are executable and diagnosable. They do not
+yet prove prevalence in the wild. A stronger version of this paper should report real faults found
+across multiple public datasets, how often each requirement fails, and whether dataset maintainers
+agree with the diagnostics.

@@ -6,6 +6,11 @@ world lineage, replay can drift because control timing is underspecified, and co
 physical semantics that the target container has no native place to store. WorldEpisode is useful
 only because these failures are observable and testable. The sidecar is the mechanism; the
 scientific claim is that explicit world--episode semantics change what a robotics result means.
+The contribution is therefore a set of falsifiable invariants: persistent entity identity must be
+consistent across observations and assets, action timestamps must distinguish command and effective
+time, representation roles must separate appearance from physics, and evaluation splits must be able
+to exclude shared world lineage. A container adapter either preserves those invariants, externalizes
+them with declared loss, or fails conformance.
 
 \paragraph{Not another monolithic binary.}
 WorldEpisode has a small semantic core and multiple bindings. LeRobotDataset v3 is the

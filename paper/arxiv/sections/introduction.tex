@@ -38,7 +38,7 @@ WorldEpisode is:
 \begin{itemize}[leftmargin=*]
   \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, or a reference package;
   \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, and future assets;
-  \item \textbf{runtime-neutral}: transferable to Isaac Sim, MuJoCo, SAPIEN, Genesis, and other simulators;
+  \item \textbf{runtime-neutral}: mappable to Isaac Sim, MuJoCo, SAPIEN, Genesis, and other simulators;
   \item \textbf{loss-explicit}: conversions may be lossy, but never silently lossy.
 \end{itemize}
 
@@ -47,4 +47,6 @@ interchange profile for world--episode semantics: identity, frames, clocks, acti
 representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits. The
 current artifact includes a JSON Schema, semantic validator, round-trip binding artifacts, an
 active public LeRobotDataset v3 conversion experiment, hand-authored independent fixtures, and
-controlled experiments for replay drift, leakage, and counterfactual augmentation.
+controlled experiments for replay drift, leakage, and counterfactual augmentation. The empirical
+claims in this draft are intentionally bounded: they demonstrate executable failure mechanisms and
+auditable conversion semantics, not a completed multi-lab benchmark or real-robot deployment study.

@@ -7,6 +7,7 @@
 \usepackage{microtype}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -80,25 +81,26 @@
 Robot-learning pipelines can fail while every file still looks valid: a controller may interpret
 degrees as radians, a replay may treat a command timestamp as an actuation timestamp, or a random
 train/test split may leak the same reconstructed room into both sides of an evaluation. We show that
-these are not bookkeeping annoyances but measurable threats to robot-learning validity. On a public
-ArmnetBench LeRobot release, a standard random episode split leaks every tested world lineage and
-gives a Torch behavioral-cloning baseline 0.850 offline imitation success; enforcing a
-scene-disjoint split drops leakage to zero and success to 0.000. On a real SO-101 LeRobot
-trajectory, ignoring the inferred four-frame, 133 ms control delay gives 4.732 degree validation
-joint RMSE, while timestamp-aware replay reduces it to 1.862 degrees; a tested MuJoCo replay drops
-from 3.425 to 1.563 degrees. We introduce \emph{WorldEpisode}, a storage-neutral sidecar contract
-that prevents these silent failures by binding each episode to an immutable world revision through
-persistent identity, explicit space/time, representation roles, interaction events, and provenance.
+these are not bookkeeping annoyances but measurable threats to robot-learning validity under scoped,
+reproducible tests. On a public ArmnetBench LeRobot release, a standard random episode split leaks
+every tested world lineage and gives a Torch behavioral-cloning probe 0.850 offline imitation
+success; enforcing a scene-disjoint split drops leakage to zero and the same offline score to 0.000.
+On a real SO-101 LeRobot trajectory, ignoring the inferred four-frame, 133 ms control delay gives
+4.732 degree validation joint RMSE, while timestamp-aware replay reduces it to 1.862 degrees; a
+tested MuJoCo position-servo replay drops from 3.425 to 1.563 degrees. We introduce
+\emph{WorldEpisode}, a storage-neutral sidecar contract that makes these silent failures detectable
+by binding each episode to an immutable world revision through persistent identity, explicit
+space/time, representation roles, interaction events, and provenance.
 WorldEpisode does not replace LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, or glTF Gaussian splats;
 it specifies the invariants those systems must preserve for reproducible conversion, replay, and
 evaluation. The reference implementation includes an active public
 LeRobotDataset-to-WorldEpisode-to-LeRobotDataset converter, executable binding artifacts, a
-semantic validator, and independent fixtures. Across seven bindings, native containers preserve
-only 17--39\% of the contract, while WorldEpisode sidecars recover the complete contract for
-dataset/log/world bindings. The validator detects all 14 injected fault classes and all
-hand-authored independent fixture failures. The central result is simple: bad data plumbing can make
-good robots look better than they are, and explicit world--episode semantics make those failures
-detectable before deployment.
+semantic validator, and independent fixtures. Across seven pilot bindings, native containers
+preserve 17--39\% of a predeclared 23-field semantic projection, while WorldEpisode sidecars recover
+that projection for dataset/log/world bindings. The validator detects all 14 injected fault classes
+and all hand-authored independent fixture failures. The central result is simple: bad data plumbing
+can make robot-learning results look better than they are, and explicit world--episode semantics
+make those failures auditable before deployment.
 \end{abstract}
 
 \input{sections/introduction}
