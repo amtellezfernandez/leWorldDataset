@@ -59,6 +59,10 @@ REPRODUCTION_COMMANDS = [
         "command": "python3 tools/release_manifest.py --strict",
     },
     {
+        "name": "verify committed release manifest",
+        "command": "python3 tools/release_manifest.py --verify --strict",
+    },
+    {
         "name": "generate this submission packet",
         "command": "python3 tools/submission_packet.py --strict",
     },

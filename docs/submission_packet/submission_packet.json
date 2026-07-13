@@ -283,6 +283,10 @@
       "name": "build digest release manifest"
     },
     {
+      "command": "python3 tools/release_manifest.py --verify --strict",
+      "name": "verify committed release manifest"
+    },
+    {
       "command": "python3 tools/submission_packet.py --strict",
       "name": "generate this submission packet"
     },

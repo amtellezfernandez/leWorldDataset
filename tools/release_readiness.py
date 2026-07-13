@@ -117,7 +117,7 @@ def ci_checks() -> list[Check]:
         "python tools/run_experiments.py",
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
-        "python tools/release_manifest.py --strict",
+        "python tools/release_manifest.py --verify --strict",
         "python tools/submission_packet.py --strict",
         "python tools/release_readiness.py --strict-rfc",
         "python tools/artifact_freshness.py --strict",

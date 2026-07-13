@@ -167,6 +167,7 @@ WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
 python3 tools/release_manifest.py --strict
+python3 tools/release_manifest.py --verify --strict
 python3 tools/submission_packet.py --strict
 python3 tools/release_readiness.py --strict-rfc
 python3 tools/artifact_freshness.py --strict
@@ -245,7 +246,7 @@ To run the public RFC release gate:
 ```bash
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
-python3 tools/release_manifest.py --strict
+python3 tools/release_manifest.py --verify --strict
 python3 tools/submission_packet.py --strict
 python3 tools/release_readiness.py --strict-rfc
 ```
@@ -258,7 +259,8 @@ cross-simulator replay.
 yet and records the commands needed to produce the missing evidence. `tools/paper_claim_audit.py`
 checks the main numerical and boundary claims in the paper against committed experiment artifacts.
 `tools/release_manifest.py` records SHA-256 digests for stable public evidence and normalized
-SHA-256 digests for timing-jitter reports.
+SHA-256 digests for timing-jitter reports; `--verify --strict` checks the committed manifest
+without rewriting it.
 `tools/submission_packet.py` renders the reviewer-facing packet tying measured claims, open results,
 required artifacts, and reproduction commands together.
 

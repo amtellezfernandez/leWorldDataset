@@ -68,6 +68,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | validate open unclaimed-result gates | `python3 tools/open_reproduction_gates.py --strict` |
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |
 | build digest release manifest | `python3 tools/release_manifest.py --strict` |
+| verify committed release manifest | `python3 tools/release_manifest.py --verify --strict` |
 | generate this submission packet | `python3 tools/submission_packet.py --strict` |
 | check RFC release readiness | `python3 tools/release_readiness.py --strict-rfc` |
 | reject stale generated artifacts | `python3 tools/artifact_freshness.py --strict` |

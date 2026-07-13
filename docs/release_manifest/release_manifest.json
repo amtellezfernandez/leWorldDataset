@@ -13,6 +13,10 @@
   },
   "audit_date": "2026-07-13",
   "claim_boundary": "Exact digests are used for stable artifacts. Timing-jitter reports are hashed after normalizing only wall-clock benchmark timing values.",
+  "commands": {
+    "generate": "python3 tools/release_manifest.py --strict",
+    "verify": "python3 tools/release_manifest.py --verify --strict"
+  },
   "entries": [
     {
       "category": "public_evidence",
@@ -30,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "README.md",
-      "sha256": "313305883327715cc2b9860b29e9bcad4ba60539c28cb3f8326f10bb4cf014b9"
+      "sha256": "0434eb38d61b04ed0a75be6297373b3d3db6bf181eb32cd939422727e72a6f18"
     },
     {
       "category": "public_evidence",
@@ -300,7 +304,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": ".github/workflows/ci.yml",
-      "sha256": "8afa7a7b5bd082a59b48cb66eab22cd6e0878fcba9a11561e83bf6175aa074ab"
+      "sha256": "d06cd1112f0f1b2955a1569f02b01c7f775916447d3bcdc52c7da4605b37c8fc"
     },
     {
       "category": "release_script",
@@ -309,7 +313,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "2df903c1b28848f48f1626fb630429f965846f07058dd6acbd53031bb2cf855e"
+      "sha256": "edf330296fba3aa141e7f3d64a375c6e24be7311916968f3e86131c0bf616b25"
     },
     {
       "category": "release_script",
@@ -345,7 +349,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "9249827657d04adc05658859427b5f58b3b0a181fc7eb8cae21950cefea8f6b8"
+      "sha256": "30f0a7367f8d48ae6eebe42ce08c7982add5c6fb51fd2860bb8b0167e117428a"
     },
     {
       "category": "release_script",
@@ -354,7 +358,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "4f6f6e3b584ca21b03ae559aaf743622466d09aef1d59e775f4dde1dd312411b"
+      "sha256": "b545a4002498eae1d3d303f4da60752c317b7dda6480ae2c1d0fd18a86a4f7ac"
     },
     {
       "category": "release_script",
@@ -363,7 +367,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "32e426dc68a4c55406eb94ddab522c4ac9fb13ea6152d840a5dc51db1b2d3324"
+      "sha256": "dce26489e7e05f2baba6ed9054b6ff868404156aa6ca673265a9f23618085db4"
     },
     {
       "category": "release_script",

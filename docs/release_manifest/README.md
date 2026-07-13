@@ -12,13 +12,15 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 - Normalized timing digests: 4
 - Missing artifacts: 0
 - Empty artifacts: 0
+- Generate: `python3 tools/release_manifest.py --strict`
+- Verify without rewriting: `python3 tools/release_manifest.py --verify --strict`
 
 ## Entries
 
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
 | `WorldEpisode.pdf` | public_evidence | exact | `b169f8cf188b00ac` |
-| `README.md` | public_evidence | exact | `313305883327715c` |
+| `README.md` | public_evidence | exact | `0434eb38d61b04ed` |
 | `paper/arxiv/main.tex` | public_evidence | exact | `8dff57d97d0708f7` |
 | `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `82ea5dfebd8a2f29` |
 | `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `4361ede816f65f09` |
@@ -47,14 +49,14 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/reference-release.md` | public_evidence | exact | `6599c4af16075d09` |
 | `GOVERNANCE.md` | public_evidence | exact | `44145db7a041ebfe` |
 | `CITATION.cff` | public_evidence | exact | `9a0c9bde871ab55a` |
-| `.github/workflows/ci.yml` | release_script | exact | `8afa7a7b5bd082a5` |
-| `Makefile` | release_script | exact | `2df903c1b28848f4` |
+| `.github/workflows/ci.yml` | release_script | exact | `d06cd1112f0f1b29` |
+| `Makefile` | release_script | exact | `edf330296fba3aa1` |
 | `tools/run_experiments.py` | release_script | exact | `4f1a93a2cc77145b` |
 | `tools/open_reproduction_gates.py` | release_script | exact | `97956c41d25bc096` |
 | `tools/paper_claim_audit.py` | release_script | exact | `fa788d5cc2d68933` |
-| `tools/release_manifest.py` | release_script | exact | `9249827657d04adc` |
-| `tools/submission_packet.py` | release_script | exact | `4f6f6e3b584ca21b` |
-| `tools/release_readiness.py` | release_script | exact | `32e426dc68a4c554` |
+| `tools/release_manifest.py` | release_script | exact | `30f0a7367f8d48ae` |
+| `tools/submission_packet.py` | release_script | exact | `b545a4002498eae1` |
+| `tools/release_readiness.py` | release_script | exact | `dce26489e7e05f2b` |
 | `tools/artifact_freshness.py` | release_script | exact | `872fb2ac81b56cfc` |
 
 ## Validation

@@ -146,6 +146,13 @@ def build_entry(path: str, category: str) -> dict[str, Any]:
 
 
 def build_manifest(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
+    manifest = compute_manifest(output_dir)
+    write_json(output_dir / "release_manifest.json", manifest)
+    write_text(output_dir / "README.md", render_markdown(manifest))
+    return manifest
+
+
+def compute_manifest(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     entries = [
         *[build_entry(path, "public_evidence") for path in PUBLIC_EVIDENCE_ARTIFACTS],
         *[build_entry(path, "release_script") for path in RELEASE_SCRIPTS],
@@ -167,6 +174,10 @@ def build_manifest(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
             "Exact digests are used for stable artifacts. Timing-jitter reports are hashed after "
             "normalizing only wall-clock benchmark timing values."
         ),
+        "commands": {
+            "generate": "python3 tools/release_manifest.py --strict",
+            "verify": "python3 tools/release_manifest.py --verify --strict",
+        },
         "entries": entries,
         "aggregate": {
             "entry_count": len(entries),
@@ -188,9 +199,100 @@ def build_manifest(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
             "markdown": rel(output_dir / "README.md"),
         },
     }
-    write_json(output_dir / "release_manifest.json", manifest)
-    write_text(output_dir / "README.md", render_markdown(manifest))
     return manifest
+
+
+def comparable_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: manifest.get(key)
+        for key in (
+            "schema",
+            "audit_date",
+            "status",
+            "hash_algorithm",
+            "claim_boundary",
+            "entries",
+            "aggregate",
+            "validation",
+            "artifacts",
+        )
+    }
+
+
+def verification_details(expected: dict[str, Any], actual: dict[str, Any]) -> dict[str, Any]:
+    expected_entries = {entry.get("path"): entry for entry in expected.get("entries", [])}
+    actual_entries = {entry.get("path"): entry for entry in actual.get("entries", [])}
+    expected_paths = set(expected_entries)
+    actual_paths = set(actual_entries)
+    digest_mismatches = []
+    mode_mismatches = []
+    for path in sorted(expected_paths & actual_paths):
+        expected_entry = expected_entries[path]
+        actual_entry = actual_entries[path]
+        if expected_entry.get("sha256") != actual_entry.get("sha256"):
+            digest_mismatches.append(
+                {
+                    "path": path,
+                    "expected": expected_entry.get("sha256"),
+                    "actual": actual_entry.get("sha256"),
+                }
+            )
+        if expected_entry.get("digest_mode") != actual_entry.get("digest_mode"):
+            mode_mismatches.append(
+                {
+                    "path": path,
+                    "expected": expected_entry.get("digest_mode"),
+                    "actual": actual_entry.get("digest_mode"),
+                }
+            )
+
+    expected_top = comparable_manifest(expected)
+    actual_top = comparable_manifest(actual)
+    metadata_mismatches = [
+        key
+        for key in expected_top
+        if key != "entries" and expected_top.get(key) != actual_top.get(key)
+    ]
+    return {
+        "missing_paths": sorted(expected_paths - actual_paths),
+        "unexpected_paths": sorted(actual_paths - expected_paths),
+        "digest_mismatches": digest_mismatches,
+        "mode_mismatches": mode_mismatches,
+        "metadata_mismatches": metadata_mismatches,
+    }
+
+
+def verify_manifest(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
+    manifest_path = output_dir / "release_manifest.json"
+    expected = compute_manifest(output_dir)
+    if not manifest_path.exists():
+        return {
+            "schema": "worldepisode_release_manifest_verification_v1",
+            "status": "fail",
+            "manifest": rel(manifest_path),
+            "validation": {
+                "passed": False,
+                "error": "release manifest is missing",
+            },
+        }
+    actual = json.loads(manifest_path.read_text(encoding="utf-8"))
+    details = verification_details(expected, actual)
+    passed = comparable_manifest(expected) == comparable_manifest(actual)
+    return {
+        "schema": "worldepisode_release_manifest_verification_v1",
+        "status": "pass" if passed else "fail",
+        "manifest": rel(manifest_path),
+        "aggregate": {
+            "expected_entry_count": len(expected.get("entries", [])),
+            "actual_entry_count": len(actual.get("entries", [])),
+            "digest_mismatch_count": len(details["digest_mismatches"]),
+            "metadata_mismatch_count": len(details["metadata_mismatches"]),
+        },
+        "validation": {
+            "passed": passed,
+            **details,
+        },
+    }
 
 
 def render_markdown(manifest: dict[str, Any]) -> str:
@@ -215,6 +317,8 @@ Status: `{manifest["status"]}`.
 - Normalized timing digests: {manifest["aggregate"]["normalized_digest_count"]}
 - Missing artifacts: {manifest["aggregate"]["missing_count"]}
 - Empty artifacts: {manifest["aggregate"]["empty_count"]}
+- Generate: `{manifest["commands"]["generate"]}`
+- Verify without rewriting: `{manifest["commands"]["verify"]}`
 
 ## Entries
 
@@ -234,8 +338,16 @@ Status: `{manifest["status"]}`.
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--verify", action="store_true", help="verify the committed manifest without rewriting it")
     parser.add_argument("--strict", action="store_true", help="exit non-zero unless manifest validates")
     args = parser.parse_args()
+    if args.verify:
+        verification = verify_manifest(args.output_dir)
+        print(json.dumps(verification, indent=2, sort_keys=True))
+        if args.strict and verification["status"] != "pass":
+            return 1
+        return 0
+
     manifest = build_manifest(args.output_dir)
     print(
         json.dumps(
