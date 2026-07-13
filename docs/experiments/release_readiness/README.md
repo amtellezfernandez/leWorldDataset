@@ -25,7 +25,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (479120 bytes) |
 | DOC.005 | paper source exists | True | error | paper/arxiv/main.tex (5291 bytes) |
 | DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17534 bytes) |
-| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147867 bytes) |
+| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147868 bytes) |
 | DOC.008 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
 | DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (1186 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
