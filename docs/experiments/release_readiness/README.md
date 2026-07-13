@@ -10,6 +10,8 @@ A ready RFC release means the repository is executable and evidence-gated. It do
 
 Open reproduction gate index: `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
 
+Paper claim audit: `docs/experiments/paper_claim_audit/paper_claim_audit_report.json`.
+
 This gate adapts the evidence workflow pattern from `~/sota/wayspan`: compact tracked artifacts,
 strict claim gates, and explicit blockers for claims that are not yet proven.
 
@@ -42,6 +44,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | EVID.010 | natural failure corpus has scoped evidence | True | warning | five-dataset count met; maintainer feedback still open |
 | GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5 |
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
+| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0 |
 
 ## Blocked Stronger Claims
 

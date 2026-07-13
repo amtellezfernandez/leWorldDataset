@@ -6,6 +6,7 @@ The repository now has an executable release-readiness gate:
 
 ```bash
 python3 tools/open_reproduction_gates.py --strict
+python3 tools/paper_claim_audit.py --strict
 python3 tools/release_readiness.py --strict-rfc
 ```
 
@@ -16,6 +17,8 @@ claims remain blocked until ACT/Diffusion or rollout results, valid famous-bench
 maintainer feedback, external adoption, and broader simulator replay evidence exist.
 Each blocked stronger claim is mapped to a command-backed open reproduction gate in
 `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
+The main numerical and boundary claims in the paper are separately checked against committed
+evidence in `docs/experiments/paper_claim_audit/paper_claim_audit_report.json`.
 
 The first release should beat larger real-to-sim datasets in completeness, interoperability, and
 auditability rather than in raw scene count.

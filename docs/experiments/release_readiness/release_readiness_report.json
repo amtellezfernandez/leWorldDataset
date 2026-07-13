@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 25,
-    "passed_count": 25,
+    "check_count": 26,
+    "passed_count": 26,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -264,6 +264,14 @@
       "name": "blocked claims have reproduction commands",
       "passed": true,
       "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "CLAIM.001",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0",
+      "name": "paper claims are evidence-backed",
+      "passed": true,
+      "severity": "error"
     }
   ],
   "claim_boundary": "A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full simulator-neutral replay claims are complete.",
@@ -279,6 +287,17 @@
       "errors": [],
       "passed": true
     }
+  },
+  "paper_claim_audit": {
+    "aggregate": {
+      "claim_count": 11,
+      "failed_claim_ids": [],
+      "failed_count": 0,
+      "missing_paper_pattern_count": 0,
+      "passed_count": 11
+    },
+    "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
+    "status": "pass"
   },
   "rfc_release_ready": true,
   "schema": "worldepisode_release_readiness_v1",

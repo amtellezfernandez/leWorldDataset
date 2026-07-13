@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "release_readiness"
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
+PAPER_CLAIM_AUDIT_JSON = ROOT / "docs" / "experiments" / "paper_claim_audit" / "paper_claim_audit_report.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -253,6 +254,46 @@ def open_gate_checks(blockers: list[dict[str, Any]]) -> list[Check]:
     ]
 
 
+def paper_claim_checks() -> list[Check]:
+    if not PAPER_CLAIM_AUDIT_JSON.exists():
+        return [
+            Check(
+                "CLAIM.001",
+                "paper claim audit exists",
+                False,
+                f"{rel(PAPER_CLAIM_AUDIT_JSON)} missing",
+            )
+        ]
+
+    try:
+        report = load_json(PAPER_CLAIM_AUDIT_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "CLAIM.001",
+                "paper claim audit parses",
+                False,
+                f"{rel(PAPER_CLAIM_AUDIT_JSON)}: {exc}",
+            )
+        ]
+
+    return [
+        Check(
+            "CLAIM.001",
+            "paper claims are evidence-backed",
+            report.get("schema") == "worldepisode_paper_claim_audit_v1"
+            and report.get("status") == "pass"
+            and nested(report, ("aggregate", "claim_count"), 0) >= 10
+            and nested(report, ("aggregate", "failed_count")) == 0,
+            (
+                f"{rel(PAPER_CLAIM_AUDIT_JSON)} claims="
+                f"{nested(report, ('aggregate', 'claim_count'))}, failed="
+                f"{nested(report, ('aggregate', 'failed_count'))}"
+            ),
+        )
+    ]
+
+
 def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
@@ -317,7 +358,9 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     ]
     blockers = claim_blockers(results)
     checks.extend(open_gate_checks(blockers))
+    checks.extend(paper_claim_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}
+    paper_claim_report = load_json(PAPER_CLAIM_AUDIT_JSON) if PAPER_CLAIM_AUDIT_JSON.exists() else {}
     blocking_errors = [check for check in checks if check.severity == "error" and not check.passed]
     warning_failures = [check for check in checks if check.severity != "error" and not check.passed]
     rfc_release_ready = not blocking_errors
@@ -346,6 +389,11 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
             "artifact": rel(OPEN_GATES_JSON),
             "aggregate": open_gate_report.get("aggregate", {}),
             "validation": open_gate_report.get("validation", {}),
+        },
+        "paper_claim_audit": {
+            "artifact": rel(PAPER_CLAIM_AUDIT_JSON),
+            "aggregate": paper_claim_report.get("aggregate", {}),
+            "status": paper_claim_report.get("status"),
         },
         "wayspan_pattern_reused": {
             "source": "~/sota/wayspan/docs/benchmark_evidence_workflow.md",
@@ -382,6 +430,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         for item in report["blocked_stronger_claims"]
     ]
     open_gates = report.get("open_reproduction_gates", {})
+    paper_claim_audit = report.get("paper_claim_audit", {})
     return f"""# Release Readiness
 
 Status: {report["status"]}.
@@ -393,6 +442,8 @@ Full standard ready: `{report["full_standard_ready"]}`.
 {report["claim_boundary"]}
 
 Open reproduction gate index: `{open_gates.get("artifact")}`.
+
+Paper claim audit: `{paper_claim_audit.get("artifact")}`.
 
 This gate adapts the evidence workflow pattern from `~/sota/wayspan`: compact tracked artifacts,
 strict claim gates, and explicit blockers for claims that are not yet proven.
