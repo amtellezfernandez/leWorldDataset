@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://worldepisode.org/schemas/conformance-requirements-v0.schema.json",
-  "title": "WorldEpisode Conformance Requirements v0 draft",
+  "title": "WorldEpisode Conformance Requirements v0 RFC",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "requirements", "profiles"],

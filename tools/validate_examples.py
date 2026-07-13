@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate WorldEpisode examples against their draft schemas."""
+"""Validate WorldEpisode examples against their v0 schemas."""
 
 from __future__ import annotations
 

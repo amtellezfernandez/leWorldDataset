@@ -1,6 +1,6 @@
 # WorldEpisode Conformance Profiles
 
-Status: draft.
+Status: active v0 profile set.
 
 Profiles are composable. A dataset can claim several profiles if it passes every required rule for
 each claimed profile.

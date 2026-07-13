@@ -1,6 +1,6 @@
 # Production-Scale Dataset Architecture
 
-Status: draft.
+Status: v0 RFC architecture.
 
 The single-episode `*.worldepisode.json` record is not the production dataset container. It is the
 core semantic record for one episode. A corpus that spans laboratories, robot embodiments, capture
@@ -35,7 +35,7 @@ A dataset-scale manifest declares:
   split membership, time ranges, and embodiment/task queries;
 - append-only release snapshots, parent versions, supersession records, and tombstones.
 
-The draft machine-readable schema is
+The v0 machine-readable schema is
 [`schemas/worldepisode-dataset-v0.schema.json`](../schemas/worldepisode-dataset-v0.schema.json).
 The example
 [`examples/scalable-corpus.worldepisode-dataset.json`](../examples/scalable-corpus.worldepisode-dataset.json)

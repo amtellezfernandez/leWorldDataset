@@ -28,8 +28,8 @@ over time without silent data corruption.
 
 - `paper/arxiv/` - arXiv-ready LaTeX paper source.
 - `paper/` - Markdown paper notes and outline.
-- `spec/` - normative specification drafts.
-- `schemas/` - machine-readable JSON Schema drafts.
+- `spec/` - evidence-gated v0 RFC specification.
+- `schemas/` - machine-readable v0 JSON Schemas.
 - `conformance/` - requirement IDs, profiles, generated and independent fixture corpora.
 - `docs/` - bindings, SDK contract, controlled results, research plan, and reference release plan.
 - `examples/` - small valid layout examples.
@@ -52,25 +52,25 @@ WorldEpisode instantiates USS for robot-learning episodes. Gaussian splats are a
 and demonstration, not the core claim. The stronger claim is persistent, verifiable spatial-state
 interoperability, with robotics used as the hardest current stress test.
 
-## Current Drafts
+## Evidence-Gated RFC Artifacts
 
 - [Paper PDF](WorldEpisode.pdf)
 - [arXiv LaTeX paper](paper/arxiv/main.tex)
 - [Markdown paper notes](paper/le-world-layout.md)
 - [USS framing note](docs/universal-spatial-state.md)
-- [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
-- [WorldEpisode JSON Schema draft](schemas/worldepisode-core-v0.schema.json)
-- [WorldEpisode dataset manifest schema draft](schemas/worldepisode-dataset-v0.schema.json)
-- [Conformance JSON Schema draft](schemas/conformance-requirements-v0.schema.json)
-- [World layout profile draft](spec/le-world-layout-v0.1.md)
-- [World layout JSON Schema draft](schemas/le-world-layout-v0.schema.json)
+- [WorldEpisode v0.1 RFC spec](spec/worldepisode-v0.1.md)
+- [WorldEpisode JSON Schema v0](schemas/worldepisode-core-v0.schema.json)
+- [WorldEpisode dataset manifest schema v0](schemas/worldepisode-dataset-v0.schema.json)
+- [Conformance JSON Schema v0](schemas/conformance-requirements-v0.schema.json)
+- [World layout profile v0.1 RFC](spec/le-world-layout-v0.1.md)
+- [World layout JSON Schema v0](schemas/le-world-layout-v0.schema.json)
 - [Conformance requirements](conformance/requirements.md)
 - [Machine-readable requirements](conformance/requirements.v0.json)
 - [Conformance profiles](conformance/profiles.md)
 - [USS-Core-23 semantic projection](conformance/projections/uss-core-23.v0.json)
 - [Pilot conformance corpus](conformance/fixtures/pilot/manifest.json)
 - [Independent conformance fixtures](conformance/fixtures/independent/manifest.json)
-- [Bindings draft](docs/bindings.md)
+- [Bindings RFC](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
 - [Production-scale dataset architecture](docs/production-scale.md)
 - [Dataset-scale manifest audit artifacts](docs/experiments/dataset_scale_audit)
@@ -106,7 +106,7 @@ interoperability, with robotics used as the hardest current stress test.
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Release readiness gate](docs/experiments/release_readiness)
-- [Governance draft](GOVERNANCE.md)
+- [Governance](GOVERNANCE.md)
 - [Minimal example](examples/minimal-static-world.layout.json)
 - [Minimal WorldEpisode example](examples/minimal.worldepisode.json)
 - [Scalable corpus manifest example](examples/scalable-corpus.worldepisode-dataset.json)
@@ -166,9 +166,10 @@ python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/submission_packet.py --strict
+python3 tools/public_maturity_audit.py --strict
 python3 tools/release_manifest.py --strict
 python3 tools/release_manifest.py --verify --strict
-python3 tools/submission_packet.py --strict
 python3 tools/release_readiness.py --strict-rfc
 python3 tools/artifact_freshness.py --strict
 ```
@@ -246,8 +247,9 @@ To run the public RFC release gate:
 ```bash
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
-python3 tools/release_manifest.py --verify --strict
 python3 tools/submission_packet.py --strict
+python3 tools/public_maturity_audit.py --strict
+python3 tools/release_manifest.py --verify --strict
 python3 tools/release_readiness.py --strict-rfc
 ```
 

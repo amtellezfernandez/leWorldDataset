@@ -55,16 +55,20 @@ REPRODUCTION_COMMANDS = [
         "command": "python3 tools/paper_claim_audit.py --strict",
     },
     {
+        "name": "generate this submission packet",
+        "command": "python3 tools/submission_packet.py --strict",
+    },
+    {
+        "name": "audit public maturity language",
+        "command": "python3 tools/public_maturity_audit.py --strict",
+    },
+    {
         "name": "build digest release manifest",
         "command": "python3 tools/release_manifest.py --strict",
     },
     {
         "name": "verify committed release manifest",
         "command": "python3 tools/release_manifest.py --verify --strict",
-    },
-    {
-        "name": "generate this submission packet",
-        "command": "python3 tools/submission_packet.py --strict",
     },
     {
         "name": "check RFC release readiness",

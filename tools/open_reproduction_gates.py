@@ -254,7 +254,7 @@ def validate_report(report: dict[str, Any]) -> list[str]:
         if not gate.get("acceptance_rule"):
             errors.append(f"{blocker_id} lacks acceptance rule")
     paper = PAPER_LIMITATIONS.read_text(encoding="utf-8") if PAPER_LIMITATIONS.exists() else ""
-    if "\\begin{openresult}{results not claimed in this draft}" not in paper:
+    if "\\begin{openresult}{results not claimed in this release}" not in paper:
         errors.append("paper limitations section must include the amber open-result callout")
     evaluation = PAPER_EVALUATION.read_text(encoding="utf-8") if PAPER_EVALUATION.exists() else ""
     for callout in (

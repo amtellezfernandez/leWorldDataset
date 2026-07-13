@@ -232,7 +232,7 @@
     },
     {
       "boundary": "Source-level call-out audit; no published-score inflation claim.",
-      "claim": "Famous benchmark audit is fail-closed and makes zero inflation claims in this draft.",
+      "claim": "Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
       "claim_id": "CLAIM.BENCHMARK_BOUNDARY.001",
       "evidence": {
         "audited_benchmark_count": 5,
@@ -277,7 +277,7 @@
         "\\begin{openresult}{ACT/Diffusion and rollout impact}",
         "\\begin{openresult}{same-trace second-runtime replay}",
         "\\begin{openresult}{famous-benchmark score-inflation proof}",
-        "\\begin{openresult}{results not claimed in this draft}",
+        "\\begin{openresult}{results not claimed in this release}",
         "Open result, not claimed",
         "open_reproduction_gates.json"
       ],

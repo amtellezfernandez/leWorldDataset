@@ -407,7 +407,7 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.BENCHMARK_BOUNDARY.001",
-            claim="Famous benchmark audit is fail-closed and makes zero inflation claims in this draft.",
+            claim="Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
             evidence_artifacts=["docs/experiments/benchmark_inflation_gate/gate_report.json"],
             paper_patterns=[
                 "zero valid famous-benchmark rerun reports",
@@ -439,7 +439,7 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 "\\begin{openresult}{ACT/Diffusion and rollout impact}",
                 "\\begin{openresult}{same-trace second-runtime replay}",
                 "\\begin{openresult}{famous-benchmark score-inflation proof}",
-                "\\begin{openresult}{results not claimed in this draft}",
+                "\\begin{openresult}{results not claimed in this release}",
                 "Open result, not claimed",
                 "open_reproduction_gates.json",
             ],

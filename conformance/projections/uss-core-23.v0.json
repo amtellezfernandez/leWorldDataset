@@ -269,7 +269,7 @@
   ],
   "profile_id": "uss-core-23",
   "schema_version": "semantic-projection-v0",
-  "scope": "Pilot semantic projection used to measure binding retention for the USS / WorldEpisode draft.",
-  "status": "draft",
+  "scope": "Pilot semantic projection used to measure binding retention for the USS / WorldEpisode v0 RFC.",
+  "status": "active",
   "version": "0.1.0"
 }

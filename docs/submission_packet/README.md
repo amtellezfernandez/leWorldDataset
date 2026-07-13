@@ -46,7 +46,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `CLAIM.USS.001` | True | Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
 | `CLAIM.REALTOSIM.001` | True | Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode. | Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun. |
 | `CLAIM.SCALE.001` | True | Generated catalog benchmark describes a billion-episode-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |
-| `CLAIM.BENCHMARK_BOUNDARY.001` | True | Famous benchmark audit is fail-closed and makes zero inflation claims in this draft. | Source-level call-out audit; no published-score inflation claim. |
+| `CLAIM.BENCHMARK_BOUNDARY.001` | True | Famous benchmark audit is fail-closed and makes zero inflation claims in this release. | Source-level call-out audit; no published-score inflation claim. |
 | `CLAIM.OPEN_GATES.001` | True | Open results are visibly and machine-readably marked as not claimed. | Open gates are unclaimed results, not paper results. |
 
 ## Open Results Not Claimed
@@ -67,9 +67,10 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | regenerate controlled experiment evidence | `python3 tools/run_experiments.py` |
 | validate open unclaimed-result gates | `python3 tools/open_reproduction_gates.py --strict` |
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |
+| generate this submission packet | `python3 tools/submission_packet.py --strict` |
+| audit public maturity language | `python3 tools/public_maturity_audit.py --strict` |
 | build digest release manifest | `python3 tools/release_manifest.py --strict` |
 | verify committed release manifest | `python3 tools/release_manifest.py --verify --strict` |
-| generate this submission packet | `python3 tools/submission_packet.py --strict` |
 | check RFC release readiness | `python3 tools/release_readiness.py --strict-rfc` |
 | reject stale generated artifacts | `python3 tools/artifact_freshness.py --strict` |
 

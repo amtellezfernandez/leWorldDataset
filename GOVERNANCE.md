@@ -1,9 +1,8 @@
 # Governance
 
-Status: draft.
+Status: active RFC governance.
 
-WorldEpisode should be governed as an open interoperability profile, not as a single-project data
-dump.
+WorldEpisode is governed as an open interoperability profile, not as a single-project data dump.
 
 ## Licensing
 

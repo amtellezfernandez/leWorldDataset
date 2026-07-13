@@ -168,7 +168,7 @@
   "provenance": {
     "source": "demo_capture",
     "creator": "URDF Studio",
-    "software": "worldepisode draft tools",
+    "software": "worldepisode v0.1 tools",
     "license": "CC0-1.0"
   },
   "quality": {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://leworldlayout.org/schemas/le-world-layout-v0.schema.json",
-  "title": "leWorldLayout v0 draft",
+  "title": "leWorldLayout v0 RFC",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "world_layout"],

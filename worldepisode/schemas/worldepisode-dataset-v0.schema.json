@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://worldepisode.org/schemas/worldepisode-dataset-v0.schema.json",
-  "title": "WorldEpisode Dataset Manifest v0 draft",
+  "title": "WorldEpisode Dataset Manifest v0 RFC",
   "type": "object",
   "additionalProperties": false,
   "required": [

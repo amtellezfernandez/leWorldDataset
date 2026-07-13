@@ -1,6 +1,6 @@
 # WorldEpisode Bindings
 
-Status: draft.
+Status: v0 RFC.
 
 WorldEpisode defines semantics first and storage second. Bindings describe how the semantic contract
 is represented in existing containers, logs, scene formats, or dataset packages.

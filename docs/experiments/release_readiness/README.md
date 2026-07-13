@@ -19,15 +19,15 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (19224 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (19322 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
-| DOC.003 | governance exists | True | error | GOVERNANCE.md (1236 bytes) |
-| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (479221 bytes) |
+| DOC.003 | governance exists | True | error | GOVERNANCE.md (1245 bytes) |
+| DOC.004 | paper PDF exists | True | error | WorldEpisode.pdf (479236 bytes) |
 | DOC.005 | paper source exists | True | error | paper/arxiv/main.tex (5328 bytes) |
-| DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17534 bytes) |
-| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147868 bytes) |
+| DOC.006 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (17528 bytes) |
+| DOC.007 | controlled results exist | True | error | docs/experiments/results.json (147869 bytes) |
 | DOC.008 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
-| DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (1196 bytes) |
+| DOC.009 | CI workflow exists | True | error | .github/workflows/ci.yml (1302 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
 | PKG.001 | pyproject exists | True | error | pyproject.toml (1244 bytes) |
 | PKG.002 | package metadata parses | True | error | name='worldepisode', version='0.1.0' |
@@ -46,7 +46,8 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5 |
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
 | CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0 |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=39, normalized=4 |
+| PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=41, normalized=4 |
 | SUBMIT.001 | submission packet validates | True | error | status=pass, claims=11, open_gates=5 |
 
 ## Blocked Stronger Claims

@@ -142,7 +142,7 @@
     "provenance.derivation": {
       "creator": "URDF Studio",
       "license": "CC0-1.0",
-      "software": "worldepisode draft tools",
+      "software": "worldepisode v0.1 tools",
       "source": "demo_capture"
     },
     "quality.uncertainty": {

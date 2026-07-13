@@ -1,6 +1,6 @@
 # USS / WorldEpisode Research Plan
 
-Status: draft.
+Status: evidence roadmap.
 
 The paper should answer scientific questions, not only publish a schema.
 

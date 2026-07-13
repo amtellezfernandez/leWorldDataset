@@ -1,6 +1,6 @@
 # WorldEpisode Conformance Requirements
 
-Status: draft.
+Status: active v0 requirement set.
 
 This document defines the first executable requirement namespace for WorldEpisode. The prose
 specification explains the model; these requirements define what validators, fixtures, and

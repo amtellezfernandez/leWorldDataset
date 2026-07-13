@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 29,
-    "passed_count": 29,
+    "check_count": 30,
+    "passed_count": 30,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -68,7 +68,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (19224 bytes)",
+      "evidence": "README.md (19322 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -84,7 +84,7 @@
     {
       "boundary": "",
       "check_id": "DOC.003",
-      "evidence": "GOVERNANCE.md (1236 bytes)",
+      "evidence": "GOVERNANCE.md (1245 bytes)",
       "name": "governance exists",
       "passed": true,
       "severity": "error"
@@ -92,7 +92,7 @@
     {
       "boundary": "",
       "check_id": "DOC.004",
-      "evidence": "WorldEpisode.pdf (479221 bytes)",
+      "evidence": "WorldEpisode.pdf (479236 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -108,7 +108,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "docs/reviewer-concern-matrix.md (17534 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (17528 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -116,7 +116,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "docs/experiments/results.json (147868 bytes)",
+      "evidence": "docs/experiments/results.json (147869 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -132,7 +132,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": ".github/workflows/ci.yml (1196 bytes)",
+      "evidence": ".github/workflows/ci.yml (1302 bytes)",
       "name": "CI workflow exists",
       "passed": true,
       "severity": "error"
@@ -283,8 +283,16 @@
     },
     {
       "boundary": "",
+      "check_id": "PUBLIC.001",
+      "evidence": "docs/experiments/public_maturity/public_maturity_report.json violations=0",
+      "name": "public surface avoids draft-only framing",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=39, normalized=4",
+      "evidence": "status=pass, entries=41, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"

@@ -92,7 +92,7 @@
     },
     {
       "boundary": "Source-level call-out audit; no published-score inflation claim.",
-      "claim": "Famous benchmark audit is fail-closed and makes zero inflation claims in this draft.",
+      "claim": "Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
       "claim_id": "CLAIM.BENCHMARK_BOUNDARY.001",
       "evidence_artifacts": [
         "docs/experiments/benchmark_inflation_gate/gate_report.json"
@@ -279,16 +279,20 @@
       "name": "audit paper claims against evidence"
     },
     {
+      "command": "python3 tools/submission_packet.py --strict",
+      "name": "generate this submission packet"
+    },
+    {
+      "command": "python3 tools/public_maturity_audit.py --strict",
+      "name": "audit public maturity language"
+    },
+    {
       "command": "python3 tools/release_manifest.py --strict",
       "name": "build digest release manifest"
     },
     {
       "command": "python3 tools/release_manifest.py --verify --strict",
       "name": "verify committed release manifest"
-    },
-    {
-      "command": "python3 tools/submission_packet.py --strict",
-      "name": "generate this submission packet"
     },
     {
       "command": "python3 tools/release_readiness.py --strict-rfc",

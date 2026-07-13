@@ -21,6 +21,7 @@ DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "release_readiness"
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
 PAPER_CLAIM_AUDIT_JSON = ROOT / "docs" / "experiments" / "paper_claim_audit" / "paper_claim_audit_report.json"
+PUBLIC_MATURITY_JSON = ROOT / "docs" / "experiments" / "public_maturity" / "public_maturity_report.json"
 RELEASE_MANIFEST_JSON = ROOT / "docs" / "release_manifest" / "release_manifest.json"
 SUBMISSION_PACKET_JSON = ROOT / "docs" / "submission_packet" / "submission_packet.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
@@ -117,6 +118,7 @@ def ci_checks() -> list[Check]:
         "python tools/run_experiments.py",
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
+        "python tools/public_maturity_audit.py --strict",
         "python tools/release_manifest.py --verify --strict",
         "python tools/submission_packet.py --strict",
         "python tools/release_readiness.py --strict-rfc",
@@ -321,6 +323,44 @@ def paper_claim_checks() -> list[Check]:
     ]
 
 
+def public_maturity_checks() -> list[Check]:
+    if not PUBLIC_MATURITY_JSON.exists():
+        return [
+            Check(
+                "PUBLIC.001",
+                "public maturity language is audited",
+                False,
+                f"{rel(PUBLIC_MATURITY_JSON)} missing",
+            )
+        ]
+
+    try:
+        report = load_json(PUBLIC_MATURITY_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "PUBLIC.001",
+                "public maturity report parses",
+                False,
+                f"{rel(PUBLIC_MATURITY_JSON)}: {exc}",
+            )
+        ]
+
+    return [
+        Check(
+            "PUBLIC.001",
+            "public surface avoids draft-only framing",
+            report.get("schema") == "worldepisode_public_maturity_audit_v1"
+            and report.get("status") == "pass"
+            and nested(report, ("aggregate", "violation_count")) == 0,
+            (
+                f"{rel(PUBLIC_MATURITY_JSON)} violations="
+                f"{nested(report, ('aggregate', 'violation_count'))}"
+            ),
+        )
+    ]
+
+
 def submission_packet_checks() -> list[Check]:
     if not SUBMISSION_PACKET_JSON.exists():
         return [
@@ -467,6 +507,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     blockers = claim_blockers(results)
     checks.extend(open_gate_checks(blockers))
     checks.extend(paper_claim_checks())
+    checks.extend(public_maturity_checks())
     checks.extend(release_manifest_checks())
     checks.extend(submission_packet_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}

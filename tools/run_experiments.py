@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run deterministic controlled experiments for the USS / WorldEpisode draft.
+"""Run deterministic controlled experiments for the USS / WorldEpisode v0 RFC.
 
 The experiments are intentionally small enough to live in the public spec repository. Their purpose
 is to provide reproducible evidence for conformance, conversion-loss, replay, split-leakage, and

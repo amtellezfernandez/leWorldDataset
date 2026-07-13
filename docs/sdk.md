@@ -1,6 +1,6 @@
 # Reference SDK Contract
 
-Status: draft specification with an implemented preflight subset.
+Status: v0 SDK contract with an implemented preflight subset.
 
 The reference SDK should expose semantic objects and lazy bindings. The SDK is not the standard,
 but it is the executable proof that the standard can be validated, converted, and inspected.

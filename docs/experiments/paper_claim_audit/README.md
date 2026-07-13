@@ -23,5 +23,5 @@ This report ties the main quantitative and boundary claims in the paper source t
 | CLAIM.USS.001 | True | Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
 | CLAIM.REALTOSIM.001 | True | Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode. | Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun. |
 | CLAIM.SCALE.001 | True | Generated catalog benchmark describes a billion-episode-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |
-| CLAIM.BENCHMARK_BOUNDARY.001 | True | Famous benchmark audit is fail-closed and makes zero inflation claims in this draft. | Source-level call-out audit; no published-score inflation claim. |
+| CLAIM.BENCHMARK_BOUNDARY.001 | True | Famous benchmark audit is fail-closed and makes zero inflation claims in this release. | Source-level call-out audit; no published-score inflation claim. |
 | CLAIM.OPEN_GATES.001 | True | Open results are visibly and machine-readably marked as not claimed. | Open gates are unclaimed results, not paper results. |
