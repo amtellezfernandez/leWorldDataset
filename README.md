@@ -61,6 +61,7 @@ is persistent, verifiable world-episode interoperability.
 - [Production-scale dataset architecture](docs/production-scale.md)
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
+- [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
@@ -68,6 +69,7 @@ is persistent, verifiable world-episode interoperability.
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
 - [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
+- [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
 - [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
@@ -178,6 +180,12 @@ To generate the source-level call-out audit over famous public robot-learning be
 python3 tools/benchmark_callout_audit.py
 ```
 
+To generate the controlled real-to-sim contract-drift ablation:
+
+```bash
+python3 tools/realtosim_contract_drift.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -196,6 +204,10 @@ open until real ACT/Diffusion metrics and rollout reports are committed.
 The famous benchmark call-out audit applies the same requirement lens to Open X-Embodiment, DROID,
 BridgeData V2, LIBERO, and CALVIN. It flags missing public leakage/timing controls, but does not
 claim a benchmark score is inflated until a measured rerun exists.
+The real-to-sim contract-drift ablation shows two proxy failures that visual reconstruction alone
+cannot prevent: action-interface drift and representation-role drift. It is a controlled proxy, not
+a hardware rollout, but it positions WorldEpisode as the contract layer around Gaussian/OpenUSD
+real-to-sim pipelines.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through

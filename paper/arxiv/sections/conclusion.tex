@@ -7,9 +7,11 @@ space/time/action semantics, assigns roles to assets, records events and provena
 conversion loss instead of hiding it. In the reference experiments, those requirements expose an
 85\% offline random-split result that collapses to 0\% under scene-disjoint evaluation, reduce
 LeRobot replay drift on a real SO-101 trajectory by modeling a four-frame action delay, and catch
-controlled physically incoherent packages before they are used as trusted artifacts. The same
-validator is exposed as a one-line preflight command for WorldEpisode, LeRobot, and Rerun artifacts.
-These are scoped results, not a completed standardization claim. The new call-out audit identifies Open
+controlled physically incoherent packages before they are used as trusted artifacts. They also show
+how a real-to-sim pipeline can report simulated success while failing under deployment proxies when
+action contracts or representation roles drift. The same validator is exposed as a one-line
+preflight command for WorldEpisode, LeRobot, and Rerun artifacts. These are scoped results, not a
+completed standardization claim. The new call-out audit identifies Open
 X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN as priority targets for this protocol, but it
 does not claim their scores are inflated without reruns. Gaussian splats remain a high-value
 appearance profile, but the durable contribution is the world--episode contract around them. The

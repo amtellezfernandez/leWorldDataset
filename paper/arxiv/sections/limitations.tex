@@ -32,6 +32,9 @@ projection; not a universal score of each storage format \\
 Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
 LIBERO, and CALVIN & Missing public controls are not measured score inflation; targeted conversions
 and reruns are still required \\
+Real-to-sim drift & Controlled action-contract and representation-role ablations where drifted
+contracts succeed in simulation and fail under deployment proxies & Deterministic proxy; not a
+RoboSnap/DROID-Sim rerun or physical hardware deployment \\
 Adoption & Public schema, installable local preflight package, validator, fixtures, and governance
 files & No PyPI release, upstream LeRobot/Rerun integration, independent implementation, or external
 dataset release yet \\
@@ -85,6 +88,13 @@ metadata audit. It identifies where public materials do not expose the controls 
 world-lineage leakage, action latency, or replay loss. It does not prove any published benchmark
 score is inflated. That claim requires a benchmark-specific WorldEpisode conversion and a measured
 policy rerun.
+
+\paragraph{Real-to-sim drift scope.}
+The contract-drift experiment isolates two real-to-sim failure mechanisms: action-interface drift
+and missing representation roles. It is intentionally deterministic and does not use a reconstructed
+RoboSnap/DROID-Sim scene or a physical robot. The stronger result is to bind a public reconstructed
+scene, replay the same checks, and measure simulator/deployment divergence under declared
+tolerances.
 
 \paragraph{Natural failure corpus.}
 The injected conformance faults prove that requirements are executable and diagnosable. The current

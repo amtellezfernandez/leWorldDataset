@@ -95,6 +95,13 @@ action timing contracts, and replay/loss reports. The next experiment is to conv
 a time into a WorldEpisode manifest and rerun a published policy protocol under the corrected split
 or timing contract.
 
+Real-to-sim artifact: `tools/realtosim_contract_drift.py` adds a controlled proxy for the
+Gaussian/OpenUSD hype cycle. It shows that a drifted action interface can succeed in simulation and
+fail under the deployment controller, and that an appearance-only reconstruction can succeed in
+simulation while colliding with real foreground geometry when the collision role is dropped. This
+does not replace a RoboSnap/DROID-Sim rerun, but it states the methodological claim that visual
+reconstruction must be bound to action contracts and representation roles.
+
 ## End-to-End Demonstration
 
 The strongest demonstration:

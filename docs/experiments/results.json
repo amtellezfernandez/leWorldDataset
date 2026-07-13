@@ -1799,6 +1799,133 @@
     "pass": true,
     "profile": "worldepisode-preflight-0.1"
   },
+  "realtosim_contract_drift": {
+    "ablations": {
+      "action_contract_drift": {
+        "drifted": {
+          "deployment_error_rad": 0.30532863655276726,
+          "deployment_success": false,
+          "failure_at_first_control_cycle": true,
+          "hardware_interpretation": "delta_joint_command_deg",
+          "policy_output": [
+            0.12,
+            -0.25,
+            0.55,
+            0.22,
+            -0.1,
+            0.08
+          ],
+          "sim_action_interpretation": "absolute_joint_target_rad",
+          "sim_error_rad": 0.0,
+          "sim_success": true
+        },
+        "failure_mode": "A policy that succeeds in a simulator with absolute-radian actions is deployed to a controller whose source contract expects delta-degree commands.",
+        "name": "action_contract_drift",
+        "start_rad": [
+          0.0,
+          -0.4,
+          0.7,
+          0.1,
+          -0.2,
+          0.0
+        ],
+        "success_gap_sim_to_deployment": 1,
+        "target_rad": [
+          0.12,
+          -0.25,
+          0.55,
+          0.22,
+          -0.1,
+          0.08
+        ],
+        "tolerance_rad": 0.035,
+        "worldepisode": {
+          "action_contract": {
+            "command_timestamp_semantics": "policy_sample_time",
+            "effective_timestamp_semantics": "motor_apply_time",
+            "hardware_command_semantics": "delta",
+            "hardware_command_units": "deg",
+            "policy_output_semantics": "absolute",
+            "policy_output_units": "rad",
+            "reference_frame": "joint_space"
+          },
+          "converted_hardware_command_deg": [
+            6.875493541569878,
+            8.59436692696235,
+            -8.594366926962344,
+            6.875493541569878,
+            5.729577951308233,
+            4.583662361046586
+          ],
+          "deployment_error_rad": 1.3877787807814457e-17,
+          "deployment_success": true
+        },
+        "worldepisode_requirement_ids": [
+          "ACTION.001",
+          "ACTION.002",
+          "REPLAY.001",
+          "CONVERT.001"
+        ]
+      },
+      "representation_role_drift": {
+        "collision_proxy": {
+          "xmax": 0.57,
+          "xmin": 0.43,
+          "ymax": 0.08,
+          "ymin": -0.08
+        },
+        "drifted": {
+          "deployment_success": false,
+          "exported_roles": [
+            "appearance"
+          ],
+          "planned_path": "straight_line",
+          "real_collision_step": 11,
+          "sim_collision_proxy_present": false,
+          "sim_success": true
+        },
+        "failure_mode": "A real-to-sim export keeps the Gaussian visual layer but drops the collision role, so a straight-line policy succeeds in simulation and collides with the real foreground object.",
+        "name": "representation_role_drift",
+        "roles": {
+          "appearance": "gaussian_splat_visual_context",
+          "collision": "box_collision_proxy",
+          "semantics": "foreground_obstacle"
+        },
+        "success_gap_sim_to_deployment": 1,
+        "worldepisode": {
+          "deployment_success": true,
+          "exported_roles": [
+            "appearance",
+            "collision",
+            "semantics"
+          ],
+          "planned_path": "role_aware_detour",
+          "real_collision_step": null,
+          "sim_collision_proxy_present": true
+        },
+        "worldepisode_requirement_ids": [
+          "REP.001",
+          "ENTITY.001",
+          "WORLD.001",
+          "REPLAY.001"
+        ]
+      }
+    },
+    "aggregate": {
+      "ablation_count": 2,
+      "drifted_deployment_successes": 0,
+      "drifted_sim_successes": 2,
+      "worldepisode_deployment_successes": 2
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/realtosim_contract_drift/README.md",
+      "report": "docs/experiments/realtosim_contract_drift/contract_drift_report.json"
+    },
+    "claim_boundary": "This deterministic experiment isolates contract drift mechanisms. It does not claim a measured real-robot deployment result.",
+    "hype_cycle_positioning": "Real-to-sim systems can reconstruct visually faithful and physically useful scenes. WorldEpisode defines the cross-container contract that keeps those scenes tied to the episode, action interface, physical roles, and replay assumptions.",
+    "profile": "worldepisode-realtosim-contract-drift-0.1",
+    "status": "controlled_proxy_not_hardware_rollout"
+  },
   "rq1_binding_retention": {
     "artifact_root": "docs/experiments/bindings",
     "bindings": [

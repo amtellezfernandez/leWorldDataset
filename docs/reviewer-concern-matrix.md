@@ -16,6 +16,7 @@ the claim at the same scope as the evidence.
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over three public LeRobot-format datasets with nine cases. | Mitigated but not closed. Evaluation and limitations distinguish the pilot corpus from a full prevalence survey. | Extend to at least five public datasets and record maintainer agreement/disagreement with representative diagnostics. |
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
 | Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
+| Real-to-sim relevance is not concrete. | `tools/realtosim_contract_drift.py` now runs two controlled ablations: action contract drift and representation-role drift. Both succeed in the drifted simulator, fail under deployment proxies, and pass with the WorldEpisode contract. | Mitigated as a controlled proxy. The paper must not call this a RoboSnap/DROID-Sim hardware result. | Run the same checks on a real reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another public real-to-sim pipeline. |
 | Binding-retention metric looks subjective. | Predeclared 23-field semantic projection stored in `tools/run_experiments.py` and `docs/experiments/results.json`; native and sidecar artifacts checked by reimport. | Mitigated by scope. The paper calls it a pilot projection, not a universal score. | Publish the projection as a versioned conformance profile and obtain external review or an independent implementation. |
 | "Why not just USD/ROS/Rerun?" | Architecture and bindings show native containers as targets/views; sidecar captures action/task/lineage/replay semantics not owned by a single container. | Mitigated. Paper explicitly avoids replacement framing. | Demonstrate a round trip through at least two independently maintained native containers with loss reports. |
 | No independent adoption. | Public schema, governance draft, fixtures, examples, and artifacts exist. | Open. Limitations state no independent implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
@@ -75,7 +76,18 @@ the claim at the same scope as the evidence.
      metrics as the MuJoCo report.
    - Claim unlocked: replay assumptions transfer across more than one tested runtime.
 
-6. **Independent implementation gate**
+6. **Real-to-sim reconstructed-scene gate**
+   - Input: one public reconstructed scene from RoboSnap/DROID-Sim, GSDF, or another Gaussian/OpenUSD
+     real-to-sim pipeline.
+   - Current output: `docs/experiments/realtosim_contract_drift/contract_drift_report.json`
+     provides a deterministic proxy over action contracts and representation roles.
+   - Remaining output: bind the public reconstructed scene to WorldEpisode, replay the same action
+     and representation-role checks, and report actual simulator/deployment or simulator/proxy
+     divergence.
+   - Claim unlocked: WorldEpisode prevents drift in a real reconstructed-scene pipeline, not only a
+     controlled proxy.
+
+7. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.

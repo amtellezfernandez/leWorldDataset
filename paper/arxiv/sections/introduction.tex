@@ -26,6 +26,10 @@ are also moving into standard asset containers through glTF's \texttt{KHR\_gauss
 extension~\citep{khronos_gs, gltf_gs}. Recent real-to-sim systems such as RoboSnap and DROID-Sim
 show that Gaussian-splat environments can support trajectory replay, synthetic data generation, and
 policy evaluation at dataset scale~\citep{robosnap}.
+That progress makes the missing contract more urgent rather than less. A layered real-to-sim scene
+can be visually faithful while still dropping the collision role of an object, and a replayable
+trajectory can still be wrong if the policy action vector is interpreted under a different
+controller contract at deployment time.
 
 The missing piece is not another monolithic file. A LeRobot table can store actions without knowing
 which immutable world revision they came from; a USD scene can store assets without knowing the

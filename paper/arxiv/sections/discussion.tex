@@ -18,6 +18,15 @@ policy-training view; Rerun is the multirate physical-data view; NCore is the se
 MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed simulation-world view; glTF or SPZ is
 the Gaussian asset view; and a reference directory is the conformance profile.
 
+\paragraph{Real-to-sim as the proving ground.}
+Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to WorldEpisode. They are the
+systems that most need an episode contract. A reconstructed room can be excellent visual training
+data and still be unsafe for policy evaluation if foreground collision roles are missing, if the
+same world lineage leaks across splits, or if the replayed policy output is interpreted under the
+wrong hardware action contract. WorldEpisode should be judged by whether it keeps those pipelines
+auditable as they scale, not by whether it serializes splats better than asset formats designed for
+that job.
+
 \paragraph{Lineage-safe evaluation.}
 Episode-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
 source video, world revision, or generated asset lineage across training and evaluation.

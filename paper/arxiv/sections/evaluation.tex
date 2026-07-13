@@ -127,7 +127,20 @@ from the same contract, but is not tested in this environment. The failure avoid
 one: blaming a simulator or controller when the dataset never said when the command actually took
 effect.
 
-\paragraph{Case 4: the validator that catches physically impossible packages.}
+\paragraph{Case 4: real-to-sim contract drift.}
+Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
+interactive physical assets. WorldEpisode targets the contract between those layers and the source
+robot episode. We therefore add two deterministic ablations. In the action-contract ablation, a
+policy succeeds in a simulator that interprets its output as absolute joint-radian targets, but the
+same vector fails under a deployment proxy whose controller expects delta-degree commands. In the
+representation-role ablation, an appearance-only Gaussian export drops the collision proxy; the
+straight-line policy succeeds in simulation and collides with the real foreground geometry under
+the deployment proxy. In both ablations the drifted contract has 2/2 simulated successes and 0/2
+deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
+controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
+enough without action contracts and representation roles.
+
+\paragraph{Case 5: the validator that catches physically impossible packages.}
 We inject 14 faults into the baseline package: missing clock domains, incomplete cross-clock
 mappings, unknown frames, missing transform intervals, unknown event entities, missing
 representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
@@ -156,7 +169,7 @@ WorldEpisode fixture fails, a native LeRobot v3 folder without a WorldEpisode si
 and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the intended usage
 pattern for labs: run one blocking line before launching a multi-day policy training job.
 
-\paragraph{Case 5: the famous benchmarks that still need call-out audits.}
+\paragraph{Case 6: the famous benchmarks that still need call-out audits.}
 The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
 source-level call-out audit over five famous public robot-learning benchmarks: Open
 X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
@@ -169,7 +182,7 @@ published scores are inflated. The stronger claim requires converting each bench
 WorldEpisode and rerunning a published policy protocol under lineage-disjoint splits or
 timestamp-aware replay.
 
-\paragraph{Case 6: augmentation that uses the world rather than a side file.}
+\paragraph{Case 7: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
 nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
 unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame

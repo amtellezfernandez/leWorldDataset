@@ -41,6 +41,7 @@ CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
 PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
+REALTOSIM_DRIFT_REPORT = RESULTS_DIR / "realtosim_contract_drift" / "contract_drift_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -524,6 +525,22 @@ def experiment_preflight_validator() -> dict[str, Any]:
     }
     write_json(PREFLIGHT_REPORT, report)
     return report
+
+
+def experiment_realtosim_contract_drift() -> dict[str, Any]:
+    try:
+        from realtosim_contract_drift import build_realtosim_contract_drift
+
+        return build_realtosim_contract_drift(output_dir=RESULTS_DIR / "realtosim_contract_drift")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/realtosim_contract_drift.py",
+        }
+        write_json(REALTOSIM_DRIFT_REPORT, report)
+        return report
 
 
 def mutated(payload: dict[str, Any], mutate: Callable[[dict[str, Any]], None]) -> dict[str, Any]:
@@ -1037,6 +1054,7 @@ def write_report(results: dict[str, Any]) -> None:
     policy_gate = results["lerobot_policy_gate"]
     benchmark_callout = results["benchmark_callout_audit"]
     preflight_result = results["preflight_validator"]
+    realtosim_drift = results["realtosim_contract_drift"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1155,6 +1173,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
+| Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
@@ -1209,6 +1228,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Python API: `from worldepisode import preflight_lerobot; preflight_lerobot(path).raise_if_failed()`
 - Cases: {len(preflight_result.get("cases", []))}
 - Gate satisfied: {preflight_result.get("pass", False)}
+
+## Real-to-Sim Contract Drift
+
+- Artifact: `{realtosim_drift.get("artifacts", {}).get("report", "docs/experiments/realtosim_contract_drift/contract_drift_report.json")}`
+- Status: {realtosim_drift.get("status", "unavailable")}
+- Ablations: {realtosim_drift.get("aggregate", {}).get("ablation_count", 0)}
+- Drifted sim successes: {realtosim_drift.get("aggregate", {}).get("drifted_sim_successes", 0)}
+- Drifted deployment successes: {realtosim_drift.get("aggregate", {}).get("drifted_deployment_successes", 0)}
+- WorldEpisode deployment successes: {realtosim_drift.get("aggregate", {}).get("worldepisode_deployment_successes", 0)}
 
 ## RQ2: Fault Detection
 
@@ -1286,6 +1314,7 @@ def main() -> int:
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
         "benchmark_callout_audit": experiment_benchmark_callout_audit(),
         "preflight_validator": experiment_preflight_validator(),
+        "realtosim_contract_drift": experiment_realtosim_contract_drift(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1338,6 +1367,17 @@ def main() -> int:
     preflight_result = results["preflight_validator"]
     if not preflight_result.get("pass"):
         print("Preflight validator regression failed.")
+        return 1
+    realtosim_drift = results["realtosim_contract_drift"]
+    realtosim_aggregate = realtosim_drift.get("aggregate", {})
+    if realtosim_aggregate.get("drifted_sim_successes") != 2:
+        print("Real-to-sim drift ablation did not preserve simulated successes.")
+        return 1
+    if realtosim_aggregate.get("drifted_deployment_successes") != 0:
+        print("Real-to-sim drift ablation did not expose deployment failures.")
+        return 1
+    if realtosim_aggregate.get("worldepisode_deployment_successes") != 2:
+        print("WorldEpisode contract did not recover deployment successes in the drift ablation.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")
