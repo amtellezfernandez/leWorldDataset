@@ -24,6 +24,8 @@ Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips 
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
 Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-servo replay & One trace
 and one MuJoCo adapter; Isaac mapping is emitted but untested \\
+Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN &
+One tested minimal MuJoCo adapter; Isaac ready but untested; Genesis/SAPIEN adapters not implemented \\
 Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
 pilot natural-source corpus over three public datasets & Natural corpus is below the five-dataset
 gate and has no maintainer feedback yet \\
@@ -63,6 +65,12 @@ WorldEpisode records simulator assumptions, timing, interpolation, and tolerance
 promise simulator-independent behavior. The reported replay result is a MuJoCo position-servo test
 under declared assumptions. The Isaac mapping is emitted and ready, but intentionally untested in
 this environment.
+
+\paragraph{Meta-simulator evidence.}
+The meta-simulator section defines what a compliant runtime adapter must preserve. It does not
+certify that MuJoCo, Isaac, Genesis, SAPIEN, or any other simulator has equivalent physics. Current
+evidence contains one tested minimal MuJoCo adapter, one untested Isaac mapping, and explicit
+adapter-required entries for Genesis and SAPIEN.
 
 \paragraph{Reference implementation maturity.}
 The converter, validator, and reports are executable, but independent implementations are still

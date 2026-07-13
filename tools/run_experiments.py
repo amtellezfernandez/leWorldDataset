@@ -42,6 +42,7 @@ POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.j
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
 PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
 REALTOSIM_DRIFT_REPORT = RESULTS_DIR / "realtosim_contract_drift" / "contract_drift_report.json"
+META_SIMULATOR_REPORT = RESULTS_DIR / "meta_simulator_contract" / "adapter_contract_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -540,6 +541,22 @@ def experiment_realtosim_contract_drift() -> dict[str, Any]:
             "reproduce": "python3 tools/realtosim_contract_drift.py",
         }
         write_json(REALTOSIM_DRIFT_REPORT, report)
+        return report
+
+
+def experiment_meta_simulator_contract() -> dict[str, Any]:
+    try:
+        from meta_simulator_contract import build_meta_simulator_contract
+
+        return build_meta_simulator_contract(output_dir=RESULTS_DIR / "meta_simulator_contract")
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/meta_simulator_contract.py",
+        }
+        write_json(META_SIMULATOR_REPORT, report)
         return report
 
 
@@ -1055,6 +1072,7 @@ def write_report(results: dict[str, Any]) -> None:
     benchmark_callout = results["benchmark_callout_audit"]
     preflight_result = results["preflight_validator"]
     realtosim_drift = results["realtosim_contract_drift"]
+    meta_sim = results["meta_simulator_contract"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1174,6 +1192,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
@@ -1237,6 +1256,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Drifted sim successes: {realtosim_drift.get("aggregate", {}).get("drifted_sim_successes", 0)}
 - Drifted deployment successes: {realtosim_drift.get("aggregate", {}).get("drifted_deployment_successes", 0)}
 - WorldEpisode deployment successes: {realtosim_drift.get("aggregate", {}).get("worldepisode_deployment_successes", 0)}
+
+## Meta-Simulator Contract
+
+- Artifact: `{meta_sim.get("artifacts", {}).get("report", "docs/experiments/meta_simulator_contract/adapter_contract_report.json")}`
+- Status: {meta_sim.get("status", "unavailable")}
+- Runtime targets: {meta_sim.get("aggregate", {}).get("runtime_target_count", 0)}
+- Compliance layers: {meta_sim.get("aggregate", {}).get("compliance_layer_count", 0)}
+- Tested adapters: {meta_sim.get("aggregate", {}).get("tested_adapter_count", 0)}
+- Ready but untested adapters: {meta_sim.get("aggregate", {}).get("ready_untested_adapter_count", 0)}
+- Adapters still required: {meta_sim.get("aggregate", {}).get("adapter_required_count", 0)}
 
 ## RQ2: Fault Detection
 
@@ -1315,6 +1344,7 @@ def main() -> int:
         "benchmark_callout_audit": experiment_benchmark_callout_audit(),
         "preflight_validator": experiment_preflight_validator(),
         "realtosim_contract_drift": experiment_realtosim_contract_drift(),
+        "meta_simulator_contract": experiment_meta_simulator_contract(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1378,6 +1408,14 @@ def main() -> int:
         return 1
     if realtosim_aggregate.get("worldepisode_deployment_successes") != 2:
         print("WorldEpisode contract did not recover deployment successes in the drift ablation.")
+        return 1
+    meta_sim = results["meta_simulator_contract"]
+    meta_aggregate = meta_sim.get("aggregate", {})
+    if meta_aggregate.get("runtime_target_count") != 4 or meta_aggregate.get("compliance_layer_count") != 3:
+        print("Meta-simulator contract matrix is incomplete.")
+        return 1
+    if meta_aggregate.get("tested_adapter_count") != 1 or meta_aggregate.get("ready_untested_adapter_count") != 1:
+        print("Meta-simulator contract evidence boundary changed unexpectedly.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")

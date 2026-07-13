@@ -55,3 +55,9 @@ The control-replay tool reads the exported LeRobot trajectory, estimates the eff
 delay from action/state alignment, writes the WorldEpisode action contract, executes the tested
 MuJoCo adapter, and emits an Isaac adapter mapping that is ready for an Isaac environment but
 explicitly marked untested in the committed report.
+
+The repository also emits a meta-simulator adapter report. It defines three compliance layers:
+the invariant interface, asynchronous schema extension, and deterministic replay accountability.
+The report records MuJoCo as the current tested minimal adapter, Isaac as adapter-ready but
+untested, and Genesis/SAPIEN as adapter-required targets. This artifact is deliberately an adapter
+contract rather than a claim of equal runtime coverage.

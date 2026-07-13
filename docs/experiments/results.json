@@ -1558,6 +1558,125 @@
     "frame_count": 10,
     "has_command_and_effective_timestamps": true
   },
+  "meta_simulator_contract": {
+    "aggregate": {
+      "adapter_required_count": 2,
+      "compliance_layer_count": 3,
+      "ready_untested_adapter_count": 1,
+      "runtime_target_count": 4,
+      "tested_adapter_count": 1
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/meta_simulator_contract/README.md",
+      "report": "docs/experiments/meta_simulator_contract/adapter_contract_report.json"
+    },
+    "claim_boundary": "The report defines adapter compliance. It does not claim equivalent physics or tested runtime results for every simulator.",
+    "layers": [
+      {
+        "description": "Adapter ingests immutable world revisions, frame/clock graphs, entity identity, representation roles, action channels, asset digests, and quality records.",
+        "layer_id": "META-SIM.001",
+        "name": "invariant_interface",
+        "requirement_ids": [
+          "WORLD.001",
+          "TRACE.001",
+          "FRAME.001",
+          "FRAME.002",
+          "TIME.001",
+          "TIME.002",
+          "ENTITY.001",
+          "REP.001",
+          "ACTION.001",
+          "ACTION.002",
+          "ASSET.001",
+          "QUALITY.001"
+        ]
+      },
+      {
+        "description": "Adapter may register runtime-specific roles, events, material models, deformable metrics, or fluid/container states without weakening the core sidecar contract.",
+        "layer_id": "META-SIM.002",
+        "name": "asynchronous_schema_extension",
+        "requirement_ids": [
+          "REP.001",
+          "ENTITY.001",
+          "PROV.001",
+          "CONVERT.001"
+        ]
+      },
+      {
+        "description": "Adapter declares runtime, version, solver, timestep, actuator parameters, command and effective timestamps, latency model, initialization state, and tolerance envelope.",
+        "layer_id": "META-SIM.003",
+        "name": "deterministic_replay_accountability",
+        "requirement_ids": [
+          "REPLAY.001",
+          "ACTION.002",
+          "ACTION.004",
+          "TIME.002",
+          "CONVERT.001"
+        ]
+      }
+    ],
+    "profile": "worldepisode-meta-simulator-contract-0.1",
+    "runtime_targets": [
+      {
+        "adapter_status": "tested_minimal_replay_adapter",
+        "claim_boundary": "One minimal six-joint position-servo replay adapter, not broad MuJoCo coverage.",
+        "evidence": {
+          "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+          "rmse_improvement_over_naive": 2.191019226228591,
+          "tested": true
+        },
+        "extension_policy": "core rigid-body replay only in current artifact",
+        "implemented_layers": [
+          "META-SIM.001",
+          "META-SIM.003"
+        ],
+        "runtime_family": "contact_dynamics",
+        "runtime_id": "mujoco"
+      },
+      {
+        "adapter_status": "adapter_contract_ready_untested",
+        "claim_boundary": "Adapter mapping only; no Isaac runtime result is claimed.",
+        "evidence": {
+          "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+          "ready": true,
+          "reason": "Isaac Sim is not installed in this execution environment.",
+          "tested": false
+        },
+        "extension_policy": "ready mapping emitted; runtime execution not available in this environment",
+        "implemented_layers": [
+          "META-SIM.001",
+          "META-SIM.003"
+        ],
+        "runtime_family": "gpu_parallel_simulation",
+        "runtime_id": "isaac_sim"
+      },
+      {
+        "adapter_status": "adapter_required",
+        "claim_boundary": "No Genesis adapter or runtime result is claimed.",
+        "evidence": {
+          "ready": false,
+          "tested": false
+        },
+        "extension_policy": "Adapter should compile Genesis scene synthesis, asset roles, actions, and replay assumptions against the same three meta-simulator layers.",
+        "implemented_layers": [],
+        "runtime_family": "parallel_robotics_simulation",
+        "runtime_id": "genesis"
+      },
+      {
+        "adapter_status": "adapter_required",
+        "claim_boundary": "No SAPIEN adapter or runtime result is claimed.",
+        "evidence": {
+          "ready": false,
+          "tested": false
+        },
+        "extension_policy": "Adapter should register articulation, contact, rendering, and optional soft-body extensions without changing the WorldEpisode core.",
+        "implemented_layers": [],
+        "runtime_family": "interactive_articulation_and_rendering",
+        "runtime_id": "sapien"
+      }
+    ],
+    "status": "runtime_neutral_adapter_contract"
+  },
   "natural_failure_corpus": {
     "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
     "available": true,

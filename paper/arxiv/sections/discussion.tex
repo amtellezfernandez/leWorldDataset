@@ -27,6 +27,14 @@ wrong hardware action contract. WorldEpisode should be judged by whether it keep
 auditable as they scale, not by whether it serializes splats better than asset formats designed for
 that job.
 
+\paragraph{Simulators as accountable adapters.}
+The same principle applies to physics and rendering engines. WorldEpisode should not become a
+MuJoCo wrapper, an Isaac wrapper, or a Genesis wrapper. It should define the contract those adapters
+must satisfy: ingest the invariant interface, declare extensions, and report replay assumptions and
+drift. This is a stronger runtime-neutral stance than claiming universal behavior. It lets a
+simulator team plug in by implementing the adapter, while the validator remains the common judge of
+whether the exported dataset is physically and temporally auditable.
+
 \paragraph{Lineage-safe evaluation.}
 Episode-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
 source video, world revision, or generated asset lineage across training and evaluation.

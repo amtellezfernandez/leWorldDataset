@@ -58,6 +58,13 @@ Measure:
 
 The claim is replay within a declared tolerance envelope, not bit-identical physics.
 
+Meta-simulator artifact: `tools/meta_simulator_contract.py` defines the runtime-neutral adapter
+contract. It separates the invariant interface, asynchronous schema extensions, and deterministic
+replay accountability. The current matrix records MuJoCo as one tested minimal adapter, Isaac as an
+adapter-ready but untested mapping, and Genesis/SAPIEN as adapter-required targets. The next
+scientific step is to run the same WorldEpisode replay contract through a second tested runtime and
+measure cross-simulator drift.
+
 ## RQ4: VLA Robustness From World Binding
 
 Train three conditions:

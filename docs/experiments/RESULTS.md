@@ -21,6 +21,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers. | One tested minimal MuJoCo adapter, one Isaac mapping ready but untested, Genesis/SAPIEN adapters required. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
@@ -111,6 +112,16 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Drifted sim successes: 2
 - Drifted deployment successes: 0
 - WorldEpisode deployment successes: 2
+
+## Meta-Simulator Contract
+
+- Artifact: `docs/experiments/meta_simulator_contract/adapter_contract_report.json`
+- Status: runtime_neutral_adapter_contract
+- Runtime targets: 4
+- Compliance layers: 3
+- Tested adapters: 1
+- Ready but untested adapters: 1
+- Adapters still required: 2
 
 ## RQ2: Fault Detection
 

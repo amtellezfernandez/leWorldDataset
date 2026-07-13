@@ -98,7 +98,8 @@ it specifies the invariants those systems must preserve for reproducible convers
 evaluation. The reference implementation includes active ten-episode public
 LeRobotDataset-to-WorldEpisode-to-LeRobotDataset batch conversions across two datasets, executable
 binding artifacts, a semantic validator, independent fixtures, an ACT/Diffusion leakage gate, and a
-pilot natural-source corpus.
+pilot natural-source corpus. It also defines a meta-simulator adapter contract so MuJoCo, Isaac,
+Genesis, SAPIEN, or future runtimes can report against the same replay invariants.
 Across seven pilot bindings, native containers
 preserve 17--39\% of a predeclared 23-field semantic projection, while WorldEpisode sidecars recover
 that projection for dataset/log/world bindings. The validator detects all 14 injected fault classes

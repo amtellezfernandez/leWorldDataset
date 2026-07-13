@@ -36,7 +36,7 @@ holds the semantics that would otherwise be scattered across undocumented loader
 
   \node[wecard=weGreen, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
   \node[wecard=weAmber, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
-  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{MuJoCo / Isaac}\\replay targets};
+  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{Runtime adapters}\\replay targets};
 
   \draw[wearrow=weBlue] (lerobot.east) -- ($(core.west)+(0,1.0)$);
   \draw[wearrow=weCyan] (rerun.east) -- (core.west);
@@ -57,3 +57,25 @@ the storage formats on either side.}
 
 This architecture gives the paper its central rule: keep native containers for the data they are
 good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
+
+\subsection{WorldEpisode as a Meta-Simulator Contract}
+
+WorldEpisode is not tied to a single rendering or physics engine. It operates as a
+meta-simulator contract: a runtime becomes a trusted target by implementing an adapter that
+preserves the same semantic invariants and emits replay evidence. This keeps the integration
+direction clean. Datasets are not rewritten around simulator-native assumptions; simulators compile
+their scene loading, action interfaces, and replay reports against the WorldEpisode sidecar.
+
+The adapter contract has three layers. First, the \emph{invariant interface} ingests immutable
+world revisions, frame and clock graphs, entity identity, representation roles, action channels,
+asset digests, provenance, and quality records. Second, \emph{asynchronous schema extension}
+allows an engine to register cloth, deformable, fluid, articulation, material, or procedural-scene
+extensions without weakening the core episode record. Third, \emph{deterministic replay
+accountability} records runtime identity, version, solver, timestep, actuator parameters,
+initialization state, command/effective timing, latency, tolerance envelopes, and measured drift.
+
+The current implementation reflects this boundary. MuJoCo has one tested minimal replay adapter;
+the Isaac mapping is emitted but untested; Genesis and SAPIEN are explicit adapter-required
+targets. The claim is therefore not simulator-independent physics. The claim is runtime-neutral
+accountability: every simulator reports against the same world--episode contract, so cross-runtime
+drift becomes measurable rather than hidden inside loader conventions.

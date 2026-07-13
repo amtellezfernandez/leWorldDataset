@@ -62,6 +62,7 @@ is persistent, verifiable world-episode interoperability.
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
 - [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
+- [Meta-simulator contract](docs/meta-simulator-contract.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
@@ -70,6 +71,7 @@ is persistent, verifiable world-episode interoperability.
 - [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
 - [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
+- [Meta-simulator contract artifacts](docs/experiments/meta_simulator_contract)
 - [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
@@ -186,6 +188,12 @@ To generate the controlled real-to-sim contract-drift ablation:
 python3 tools/realtosim_contract_drift.py
 ```
 
+To generate the runtime-neutral simulator adapter contract:
+
+```bash
+python3 tools/meta_simulator_contract.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -208,6 +216,9 @@ The real-to-sim contract-drift ablation shows two proxy failures that visual rec
 cannot prevent: action-interface drift and representation-role drift. It is a controlled proxy, not
 a hardware rollout, but it positions WorldEpisode as the contract layer around Gaussian/OpenUSD
 real-to-sim pipelines.
+The meta-simulator contract makes that runtime-neutral: MuJoCo is the current tested minimal replay
+adapter, Isaac is adapter-ready but untested, and Genesis/SAPIEN are explicit adapter-required
+targets. The claim is adapter compliance, not simulator-independent physics.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through
