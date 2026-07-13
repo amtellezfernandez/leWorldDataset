@@ -77,6 +77,10 @@ The expected contribution is showing how ordinary episode-level splits can overe
 generalization when reconstructed rooms, objects, Gaussian assets, source videos, or generated
 asset families leak across train and evaluation.
 
+Current executable artifact: `tools/lerobot_scene_leakage_experiment.py` runs this audit on
+`armnet/armnetbench_v01_lerobot_so101`, derives `world_lineage` hashes for task-scene/camera-layout
+groups, and compares random-episode against scene-disjoint splits with a Torch MLP BC baseline.
+
 ## End-to-End Demonstration
 
 The strongest demonstration:
@@ -95,4 +99,3 @@ The strongest demonstration:
 12. Train a VLA with and without those counterfactual variants.
 13. Evaluate on the original real robot.
 14. Publish every conversion-loss report and conformance result.
-

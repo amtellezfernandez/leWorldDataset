@@ -78,6 +78,19 @@ success to 0.342. WorldEpisode-style world-frame identity and counterfactual cam
 increase success to 0.592 over 120 deterministic test cases.
 
 \paragraph{RQ5: lineage-safe splits.}
+We also run a public LeRobot split audit on ArmnetBench v0.1's single-arm SO-101 LeRobot
+release~\citep{armnetbench_lerobot_so101}. From the dataset metadata we derive eight
+WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene/camera-layout group. We
+train the same Torch MLP state-action behavioral-cloning baseline on two splits of the 400
+teleoperated reference demonstrations. A random episode split trains on 320 episodes, tests on 80,
+and leaks all test scene lineages into training. It obtains 0.850 offline BC imitation success under
+a fixed normalized-RMSE tolerance of 0.25, with mean episode normalized RMSE 0.183. The
+scene-disjoint split holds out the two eye-drop scene lineages, trains on 300 episodes, tests on
+100, and has zero lineage leakage. Its offline BC success drops to 0.000 and mean episode
+normalized RMSE rises to 0.363, a \(1.98\times\) increase. This is an offline action-imitation
+benchmark, not a physical rollout claim; the split manifest is directly reusable for native LeRobot
+ACT or Diffusion Policy training.
+
 We generate episodes with world/entity lineage labels and evaluate a memorization policy. A random
 episode split leaks every tested world/entity pair and obtains 1.000 accuracy. World-disjoint and
 entity-disjoint splits have zero measured leakage and reduce memorization accuracy to 0.500 and

@@ -57,6 +57,7 @@ is persistent, verifiable world-episode interoperability.
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
+- [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Governance draft](GOVERNANCE.md)
@@ -94,6 +95,19 @@ python3 -m pip install -r requirements-experiments.txt
 python3 tools/lerobot_worldepisode_roundtrip.py --required
 ```
 
+For the active public LeRobot scene-leakage audit:
+
+```bash
+python3 -m pip install -r requirements-experiments.txt
+python3 tools/lerobot_scene_leakage_experiment.py --required
+```
+
+The scene-leakage audit uses `armnet/armnetbench_v01_lerobot_so101`, derives
+WorldEpisode-style `world_lineage` hashes for task-scene/camera-layout groups, compares a random
+episode split against a scene-disjoint split, and trains the same Torch MLP behavioral-cloning
+baseline on both. In the committed run, the random split leaks all test scene lineages and obtains
+0.850 offline BC success; the scene-disjoint split has zero lineage leakage and drops to 0.000.
+
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through
 `LeRobotDataset v3 -> WorldEpisode -> LeRobotDataset v3`, exports a small LeRobot v3 package, and
@@ -113,6 +127,7 @@ The script writes:
 - `docs/experiments/RESULTS.md`
 - `docs/experiments/bindings/*`
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
+- `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/recorded_episodes/*`
 - `conformance/fixtures/pilot/*`
 

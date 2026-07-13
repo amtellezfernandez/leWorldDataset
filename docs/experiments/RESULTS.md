@@ -38,6 +38,23 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Discarded fields: 0
 
 
+## Active LeRobot Scene Leakage Audit
+
+- Source: `armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84`
+- Teleoperated reference episodes: 400
+- World-lineage groups: 8
+- Held-out scene tasks: Put the eye drops into the basket, Put the eye drops on the shelf
+- BC policy: torch_mlp_bc_state_action
+
+| Split | Leakage Rate | Test Episodes | Offline BC Success | Episode nRMSE Mean |
+|---|---:|---:|---:|---:|
+| Random episode | 1.000 | 80 | 0.850 | 0.183 |
+| Scene-disjoint | 0.000 | 100 | 0.000 | 0.363 |
+
+- Offline BC success drop: 0.850
+- Scene-disjoint/random episode nRMSE ratio: 1.98x
+
+
 ## RQ2: Fault Detection
 
 - Cases: 14
