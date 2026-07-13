@@ -24,9 +24,9 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1245 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (10281 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (479557 bytes) |
-| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (5607 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18067 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (459782 bytes) |
+| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (5590 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18142 bytes) |
 | DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180869 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1402 bytes) |

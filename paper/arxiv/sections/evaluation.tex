@@ -81,54 +81,56 @@ families where explicit state semantics alter the outcome.
 \centering
 \resizebox{0.98\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \def\panelw{3.72}
-  \def\panelh{3.05}
+  \begin{groupplot}[
+    group style={group size=3 by 1, horizontal sep=1.15cm},
+    width=4.15cm,
+    height=3.35cm,
+    ybar=12pt,
+    ymin=0,
+    enlarge x limits=0.40,
+    axis line style={draw=weLine},
+    tick style={draw=weLine},
+    ymajorgrids,
+    grid style={draw=weLine!45},
+    xtick=data,
+    x tick label style={font=\scriptsize, align=center},
+    y tick label style={font=\scriptsize},
+    title style={font=\bfseries\scriptsize, yshift=-1mm},
+    label style={font=\scriptsize},
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize, text=weInk, yshift=2pt},
+    every axis plot/.append style={draw=none},
+  ]
+    \nextgroupplot[
+      title={(a) Scene leakage},
+      ylabel={leakage rate},
+      ymax=1.25,
+      symbolic x coords={Random,Heldout},
+      xtick={Random,Heldout},
+    ]
+      \addplot+[fill=weRose!72] coordinates {(Random,1.00)};
+      \addplot+[fill=weGreen!68] coordinates {(Heldout,0.00)};
 
-  \draw[rounded corners=5pt, draw=weRose!70, fill=weRose!5, line width=0.8pt]
-    (0,0) rectangle (\panelw,\panelh);
-  \node[anchor=west, font=\bfseries\scriptsize, text=weRose, text width=3.25cm] at (0.18,2.78)
-    {(a) Leakage};
-  \node[font=\bfseries\Large, text=weRose] at (0.88,2.05) {1.00};
-  \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {random\\leakage};
-  \draw[wearrow=weRose] (1.45,2.05) -- (2.22,2.05);
-  \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {0.00};
-  \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {scene\\disjoint};
-  \draw[webar=weRose!75] (0.58,0.55) rectangle (1.18,1.38);
-  \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,0.58);
-  \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
-  \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {leaked lineages removed};
+    \nextgroupplot[
+      title={(b) Replay alignment},
+      ylabel={joint RMSE (deg)},
+      ymax=5.70,
+      symbolic x coords={Naive,Timed},
+      xtick={Naive,Timed},
+    ]
+      \addplot+[fill=weAmber!82] coordinates {(Naive,4.73)};
+      \addplot+[fill=weGreen!68] coordinates {(Timed,1.86)};
 
-  \begin{scope}[xshift=4.18cm]
-    \draw[rounded corners=5pt, draw=weAmber!75, fill=weAmber!6, line width=0.8pt]
-      (0,0) rectangle (\panelw,\panelh);
-    \node[anchor=west, font=\bfseries\scriptsize, text=weAmber!90!black, text width=3.25cm] at (0.18,2.78)
-      {(b) Replay error};
-    \node[font=\bfseries\Large, text=weAmber!90!black] at (0.88,2.05) {4.73};
-    \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {command\\time};
-    \draw[wearrow=weAmber] (1.45,2.05) -- (2.22,2.05);
-    \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {1.86};
-    \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {timestamp\\aware};
-    \draw[webar=weAmber!85] (0.58,0.55) rectangle (1.18,1.42);
-    \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,0.89);
-    \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
-    \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {2.54\(\times\) lower joint RMSE};
-  \end{scope}
-
-  \begin{scope}[xshift=8.36cm]
-    \draw[rounded corners=5pt, draw=weBlue!70, fill=weBlue!5, line width=0.8pt]
-      (0,0) rectangle (\panelw,\panelh);
-    \node[anchor=west, font=\bfseries\scriptsize, text=weBlue, text width=3.25cm] at (0.18,2.78)
-      {(c) Retention};
-    \node[font=\bfseries\Large, text=weBlue] at (0.88,2.05) {0.26};
-    \node[font=\tiny, text=weSlate, align=center] at (0.88,1.62) {native\\fields};
-    \draw[wearrow=weBlue] (1.45,2.05) -- (2.22,2.05);
-    \node[font=\bfseries\Large, text=weGreen] at (2.86,2.05) {1.00};
-    \node[font=\tiny, text=weSlate, align=center] at (2.86,1.62) {with\\sidecar};
-    \draw[webar=weBlue!75] (0.58,0.55) rectangle (1.18,0.77);
-    \draw[webar=weGreen!70] (2.52,0.55) rectangle (3.12,1.38);
-    \draw[draw=weLine, line width=0.4pt] (0.42,0.55) -- (3.28,0.55);
-    \node[font=\bfseries\tiny, text=weInk] at (1.86,0.25) {sidecar restores projection};
-  \end{scope}
+    \nextgroupplot[
+      title={(c) Semantic retention},
+      ylabel={profile retention},
+      ymax=1.25,
+      symbolic x coords={Native,Sidecar},
+      xtick={Native,Sidecar},
+    ]
+      \addplot+[fill=weBlue!70] coordinates {(Native,0.26)};
+      \addplot+[fill=weGreen!68] coordinates {(Sidecar,1.00)};
+  \end{groupplot}
 \end{tikzpicture}%
 }
 \caption{Quantitative summary of the three measured effects used in the evaluation. Lower is

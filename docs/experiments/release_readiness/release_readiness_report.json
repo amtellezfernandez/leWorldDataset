@@ -124,7 +124,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (479557 bytes)",
+      "evidence": "WorldEpisode.pdf (459782 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -132,7 +132,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "paper/arxiv/main.tex (5607 bytes)",
+      "evidence": "paper/arxiv/main.tex (5590 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"
@@ -140,7 +140,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18067 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18142 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"

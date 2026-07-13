@@ -19,13 +19,13 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
-| `WorldEpisode.pdf` | public_evidence | exact | `82910a904f3a6941` |
+| `WorldEpisode.pdf` | public_evidence | exact | `152b928b169d7c58` |
 | `README.md` | public_evidence | exact | `e292b0d25f8b7a55` |
 | `spec/worldepisode-v0.1.md` | public_evidence | exact | `dc6a0126ee7621ba` |
 | `spec/le-world-layout-v0.1.md` | public_evidence | exact | `bfb612a8c1300c0b` |
 | `paper/le-world-layout.md` | public_evidence | exact | `51549aaafa85c61e` |
-| `paper/arxiv/main.tex` | public_evidence | exact | `ba32ee52767a8f61` |
-| `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `af78f0dec5312d4d` |
+| `paper/arxiv/main.tex` | public_evidence | exact | `7082d16d56e82058` |
+| `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `d9417dd94116ac65` |
 | `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `f3c6389a277cc7dd` |
 | `schemas/worldepisode-core-v0.schema.json` | public_evidence | exact | `ee02649c28fb1c67` |
 | `schemas/worldepisode-dataset-v0.schema.json` | public_evidence | exact | `488d517937e90a87` |
@@ -58,7 +58,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/experiments/natural_failure_corpus/datasets/lerobot_pusht_7628202a2180.json` | public_evidence | exact | `bd31ed1229ecf2b5` |
 | `docs/experiments/natural_failure_corpus/datasets/lerobot_svla_so101_pickplace_f641879e2217.json` | public_evidence | exact | `2fd75a4b0962189e` |
 | `docs/experiments/natural_failure_corpus/manifest.json` | public_evidence | exact | `af79dfde34d015d9` |
-| `docs/reviewer-concern-matrix.md` | public_evidence | exact | `798ea9a023ec0294` |
+| `docs/reviewer-concern-matrix.md` | public_evidence | exact | `240076eac8c104c7` |
 | `docs/reference-release.md` | public_evidence | exact | `a17c16840efc720f` |
 | `GOVERNANCE.md` | public_evidence | exact | `c5f5e9618c26f9e4` |
 | `CITATION.cff` | public_evidence | exact | `9a0c9bde871ab55a` |

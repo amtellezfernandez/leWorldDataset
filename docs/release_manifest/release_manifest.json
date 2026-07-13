@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "82910a904f3a6941796169f3e8221e0067622411d9a003076f83dc6c63266390"
+      "sha256": "152b928b169d7c587a30a010db220592987bf537ea471e4b4f5b82a4773195e5"
     },
     {
       "category": "public_evidence",
@@ -70,7 +70,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/main.tex",
-      "sha256": "ba32ee52767a8f614ffb8ffaca2e36b46a427edae083a6a17553ec5c77073fa2"
+      "sha256": "7082d16d56e820584328b7cfbfd045bcdb26478a2e69e74e78058ce58770d317"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "af78f0dec5312d4dbb02c836ff39675767b333169a01789ccc19041f18fb8fe3"
+      "sha256": "d9417dd94116ac65d38dbfec04bcaefacd51e40c5a982088c9e39cf3ebeba21c"
     },
     {
       "category": "public_evidence",
@@ -385,7 +385,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reviewer-concern-matrix.md",
-      "sha256": "798ea9a023ec029423b57ac138145126a7aacf356a8b5585f3d2aa7c264e9b63"
+      "sha256": "240076eac8c104c72bcf0fa296fff27f27d2f9074b13d1a2d29d10e1779c49ea"
     },
     {
       "category": "public_evidence",

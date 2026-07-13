@@ -143,9 +143,9 @@ famous benchmark score is inflated. It requires a benchmark-specific WorldEpisod
 lineage/timing audit, published-policy rerun, corrected evaluation, and measured score drop. The
 current gate has one attempted DROID subset rerun report, zero valid famous-benchmark rerun
 reports, and therefore zero measured famous-benchmark inflation claims. The attempted DROID run is
-fail-closed because Hugging Face DNS resolution failed before the pinned Parquet shards could be
-fetched. `python3 tools/benchmark_inflation_gate.py --required` should fail until real rerun
-artifacts are committed.
+fail-closed because the local rerun environment could not satisfy the public-data/dependency path
+before the pinned Parquet shards were read. `python3 tools/benchmark_inflation_gate.py --required`
+should fail until real rerun artifacts are committed.
 
 Real-to-sim artifact: `tools/realtosim_contract_drift.py` adds a controlled proxy for the
 Gaussian/OpenUSD hype cycle. It shows that a drifted action interface can succeed in simulation and
