@@ -20,6 +20,9 @@ AUDIT_DATE = "2026-07-13"
 PUBLIC_EVIDENCE_ARTIFACTS = [
     "WorldEpisode.pdf",
     "README.md",
+    "spec/worldepisode-v0.1.md",
+    "spec/le-world-layout-v0.1.md",
+    "paper/le-world-layout.md",
     "paper/arxiv/main.tex",
     "paper/arxiv/sections/evaluation.tex",
     "paper/arxiv/sections/limitations.tex",

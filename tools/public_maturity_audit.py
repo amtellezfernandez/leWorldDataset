@@ -23,15 +23,25 @@ AUDIT_DATE = "2026-07-13"
 SCAN_PATHS = [
     "README.md",
     "GOVERNANCE.md",
+    "spec/worldepisode-v0.1.md",
+    "spec/le-world-layout-v0.1.md",
+    "paper/le-world-layout.md",
+    "paper/outline.md",
     "conformance/requirements.md",
     "conformance/profiles.md",
+    "conformance/fixtures/README.md",
     "conformance/projections/uss-core-23.v0.json",
+    "docs/benchmark-callout-audit.md",
     "docs/bindings.md",
+    "docs/meta-simulator-contract.md",
+    "docs/policy-leakage-gate.md",
     "docs/production-scale.md",
+    "docs/real-to-sim-contract-drift.md",
     "docs/reference-release.md",
     "docs/research-plan.md",
     "docs/reviewer-concern-matrix.md",
     "docs/sdk.md",
+    "docs/universal-spatial-state.md",
     "docs/experiments/results.json",
     "docs/experiments/paper_claim_audit/README.md",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
@@ -100,8 +110,9 @@ def rel(path: Path) -> str:
 def line_matches(path: Path, pattern: str) -> list[dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     matches = []
+    pattern_lower = pattern.lower()
     for index, line in enumerate(text.splitlines(), start=1):
-        if pattern in line:
+        if pattern_lower in line.lower():
             matches.append(
                 {
                     "path": rel(path),

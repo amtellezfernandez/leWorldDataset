@@ -21,6 +21,9 @@ AUDIT_DATE = "2026-07-13"
 REQUIRED_PUBLIC_ARTIFACTS = [
     "WorldEpisode.pdf",
     "README.md",
+    "spec/worldepisode-v0.1.md",
+    "spec/le-world-layout-v0.1.md",
+    "paper/le-world-layout.md",
     "paper/arxiv/main.tex",
     "schemas/worldepisode-core-v0.schema.json",
     "schemas/worldepisode-dataset-v0.schema.json",

@@ -1,10 +1,10 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 41,
+    "entry_count": 44,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 31,
+    "public_evidence_count": 34,
     "release_script_count": 10
   },
   "artifacts": {
@@ -35,6 +35,33 @@
       "normalizers_applied": [],
       "path": "README.md",
       "sha256": "ac3516f5a7c78cbd50d0503a87b04d63cc92d082b167fe6b1985adfe7d9dd1d6"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "spec/worldepisode-v0.1.md",
+      "sha256": "dc6a0126ee7621baeda36bfd6901915d2a051461cd399eb35817bc1d6fd200d0"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "spec/le-world-layout-v0.1.md",
+      "sha256": "bfb612a8c1300c0bcba295c9f90ac740d0e55d9241aad4f9b7054b6526c8e09a"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "paper/le-world-layout.md",
+      "sha256": "51549aaafa85c61e38054c1ddb4793fa64167ecb018828d1f51688579c4d0a16"
     },
     {
       "category": "public_evidence",
@@ -169,7 +196,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/public_maturity/public_maturity_report.json",
-      "sha256": "f89b6d4d222cb2f15ba9cddcfb03df4add6fad98fdd9a653b3bc9fc333d4ca61"
+      "sha256": "6823f9f886f2f1b08eb4a2040f6de3c4367dbcbe0a58a67888aad7b0ae6c0206"
     },
     {
       "category": "public_evidence",
@@ -358,7 +385,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/public_maturity_audit.py",
-      "sha256": "9cc63fcec04b386f76594c1d38d3bb423a21f9a10313455f42b7a4410e555bbc"
+      "sha256": "c3f02c825a5fce0187d29b79ad61b41c47a25d29440904417340ec6c1a5ec61a"
     },
     {
       "category": "release_script",
@@ -367,7 +394,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "a25c6cfdd3331545c89d797807d807a1f86404e9f994cc2f6dfc1feb5fd97cf3"
+      "sha256": "24a10c5ee11c072823ebf139f2addccf6c837cbaea1195c569b9316ce11156fc"
     },
     {
       "category": "release_script",
@@ -376,7 +403,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "aa5ed4174d1fdaa37832ba71a665c57822287beaf010ae636eb913567779f114"
+      "sha256": "eef9127c7d4d25a79bcaef085f04c71e2b7dd0a7992fedec8ab83de668ad88c4"
     },
     {
       "category": "release_script",
@@ -385,7 +412,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "bbf7d3fdfc7c4111393e941ed6725fe085841bd614747c85d004136c9879b571"
+      "sha256": "4161cc29ba209781a1412817c35d0b78e768b5e9864d0fe6486bd3b7ae66ec06"
     },
     {
       "category": "release_script",

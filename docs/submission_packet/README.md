@@ -18,6 +18,9 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 |---|---:|---:|
 | `WorldEpisode.pdf` | True | True |
 | `README.md` | True | True |
+| `spec/worldepisode-v0.1.md` | True | True |
+| `spec/le-world-layout-v0.1.md` | True | True |
+| `paper/le-world-layout.md` | True | True |
 | `paper/arxiv/main.tex` | True | True |
 | `schemas/worldepisode-core-v0.schema.json` | True | True |
 | `schemas/worldepisode-dataset-v0.schema.json` | True | True |

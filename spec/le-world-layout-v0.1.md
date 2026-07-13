@@ -1,6 +1,6 @@
-# leWorldLayout v0.1 Draft Specification
+# leWorldLayout v0.1 RFC Specification
 
-Status: draft.
+Status: active RFC.
 
 This document is intentionally normative. The paper can explain motivation and evaluation; this
 file defines the interchange contract.

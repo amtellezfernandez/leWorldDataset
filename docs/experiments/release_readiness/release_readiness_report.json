@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 30,
-    "passed_count": 30,
+    "check_count": 32,
+    "passed_count": 32,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -92,6 +92,22 @@
     {
       "boundary": "",
       "check_id": "DOC.004",
+      "evidence": "spec/worldepisode-v0.1.md (10281 bytes)",
+      "name": "WorldEpisode RFC spec exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.005",
+      "evidence": "spec/le-world-layout-v0.1.md (5602 bytes)",
+      "name": "world layout RFC spec exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.006",
       "evidence": "WorldEpisode.pdf (479236 bytes)",
       "name": "paper PDF exists",
       "passed": true,
@@ -99,7 +115,7 @@
     },
     {
       "boundary": "",
-      "check_id": "DOC.005",
+      "check_id": "DOC.007",
       "evidence": "paper/arxiv/main.tex (5328 bytes)",
       "name": "paper source exists",
       "passed": true,
@@ -107,7 +123,7 @@
     },
     {
       "boundary": "",
-      "check_id": "DOC.006",
+      "check_id": "DOC.008",
       "evidence": "docs/reviewer-concern-matrix.md (17528 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
@@ -115,7 +131,7 @@
     },
     {
       "boundary": "",
-      "check_id": "DOC.007",
+      "check_id": "DOC.009",
       "evidence": "docs/experiments/results.json (147869 bytes)",
       "name": "controlled results exist",
       "passed": true,
@@ -123,7 +139,7 @@
     },
     {
       "boundary": "",
-      "check_id": "DOC.008",
+      "check_id": "DOC.010",
       "evidence": "CITATION.cff (432 bytes)",
       "name": "public citation metadata exists",
       "passed": true,
@@ -131,7 +147,7 @@
     },
     {
       "boundary": "",
-      "check_id": "DOC.009",
+      "check_id": "DOC.011",
       "evidence": ".github/workflows/ci.yml (1302 bytes)",
       "name": "CI workflow exists",
       "passed": true,
@@ -292,7 +308,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=41, normalized=4",
+      "evidence": "status=pass, entries=44, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"

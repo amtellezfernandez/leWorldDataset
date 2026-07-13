@@ -317,6 +317,21 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "spec/worldepisode-v0.1.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "spec/le-world-layout-v0.1.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "paper/le-world-layout.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "paper/arxiv/main.tex"
     },
     {

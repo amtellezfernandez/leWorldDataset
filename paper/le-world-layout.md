@@ -144,5 +144,5 @@ The paper should evaluate:
 
 - Which frame convention identifiers should be mandatory in v0.1?
 - Should dynamic layouts live in this spec or only in a scenario layer?
-- Which fields should be required for publication versus allowed for local drafts?
+- Which fields should be required for publication versus allowed for local work-in-progress artifacts?
 - How strict should the paper be about JSON canonicalization and registry digests?

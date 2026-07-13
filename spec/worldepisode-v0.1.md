@@ -1,6 +1,6 @@
-# WorldEpisode v0.1 Draft Specification
+# WorldEpisode v0.1 RFC Specification
 
-Status: draft.
+Status: active RFC.
 
 WorldEpisode is a storage-neutral, representation-neutral interchange profile that binds a
 robot-learning episode to an immutable world revision. At dataset scale, it also defines a manifest
@@ -235,4 +235,4 @@ The initial requirement namespace is:
 - `WE-Replay`: simulator configuration, initial state, runtime checks.
 - `WE-Counterfactual`: entity-level decomposition and editable world deltas.
 
-Version 1 should target rigid tabletop manipulation with fixed-base single- or dual-arm robots.
+The v1 target is rigid tabletop manipulation with fixed-base single- or dual-arm robots.

@@ -6,8 +6,8 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 ## Summary
 
-- Entries: 41
-- Public evidence artifacts: 31
+- Entries: 44
+- Public evidence artifacts: 34
 - Release scripts: 10
 - Normalized timing digests: 4
 - Missing artifacts: 0
@@ -21,6 +21,9 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 |---|---|---|---|
 | `WorldEpisode.pdf` | public_evidence | exact | `aae72da63f39b2ec` |
 | `README.md` | public_evidence | exact | `ac3516f5a7c78cbd` |
+| `spec/worldepisode-v0.1.md` | public_evidence | exact | `dc6a0126ee7621ba` |
+| `spec/le-world-layout-v0.1.md` | public_evidence | exact | `bfb612a8c1300c0b` |
+| `paper/le-world-layout.md` | public_evidence | exact | `51549aaafa85c61e` |
 | `paper/arxiv/main.tex` | public_evidence | exact | `76bfff546d9430f9` |
 | `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `65639ae5cf0b5bca` |
 | `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `743acf8cc4cae3c0` |
@@ -34,7 +37,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/experiments/dataset_scale_performance/README.md` | public_evidence | normalized | `943173b82eec9763` |
 | `docs/experiments/dataset_scale_performance/performance_report.json` | public_evidence | normalized | `48293944cf0e21b1` |
 | `docs/experiments/paper_claim_audit/paper_claim_audit_report.json` | public_evidence | exact | `2b240ed3e37bd762` |
-| `docs/experiments/public_maturity/public_maturity_report.json` | public_evidence | exact | `f89b6d4d222cb2f1` |
+| `docs/experiments/public_maturity/public_maturity_report.json` | public_evidence | exact | `6823f9f886f2f1b0` |
 | `docs/experiments/open_reproduction_gates/open_reproduction_gates.json` | public_evidence | exact | `721a98c933c149c4` |
 | `docs/experiments/benchmark_inflation_gate/gate_report.json` | public_evidence | exact | `1a7ff1c3d96cc5e7` |
 | `docs/experiments/lerobot_scene_leakage/leakage_report.json` | public_evidence | exact | `5ffe5fd924814d59` |
@@ -55,10 +58,10 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `tools/run_experiments.py` | release_script | exact | `651feb2d65a70a20` |
 | `tools/open_reproduction_gates.py` | release_script | exact | `2c4260573bdfb89f` |
 | `tools/paper_claim_audit.py` | release_script | exact | `64c26114d812370c` |
-| `tools/public_maturity_audit.py` | release_script | exact | `9cc63fcec04b386f` |
-| `tools/release_manifest.py` | release_script | exact | `a25c6cfdd3331545` |
-| `tools/submission_packet.py` | release_script | exact | `aa5ed4174d1fdaa3` |
-| `tools/release_readiness.py` | release_script | exact | `bbf7d3fdfc7c4111` |
+| `tools/public_maturity_audit.py` | release_script | exact | `c3f02c825a5fce01` |
+| `tools/release_manifest.py` | release_script | exact | `24a10c5ee11c0728` |
+| `tools/submission_packet.py` | release_script | exact | `eef9127c7d4d25a7` |
+| `tools/release_readiness.py` | release_script | exact | `4161cc29ba209781` |
 | `tools/artifact_freshness.py` | release_script | exact | `872fb2ac81b56cfc` |
 
 ## Validation
