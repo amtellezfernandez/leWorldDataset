@@ -43,3 +43,7 @@ latency, are not guessed; they are emitted in the conversion report as explicitl
 The split-leakage tool similarly downloads bounded ArmnetBench LeRobot shards, writes
 \texttt{world\_lineage} and split-manifest artifacts, and trains an executable BC baseline over the
 real LeRobot tensors.
+The control-replay tool reads the exported LeRobot trajectory, estimates the effective command
+delay from action/state alignment, writes the WorldEpisode action contract, executes the tested
+MuJoCo adapter, and emits an Isaac adapter mapping that is ready for an Isaac environment but
+explicitly marked untested in the committed report.

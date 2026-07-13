@@ -1,0 +1,191 @@
+{
+  "alignment": {
+    "calibration_by_delay": [
+      {
+        "delay_frames": 0,
+        "joint_rmse_deg": 3.388358192384155
+      },
+      {
+        "delay_frames": 1,
+        "joint_rmse_deg": 2.68334568508476
+      },
+      {
+        "delay_frames": 2,
+        "joint_rmse_deg": 1.9949978942203184
+      },
+      {
+        "delay_frames": 3,
+        "joint_rmse_deg": 1.3849369442142896
+      },
+      {
+        "delay_frames": 4,
+        "joint_rmse_deg": 1.0476693522987472
+      },
+      {
+        "delay_frames": 5,
+        "joint_rmse_deg": 1.2202684703044544
+      },
+      {
+        "delay_frames": 6,
+        "joint_rmse_deg": 1.729175129720638
+      },
+      {
+        "delay_frames": 7,
+        "joint_rmse_deg": 2.337575258707417
+      }
+    ],
+    "full_by_delay": [
+      {
+        "delay_frames": 0,
+        "joint_rmse_deg": 3.984340509867802
+      },
+      {
+        "delay_frames": 1,
+        "joint_rmse_deg": 3.161498618084714
+      },
+      {
+        "delay_frames": 2,
+        "joint_rmse_deg": 2.369204447337189
+      },
+      {
+        "delay_frames": 3,
+        "joint_rmse_deg": 1.7072032069398149
+      },
+      {
+        "delay_frames": 4,
+        "joint_rmse_deg": 1.4323014943742967
+      },
+      {
+        "delay_frames": 5,
+        "joint_rmse_deg": 1.7390533943428876
+      },
+      {
+        "delay_frames": 6,
+        "joint_rmse_deg": 2.395234541302811
+      },
+      {
+        "delay_frames": 7,
+        "joint_rmse_deg": 3.168724385627652
+      }
+    ],
+    "inferred_effective_delay_frames": 4,
+    "inferred_effective_delay_s": 0.1333332061767578,
+    "validation_by_delay": [
+      {
+        "delay_frames": 0,
+        "joint_rmse_deg": 4.732222905942676
+      },
+      {
+        "delay_frames": 1,
+        "joint_rmse_deg": 3.760498962246461
+      },
+      {
+        "delay_frames": 2,
+        "joint_rmse_deg": 2.8347887117274597
+      },
+      {
+        "delay_frames": 3,
+        "joint_rmse_deg": 2.0959354769364356
+      },
+      {
+        "delay_frames": 4,
+        "joint_rmse_deg": 1.861898224847853
+      },
+      {
+        "delay_frames": 5,
+        "joint_rmse_deg": 2.3026106928887993
+      },
+      {
+        "delay_frames": 6,
+        "joint_rmse_deg": 3.132533618132824
+      },
+      {
+        "delay_frames": 7,
+        "joint_rmse_deg": 4.102514221117706
+      }
+    ],
+    "validation_improvement_over_naive": 2.5416120187393028,
+    "validation_naive_rmse_deg": 4.732222905942676,
+    "validation_timestamp_aware_rmse_deg": 1.861898224847853
+  },
+  "available": true,
+  "calibration_fraction": 0.6,
+  "calibration_samples": 181,
+  "joint_count": 6,
+  "pass": true,
+  "sample_count": 303,
+  "sample_period_s": 0.03333330154418945,
+  "sample_rate_hz": 30.000028610256777,
+  "simulators": {
+    "isaac": {
+      "adapter_contract": {
+        "expected_mapping": [
+          "policy_output_timestamp_semantics",
+          "action_enqueue_timestamp_semantics",
+          "queue_consume_timestamp_semantics",
+          "motor_receive_timestamp_semantics",
+          "latency_model",
+          "interpolation"
+        ],
+        "input": "worldepisode_action_contract"
+      },
+      "backend": "isaac-sim",
+      "ready": true,
+      "reason": "Isaac Sim is not installed in this execution environment.",
+      "tested": false
+    },
+    "mujoco": {
+      "backend": "mujoco",
+      "kp": 20.0,
+      "kv": 1.0,
+      "model": "minimal six-joint position-servo adapter",
+      "naive_command_time": {
+        "final_joint_rmse_deg": 0.37679009508326555,
+        "joint_rmse_deg": 3.4247236915825052
+      },
+      "rmse_improvement_over_naive": 2.191019226228591,
+      "tested": true,
+      "timestamp_aware": {
+        "final_joint_rmse_deg": 0.3767900654698427,
+        "joint_rmse_deg": 1.563073317926787
+      },
+      "timestep_s": 0.03333330154418945
+    }
+  },
+  "source_trace": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+  "validation_samples": 122,
+  "worldepisode_action_contract": {
+    "action_chunking": {
+      "chunk_size": "source_absent",
+      "horizon": "source_absent",
+      "stride": "source_absent",
+      "supported_fields": [
+        "chunk_id",
+        "chunk_index",
+        "horizon",
+        "producer_timestamp",
+        "consumer_timestamp"
+      ]
+    },
+    "action_enqueue_timestamp_semantics": "command enters an action queue/chunk buffer",
+    "command_rate_hz": 30.000028610256777,
+    "control_mode": "joint_position",
+    "effective_timestamp_semantics": "effective_time = sample_timestamp + 4 sample periods",
+    "interpolation": "zero_order_hold",
+    "latency_model": {
+      "delay_frames": 4,
+      "delay_s": 0.1333332061767578,
+      "estimated_from": "argmin action[t-delay] -> observation.state[t] joint RMSE on calibration prefix",
+      "type": "constant_frame_delay"
+    },
+    "missing_value_policy": "hold_last",
+    "motor_receive_timestamp_semantics": "estimated effective motor target time",
+    "parameterization": "absolute_joint_vector",
+    "policy_output_timestamp_semantics": "policy inference output time; may be asynchronous",
+    "profile": "worldepisode-control-loop-0.1",
+    "queue_consume_timestamp_semantics": "fixed-rate low-level control loop consumes the selected command",
+    "selection_policy": "latest_valid_command_before_effective_time",
+    "source_binding": "lerobot-v3",
+    "units": "position_units_inferred_degrees"
+  }
+}

@@ -83,12 +83,20 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Declared latency: 20 ms
 - Command/effective timestamps present: True
 
-## RQ3: Replay Timing
+## RQ3: LeRobot Control-Loop Replay
 
-- Declared latency RMSE: 0.00395
-- Naive command-time RMSE: 0.01422
-- Alternate-engine RMSE under declared assumptions: 0.00668
-- Declared latency improvement over naive timing: 3.60x
+- Source trace: `docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/data/chunk-000/file-000.parquet`
+- Samples x joints: 303 x 6
+- Sample rate: 30.00 Hz
+- Inferred effective delay: 4 frames (133.3 ms)
+- Validation naive command-time RMSE: 4.732 deg
+- Validation timestamp-aware RMSE: 1.862 deg
+- Validation alignment improvement: 2.54x
+- MuJoCo naive replay RMSE: 3.425 deg
+- MuJoCo timestamp-aware replay RMSE: 1.563 deg
+- MuJoCo replay improvement: 2.19x
+- Isaac adapter ready: True; tested: False
+
 
 ## RQ4: Counterfactual Robustness
 

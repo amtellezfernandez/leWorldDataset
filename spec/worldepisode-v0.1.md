@@ -133,7 +133,13 @@ Every action channel MUST declare:
 - command timestamp
 - effective timestamp
 - latency model
+- policy-output timestamp semantics
+- action-enqueue timestamp semantics
+- queue-consume timestamp semantics
+- motor-receive/effective timestamp semantics
+- action-chunk horizon, stride, and selection policy when chunked control is used
 - interpolation
+- aggregation policy when several policy outputs compete for one control tick
 - normalization
 - gripper semantics
 - missing-value policy

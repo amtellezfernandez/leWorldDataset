@@ -40,6 +40,12 @@ asserts zero numerical loss for action tensors, state tensors, sample timestamps
 timestamp ranges. Source semantics absent from LeRobot, including camera extrinsics, action units,
 robot/world calibration, and controller latency, are tracked in the conversion report.
 
+The companion control-replay experiment at `tools/lerobot_control_replay_experiment.py` reads the
+exported LeRobot trajectory, infers a four-frame effective action delay, emits the WorldEpisode
+control-loop contract, and verifies timestamp-aware replay in MuJoCo. The same contract contains an
+Isaac adapter mapping, but that backend is marked ready and untested until an Isaac environment is
+available.
+
 ## Loss Report Shape
 
 Converters should produce a report similar to:

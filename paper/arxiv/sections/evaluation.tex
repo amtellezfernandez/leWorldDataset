@@ -64,12 +64,18 @@ From the same mirrored frame we materialize a 10-frame LeRobot-style episode art
 actions, command timestamps, effective timestamps, and a declared 20 ms latency model. This artifact
 is used as the recorded-episode fixture for timing and action-contract checks.
 
-\paragraph{RQ3: declared replay timing.}
-We replay a deterministic grasp-and-transport trace with a two-step declared actuation latency. The
-declared-latency replay obtains object-trajectory RMSE \(0.00395\), while naive command-time replay
-obtains RMSE \(0.01422\), a \(3.6\times\) improvement. A second engine parameterization under the
-same declared assumptions obtains RMSE \(0.00668\), illustrating replay within a tolerance envelope
-rather than bit-identical physics.
+\paragraph{RQ3: LeRobot control-loop replay.}
+We ground the action contract in the LeRobot control loop, where policy inference may run
+asynchronously from a fixed-rate low-level controller and commands may be queued, chunked,
+interpolated, or consumed later~\citep{lerobot}. On the public SO-101 LeRobot trajectory used
+above, WorldEpisode records policy-output, enqueue, queue-consume, and motor-receive timestamp
+semantics, plus zero-order-hold interpolation and a constant-frame latency model. Estimating the
+effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the validation
+suffix, naive command-time alignment has joint RMSE 4.732 degrees, while timestamp-aware alignment
+has 1.862 degrees, a \(2.54\times\) improvement. In a tested MuJoCo six-joint position-servo
+replay, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
+degrees, a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping from the
+same contract, but is not tested in this environment.
 
 \paragraph{RQ4: synthetic counterfactual robustness.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only nearest-neighbor

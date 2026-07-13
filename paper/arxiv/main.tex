@@ -58,12 +58,13 @@ converter preserves 303 six-dimensional action rows, state rows, sample timestam
 timestamp ranges, and derived physical-frame records with zero measured numerical loss while
 explicitly reporting source-absent camera extrinsics, action units, and latency semantics. The
 validator detects all 14 injected fault classes and all hand-authored independent fixture failures.
-Declared actuation latency reduces replay RMSE by
-\(3.6\times\) over naive command-time replay. On a public ArmnetBench LeRobot release, random
-episode splitting leaks all tested world lineages and gives a Torch behavioral-cloning baseline
-0.850 offline imitation success, while a scene-disjoint split has zero lineage leakage and drops to
-0.000. These results show that world--episode semantics are not documentation overhead; they are
-measurable controls for robot-learning validity.
+A real LeRobot trajectory reveals a four-frame, 133 ms effective action delay; timestamp-aware
+alignment reduces validation joint RMSE from 4.732 to 1.862 degrees, and tested MuJoCo replay drops
+from 3.425 to 1.563 degrees while the Isaac adapter remains ready but untested. On a public
+ArmnetBench LeRobot release, random episode splitting leaks all tested world lineages and gives a
+Torch behavioral-cloning baseline 0.850 offline imitation success, while a scene-disjoint split has
+zero lineage leakage and drops to 0.000. These results show that world--episode semantics are not
+documentation overhead; they are measurable controls for robot-learning validity.
 \end{abstract}
 
 \input{sections/introduction}

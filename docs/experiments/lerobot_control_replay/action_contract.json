@@ -1,0 +1,34 @@
+{
+  "action_chunking": {
+    "chunk_size": "source_absent",
+    "horizon": "source_absent",
+    "stride": "source_absent",
+    "supported_fields": [
+      "chunk_id",
+      "chunk_index",
+      "horizon",
+      "producer_timestamp",
+      "consumer_timestamp"
+    ]
+  },
+  "action_enqueue_timestamp_semantics": "command enters an action queue/chunk buffer",
+  "command_rate_hz": 30.000028610256777,
+  "control_mode": "joint_position",
+  "effective_timestamp_semantics": "effective_time = sample_timestamp + 4 sample periods",
+  "interpolation": "zero_order_hold",
+  "latency_model": {
+    "delay_frames": 4,
+    "delay_s": 0.1333332061767578,
+    "estimated_from": "argmin action[t-delay] -> observation.state[t] joint RMSE on calibration prefix",
+    "type": "constant_frame_delay"
+  },
+  "missing_value_policy": "hold_last",
+  "motor_receive_timestamp_semantics": "estimated effective motor target time",
+  "parameterization": "absolute_joint_vector",
+  "policy_output_timestamp_semantics": "policy inference output time; may be asynchronous",
+  "profile": "worldepisode-control-loop-0.1",
+  "queue_consume_timestamp_semantics": "fixed-rate low-level control loop consumes the selected command",
+  "selection_policy": "latest_valid_command_before_effective_time",
+  "source_binding": "lerobot-v3",
+  "units": "position_units_inferred_degrees"
+}

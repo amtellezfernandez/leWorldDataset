@@ -58,6 +58,7 @@ is persistent, verifiable world-episode interoperability.
 - [Binding round-trip artifacts](docs/experiments/bindings)
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
+- [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Research plan](docs/research-plan.md)
 - [Reference release plan](docs/reference-release.md)
 - [Governance draft](GOVERNANCE.md)
@@ -102,6 +103,13 @@ python3 -m pip install -r requirements-experiments.txt
 python3 tools/lerobot_scene_leakage_experiment.py --required
 ```
 
+For the active public LeRobot control-loop replay experiment:
+
+```bash
+python3 -m pip install -r requirements-experiments.txt
+python3 tools/lerobot_control_replay_experiment.py --required
+```
+
 The scene-leakage audit uses `armnet/armnetbench_v01_lerobot_so101`, derives
 WorldEpisode-style `world_lineage` hashes for task-scene/camera-layout groups, compares a random
 episode split against a scene-disjoint split, and trains the same Torch MLP behavioral-cloning
@@ -114,6 +122,13 @@ The active converter downloads bounded metadata/data shards from
 asserts zero numerical loss for action tensors, state tensors, timestamps, and video timestamp
 ranges. LeRobot source fields that are absent, such as camera extrinsics and controller latency, are
 reported explicitly rather than silently invented.
+
+The control-loop replay experiment reads the exported SO-101 LeRobot v3 trajectory, estimates the
+effective action delay from the timestamped action/state streams, writes a WorldEpisode action
+contract, and tests timestamp-aware replay in MuJoCo. In the committed run, the inferred delay is
+four 30 Hz frames (133 ms), validation alignment improves from 4.732 deg to 1.862 deg RMSE, and the
+tested MuJoCo replay improves from 3.425 deg to 1.563 deg RMSE. The Isaac adapter contract is
+emitted and marked ready, but Isaac is intentionally untested here.
 
 For the lightweight controlled suite without requiring the active LeRobot dependency path:
 
@@ -128,6 +143,7 @@ The script writes:
 - `docs/experiments/bindings/*`
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/lerobot_scene_leakage/*`
+- `docs/experiments/lerobot_control_replay/*`
 - `docs/experiments/recorded_episodes/*`
 - `conformance/fixtures/pilot/*`
 
