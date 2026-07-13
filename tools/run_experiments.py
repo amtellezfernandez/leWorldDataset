@@ -1365,7 +1365,7 @@ def write_report(results: dict[str, Any]) -> None:
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace and one WorldEpisode MuJoCo replay adapter; URDF Studio is companion scenario-backend evidence, not the same LeRobot trace; Isaac mapping is emitted but untested. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
@@ -1421,6 +1421,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Virtual split datasets: {policy_gate.get("materialized_split_manifests", {}).get("manifest_count", 0)}
 - Split source files with digests: {policy_gate.get("materialized_split_manifests", {}).get("source_file_count", 0)}
 - Split train/test overlap zero: {policy_gate.get("materialized_split_manifests", {}).get("all_train_test_overlaps_zero", False)}
+- Physical split packages: {policy_gate.get("physical_split_packages", {}).get("package_count", 0)}
+- Physical source files verified: {policy_gate.get("physical_split_packages", {}).get("source_files_verified", False)}
+- Physical package frames: {policy_gate.get("physical_split_packages", {}).get("total_output_frames", 0)}
 - Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
 
 ## Famous Benchmark Call-Out Audit
@@ -1655,6 +1658,7 @@ def main() -> int:
         return 1
     policy_gate = results["lerobot_policy_gate"]
     policy_materialization = policy_gate.get("materialized_split_manifests", {})
+    physical_packages = policy_gate.get("physical_split_packages", {})
     if policy_gate.get("available") and (
         policy_materialization.get("manifest_count") != 4
         or policy_materialization.get("source_file_count", 0) < 1
@@ -1662,6 +1666,16 @@ def main() -> int:
         or not policy_materialization.get("all_membership_counts_match")
     ):
         print("ACT/Diffusion policy gate split materialization manifests are incomplete.")
+        return 1
+    if policy_gate.get("available") and (
+        physical_packages.get("status") != "physical_split_packages_ready"
+        or physical_packages.get("package_count") != 4
+        or not physical_packages.get("source_files_verified")
+        or not physical_packages.get("all_train_test_overlaps_zero")
+        or not physical_packages.get("all_membership_counts_match")
+        or physical_packages.get("total_output_frames", 0) < 1
+    ):
+        print("ACT/Diffusion policy gate physical split packages are incomplete.")
         return 1
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_POLICY_GATE") == "1" and not policy_gate.get("pass"):
         print("ACT/Diffusion policy leakage gate is required but did not pass.")

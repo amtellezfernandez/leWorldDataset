@@ -1,0 +1,706 @@
+{
+  "claim_boundary": "This is a compact low-dimensional LeRobot split package for state/action policy reruns. It is digest-verified against the cached public source Parquet files and preserves action, state, timestamp, frame, task, reward, and done values. It deliberately does not claim to be a full vision dataset because the source video files were not part of the committed leakage audit cache.",
+  "episode_filter": {
+    "field": "episode_index",
+    "local_episode_map": [
+      {
+        "local_episode_index": 0,
+        "source_episode_index": 257
+      },
+      {
+        "local_episode_index": 1,
+        "source_episode_index": 264
+      },
+      {
+        "local_episode_index": 2,
+        "source_episode_index": 268
+      },
+      {
+        "local_episode_index": 3,
+        "source_episode_index": 280
+      },
+      {
+        "local_episode_index": 4,
+        "source_episode_index": 281
+      },
+      {
+        "local_episode_index": 5,
+        "source_episode_index": 284
+      },
+      {
+        "local_episode_index": 6,
+        "source_episode_index": 286
+      },
+      {
+        "local_episode_index": 7,
+        "source_episode_index": 287
+      },
+      {
+        "local_episode_index": 8,
+        "source_episode_index": 290
+      },
+      {
+        "local_episode_index": 9,
+        "source_episode_index": 296
+      },
+      {
+        "local_episode_index": 10,
+        "source_episode_index": 566
+      },
+      {
+        "local_episode_index": 11,
+        "source_episode_index": 569
+      },
+      {
+        "local_episode_index": 12,
+        "source_episode_index": 573
+      },
+      {
+        "local_episode_index": 13,
+        "source_episode_index": 576
+      },
+      {
+        "local_episode_index": 14,
+        "source_episode_index": 580
+      },
+      {
+        "local_episode_index": 15,
+        "source_episode_index": 581
+      },
+      {
+        "local_episode_index": 16,
+        "source_episode_index": 582
+      },
+      {
+        "local_episode_index": 17,
+        "source_episode_index": 587
+      },
+      {
+        "local_episode_index": 18,
+        "source_episode_index": 599
+      },
+      {
+        "local_episode_index": 19,
+        "source_episode_index": 608
+      },
+      {
+        "local_episode_index": 20,
+        "source_episode_index": 910
+      },
+      {
+        "local_episode_index": 21,
+        "source_episode_index": 917
+      },
+      {
+        "local_episode_index": 22,
+        "source_episode_index": 919
+      },
+      {
+        "local_episode_index": 23,
+        "source_episode_index": 932
+      },
+      {
+        "local_episode_index": 24,
+        "source_episode_index": 937
+      },
+      {
+        "local_episode_index": 25,
+        "source_episode_index": 938
+      },
+      {
+        "local_episode_index": 26,
+        "source_episode_index": 939
+      },
+      {
+        "local_episode_index": 27,
+        "source_episode_index": 946
+      },
+      {
+        "local_episode_index": 28,
+        "source_episode_index": 951
+      },
+      {
+        "local_episode_index": 29,
+        "source_episode_index": 952
+      },
+      {
+        "local_episode_index": 30,
+        "source_episode_index": 958
+      },
+      {
+        "local_episode_index": 31,
+        "source_episode_index": 1205
+      },
+      {
+        "local_episode_index": 32,
+        "source_episode_index": 1208
+      },
+      {
+        "local_episode_index": 33,
+        "source_episode_index": 1212
+      },
+      {
+        "local_episode_index": 34,
+        "source_episode_index": 1219
+      },
+      {
+        "local_episode_index": 35,
+        "source_episode_index": 1222
+      },
+      {
+        "local_episode_index": 36,
+        "source_episode_index": 1231
+      },
+      {
+        "local_episode_index": 37,
+        "source_episode_index": 1234
+      },
+      {
+        "local_episode_index": 38,
+        "source_episode_index": 1237
+      },
+      {
+        "local_episode_index": 39,
+        "source_episode_index": 1240
+      },
+      {
+        "local_episode_index": 40,
+        "source_episode_index": 1241
+      },
+      {
+        "local_episode_index": 41,
+        "source_episode_index": 1246
+      },
+      {
+        "local_episode_index": 42,
+        "source_episode_index": 1554
+      },
+      {
+        "local_episode_index": 43,
+        "source_episode_index": 1556
+      },
+      {
+        "local_episode_index": 44,
+        "source_episode_index": 1558
+      },
+      {
+        "local_episode_index": 45,
+        "source_episode_index": 1561
+      },
+      {
+        "local_episode_index": 46,
+        "source_episode_index": 1563
+      },
+      {
+        "local_episode_index": 47,
+        "source_episode_index": 1570
+      },
+      {
+        "local_episode_index": 48,
+        "source_episode_index": 1591
+      },
+      {
+        "local_episode_index": 49,
+        "source_episode_index": 1593
+      },
+      {
+        "local_episode_index": 50,
+        "source_episode_index": 1845
+      },
+      {
+        "local_episode_index": 51,
+        "source_episode_index": 1848
+      },
+      {
+        "local_episode_index": 52,
+        "source_episode_index": 1856
+      },
+      {
+        "local_episode_index": 53,
+        "source_episode_index": 1858
+      },
+      {
+        "local_episode_index": 54,
+        "source_episode_index": 1861
+      },
+      {
+        "local_episode_index": 55,
+        "source_episode_index": 1865
+      },
+      {
+        "local_episode_index": 56,
+        "source_episode_index": 1871
+      },
+      {
+        "local_episode_index": 57,
+        "source_episode_index": 1872
+      },
+      {
+        "local_episode_index": 58,
+        "source_episode_index": 1873
+      },
+      {
+        "local_episode_index": 59,
+        "source_episode_index": 1874
+      },
+      {
+        "local_episode_index": 60,
+        "source_episode_index": 1875
+      },
+      {
+        "local_episode_index": 61,
+        "source_episode_index": 1881
+      },
+      {
+        "local_episode_index": 62,
+        "source_episode_index": 1885
+      },
+      {
+        "local_episode_index": 63,
+        "source_episode_index": 2166
+      },
+      {
+        "local_episode_index": 64,
+        "source_episode_index": 2168
+      },
+      {
+        "local_episode_index": 65,
+        "source_episode_index": 2186
+      },
+      {
+        "local_episode_index": 66,
+        "source_episode_index": 2196
+      },
+      {
+        "local_episode_index": 67,
+        "source_episode_index": 2197
+      },
+      {
+        "local_episode_index": 68,
+        "source_episode_index": 2208
+      },
+      {
+        "local_episode_index": 69,
+        "source_episode_index": 2449
+      },
+      {
+        "local_episode_index": 70,
+        "source_episode_index": 2450
+      },
+      {
+        "local_episode_index": 71,
+        "source_episode_index": 2459
+      },
+      {
+        "local_episode_index": 72,
+        "source_episode_index": 2460
+      },
+      {
+        "local_episode_index": 73,
+        "source_episode_index": 2465
+      },
+      {
+        "local_episode_index": 74,
+        "source_episode_index": 2469
+      },
+      {
+        "local_episode_index": 75,
+        "source_episode_index": 2477
+      },
+      {
+        "local_episode_index": 76,
+        "source_episode_index": 2481
+      },
+      {
+        "local_episode_index": 77,
+        "source_episode_index": 2484
+      },
+      {
+        "local_episode_index": 78,
+        "source_episode_index": 2491
+      },
+      {
+        "local_episode_index": 79,
+        "source_episode_index": 2495
+      }
+    ],
+    "local_episode_map_sha256": "65b8b0cc430fb9af9ac5443d8eb68d8a5c66f95128f17dab788515c1506afe70",
+    "source_episode_count": 80,
+    "source_episode_indices": [
+      257,
+      264,
+      268,
+      280,
+      281,
+      284,
+      286,
+      287,
+      290,
+      296,
+      566,
+      569,
+      573,
+      576,
+      580,
+      581,
+      582,
+      587,
+      599,
+      608,
+      910,
+      917,
+      919,
+      932,
+      937,
+      938,
+      939,
+      946,
+      951,
+      952,
+      958,
+      1205,
+      1208,
+      1212,
+      1219,
+      1222,
+      1231,
+      1234,
+      1237,
+      1240,
+      1241,
+      1246,
+      1554,
+      1556,
+      1558,
+      1561,
+      1563,
+      1570,
+      1591,
+      1593,
+      1845,
+      1848,
+      1856,
+      1858,
+      1861,
+      1865,
+      1871,
+      1872,
+      1873,
+      1874,
+      1875,
+      1881,
+      1885,
+      2166,
+      2168,
+      2186,
+      2196,
+      2197,
+      2208,
+      2449,
+      2450,
+      2459,
+      2460,
+      2465,
+      2469,
+      2477,
+      2481,
+      2484,
+      2491,
+      2495
+    ],
+    "source_episode_indices_sha256": "2124c69c56deee2b372677ef060b689e501410c52f51b6b963e6d36f6ceee775",
+    "split_manifest_episode_indices_sha256": "2124c69c56deee2b372677ef060b689e501410c52f51b6b963e6d36f6ceee775"
+  },
+  "explicitly_remapped": [
+    "episode_index",
+    "index",
+    "meta/episodes dataset_from_index",
+    "meta/episodes dataset_to_index"
+  ],
+  "manifest": {
+    "media_type": "application/json",
+    "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/worldepisode_split_package.json"
+  },
+  "not_materialized": [
+    "video payload files",
+    "observation.images.* feature payloads"
+  ],
+  "outputs": {
+    "data": {
+      "bytes": 512944,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/data/chunk-000/file-000.parquet",
+      "sha256": "a3134ede097612b7b0489d4bfb4ce5a961c1d5a9ee0c3b7d8dbafe1b30380167"
+    },
+    "episodes": {
+      "bytes": 155080,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/episodes/chunk-000/file-000.parquet",
+      "sha256": "ed1e768a80590af7109956ae52587a19a3d4ea5ace52a48be2277efb20708810"
+    },
+    "info": {
+      "bytes": 1899,
+      "media_type": "application/json",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/info.json",
+      "sha256": "e974a5326a2c7fde948a4a58cac7a754aecb92009e85b414b9fbb6f97fe4a7a9"
+    },
+    "tasks": {
+      "bytes": 2534,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/tasks.parquet",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f"
+    }
+  },
+  "preserved_without_numeric_change": [
+    "action",
+    "observation.state",
+    "timestamp",
+    "frame_index",
+    "task_index",
+    "next.reward",
+    "next.done"
+  ],
+  "profile": "worldepisode-physical-lerobot-split-package-0.1",
+  "row_counts": {
+    "episodes": 80,
+    "frames": 21745,
+    "metadata_episode_rows": 80
+  },
+  "source_dataset": {
+    "local_cache_root": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+  },
+  "source_integrity": {
+    "source_files": [
+      {
+        "bytes": 168964,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-013.parquet",
+        "sha256": "21f6b9206c92107c9e3462b3d6dccc19d67ab04e961ab17beb7faa97340a3793",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet"
+      },
+      {
+        "bytes": 185354,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-014.parquet",
+        "sha256": "c7e4f337ca692a22cb31e52af93c858941825cc1e5be35173a0bcd7ecd7590dc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet"
+      },
+      {
+        "bytes": 212543,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-027.parquet",
+        "sha256": "62c344620ea3cceaa62a46895fd542f1bbabc2c4f473f8bf5c218a0b423764b5",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet"
+      },
+      {
+        "bytes": 181040,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-028.parquet",
+        "sha256": "a932030cdb13ecba62bf0659a299bd2e7cdb91db156c2650d6a32992f779dc99",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet"
+      },
+      {
+        "bytes": 322466,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-040.parquet",
+        "sha256": "e1e9cc6db2e7c7a00789821d253401acf8c244af10429827af7d519e37cafbe3",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet"
+      },
+      {
+        "bytes": 267573,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-041.parquet",
+        "sha256": "f67f8512b2019aa3bb94dc1445998e55016a62571fc7bd4a8880a10e252ce864",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet"
+      },
+      {
+        "bytes": 268803,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-052.parquet",
+        "sha256": "0e20903bc14ac7927b3950421894ea3e3939b56c1719ded863b051ae71883918",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet"
+      },
+      {
+        "bytes": 206664,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-053.parquet",
+        "sha256": "5b2a6b92124f8bb148af01a6f145793f741d87fd7fb80cc8985800d0225fd95b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet"
+      },
+      {
+        "bytes": 335315,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-066.parquet",
+        "sha256": "4b4915599acc6a54133ae69526ca4145adf02e0dfc6fb365bcc1098e938d1810",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet"
+      },
+      {
+        "bytes": 120686,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-078.parquet",
+        "sha256": "fdcb70fcd5cb3ea1619c8d159eb3abc13804aaae5e5f0102c27fd5d67fc75a2b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet"
+      },
+      {
+        "bytes": 22002,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-079.parquet",
+        "sha256": "fd4e317f99eba8e8556ae8274a41bdabdf9b2dd4756adba0315a752e599a7135",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet"
+      },
+      {
+        "bytes": 174527,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-080.parquet",
+        "sha256": "d00a6dcb02e538a30e5b8792592c919c78e0f6849cf02de8438e55c21941471a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet"
+      },
+      {
+        "bytes": 63747,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-095.parquet",
+        "sha256": "0cb99deb90529b2e9510d0b3580312fa826b3aa82842e4522010d322059b346e",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet"
+      },
+      {
+        "bytes": 227305,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-096.parquet",
+        "sha256": "6e4bddaece0756e454e7bfc9b7c66322f9ba706e8a63cb4cae25197019463443",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet"
+      },
+      {
+        "bytes": 237430,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-097.parquet",
+        "sha256": "9f00c6154fc0aa3729d57e4eced9bf21f72440c5668890b0bfca84707f1ea2bc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet"
+      },
+      {
+        "bytes": 198168,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-098.parquet",
+        "sha256": "a8292ee476bc6f42f8c06af6915ddf024f3e1b15ff8de54b31af5f1a187bf577",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet"
+      },
+      {
+        "bytes": 54442,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-099.parquet",
+        "sha256": "3a4dde0b110eae2868efd10cdafb91b772245289face9be0685c18a902da6d50",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet"
+      },
+      {
+        "bytes": 79559,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-100.parquet",
+        "sha256": "c12947de83885bb2370298fef3e69dc9a97ca30fd0e6d38bb65748a3b81923b7",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet"
+      },
+      {
+        "bytes": 80795,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-101.parquet",
+        "sha256": "8158700b45beb3333e85c0ec3367f2d4ce5aa8b536332f630692db5483eed596",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet"
+      },
+      {
+        "bytes": 22817,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-102.parquet",
+        "sha256": "ed68f11e6dc3122aa5c2e5ffbee8dd78e002bcf0a02010b6fc84a12994f5ed0a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet"
+      },
+      {
+        "bytes": 92894,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-116.parquet",
+        "sha256": "ac8818b6e5fa28de86c34ae209973e826fb1a0ab486f41142fcc4e4fa334c67c",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet"
+      },
+      {
+        "bytes": 111413,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-117.parquet",
+        "sha256": "ee67124ccb490313b2275ace08bfc49a820e7efa84e899edbcf5801c41ab7aef",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet"
+      },
+      {
+        "bytes": 119398,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-118.parquet",
+        "sha256": "ac4c02f451681ce5499294b64330201d1edaf53890f27bb004851e5ddeb54f06",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet"
+      },
+      {
+        "bytes": 96609,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-119.parquet",
+        "sha256": "d6561f7571e2fd39ff3e5278cfd9374ebc181a901e91ccee59a8f5854f2bf683",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet"
+      },
+      {
+        "bytes": 3865933,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/episodes/chunk-000/file-000.parquet",
+        "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet"
+      },
+      {
+        "bytes": 4878,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json",
+        "media_type": "application/json",
+        "path": "meta/info.json",
+        "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json"
+      },
+      {
+        "bytes": 2534,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/tasks.parquet",
+        "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet"
+      }
+    ],
+    "source_files_sha256": "fbf5fe0222b969529bd0edadc3a147b57ce7683b1a19d50fe9979060d3a9fd84",
+    "verified": true,
+    "verified_file_count": 27,
+    "verified_total_bytes": 7723859
+  },
+  "status": "physical_split_package_ready",
+  "target_dataset": {
+    "lerobot_split_alias": "train",
+    "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+    "partition": "test",
+    "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+    "split_name": "random_episode"
+  }
+}

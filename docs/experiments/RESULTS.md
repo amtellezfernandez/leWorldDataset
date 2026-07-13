@@ -16,7 +16,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment, tested MuJoCo position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace and one WorldEpisode MuJoCo replay adapter; URDF Studio is companion scenario-backend evidence, not the same LeRobot trace; Isaac mapping is emitted but untested. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
@@ -98,6 +98,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Virtual split datasets: 4
 - Split source files with digests: 27
 - Split train/test overlap zero: True
+- Physical split packages: 4
+- Physical source files verified: True
+- Physical package frames: 241470
 - Ready to execute in this environment: False
 
 ## Famous Benchmark Call-Out Audit

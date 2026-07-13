@@ -2,6 +2,7 @@
   "artifacts": {
     "jobs": "docs/experiments/lerobot_policy_gate/train_eval_jobs.json",
     "materialized_split_manifest": "docs/experiments/lerobot_policy_gate/materialized_splits/manifest.json",
+    "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
     "random_episode_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/split_episodes.json",
     "random_episode_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
     "random_episode_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_test.lerobot_split_manifest.json",
@@ -18,11 +19,11 @@
   },
   "available": true,
   "closure_required": [
-    "materialize train/test LeRobot datasets from the allowlists without changing episode membership",
     "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
     "evaluate each checkpoint on the corresponding test split with action-error metrics",
     "run at least one high-fidelity simulator or physical rollout using the same split manifest",
-    "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces"
+    "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces",
+    "mirror source videos before claiming any vision-policy result from the compact split packages"
   ],
   "environment": {
     "cuda_visible_devices": null,
@@ -51,11 +52,14 @@
       "job_id": "act_random_episode_worldepisode_leakage",
       "materialized_datasets_required": {
         "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+        "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
         "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
         "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+        "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
         "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
       },
       "offline_action_eval": {
+        "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
         "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
         "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
         "metrics": [
@@ -122,11 +126,14 @@
       "job_id": "diffusion_random_episode_worldepisode_leakage",
       "materialized_datasets_required": {
         "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+        "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
         "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
         "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+        "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
         "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
       },
       "offline_action_eval": {
+        "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
         "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
         "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
         "metrics": [
@@ -193,11 +200,14 @@
       "job_id": "act_scene_disjoint_worldepisode_leakage",
       "materialized_datasets_required": {
         "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+        "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
         "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
         "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+        "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
         "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
       },
       "offline_action_eval": {
+        "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
         "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
         "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
         "metrics": [
@@ -264,11 +274,14 @@
       "job_id": "diffusion_scene_disjoint_worldepisode_leakage",
       "materialized_datasets_required": {
         "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+        "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
         "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
         "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+        "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
         "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
       },
       "offline_action_eval": {
+        "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
         "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
         "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
         "metrics": [
@@ -352,6 +365,59 @@
     ]
   },
   "pass": false,
+  "physical_split_packages": {
+    "all_membership_counts_match": true,
+    "all_train_test_overlaps_zero": true,
+    "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. They are ready for state/action ACT or Diffusion reruns and still require external video mirroring before any vision-policy result can be claimed.",
+    "package_count": 4,
+    "package_root": "docs/experiments/lerobot_policy_gate/physical_splits",
+    "packages": [
+      {
+        "episodes": 320,
+        "frames": 98990,
+        "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+        "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/worldepisode_split_package.json",
+        "partition": "train",
+        "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+        "split_name": "random_episode"
+      },
+      {
+        "episodes": 80,
+        "frames": 21745,
+        "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+        "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/worldepisode_split_package.json",
+        "partition": "test",
+        "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+        "split_name": "random_episode"
+      },
+      {
+        "episodes": 300,
+        "frames": 100422,
+        "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+        "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/worldepisode_split_package.json",
+        "partition": "train",
+        "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+        "split_name": "scene_disjoint"
+      },
+      {
+        "episodes": 100,
+        "frames": 20313,
+        "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+        "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/worldepisode_split_package.json",
+        "partition": "test",
+        "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+        "split_name": "scene_disjoint"
+      }
+    ],
+    "profile": "worldepisode-physical-lerobot-split-packages-0.1",
+    "source_cache_root": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "source_file_count": 27,
+    "source_files_verified": true,
+    "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+    "status": "physical_split_packages_ready",
+    "total_output_bytes": 6245649,
+    "total_output_frames": 241470
+  },
   "policies": [
     "act",
     "diffusion"

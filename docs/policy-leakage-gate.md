@@ -19,6 +19,8 @@ and writes:
 - train/test episode allowlists for the random and scene-disjoint splits;
 - virtual split materialization manifests in `materialized_splits/`, with source file digests and
   split-membership hashes;
+- compact low-dimensional LeRobot split packages in `physical_splits/`, with source-file digest
+  verification and explicit source-to-local episode maps;
 - a rollout contract requiring high-fidelity simulation or physical robot evaluation;
 - `run_lerobot_policy_jobs.sh`, which contains the LeRobot `lerobot-train` commands.
 
@@ -38,6 +40,8 @@ This is not a completed empirical result. It is the executable gate that prevent
 overclaiming the MLP leakage result as if it already covered ACT, Diffusion Policy, IsaacLab, or
 hardware rollouts.
 
-The materialization manifests are also bounded: they fix source integrity and episode membership
-for the split datasets, but they are not committed physical copies of every LeRobot payload shard
-and video.
+The committed physical split packages are also bounded: they are state/action packages for
+low-dimensional policy reruns. They preserve action, state, timestamp, frame, task, reward, and
+done values from the cached public Parquet source and remap `episode_index`/`index` into contiguous
+local LeRobot packages. They do not include video payloads; vision-policy results require mirroring
+the source videos and committing their digests before any such result can be claimed.

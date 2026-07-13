@@ -1,0 +1,101 @@
+{
+  "chunks_size": 1000,
+  "codebase_version": "v3.0",
+  "data_files_size_in_mb": 2.130474,
+  "data_path": "data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet",
+  "features": {
+    "action": {
+      "dtype": "float32",
+      "names": [
+        "shoulder_pan.pos",
+        "shoulder_lift.pos",
+        "elbow_flex.pos",
+        "wrist_flex.pos",
+        "wrist_roll.pos",
+        "gripper.pos"
+      ],
+      "shape": [
+        6
+      ]
+    },
+    "episode_index": {
+      "dtype": "int64",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "frame_index": {
+      "dtype": "int64",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "index": {
+      "dtype": "int64",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "next.done": {
+      "dtype": "bool",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "next.reward": {
+      "dtype": "float32",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "observation.state": {
+      "dtype": "float32",
+      "names": [
+        "shoulder_pan.pos",
+        "shoulder_lift.pos",
+        "elbow_flex.pos",
+        "wrist_flex.pos",
+        "wrist_roll.pos",
+        "gripper.pos"
+      ],
+      "shape": [
+        6
+      ]
+    },
+    "task_index": {
+      "dtype": "int64",
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "timestamp": {
+      "dtype": "float32",
+      "names": null,
+      "shape": [
+        1
+      ]
+    }
+  },
+  "fps": 20,
+  "robot_type": "so-101",
+  "splits": {
+    "train": "0:300"
+  },
+  "total_episodes": 300,
+  "total_frames": 100422,
+  "total_tasks": 8,
+  "video_files_size_in_mb": 0,
+  "worldepisode_split_package": {
+    "local_split_alias": "train",
+    "mode": "low_dimensional_state_action_package",
+    "partition": "train",
+    "split_name": "scene_disjoint",
+    "video_payloads": "external_not_materialized"
+  }
+}

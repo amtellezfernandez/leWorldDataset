@@ -263,9 +263,10 @@ episode split against a scene-disjoint split, and trains the same Torch MLP beha
 baseline on both. In the committed run, the random split leaks all test scene lineages and obtains
 0.850 offline BC success; the scene-disjoint split has zero lineage leakage and drops to 0.000.
 The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs,
-episode allowlists, virtual split materialization manifests, and high-fidelity/physical rollout
-requirements; it is intentionally marked open until real ACT/Diffusion metrics and rollout reports
-are committed.
+episode allowlists, virtual split manifests, compact physical state/action LeRobot split packages,
+and high-fidelity/physical rollout requirements; it is intentionally marked open until real
+ACT/Diffusion metrics and rollout reports are committed. The compact packages omit source videos,
+so vision-policy claims require mirrored video assets with digests.
 The famous benchmark call-out audit applies the same requirement lens to Open X-Embodiment, DROID,
 BridgeData V2, LIBERO, and CALVIN. It flags missing public leakage/timing controls, but does not
 claim a benchmark score is inflated until a measured rerun exists. The separate

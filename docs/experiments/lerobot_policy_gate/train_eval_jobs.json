@@ -16,11 +16,14 @@
     "job_id": "act_random_episode_worldepisode_leakage",
     "materialized_datasets_required": {
       "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
       "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
       "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
       "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
     },
     "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
       "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
       "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
       "metrics": [
@@ -87,11 +90,14 @@
     "job_id": "diffusion_random_episode_worldepisode_leakage",
     "materialized_datasets_required": {
       "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
       "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
       "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
       "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
     },
     "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
       "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
       "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
       "metrics": [
@@ -158,11 +164,14 @@
     "job_id": "act_scene_disjoint_worldepisode_leakage",
     "materialized_datasets_required": {
       "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
       "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
       "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
       "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
     },
     "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
       "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
       "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
       "metrics": [
@@ -229,11 +238,14 @@
     "job_id": "diffusion_scene_disjoint_worldepisode_leakage",
     "materialized_datasets_required": {
       "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
       "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
       "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
       "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
     },
     "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
       "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
       "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
       "metrics": [
