@@ -1,0 +1,49 @@
+{
+  "artifacts": {
+    "conversion_report": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/conversion_report.json",
+    "exported_lerobot_v3": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3",
+    "source_manifest": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/source_manifest.json",
+    "worldepisode_manifest": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/worldepisode.manifest.json",
+    "worldepisode_sidecar": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/worldepisode.sidecar.json"
+  },
+  "available": true,
+  "episode_index": 1,
+  "explicitly_tracked_source_absent_fields": [
+    "camera extrinsics",
+    "robot/world calibration transform",
+    "action units",
+    "controller latency model"
+  ],
+  "metrics": {
+    "action_rows": 118,
+    "action_tensor_sha256": "af948f914673c369da71f1eae1c851a52385456c9e84461a9cf7831eeb113b0e",
+    "action_width": 2,
+    "discarded_fields": [],
+    "max_abs_action_error": 0.0,
+    "max_abs_episode_index_error": 0.0,
+    "max_abs_frame_index_error": 0.0,
+    "max_abs_index_error": 0.0,
+    "max_abs_state_error": 0.0,
+    "max_abs_task_index_error": 0.0,
+    "max_abs_timestamp_error": 0.0,
+    "max_abs_video_timestamp_error": 0.0,
+    "pass": true,
+    "physical_frame_records": 2,
+    "physical_frames_preserved": true,
+    "physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c",
+    "roundtrip_action_tensor_sha256": "af948f914673c369da71f1eae1c851a52385456c9e84461a9cf7831eeb113b0e",
+    "roundtrip_physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c",
+    "roundtrip_timestamp_sha256": "6035b3363268e79f52dacffacb0db9c9b2c30e428c3a1e98f16d9ca5c878e6d8",
+    "roundtrip_video_timestamp_sha256": "9993ccd78289fd63673a6aec7d56b37dfc88e5f1f9a1e99d86757c8969cad5d1",
+    "source_absent_fields_tracked": 4,
+    "state_rows": 118,
+    "timestamp_count": 118,
+    "timestamp_sha256": "6035b3363268e79f52dacffacb0db9c9b2c30e428c3a1e98f16d9ca5c878e6d8",
+    "video_streams": 1,
+    "video_timestamp_sha256": "9993ccd78289fd63673a6aec7d56b37dfc88e5f1f9a1e99d86757c8969cad5d1",
+    "worldepisode_sidecar_physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c"
+  },
+  "pass": true,
+  "repo_id": "lerobot/pusht",
+  "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+}

@@ -80,6 +80,10 @@ def load_json(path: Path) -> Any:
         return json.load(handle)
 
 
+def repo_path(path: Path) -> Path:
+    return path if path.is_absolute() else ROOT / path
+
+
 def portable_uri(uri: str) -> str:
     try:
         path = Path(uri)
@@ -863,6 +867,8 @@ def main() -> int:
     parser.add_argument("--max-download-mb", type=int, default=2)
     parser.add_argument("--required", action="store_true", help="return non-zero if the active experiment cannot run")
     args = parser.parse_args()
+    args.output_dir = repo_path(args.output_dir)
+    args.cache_dir = repo_path(args.cache_dir)
 
     try:
         report = run_roundtrip_experiment(

@@ -15,7 +15,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
-| Conversion | Pinned LeRobotDataset v3 five-episode batch round trip with exact tensor, index, and timestamp equality. | One dataset; broader dataset coverage remains future work. |
+| Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
@@ -50,6 +50,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Discarded fields: 0
 - Batch report: 5 episodes, 1197 action rows, max action/state/timestamp/video errors = 0.0/0.0/0.0/0.0
 - Batch source-index errors: frame/episode/global/task = 0.0/0.0/0.0/0.0
+
+- Secondary batch: `lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19`; 5 episodes, 738 action rows, max source-native errors all zero: True
 
 
 

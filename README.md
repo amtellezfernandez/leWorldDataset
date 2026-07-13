@@ -108,6 +108,12 @@ To extend that conversion from the default single-episode run to the committed b
 
 ```bash
 python3 tools/lerobot_worldepisode_roundtrip.py --required --batch-episode-indices 0,1,2,3,4
+python3 tools/lerobot_worldepisode_roundtrip.py --required \
+  --repo-id lerobot/pusht \
+  --revision 7628202a2180972f291ba1bc6723834921e72c19 \
+  --output-dir docs/experiments/lerobot_worldepisode_roundtrip_pusht \
+  --batch-episode-indices 0,1,2,3,4 \
+  --max-download-mb 4
 ```
 
 For the active public LeRobot scene-leakage audit:
@@ -133,11 +139,12 @@ baseline on both. In the committed run, the random split leaks all test scene li
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through
 `LeRobotDataset v3 -> WorldEpisode -> LeRobotDataset v3`, and can extend the audit to episodes 0--4
-with `--batch-episode-indices 0,1,2,3,4`. The committed batch report preserves 1,197 action/state
-rows plus sample timestamps, frame indices, episode indices, global sample indices, task indices,
-video timestamp ranges, and physical-frame records with zero numerical loss. LeRobot source fields
-that are absent, such as camera extrinsics and controller latency, are reported explicitly rather
-than silently invented.
+with `--batch-episode-indices 0,1,2,3,4`. A second committed batch repeats the same audit on
+`lerobot/pusht`. Together, the two public LeRobot batches preserve 1,935 action/state rows plus
+sample timestamps, frame indices, episode indices, global sample indices, task indices, video
+timestamp ranges, and physical-frame records with zero numerical loss. LeRobot source fields that
+are absent, such as camera extrinsics and controller latency, are reported explicitly rather than
+silently invented.
 
 The control-loop replay experiment reads the exported SO-101 LeRobot v3 trajectory, estimates the
 effective action delay from the timestamped action/state streams, writes a WorldEpisode action

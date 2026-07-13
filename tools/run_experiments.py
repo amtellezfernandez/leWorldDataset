@@ -34,6 +34,9 @@ RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
+SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
+    RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
+)
 
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 
@@ -445,6 +448,14 @@ def experiment_lerobot_active_roundtrip() -> dict[str, Any]:
         report = run_roundtrip_experiment()
         if ROUNDTRIP_BATCH_REPORT.exists():
             report["batch_roundtrip"] = load_json(ROUNDTRIP_BATCH_REPORT)
+        secondary_reports = []
+        for path in SECONDARY_ROUNDTRIP_BATCH_REPORTS:
+            if path.exists():
+                secondary = load_json(path)
+                secondary["artifact"] = str(path.relative_to(ROOT))
+                secondary_reports.append(secondary)
+        if secondary_reports:
+            report["secondary_batch_roundtrips"] = secondary_reports
         return report
     except RoundTripUnavailable as exc:
         return unavailable_report(exc)
@@ -853,6 +864,15 @@ def write_report(results: dict[str, Any]) -> None:
                 f"{batch['max_errors']['max_abs_index_error']:.1f}/"
                 f"{batch['max_errors']['max_abs_task_index_error']:.1f}\n"
             )
+        secondary_lines = ""
+        for secondary in active_lerobot.get("secondary_batch_roundtrips", []):
+            if not secondary.get("available"):
+                continue
+            secondary_lines += (
+                f"- Secondary batch: `{secondary['repo_id']}@{secondary['revision']}`; "
+                f"{secondary['episode_count']} episodes, {secondary['total_action_rows']} action rows, "
+                f"max source-native errors all zero: {secondary['pass']}\n"
+            )
         active_section = f"""## Active LeRobot -> WorldEpisode -> LeRobot Round-Trip
 
 - Source: `{active_lerobot["repo_id"]}@{active_lerobot["revision"]}`
@@ -868,6 +888,7 @@ def write_report(results: dict[str, Any]) -> None:
 - Explicitly tracked source-absent fields: {active_metrics["source_absent_fields_tracked"]}
 - Discarded fields: {len(active_metrics["discarded_fields"])}
 {batch_lines}
+{secondary_lines}
 """
     else:
         active_section = f"""## Active LeRobot -> WorldEpisode -> LeRobot Round-Trip
@@ -933,7 +954,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
-| Conversion | Pinned LeRobotDataset v3 five-episode batch round trip with exact tensor, index, and timestamp equality. | One dataset; broader dataset coverage remains future work. |
+| Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |

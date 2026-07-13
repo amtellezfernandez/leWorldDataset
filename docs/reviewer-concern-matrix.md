@@ -10,7 +10,7 @@ the claim at the same scope as the evidence.
 |---|---|---|---|
 | "This is only infrastructure." | Five-graph contract, conformance requirements, validators, binding artifacts, leakage/replay/conversion experiments. | Mitigated. Discussion frames the contribution as falsifiable invariants rather than an SDK. | Independent adapter or dataset using the invariants without relying on the original implementation. |
 | Offline leakage is not real robot success. | ArmnetBench LeRobot audit over 400 teleoperated reference episodes; random split leakage 1.000; scene-disjoint leakage 0.000; Torch BC probe drops 0.850 to 0.000 offline score. | Mitigated by scope. Abstract, evaluation, and limitations call this an offline imitation probe. | Run the committed split manifest with ACT or Diffusion Policy, then evaluate in simulation or on hardware. |
-| LeRobot round trip is too small. | Active pinned `lerobot/svla_so101_pickplace` batch round trip over episodes 0--4; 1,197 action/state rows; action/state/timestamp/index/video timestamp max error 0.0; source-absent fields tracked. | Mitigated for one dataset. Evaluation calls this a batch audit, not broad LeRobot coverage. | Repeat on at least a second public LeRobot dataset with pinned revision and committed batch report. |
+| LeRobot round trip is too small. | Active pinned batch round trips over `lerobot/svla_so101_pickplace` and `lerobot/pusht`, episodes 0--4 each; 1,935 action/state rows; action/state/timestamp/index/video timestamp max error 0.0; source-absent fields tracked. | Closed for current scope. Evaluation calls this a two-dataset batch audit, not broad LeRobot coverage. | Extend only if claiming broad LeRobot coverage beyond the current paper scope. |
 | Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors. | Mitigated by scope. The paper avoids claiming state-of-the-art policy impact. | Repeat leakage experiment with LeRobot-native ACT and Diffusion Policy using the same split manifest. |
 | Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Isaac mapping emitted but untested. | Mitigated by scope. Limitations state one trace, one MuJoCo adapter, Isaac untested. | Run at least two trajectories, a second robot/dataset, and an Isaac or second-simulator replay with declared tolerance envelopes. |
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures. | Partially mitigated. Limitations identify need for natural failure corpus. | Audit several public datasets for naturally occurring faults and report maintainers' agreement/disagreement with diagnostics. |
@@ -32,11 +32,15 @@ the claim at the same scope as the evidence.
    - Input: two public LeRobot datasets with pinned revisions.
    - Command for the first dataset:
      `python3 tools/lerobot_worldepisode_roundtrip.py --required --batch-episode-indices 0,1,2,3,4`.
-   - Current output: per-episode round-trip reports and aggregate equality/error table in
+   - Command for the second dataset:
+     `python3 tools/lerobot_worldepisode_roundtrip.py --required --repo-id lerobot/pusht --revision 7628202a2180972f291ba1bc6723834921e72c19 --output-dir docs/experiments/lerobot_worldepisode_roundtrip_pusht --batch-episode-indices 0,1,2,3,4 --max-download-mb 4`.
+   - Current output: per-episode round-trip reports and aggregate equality/error tables in
      `docs/experiments/lerobot_worldepisode_roundtrip/batch_roundtrip_report.json` for
-     `lerobot/svla_so101_pickplace` episodes 0--4.
-   - Remaining output: repeat on a second public LeRobot dataset with conversion loss reports.
-   - Claim unlocked: active conversion is more than a one-episode smoke test for the first dataset.
+     `lerobot/svla_so101_pickplace` episodes 0--4 and
+     `docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json` for
+     `lerobot/pusht` episodes 0--4.
+   - Remaining output: none for current scope.
+   - Claim unlocked: active conversion is more than a one-episode or one-dataset smoke test.
 
 3. **Natural failure corpus gate**
    - Input: at least five public robot-learning datasets.

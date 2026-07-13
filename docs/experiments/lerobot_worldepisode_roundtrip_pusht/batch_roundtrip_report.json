@@ -1,0 +1,35 @@
+{
+  "all_physical_frames_preserved": true,
+  "available": true,
+  "discarded_fields": [],
+  "episode_count": 5,
+  "episode_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "max_errors": {
+    "max_abs_action_error": 0.0,
+    "max_abs_episode_index_error": 0.0,
+    "max_abs_frame_index_error": 0.0,
+    "max_abs_index_error": 0.0,
+    "max_abs_state_error": 0.0,
+    "max_abs_task_index_error": 0.0,
+    "max_abs_timestamp_error": 0.0,
+    "max_abs_video_timestamp_error": 0.0
+  },
+  "pass": true,
+  "repo_id": "lerobot/pusht",
+  "reports": [
+    "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/roundtrip_report.json",
+    "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/roundtrip_report.json",
+    "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/roundtrip_report.json",
+    "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/roundtrip_report.json",
+    "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/roundtrip_report.json"
+  ],
+  "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+  "total_action_rows": 738,
+  "total_state_rows": 738
+}
