@@ -14,6 +14,7 @@ the claim at the same scope as the evidence.
 | Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors plus `tools/lerobot_policy_leakage_gate.py`, which prepares ACT and Diffusion Policy jobs for the same split manifest. | Mitigated but open. The paper avoids claiming state-of-the-art policy impact. | Run the generated ACT/Diffusion jobs and commit train, offline eval, and rollout reports. |
 | Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Isaac mapping emitted but untested. | Mitigated by scope. Limitations state one trace, one MuJoCo adapter, Isaac untested. | Run at least two trajectories, a second robot/dataset, and an Isaac or second-simulator replay with declared tolerance envelopes. |
 | Runtime-neutral claim overstates evidence. | `tools/meta_simulator_contract.py` defines three adapter compliance layers and reports MuJoCo tested, Isaac ready/untested, Genesis and SAPIEN adapter-required. | Mitigated by scope. The paper can claim a meta-simulator adapter contract, not equal evidence across engines. | Run the same replay/contract-drift checks through a second tested simulator adapter. |
+| USS generality is overbroad. | `tools/uss_state_drift_pilots.py` emits deterministic game-engine collision-patch and autonomous-driving clock-domain pilots, while robotics remains the deep stress test. | Mitigated as framing only. The paper can claim USS vocabulary generalizes, not that production game/AV systems have been benchmarked. | Run at least one public game/simulation telemetry corpus or AV log through a USS adapter and report measured drift diagnostics. |
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over three public LeRobot-format datasets with nine cases. | Mitigated but not closed. Evaluation and limitations distinguish the pilot corpus from a full prevalence survey. | Extend to at least five public datasets and record maintainer agreement/disagreement with representative diagnostics. |
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
 | Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
@@ -91,7 +92,16 @@ the claim at the same scope as the evidence.
    - Claim unlocked: WorldEpisode prevents drift in a real reconstructed-scene pipeline, not only a
      controlled proxy.
 
-7. **Independent implementation gate**
+7. **USS non-robotics evidence gate**
+   - Input: one public game/simulation telemetry corpus or one public autonomous-driving log with
+     enough metadata to test state revision, asset digest, frame/clock, and transition invariants.
+   - Current output: `docs/experiments/uss_state_drift_pilots/state_drift_report.json` records two
+     deterministic pilots, one collision-patch case and one AV clock-domain case.
+   - Remaining output: measured diagnostics on a real non-robotics corpus and, ideally, an adapter
+     maintained outside this repository.
+   - Claim unlocked: USS is empirically useful outside robotics, not only a general vocabulary.
+
+8. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.

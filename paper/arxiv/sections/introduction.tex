@@ -8,12 +8,20 @@ values in a unit the controller did not declare, the replay script treated comma
 motor-effective timestamps, and the random split let the policy see the same reconstructed room in
 both training and evaluation. Nothing was corrupt, but the experiment was scientifically broken.
 
-This is the failure mode WorldEpisode targets. Modern robot-learning pipelines no longer move only
-arrays from disk to a policy. Recorded episodes become training datasets; reconstructed rooms become
-simulator assets; Gaussian splats, meshes, collision proxies, and logs move through different tools;
-and counterfactual worlds become augmentation. A camera transform with the wrong direction, a
-millisecond command delay, or a train/test split that shares the same world lineage can change the
-conclusion without changing file validity.
+The same pattern appears outside robotics. A game client can load an old collision asset after a
+server patch, but the authoritative state now places an obstacle in the avatar path. An
+autonomous-driving replay can deserialize camera and lidar logs correctly while fusing samples from
+different clock domains. A cloud digital twin can point to the right-looking asset URI while using
+the wrong content digest. In each case the file is valid and the behavior is not. We call this
+failure class \emph{silent state drift}.
+
+This paper introduces Universal Spatial State (USS), a sidecar contract for making silent state
+drift auditable. USS is not a file format. It is a set of invariants that bind interactive spatial
+data to immutable state revisions: persistent identity, explicit space/time mappings, role semantics,
+transition contracts, temporal events, provenance, quality records, and lineage-aware splits.
+WorldEpisode is the robotics-heavy USS profile implemented and evaluated in this repository.
+Robotics is the deepest current stress test because it combines real hardware, asynchronous control,
+multi-camera data, reconstructed worlds, simulator exports, and policy evaluation.
 
 Existing formats solve important pieces of this chain. The LeRobot library vertically integrates
 robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
@@ -34,23 +42,25 @@ controller contract at deployment time.
 The missing piece is not another monolithic file. A LeRobot table can store actions without knowing
 which immutable world revision they came from; a USD scene can store assets without knowing the
 policy action semantics that generated a trajectory; a ROS or MCAP log can store messages without
-knowing whether evaluation splits leak the same physical room. WorldEpisode fills that gap as a
-sidecar contract: it binds each episode to the world in which it happened and records the
-assumptions required to convert, replay, and evaluate it.
+knowing whether evaluation splits leak the same physical room. More generally, a game telemetry log
+or AV sensor recording can be locally valid without declaring the state revision, asset digest,
+clock mapping, or transition invariant that makes its behavior meaningful. USS fills that gap as a
+sidecar contract; WorldEpisode instantiates it for robot-learning episodes.
 
-WorldEpisode is:
+USS is:
 \begin{itemize}[leftmargin=*]
-  \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, or a reference package;
-  \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, and future assets;
-  \item \textbf{runtime-neutral}: mappable to Isaac Sim, MuJoCo, SAPIEN, Genesis, and other simulators;
+  \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, game telemetry, AV logs, or a reference package;
+  \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, collision proxies, sensor streams, and future assets;
+  \item \textbf{runtime-neutral}: mappable to MuJoCo, Isaac Sim, SAPIEN, Genesis, game engines, AV replay systems, and future runtimes;
   \item \textbf{loss-explicit}: conversions may be lossy, but never silently lossy.
 \end{itemize}
 
-The paper's core claim is therefore not a new monolithic file format. It is an executable
-interchange profile for world--episode semantics: identity, frames, clocks, action contracts,
-representation roles, events, provenance, uncertainty, and lineage-safe evaluation splits. The
-current artifact includes a JSON Schema, semantic validator, round-trip binding artifacts, an
-active public LeRobotDataset v3 conversion experiment, hand-authored independent fixtures, and
-controlled experiments for replay drift, leakage, and counterfactual augmentation. The empirical
-claims in this draft are intentionally bounded: they demonstrate executable failure mechanisms and
-auditable conversion semantics, not a completed multi-lab benchmark or real-robot deployment study.
+The paper's core claim is therefore not a new monolithic file format. It is an executable spatial
+state contract: identity, frames, clocks, transition contracts, representation roles, events,
+provenance, uncertainty, and lineage-safe evaluation splits. The current artifact includes a JSON
+Schema, semantic validator, round-trip binding artifacts, an active public LeRobotDataset v3
+conversion experiment, hand-authored independent fixtures, controlled experiments for replay drift,
+leakage, and counterfactual augmentation, plus two deterministic USS pilots outside robotics. The
+empirical claims in this draft are intentionally bounded: they demonstrate executable failure
+mechanisms and auditable conversion semantics, not a completed multi-lab benchmark, production game
+engine audit, autonomous-driving fleet audit, or real-robot deployment study.

@@ -64,13 +64,13 @@
   urlcolor=blue
 }
 
-\title{WorldEpisode: Diagnosing and Correcting Hidden World--Episode Failures in Robot-Learning Datasets}
+\title{Universal Spatial State: Diagnosing and Correcting Silent State Drift across Embodied and Virtual Agent Datasets}
 
 \author{
   Alba Tellez Fernandez\\
   URDF Studio
   \and
-  WorldEpisode Contributors
+  USS / WorldEpisode Contributors
 }
 
 \date{}
@@ -80,32 +80,36 @@
 \maketitle
 
 \begin{abstract}
-Robot-learning pipelines can fail while every file still looks valid: a controller may interpret
-degrees as radians, a replay may treat a command timestamp as an actuation timestamp, or a random
-train/test split may leak the same reconstructed room into both sides of an evaluation. We show that
-these are not bookkeeping annoyances but measurable threats to robot-learning validity under scoped,
-reproducible tests. On a public ArmnetBench LeRobot release, a standard random episode split leaks
-every tested world lineage and gives a Torch behavioral-cloning probe 0.850 offline imitation
-success; enforcing a scene-disjoint split drops leakage to zero and the same offline score to 0.000.
-On a real SO-101 LeRobot trajectory, ignoring the inferred four-frame, 133 ms control delay gives
-4.732 degree validation joint RMSE, while timestamp-aware replay reduces it to 1.862 degrees; a
-tested MuJoCo position-servo replay drops from 3.425 to 1.563 degrees. We introduce
-\emph{WorldEpisode}, a storage-neutral sidecar contract that makes these silent failures detectable
-by binding each episode to an immutable world revision through persistent identity, explicit
-space/time, representation roles, interaction events, and provenance.
-WorldEpisode does not replace LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, or glTF Gaussian splats;
-it specifies the invariants those systems must preserve for reproducible conversion, replay, and
-evaluation. The reference implementation includes active ten-episode public
-LeRobotDataset-to-WorldEpisode-to-LeRobotDataset batch conversions across two datasets, executable
-binding artifacts, a semantic validator, independent fixtures, an ACT/Diffusion leakage gate, and a
-pilot natural-source corpus. It also defines a meta-simulator adapter contract so MuJoCo, Isaac,
-Genesis, SAPIEN, or future runtimes can report against the same replay invariants.
-Across seven pilot bindings, native containers
+Interactive spatial pipelines can fail while every file still looks valid: a game-engine patch may
+shift a collision mesh by centimeters, an autonomous-driving replay may fuse sensors across
+undeclared clock domains, or a robot controller may apply a policy vector under the wrong action
+semantics. We call this failure class \emph{silent state drift}: local containers deserialize, but
+the behavioral state is no longer the state being evaluated or deployed. We introduce
+\emph{Universal Spatial State} (USS), a storage-, representation-, and runtime-neutral sidecar
+contract that binds streaming interaction data to immutable state revisions through persistent
+identity, explicit space/time mappings, state-role semantics, transition invariants, temporal
+events, provenance, and lineage-aware splits.
+
+WorldEpisode is the robotics-heavy USS reference profile used as the main stress test. On a public
+ArmnetBench LeRobot release, a standard random episode split leaks every tested world lineage and
+gives a Torch behavioral-cloning probe 0.850 offline imitation success; enforcing a scene-disjoint
+split drops leakage to zero and the same offline score to 0.000. On a real SO-101 LeRobot
+trajectory, ignoring the inferred four-frame, 133 ms control delay gives 4.732 degree validation
+joint RMSE, while timestamp-aware replay reduces it to 1.862 degrees; a tested MuJoCo
+position-servo replay drops from 3.425 to 1.563 degrees. The reference implementation includes
+active ten-episode public LeRobotDataset-to-WorldEpisode-to-LeRobotDataset batch conversions across
+two datasets, executable binding artifacts, a semantic validator, independent fixtures, an
+ACT/Diffusion leakage gate, a meta-simulator adapter contract, and deterministic USS pilots for
+game-engine collision-patch drift and autonomous-driving clock-domain drift.
+
+USS does not replace LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian splats, game-engine
+telemetry, or AV logs; it specifies the invariants those systems must preserve for reproducible
+conversion, replay, synchronization, and evaluation. Across seven pilot bindings, native containers
 preserve 17--39\% of a predeclared 23-field semantic projection, while WorldEpisode sidecars recover
 that projection for dataset/log/world bindings. The validator detects all 14 injected fault classes
 and all hand-authored independent fixture failures; the pilot natural-source corpus records nine
-cases across three public LeRobot-format datasets. The central result is simple: bad data plumbing can
-make robot-learning results look better than they are, and explicit world--episode semantics make
+cases across three public LeRobot-format datasets. The central result is simple: bad state plumbing
+can make embodied-agent results look better than they are, and explicit spatial-state semantics make
 those failures auditable before deployment.
 \end{abstract}
 

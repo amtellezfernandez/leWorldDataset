@@ -1,11 +1,12 @@
-\section{WorldEpisode Architecture}
+\section{Universal Spatial State Architecture}
 \label{sec:architecture}
 
-WorldEpisode is implemented as a sidecar blueprint around existing formats. It does not ask a
-LeRobot dataset to become a USD scene, or a USD scene to become a policy-training table. Instead,
-it records the relationships those containers need in order to agree about the same episode: the
-world revision, persistent entities, space/time conventions, action contract, asset roles,
-interaction events, provenance, and split lineage.
+USS is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
+dataset to become a USD scene, a game-engine telemetry log to become an AV replay format, or a USD
+scene to become a policy-training table. Instead, it records the relationships those containers
+need in order to agree about the same state: the state revision, persistent entities, space/time
+conventions, transition contract, asset roles, interaction events, provenance, and split lineage.
+WorldEpisode is the robotics profile of this architecture.
 
 The sidecar is not a mandate to package a global robot corpus as millions of small folders. The
 single-episode record is the semantic unit. Production datasets add a manifest layer: globally
@@ -13,30 +14,31 @@ scoped namespaces, URI resolvers, shard catalogs, materialized indexes, split ma
 append-only release snapshots. Opening such a corpus starts from the manifest and its indexes; it
 does not require recursively scanning an object store or loading every episode.
 
-Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset and log containers plug
-in on the left; world assets and replay targets plug in on the right; the WorldEpisode sidecar
-holds the semantics that would otherwise be scattered across undocumented loader assumptions.
+Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset, log, and telemetry
+containers plug in on the left; world assets and replay targets plug in on the right; the USS
+sidecar holds the semantics that would otherwise be scattered across undocumented loader
+assumptions. The current implementation names that robotics sidecar WorldEpisode.
 
 \begin{figure}[t]
 \centering
 \resizebox{0.98\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weBlue, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
-  \node[wecard=weCyan, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
-  \node[wecard=weViolet, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (ncore) at (0,-0.9) {\textbf{NCore}\\sensor calibration};
+  \node[wecard=weBlue, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
+  \node[wecard=weCyan, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
+  \node[wecard=weViolet, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (ncore) at (0,-0.9) {\textbf{Game / AV logs}\\telemetry streams};
 
-  \node[wecard=weInk, fill=wePanel, text width=4.55cm, minimum height=3.65cm] (core) at (5.0,0.45) {};
-  \node[font=\sffamily\bfseries\normalsize, text=weInk] at (core.north) [yshift=-0.32cm] {WorldEpisode};
-  \node[font=\sffamily\scriptsize, text=weSlate] at (5.0,1.33) {sidecar blueprint};
-  \node[wechip=weBlue, font=\sffamily\tiny, text width=1.15cm] at (3.85,0.65) {identity};
-  \node[wechip=weCyan, font=\sffamily\tiny, text width=1.55cm] at (6.05,0.65) {frames + clocks};
-  \node[wechip=weAmber, font=\sffamily\tiny, text width=1.55cm] at (3.85,-0.05) {action contract};
-  \node[wechip=weGreen, font=\sffamily\tiny, text width=1.45cm] at (6.05,-0.05) {roles + events};
-  \node[wechip=weRose, font=\sffamily\tiny, text width=2.2cm] at (4.95,-0.75) {provenance + lineage};
+  \node[wecard=weInk, fill=wePanel, text width=4.75cm, minimum height=3.65cm] (core) at (5.0,0.45) {};
+  \node[font=\sffamily\bfseries\small, text=weInk, align=center] at (core.north) [yshift=-0.34cm] {Universal Spatial State};
+  \node[font=\sffamily\tiny, text=weSlate] at (5.0,1.29) {WorldEpisode robotics profile};
+  \node[wechip=weBlue, font=\sffamily\tiny, text width=1.25cm] at (3.85,0.65) {identity};
+  \node[wechip=weCyan, font=\sffamily\tiny, text width=1.45cm] at (6.08,0.65) {space + time};
+  \node[wechip=weAmber, font=\sffamily\tiny, text width=1.75cm] at (3.82,-0.05) {transition rules};
+  \node[wechip=weGreen, font=\sffamily\tiny, text width=1.50cm] at (6.08,-0.05) {roles + events};
+  \node[wechip=weRose, font=\sffamily\tiny, text width=2.25cm] at (4.95,-0.75) {provenance + lineage};
 
-  \node[wecard=weGreen, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
-  \node[wecard=weAmber, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
-  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.55cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{Runtime adapters}\\replay targets};
+  \node[wecard=weGreen, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
+  \node[wecard=weAmber, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
+  \node[wecard=weRose, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{Runtime adapters}\\replay targets};
 
   \draw[wearrow=weBlue] (lerobot.east) -- ($(core.west)+(0,1.0)$);
   \draw[wearrow=weCyan] (rerun.east) -- (core.west);
@@ -49,22 +51,21 @@ holds the semantics that would otherwise be scattered across undocumented loader
     {validator diagnostics \(\cdot\) conversion-loss reports \(\cdot\) lineage-safe splits \(\cdot\) replay assumptions};
 \end{tikzpicture}%
 }
-\caption{WorldEpisode is the semantic bridge between robot-learning containers, reconstructed
-world assets, and simulator targets. It preserves the world--episode contract without replacing
-the storage formats on either side.}
+\caption{USS is the semantic bridge between spatial data containers, state/world assets, and
+runtime targets. WorldEpisode is the robotics profile used in the experiments.}
 \label{fig:worldepisode-bridge}
 \end{figure}
 
 This architecture gives the paper its central rule: keep native containers for the data they are
 good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
 
-\subsection{WorldEpisode as a Meta-Simulator Contract}
+\subsection{USS as a Meta-Simulator Contract}
 
-WorldEpisode is not tied to a single rendering or physics engine. It operates as a
+USS is not tied to a single rendering or physics engine. It operates as a
 meta-simulator contract: a runtime becomes a trusted target by implementing an adapter that
 preserves the same semantic invariants and emits replay evidence. This keeps the integration
 direction clean. Datasets are not rewritten around simulator-native assumptions; simulators compile
-their scene loading, action interfaces, and replay reports against the WorldEpisode sidecar.
+their scene loading, action interfaces, and replay reports against the USS sidecar.
 
 The adapter contract has three layers. First, the \emph{invariant interface} ingests immutable
 world revisions, frame and clock graphs, entity identity, representation roles, action channels,
@@ -74,8 +75,8 @@ extensions without weakening the core episode record. Third, \emph{deterministic
 accountability} records runtime identity, version, solver, timestep, actuator parameters,
 initialization state, command/effective timing, latency, tolerance envelopes, and measured drift.
 
-The current implementation reflects this boundary. MuJoCo has one tested minimal replay adapter;
-the Isaac mapping is emitted but untested; Genesis and SAPIEN are explicit adapter-required
-targets. The claim is therefore not simulator-independent physics. The claim is runtime-neutral
-accountability: every simulator reports against the same world--episode contract, so cross-runtime
-drift becomes measurable rather than hidden inside loader conventions.
+The current WorldEpisode implementation reflects this boundary. MuJoCo has one tested minimal
+replay adapter; the Isaac mapping is emitted but untested; Genesis and SAPIEN are explicit
+adapter-required targets. The claim is therefore not simulator-independent physics. The claim is
+runtime-neutral accountability: every simulator reports against the same state contract, so
+cross-runtime drift becomes measurable rather than hidden inside loader conventions.

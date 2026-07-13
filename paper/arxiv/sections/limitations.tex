@@ -1,7 +1,7 @@
 \section{Limitations and Scope}
 
 The current evidence is deliberately scoped. It is meant to expose hidden failure mechanisms, not
-to claim full robot-learning generality.
+to claim full robot-learning, game-engine, or autonomous-driving generality.
 
 Table~\ref{tab:evidence-boundaries} states the boundary of each empirical claim. This is important
 because the paper argues for a semantic contract, not for a finished benchmark suite.
@@ -26,6 +26,9 @@ Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-serv
 and one MuJoCo adapter; Isaac mapping is emitted but untested \\
 Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN &
 One tested minimal MuJoCo adapter; Isaac ready but untested; Genesis/SAPIEN adapters not implemented \\
+USS generality & Deterministic game-engine collision-patch and autonomous-driving clock-domain
+pilots using the same invariant vocabulary & Not measured on production game engines, public AV
+datasets, or fleet logs \\
 Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
 pilot natural-source corpus over three public datasets & Natural corpus is below the five-dataset
 gate and has no maintainer feedback yet \\
@@ -51,6 +54,14 @@ catalog latency, distributed cache behavior, or federation across institutions \
 The current profile targets rigid tabletop manipulation with fixed-base single- or dual-arm robots.
 Humanoids, locomotion, deformables, fluids, and multi-agent environments require later profiles and
 new conformance fixtures.
+
+\paragraph{USS generality.}
+The paper title and framing are broader than robotics, but the strong empirical evidence is still
+the WorldEpisode robotics profile. The game-engine and autonomous-driving examples are deterministic
+pilots that test whether the same state-invariant vocabulary can express non-robotics drift. They
+do not prove prevalence or effectiveness on production game, simulation, or AV datasets. A stronger
+USS paper should add at least one public non-robotics corpus and an independently maintained
+adapter.
 
 \paragraph{Offline leakage result.}
 The ArmnetBench experiment is an offline behavioral-cloning audit, not a physical rollout. Its

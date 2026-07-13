@@ -1,16 +1,23 @@
-# WorldEpisode
+# Universal Spatial State (USS) / WorldEpisode
 
-`WorldEpisode` is the paper and specification base for a storage-neutral interchange contract
-linking robot-learning episodes to immutable, versioned, replayable 3D worlds.
+Universal Spatial State (USS) is the paper-level contract for diagnosing and correcting silent
+state drift across embodied and virtual spatial pipelines. It targets failures where local files
+still load, but behavior is invalid because state ancestry, asset identity, frame/clock mappings,
+representation roles, transition semantics, or provenance drifted.
+
+`WorldEpisode` is the robotics-heavy USS reference profile in this repository. It binds
+robot-learning episodes to immutable, versioned, replayable 3D worlds and provides the concrete
+schemas, validator, converters, and experiments used by the paper.
 
 The goal is not to create another monolithic file format. The goal is to define the semantic
 contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian splats,
-GSDF-style assets, or a reference package layout. Large corpora are described through a dataset
-manifest and index layer, not by treating a folder tree as the semantic API.
+GSDF-style assets, game-engine telemetry, autonomous-driving logs, object storage, or a reference
+package layout. Large corpora are described through a dataset manifest and index layer, not by
+treating a folder tree as the semantic API.
 
 ## Paper
 
-- [WorldEpisode.pdf](WorldEpisode.pdf)
+- [WorldEpisode.pdf](WorldEpisode.pdf) - current USS / WorldEpisode paper build
 - [arXiv LaTeX source](paper/arxiv/main.tex)
 
 ## Repository Layout
@@ -26,25 +33,27 @@ manifest and index layer, not by treating a folder tree as the semantic API.
 
 ## Core Position
 
-WorldEpisode is:
+USS is:
 
 - **storage-neutral**: it can be serialized in LeRobot, Rerun, NCore, MCAP, or a reference package;
-- **representation-neutral**: appearance can be Gaussian splats, meshes, NeRFs, point clouds, or future representations;
-- **runtime-neutral**: physical worlds can target Isaac Sim, MuJoCo, SAPIEN, Genesis, or other simulators;
+- **representation-neutral**: appearance and state can use splats, meshes, NeRFs, point clouds, collision proxies, telemetry streams, or future representations;
+- **runtime-neutral**: physical and virtual worlds can target MuJoCo, Isaac Sim, SAPIEN, Genesis, game engines, AV replay systems, or future runtimes;
 - **loss-explicit**: conversions may be lossy, but never silently lossy.
 - **resolver-neutral**: assets are portable through URI, media type, digest, and optional mirrors,
   not by forcing every asset into a local folder.
 - **dataset-scale**: production corpora use globally scoped IDs, shard catalogs, materialized
   indexes, resolver registries, and append-only dataset snapshots.
 
-Gaussian splats are a high-value profile and demonstration, not the core claim. The stronger claim
-is persistent, verifiable world-episode interoperability.
+WorldEpisode instantiates USS for robot-learning episodes. Gaussian splats are a high-value profile
+and demonstration, not the core claim. The stronger claim is persistent, verifiable spatial-state
+interoperability, with robotics used as the hardest current stress test.
 
 ## Current Drafts
 
 - [Paper PDF](WorldEpisode.pdf)
 - [arXiv LaTeX paper](paper/arxiv/main.tex)
 - [Markdown paper notes](paper/le-world-layout.md)
+- [USS framing note](docs/universal-spatial-state.md)
 - [WorldEpisode draft spec](spec/worldepisode-v0.1.md)
 - [WorldEpisode JSON Schema draft](schemas/worldepisode-core-v0.schema.json)
 - [WorldEpisode dataset manifest schema draft](schemas/worldepisode-dataset-v0.schema.json)
@@ -63,6 +72,7 @@ is persistent, verifiable world-episode interoperability.
 - [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
 - [Real-to-sim contract drift](docs/real-to-sim-contract-drift.md)
 - [Meta-simulator contract](docs/meta-simulator-contract.md)
+- [USS state-drift pilots](docs/experiments/uss_state_drift_pilots)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
@@ -72,6 +82,7 @@ is persistent, verifiable world-episode interoperability.
 - [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
 - [Real-to-sim contract-drift artifacts](docs/experiments/realtosim_contract_drift)
 - [Meta-simulator contract artifacts](docs/experiments/meta_simulator_contract)
+- [USS state-drift pilot artifacts](docs/experiments/uss_state_drift_pilots)
 - [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
@@ -194,6 +205,12 @@ To generate the runtime-neutral simulator adapter contract:
 python3 tools/meta_simulator_contract.py
 ```
 
+To generate the USS non-robotics state-drift pilots:
+
+```bash
+python3 tools/uss_state_drift_pilots.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -219,6 +236,10 @@ real-to-sim pipelines.
 The meta-simulator contract makes that runtime-neutral: MuJoCo is the current tested minimal replay
 adapter, Isaac is adapter-ready but untested, and Genesis/SAPIEN are explicit adapter-required
 targets. The claim is adapter compliance, not simulator-independent physics.
+The USS state-drift pilots add two lightweight non-robotics checks: a game-engine collision patch
+where a loadable client asset no longer matches the authoritative state, and an autonomous-driving
+clock-domain offset where valid logs produce invalid spatial fusion. These pilots support the USS
+vocabulary claim only; they are not production game-engine or AV benchmark results.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through
@@ -251,6 +272,7 @@ The script writes:
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
+- `docs/experiments/uss_state_drift_pilots/*`
 - `docs/experiments/natural_failure_corpus/*`
 - `docs/experiments/recorded_episodes/*`
 - `conformance/fixtures/pilot/*`
@@ -265,8 +287,8 @@ URDF Studio already implements the practical base:
 - `backend/services/world_layout_static_transfer.py`
 - cross-simulator transfer into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender
 
-WorldEpisode extracts the interoperable contract and frames the existing world-layout work as one
-profile within a broader episode-to-world norm.
+WorldEpisode extracts the interoperable robotics contract and frames the existing world-layout work
+as one profile within the broader USS spatial-state norm.
 
 ## License
 

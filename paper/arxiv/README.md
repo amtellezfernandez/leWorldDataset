@@ -1,4 +1,4 @@
-# WorldEpisode arXiv LaTeX Template
+# USS / WorldEpisode arXiv LaTeX Template
 
 This directory contains the arXiv-ready LaTeX paper source.
 
@@ -40,4 +40,5 @@ pdflatex main.tex
 - `references.bib` is the BibTeX database.
 - Section files live in `sections/`.
 - Generated files such as `.aux`, `.bbl`, `.log`, and `paper/arxiv/main.pdf` should not be committed.
-- The release PDF `WorldEpisode.pdf` at the repository root is intentionally committed.
+- The release PDF `WorldEpisode.pdf` at the repository root is intentionally committed. The current
+  paper title uses Universal Spatial State; the filename remains stable for repository links.

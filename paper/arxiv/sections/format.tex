@@ -1,27 +1,27 @@
 \section{Five Questions, Five Graphs}
 
-Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make an episode replayable
-and auditable rather than just stored. Each graph answers a question that appears during debugging:
-what object is this, where and when is it, what is the asset safe to do, what physically happened,
-and where did this data come from?
+Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make a spatial state
+replayable and auditable rather than just stored. Each graph answers a question that appears during
+debugging: what object is this, where and when is it, what is the asset safe to do, what physically
+or virtually happened, and where did this data come from?
 
 \begin{figure}[t]
 \centering
 \resizebox{0.90\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weInk, fill=wePanel, font=\sffamily\footnotesize, text width=3.95cm, minimum height=1.55cm] (center) at (0,0)
-    {\textbf{Episode--World}\\\textbf{Binding}\\[2pt]
-     base world\\+ ordered deltas};
+  \node[wecard=weInk, fill=wePanel, font=\sffamily\scriptsize, text width=4.05cm, minimum height=1.55cm] (center) at (0,0)
+    {\textbf{Universal Spatial}\\\textbf{State}\\[2pt]
+     state revision\\+ ordered deltas};
 
-  \node[wecard=weBlue, font=\sffamily\footnotesize, text width=2.75cm, minimum height=1.0cm] (identity) at (0,2.45)
+  \node[wecard=weBlue, font=\sffamily\scriptsize, text width=2.75cm, minimum height=1.0cm] (identity) at (0,2.45)
     {\textbf{Identity}\\persistent entities};
-  \node[wecard=weCyan, font=\sffamily\footnotesize, text width=2.95cm, minimum height=1.0cm] (frame) at (4.0,0.85)
+  \node[wecard=weCyan, font=\sffamily\scriptsize, text width=2.95cm, minimum height=1.0cm] (frame) at (4.0,0.85)
     {\textbf{Frame + Clock}\\transforms, timing};
-  \node[wecard=weAmber, font=\sffamily\footnotesize, text width=2.85cm, minimum height=1.0cm] (role) at (2.05,-2.15)
-    {\textbf{Representation Role}\\appearance, physics};
-  \node[wecard=weGreen, font=\sffamily\footnotesize, text width=2.85cm, minimum height=1.0cm] (event) at (-2.05,-2.15)
-    {\textbf{Temporal Events}\\contact, grasp, deltas};
-  \node[wecard=weRose, font=\sffamily\footnotesize, text width=2.95cm, minimum height=1.0cm] (prov) at (-4.0,0.85)
+  \node[wecard=weAmber, font=\sffamily\scriptsize, text width=2.85cm, minimum height=1.0cm] (role) at (2.05,-2.15)
+    {\textbf{State Roles}\\appearance, physics};
+  \node[wecard=weGreen, font=\sffamily\scriptsize, text width=2.85cm, minimum height=1.0cm] (event) at (-2.05,-2.15)
+    {\textbf{Temporal Events}\\contacts, patches};
+  \node[wecard=weRose, font=\sffamily\scriptsize, text width=2.95cm, minimum height=1.0cm] (prov) at (-4.0,0.85)
     {\textbf{Provenance}\\lineage, uncertainty};
 
   \draw[wearrow=weBlue] (identity.south) -- (center.north);
@@ -35,16 +35,17 @@ and where did this data come from?
     {closed references + digest-verified assets + explicit loss reports};
 \end{tikzpicture}%
 }
-\caption{The five-graph model. WorldEpisode makes identity, frames/clocks, representation roles,
-temporal events, and provenance mutually referential so conversion and replay errors become
-detectable instead of hidden.}
+\caption{The five-graph model. USS makes identity, frames/clocks, state roles, temporal events, and
+provenance mutually referential so conversion, synchronization, and replay errors become detectable
+instead of hidden.}
 \label{fig:five-graph-model}
 \end{figure}
 
 \subsection{What object am I looking at?}
 
-Every physical or logical entity receives a persistent identifier: robot, link, gripper, sensor,
-rigid object, articulated object, fixture, support surface, region, human, light, or semantic group.
+Every physical or logical entity receives a persistent identifier: robot, link, gripper, vehicle,
+avatar, sensor, rigid object, articulated object, fixture, support surface, region, human, light, or
+semantic group.
 The same \texttt{entity\_id} must be used by segmentation masks, bounding boxes, Gaussian groups,
 render meshes, collision bodies, simulator actors, language references, contact events, object
 trajectories, grasp events, and attachment events. The real-world fix is simple: if a language
@@ -58,36 +59,38 @@ direction, quaternion convention, validity interval, calibration revision, and u
 available. Every stream declares a clock domain, device timestamp, host-receive timestamp where
 available, exposure interval for cameras, effective command time for actions, synchronization
 mapping, and estimated offset/drift/error. NCore's explicit pose-graph convention demonstrates the
-kind of rigor WorldEpisode requires across the whole episode~\citep{ncore}. This graph is what
-turns a suspicious replay from ``the policy is bad'' into a diagnosable offset, transform direction,
-or unit error.
+kind of rigor USS requires across the whole state record~\citep{ncore}. This graph is what turns a
+suspicious replay from ``the policy is bad'' or ``the engine is wrong'' into a diagnosable offset,
+transform direction, or unit error.
 
 \subsection{What is this asset safe to be used for?}
 
-One physical entity can have many representations: Gaussian splat appearance, textured render mesh,
-metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic affordance,
-or learned embedding. Each representation declares its role and an asset descriptor: URI, media
-type, SHA-256 digest, optional mirrors, optional embedded payload metadata, coordinate frame, units,
-validity interval, derivation, uncertainty, and license. The URI may be relative, HTTP(S),
-Hugging Face, object storage, OCI, IPFS, or another registered resolver. Portability comes from
-deterministic resolution and digest verification, not from requiring every asset to live in one
-folder. The role field is essential: a splat may be valid for appearance but invalid for collision,
-while a simplified proxy may be valid for collision but unsuitable for visual training.
+One physical or virtual entity can have many representations: Gaussian splat appearance, textured
+render mesh, metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic
+affordance, telemetry stream, or learned embedding. Each representation declares its role and an
+asset descriptor: URI, media type, SHA-256 digest, optional mirrors, optional embedded payload
+metadata, coordinate frame, units, validity interval, derivation, uncertainty, and license. The URI
+may be relative, HTTP(S), Hugging Face, object storage, OCI, IPFS, or another registered resolver.
+Portability comes from deterministic resolution and digest verification, not from requiring every
+asset to live in one folder. The role field is essential: a splat may be valid for appearance but
+invalid for collision, while a simplified proxy may be valid for collision but unsuitable for visual
+training.
 
 \subsection{Did the robot actually grab the object?}
 
-Episodes do not store only poses. They record interaction events: contact begin/end,
-grasp establish/release, attachment create/remove, support, containment, articulation state changes,
-spawn/despawn, topology changes, simulator reset, intervention, subgoal completion, and failure
-detection. Each event references entities, time, confidence, source, and optionally evidence. This
-turns raw coordinate streams into physical milestones such as ``contact established,'' ``object
-dropped,'' or ``intervention occurred.''
+Spatial records do not store only poses. They record interaction events: contact begin/end, grasp
+establish/release, attachment create/remove, support, containment, map or collision patch,
+articulation state changes, spawn/despawn, topology changes, simulator reset, intervention, subgoal
+completion, and failure detection. Each event references entities, time, confidence, source, and
+optionally evidence. This turns raw coordinate streams into milestones such as ``contact
+established,'' ``object dropped,'' ``authoritative collision patch applied,'' or ``intervention
+occurred.''
 
 \subsection{Where did this data come from?}
 
 Every derived asset identifies source episodes, source sensors and intervals, reconstruction
 algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
-edits, source and output hashes, creator, license, and quality metrics. WorldEpisode maps to
+edits, source and output hashes, creator, license, and quality metrics. USS maps to
 existing provenance and dataset metadata vocabularies rather than inventing an incompatible
 publication vocabulary. This graph lets a split avoid putting the same reconstructed room, capture
 session, or generated asset family on both sides of evaluation.

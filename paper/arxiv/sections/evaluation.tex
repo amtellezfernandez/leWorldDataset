@@ -1,8 +1,22 @@
 \section{Failure Case Studies}
 
 The experiments are written as failure investigations rather than as isolated unit tests. Each one
-starts from a failure mode that can make a robot-learning result look better, cleaner, or more
-reproducible than it really is.
+starts from a failure mode that can make an embodied or virtual-agent result look better, cleaner,
+or more reproducible than it really is. Robotics provides the deep measured stress test; two
+deterministic USS pilots check that the same state-invariant vocabulary also applies outside robot
+episodes.
+
+\paragraph{Case 0: the valid file with the wrong live state.}
+USS is evaluated outside robotics with two deliberately small pilots. In the game-engine collision
+case, a client can still load an old arena collision asset, but an authoritative patch moves the
+obstacle into the avatar path. The stale client path looks valid locally, fails against the
+authoritative state, and is caught by the asset digest, state revision, and role checks
+(\texttt{ASSET.002}, \texttt{WORLD.001}, \texttt{REP.001}). In the autonomous-driving clock case,
+camera and lidar logs deserialize correctly, but a 50 ms undeclared clock offset at 15 m/s creates a
+0.75 m fusion error against a 0.20 m tolerance. The USS clock mapping corrects the error to 0.0 m
+and triggers \texttt{TIME.001}, \texttt{TIME.002}, and \texttt{FRAME.001}. These pilots support the
+terminology shift from episodes to state; they are not production game-engine or AV benchmark
+results.
 
 \paragraph{Case 1: the split that faked success.}
 The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
@@ -29,7 +43,7 @@ rollout contract. The gate is intentionally open in this draft; no ACT, Diffusio
 or hardware success number is claimed.
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
-families where world--episode semantics alter the outcome.
+families where explicit state semantics alter the outcome.
 
 \begin{figure}[!htbp]
 \centering

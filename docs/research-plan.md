@@ -1,8 +1,15 @@
-# WorldEpisode Research Plan
+# USS / WorldEpisode Research Plan
 
 Status: draft.
 
 The paper should answer scientific questions, not only publish a schema.
+
+The paper-level frame is Universal Spatial State (USS): a runtime-neutral contract for detecting
+silent state drift across embodied and virtual spatial pipelines. WorldEpisode is the concrete
+robotics-heavy USS profile. The intended structure is universal theory with grounded proof:
+domain-agnostic invariants first, then robotics as the deepest current stress test, plus lightweight
+game-engine and autonomous-driving pilots to prevent the broader framing from being purely
+aspirational.
 
 ## RQ1: Semantic Preservation Across Bindings
 
@@ -108,6 +115,20 @@ fail under the deployment controller, and that an appearance-only reconstruction
 simulation while colliding with real foreground geometry when the collision role is dropped. This
 does not replace a RoboSnap/DROID-Sim rerun, but it states the methodological claim that visual
 reconstruction must be bound to action contracts and representation roles.
+
+## USS Generality Pilots
+
+Use `tools/uss_state_drift_pilots.py` to keep the broader Universal Spatial State claim executable.
+The current pilots cover:
+
+- a game-engine collision patch where a client asset remains structurally valid but no longer
+  matches the authoritative collision state;
+- an autonomous-driving clock-domain offset where camera/lidar logs deserialize correctly but naive
+  fusion exceeds the declared spatial tolerance.
+
+These pilots show that state ancestry, asset digests, representation roles, frame/clock mappings,
+and transition invariants are not robotics-only concepts. They do not replace measured game-engine
+or autonomous-driving dataset experiments.
 
 ## End-to-End Demonstration
 
