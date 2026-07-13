@@ -21,6 +21,13 @@ conventional split can reward memorizing a background world rather than learning
 manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
 ACT, Diffusion Policy, or another LeRobot-native policy.
 
+To keep that stronger claim from being implied before it is measured, the repository also emits an
+ACT/Diffusion gate from the same split manifest. The gate writes train/test episode allowlists,
+four LeRobot-native training jobs (\texttt{act} and \texttt{diffusion} on random and scene-disjoint
+splits), required offline action-evaluation reports, and a high-fidelity simulator or physical
+rollout contract. The gate is intentionally open in this draft; no ACT, Diffusion Policy, IsaacLab,
+or hardware success number is claimed.
+
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
 families where world--episode semantics alter the outcome.
 

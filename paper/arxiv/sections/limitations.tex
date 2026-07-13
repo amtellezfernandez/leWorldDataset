@@ -17,8 +17,9 @@ because the paper argues for a semantic contract, not for a finished benchmark s
 \toprule
 Claim area & Current evidence & Boundary \\
 \midrule
-Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable
-Torch BC probe & Offline imitation proxy; no real-robot rollout or ACT/Diffusion result \\
+Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable
+Torch BC probe, and an ACT/Diffusion gate harness & Stronger policy jobs are prepared but not run;
+no real-robot or high-fidelity rollout result yet \\
 Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
 index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
 Replay timing & Real SO-101 trajectory alignment and tested MuJoCo position-servo replay & One trace
@@ -47,7 +48,8 @@ The ArmnetBench experiment is an offline behavioral-cloning audit, not a physica
 value is that it demonstrates how random episode splits can leak world lineage and inflate
 evaluation, not that it measures real-robot success directly. The current baseline is an executable
 Torch MLP probe over LeRobot tensors; ACT and Diffusion Policy should be run on the committed split
-manifest before claiming impact on common LeRobot training recipes.
+manifest before claiming impact on common LeRobot training recipes. The repository now emits those
+ACT/Diffusion jobs and rollout requirements, but no such policy result is claimed here.
 
 \paragraph{Replay is not bit-identical physics.}
 WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not

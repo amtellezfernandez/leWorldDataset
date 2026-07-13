@@ -33,6 +33,7 @@ INDEPENDENT_FIXTURE_DIR = ROOT / "conformance" / "fixtures" / "independent"
 RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
+POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -508,6 +509,33 @@ def experiment_lerobot_scene_leakage() -> dict[str, Any]:
         "reason": "No committed leakage report exists yet.",
         "reproduce": "WORLDEPISODE_RUN_LEROBOT_LEAKAGE=1 python3 tools/run_experiments.py",
     }
+
+
+def experiment_lerobot_policy_gate() -> dict[str, Any]:
+    try:
+        from lerobot_policy_leakage_gate import build_policy_gate
+
+        return build_policy_gate(
+            split_manifest_path=RESULTS_DIR / "lerobot_scene_leakage" / "split_manifest.json",
+            leakage_report_path=SCENE_LEAKAGE_REPORT,
+            output_dir=RESULTS_DIR / "lerobot_policy_gate",
+            policies=["act", "diffusion"],
+            device="cuda",
+            steps=20000,
+            seed=17,
+            wandb=False,
+            rollout_episodes=20,
+            execute=False,
+        )
+    except Exception as exc:
+        report = {
+            "available": False,
+            "pass": False,
+            "reason": str(exc),
+            "reproduce": "python3 tools/lerobot_policy_leakage_gate.py",
+        }
+        write_json(POLICY_GATE_REPORT, report)
+        return report
 
 
 def mutated(payload: dict[str, Any], mutate: Callable[[dict[str, Any]], None]) -> dict[str, Any]:
@@ -1018,6 +1046,7 @@ def write_report(results: dict[str, Any]) -> None:
     episode_set = results["lerobot_style_episode_set"]
     active_lerobot = results["lerobot_active_roundtrip"]
     scene_leakage = results["lerobot_scene_leakage"]
+    policy_gate = results["lerobot_policy_gate"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1131,7 +1160,7 @@ def write_report(results: dict[str, Any]) -> None:
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
@@ -1162,6 +1191,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 {active_section}
 
 {scene_section}
+
+## ACT/Diffusion Policy Leakage Gate
+
+- Gate artifact: `{policy_gate.get("artifacts", {}).get("report", "docs/experiments/lerobot_policy_gate/policy_gate_report.json")}`
+- Status: {policy_gate.get("status", "unavailable")}
+- Gate satisfied: {policy_gate.get("pass", False)}
+- Policies: {", ".join(policy_gate.get("policies", []))}
+- Jobs prepared: {len(policy_gate.get("jobs", []))}
+- Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
 
 ## RQ2: Fault Detection
 
@@ -1236,6 +1274,7 @@ def main() -> int:
         "rq1_binding_retention": experiment_binding_retention(base),
         "lerobot_active_roundtrip": experiment_lerobot_active_roundtrip(),
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
+        "lerobot_policy_gate": experiment_lerobot_policy_gate(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1280,6 +1319,10 @@ def main() -> int:
     scene_leakage = results["lerobot_scene_leakage"]
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_LEAKAGE") == "1" and not scene_leakage.get("pass"):
         print("Active LeRobot scene leakage experiment is required but did not pass.")
+        return 1
+    policy_gate = results["lerobot_policy_gate"]
+    if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_POLICY_GATE") == "1" and not policy_gate.get("pass"):
+        print("ACT/Diffusion policy leakage gate is required but did not pass.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")

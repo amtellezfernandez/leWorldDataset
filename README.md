@@ -59,11 +59,13 @@ is persistent, verifiable world-episode interoperability.
 - [Bindings draft](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
 - [Production-scale dataset architecture](docs/production-scale.md)
+- [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
+- [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
 - [Research plan](docs/research-plan.md)
@@ -130,6 +132,12 @@ python3 -m pip install -r requirements-experiments.txt
 python3 tools/lerobot_scene_leakage_experiment.py --required
 ```
 
+To prepare the stronger ACT/Diffusion leakage gate from the same split manifest:
+
+```bash
+python3 tools/lerobot_policy_leakage_gate.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -142,6 +150,9 @@ WorldEpisode-style `world_lineage` hashes for task-scene/camera-layout groups, c
 episode split against a scene-disjoint split, and trains the same Torch MLP behavioral-cloning
 baseline on both. In the committed run, the random split leaks all test scene lineages and obtains
 0.850 offline BC success; the scene-disjoint split has zero lineage leakage and drops to 0.000.
+The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs,
+episode allowlists, and high-fidelity/physical rollout requirements; it is intentionally marked
+open until real ACT/Diffusion metrics and rollout reports are committed.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through

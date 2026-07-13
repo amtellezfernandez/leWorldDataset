@@ -1,0 +1,23 @@
+{
+  "acceptance_rule": "The leakage claim is closed only when ACT or Diffusion reports exist for both random_episode and scene_disjoint splits, and at least one high-fidelity simulator or physical rollout report is available with the same split manifest.",
+  "minimum_rollout_episodes_per_policy_split": 20,
+  "profile": "worldepisode-policy-rollout-gate-0.1",
+  "required_metrics": [
+    "train_loss_curve",
+    "offline_action_nrmse_by_episode",
+    "success_rate_by_split",
+    "success_rate_by_world_lineage",
+    "failure_modes",
+    "video_or_trace_uris_with_sha256",
+    "simulator_or_robot_runtime_manifest"
+  ],
+  "required_policy_types": [
+    "act",
+    "diffusion"
+  ],
+  "required_splits": [
+    "random_episode",
+    "scene_disjoint"
+  ],
+  "sim_ready_but_not_executed_here": true
+}

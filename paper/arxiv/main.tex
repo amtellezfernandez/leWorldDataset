@@ -97,7 +97,8 @@ WorldEpisode does not replace LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, or gl
 it specifies the invariants those systems must preserve for reproducible conversion, replay, and
 evaluation. The reference implementation includes active ten-episode public
 LeRobotDataset-to-WorldEpisode-to-LeRobotDataset batch conversions across two datasets, executable
-binding artifacts, a semantic validator, independent fixtures, and a pilot natural-source corpus.
+binding artifacts, a semantic validator, independent fixtures, an ACT/Diffusion leakage gate, and a
+pilot natural-source corpus.
 Across seven pilot bindings, native containers
 preserve 17--39\% of a predeclared 23-field semantic projection, while WorldEpisode sidecars recover
 that projection for dataset/log/world bindings. The validator detects all 14 injected fault classes

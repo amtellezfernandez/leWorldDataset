@@ -15,7 +15,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
-| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, and an ACT/Diffusion gate harness. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed. |
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
@@ -73,6 +73,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Offline BC success drop: 0.850
 - Scene-disjoint/random episode nRMSE ratio: 1.98x
 
+
+## ACT/Diffusion Policy Leakage Gate
+
+- Gate artifact: `docs/experiments/lerobot_policy_gate/policy_gate_report.json`
+- Status: ready_not_executed
+- Gate satisfied: False
+- Policies: act, diffusion
+- Jobs prepared: 4
+- Ready to execute in this environment: False
 
 ## RQ2: Fault Detection
 
