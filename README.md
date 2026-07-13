@@ -15,6 +15,10 @@ GSDF-style assets, game-engine telemetry, autonomous-driving logs, object storag
 package layout. Large corpora are described through a dataset manifest and index layer, not by
 treating a folder tree as the semantic API.
 
+OpenUSD standardizes how a 3D world is composed. USS standardizes how any agent, whether a physical
+robot, a video game character, or an autonomous vehicle, modifies state within that space over time
+without silent data corruption.
+
 ## Paper
 
 - [WorldEpisode.pdf](WorldEpisode.pdf) - current USS / WorldEpisode paper build

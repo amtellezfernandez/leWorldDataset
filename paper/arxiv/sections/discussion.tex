@@ -18,8 +18,10 @@ USS has a small semantic core and multiple bindings. WorldEpisode is the robotic
 LeRobotDataset v3 is the policy-training view; Rerun is the multirate physical-data view; NCore is
 the sensor/reconstruction capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the
 composed simulation-world view; glTF or SPZ is the Gaussian asset view; and a reference directory is
-the conformance profile. A game-engine or AV profile should reuse the same invariant structure
-rather than inherit robotics-specific terminology.
+the conformance profile. OpenUSD standardizes how the 3D world is composed; USS standardizes how any
+agent, whether a physical robot, a video game character, or an autonomous vehicle, modifies state
+within that space over time without silent data corruption. A game-engine or AV profile should
+reuse the same invariant structure rather than inherit robotics-specific terminology.
 
 \paragraph{Real-to-sim as the proving ground.}
 Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to USS. They are the
