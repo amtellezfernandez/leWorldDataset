@@ -150,6 +150,12 @@ controller-latency models, and a random episode split with measured scene-lineag
 not claimed as maintainer-confirmed dataset bugs; they are naturally occurring source omissions or
 evaluation risks that a WorldEpisode audit must make explicit.
 
+The same validator is exposed as a pre-training command rather than only as an experiment script.
+The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid
+WorldEpisode fixture fails, a native LeRobot v3 folder without a WorldEpisode sidecar fails closed,
+and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the intended usage
+pattern for labs: run one blocking line before launching a multi-day policy training job.
+
 \paragraph{Case 5: the famous benchmarks that still need call-out audits.}
 The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
 source-level call-out audit over five famous public robot-learning benchmarks: Open

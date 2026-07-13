@@ -68,6 +68,7 @@ is persistent, verifiable world-episode interoperability.
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
 - [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
+- [Single-line preflight artifacts](docs/experiments/preflight/preflight_report.json)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
 - [Research plan](docs/research-plan.md)
@@ -93,6 +94,37 @@ bibtex main
 pdflatex main.tex
 pdflatex main.tex
 ```
+
+## Single-Line Preflight Validator
+
+Install the reference validator from this repository:
+
+```bash
+python3 -m pip install -e .
+```
+
+Run a blocking preflight before training:
+
+```bash
+worldepisode preflight examples/minimal.worldepisode.json
+worldepisode preflight --kind lerobot /path/to/lerobot_v3_dataset
+worldepisode preflight --kind rerun /path/to/recording.rrd --sidecar /path/to/worldepisode.manifest.json
+```
+
+Use the same check inside a LeRobot or Rerun pipeline:
+
+```python
+from worldepisode import preflight_lerobot, preflight_rerun
+
+preflight_lerobot(dataset.root).raise_if_failed()
+preflight_rerun("episode.rrd", sidecar="episode.worldepisode.json").raise_if_failed()
+```
+
+By default, `worldepisode preflight` exits non-zero on warnings as well as errors. This makes a
+native LeRobot or Rerun artifact without a WorldEpisode sidecar fail closed before training, because
+the native container cannot prove world revisions, persistent entity identity, action timing,
+frame/clock mappings, lineage-safe splits, or conversion loss. Use `--advisory` only when warnings
+should be reported without failing the command.
 
 ## Reproduce Controlled Results
 

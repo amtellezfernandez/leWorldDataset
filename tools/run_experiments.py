@@ -14,7 +14,7 @@ import math
 import os
 import random
 import re
-from dataclasses import dataclass
+import sys
 from pathlib import Path
 from typing import Any, Callable
 
@@ -22,6 +22,11 @@ import jsonschema
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from worldepisode.validator import validate_semantics
+
 EXAMPLE_PATH = ROOT / "examples" / "minimal.worldepisode.json"
 SCHEMA_PATH = ROOT / "schemas" / "worldepisode-core-v0.schema.json"
 RESULTS_DIR = ROOT / "docs" / "experiments"
@@ -35,20 +40,12 @@ SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.j
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
+PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
 )
 NATURAL_FAILURE_DIR = RESULTS_DIR / "natural_failure_corpus"
-
-SHA_RE = re.compile(r"^[a-f0-9]{64}$")
-
-
-@dataclass(frozen=True)
-class Diagnostic:
-    requirement: str
-    location: str
-    message: str
 
 
 def load_json(path: Path) -> Any:
@@ -58,129 +55,6 @@ def load_json(path: Path) -> Any:
 
 def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-
-
-def ptr(parts: list[str | int]) -> str:
-    return "/" + "/".join(str(part) for part in parts)
-
-
-def iter_assets(payload: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
-    assets: list[tuple[str, dict[str, Any]]] = []
-
-    def walk(value: Any, path: list[str | int]) -> None:
-        if isinstance(value, dict):
-            if {"uri", "media_type", "sha256"}.issubset(value.keys()):
-                assets.append((ptr(path), value))
-            for key, child in value.items():
-                walk(child, [*path, key])
-        elif isinstance(value, list):
-            for index, child in enumerate(value):
-                walk(child, [*path, index])
-
-    walk(payload, [])
-    return assets
-
-
-def validate_semantics(payload: dict[str, Any]) -> list[Diagnostic]:
-    diagnostics: list[Diagnostic] = []
-
-    def add(requirement: str, location: str, message: str) -> None:
-        diagnostics.append(Diagnostic(requirement, location, message))
-
-    clocks = {
-        clock.get("clock_id")
-        for clock in payload.get("clock_graph", {}).get("clocks", [])
-        if isinstance(clock, dict)
-    }
-    frames = {
-        frame.get("frame_id")
-        for frame in payload.get("frame_graph", {}).get("frames", [])
-        if isinstance(frame, dict)
-    }
-    entity_ids = {
-        entity.get("entity_id")
-        for entity in payload.get("entities", [])
-        if isinstance(entity, dict)
-    }
-
-    if not clocks:
-        add("TIME.001", "/clock_graph/clocks", "No declared clock domain.")
-
-    for index, mapping in enumerate(payload.get("clock_graph", {}).get("mappings", [])):
-        if "drift_model" not in mapping or "estimated_error" not in mapping:
-            add("TIME.002", f"/clock_graph/mappings/{index}", "Cross-clock mapping lacks drift or error.")
-
-    for index, transform in enumerate(payload.get("frame_graph", {}).get("transforms", [])):
-        location = f"/frame_graph/transforms/{index}"
-        if transform.get("source_frame") not in frames or transform.get("target_frame") not in frames:
-            add("FRAME.001", location, "Transform references an unknown frame.")
-        if "valid_interval" not in transform:
-            add("FRAME.002", location, "Transform lacks valid interval.")
-        else:
-            clock_id = transform["valid_interval"].get("clock_id")
-            if clock_id not in clocks:
-                add("TIME.001", f"{location}/valid_interval", "Transform interval references an unknown clock.")
-
-    seen_entities: set[str] = set()
-    for entity_index, entity in enumerate(payload.get("entities", [])):
-        entity_id = entity.get("entity_id")
-        if entity_id in seen_entities:
-            add("ENTITY.001", f"/entities/{entity_index}/entity_id", "Duplicate entity id.")
-        seen_entities.add(entity_id)
-        for rep_index, rep in enumerate(entity.get("representations", [])):
-            location = f"/entities/{entity_index}/representations/{rep_index}"
-            if "role" not in rep:
-                add("REP.001", location, "Representation lacks role.")
-            if rep.get("coordinate_frame") not in frames:
-                add("FRAME.001", location, "Representation references an unknown frame.")
-            valid_interval = rep.get("valid_interval")
-            if isinstance(valid_interval, dict) and valid_interval.get("clock_id") not in clocks:
-                add("TIME.001", f"{location}/valid_interval", "Representation interval references an unknown clock.")
-
-    for location, asset in iter_assets(payload):
-        if not asset.get("uri") or not asset.get("media_type") or not SHA_RE.match(asset.get("sha256", "")):
-            add("ASSET.001", location, "Asset lacks deterministic URI, media type, or SHA-256 digest.")
-        if asset.get("resolved_sha256") and asset["resolved_sha256"] != asset.get("sha256"):
-            add("ASSET.002", location, "Resolved asset digest does not match declared digest.")
-
-    for index, channel in enumerate(payload.get("action_space", {}).get("channels", [])):
-        location = f"/action_space/channels/{index}"
-        for key in ("control_mode", "parameterization", "reference_frame", "units", "semantics"):
-            if key not in channel:
-                add("ACTION.001", location, f"Action channel lacks {key}.")
-        if channel.get("reference_frame") not in frames:
-            add("FRAME.001", f"{location}/reference_frame", "Action references an unknown frame.")
-        if "command_timestamp_semantics" not in channel or "effective_timestamp_semantics" not in channel:
-            add("ACTION.002", location, "Action channel lacks command/effective timestamp semantics.")
-
-    world_revision = payload.get("world_revision", {})
-    world_revision_id = world_revision.get("world_revision_id", "")
-    if not re.search(r"sha256:[a-f0-9]{64}", world_revision_id):
-        add("WORLD.001", "/world_revision/world_revision_id", "World revision is not content-addressed.")
-
-    if "world_revision" not in payload or "world_deltas" not in payload:
-        add("TRACE.001", "/", "Episode does not declare a base world revision and ordered delta list.")
-
-    for event_index, event in enumerate(payload.get("events", [])):
-        if event.get("clock_id") not in clocks:
-            add("TIME.001", f"/events/{event_index}/clock_id", "Event references an unknown clock.")
-        for entity_id in event.get("entity_ids", []):
-            if entity_id not in entity_ids:
-                add("ENTITY.001", f"/events/{event_index}/entity_ids", "Event references an unknown entity.")
-
-    for delta_index, delta in enumerate(payload.get("world_deltas", [])):
-        if delta.get("clock_id") not in clocks:
-            add("TIME.001", f"/world_deltas/{delta_index}/clock_id", "Delta references an unknown clock.")
-        if delta.get("entity_id") not in entity_ids:
-            add("ENTITY.001", f"/world_deltas/{delta_index}/entity_id", "Delta references an unknown entity.")
-
-    if "provenance" not in payload or "source" not in payload.get("provenance", {}):
-        add("PROV.001", "/provenance", "Missing source provenance.")
-
-    if "quality" not in payload:
-        add("QUALITY.001", "/quality", "Missing quality record.")
-
-    return diagnostics
 
 
 def validate_schema(payload: dict[str, Any]) -> list[str]:
@@ -553,6 +427,103 @@ def experiment_benchmark_callout_audit() -> dict[str, Any]:
         }
         write_json(BENCHMARK_CALLOUT_REPORT, report)
         return report
+
+
+def experiment_preflight_validator() -> dict[str, Any]:
+    from worldepisode import preflight
+
+    output_dir = RESULTS_DIR / "preflight"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "README.md").write_text(
+        "# Single-Line Preflight Fixture\n\n"
+        "This directory is generated by `python3 tools/run_experiments.py`.\n\n"
+        "It contains a small structural LeRobot v3 fixture and a small `.rrd` placeholder used only "
+        "to test preflight behavior. The `.parquet` and `.rrd` files here are not training data; "
+        "they are minimal sentinels that let the reference preflight detect native containers "
+        "without a WorldEpisode sidecar.\n",
+        encoding="utf-8",
+    )
+
+    native_lerobot = output_dir / "native_lerobot_without_sidecar"
+    (native_lerobot / "meta").mkdir(parents=True, exist_ok=True)
+    (native_lerobot / "data" / "chunk-000").mkdir(parents=True, exist_ok=True)
+    write_json(
+        native_lerobot / "meta" / "info.json",
+        {
+            "codebase_version": "v3.0",
+            "features": {
+                "timestamp": {"dtype": "float32", "shape": [1], "fps": 30.0},
+                "action": {
+                    "dtype": "float32",
+                    "shape": [6],
+                    "names": [
+                        "shoulder_pan.pos",
+                        "shoulder_lift.pos",
+                        "elbow_flex.pos",
+                        "wrist_flex.pos",
+                        "wrist_roll.pos",
+                        "gripper.pos",
+                    ],
+                    "fps": 30.0,
+                },
+                "observation.state": {"dtype": "float32", "shape": [6], "fps": 30.0},
+            },
+        },
+    )
+    (native_lerobot / "data" / "chunk-000" / "file-000.parquet").write_bytes(b"PAR1")
+
+    rerun_recording = output_dir / "recording_without_sidecar.rrd"
+    rerun_recording.write_bytes(b"worldepisode-preflight-placeholder")
+
+    valid_manifest = str(EXAMPLE_PATH.relative_to(ROOT))
+    invalid_manifest = str(
+        (PILOT_FIXTURE_DIR / "invalid" / "ACTION.002_missing_effective_time.worldepisode.json").relative_to(ROOT)
+    )
+    native_lerobot_target = str(native_lerobot.relative_to(ROOT))
+    rerun_target = str(rerun_recording.relative_to(ROOT))
+
+    cases = [
+        {
+            "case": "valid_worldepisode_manifest",
+            "report": preflight(valid_manifest, fail_on="warning").to_dict(),
+            "expected_ok": True,
+        },
+        {
+            "case": "invalid_worldepisode_fixture",
+            "report": preflight(invalid_manifest, fail_on="warning").to_dict(),
+            "expected_ok": False,
+        },
+        {
+            "case": "native_lerobot_without_sidecar",
+            "report": preflight(native_lerobot_target, kind="lerobot", fail_on="warning").to_dict(),
+            "expected_ok": False,
+        },
+        {
+            "case": "rerun_without_sidecar",
+            "report": preflight(rerun_target, kind="rerun", fail_on="warning").to_dict(),
+            "expected_ok": False,
+        },
+    ]
+    failures = [
+        case["case"]
+        for case in cases
+        if bool(case["report"]["ok"]) is not bool(case["expected_ok"])
+    ]
+    report = {
+        "available": True,
+        "pass": not failures,
+        "profile": "worldepisode-preflight-0.1",
+        "cases": cases,
+        "failures": failures,
+        "commands": [
+            "python3 -m pip install -e .",
+            "worldepisode preflight <dataset-or-manifest>",
+            "python3 - <<'PY'\nfrom worldepisode import preflight_lerobot\npreflight_lerobot('/path/to/lerobot').raise_if_failed()\nPY",
+        ],
+        "artifact": str(PREFLIGHT_REPORT.relative_to(ROOT)),
+    }
+    write_json(PREFLIGHT_REPORT, report)
+    return report
 
 
 def mutated(payload: dict[str, Any], mutate: Callable[[dict[str, Any]], None]) -> dict[str, Any]:
@@ -1065,6 +1036,7 @@ def write_report(results: dict[str, Any]) -> None:
     scene_leakage = results["lerobot_scene_leakage"]
     policy_gate = results["lerobot_policy_gate"]
     benchmark_callout = results["benchmark_callout_audit"]
+    preflight_result = results["preflight_validator"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1182,6 +1154,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
+| Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
@@ -1227,6 +1200,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Benchmarks: {benchmark_callout.get("aggregate", {}).get("benchmark_count", 0)}
 - Benchmarks with high-severity open controls: {benchmark_callout.get("aggregate", {}).get("benchmarks_with_high_severity_open_controls", 0)}
 - Measured inflation claims in this audit: {benchmark_callout.get("aggregate", {}).get("measured_inflation_claims", 0)}
+
+## Single-Line Preflight Validator
+
+- Artifact: `{preflight_result.get("artifact", "docs/experiments/preflight/preflight_report.json")}`
+- Package command: `python3 -m pip install -e .`
+- CLI command: `worldepisode preflight <dataset-or-manifest>`
+- Python API: `from worldepisode import preflight_lerobot; preflight_lerobot(path).raise_if_failed()`
+- Cases: {len(preflight_result.get("cases", []))}
+- Gate satisfied: {preflight_result.get("pass", False)}
 
 ## RQ2: Fault Detection
 
@@ -1303,6 +1285,7 @@ def main() -> int:
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
         "benchmark_callout_audit": experiment_benchmark_callout_audit(),
+        "preflight_validator": experiment_preflight_validator(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),
@@ -1351,6 +1334,10 @@ def main() -> int:
     policy_gate = results["lerobot_policy_gate"]
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_POLICY_GATE") == "1" and not policy_gate.get("pass"):
         print("ACT/Diffusion policy leakage gate is required but did not pass.")
+        return 1
+    preflight_result = results["preflight_validator"]
+    if not preflight_result.get("pass"):
+        print("Preflight validator regression failed.")
         return 1
 
     print(f"Wrote {RESULTS_JSON.relative_to(ROOT)}")

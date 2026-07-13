@@ -1,6 +1,6 @@
 # Reference SDK Contract
 
-Status: draft.
+Status: draft specification with an implemented preflight subset.
 
 The reference SDK should expose semantic objects and lazy bindings. The SDK is not the standard,
 but it is the executable proof that the standard can be validated, converted, and inspected.
@@ -8,6 +8,7 @@ but it is the executable proof that the standard can be validated, converted, an
 ## CLI
 
 ```bash
+worldepisode preflight dataset_or_manifest
 worldepisode validate dataset/
 worldepisode inspect dataset/
 worldepisode index build dataset/
@@ -29,6 +30,19 @@ worldepisode export gltf ...
 worldepisode conversion-report report.json
 ```
 
+The implemented `v0.1.0` package currently provides the blocking preflight/validate surface:
+
+```bash
+python3 -m pip install -e .
+worldepisode preflight examples/minimal.worldepisode.json
+worldepisode preflight --kind lerobot /path/to/lerobot_v3_dataset
+worldepisode preflight --kind rerun /path/to/recording.rrd --sidecar /path/to/worldepisode.manifest.json
+```
+
+`preflight` defaults to fail-closed behavior: warnings return a non-zero exit code, because a native
+LeRobot folder or Rerun `.rrd` without a WorldEpisode sidecar cannot prove replay-safe physical
+semantics. `--advisory` keeps the diagnostics but exits non-zero only on errors.
+
 ## Python API
 
 ```python
@@ -49,6 +63,21 @@ collision = mug.representation(role="collision")
 
 report = episode.validate(profile="WE-Rigid-Manipulation")
 ```
+
+The implemented one-line preflight API is:
+
+```python
+from worldepisode import preflight, preflight_lerobot, preflight_rerun
+
+preflight("episode.worldepisode.json").raise_if_failed()
+preflight_lerobot(dataset.root).raise_if_failed()
+preflight_rerun("episode.rrd", sidecar="episode.worldepisode.json").raise_if_failed()
+```
+
+The full semantic validator runs on `worldepisode-0.1` manifests. Native LeRobot and Rerun inputs
+are recognized directly, but without a sidecar they produce blocking diagnostics for the missing
+world, entity, representation-role, action-timing, frame/clock, split-lineage, and conversion-loss
+controls.
 
 For production corpora, `Dataset.open` should read the dataset manifest first and then lazily load
 only the shards selected by indexes and partition keys:

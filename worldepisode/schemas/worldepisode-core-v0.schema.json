@@ -1,0 +1,370 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://worldepisode.org/schemas/worldepisode-core-v0.schema.json",
+  "title": "WorldEpisode Core v0 draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode",
+    "world_revision",
+    "embodiment",
+    "frame_graph",
+    "clock_graph",
+    "entities",
+    "action_space",
+    "trace",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "worldepisode-0.1"
+    },
+    "episode": {
+      "$ref": "#/$defs/episode"
+    },
+    "world_revision": {
+      "$ref": "#/$defs/worldRevision"
+    },
+    "embodiment": {
+      "$ref": "#/$defs/embodiment"
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "frame_graph": {
+      "$ref": "#/$defs/frameGraph"
+    },
+    "clock_graph": {
+      "$ref": "#/$defs/clockGraph"
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      },
+      "minItems": 1
+    },
+    "action_space": {
+      "$ref": "#/$defs/actionSpace"
+    },
+    "trace": {
+      "$ref": "#/$defs/trace"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "world_deltas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/worldDelta"
+      }
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "assetDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "media_type", "sha256"],
+      "properties": {
+        "uri": { "type": "string", "minLength": 1 },
+        "media_type": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mirrors": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "embedded": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["encoding", "data"],
+          "properties": {
+            "encoding": { "type": "string", "enum": ["base64"] },
+            "data": { "type": "string", "minLength": 1 }
+          }
+        },
+        "license": { "type": "string" }
+      }
+    },
+    "episode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["episode_id", "dataset_id"],
+      "properties": {
+        "episode_id": { "type": "string", "minLength": 1 },
+        "dataset_id": { "type": "string", "minLength": 1 },
+        "split": { "type": "string" },
+        "outcome": { "type": "string" }
+      }
+    },
+    "worldRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["world_revision_id", "asset"],
+      "properties": {
+        "world_revision_id": { "type": "string", "minLength": 1 },
+        "asset": { "$ref": "#/$defs/assetDescriptor" },
+        "binding": { "type": "string" }
+      }
+    },
+    "embodiment": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["embodiment_id"],
+      "properties": {
+        "embodiment_id": { "type": "string", "minLength": 1 },
+        "urdf_asset": { "$ref": "#/$defs/assetDescriptor" }
+      }
+    },
+    "frameGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frames", "transforms"],
+      "properties": {
+        "frames": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/frame" },
+          "minItems": 1
+        },
+        "transforms": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/transform" }
+        }
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame_id", "units"],
+      "properties": {
+        "frame_id": { "type": "string", "minLength": 1 },
+        "units": { "type": "string", "enum": ["m", "rad"] },
+        "handedness": { "type": "string", "enum": ["right", "left"] },
+        "up_axis": { "type": "string", "enum": ["x", "y", "z", "-x", "-y", "-z"] },
+        "convention": { "type": "string" }
+      }
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_frame", "target_frame", "valid_interval"],
+      "properties": {
+        "source_frame": { "type": "string", "minLength": 1 },
+        "target_frame": { "type": "string", "minLength": 1 },
+        "valid_interval": { "$ref": "#/$defs/interval" },
+        "translation_xyz": { "$ref": "#/$defs/vec3" },
+        "quaternion_xyzw": { "$ref": "#/$defs/vec4" },
+        "uncertainty": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "clockGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clocks"],
+      "properties": {
+        "clocks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/clock" },
+          "minItems": 1
+        },
+        "mappings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/clockMapping" }
+        }
+      }
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clock_id", "domain"],
+      "properties": {
+        "clock_id": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 },
+        "units": { "type": "string", "enum": ["ns", "us", "ms", "s"] }
+      }
+    },
+    "clockMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_clock", "target_clock", "offset"],
+      "properties": {
+        "source_clock": { "type": "string", "minLength": 1 },
+        "target_clock": { "type": "string", "minLength": 1 },
+        "offset": { "type": "number" },
+        "drift_model": { "type": "string" },
+        "estimated_error": { "type": "number" }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "entity_type", "representations"],
+      "properties": {
+        "entity_id": { "type": "string", "minLength": 1 },
+        "entity_type": { "type": "string", "minLength": 1 },
+        "representations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/representation" }
+        }
+      }
+    },
+    "representation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["representation_id", "role", "asset"],
+      "properties": {
+        "representation_id": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": ["appearance", "geometry", "collision", "semantics", "learned"]
+        },
+        "asset": { "$ref": "#/$defs/assetDescriptor" },
+        "coordinate_frame": { "type": "string" },
+        "valid_interval": { "$ref": "#/$defs/interval" },
+        "derivation": { "type": "string" },
+        "uncertainty": { "type": "object", "additionalProperties": true },
+        "license": { "type": "string" }
+      }
+    },
+    "actionSpace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channels"],
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionChannel" },
+          "minItems": 1
+        }
+      }
+    },
+    "actionChannel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "actuator",
+        "control_mode",
+        "parameterization",
+        "reference_frame",
+        "units",
+        "semantics",
+        "command_timestamp_semantics",
+        "effective_timestamp_semantics"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "actuator": { "type": "string", "minLength": 1 },
+        "control_mode": { "type": "string", "minLength": 1 },
+        "parameterization": { "type": "string", "minLength": 1 },
+        "reference_frame": { "type": "string", "minLength": 1 },
+        "units": { "type": "string", "minLength": 1 },
+        "semantics": { "type": "string", "enum": ["absolute", "delta", "velocity", "normalized"] },
+        "command_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "effective_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "policy_output_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "action_enqueue_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "queue_consume_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "motor_receive_timestamp_semantics": { "type": "string", "minLength": 1 },
+        "command_rate_hz": { "type": "number" },
+        "latency_model": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object", "additionalProperties": true }
+          ]
+        },
+        "action_chunking": { "type": "object", "additionalProperties": true },
+        "selection_policy": { "type": "string" },
+        "aggregation_policy": { "type": "string" },
+        "interpolation": { "type": "string" },
+        "missing_value_policy": { "type": "string" }
+      }
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "asset"],
+      "properties": {
+        "binding": { "type": "string", "minLength": 1 },
+        "asset": { "$ref": "#/$defs/assetDescriptor" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["event_id", "event_type", "clock_id", "timestamp"],
+      "properties": {
+        "event_id": { "type": "string", "minLength": 1 },
+        "event_type": { "type": "string", "minLength": 1 },
+        "clock_id": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "number" },
+        "entity_ids": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "worldDelta": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["delta_id", "clock_id", "timestamp", "entity_id"],
+      "properties": {
+        "delta_id": { "type": "string", "minLength": 1 },
+        "clock_id": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "number" },
+        "entity_id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["source", "creator"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "creator": { "type": "string", "minLength": 1 },
+        "software": { "type": "string" },
+        "commit": { "type": "string" },
+        "license": { "type": "string" }
+      }
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "clock_id"],
+      "properties": {
+        "start": { "type": "number" },
+        "end": { "type": "number" },
+        "clock_id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "vec4": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "type": "number" }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "codebase_version": "v3.0",
+  "features": {
+    "action": {
+      "dtype": "float32",
+      "fps": 30.0,
+      "names": [
+        "shoulder_pan.pos",
+        "shoulder_lift.pos",
+        "elbow_flex.pos",
+        "wrist_flex.pos",
+        "wrist_roll.pos",
+        "gripper.pos"
+      ],
+      "shape": [
+        6
+      ]
+    },
+    "observation.state": {
+      "dtype": "float32",
+      "fps": 30.0,
+      "shape": [
+        6
+      ]
+    },
+    "timestamp": {
+      "dtype": "float32",
+      "fps": 30.0,
+      "shape": [
+        1
+      ]
+    }
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leworldlayout.org/schemas/le-world-layout-v0.schema.json",
+  "title": "leWorldLayout v0 draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "world_layout"],
+  "properties": {
+    "schema_version": {
+      "const": "le-world-layout-0.1"
+    },
+    "world_layout": {
+      "$ref": "#/$defs/worldLayout"
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "frame_convention": {
+          "type": "string",
+          "enum": ["ros-rep-103", "studio-y-up"]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "number"
+      }
+    },
+    "worldLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objects", "scenario_time_ms", "scenario_duration_ms"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/worldObject"
+          },
+          "maxItems": 256
+        },
+        "scenario_time_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scenario_duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "urdf_xml": {
+          "type": "string"
+        },
+        "joint_positions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "cameras": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "worldObject": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "name", "type", "position_xyz", "size_xyz", "color"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["cube", "sphere", "cylinder", "point", "mesh", "splat"]
+        },
+        "position_xyz": {
+          "$ref": "#/$defs/vec3"
+        },
+        "rotation_rpy_rad": {
+          "$ref": "#/$defs/vec3"
+        },
+        "size_xyz": {
+          "$ref": "#/$defs/vec3"
+        },
+        "color": {
+          "type": "string"
+        },
+        "asset_ref": {
+          "$ref": "#/$defs/assetReference"
+        },
+        "appearance": {
+          "$ref": "#/$defs/appearance"
+        },
+        "physics": {
+          "$ref": "#/$defs/physics"
+        },
+        "consistency": {
+          "$ref": "#/$defs/consistency"
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "assetReference": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/assetDescriptor"
+        }
+      ]
+    },
+    "assetDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "media_type", "sha256"],
+      "properties": {
+        "uri": { "type": "string", "minLength": 1 },
+        "media_type": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mirrors": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "embedded": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["encoding", "data"],
+          "properties": {
+            "encoding": { "type": "string", "enum": ["base64"] },
+            "data": { "type": "string", "minLength": 1 }
+          }
+        },
+        "license": { "type": "string" }
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "representations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/appearanceRepresentation"
+          }
+        }
+      }
+    },
+    "appearanceRepresentation": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["primitive", "mesh", "splat"]
+        },
+        "asset_ref": {
+          "$ref": "#/$defs/assetReference"
+        },
+        "scale_xyz": {
+          "$ref": "#/$defs/vec3"
+        },
+        "semantic_role": {
+          "type": "string"
+        }
+      }
+    },
+    "physics": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "collision_geometry": {
+          "$ref": "#/$defs/collisionGeometry"
+        },
+        "fixed": {
+          "type": "boolean"
+        },
+        "collision": {
+          "type": "boolean"
+        },
+        "mass_kg": {
+          "type": "number",
+          "minimum": 0
+        },
+        "friction": {
+          "type": "number",
+          "minimum": 0
+        },
+        "restitution": {
+          "type": "number",
+          "minimum": 0
+        },
+        "semantic_role": {
+          "type": "string"
+        }
+      }
+    },
+    "collisionGeometry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["kind"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["box", "sphere", "cylinder", "mesh"]
+        },
+        "size_xyz": {
+          "$ref": "#/$defs/vec3"
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "length": {
+          "type": "number",
+          "minimum": 0
+        },
+        "asset_ref": {
+          "$ref": "#/$defs/assetReference"
+        },
+        "scale_xyz": {
+          "$ref": "#/$defs/vec3"
+        }
+      }
+    },
+    "consistency": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "appearance_ref": {
+          "type": "string"
+        },
+        "physics_ref": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["valid", "warning", "missing", "unchecked"]
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

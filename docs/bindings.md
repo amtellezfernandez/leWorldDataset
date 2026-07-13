@@ -40,11 +40,33 @@ asserts zero numerical loss for action tensors, state tensors, sample timestamps
 timestamp ranges. Source semantics absent from LeRobot, including camera extrinsics, action units,
 robot/world calibration, and controller latency, are tracked in the conversion report.
 
+For training pipelines, the reference package exposes the same requirement lens as a blocking
+preflight:
+
+```python
+from worldepisode import preflight_lerobot
+
+preflight_lerobot(dataset.root).raise_if_failed()
+```
+
+Native LeRobot v3 folders are recognized from `meta/info.json` and `data/**/*.parquet`. Without a
+WorldEpisode manifest or sidecar, the preflight fails closed on the missing world revision, entity
+graph, representation roles, frame/clock mappings, action timing, lineage splits, and conversion
+report.
+
 The companion control-replay experiment at `tools/lerobot_control_replay_experiment.py` reads the
 exported LeRobot trajectory, infers a four-frame effective action delay, emits the WorldEpisode
 control-loop contract, and verifies timestamp-aware replay in MuJoCo. The same contract contains an
 Isaac adapter mapping, but that backend is marked ready and untested until an Isaac environment is
 available.
+
+For Rerun, use the same pattern after saving an `.rrd` recording:
+
+```python
+from worldepisode import preflight_rerun
+
+preflight_rerun("episode.rrd", sidecar="episode.worldepisode.json").raise_if_failed()
+```
 
 ## Loss Report Shape
 

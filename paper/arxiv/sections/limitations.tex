@@ -32,8 +32,9 @@ projection; not a universal score of each storage format \\
 Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
 LIBERO, and CALVIN & Missing public controls are not measured score inflation; targeted conversions
 and reruns are still required \\
-Adoption & Public schema, validator, fixtures, and governance files & No independent implementation
-or external dataset release yet \\
+Adoption & Public schema, installable local preflight package, validator, fixtures, and governance
+files & No PyPI release, upstream LeRobot/Rerun integration, independent implementation, or external
+dataset release yet \\
 Scale architecture & Dataset manifest schema, scalable example, and production requirements for
 shards, indexes, resolvers, and append-only versions & No benchmark yet for billion-episode
 catalog latency, distributed cache behavior, or federation across institutions \\
@@ -65,6 +66,11 @@ The converter, validator, and reports are executable, but independent implementa
 needed before the project should be treated as a mature interoperability standard. The next
 empirical step is to run the same protocol on larger multi-camera manipulation datasets and
 externally maintained adapters.
+
+\paragraph{Preflight distribution.}
+The repository packages a local \texttt{worldepisode} preflight CLI and Python API, but it is not
+yet a released PyPI package and has not been merged into upstream LeRobot or Rerun examples. The
+current claim is friction reduction in the reference implementation, not ecosystem default status.
 
 \paragraph{Dataset-scale performance.}
 The specification separates the core episode record from a dataset-scale manifest with namespaces,

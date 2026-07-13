@@ -47,7 +47,8 @@ opened through the manifest and indexes without scanning the backing storage.
 
 1. Publish the landscape and RFC first: comparison, terminology, problem statement, non-goals,
    draft schemas, use cases, and unresolved design questions.
-2. Release the validator before the large dataset.
+2. Release the validator before the large dataset, including `pip install worldepisode`,
+   `worldepisode preflight`, and one-line Python hooks for LeRobot and Rerun pipelines.
 3. Implement adapters for LeRobot, OpenUSD, Rerun, NCore, GSDF/GSWorld-style assets, glTF Gaussian
    splats, and MCAP.
 4. Secure at least one independent implementation before paper submission.
@@ -59,7 +60,8 @@ opened through the manifest and indexes without scanning the backing storage.
 ## Initial Repository Milestones
 
 - `v0.1-rfc`: paper draft, schemas, examples, requirements, and profile definitions.
-- `v0.2-validator`: executable validator with passing and failing fixtures.
+- `v0.2-validator`: executable validator with passing and failing fixtures plus blocking preflight
+  CLI/API checks.
 - `v0.3-bindings`: LeRobot, Rerun, OpenUSD, glTF Gaussian, and MCAP import/export sketches.
 - `v0.4-corpus`: golden conformance corpus and replay fixtures.
 - `v1.0-rigid-tabletop`: stable rigid tabletop manipulation profile and benchmark release.

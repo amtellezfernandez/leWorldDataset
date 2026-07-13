@@ -19,6 +19,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
+| Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
@@ -91,6 +92,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Benchmarks: 5
 - Benchmarks with high-severity open controls: 5
 - Measured inflation claims in this audit: 0
+
+## Single-Line Preflight Validator
+
+- Artifact: `docs/experiments/preflight/preflight_report.json`
+- Package command: `python3 -m pip install -e .`
+- CLI command: `worldepisode preflight <dataset-or-manifest>`
+- Python API: `from worldepisode import preflight_lerobot; preflight_lerobot(path).raise_if_failed()`
+- Cases: 4
+- Gate satisfied: True
 
 ## RQ2: Fault Detection
 

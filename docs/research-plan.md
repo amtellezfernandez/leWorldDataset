@@ -35,6 +35,13 @@ Inject controlled failures:
 
 Measure validator precision, recall, and diagnosis quality.
 
+Preflight adoption artifact: `worldepisode preflight` and the Python APIs
+`preflight(...)`, `preflight_lerobot(...)`, and `preflight_rerun(...)` make the validator runnable
+as a single blocking line before a costly training job. The committed regression artifact at
+`docs/experiments/preflight/preflight_report.json` checks that a valid WorldEpisode manifest passes,
+an invalid fixture fails, and native LeRobot/Rerun artifacts without a WorldEpisode sidecar fail
+closed on missing physical-semantics controls.
+
 ## RQ3: Cross-Simulator Replay
 
 Replay the same demonstrations in at least two simulators.

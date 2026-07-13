@@ -1573,6 +1573,232 @@
       "SPLIT.001": 1
     }
   },
+  "preflight_validator": {
+    "artifact": "docs/experiments/preflight/preflight_report.json",
+    "available": true,
+    "cases": [
+      {
+        "case": "valid_worldepisode_manifest",
+        "expected_ok": true,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 0
+          },
+          "diagnostics": [],
+          "fail_on": "warning",
+          "kind": "worldepisode",
+          "ok": true,
+          "summary": {
+            "document_kind": "worldepisode"
+          },
+          "target": "examples/minimal.worldepisode.json"
+        }
+      },
+      {
+        "case": "invalid_worldepisode_fixture",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 2,
+            "info": 0,
+            "warning": 0
+          },
+          "diagnostics": [
+            {
+              "hint": "Validate the document against the published JSON Schema before training.",
+              "location": "/action_space/channels/0",
+              "message": "'effective_timestamp_semantics' is a required property",
+              "requirement": "SCHEMA.001",
+              "severity": "error"
+            },
+            {
+              "location": "/action_space/channels/0",
+              "message": "Action channel lacks command/effective timestamp semantics.",
+              "requirement": "ACTION.002",
+              "severity": "error"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "worldepisode",
+          "ok": false,
+          "summary": {
+            "document_kind": "worldepisode"
+          },
+          "target": "conformance/fixtures/pilot/invalid/ACTION.002_missing_effective_time.worldepisode.json"
+        }
+      },
+      {
+        "case": "native_lerobot_without_sidecar",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 10
+          },
+          "diagnostics": [
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/world_revision",
+              "message": "No immutable, content-addressed world revision is bound to this native LeRobot dataset.",
+              "requirement": "WORLD.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/entities",
+              "message": "No persistent entity identity graph is available across observations, assets, and annotations.",
+              "requirement": "ENTITY.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/entities/*/representations",
+              "message": "No representation-role graph declares appearance, collision, semantic, or learned roles.",
+              "requirement": "REP.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/frame_graph",
+              "message": "Native LeRobot metadata does not provide a complete frame graph with explicit transform directions.",
+              "requirement": "FRAME.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/frame_graph/transforms",
+              "message": "Native LeRobot metadata does not provide transform validity intervals.",
+              "requirement": "FRAME.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/clock_graph/mappings",
+              "message": "Native LeRobot metadata does not provide cross-clock drift/error mappings.",
+              "requirement": "TIME.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/action_space/channels",
+              "message": "Action units, reference frames, and absolute/delta/velocity semantics are not normative.",
+              "requirement": "ACTION.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/action_space/channels",
+              "message": "Command-time versus effective-time semantics and latency model are absent.",
+              "requirement": "ACTION.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/splits",
+              "message": "No world-lineage-disjoint split manifest is attached.",
+              "requirement": "SPLIT.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/conversion_report",
+              "message": "No machine-readable conversion-loss report is attached.",
+              "requirement": "CONVERT.001",
+              "severity": "warning"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "lerobot",
+          "ok": false,
+          "summary": {
+            "data_parquet_files": 1,
+            "feature_count": 3,
+            "info_json": true,
+            "sidecar_status": "missing",
+            "video_feature_count": 0,
+            "video_mp4_files": 0,
+            "worldepisode_sidecar_found": false
+          },
+          "target": "docs/experiments/preflight/native_lerobot_without_sidecar"
+        }
+      },
+      {
+        "case": "rerun_without_sidecar",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 6
+          },
+          "diagnostics": [
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/world_revision",
+              "message": "Rerun recordings do not by themselves declare immutable world revisions.",
+              "requirement": "WORLD.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/action_space/channels",
+              "message": "Rerun streams do not by themselves make action units and frames normative.",
+              "requirement": "ACTION.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/action_space/channels",
+              "message": "Rerun streams do not by themselves declare command/effective timing and latency.",
+              "requirement": "ACTION.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/entities",
+              "message": "Persistent cross-representation entity identity requires a WorldEpisode sidecar.",
+              "requirement": "ENTITY.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/entities/*/representations",
+              "message": "Representation roles require a WorldEpisode sidecar.",
+              "requirement": "REP.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/conversion_report",
+              "message": "Replay/conversion loss must be reported outside the .rrd stream.",
+              "requirement": "CONVERT.001",
+              "severity": "warning"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "rerun",
+          "ok": false,
+          "summary": {
+            "rrd_path_exists": true,
+            "sidecar_status": "missing",
+            "worldepisode_sidecar_found": false
+          },
+          "target": "docs/experiments/preflight/recording_without_sidecar.rrd"
+        }
+      }
+    ],
+    "commands": [
+      "python3 -m pip install -e .",
+      "worldepisode preflight <dataset-or-manifest>",
+      "python3 - <<'PY'\nfrom worldepisode import preflight_lerobot\npreflight_lerobot('/path/to/lerobot').raise_if_failed()\nPY"
+    ],
+    "failures": [],
+    "pass": true,
+    "profile": "worldepisode-preflight-0.1"
+  },
   "rq1_binding_retention": {
     "artifact_root": "docs/experiments/bindings",
     "bindings": [
