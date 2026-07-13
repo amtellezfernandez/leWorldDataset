@@ -21,6 +21,7 @@ DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "release_readiness"
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
 PAPER_CLAIM_AUDIT_JSON = ROOT / "docs" / "experiments" / "paper_claim_audit" / "paper_claim_audit_report.json"
+SUBMISSION_PACKET_JSON = ROOT / "docs" / "submission_packet" / "submission_packet.json"
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -115,6 +116,7 @@ def ci_checks() -> list[Check]:
         "python tools/run_experiments.py",
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
+        "python tools/submission_packet.py --strict",
         "python tools/release_readiness.py --strict-rfc",
         "python tools/artifact_freshness.py --strict",
     ]
@@ -317,6 +319,46 @@ def paper_claim_checks() -> list[Check]:
     ]
 
 
+def submission_packet_checks() -> list[Check]:
+    if not SUBMISSION_PACKET_JSON.exists():
+        return [
+            Check(
+                "SUBMIT.001",
+                "submission packet exists",
+                False,
+                f"{rel(SUBMISSION_PACKET_JSON)} missing",
+            )
+        ]
+    try:
+        packet = load_json(SUBMISSION_PACKET_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "SUBMIT.001",
+                "submission packet parses",
+                False,
+                f"{rel(SUBMISSION_PACKET_JSON)}: {exc}",
+            )
+        ]
+    validation = packet.get("validation", {})
+    return [
+        Check(
+            "SUBMIT.001",
+            "submission packet validates",
+            packet.get("schema") == "worldepisode_submission_packet_v1"
+            and packet.get("status") == "pass"
+            and validation.get("passed") is True
+            and nested(packet, ("summary", "paper_claim_count"), 0) >= 10
+            and nested(packet, ("summary", "open_result_gate_count"), 0) >= 5,
+            (
+                f"status={packet.get('status')}, "
+                f"claims={nested(packet, ('summary', 'paper_claim_count'))}, "
+                f"open_gates={nested(packet, ('summary', 'open_result_gate_count'))}"
+            ),
+        )
+    ]
+
+
 def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     benchmark_inflation = results.get("benchmark_inflation_gate", {})
     policy_gate = results.get("lerobot_policy_gate", {})
@@ -383,6 +425,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     blockers = claim_blockers(results)
     checks.extend(open_gate_checks(blockers))
     checks.extend(paper_claim_checks())
+    checks.extend(submission_packet_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}
     paper_claim_report = load_json(PAPER_CLAIM_AUDIT_JSON) if PAPER_CLAIM_AUDIT_JSON.exists() else {}
     blocking_errors = [check for check in checks if check.severity == "error" and not check.passed]

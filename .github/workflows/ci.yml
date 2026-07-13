@@ -35,6 +35,9 @@ jobs:
       - name: Check paper claims against evidence
         run: python tools/paper_claim_audit.py --strict
 
+      - name: Build submission packet
+        run: python tools/submission_packet.py --strict
+
       - name: Check RFC release readiness
         run: python tools/release_readiness.py --strict-rfc
 

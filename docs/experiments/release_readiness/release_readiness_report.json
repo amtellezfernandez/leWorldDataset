@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
-    "check_count": 27,
-    "passed_count": 27,
+    "check_count": 28,
+    "passed_count": 28,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -68,7 +68,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (18517 bytes)",
+      "evidence": "README.md (18817 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -132,7 +132,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": ".github/workflows/ci.yml (998 bytes)",
+      "evidence": ".github/workflows/ci.yml (1093 bytes)",
       "name": "CI workflow exists",
       "passed": true,
       "severity": "error"
@@ -278,6 +278,14 @@
       "check_id": "CLAIM.001",
       "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=11, failed=0",
       "name": "paper claims are evidence-backed",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "SUBMIT.001",
+      "evidence": "status=pass, claims=11, open_gates=5",
+      "name": "submission packet validates",
       "passed": true,
       "severity": "error"
     }
