@@ -20,6 +20,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 3 public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 
 
@@ -82,6 +83,14 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Policies: act, diffusion
 - Jobs prepared: 4
 - Ready to execute in this environment: False
+
+## Famous Benchmark Call-Out Audit
+
+- Artifact: `docs/experiments/benchmark_callout_audit/benchmark_callout_report.json`
+- Status: prepared_not_measured
+- Benchmarks: 5
+- Benchmarks with high-severity open controls: 5
+- Measured inflation claims in this audit: 0
 
 ## RQ2: Fault Detection
 

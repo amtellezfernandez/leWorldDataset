@@ -1,6 +1,709 @@
 {
   "baseline_schema_errors": 0,
   "baseline_semantic_errors": 0,
+  "benchmark_callout_audit": {
+    "aggregate": {
+      "benchmark_count": 5,
+      "benchmarks_with_high_severity_open_controls": 5,
+      "checks": {
+        "WE-CALLOUT.001": {
+          "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+          "requirement_ids": [
+            "SPLIT.001",
+            "DATASET.003"
+          ],
+          "severities": {
+            "high": 4,
+            "info": 1
+          },
+          "statuses": {
+            "needs_targeted_audit": 4,
+            "public_evidence_missing": 1
+          }
+        },
+        "WE-CALLOUT.002": {
+          "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+          "requirement_ids": [
+            "WORLD.001",
+            "TRACE.001"
+          ],
+          "severities": {
+            "high": 5
+          },
+          "statuses": {
+            "needs_targeted_audit": 2,
+            "public_evidence_missing": 3
+          }
+        },
+        "WE-CALLOUT.003": {
+          "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+          "requirement_ids": [
+            "ENTITY.001",
+            "REP.001"
+          ],
+          "severities": {
+            "high": 3,
+            "medium": 2
+          },
+          "statuses": {
+            "partial_public_evidence": 2,
+            "public_evidence_missing": 3
+          }
+        },
+        "WE-CALLOUT.004": {
+          "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+          "requirement_ids": [
+            "ACTION.001",
+            "ACTION.002",
+            "ACTION.004"
+          ],
+          "severities": {
+            "high": 5
+          },
+          "statuses": {
+            "partial_public_evidence": 3,
+            "public_evidence_missing": 2
+          }
+        },
+        "WE-CALLOUT.005": {
+          "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+          "requirement_ids": [
+            "FRAME.001",
+            "FRAME.002",
+            "TIME.001",
+            "TIME.002"
+          ],
+          "severities": {
+            "medium": 5
+          },
+          "statuses": {
+            "partial_public_evidence": 5
+          }
+        },
+        "WE-CALLOUT.006": {
+          "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+          "requirement_ids": [
+            "REPLAY.001",
+            "CONVERT.001"
+          ],
+          "severities": {
+            "high": 3,
+            "medium": 2
+          },
+          "statuses": {
+            "needs_targeted_audit": 2,
+            "public_evidence_missing": 3
+          }
+        }
+      },
+      "measured_inflation_claims": 0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/benchmark_callout_audit/README.md",
+      "report": "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+    },
+    "audit_date": "2026-07-13",
+    "benchmarks": [
+      {
+        "benchmark_id": "open_x_embodiment",
+        "code_or_data_url": "https://github.com/google-deepmind/open_x_embodiment",
+        "domain": "real_robot_multi_embodiment",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "missing_public_world_lineage_split_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "partial_action_semantics_public_evidence_but_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_dataset_specific_frame_time_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "cross-robot dataset aggregation",
+          "standardized action/observation loading through Open X-Embodiment tooling",
+          "generalist RT-X policy evaluation"
+        ],
+        "name": "Open X-Embodiment / RT-X",
+        "rank": 1,
+        "scale_public_claim": "22 robots, 21 institutions, hundreds of skills/tasks in a standardized cross-embodiment release",
+        "selection_reason": "large multi-institution, multi-robot generalist policy dataset and model benchmark",
+        "source_check": null,
+        "source_url": "https://robotics-transformer-x.github.io/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "droid",
+        "code_or_data_url": "https://github.com/droid-dataset/droid",
+        "domain": "real_robot_in_the_wild_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "partial_scene_metadata_expected_but_lineage_disjoint_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "missing_public_command_effective_latency_contract_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_raw_sensor_calibration_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "large real-world scene diversity",
+          "public robot platform and data collection stack",
+          "raw and RLDS dataset formats"
+        ],
+        "name": "DROID",
+        "rank": 2,
+        "scale_public_claim": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+        "selection_reason": "large in-the-wild robot manipulation dataset with public RLDS/raw releases",
+        "source_check": null,
+        "source_url": "https://droid-dataset.github.io/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "bridgedata_v2",
+        "code_or_data_url": "https://github.com/rail-berkeley/bridge_data_v2",
+        "domain": "real_robot_low_cost_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "environment_metadata_exists_but_lineage_disjoint_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "missing_public_command_effective_latency_contract_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_dataset_specific_frame_time_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "large real robot trajectory corpus",
+          "environment and task diversity",
+          "goal-image and language-conditioned learning support"
+        ],
+        "name": "BridgeData V2",
+        "rank": 3,
+        "scale_public_claim": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+        "selection_reason": "large real-world manipulation dataset used for scalable imitation and offline RL",
+        "source_check": null,
+        "source_url": "https://rail-berkeley.github.io/bridgedata/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "libero",
+        "code_or_data_url": "https://github.com/Lifelong-Robot-Learning/LIBERO",
+        "domain": "simulated_lifelong_robot_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "controlled_task_splits_exist_but_world_lineage_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "info",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "sim_environment_defined_but_content_addressed_world_revision_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "partial_sim_object_identity_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "sim_action_contract_expected_but_command_effective_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "sim_frame_time_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "partial_runtime_evidence_but_loss_report_missing",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "medium",
+            "status": "needs_targeted_audit"
+          }
+        ],
+        "known_strengths": [
+          "controlled distribution-shift suites",
+          "language-conditioned manipulation tasks",
+          "simulated reproducibility"
+        ],
+        "name": "LIBERO",
+        "rank": 4,
+        "scale_public_claim": "130 tasks across four suites for spatial, object, goal, and mixed transfer",
+        "selection_reason": "widely used lifelong robot learning and VLA evaluation benchmark",
+        "source_check": null,
+        "source_url": "https://libero-project.github.io/main.html",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 2,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "calvin",
+        "code_or_data_url": "https://github.com/mees/calvin",
+        "domain": "simulated_language_conditioned_long_horizon_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "environment_splits_exist_but_asset_lineage_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "sim_environment_defined_but_content_addressed_world_revision_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "partial_sim_object_identity_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "sim_action_contract_expected_but_command_effective_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "sim_frame_time_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "partial_runtime_evidence_but_loss_report_missing",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "medium",
+            "status": "needs_targeted_audit"
+          }
+        ],
+        "known_strengths": [
+          "long-horizon task chaining",
+          "language-conditioned policy evaluation",
+          "controlled simulated environments"
+        ],
+        "name": "CALVIN",
+        "rank": 5,
+        "scale_public_claim": "open-source simulated benchmark for long-horizon language-conditioned manipulation",
+        "selection_reason": "canonical long-horizon language-conditioned manipulation benchmark",
+        "source_check": null,
+        "source_url": "https://calvin.cs.uni-freiburg.de/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 3,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      }
+    ],
+    "checks": [
+      {
+        "check_id": "WE-CALLOUT.001",
+        "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+        "requirement_ids": [
+          "SPLIT.001",
+          "DATASET.003"
+        ],
+        "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training."
+      },
+      {
+        "check_id": "WE-CALLOUT.002",
+        "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+        "requirement_ids": [
+          "WORLD.001",
+          "TRACE.001"
+        ],
+        "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision."
+      },
+      {
+        "check_id": "WE-CALLOUT.003",
+        "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+        "requirement_ids": [
+          "ENTITY.001",
+          "REP.001"
+        ],
+        "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations."
+      },
+      {
+        "check_id": "WE-CALLOUT.004",
+        "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+        "requirement_ids": [
+          "ACTION.001",
+          "ACTION.002",
+          "ACTION.004"
+        ],
+        "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time."
+      },
+      {
+        "check_id": "WE-CALLOUT.005",
+        "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+        "requirement_ids": [
+          "FRAME.001",
+          "FRAME.002",
+          "TIME.001",
+          "TIME.002"
+        ],
+        "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records."
+      },
+      {
+        "check_id": "WE-CALLOUT.006",
+        "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+        "requirement_ids": [
+          "REPLAY.001",
+          "CONVERT.001"
+        ],
+        "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators."
+      }
+    ],
+    "claim_boundary": "Findings identify missing or unverified public evidence for WorldEpisode controls. They are not claims that benchmark scores are inflated.",
+    "contrast_measured_case": {
+      "artifact": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+      "dataset": "armnet/armnetbench_v01_lerobot_so101",
+      "random_offline_bc_success": 0.85,
+      "random_split_leakage": 1.0,
+      "scene_disjoint_leakage": 0.0,
+      "scene_disjoint_offline_bc_success": 0.0
+    },
+    "profile": "worldepisode-famous-benchmark-callout-0.1",
+    "required_next_steps": [
+      "convert each benchmark into a WorldEpisode dataset manifest or sidecar",
+      "derive or import world_lineage identifiers from scene, environment, asset, or capture metadata",
+      "audit official train/eval splits for world, entity, source-capture, and asset-lineage leakage",
+      "extract action units, frames, absolute/delta semantics, command timestamps, effective timestamps, and latency models",
+      "rerun at least one published policy protocol under lineage-disjoint splits or timestamp-aware replay"
+    ],
+    "scope": "source_level_public_metadata_audit",
+    "status": "prepared_not_measured"
+  },
   "independent_fixture_check": {
     "available": true,
     "cases": [

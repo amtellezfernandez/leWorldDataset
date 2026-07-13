@@ -25,6 +25,13 @@ WorldEpisode supports split constraints such as \texttt{world\_lineage},
 \texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
 \texttt{generated\_asset\_family}.
 
+\paragraph{Call-outs without overclaiming.}
+The practical target is to make famous benchmarks auditable, not to accuse them without a rerun.
+When public metadata cannot answer whether train and test share a scene lineage, asset family,
+source capture, action timing convention, or simulator assumption, WorldEpisode should mark the
+published score as unaudited with respect to that control. It should mark a score as inflated only
+after the same policy protocol is rerun under the corrected split or timing contract.
+
 \paragraph{Standards alignment.}
 The project aligns with standards bodies rather than antagonizing them. Static 3D robot-map
 exchange, humanoid dataset lifecycle, OpenLABEL annotation, glTF Gaussian splats, USD composition,

@@ -81,6 +81,13 @@ Current executable artifact: `tools/lerobot_scene_leakage_experiment.py` runs th
 `armnet/armnetbench_v01_lerobot_so101`, derives `world_lineage` hashes for task-scene/camera-layout
 groups, and compares random-episode against scene-disjoint splits with a Torch MLP BC baseline.
 
+Scale-out artifact: `tools/benchmark_callout_audit.py` creates a source-level audit over Open
+X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. That artifact identifies which famous
+benchmarks lack public evidence for lineage-disjoint splits, content-addressed world revisions,
+action timing contracts, and replay/loss reports. The next experiment is to convert one benchmark at
+a time into a WorldEpisode manifest and rerun a published policy protocol under the corrected split
+or timing contract.
+
 ## End-to-End Demonstration
 
 The strongest demonstration:

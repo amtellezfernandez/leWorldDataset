@@ -60,12 +60,14 @@ is persistent, verifiable world-episode interoperability.
 - [Reference SDK contract](docs/sdk.md)
 - [Production-scale dataset architecture](docs/production-scale.md)
 - [ACT/Diffusion policy leakage gate](docs/policy-leakage-gate.md)
+- [Famous benchmark call-out audit](docs/benchmark-callout-audit.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
 - [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](docs/experiments/lerobot_policy_gate)
+- [Famous benchmark call-out artifacts](docs/experiments/benchmark_callout_audit)
 - [Active LeRobot control-replay artifacts](docs/experiments/lerobot_control_replay)
 - [Pilot natural-source failure corpus](docs/experiments/natural_failure_corpus/manifest.json)
 - [Research plan](docs/research-plan.md)
@@ -138,6 +140,12 @@ To prepare the stronger ACT/Diffusion leakage gate from the same split manifest:
 python3 tools/lerobot_policy_leakage_gate.py
 ```
 
+To generate the source-level call-out audit over famous public robot-learning benchmarks:
+
+```bash
+python3 tools/benchmark_callout_audit.py
+```
+
 For the active public LeRobot control-loop replay experiment:
 
 ```bash
@@ -153,6 +161,9 @@ baseline on both. In the committed run, the random split leaks all test scene li
 The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs,
 episode allowlists, and high-fidelity/physical rollout requirements; it is intentionally marked
 open until real ACT/Diffusion metrics and rollout reports are committed.
+The famous benchmark call-out audit applies the same requirement lens to Open X-Embodiment, DROID,
+BridgeData V2, LIBERO, and CALVIN. It flags missing public leakage/timing controls, but does not
+claim a benchmark score is inflated until a measured rerun exists.
 
 The active converter downloads bounded metadata/data shards from
 `lerobot/svla_so101_pickplace`, converts episode 0 through

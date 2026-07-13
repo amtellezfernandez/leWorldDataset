@@ -34,6 +34,7 @@ RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
+BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
 ROUNDTRIP_BATCH_REPORT = RESULTS_DIR / "lerobot_worldepisode_roundtrip" / "batch_roundtrip_report.json"
 SECONDARY_ROUNDTRIP_BATCH_REPORTS = (
     RESULTS_DIR / "lerobot_worldepisode_roundtrip_pusht" / "batch_roundtrip_report.json",
@@ -535,6 +536,22 @@ def experiment_lerobot_policy_gate() -> dict[str, Any]:
             "reproduce": "python3 tools/lerobot_policy_leakage_gate.py",
         }
         write_json(POLICY_GATE_REPORT, report)
+        return report
+
+
+def experiment_benchmark_callout_audit() -> dict[str, Any]:
+    try:
+        from benchmark_callout_audit import build_callout_audit
+
+        return build_callout_audit(output_dir=RESULTS_DIR / "benchmark_callout_audit", refresh_sources=False)
+    except Exception as exc:
+        report = {
+            "available": False,
+            "status": "unavailable",
+            "reason": str(exc),
+            "reproduce": "python3 tools/benchmark_callout_audit.py",
+        }
+        write_json(BENCHMARK_CALLOUT_REPORT, report)
         return report
 
 
@@ -1047,6 +1064,7 @@ def write_report(results: dict[str, Any]) -> None:
     active_lerobot = results["lerobot_active_roundtrip"]
     scene_leakage = results["lerobot_scene_leakage"]
     policy_gate = results["lerobot_policy_gate"]
+    benchmark_callout = results["benchmark_callout_audit"]
     if active_lerobot.get("available"):
         active_metrics = active_lerobot["metrics"]
         batch = active_lerobot.get("batch_roundtrip")
@@ -1165,6 +1183,7 @@ def write_report(results: dict[str, Any]) -> None:
 | Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | Natural corpus is still below the five-dataset gate and has no maintainer feedback yet. |
 | Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
+| Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN. | Prepared audit only; no published score is accused of inflation without a measured rerun. |
 | Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
 """
     report = f"""# WorldEpisode Controlled Experiment Results
@@ -1200,6 +1219,14 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Policies: {", ".join(policy_gate.get("policies", []))}
 - Jobs prepared: {len(policy_gate.get("jobs", []))}
 - Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
+
+## Famous Benchmark Call-Out Audit
+
+- Artifact: `{benchmark_callout.get("artifacts", {}).get("report", "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json")}`
+- Status: {benchmark_callout.get("status", "unavailable")}
+- Benchmarks: {benchmark_callout.get("aggregate", {}).get("benchmark_count", 0)}
+- Benchmarks with high-severity open controls: {benchmark_callout.get("aggregate", {}).get("benchmarks_with_high_severity_open_controls", 0)}
+- Measured inflation claims in this audit: {benchmark_callout.get("aggregate", {}).get("measured_inflation_claims", 0)}
 
 ## RQ2: Fault Detection
 
@@ -1275,6 +1302,7 @@ def main() -> int:
         "lerobot_active_roundtrip": experiment_lerobot_active_roundtrip(),
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
+        "benchmark_callout_audit": experiment_benchmark_callout_audit(),
         "rq2_fault_detection": experiment_fault_detection(base),
         "independent_fixture_check": experiment_independent_fixtures(),
         "natural_failure_corpus": experiment_natural_failure_corpus(),

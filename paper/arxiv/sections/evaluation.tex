@@ -150,7 +150,20 @@ controller-latency models, and a random episode split with measured scene-lineag
 not claimed as maintainer-confirmed dataset bugs; they are naturally occurring source omissions or
 evaluation risks that a WorldEpisode audit must make explicit.
 
-\paragraph{Case 5: augmentation that uses the world rather than a side file.}
+\paragraph{Case 5: the famous benchmarks that still need call-out audits.}
+The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
+source-level call-out audit over five famous public robot-learning benchmarks: Open
+X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
+LIBERO~\citep{libero}, and CALVIN~\citep{calvin}. The audit asks whether public metadata exposes
+world or scene lineage splits, content-addressed world revisions, persistent entity identity,
+action timing and latency contracts, frame/clock graphs, and replay or conversion-loss reports. All
+five benchmarks have at least one high-severity open control; the three real-robot datasets have
+five each in the current source-level audit. This is a call-out target list, not a claim that their
+published scores are inflated. The stronger claim requires converting each benchmark into
+WorldEpisode and rerunning a published policy protocol under lineage-disjoint splits or
+timestamp-aware replay.
+
+\paragraph{Case 6: augmentation that uses the world rather than a side file.}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
 nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
 unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame

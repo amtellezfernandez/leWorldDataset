@@ -14,6 +14,7 @@ the claim at the same scope as the evidence.
 | Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors plus `tools/lerobot_policy_leakage_gate.py`, which prepares ACT and Diffusion Policy jobs for the same split manifest. | Mitigated but open. The paper avoids claiming state-of-the-art policy impact. | Run the generated ACT/Diffusion jobs and commit train, offline eval, and rollout reports. |
 | Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Isaac mapping emitted but untested. | Mitigated by scope. Limitations state one trace, one MuJoCo adapter, Isaac untested. | Run at least two trajectories, a second robot/dataset, and an Isaac or second-simulator replay with declared tolerance envelopes. |
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over three public LeRobot-format datasets with nine cases. | Mitigated but not closed. Evaluation and limitations distinguish the pilot corpus from a full prevalence survey. | Extend to at least five public datasets and record maintainer agreement/disagreement with representative diagnostics. |
+| Famous benchmark impact is not demonstrated. | `tools/benchmark_callout_audit.py` now audits Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN for public leakage/timing controls. | Open. The paper can say these benchmarks require targeted WorldEpisode audits, not that their scores are inflated. | Convert at least one famous benchmark into WorldEpisode and rerun a published protocol under lineage-disjoint splits or timestamp-aware replay. |
 | Binding-retention metric looks subjective. | Predeclared 23-field semantic projection stored in `tools/run_experiments.py` and `docs/experiments/results.json`; native and sidecar artifacts checked by reimport. | Mitigated by scope. The paper calls it a pilot projection, not a universal score. | Publish the projection as a versioned conformance profile and obtain external review or an independent implementation. |
 | "Why not just USD/ROS/Rerun?" | Architecture and bindings show native containers as targets/views; sidecar captures action/task/lineage/replay semantics not owned by a single container. | Mitigated. Paper explicitly avoids replacement framing. | Demonstrate a round trip through at least two independently maintained native containers with loss reports. |
 | No independent adoption. | Public schema, governance draft, fixtures, examples, and artifacts exist. | Open. Limitations state no independent implementation or external dataset release yet. | Secure one independent reader/exporter or one external WorldEpisode-compatible dataset. |
@@ -57,14 +58,23 @@ the claim at the same scope as the evidence.
      disagreement records.
    - Claim unlocked: conformance catches real dataset problems, not only injected faults.
 
-4. **Second replay backend gate**
+4. **Famous benchmark call-out gate**
+   - Input: Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN public metadata.
+   - Current output: `docs/experiments/benchmark_callout_audit/benchmark_callout_report.json`.
+   - Remaining output: convert one or more of these benchmarks into WorldEpisode, derive actual
+     world/entity/source-capture lineage, and rerun a published policy protocol under corrected
+     splits or timestamp-aware replay.
+   - Claim unlocked: the leakage/timing finding applies to a celebrated benchmark, not only a
+     scoped ArmnetBench audit.
+
+5. **Second replay backend gate**
    - Input: the WorldEpisode action contract emitted in
      `docs/experiments/lerobot_control_replay/action_contract.json`.
    - Required output: a replay report from Isaac or another simulator, with the same tolerance
      metrics as the MuJoCo report.
    - Claim unlocked: replay assumptions transfer across more than one tested runtime.
 
-5. **Independent implementation gate**
+6. **Independent implementation gate**
    - Input: `schemas/worldepisode-core-v0.schema.json`, `conformance/fixtures/`, and `spec/`.
    - Required output: a reader/exporter or dataset generated outside this repository that passes
      the public conformance suite.
