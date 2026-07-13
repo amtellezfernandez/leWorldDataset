@@ -46,7 +46,8 @@ def require_pyarrow() -> Any:
     except ImportError as exc:
         raise ControlReplayUnavailable(
             "pyarrow is required. Install experiment dependencies with "
-            "`python3 -m pip install -r requirements-experiments.txt`."
+            "`python3 -m pip install -r requirements-experiments.txt` or run through "
+            "`uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     return pq
 
@@ -57,7 +58,8 @@ def require_mujoco() -> Any:
     except ImportError as exc:
         raise ControlReplayUnavailable(
             "mujoco is required for the tested replay adapter. Install experiment dependencies with "
-            "`python3 -m pip install -r requirements-experiments.txt`."
+            "`python3 -m pip install -r requirements-experiments.txt` or run through "
+            "`uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     return mujoco
 
@@ -285,7 +287,8 @@ def unavailable_report(error: Exception) -> dict[str, Any]:
         "pass": False,
         "reason": str(error),
         "reproduce": "python3 -m pip install -r requirements-experiments.txt && "
-        "python3 tools/lerobot_control_replay_experiment.py --required",
+        "python3 tools/lerobot_control_replay_experiment.py --required "
+        "(or uv run --with-requirements requirements-experiments.txt python tools/lerobot_control_replay_experiment.py --required)",
     }
 
 

@@ -10,6 +10,17 @@ The same command materializes binding round-trip artifacts in `docs/experiments/
 conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored independent fixtures in
 `conformance/fixtures/independent/`.
 
+## Evidence Boundaries
+
+| Claim Area | Current Evidence | Boundary |
+|---|---|---|
+| Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes and an executable Torch BC probe. | Offline imitation proxy; no real-robot rollout or ACT/Diffusion result. |
+| Conversion | Pinned LeRobotDataset v3 episode round trip with exact tensor and timestamp equality. | One dataset and one episode; broader dataset coverage remains future work. |
+| Replay timing | Real SO-101 trajectory alignment and tested MuJoCo position-servo replay. | One trace and one MuJoCo adapter; Isaac mapping is emitted but untested. |
+| Validation | Fourteen injected requirement faults plus two independent hand-authored fixtures. | Controlled faults; no survey of naturally occurring third-party dataset bugs yet. |
+| Binding retention | Predeclared 23-field semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
+| Adoption | Public schema, validator, fixtures, and governance files. | No independent implementation or external dataset release yet. |
+
 ## RQ1: Binding Retention
 
 | Binding | Native Retention | With WorldEpisode Sidecar | Discarded Fields |

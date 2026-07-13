@@ -47,7 +47,8 @@ def require_pyarrow() -> Any:
     except ImportError as exc:
         raise RoundTripUnavailable(
             "pyarrow is required for the active LeRobot round-trip. "
-            "Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt`."
+            "Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt` "
+            "or run through `uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     return pa, pq
 
@@ -105,7 +106,8 @@ def validate_worldepisode_manifest(manifest: dict[str, Any]) -> None:
     except ImportError as exc:
         raise RoundTripUnavailable(
             "jsonschema is required to validate the generated WorldEpisode manifest. "
-            "Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt`."
+            "Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt` "
+            "or run through `uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     validator = jsonschema.Draft202012Validator(load_json(SCHEMA_PATH))
     errors = sorted(validator.iter_errors(manifest), key=lambda error: list(error.path))

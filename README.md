@@ -55,6 +55,7 @@ is persistent, verifiable world-episode interoperability.
 - [Bindings draft](docs/bindings.md)
 - [Reference SDK contract](docs/sdk.md)
 - [Controlled experiment results](docs/experiments/RESULTS.md)
+- [Reviewer concern matrix](docs/reviewer-concern-matrix.md)
 - [Binding round-trip artifacts](docs/experiments/bindings)
 - [Active LeRobot round-trip artifacts](docs/experiments/lerobot_worldepisode_roundtrip)
 - [Active LeRobot scene-leakage artifacts](docs/experiments/lerobot_scene_leakage)
@@ -87,6 +88,13 @@ pdflatex main.tex
 ```bash
 python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
+```
+
+If this Python environment does not include `pip`, use `uv`:
+
+```bash
+uv run --with-requirements requirements-experiments.txt \
+  env WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python tools/run_experiments.py
 ```
 
 For only the active public LeRobot conversion:

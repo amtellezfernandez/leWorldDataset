@@ -60,7 +60,8 @@ def require_pyarrow() -> Any:
     except ImportError as exc:
         raise LeakageExperimentUnavailable(
             "pyarrow is required. Install experiment dependencies with "
-            "`python3 -m pip install -r requirements-experiments.txt`."
+            "`python3 -m pip install -r requirements-experiments.txt` or run through "
+            "`uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     return pq
 
@@ -71,7 +72,8 @@ def require_torch() -> Any:
     except ImportError as exc:
         raise LeakageExperimentUnavailable(
             "torch is required for the BC leakage experiment. Install experiment dependencies with "
-            "`python3 -m pip install -r requirements-experiments.txt`."
+            "`python3 -m pip install -r requirements-experiments.txt` or run through "
+            "`uv run --with-requirements requirements-experiments.txt`."
         ) from exc
     return torch
 
