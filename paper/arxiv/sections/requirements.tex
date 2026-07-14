@@ -30,7 +30,7 @@ What actually happened? & temporal-event graph & \texttt{TRACE.001} & Case 4 \\
 Where did this come from? & provenance graph & \texttt{PROV.001}, \texttt{QUALITY.001} & Case 4 \\
 What was lost in conversion? & obligation: loss-explicit conversion & \texttt{CONVERT.001} & Cases 5, 6 \\
 Can the evaluation split leak? & obligation: lineage-safe splits & \texttt{SPLIT.001} & Cases 1, 7 \\
-Can this scale past one folder? & dataset manifest + indexes & \texttt{DATASET.001} & Case 8 \\
+Can this scale past one folder? & dataset manifest + indexes & \texttt{DATASET.001} & App.~\ref{app:scale} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -81,54 +81,43 @@ instead of hidden.}
 
 \paragraph{World revision and deltas (\texttt{WORLD.001}, \texttt{TRACE.001}).}
 Each record references one immutable, content-addressed world revision plus an ordered list of
-state-specific deltas. Changing geometry, metric scale, calibration, collision proxies, physical
-parameters, entity decomposition, object identity, or task-relevant fixtures creates a new
-revision. Content hashes let two datasets prove they refer to the same world without relying on
-filenames, and make it detectable when two datasets silently use the same filename for different
-states or different filenames for the same state.
+deltas; any change to geometry, scale, calibration, collision proxies, physical parameters, or
+object identity creates a new revision. Content hashes let two datasets prove they refer to the
+same world without relying on filenames.
 
 \paragraph{Identity graph (\texttt{ENTITY.001}).}
-Every physical or logical entity --- robot, link, gripper, sensor, rigid or articulated object,
-fixture, region, human --- receives a persistent identifier, and the same \texttt{entity\_id} must
-be used by segmentation masks, Gaussian groups, render meshes, collision bodies, simulator actors,
-language references, and interaction events. The real-world fix is simple: if a language command
-says ``pick up the mug,'' the perception mask, the simulator object, and the collision proxy must
-identify the same mug.
+Every physical or logical entity receives a persistent identifier, and the same
+\texttt{entity\_id} must be used by segmentation masks, Gaussian groups, meshes, collision bodies,
+simulator actors, language references, and interaction events. If a language command says ``pick up
+the mug,'' the perception mask, the simulator object, and the collision proxy must identify the
+same mug.
 
 \paragraph{Frame and clock graphs (\texttt{FRAME.001}, \texttt{TIME.001}, \texttt{ACTION.002}).}
-Every spatial value declares source frame, target frame, units, handedness, up axis, transform
-direction, quaternion convention, validity interval, calibration revision, and uncertainty where
-available, consistent with and extending ROS's coordinate and unit
-conventions~\citep{rosrep103}. Every stream declares a clock domain, device timestamp, host-receive
-timestamp where available, exposure interval for cameras, effective command time for actions,
-synchronization mapping, and estimated offset/drift/error; NCore's explicit pose-graph convention
-demonstrates the kind of rigor required across the whole state record~\citep{ncore}. Actions
-declare command time and effective motor time rather than assuming those are the same instant.
-This graph is what turns a suspicious replay from ``the policy is bad'' or ``the engine is wrong''
-into a diagnosable offset, transform direction, or unit error.
+Every spatial value declares its frames, units, transform direction, and validity interval,
+consistent with and extending ROS conventions~\citep{rosrep103}; every stream declares a clock
+domain, timestamps, synchronization mapping, and estimated drift, with the rigor NCore demonstrates
+for pose graphs~\citep{ncore}. Actions declare command time and effective motor time rather than
+assuming those are the same instant. This graph turns a suspicious replay from ``the policy is
+bad'' into a diagnosable offset, transform-direction, or unit error.
 
 \paragraph{Representation-role graph (\texttt{REP.001}).}
-One entity can have many representations: Gaussian splat appearance, textured render mesh, metric
-surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic affordance,
-telemetry stream, or learned embedding. Each declares its role and an asset descriptor: URI, media
-type, SHA-256 digest, optional mirrors, coordinate frame, units, validity interval, derivation,
-uncertainty, and license. Portability comes from deterministic resolution and digest verification,
-not from requiring every asset to live in one folder. The role field is essential: a splat may be
-valid for appearance but invalid for collision, while a simplified proxy may be valid for collision
-but unsuitable for visual training.
+One entity can have many representations (splat, mesh, point cloud, collision proxy, mass/inertia
+record), each declaring a role and a digest-verified asset descriptor. The role field is essential:
+a splat may be valid for appearance but invalid for collision, while a simplified proxy may be
+valid for collision but unsuitable for visual training.
 
 \paragraph{Temporal-event graph (\texttt{TRACE.001}).}
-Spatial records do not store only poses. They record interaction events --- contact begin/end,
-grasp establish/release, attachment, map or collision patch, articulation change, spawn/despawn,
-simulator reset, intervention, subgoal completion, failure detection --- each referencing entities,
-time, confidence, source, and optionally evidence. This turns raw coordinate streams into
-milestones such as ``contact established,'' ``object dropped,'' or ``intervention occurred.''
+Records store interaction events --- contact, grasp, attachment, collision patch, reset,
+intervention, failure --- each referencing entities, time, confidence, and source, turning raw
+coordinate streams into auditable milestones.
 
 \paragraph{Provenance graph (\texttt{PROV.001}).}
-Every derived asset identifies its source episodes, sensors and intervals, reconstruction algorithm
-and version, model/checkpoint hash, calibration revision, source and output hashes, creator,
-license, and quality metrics, mapping to existing provenance vocabularies rather than inventing an
-incompatible one.
+Every derived asset identifies its source episodes, sensors, reconstruction algorithm and version,
+calibration revision, hashes, creator, license, and quality metrics, mapping to existing provenance
+vocabularies rather than inventing an incompatible one.
+
+The full normative field lists are specified in the v0.1 RFC and its JSON Schemas; the paper keeps
+only what each graph must guarantee.
 
 \subsection{Two corpus-level obligations, plus scale}
 

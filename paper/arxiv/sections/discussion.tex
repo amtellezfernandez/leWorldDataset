@@ -7,41 +7,26 @@ world lineage, replay can drift because control timing is underspecified, conver
 physical semantics that the target container has no native place to store, and a live virtual or AV
 state can drift from its authoritative revision. WorldEpisode is useful only because these failures
 are observable and testable. The sidecar is the mechanism; the scientific claim is that explicit
-spatial-state semantics change what an embodied-agent result means. The contribution is therefore a
-set of falsifiable invariants: persistent entity identity must be consistent across observations and
-assets, timestamps must distinguish observation, command, and effective time, state roles must
-separate appearance from physics, and evaluation splits must be able to exclude shared state
-lineage. A container adapter either preserves those invariants, externalizes them with declared
-loss, or fails conformance.
+spatial-state semantics change what an embodied-agent result means. A container adapter either
+preserves those invariants, externalizes them with declared loss, or fails conformance.
 
 \paragraph{A small semantic core with multiple bindings.}
-WorldEpisode has a small semantic core and multiple bindings, evaluated at very different depths.
-LeRobotDataset v3 is the policy-training view and the only binding exercised with active,
-real-data experiments in this paper (conversion, leakage, and replay-timing results in
-Section~\ref{sec:evidence}). Rerun is the multirate physical-data view; NCore is the
-sensor/reconstruction capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed
-simulation-world view; and glTF or SPZ is the Gaussian asset view --- these five are covered only as
-binding-retention pilots (Table~\ref{tab:binding-retention}), not active experiments. A reference
-directory is the conformance profile. OpenUSD
-standardizes how the 3D world is composed; WorldEpisode standardizes how a robot modifies state
-within that space over time without silent data corruption. The same invariant structure should
-generalize to a game-engine or AV profile, though only the robotics profile is implemented and
-evaluated here.
+The bindings are evaluated at very different depths: LeRobotDataset v3 is the only binding
+exercised with active real-data experiments (conversion, leakage, replay timing); Rerun, NCore,
+MCAP/ROS, OpenUSD/SimReady, and glTF/SPZ are covered only as binding-retention pilots
+(Table~\ref{tab:binding-retention}). OpenUSD standardizes how the 3D world is composed;
+WorldEpisode standardizes how a robot modifies state within that space over time without silent
+data corruption. The same invariant structure should generalize to a game-engine or AV profile,
+though only the robotics profile is implemented and evaluated here.
 
-\paragraph{Relationship to real-to-sim pipelines.}
-Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to WorldEpisode. They are the
-systems that most need a state and episode contract. A reconstructed room can be excellent visual training
-data and still be unsafe for policy evaluation if foreground collision roles are missing, if the
-same world lineage leaks across splits, or if the replayed policy output is interpreted under the
-wrong hardware action contract. WorldEpisode should be judged by whether it keeps those pipelines
-auditable as they scale, not by whether it serializes splats better than asset formats designed for
-that job.
-
-\paragraph{Auditing benchmarks without overclaiming.}
-The practical target is to make famous benchmarks auditable, not to accuse them without a rerun.
-When public metadata cannot answer whether train and test share a scene lineage, asset family,
-source capture, or timing convention, WorldEpisode marks the published score as unaudited with
-respect to that control; it marks a score as inflated only after the same policy protocol is rerun
+\paragraph{Real-to-sim pipelines and benchmarks are the users, not the competitors.}
+Gaussian-splat and OpenUSD real-to-sim pipelines are the systems that most need a state and episode
+contract: a reconstructed room can be excellent visual training data and still be unsafe for policy
+evaluation if collision roles are missing, lineage leaks across splits, or the replayed action
+vector is interpreted under the wrong hardware contract. The same stance governs benchmark
+auditing: when public metadata cannot answer whether train and test share a scene lineage, asset
+family, source capture, or timing convention, WorldEpisode marks the published score as unaudited
+with respect to that control --- and marks it inflated only after the same policy protocol is rerun
 under the corrected split or timing contract.
 
 \paragraph{Standards alignment.}

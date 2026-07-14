@@ -1,0 +1,124 @@
+\appendix
+
+\section{Evidence Boundaries}
+\label{app:boundaries}
+
+Table~\ref{tab:evidence-boundaries} states the boundary of each empirical claim in
+Section~\ref{sec:evidence}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{What the current evidence supports, and what it does not yet support.}
+\label{tab:evidence-boundaries}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}
+                >{\raggedright\arraybackslash}p{0.43\linewidth}
+                >{\raggedright\arraybackslash}p{0.32\linewidth}@{}}
+\toprule
+Claim area & Current evidence & Boundary \\
+\midrule
+Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable
+Torch BC probe, a measured temporal ridge state/action baseline, an ACT/Diffusion gate harness, and
+four compact digest-verified LeRobot state/action split packages totaling 241{,}470 frames &
+Stronger ACT/Diffusion jobs are prepared but not run; the compact split packages omit video
+payloads, so no vision-policy, real-robot, or high-fidelity rollout result is claimed yet \\
+Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
+index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
+Replay timing & Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis
+position-servo replay adapters, URDF Studio MuJoCo/Genesis episode-backend evidence, and a
+dependency-free scheduler conformance harness & One LeRobot trace with minimal joint replay
+adapters; no contact-rich task rollout, Isaac runtime result, or SAPIEN runtime result is claimed \\
+Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN
+plus same-trace MuJoCo/Genesis replay evidence, URDF Studio \texttt{SimBackend} conformance, and a
+one-episode MuJoCo--Genesis comparison & MuJoCo and Genesis are tested for the minimal replay
+profile; Isaac and SAPIEN are not replay-tested in this paper, and equal physics is not claimed \\
+Generalization beyond robotics & Deterministic game-engine collision-patch and autonomous-driving
+clock-domain pilots using the same invariant vocabulary & Not measured on production game engines,
+public AV datasets, or fleet logs \\
+Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
+pilot natural-source corpus over five public datasets & Five-dataset count is met through active
+LeRobot artifacts plus source-level public benchmark metadata; dataset-specific diagnostic reports
+now cover all cases, but no maintainer feedback is recorded yet \\
+Binding retention & Versioned \texttt{uss-core-23} semantic projection checked by executable
+artifacts & Pilot projection; not a universal score of each storage format \\
+Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
+LIBERO, and CALVIN, plus a targeted DROID subset rerun tool and a separate inflation-proof gate &
+Missing public controls are not measured score inflation; the proof gate currently has one
+executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
+inflation claims \\
+Real-to-sim drift & Controlled action-contract and representation-role ablations where drifted
+contracts succeed in simulation and fail under deployment proxies & Deterministic proxy; not a
+RoboSnap/DROID-Sim rerun or physical hardware deployment \\
+Adoption & Public schema, installable local preflight package, validator, fixtures, governance
+files, and an internal clean-room reader that does not import the reference SDK & No PyPI release,
+upstream LeRobot/Rerun integration, external independent implementation, or external dataset release
+yet \\
+Scale architecture & Dataset manifest schema, scalable example, executable audit, and a generated
+32{,}768-shard catalog benchmark describing 1{,}073{,}741{,}824 episodes for open/index latency,
+partition pruning, digest-cache behavior, and resolver routing & Catalog-side benchmark only; no
+billion episode rows, payload bytes, distributed storage, concurrent readers, or institutional
+federation are measured \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+
+\section{Open Gates: Commands and Acceptance Rules}
+\label{app:gates}
+
+\begin{openresult}{results not claimed in this release}
+The artifact keeps unfinished claims executable instead of hiding them. The current RFC release gate
+is:
+\texttt{python3 tools/release\_readiness.py --strict-rfc}. The full-standard gate is:
+\texttt{python3 tools/release\_readiness.py --strict-full}. The latter is expected to fail until
+the two gates boxed below are backed by committed reports and, additionally, external standard
+evidence exists: maintainer-reviewed diagnostics, an independently written reader/exporter, and at
+least one externally published WorldEpisode-compatible dataset. The same gates are indexed in
+\path{docs/experiments/open_reproduction_gates/open_reproduction_gates.json}.
+\end{openresult}
+
+\begin{openresult}{ACT/Diffusion and rollout impact}
+Status: open (referenced from Case 1). To close this gate, first regenerate the split packages and
+LeRobot job specs with \texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}. Then run the
+generated jobs with \texttt{bash docs/experiments/lerobot\_policy\_gate/run\_lerobot\_policy\_jobs.sh}
+inside a LeRobot training environment.
+
+Required artifacts: policy checkpoint digests, train/eval configs and seeds, offline action
+metrics for random and scene-disjoint splits, rollout traces or videos with content digests, and an
+updated \path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+
+Acceptance rule: at least one ACT or Diffusion Policy run must report both split protocols, and at
+least one simulator or physical rollout report must use the same split manifest. Until then, the
+paper claims only the offline Torch probe and the prepared gate.
+\end{openresult}
+
+\begin{openresult}{famous-benchmark score-inflation proof}
+Status: open (referenced from Case 7). A targeted DROID subset rerun can be attempted with
+\texttt{uv run --with pyarrow --with requests --with numpy python
+tools/famous\_benchmark\_policy\_rerun.py --benchmark droid\_100 --required}. The proof contract is
+then enforced with \texttt{python3 tools/benchmark\_inflation\_gate.py --required}.
+
+Required artifacts: benchmark-specific WorldEpisode conversion, lineage/timing audit, faithful
+published-protocol policy rerun, paired corrected evaluation under the same metric, and a measured
+baseline-minus-corrected score drop.
+
+Acceptance rule: the gate must contain at least one inflation-proof valid rerun report with
+\texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
+controls, not evidence that published scores are inflated.
+\end{openresult}
+
+\section{Dataset-Scale Audit (\texttt{DATASET.001})}
+\label{app:scale}
+
+To address production scale, we audit the dataset manifest in
+\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
+three resolver schemes, three registries, three shards, two indexes, one append-only version, and
+nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
+It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
+split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
+describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
+and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
+and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
+the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
+recursive storage discovery.

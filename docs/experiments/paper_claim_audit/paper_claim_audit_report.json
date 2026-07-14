@@ -342,6 +342,7 @@
   "evidence_root": "docs/experiments/results.json",
   "paper_sources": [
     "paper/arxiv/main.tex",
+    "paper/arxiv/sections/appendix.tex",
     "paper/arxiv/sections/architecture.tex",
     "paper/arxiv/sections/conclusion.tex",
     "paper/arxiv/sections/discussion.tex",

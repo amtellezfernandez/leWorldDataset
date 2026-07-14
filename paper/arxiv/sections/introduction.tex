@@ -1,23 +1,6 @@
 \section{Introduction}
 \label{sec:intro}
 
-\begin{keybox}{Summary}
-\textbf{The problem.} Interactive spatial datasets can pass every local loader and still be
-behaviorally wrong: joint values in an undeclared unit, command timestamps replayed as
-motor-effective time, train and test sharing the same reconstructed scene, a dropped collision role,
-or an undeclared clock offset. We call this \emph{silent state drift} --- the bytes are readable, but
-the state assumptions that make replay, training, or deployment meaningful have drifted.\par
-\textbf{Why it goes uncaught.} LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, and glTF each store a
-piece, but none bind an episode to an immutable world revision with persistent identity, frame and
-clock mappings, action-timing, representation roles, and provenance. The file validates; the contract
-does not exist.\par
-\textbf{Why it matters.} The result is weeks of wasted training, benchmark scores inflated by scene
-leakage, and real-to-sim gaps blamed on the simulator rather than the data contract.\par
-\textbf{What this paper contributes.} \emph{WorldEpisode}, an executable sidecar contract of those
-invariants for robot-learning datasets: a validator and a one-line preflight that turn silent
-failures into hard, auditable errors before training or deployment.
-\end{keybox}
-
 Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. Every
 Parquet, video, and scene file passes its local loader and the simulator reports an 85\% success
 rate; deployed on the real arm, the policy immediately misses the object. Nothing was corrupt: the
@@ -123,9 +106,6 @@ engine audit, autonomous-driving fleet audit, or real-robot deployment study.
   every stronger claim bounded by an explicit open reproduction gate.
 \end{enumerate}
 
-\paragraph{Reader's guide.} Section~\ref{sec:questions} states the contract --- five coupled graphs
-and two corpus-level obligations, each mapped to requirement IDs and to the case that tests it.
-Section~\ref{sec:contract} delivers the contract as an executable sidecar. Section~\ref{sec:evidence}
-is the empirical core in three acts: what drift costs, what the contract catches, and how the audit
-scales. Section~\ref{sec:positioning} positions the result, and Section~\ref{sec:limits} states the
-boundary of every claim.
+Section~\ref{sec:questions} states the contract, Section~\ref{sec:contract} makes it executable,
+Section~\ref{sec:evidence} reports what the audit finds, and Section~\ref{sec:limits} states the
+boundary of every claim, with the full evidence-boundary table and gate commands in the appendix.

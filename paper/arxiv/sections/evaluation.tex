@@ -3,11 +3,12 @@
 
 The experiments are written as failure investigations rather than as isolated unit tests, and they
 run in three acts: what drift costs when it goes uncaught (Cases 1--3), what the contract catches
-and repairs (Cases 4--6), and how the same audit scales beyond one dataset (Cases 7--8). All
-measured evidence here is robotics; two deterministic non-robotics pilots are deferred to
-Section~\ref{sec:limits}. Results that are executable but not yet measured are marked open inline;
-their exact commands, required artifacts, and acceptance rules are consolidated in the open-gate
-boxes in Section~\ref{sec:limits}.
+and repairs (Cases 4--6), and how the same audit scales beyond one dataset (Case 7, with the
+dataset-scale audit in Appendix~\ref{app:scale}). All measured evidence here is robotics; two
+deterministic non-robotics pilots are deferred to Section~\ref{sec:limits}. Results that are
+executable but not yet measured are marked open inline; their commands, required artifacts, and
+acceptance rules are consolidated in Appendix~\ref{app:gates}, and the boundary of every claim is
+tabulated in Appendix~\ref{app:boundaries}.
 
 \subsection{What drift costs}
 
@@ -25,9 +26,7 @@ drops to 0.000. Mean episode normalized RMSE rises from 0.183 to 0.363, a \(1.98
 This is an offline action-imitation benchmark, not a physical rollout claim or a claim about
 state-of-the-art LeRobot policies. Its purpose is narrower and diagnostic: it exposes that a
 conventional split can reward memorizing a background world rather than learning a transferable
-manipulation behavior.\collabmark{C1}
-\takeaway{The number moved with the split, not the policy: a random split scores 0.850 by memorizing
-the scene, and a lineage-disjoint split drops the same probe to 0.000.}
+manipulation behavior: the number moved with the split, not the policy.\collabmark{C1}
 
 The leakage penalty survives a second model class: a closed-form temporal ridge baseline with a
 three-frame state history, executed directly on the committed compact LeRobot state/action split
@@ -45,7 +44,7 @@ packages totaling 241{,}470 rows, four LeRobot-native training jobs (\texttt{act
 contract. The gate is intentionally open in this release; no ACT, Diffusion Policy, IsaacLab, or
 hardware success number is claimed, and the compact packages omit video payloads until source
 videos are mirrored with committed digests. The command path and acceptance rule are stated in
-Section~\ref{sec:limits}.
+Appendix~\ref{app:gates}.
 
 \paragraph{Case 2: action-timing and replay drift (\texttt{ACTION.002}).}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
@@ -68,8 +67,6 @@ same action contract executes consistently across runtimes --- and explicitly no
 the engines' underlying physics agree. The Isaac adapter is emitted as a ready mapping from the same
 contract, but is not tested in this environment. The failure avoided here is a common one: blaming
 a simulator or controller when the dataset never said when the command actually took effect.
-\takeaway{Declaring when a command actually takes effect cuts replay error roughly in half; the drift
-was a missing timing contract, not a bad simulator.}
 
 A dependency-free replay-adapter conformance harness guards additional runtime adapters: on
 constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
@@ -90,9 +87,8 @@ straight-line policy succeeds in simulation and collides with the real foregroun
 the deployment proxy. In both ablations the drifted contract has 2/2 simulated successes and 0/2
 deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
 controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
-enough without action contracts and representation roles.
-\takeaway{A visually faithful reconstruction still fails at deployment without the action contract and
-collision role, so appearance alone does not make a scene replay-safe.}
+enough without action contracts and representation roles: appearance alone does not make a scene
+replay-safe.
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
 families where explicit state semantics alter the outcome.
@@ -216,8 +212,6 @@ derived physical-frame records through the sidecar. More importantly, it does no
 semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
 reported as source-absent rather than guessed. This is the difference between a convenient
 conversion and an auditable one.\collabmark{C7}
-\takeaway{The round trip loses nothing it can preserve (maximum error 0.0) and explicitly names the
-fields it cannot recover, instead of silently inventing them.}
 
 \paragraph{Case 6: binding retention across containers (\texttt{CONVERT.001}).}
 The same executable artifacts measure how much of the semantic contract is preserved by native
@@ -274,20 +268,10 @@ physical scene identifier; the corrected proxy split scores 0.516 versus 0.496 f
 split, so the measured score drop is negative. The proof gate therefore records one executed DROID
 subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
 famous-benchmark inflation claims in this release; its command path and acceptance rule are stated
-in Section~\ref{sec:limits}.\collabmark{C2}
-\takeaway{The famous benchmarks lack the public controls needed to rule out leakage; we flag that gap
-but refuse to call any score inflated without a measured rerun.}
+in Appendix~\ref{app:gates}.\collabmark{C2} The benchmarks lack the public controls needed to rule
+out leakage; we flag that gap but refuse to call any score inflated without a measured rerun.
 
-\paragraph{Case 8: dataset-scale manifests and indexes (\texttt{DATASET.001}).}
-To address production scale, we audit the dataset manifest in
-\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
-three resolver schemes, three registries, three shards, two indexes, one append-only version, and
-nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
-It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
-split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
-describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
-and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
-and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
-the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
-recursive storage discovery.
+The same audit protocol also runs above the episode level: a dataset-scale manifest audit and a
+generated catalog benchmark (Appendix~\ref{app:scale}) make the \texttt{DATASET.001} scale claim
+executable on catalog-side evidence only.
 \FloatBarrier

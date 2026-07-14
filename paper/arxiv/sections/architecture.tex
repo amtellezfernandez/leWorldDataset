@@ -113,8 +113,5 @@ folders and Rerun \texttt{.rrd} recordings are recognized directly; without a Wo
 manifest or sidecar, they fail closed on missing world revision, entity identity, representation
 role, action timing, frame/clock, split-lineage, and conversion-loss controls. This makes the
 semantic audit a pre-training check rather than a separate post-hoc documentation exercise. The
-repository also includes an active LeRobotDataset v3 converter, a scene-leakage and split-manifest
-tool, a control-replay tool, a dependency-free replay-adapter conformance harness, a dataset-scale
-manifest audit and performance benchmark, a clean-room reader that does not import
-\texttt{worldepisode}, and a meta-simulator adapter report covering MuJoCo, Genesis, Isaac, and
-SAPIEN. Section~\ref{sec:evidence} presents what each one measures.
+repository pairs the validator with converters, leakage and replay tools, a clean-room reader, and
+a meta-simulator adapter report; Section~\ref{sec:evidence} presents what each one measures.
