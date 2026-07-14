@@ -1,8 +1,5 @@
 \section{The Five Invariants}
 \label{sec:invariants}
-\lead{Section~\ref{sec:questions} fixed what a valid state must answer; this section formalizes the
-state record that answers it as five coupled graphs.
-Making them mutually referential is what turns a silent error into a detectable one.}
 
 Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make a spatial state
 replayable and auditable rather than just stored. Each graph answers a question that appears during
@@ -49,14 +46,12 @@ instead of hidden.}
 
 \subsection{Identity graph: what object is this? (\texttt{ENTITY.001})}
 
-Every physical or logical entity receives a persistent identifier: robot, link, gripper, vehicle,
-avatar, sensor, rigid object, articulated object, fixture, support surface, region, human, light, or
-semantic group.
-The same \texttt{entity\_id} must be used by segmentation masks, bounding boxes, Gaussian groups,
-render meshes, collision bodies, simulator actors, language references, contact events, object
-trajectories, grasp events, and attachment events. The real-world fix is simple: if a language
-command says ``pick up the mug,'' the perception mask, the simulator object, and the collision
-proxy must identify the same mug.
+Every physical or logical entity --- robot, link, gripper, sensor, rigid or articulated object,
+fixture, region, human --- receives a persistent identifier, and the same \texttt{entity\_id} must
+be used by segmentation masks, Gaussian groups, render meshes, collision bodies, simulator actors,
+language references, and interaction events. The real-world fix is simple: if a language command
+says ``pick up the mug,'' the perception mask, the simulator object, and the collision proxy must
+identify the same mug.
 
 \subsection{Frame and clock graph: where is it, and exactly when? (\texttt{FRAME.001}, \texttt{TIME.001})}
 
@@ -84,19 +79,16 @@ training.
 
 \subsection{Temporal-event graph: what actually happened? (\texttt{TRACE.001})}
 
-Spatial records do not store only poses. They record interaction events: contact begin/end, grasp
-establish/release, attachment create/remove, support, containment, map or collision patch,
-articulation state changes, spawn/despawn, topology changes, simulator reset, intervention, subgoal
-completion, and failure detection. Each event references entities, time, confidence, source, and
-optionally evidence. This turns raw coordinate streams into milestones such as ``contact
-established,'' ``object dropped,'' ``authoritative collision patch applied,'' or ``intervention
-occurred.''
+Spatial records do not store only poses. They record interaction events --- contact begin/end,
+grasp establish/release, attachment, map or collision patch, articulation change, spawn/despawn,
+simulator reset, intervention, subgoal completion, failure detection --- each referencing entities,
+time, confidence, source, and optionally evidence. This turns raw coordinate streams into
+milestones such as ``contact established,'' ``object dropped,'' or ``intervention occurred.''
 
 \subsection{Provenance graph: where did this come from? (\texttt{PROV.001}, \texttt{SPLIT.001})}
 
-Every derived asset identifies source episodes, source sensors and intervals, reconstruction
-algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
-edits, source and output hashes, creator, license, and quality metrics. WorldEpisode maps to
-existing provenance and dataset metadata vocabularies rather than inventing an incompatible
-publication vocabulary. This graph lets a split avoid putting the same reconstructed room, capture
+Every derived asset identifies its source episodes, sensors and intervals, reconstruction algorithm
+and version, model/checkpoint hash, calibration revision, source and output hashes, creator,
+license, and quality metrics, mapping to existing provenance vocabularies rather than inventing an
+incompatible one. This graph lets a split avoid putting the same reconstructed room, capture
 session, or generated asset family on both sides of evaluation.

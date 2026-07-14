@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "9c753a9726a0fad2bea7de22e99fe9eb4b095a886aa7afc6c28924e8a9387df3"
+      "sha256": "9a64ccfdfd6eb47ab1ad7ba3515a3c9518cbb30f2c0e5fce351b988f24966b80"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "README.md",
-      "sha256": "0eaa702a8176d20d72b490751770a7d1f8eb0d7b90af8edefbac080fd225ee01"
+      "sha256": "bd2395ad36d3b3ac90fb31e21ec7f0483d527bd55f63fe1c75e16e9b8565106f"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "662e55799d8596d797eac270ea21fc42fdc64b8c190029056fdac366870189eb"
+      "sha256": "6fae876b5002653f08341257030b46ade7b62cad609828951464518c76b82eab"
     },
     {
       "category": "public_evidence",
@@ -88,7 +88,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "db67de686f9154d711933226a50ce70361f3495c82fd008cb2506b44e2434432"
+      "sha256": "7847f95f89d35315a866ac9e866c91c05b278d466350547964da65b258b7f0a6"
     },
     {
       "category": "public_evidence",

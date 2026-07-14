@@ -18,21 +18,17 @@ invariants for robot-learning datasets: a validator and a one-line preflight tha
 failures into hard, auditable errors before training or deployment.
 \end{keybox}
 
-Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. The loss
-curves are smooth, the simulator reports an 85\% success rate, and every Parquet, video, and scene
-file passes its local loader. Then the policy is deployed on the real arm and immediately misses the
-object. The failure is not a new neural architecture problem. The dataset silently encoded joint
-values in a unit the controller did not declare, the replay script treated command timestamps as
-motor-effective timestamps, and the random split let the policy see the same reconstructed room in
-both training and evaluation. Nothing was corrupt, but the experiment was scientifically broken. We
-call this failure class \emph{silent state drift}. The same pattern of a file that validates while
-its behavior is wrong appears outside robotics as well; Section~\ref{sec:limits} returns to that
+Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. Every
+Parquet, video, and scene file passes its local loader and the simulator reports an 85\% success
+rate; deployed on the real arm, the policy immediately misses the object. Nothing was corrupt: the
+dataset encoded joint values in a unit the controller did not declare, the replay script treated
+command timestamps as motor-effective timestamps, and the random split let the policy see the same
+reconstructed room in both training and evaluation. We call this failure class \emph{silent state
+drift}. The same pattern appears outside robotics as well; Section~\ref{sec:limits} returns to that
 point as future work, since this paper's measured evidence is entirely robotics.
-
-Table~\ref{tab:failure-motivation} makes the stakes concrete before any evaluation: each row is a file
-that still loads, the behavior it silently breaks, and the requirement that catches it. The rest of
-the paper turns each requirement into an executable rule and measures what happens when it is
-missing.
+Table~\ref{tab:failure-motivation} makes the stakes concrete: each row is a file that still loads,
+the behavior it silently breaks, and the requirement that catches it. The rest of the paper turns
+each requirement into an executable rule and measures what happens when it is missing.
 
 \begin{table}[t]
 \centering
@@ -62,37 +58,30 @@ an asset URI looks right but its content digest changed & the wrong geometry is 
 \end{tabular}
 \end{table}
 
-Every requirement ID follows \texttt{AREA.number}: \texttt{ACTION} is the action-channel contract
-(units, frame, command/effective timing), \texttt{TIME}/\texttt{FRAME} are clocks and spatial frames,
+Requirement IDs follow \texttt{AREA.number}: \texttt{ACTION} is the action-channel contract (units,
+frame, command/effective timing), \texttt{TIME}/\texttt{FRAME} are clocks and spatial frames,
 \texttt{REP} is representation role, \texttt{ASSET} is asset identity and digest, \texttt{SPLIT} is
 evaluation-split lineage, \texttt{WORLD}/\texttt{TRACE} are the world revision and its episode
 deltas, \texttt{PROV}/\texttt{QUALITY} are provenance and uncertainty, and \texttt{DATASET} is
-corpus scale; the number distinguishes rules within an area. Section~\ref{sec:questions} defines all
-of them. Once this prefix is known, every later \texttt{AREA.number} tag in the paper is readable on
-sight without flipping back to a table.
+corpus scale. Section~\ref{sec:questions} defines all of them. Robotics is the profile implemented
+and evaluated here because it is the deepest current stress test: real hardware, asynchronous
+control, multi-camera data, reconstructed worlds, simulator exports, and policy evaluation.
 
-Robotics is the profile implemented and evaluated here because it is the deepest current stress
-test: it combines real hardware, asynchronous control, multi-camera data, reconstructed worlds,
-simulator exports, and policy evaluation.
-
-Existing formats solve important pieces of this chain. The LeRobot library vertically integrates
-robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
-deployment~\citep{lerobot}. The current LeRobotDataset v3 layout stores high-frequency states,
-actions, and timestamps in Parquet, visual streams in MP4 shards, and episode indexing in metadata
-rather than filenames~\citep{lerobot_v3}. LeRobotDataset v3 is therefore the container this paper
-evaluates in depth, with active experiments on real downloaded data; the remaining containers below
-are covered only as lighter binding-retention pilots in Section~\ref{sec:evidence}. Rerun provides a
-physical-data layer and storage target for multimodal recordings. NCore documents explicit pose
-graphs and sensor conventions. OpenUSD, SimReady, glTF, and simulator-native formats describe
-composed worlds and assets. Gaussian splats
-are also moving into standard asset containers through glTF's \texttt{KHR\_gaussian\_splatting}
-extension~\citep{khronos_gs, gltf_gs}. Recent real-to-sim systems such as RoboSnap and DROID-Sim
-show that Gaussian-splat environments can support trajectory replay, synthetic data generation, and
-policy evaluation at dataset scale~\citep{robosnap}.
-That progress makes the missing contract more urgent rather than less. A layered real-to-sim scene
-can be visually faithful while still dropping the collision role of an object, and a replayable
-trajectory can still be wrong if the policy action vector is interpreted under a different
-controller contract at deployment time.
+Existing formats solve important pieces of this chain. LeRobot vertically integrates robot learning
+from motor interfaces through dataset collection, policies, and deployment~\citep{lerobot};
+LeRobotDataset v3 stores high-frequency states, actions, and timestamps in Parquet, visual streams
+in MP4 shards, and episode indexing in metadata~\citep{lerobot_v3}, and is the container this paper
+evaluates in depth with active experiments on real downloaded data. Rerun provides a physical-data
+layer for multimodal recordings, NCore documents explicit pose graphs and sensor conventions, and
+OpenUSD, SimReady, glTF, and simulator-native formats describe composed worlds and assets, with
+Gaussian splats entering standard containers through glTF's \texttt{KHR\_gaussian\_splatting}
+extension~\citep{khronos_gs, gltf_gs}; these are covered as lighter binding-retention pilots in
+Section~\ref{sec:evidence}. Recent real-to-sim systems such as RoboSnap and DROID-Sim show that
+Gaussian-splat environments can support trajectory replay, synthetic data generation, and policy
+evaluation at dataset scale~\citep{robosnap}. That progress makes the missing contract more urgent
+rather than less: a layered scene can be visually faithful while dropping an object's collision
+role, and a replayable trajectory is still wrong if the action vector is interpreted under a
+different controller contract at deployment time.
 
 WorldEpisode is:
 \begin{itemize}[leftmargin=*]
@@ -119,9 +108,8 @@ engine audit, autonomous-driving fleet audit, or real-robot deployment study.
   every stronger claim bounded by an explicit open reproduction gate.
 \end{enumerate}
 
-\paragraph{Reader's guide.} A reader who only wants the motivation can stop after
-Table~\ref{tab:failure-motivation}. The rest follows one spine: Section~\ref{sec:questions} states the
-five questions any valid state must answer, Section~\ref{sec:invariants} formalizes them as five
-graphs, Section~\ref{sec:contract} delivers them as a sidecar contract, Section~\ref{sec:profile}
-makes the contract executable, Section~\ref{sec:evidence} is the empirical core with each result
-tagged by the requirement it proves, and Section~\ref{sec:limits} states the boundary of every claim.
+\paragraph{Reader's guide.} Section~\ref{sec:questions} states the questions any valid state must
+answer, Section~\ref{sec:invariants} formalizes them as five graphs, Section~\ref{sec:contract}
+delivers them as a sidecar contract, Section~\ref{sec:profile} makes the contract executable,
+Section~\ref{sec:evidence} is the empirical core, and Section~\ref{sec:limits} states the boundary
+of every claim.

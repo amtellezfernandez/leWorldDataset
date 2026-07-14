@@ -85,7 +85,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (20868 bytes)",
+      "evidence": "README.md (6198 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -125,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (502321 bytes)",
+      "evidence": "WorldEpisode.pdf (492073 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"

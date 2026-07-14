@@ -1,7 +1,5 @@
 \section{Positioning}
 \label{sec:positioning}
-\lead{Where WorldEpisode sits relative to existing formats, simulators, benchmarks, and standards
-bodies.}
 
 \subsection{Related work}
 Documenting datasets is not new. Datasheets for Datasets~\citep{gebru2021datasheets} and model cards
@@ -54,27 +52,12 @@ wrong hardware action contract. WorldEpisode should be judged by whether it keep
 auditable as they scale, not by whether it serializes splats better than asset formats designed for
 that job.
 
-\paragraph{Simulators as accountable adapters.}
-The same principle applies to physics and rendering engines. WorldEpisode should not become a
-MuJoCo wrapper, an Isaac wrapper, or a Genesis wrapper. It should define the contract those adapters
-must satisfy: ingest the invariant interface, declare extensions, and report replay assumptions and
-drift. This is a stronger runtime-neutral stance than claiming universal behavior. It lets a
-simulator team plug in by implementing the adapter, while the validator remains the common judge of
-whether the exported dataset is physically and temporally auditable.
-
-\paragraph{Lineage-safe evaluation.}
-Record-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
-source video, state revision, map patch, or generated asset lineage across training and evaluation.
-WorldEpisode supports split constraints such as \texttt{world\_lineage},
-\texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
-\texttt{generated\_asset\_family}.
-
 \paragraph{Auditing benchmarks without overclaiming.}
 The practical target is to make famous benchmarks auditable, not to accuse them without a rerun.
 When public metadata cannot answer whether train and test share a scene lineage, asset family,
-source capture, action timing convention, or simulator assumption, WorldEpisode should mark the
-published score as unaudited with respect to that control. It should mark a score as inflated only
-after the same policy protocol is rerun under the corrected split or timing contract.
+source capture, or timing convention, WorldEpisode marks the published score as unaudited with
+respect to that control; it marks a score as inflated only after the same policy protocol is rerun
+under the corrected split or timing contract.
 
 \paragraph{Standards alignment.}
 The project aligns with standards bodies rather than antagonizing them. Static 3D robot-map

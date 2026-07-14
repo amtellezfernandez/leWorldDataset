@@ -19,14 +19,14 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
-| `WorldEpisode.pdf` | public_evidence | exact | `9c753a9726a0fad2` |
-| `README.md` | public_evidence | exact | `0eaa702a8176d20d` |
+| `WorldEpisode.pdf` | public_evidence | exact | `9a64ccfdfd6eb47a` |
+| `README.md` | public_evidence | exact | `bd2395ad36d3b3ac` |
 | `spec/worldepisode-v0.1.md` | public_evidence | exact | `245a953769413e3d` |
 | `spec/le-world-layout-v0.1.md` | public_evidence | exact | `bfb612a8c1300c0b` |
 | `paper/le-world-layout.md` | public_evidence | exact | `51549aaafa85c61e` |
 | `paper/arxiv/main.tex` | public_evidence | exact | `4a6e4e4690738141` |
-| `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `662e55799d8596d7` |
-| `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `db67de686f9154d7` |
+| `paper/arxiv/sections/evaluation.tex` | public_evidence | exact | `6fae876b5002653f` |
+| `paper/arxiv/sections/limitations.tex` | public_evidence | exact | `7847f95f89d35315` |
 | `schemas/worldepisode-core-v0.schema.json` | public_evidence | exact | `ee02649c28fb1c67` |
 | `schemas/worldepisode-dataset-v0.schema.json` | public_evidence | exact | `488d517937e90a87` |
 | `schemas/conformance-requirements-v0.schema.json` | public_evidence | exact | `effb7b3980139195` |

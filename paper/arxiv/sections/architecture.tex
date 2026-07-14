@@ -1,7 +1,5 @@
 \section{The Sidecar Contract}
 \label{sec:contract}
-\lead{How the five invariants are delivered: a sidecar wrapped around existing formats, plus a
-runtime-neutral adapter contract, so no container has to become another.}
 
 WorldEpisode is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
 dataset to become a USD scene, a game-engine telemetry log to become an AV replay format, or a USD
@@ -82,13 +80,11 @@ The adapter contract has three layers:
   envelopes, and measured drift.
 \end{itemize}
 
-The current implementation reflects this boundary across two codebases. WorldEpisode has tested
-minimal MuJoCo~\citep{mujoco} and Genesis replay adapters for the same LeRobot control-loop trace. URDF Studio,
-the companion simulator-transfer workbench, implements the same episode-backend idea for MuJoCo
-and Genesis: both backends pass a shared \texttt{SimBackend} conformance suite, and a one-episode
-carton-sorting scenario produces a MuJoCo--Genesis comparison report with matching task success
-and measured trajectory divergence. The Isaac mapping is emitted and deployment-guarded but
-untested, and SAPIEN remains guarded rather than replay-tested. The claim is therefore not
-simulator-independent physics. The claim is runtime-neutral accountability: every simulator reports
-against the same state contract, so cross-runtime drift becomes measurable rather than hidden
-inside loader conventions.
+The current implementation reflects this boundary across two codebases: WorldEpisode has tested
+minimal MuJoCo~\citep{mujoco} and Genesis replay adapters for the same LeRobot control-loop trace,
+and URDF Studio, the companion simulator-transfer workbench, passes a shared \texttt{SimBackend}
+conformance suite for both engines with a one-episode MuJoCo--Genesis comparison report. The Isaac
+mapping is emitted but untested, and SAPIEN remains adapter-required. The claim is therefore not
+simulator-independent physics but runtime-neutral accountability: every simulator reports against
+the same state contract, so cross-runtime drift becomes measurable rather than hidden inside loader
+conventions.

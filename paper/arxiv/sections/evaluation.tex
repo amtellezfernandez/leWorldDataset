@@ -1,20 +1,13 @@
 \section{Evidence: Failure Case Studies}
 \label{sec:evidence}
-\lead{The empirical core. Each case is a file that passes local validation, the requirement it
-violates, and what changes once the contract is enforced. Requirement IDs in each heading tie the
-result back to Section~\ref{sec:questions}.}
 
 The experiments are written as failure investigations rather than as isolated unit tests. Each one
 starts from a failure mode that can make an embodied or virtual-agent result look better, cleaner,
 or more reproducible than it really is. All measured evidence here is robotics; two deterministic
-non-robotics pilots are deferred to the future-work discussion in Section~\ref{sec:limits}, where
-they are framed as illustrative rather than measured.
-
-\paragraph{Reading the open-result boxes.}
-Amber boxes mark work that is executable but not counted as a paper result. Each box states the
-exact command path, required artifacts, and acceptance rule needed before the corresponding claim
-can move from ``open'' to ``measured.'' These boxes are intentionally visible in the PDF so a reader
-can reproduce or close the missing evidence without reading the repository internals.
+non-robotics pilots are deferred to the future-work discussion in Section~\ref{sec:limits}. Amber
+boxes mark work that is executable but not counted as a paper result: each states the command path,
+required artifacts, and acceptance rule needed before the claim can move from ``open'' to
+``measured.''
 
 \paragraph{Case 1: scene-lineage leakage in evaluation splits (\texttt{SPLIT.001}).}
 The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
@@ -44,14 +37,13 @@ rollout result, but it shows that the leakage penalty survives a second temporal
 baseline executed directly on the packaged LeRobot splits.
 
 To keep that stronger claim from being implied before it is measured, the repository also emits an
-ACT/Diffusion gate from the same split manifest. The gate writes train/test episode allowlists,
-four virtual split manifests with 27 digest-verified source files, four compact physical LeRobot
-state/action split packages totaling 241{,}470 rows, four LeRobot-native training jobs
-(\texttt{act} and \texttt{diffusion} on random and scene-disjoint splits), required offline
-action-evaluation reports, and a high-fidelity simulator or physical rollout contract. The gate is
-intentionally open in this release; no ACT, Diffusion Policy, IsaacLab, or hardware success number is
-claimed, and the compact packages omit video payloads until source videos are mirrored with
-committed digests.
+ACT/Diffusion gate from the same split manifest: train/test episode allowlists, four virtual split
+manifests with 27 digest-verified source files, four compact physical LeRobot state/action split
+packages totaling 241{,}470 rows, four LeRobot-native training jobs (\texttt{act} and
+\texttt{diffusion} on random and scene-disjoint splits), and a simulator or physical rollout
+contract. The gate is intentionally open in this release; no ACT, Diffusion Policy, IsaacLab, or
+hardware success number is claimed, and the compact packages omit video payloads until source
+videos are mirrored with committed digests.
 
 \begin{openresult}{ACT/Diffusion and rollout impact}
 Status: open. To close this gate, first regenerate the split packages and LeRobot job specs with
@@ -174,16 +166,12 @@ the engines' underlying physics agree. The Isaac adapter is emitted as a ready m
 contract, but is not tested in this environment. The failure avoided here is a common one: blaming
 a simulator or controller when the dataset never said when the command actually took effect.
 
-We also add a dependency-free replay-adapter conformance harness before trusting additional runtime
-adapters.
-It tests three scheduler cases: constant frame delay, zero-order hold for missing commands, and
-asynchronous queue selection. In all three cases a naive scheduler fails while the contract-aware
-scheduler matches the expected trace with zero numerical error. This is a precondition check for
-simulator adapters, not a claim that the simulators have equivalent physics. For broader runtime
-evidence, we also record URDF Studio's shared \texttt{SimBackend} conformance suite for MuJoCo and
-Genesis and its one-episode carton-sorting MuJoCo--Genesis comparison report with matched task
-success and measured trajectory divergence. These results close the narrow same-trace
-second-runtime replay gate for the minimal joint replay profile. They do not claim contact-rich
+A dependency-free replay-adapter conformance harness guards additional runtime adapters: on
+constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
+naive scheduler fails while the contract-aware scheduler matches the expected trace with zero
+numerical error. Together with URDF Studio's shared \texttt{SimBackend} conformance suite and its
+one-episode MuJoCo--Genesis comparison report, these results close the narrow same-trace
+second-runtime replay gate for the minimal joint replay profile; they do not claim contact-rich
 task replay, Isaac/SAPIEN execution, or simulator-independent behavior.\collabmark{C5}
 \takeaway{Declaring when a command actually takes effect cuts replay error roughly in half; the drift
 was a missing timing contract, not a bad simulator.}
@@ -219,18 +207,16 @@ after radian conversion. Treating those degree values as radians would violate t
 unit contract even though the tensor shape is valid.
 
 To move beyond synthetic mutations, the experiment runner also writes a pilot natural-source corpus
-from committed public LeRobot artifacts and selected source-level public benchmark metadata. Across
+from committed public LeRobot artifacts and source-level public benchmark metadata. Across
 \path{lerobot/svla_so101_pickplace}, \path{lerobot/pusht},
 \path{armnet/armnetbench_v01_lerobot_so101}, DROID, and BridgeData V2, it records 19 observed
-cases. The active LeRobot evidence covers source-absent camera extrinsics, robot/world calibration
-transforms, action units, controller-latency models, and a random episode split with measured
-scene-lineage leakage. The DROID and BridgeData V2 cases are source-level public evidence gaps
-selected from the famous-benchmark call-out audit. These are not claimed as maintainer-confirmed
-dataset bugs or measured score-inflation results; they are naturally occurring source omissions,
-metadata gaps, or evaluation risks that a WorldEpisode audit must make explicit.
-The runner also emits dataset-specific diagnostic reports for all five datasets; the DROID and
-BridgeData V2 reports are explicitly marked source-level-only until pinned WorldEpisode conversions
-and false-positive review are available.\collabmark{C3}
+cases: source-absent camera extrinsics, calibration transforms, action units, controller-latency
+models, a random split with measured scene-lineage leakage, and public evidence gaps from the
+famous-benchmark call-out audit. These are naturally occurring source omissions and evaluation
+risks, not claimed as maintainer-confirmed dataset bugs or measured score-inflation results. The
+runner emits dataset-specific diagnostic reports for all five datasets; the DROID and BridgeData V2
+reports are marked source-level-only until pinned WorldEpisode conversions and false-positive
+review are available.\collabmark{C3}
 
 The same validator is exposed as a pre-training command rather than only as an experiment script.
 The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid
@@ -267,23 +253,18 @@ The ArmnetBench result is the measured leakage case. To scale the same diagnosti
 source-level call-out audit over five famous public robot-learning benchmarks: Open
 X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
 LIBERO~\citep{libero}, and CALVIN~\citep{calvin}. The audit asks whether public metadata exposes
-world or scene lineage splits, content-addressed world revisions, persistent entity identity,
-action timing and latency contracts, frame/clock graphs, and replay or conversion-loss reports. All
-five benchmarks have at least one high-severity open control; the three real-robot datasets have
-five each in the current source-level audit. This is a call-out target list, not a claim that their
-published scores are inflated. The stronger claim requires converting each benchmark into
-WorldEpisode and rerunning a published policy protocol under lineage-disjoint splits or
-timestamp-aware replay. To make that boundary executable, we add a separate inflation-proof gate:
-it requires a benchmark-specific WorldEpisode conversion, lineage/timing audit, published-policy
-rerun, corrected evaluation, and measured score drop before any famous benchmark can be labeled
-inflated. We also add a targeted DROID-100 LeRobot-subset rerun tool that downloads pinned public
-Parquet shards, builds a WorldEpisode evidence package, compares random and lineage-disjoint
-splits, and runs a deterministic offline state-action policy. In the current run, that DROID subset
-tool executes over 100 public episodes and 32{,}212 frames. Its lineage source is only a
-task/camera-schema proxy, not a physical scene identifier; the corrected proxy split scores
-0.516 versus 0.496 for the random split, so the measured score drop is negative. The proof gate
-therefore records one executed DROID subset rerun, zero inflation-proof famous-benchmark rerun
-reports, and zero measured famous-benchmark inflation claims in this release.
+lineage splits, content-addressed world revisions, persistent entity identity, action timing
+contracts, frame/clock graphs, and replay or conversion-loss reports. All five benchmarks have at
+least one high-severity open control; the three real-robot datasets have five each. This is a
+call-out target list, not a claim that their published scores are inflated: a separate
+inflation-proof gate requires a benchmark-specific WorldEpisode conversion, lineage/timing audit,
+published-policy rerun, corrected evaluation, and measured score drop before any famous benchmark
+can be labeled inflated. A targeted DROID-100 LeRobot-subset rerun tool executes that path over 100
+public episodes and 32{,}212 frames. Its lineage source is only a task/camera-schema proxy, not a
+physical scene identifier; the corrected proxy split scores 0.516 versus 0.496 for the random
+split, so the measured score drop is negative. The proof gate therefore records one executed DROID
+subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
+famous-benchmark inflation claims in this release.
 
 \begin{openresult}{famous-benchmark score-inflation proof}
 Status: open. A targeted DROID subset rerun can be attempted with
@@ -350,9 +331,7 @@ glTF Gaussian asset & 0.174 & 0.304 \\
 \end{tabular}
 \end{table}
 
-Finally, we generate episodes with world/entity lineage labels and evaluate a memorization policy.
-A random episode split leaks every tested world/entity pair and obtains 1.000 accuracy.
-World-disjoint and entity-disjoint splits have zero measured leakage and reduce memorization
-accuracy to 0.500 and 0.562 respectively. This pilot demonstrates why split manifests need lineage
-constraints beyond the public ArmnetBench audit above.
+Finally, a generated memorization pilot with world/entity lineage labels shows the same shape:
+random splits reach 1.000 accuracy while world-disjoint and entity-disjoint splits fall to 0.500
+and 0.562, motivating lineage constraints beyond \texttt{world\_lineage} alone.
 \FloatBarrier
