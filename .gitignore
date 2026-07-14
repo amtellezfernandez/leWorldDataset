@@ -14,5 +14,6 @@ build/
 *.out
 *.pdf
 !/WorldEpisode.pdf
+!/WorldEpisode-collab.pdf
 *.run.xml
 *.synctex.gz

@@ -18,7 +18,9 @@ state within that space over time without silent data corruption.
 
 ## Paper
 
-- [WorldEpisode.pdf](WorldEpisode.pdf) - current WorldEpisode paper build
+- [WorldEpisode.pdf](WorldEpisode.pdf) - publication build (no internal collaboration appendix)
+- [WorldEpisode-collab.pdf](WorldEpisode-collab.pdf) - collaborator working build with the C1--C7
+  open-contribution task cards and inline HELP markers
 - [arXiv LaTeX source](paper/arxiv/main.tex)
 
 ## Repository Layout
@@ -30,6 +32,7 @@ state within that space over time without silent data corruption.
 - `conformance/` - requirement IDs, profiles, generated and independent fixture corpora.
 - `docs/` - bindings, SDK contract, controlled results, research plan, and reference release plan.
 - `examples/` - small valid layout examples.
+- `tests/` - pytest suite over the validator, preflight, CLI, and conformance corpora.
 - `notes/` - research notes, decisions, and open questions.
 
 ## Core Position
@@ -111,20 +114,32 @@ verifiable spatial-state interoperability, with robotics used as the hardest cur
 
 ## Build The Paper
 
+Publication build (default; strips the internal collaboration appendix and HELP markers):
+
 ```bash
 cd paper/arxiv
 make root-pdf
 ```
 
-If `latexmk` is unavailable:
+Collaborator working build with the C1--C7 task cards:
 
 ```bash
 cd paper/arxiv
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
+make collab-pdf
 ```
+
+Both use `pdflatex` + `bibtex` directly when `latexmk` is unavailable; see
+`paper/arxiv/README.md` for the manual command sequence.
+
+## Run The Test Suite
+
+```bash
+python3 -m pip install -e '.[dev]'
+make test
+```
+
+The suite covers the reference validator, the preflight CLI, and every committed conformance
+fixture (each invalid fixture must trigger its expected requirement IDs).
 
 ## Single-Line Preflight Validator
 

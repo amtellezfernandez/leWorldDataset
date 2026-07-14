@@ -85,7 +85,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (20161 bytes)",
+      "evidence": "README.md (20868 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -101,7 +101,7 @@
     {
       "boundary": "",
       "check_id": "DOC.003",
-      "evidence": "GOVERNANCE.md (1245 bytes)",
+      "evidence": "GOVERNANCE.md (1298 bytes)",
       "name": "governance exists",
       "passed": true,
       "severity": "error"
@@ -109,7 +109,7 @@
     {
       "boundary": "",
       "check_id": "DOC.004",
-      "evidence": "spec/worldepisode-v0.1.md (10281 bytes)",
+      "evidence": "spec/worldepisode-v0.1.md (12268 bytes)",
       "name": "WorldEpisode RFC spec exists",
       "passed": true,
       "severity": "error"
@@ -125,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (460282 bytes)",
+      "evidence": "WorldEpisode.pdf (502321 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -133,7 +133,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "paper/arxiv/main.tex (6769 bytes)",
+      "evidence": "paper/arxiv/main.tex (7857 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"
@@ -141,7 +141,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18127 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18269 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -149,7 +149,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (180739 bytes)",
+      "evidence": "docs/experiments/results.json (180738 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -157,7 +157,7 @@
     {
       "boundary": "",
       "check_id": "DOC.010",
-      "evidence": "CITATION.cff (432 bytes)",
+      "evidence": "CITATION.cff (427 bytes)",
       "name": "public citation metadata exists",
       "passed": true,
       "severity": "error"
@@ -181,7 +181,7 @@
     {
       "boundary": "",
       "check_id": "PKG.001",
-      "evidence": "pyproject.toml (1177 bytes)",
+      "evidence": "pyproject.toml (1324 bytes)",
       "name": "pyproject exists",
       "passed": true,
       "severity": "error"

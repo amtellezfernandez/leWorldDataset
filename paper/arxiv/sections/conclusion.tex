@@ -7,8 +7,8 @@ assumptions explicit. It binds interaction data to immutable state revisions, gi
 identity to entities, declares space/time/transition semantics, assigns roles to assets, records
 events and provenance, and reports conversion loss instead of hiding it.
 
-In the reference experiments, those requirements expose an 85\% offline random-split result that
-collapses to 0\% under scene-disjoint evaluation, reduce LeRobot replay drift on a real SO-101
+In the reference experiments, those requirements expose a 0.850 offline random-split success rate
+that collapses to 0.000 under scene-disjoint evaluation, reduce LeRobot replay drift on a real SO-101
 trajectory by modeling a four-frame action delay, and catch every injected physically incoherent
 package before deployment. A real-to-sim pipeline can report simulated success while failing under
 deployment proxies when action contracts or representation roles drift; the same vocabulary catches

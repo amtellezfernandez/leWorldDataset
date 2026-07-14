@@ -39,6 +39,9 @@ all = [
   "pyarrow>=15.0",
   "rerun-sdk>=0.23"
 ]
+dev = [
+  "pytest>=7.0"
+]
 
 [project.scripts]
 worldepisode = "worldepisode.cli:main"
@@ -51,3 +54,7 @@ worldepisode = ["schemas/*.json", "py.typed"]
 
 [tool.setuptools]
 license-files = ["LICENSE-APACHE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

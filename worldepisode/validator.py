@@ -227,7 +227,7 @@ def validate_dataset_manifest(payload: dict[str, Any], *, schema: bool = True) -
     for prefix in duplicates:
         diagnostics.append(
             Diagnostic(
-                "DATASET.001",
+                "DATASET.003",
                 "/namespaces",
                 f"Duplicate namespace prefix {prefix!r}.",
                 "error",

@@ -342,6 +342,13 @@ def preflight_rerun(
     sidecar: str | Path | None = None,
     fail_on: str = DEFAULT_FAIL_ON,
 ) -> PreflightReport:
+    """Preflight a Rerun recording path plus its WorldEpisode sidecar.
+
+    This checks the recording path and validates the sidecar manifest; it does
+    not parse the ``.rrd`` stream itself, so recording-internal properties are
+    out of scope. Without a sidecar the report fails closed on the semantic
+    gaps a native recording cannot prove.
+    """
     path = _maybe_path(target)
     diagnostics: list[Diagnostic] = []
     if not path.exists():

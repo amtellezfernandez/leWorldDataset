@@ -239,8 +239,10 @@ and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the 
 pattern for labs: run one blocking line before launching a multi-day policy training job.
 To reduce single-implementation risk, we also run an internal clean-room reader that does not import
 the \texttt{worldepisode} package. It parses the public schema, summarizes the minimal example, and
-catches all 18 expected requirement instances across 17 pilot and independently authored fixtures
-with 1.000 recall. This is not external adoption, but it verifies that the public artifacts are
+catches all 18 expected requirement instances across 17 fixtures with 1.000 recall (the 14
+injected-fault fixtures above plus one valid baseline and two independently authored fixtures; one
+independent fixture expects three requirement failures, so 17 fixtures carry 18 expected
+instances). This is not external adoption, but it verifies that the public artifacts are
 readable outside the reference SDK path.
 \takeaway{Every injected physical-coherence fault is caught with full recall, and the same validator
 runs as a single blocking line before a training job.}

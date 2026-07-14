@@ -166,7 +166,7 @@
     {
       "acceptance_rule": "The gate must contain at least one inflation-proof valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence.",
       "blocker_id": "BENCH.INFLATE.001",
-      "boundary": "The paper may call famous benchmarks unaudited with respect to USS controls, but it must not call published scores inflated until a benchmark-specific rerun passes.",
+      "boundary": "The paper may call famous benchmarks unaudited with respect to WorldEpisode's controls, but it must not call published scores inflated until a benchmark-specific rerun passes.",
       "claim": "famous benchmark published scores are inflated",
       "commands": [
         {

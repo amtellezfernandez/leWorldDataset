@@ -104,9 +104,11 @@
 
 % ---- Collaborator task-map switch (working build only) ----
 % \collabtrue renders the Open Contributions appendix and the inline HELP markers so
-% colleagues can pick up open work. Set \collabfalse for an external submission build.
+% colleagues can pick up open work. The publication build (`make root-pdf`, the default)
+% defines \collaboff on the command line to hide all of it; `make collab-pdf` keeps it.
 \newif\ifcollab
 \collabtrue
+\ifdefined\collaboff\collabfalse\fi
 
 % One-line skimmable summary placed under a result or a dense section.
 \newcommand{\takeaway}[1]{\par\smallskip\noindent{\small\textcolor{weInk}{\textbf{Takeaway.}}~\textit{\textcolor{weSlate}{#1}}}\par\smallskip}

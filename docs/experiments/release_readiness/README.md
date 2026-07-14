@@ -19,19 +19,19 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (20161 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (20868 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
-| DOC.003 | governance exists | True | error | GOVERNANCE.md (1245 bytes) |
-| DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (10281 bytes) |
+| DOC.003 | governance exists | True | error | GOVERNANCE.md (1298 bytes) |
+| DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (12268 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (460282 bytes) |
-| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (6769 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18127 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180739 bytes) |
-| DOC.010 | public citation metadata exists | True | error | CITATION.cff (432 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (502321 bytes) |
+| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (7857 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18269 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180738 bytes) |
+| DOC.010 | public citation metadata exists | True | error | CITATION.cff (427 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1402 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
-| PKG.001 | pyproject exists | True | error | pyproject.toml (1177 bytes) |
+| PKG.001 | pyproject exists | True | error | pyproject.toml (1324 bytes) |
 | PKG.002 | package metadata parses | True | error | name='worldepisode', version='0.1.0' |
 | PKG.003 | console script is exposed | True | error | worldepisode='worldepisode.cli:main' |
 | PKG.004 | license and authors are declared | True | error | license and authors present in pyproject.toml |

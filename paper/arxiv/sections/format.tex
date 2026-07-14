@@ -1,6 +1,7 @@
 \section{The Five Invariants}
 \label{sec:invariants}
-\lead{The same five questions from Section~\ref{sec:questions}, now formalized as five coupled graphs.
+\lead{Section~\ref{sec:questions} fixed what a valid state must answer; this section formalizes the
+state record that answers it as five coupled graphs.
 Making them mutually referential is what turns a silent error into a detectable one.}
 
 Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make a spatial state
@@ -15,7 +16,7 @@ identity, timing, role, event, or lineage error becomes detectable instead of hi
 \resizebox{0.90\linewidth}{!}{%
 \begin{tikzpicture}[font=\sffamily]
   \node[wecard=weInk, fill=wePanel, font=\sffamily\scriptsize, text width=4.05cm, minimum height=1.55cm] (center) at (0,0)
-    {\textbf{Universal Spatial}\\\textbf{State}\\[2pt]
+    {\textbf{WorldEpisode}\\USS robotics profile\\[2pt]
      state revision\\+ ordered deltas};
 
   \node[wecard=weBlue, font=\sffamily\scriptsize, text width=2.75cm, minimum height=1.0cm] (identity) at (0,2.45)

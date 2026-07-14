@@ -4,34 +4,44 @@ This directory contains the arXiv-ready LaTeX paper source.
 
 ## Build
 
-Preferred:
+Two builds exist:
 
-```bash
-cd paper/arxiv
-make
-```
+- **Publication build** (default): strips the collaborator Open Contributions appendix and the
+  inline HELP markers by defining `\collaboff` on the command line.
+- **Collab build**: the working build with the C1--C7 task cards and HELP markers, for
+  collaborators picking up open experiments.
 
-Generate the public PDF at the repository root:
+Generate the public publication PDF at the repository root:
 
 ```bash
 cd paper/arxiv
 make root-pdf
 ```
 
-Equivalent when `latexmk` is installed:
+Generate the collaborator working PDF at the repository root:
 
 ```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+cd paper/arxiv
+make collab-pdf
 ```
 
-Fallback if `latexmk` is unavailable:
+Generate both (`WorldEpisode-collab.pdf` first, then `WorldEpisode.pdf`):
 
 ```bash
-pdflatex main.tex
+cd paper/arxiv
+make pdfs
+```
+
+Fallback if `make` is unavailable (publication build without `latexmk`):
+
+```bash
+pdflatex '\def\collaboff{}\input{main.tex}'
 bibtex main
-pdflatex main.tex
-pdflatex main.tex
+pdflatex '\def\collaboff{}\input{main.tex}'
+pdflatex '\def\collaboff{}\input{main.tex}'
 ```
+
+Omit the `\def\collaboff{}` prefix for the collab build.
 
 ## arXiv Notes
 
@@ -40,5 +50,9 @@ pdflatex main.tex
 - `references.bib` is the BibTeX database.
 - Section files live in `sections/`.
 - Generated files such as `.aux`, `.bbl`, `.log`, and `paper/arxiv/main.pdf` should not be committed.
-- The release PDF `WorldEpisode.pdf` at the repository root is intentionally committed. The current
-  paper title uses Universal Spatial State; the filename remains stable for repository links.
+- Upload the **publication build** source state to arXiv (the `\collaboff` define is a build-time
+  flag, so the same source tree works; just do not upload a PDF built with the collab appendix).
+- The release PDF `WorldEpisode.pdf` (publication build) and the collaborator working PDF
+  `WorldEpisode-collab.pdf` at the repository root are intentionally committed. The paper title is
+  "WorldEpisode: Auditing Silent State Drift in Robot-Learning Datasets"; the filenames remain
+  stable for repository links.
