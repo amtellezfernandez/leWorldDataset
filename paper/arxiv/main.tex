@@ -142,8 +142,6 @@
 \author{
   Alba Tellez Fernandez\\
   URDF Studio
-  \and
-  USS / WorldEpisode Contributors
 }
 
 \date{}
@@ -165,11 +163,10 @@ datasets. Rather than adding another file format, it specifies the invariants an
 preserve on top of existing containers such as LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, and
 glTF: persistent identity, explicit frame and clock graphs, state and asset roles, transition and
 action semantics, temporal events, provenance, quality records, content-addressed assets, and
-lineage-aware splits. We refer to this family of invariants as Universal Spatial State (USS), a
-vocabulary intended to generalize beyond robotics; robotics is the profile we implement, and the
-only domain in which we report measured evidence in this paper.
+lineage-aware splits (we call this general family of invariants Universal Spatial State, or USS, but
+evaluate only the robotics profile in this paper).
 
-We evaluate WorldEpisode as a stress test of the broader USS claim. On ArmnetBench's public SO-101
+We evaluate WorldEpisode on public robot-learning data. On ArmnetBench's public SO-101
 LeRobot release, a random episode split leaks every tested world lineage and yields 0.850 offline
 success for a behavioral-cloning probe; a scene-disjoint split reduces measured leakage to zero
 (0.000) and the same probe to 0.000. On a real SO-101 trajectory, declaring the inferred four-frame, 133 ms

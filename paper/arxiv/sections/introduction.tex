@@ -15,8 +15,7 @@ does not exist.\par
 leakage, and real-to-sim gaps blamed on the simulator rather than the data contract.\par
 \textbf{What this paper contributes.} \emph{WorldEpisode}, an executable sidecar contract of those
 invariants for robot-learning datasets: a validator and a one-line preflight that turn silent
-failures into hard, auditable errors before training or deployment. We frame the invariants under a
-broader banner, Universal Spatial State (USS), but evaluate only the robotics profile here.
+failures into hard, auditable errors before training or deployment.
 \end{keybox}
 
 Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. The loss
@@ -25,31 +24,27 @@ file passes its local loader. Then the policy is deployed on the real arm and im
 object. The failure is not a new neural architecture problem. The dataset silently encoded joint
 values in a unit the controller did not declare, the replay script treated command timestamps as
 motor-effective timestamps, and the random split let the policy see the same reconstructed room in
-both training and evaluation. Nothing was corrupt, but the experiment was scientifically broken.
-
-The same pattern appears outside robotics. A game client can load an old collision asset after a
-server patch, but the authoritative state now places an obstacle in the avatar path. An
-autonomous-driving replay can deserialize camera and lidar logs correctly while fusing samples from
-different clock domains. A cloud digital twin can point to the right-looking asset URI while using
-the wrong content digest. In each case the file is valid and the behavior is not. We call this
-failure class \emph{silent state drift}.
+both training and evaluation. Nothing was corrupt, but the experiment was scientifically broken. We
+call this failure class \emph{silent state drift}. The same pattern of a file that validates while
+its behavior is wrong appears outside robotics as well; Section~\ref{sec:limits} returns to that
+point as future work, since this paper's measured evidence is entirely robotics.
 
 Table~\ref{tab:failure-motivation} makes the stakes concrete before any evaluation: each row is a file
-that still loads, the behavior it silently breaks, and the USS control that catches it. The rest of
-the paper turns each control into an executable requirement and measures what happens when it is
+that still loads, the behavior it silently breaks, and the requirement that catches it. The rest of
+the paper turns each requirement into an executable rule and measures what happens when it is
 missing.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Failure modes that pass local validation but break behavior, and the USS control that
-catches each. Requirement IDs are defined in the requirements section.}
+\caption{Failure modes that pass local validation but break behavior, and the WorldEpisode
+requirement that catches each. Requirement IDs are defined in Section~\ref{sec:questions}.}
 \label{tab:failure-motivation}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
                 >{\raggedright\arraybackslash}p{0.40\linewidth}
                 >{\raggedright\arraybackslash}p{0.22\linewidth}@{}}
 \toprule
-File still loads, but\ldots & Silent consequence & USS control \\
+File still loads, but\ldots & Silent consequence & Requirement \\
 \midrule
 joint values use an undeclared unit & controller misreads the scale; policy misses the object &
 \texttt{ACTION.001} \\
@@ -67,14 +62,9 @@ an asset URI looks right but its content digest changed & the wrong geometry is 
 \end{tabular}
 \end{table}
 
-This paper introduces \emph{WorldEpisode}, a sidecar contract for making silent state drift auditable
-in robot-learning datasets. It is not a file format. It is a set of invariants that bind episode data
-to immutable state revisions: persistent identity, explicit space/time mappings, role semantics,
-transition contracts, temporal events, provenance, quality records, and lineage-aware splits. We call
-the general family of invariants Universal Spatial State (USS); robotics is the profile we implement
-and evaluate, chosen because it is the deepest current stress test --- it combines real hardware,
-asynchronous control, multi-camera data, reconstructed worlds, simulator exports, and policy
-evaluation.
+Robotics is the profile implemented and evaluated here because it is the deepest current stress
+test: it combines real hardware, asynchronous control, multi-camera data, reconstructed worlds,
+simulator exports, and policy evaluation.
 
 Existing formats solve important pieces of this chain. The LeRobot library vertically integrates
 robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
@@ -92,18 +82,7 @@ can be visually faithful while still dropping the collision role of an object, a
 trajectory can still be wrong if the policy action vector is interpreted under a different
 controller contract at deployment time.
 
-The missing piece is not another monolithic file. A LeRobot table can store actions without knowing
-which immutable world revision they came from; a USD scene can store assets without knowing the
-policy action semantics that generated a trajectory; a ROS or MCAP log can store messages without
-knowing whether evaluation splits leak the same physical room. More generally, a game telemetry log
-or AV sensor recording can be locally valid without declaring the state revision, asset digest,
-clock mapping, or transition invariant that makes its behavior meaningful. USS fills that gap as a
-sidecar contract; WorldEpisode instantiates it for robot-learning episodes. OpenUSD standardizes
-how the 3D world is composed, but USS standardizes how any agent, whether a physical robot, a video
-game character, or an autonomous vehicle, modifies state within that space over time without silent
-data corruption.
-
-USS is:
+WorldEpisode is:
 \begin{itemize}[leftmargin=*]
   \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, game telemetry, AV logs, or a reference package;
   \item \textbf{representation-neutral}: compatible with splats, meshes, NeRFs, point clouds, collision proxies, sensor streams, and future assets;
@@ -111,13 +90,7 @@ USS is:
   \item \textbf{loss-explicit}: conversions may be lossy, but never silently lossy.
 \end{itemize}
 
-The paper's core claim is therefore not a new monolithic file format. It is an executable spatial
-state contract: identity, frames, clocks, transition contracts, representation roles, events,
-provenance, uncertainty, and lineage-safe evaluation splits. The current artifact includes a JSON
-Schema, semantic validator, round-trip binding artifacts, an active public LeRobotDataset v3
-conversion experiment, hand-authored independent fixtures, controlled experiments for replay drift,
-leakage, and counterfactual augmentation, plus two deterministic USS pilots outside robotics. The
-empirical claims in this release are intentionally bounded: they demonstrate executable failure
+The empirical claims in this release are intentionally bounded: they demonstrate executable failure
 mechanisms and auditable conversion semantics, not a completed multi-lab benchmark, production game
 engine audit, autonomous-driving fleet audit, or real-robot deployment study.
 
@@ -127,8 +100,6 @@ engine audit, autonomous-driving fleet audit, or real-robot deployment study.
   expressed as five graphs of invariants (identity; frames and clocks; representation roles; temporal
   state and events; provenance and lineage), with a JSON Schema, a semantic validator, and a
   one-line fail-closed preflight for native LeRobot and Rerun artifacts.
-  \item \textbf{USS}, the broader vocabulary these invariants generalize toward, proposed as storage-,
-  representation-, and runtime-neutral but evaluated in this paper only for robotics.
   \item \textbf{Loss-explicit binding}: round-trip conversions that emit machine-readable loss reports,
   with measured native-versus-sidecar semantic retention.
   \item \textbf{Controlled failure studies}: scene-lineage leakage, action-timing replay drift, and

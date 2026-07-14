@@ -3,14 +3,13 @@
 \lead{How the five invariants are delivered: a sidecar wrapped around existing formats, plus a
 runtime-neutral adapter contract, so no container has to become another.}
 
-USS is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
+WorldEpisode is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
 dataset to become a USD scene, a game-engine telemetry log to become an AV replay format, or a USD
 scene to become a policy-training table. Instead, it records the relationships those containers
 need in order to agree about the same state: the state revision, persistent entities, space/time
 conventions, transition contract, asset roles, interaction events, provenance, and split lineage.
-WorldEpisode is the robotics profile of this architecture.
-\takeaway{USS records the cross-container relationships that loaders otherwise leave implicit; it
-does not force any format to become another.}
+\takeaway{WorldEpisode records the cross-container relationships that loaders otherwise leave
+implicit; it does not force any format to become another.}
 
 The sidecar is not a mandate to package a global robot corpus as millions of small folders. The
 single-episode record is the semantic unit. Production datasets add a manifest layer: globally
@@ -19,9 +18,9 @@ append-only release snapshots. Opening such a corpus starts from the manifest an
 does not require recursively scanning an object store or loading every episode.
 
 Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset, log, and telemetry
-containers plug in on the left; world assets and replay targets plug in on the right; the USS
-sidecar holds the semantics that would otherwise be scattered across undocumented loader
-assumptions. The current implementation names that robotics sidecar WorldEpisode.
+containers plug in on the left; world assets and replay targets plug in on the right; the
+WorldEpisode sidecar holds the semantics that would otherwise be scattered across undocumented
+loader assumptions.
 
 \begin{figure}[t]
 \centering
@@ -32,8 +31,8 @@ assumptions. The current implementation names that robotics sidecar WorldEpisode
   \node[wecard=weViolet, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (ncore) at (0,-0.9) {\textbf{Game / AV logs}\\telemetry streams};
 
   \node[wecard=weInk, fill=wePanel, text width=4.75cm, minimum height=3.65cm] (core) at (5.0,0.45) {};
-  \node[font=\sffamily\bfseries\small, text=weInk, align=center] at (core.north) [yshift=-0.34cm] {Universal Spatial State};
-  \node[font=\sffamily\tiny, text=weSlate] at (5.0,1.29) {WorldEpisode robotics profile};
+  \node[font=\sffamily\bfseries\small, text=weInk, align=center] at (core.north) [yshift=-0.34cm] {WorldEpisode};
+  \node[font=\sffamily\tiny, text=weSlate] at (5.0,1.29) {state-integrity sidecar};
   \node[wechip=weBlue, font=\sffamily\tiny, text width=1.25cm] at (3.85,0.65) {identity};
   \node[wechip=weCyan, font=\sffamily\tiny, text width=1.45cm] at (6.08,0.65) {space + time};
   \node[wechip=weAmber, font=\sffamily\tiny, text width=1.75cm] at (3.82,-0.05) {transition rules};
@@ -55,21 +54,21 @@ assumptions. The current implementation names that robotics sidecar WorldEpisode
     {validator diagnostics \(\cdot\) conversion-loss reports \(\cdot\) lineage-safe splits \(\cdot\) replay assumptions};
 \end{tikzpicture}%
 }
-\caption{USS is the semantic bridge between spatial data containers, state/world assets, and
-runtime targets. WorldEpisode is the robotics profile used in the experiments.}
+\caption{WorldEpisode is the semantic bridge between spatial data containers, state/world assets, and
+runtime targets.}
 \label{fig:worldepisode-bridge}
 \end{figure}
 
 This architecture gives the paper its central rule: keep native containers for the data they are
 good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
 
-\subsection{USS as a Meta-Simulator Contract}
+\subsection{WorldEpisode as a Meta-Simulator Contract}
 
-USS is not tied to a single rendering or physics engine. It operates as a
+WorldEpisode is not tied to a single rendering or physics engine. It operates as a
 meta-simulator contract: a runtime becomes a trusted target by implementing an adapter that
 preserves the same semantic invariants and emits replay evidence. This keeps the integration
 direction clean. Datasets are not rewritten around simulator-native assumptions; simulators compile
-their scene loading, action interfaces, and replay reports against the USS sidecar.
+their scene loading, action interfaces, and replay reports against the WorldEpisode sidecar.
 
 The adapter contract has three layers:
 \begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
@@ -84,7 +83,7 @@ The adapter contract has three layers:
 \end{itemize}
 
 The current implementation reflects this boundary across two codebases. WorldEpisode has tested
-minimal MuJoCo and Genesis replay adapters for the same LeRobot control-loop trace. URDF Studio,
+minimal MuJoCo~\citep{mujoco} and Genesis replay adapters for the same LeRobot control-loop trace. URDF Studio,
 the companion simulator-transfer workbench, implements the same episode-backend idea for MuJoCo
 and Genesis: both backends pass a shared \texttt{SimBackend} conformance suite, and a one-episode
 carton-sorting scenario produces a MuJoCo--Genesis comparison report with matching task success

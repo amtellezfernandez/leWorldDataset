@@ -47,36 +47,9 @@ folders and Rerun \texttt{.rrd} recordings are recognized directly; without a Wo
 manifest or sidecar, they fail closed on missing world revision, entity identity, representation
 role, action timing, frame/clock, split-lineage, and conversion-loss controls. This makes the
 semantic audit a pre-training check rather than a separate post-hoc documentation exercise.
-The dataset-scale audit checks the separate corpus manifest for namespace uniqueness, resolver
-coverage, digest-addressed assets, local mirrors, shard/index references, required lineage and
-asset-digest indexes, split-manifest presence, and append-only version structure. A companion
-scale-performance benchmark generates a 32{,}768-shard descriptor catalog with 1{,}073{,}741{,}824
-described episodes and measures catalog open/indexing, partition pruning, digest-cache resolution,
-and resolver routing without materializing payload rows.
-The clean-room reader check intentionally does not import the \texttt{worldepisode} package. It
-uses the published JSON Schema and separately implemented requirement checks to parse the minimal
-example and fixture corpus, providing an internal sanity check for independent implementability.
 
-The repository also includes an active LeRobotDataset v3 converter. It downloads bounded Parquet
-and metadata shards from the pinned public \path{lerobot/svla_so101_pickplace} SO-101 dataset,
-constructs a schema-valid WorldEpisode manifest and sidecar, exports a small LeRobotDataset v3
-package, reads that package back, and asserts equality of source-native tensors and timestamp
-records. Source fields that LeRobot does not declare, such as camera extrinsics and controller
-latency, are not guessed; they are emitted in the conversion report as explicitly source-absent.
-The split-leakage tool similarly downloads bounded ArmnetBench LeRobot shards, writes
-\texttt{world\_lineage} and split-manifest artifacts, and trains an executable BC baseline over the
-real LeRobot tensors.
-The control-replay tool reads the exported LeRobot trajectory, estimates the effective command
-delay from action/state alignment, writes the WorldEpisode action contract, executes tested MuJoCo
-and Genesis adapters, and emits an Isaac adapter mapping that is ready for an Isaac environment but
-explicitly marked untested in the committed report.
-The replay-adapter conformance tool then runs a dependency-free reference scheduler over delay,
-zero-order-hold, missing-command, and asynchronous queue cases. This checks the timing contract that
-runtime adapters must honor before a simulator-specific replay is trusted.
-
-The repository also emits a meta-simulator adapter report. It defines three compliance layers:
-the invariant interface, asynchronous schema extension, and deterministic replay accountability.
-The report records WorldEpisode's tested MuJoCo and Genesis replay adapters, URDF Studio's tested
-MuJoCo/Genesis episode-backend conformance and one-episode comparison, Isaac as adapter-ready but
-untested, and SAPIEN as adapter-required. This artifact is deliberately an adapter contract rather
-than a claim of equal runtime coverage.
+The repository also includes an active LeRobotDataset v3 converter, a scene-leakage and
+split-manifest tool, a control-replay tool, a dependency-free replay-adapter conformance harness, a
+dataset-scale manifest audit and performance benchmark, a clean-room reader that does not import
+\texttt{worldepisode}, and a meta-simulator adapter report covering MuJoCo, Genesis, Isaac, and
+SAPIEN. Section~\ref{sec:evidence} presents what each one measures.

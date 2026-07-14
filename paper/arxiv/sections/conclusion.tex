@@ -2,30 +2,27 @@
 \label{sec:conclusion}
 
 Spatial-agent failures often arrive disguised as clean data: valid tensors, valid videos, valid
-scene files, valid telemetry logs, and invalid state assumptions. USS makes those assumptions
-explicit. It binds interaction data to immutable state revisions, gives persistent identity to
-entities, declares space/time/transition semantics, assigns roles to assets, records events and
-provenance, and reports conversion loss instead of hiding it. WorldEpisode is the robotics profile
-that makes this claim executable today.
+scene files, valid telemetry logs, and invalid state assumptions. WorldEpisode makes those
+assumptions explicit. It binds interaction data to immutable state revisions, gives persistent
+identity to entities, declares space/time/transition semantics, assigns roles to assets, records
+events and provenance, and reports conversion loss instead of hiding it.
 
 In the reference experiments, those requirements expose an 85\% offline random-split result that
 collapses to 0\% under scene-disjoint evaluation, reduce LeRobot replay drift on a real SO-101
-trajectory by modeling a four-frame action delay, and catch controlled physically incoherent
-packages before they are used as trusted artifacts. They also show how a real-to-sim pipeline can
-report simulated success while failing under deployment proxies when action contracts or
-representation roles drift, and how the same state-invariant vocabulary catches a game-engine
-collision-patch drift and an autonomous-driving clock-domain drift in deterministic pilots. The
-validator is exposed as a one-line preflight command for WorldEpisode, LeRobot, and Rerun artifacts,
-and the simulator pathway is defined as an adapter compliance contract rather than a dependency on
-one runtime.
+trajectory by modeling a four-frame action delay, and catch every injected physically incoherent
+package before deployment. A real-to-sim pipeline can report simulated success while failing under
+deployment proxies when action contracts or representation roles drift; the same vocabulary catches
+that drift in deterministic pilots outside robotics as well. The validator ships as a one-line
+preflight command, and the simulator pathway is an adapter compliance contract rather than a
+dependency on one runtime.
 
 These are scoped results, not a completed standardization claim. The call-out audit identifies Open
 X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN as priority targets for this protocol, but it
 does not claim their scores are inflated without reruns; the inflation-proof gate currently records
 one executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero
-measured inflation claims. The non-robotics USS pilots are vocabulary checks, not production game-engine or
+measured inflation claims. The non-robotics pilots are vocabulary checks, not production game-engine or
 AV evaluations. Gaussian splats remain a high-value
 appearance profile, but the durable contribution is the spatial-state contract around them. The
 next step is to scale the same protocol to larger multi-robot datasets, stronger LeRobot-native
-policies, real or high-fidelity rollout evaluation, natural failure corpora, non-robotics USS
+policies, real or high-fidelity rollout evaluation, natural failure corpora, non-robotics
 adapters, and independently maintained bindings.

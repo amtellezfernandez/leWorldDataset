@@ -32,7 +32,7 @@ the Failure Case Studies section, and (3) keep the gates green by re-running
 \subsection*{Experiment gates}
 
 \collabcard{C1}{ACT/Diffusion policy metrics and rollout impact}
-{Failure Case Studies, Case 1 (scene-lineage leakage); Limitations, ``Offline leakage
+{Evidence: Failure Case Studies, Case 1 (scene-lineage leakage); Limitations, ``Offline leakage
 result''; artifacts under \path{docs/experiments/lerobot_policy_gate/}. Gate \texttt{POLICY.ROLL.001}.}
 {ACT and Diffusion Policy offline metrics on \emph{both} the random and scene-disjoint splits, plus at
 least one simulator or physical rollout on the same split manifest. Source videos must be mirrored
@@ -48,7 +48,7 @@ Commit the policy metrics, rollout traces or videos with digests, and the update
 videos.}
 
 \collabcard{C2}{Famous-benchmark score-inflation proof}
-{Failure Case Studies, Case 7 (famous benchmarks); Limitations, ``Famous benchmark call-out scope''.
+{Evidence: Failure Case Studies, Case 7 (famous benchmarks); Limitations, ``Famous benchmark call-out scope''.
 Gate \texttt{BENCH.INFLATE.001}.}
 {A benchmark-specific WorldEpisode conversion, a faithful published-protocol policy rerun, and a
 paired corrected evaluation showing a measured baseline-minus-corrected score drop. The committed
@@ -64,7 +64,7 @@ automatically).}
 the target benchmark; compute for the rerun.}
 
 \collabcard{C3}{Maintainer-confirmed natural-failure prevalence}
-{Failure Case Studies, Case 5 (the validator) and its natural-source corpus; Limitations, ``Natural
+{Evidence: Failure Case Studies, Case 5 (the validator) and its natural-source corpus; Limitations, ``Natural
 failure corpus''. Gate: natural-failure prevalence.}
 {Pinned WorldEpisode conversions for the source-level datasets (DROID, BridgeData V2), false-positive
 review of the emitted diagnostics, and recorded agreement from the dataset maintainers. Today two
@@ -74,11 +74,10 @@ contact the dataset maintainers with representative diagnostics and record their
 {Dataset domain knowledge; maintainer contacts; storage for the pinned shards.}
 
 \collabcard{C4}{Mature external-standard adoption}
-{Limitations, ``Reference implementation maturity'', ``Preflight distribution'', and the Adoption row
-of the evidence-boundary table; \path{GOVERNANCE.md} ``Independence Target''. Gate: external
-adoption.}
+{Limitations, ``Reference implementation maturity'' and the Adoption row of the evidence-boundary
+table; \path{GOVERNANCE.md} ``Independence Target''. Gate: external adoption.}
 {A second, independently written reader/exporter (not the reference SDK), at least one externally
-published USS / WorldEpisode dataset, a PyPI release of the \texttt{worldepisode} package, and
+published WorldEpisode-compatible dataset, a PyPI release of the \texttt{worldepisode} package, and
 upstream LeRobot / Rerun integration.}
 {Build the independent implementation and validate it with
 \texttt{python3 tools/cleanroom\_conformance\_reader.py}; publish the wheel to PyPI; open the upstream
@@ -89,8 +88,8 @@ release access.}
 \subsection*{Standalone technical items}
 
 \collabcard{C5}{Isaac Sim / SAPIEN replay and a contact-rich rollout}
-{Failure Case Studies, Case 3 (the replay that drifted); Limitations, ``Replay is not bit-identical
-physics'' and ``Meta-simulator evidence''.}
+{Evidence: Failure Case Studies, Case 3 (the replay that drifted); Limitations, ``Meta-simulator
+evidence''.}
 {Tested Isaac Sim and SAPIEN replay adapters (Isaac is adapter-ready but untested; SAPIEN is
 adapter-required) and at least one contact-rich task rollout. Only MuJoCo and Genesis same-trace
 replay is measured today.}
@@ -99,8 +98,8 @@ replay is measured today.}
 replays and commit the RMSE reports.}
 {IsaacLab and SAPIEN installations; GPU.}
 
-\collabcard{C6}{A public non-robotics corpus for USS generality}
-{Limitations, ``USS generality''; Failure Case Studies, Case 0 (the pilots).}
+\collabcard{C6}{A public non-robotics corpus (generalization beyond robotics)}
+{Limitations, ``Beyond robotics (future work)''.}
 {At least one public non-robotics corpus (game-engine or autonomous-driving) bound through an
 independently maintained adapter, beyond the two deterministic pilots.}
 {Pick a public AV or game-telemetry dataset, write a binding plus a conversion-loss report, add
@@ -108,7 +107,7 @@ conformance fixtures, and wire it into \texttt{tools/run\_experiments.py}.}
 {Access to a public AV or game-telemetry dataset; a maintainer for that adapter.}
 
 \collabcard{C7}{Broader conversion coverage}
-{Failure Case Studies, Case 2 (the converter that refuses to invent physics); Limitations, Conversion
+{Evidence: Failure Case Studies, Case 2 (the converter that refuses to invent physics); Limitations, Conversion
 row of the evidence-boundary table.}
 {More than two round-tripped LeRobot datasets, and at least one larger multi-camera manipulation
 dataset.}

@@ -40,7 +40,7 @@ identity, timing, role, event, or lineage error becomes detectable instead of hi
     {closed references + digest-verified assets + explicit loss reports};
 \end{tikzpicture}%
 }
-\caption{The five-graph model. USS makes identity, frames/clocks, state roles, temporal events, and
+\caption{The five-graph model. WorldEpisode makes identity, frames/clocks, state roles, temporal events, and
 provenance mutually referential so conversion, synchronization, and replay errors become detectable
 instead of hidden.}
 \label{fig:five-graph-model}
@@ -61,10 +61,10 @@ proxy must identify the same mug.
 
 Every spatial value declares source frame, target frame, units, handedness, up axis, transform
 direction, quaternion convention, validity interval, calibration revision, and uncertainty where
-available. Every stream declares a clock domain, device timestamp, host-receive timestamp where
+available, consistent with and extending ROS's coordinate and unit conventions~\citep{rosrep103}. Every stream declares a clock domain, device timestamp, host-receive timestamp where
 available, exposure interval for cameras, effective command time for actions, synchronization
 mapping, and estimated offset/drift/error. NCore's explicit pose-graph convention demonstrates the
-kind of rigor USS requires across the whole state record~\citep{ncore}. This graph is what turns a
+kind of rigor WorldEpisode requires across the whole state record~\citep{ncore}. This graph is what turns a
 suspicious replay from ``the policy is bad'' or ``the engine is wrong'' into a diagnosable offset,
 transform direction, or unit error.
 
@@ -95,7 +95,7 @@ occurred.''
 
 Every derived asset identifies source episodes, source sensors and intervals, reconstruction
 algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual
-edits, source and output hashes, creator, license, and quality metrics. USS maps to
+edits, source and output hashes, creator, license, and quality metrics. WorldEpisode maps to
 existing provenance and dataset metadata vocabularies rather than inventing an incompatible
 publication vocabulary. This graph lets a split avoid putting the same reconstructed room, capture
 session, or generated asset family on both sides of evaluation.

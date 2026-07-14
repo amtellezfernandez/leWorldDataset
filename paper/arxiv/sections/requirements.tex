@@ -4,7 +4,7 @@
 converted, replayed, or evaluated, plus one question of scale. Each maps to a stable requirement ID
 that Section~\ref{sec:profile} enforces and Section~\ref{sec:evidence} tests.}
 
-USS starts from a practical question: what must be known before an interactive spatial state can be
+Any valid spatial state must answer a practical question: what must be known before it can be
 safely converted, replayed, synchronized, augmented, or used for evaluation? A valid state record
 must answer five questions. A production dataset must also answer how those records are named,
 sharded, indexed, resolved, and versioned without turning storage layout into the semantic API.
@@ -30,7 +30,7 @@ needs the same identity discipline across telemetry, assets, and runtime actors.
 Spatial values declare their frames, units, transform direction, validity interval, and calibration
 revision. Streams declare clock domains, timestamps, synchronization mappings, and timing error
 where available. Actions declare command time and effective motor time rather than assuming those
-are the same instant. USS calls these state transition invariants: a control input, physics step,
+are the same instant. WorldEpisode calls these state transition invariants: a control input, physics step,
 server patch, or sensor fusion event is only meaningful under its declared timing, frame, unit, and
 latency contract.
 
@@ -45,7 +45,7 @@ instead of silently discarding semantics.
 \paragraph{Can the evaluation split leak? (\texttt{SPLIT.001})}
 Record-level random splits are not enough when multiple records share a reconstructed room, map
 patch, physical object, source capture, calibration, generated asset lineage, or state ancestry. A
-USS split manifest can enforce disjointness by state lineage, physical entity, source capture,
+WorldEpisode split manifest can enforce disjointness by state lineage, physical entity, source capture,
 reconstruction run, generated asset family, or collection site.
 
 \paragraph{Can this scale past one dataset folder? (\texttt{DATASET.001})}
@@ -56,5 +56,5 @@ index lookup rather than by crawling storage paths.
 
 The initial WorldEpisode profile is intentionally narrow: rigid tabletop manipulation with
 fixed-base single- or dual-arm robots. That bounded domain keeps conformance executable rather than
-aspirational. USS can define later profiles for humanoids, locomotion, deformables, fluids,
-multi-agent game worlds, and autonomous-driving logs.
+aspirational. Future profiles can extend this specification to humanoids, locomotion, deformables,
+fluids, multi-agent game worlds, and autonomous-driving logs.

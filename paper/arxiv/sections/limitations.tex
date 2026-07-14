@@ -34,9 +34,9 @@ Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Gene
 plus same-trace MuJoCo/Genesis replay evidence, URDF Studio \texttt{SimBackend} conformance, and a
 one-episode MuJoCo--Genesis comparison & MuJoCo and Genesis are tested for the minimal replay
 profile; Isaac and SAPIEN are not replay-tested in this paper, and equal physics is not claimed \\
-USS generality & Deterministic game-engine collision-patch and autonomous-driving clock-domain
-pilots using the same invariant vocabulary & Not measured on production game engines, public AV
-datasets, or fleet logs \\
+Generalization beyond robotics & Deterministic game-engine collision-patch and autonomous-driving
+clock-domain pilots using the same invariant vocabulary & Not measured on production game engines,
+public AV datasets, or fleet logs \\
 Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
 pilot natural-source corpus over five public datasets & Five-dataset count is met through active
 LeRobot artifacts plus source-level public benchmark metadata; dataset-specific diagnostic reports
@@ -87,15 +87,10 @@ dependencies, using \path{tools/famous_benchmark_policy_rerun.py} with
 inflated unless this gate records an inflation-proof valid rerun and a measured corrected-score
 drop.
 \item External standard evidence: add maintainer-reviewed diagnostics, an independently written
-reader/exporter, and at least one externally published USS or WorldEpisode-compatible dataset
-before calling the project a mature interoperability standard.
+reader/exporter, and at least one externally published WorldEpisode-compatible dataset before
+calling the project a mature interoperability standard.
 \end{itemize}
 \end{openresult}
-
-\paragraph{Manipulation scope.}
-The current profile targets rigid tabletop manipulation with fixed-base single- or dual-arm robots.
-Humanoids, locomotion, deformables, fluids, and multi-agent environments require later profiles and
-new conformance fixtures.
 
 \paragraph{Beyond robotics (future work).}
 All measured evidence in this paper is the WorldEpisode robotics profile; the broader Universal
@@ -122,70 +117,31 @@ packages verify 27 cached source files, preserve state/action/timestamp rows, an
 episode/index fields into contiguous local LeRobot folders; they intentionally omit video payloads,
 so a vision-policy result still requires mirrored source videos with committed digests.
 
-\paragraph{Replay is not bit-identical physics.}
-WorldEpisode records simulator assumptions, timing, interpolation, and tolerances; it does not
-promise simulator-independent behavior. The reported replay result is a same-trace MuJoCo/Genesis
-position-servo test under declared assumptions. The replay-adapter harness checks delay,
-zero-order hold, missing-command, and asynchronous queue scheduling, but it is not a physics
-simulator. Isaac and SAPIEN are intentionally untested in this environment, and no contact-rich
-task rollout result is claimed.
-
 \paragraph{Meta-simulator evidence.}
-The meta-simulator section defines what a compliant runtime adapter must preserve. It does not
-certify that MuJoCo, Isaac, Genesis, SAPIEN, or any other simulator has equivalent physics. Current
-evidence contains WorldEpisode MuJoCo and Genesis replay adapters for the same LeRobot control
-trace, plus a separate URDF Studio episode-backend path where MuJoCo and Genesis pass shared
-conformance tests and produce a one-episode comparison report. Isaac and SAPIEN are not
-replay-tested here.
+The meta-simulator section (Section~\ref{sec:contract}) defines what a compliant runtime adapter
+must preserve; it does not certify that MuJoCo, Isaac, Genesis, SAPIEN, or any other simulator has
+equivalent physics, and neither the replay results nor the replay-adapter harness are a claim of
+simulator-independent behavior. Isaac and SAPIEN remain untested here, and no contact-rich task
+rollout result is claimed.
 
 \paragraph{Reference implementation maturity.}
 The converter, validator, and reports are executable, but independent implementations are still
 needed before the project should be treated as a mature interoperability standard. The clean-room
 reader reduces the risk that the fixtures only work through the reference SDK, but it is still an
-internal artifact. The next empirical step is to run the same protocol on larger multi-camera
-manipulation datasets and externally maintained adapters.\collabmark{C4}
-
-\paragraph{Preflight distribution.}
-The repository packages a local \texttt{worldepisode} preflight CLI and Python API, but it is not
-yet a released PyPI package and has not been merged into upstream LeRobot or Rerun examples. The
-current claim is friction reduction in the reference implementation, not ecosystem default status.
-
-\paragraph{Dataset-scale performance.}
-The specification separates the core episode record from a dataset-scale manifest with namespaces,
-shards, indexes, resolvers, and append-only snapshots. That design prevents the standard from being
-defined around a local folder layout. The current audit makes the catalog invariants executable,
-and the scale-performance benchmark opens and indexes a generated 32{,}768-shard descriptor catalog
-with 1{,}073{,}741{,}824 described episodes, then measures partition pruning, digest-cache
-resolution, and resolver routing. This is still not a measured distributed-systems result: it does
-not materialize the episode rows, load payload bytes, test concurrent readers, measure cache
-eviction, or exercise federation across institutions.
+internal artifact, and the \texttt{worldepisode} preflight CLI and API are not yet a released PyPI
+package or merged into upstream LeRobot or Rerun examples. The next empirical step is to run the
+same protocol on larger multi-camera manipulation datasets and externally maintained
+adapters.\collabmark{C4}
 
 \paragraph{Famous benchmark call-out scope.}
 The audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN is a source-level
-metadata audit. It identifies where public materials do not expose the controls needed to test
-world-lineage leakage, action latency, or replay loss. It does not prove any published benchmark
-score is inflated. That claim requires a benchmark-specific WorldEpisode conversion and a measured
-policy rerun. The repository now makes that requirement executable with a targeted DROID subset
-rerun tool and a separate proof gate. In the current artifact, one bounded DROID subset rerun
-executes on pinned public LeRobot data, but its lineage source is only a task/camera-schema proxy,
-it is not a published leaderboard reproduction, and its corrected proxy split does not reduce the
-offline score. Thus zero inflation-proof famous-benchmark rerun reports are committed and zero
-score-inflation claims are measured.
-
-\paragraph{Real-to-sim drift scope.}
-The contract-drift experiment isolates two real-to-sim failure mechanisms: action-interface drift
-and missing representation roles. It is intentionally deterministic and does not use a reconstructed
-RoboSnap/DROID-Sim scene or a physical robot. The stronger result is to bind a public reconstructed
-scene, replay the same checks, and measure simulator/deployment divergence under declared
-tolerances.
+metadata audit; it does not prove any published benchmark score is inflated without a
+benchmark-specific conversion and a measured policy rerun under the corrected split or timing
+contract.
 
 \paragraph{Natural failure corpus.}
 The injected conformance faults prove that requirements are executable and diagnosable. The current
 pilot natural-source corpus adds 19 cases from five public robot-learning datasets, but it still
-does not prove prevalence in the wild. Two datasets are active LeRobot conversion audits, one is an
-active LeRobot scene-leakage audit, and two are source-level public metadata audits from the
-benchmark call-out list. The repository now writes dataset-specific diagnostic reports for all five
-datasets, with DROID and BridgeData V2 explicitly marked source-level-only. A stronger version of
-this paper should convert those source-level gaps into dataset-specific WorldEpisode manifests,
-report false-positive review, and record whether dataset maintainers agree with representative
-diagnostics.
+does not prove prevalence in the wild. A stronger version of this paper should convert the
+source-level gaps into dataset-specific WorldEpisode manifests, report false-positive review, and
+record whether dataset maintainers agree with representative diagnostics.

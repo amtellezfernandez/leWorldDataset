@@ -22,8 +22,8 @@ replacement format or a dataset card.
 The experiments show several ways a result can be wrong while the files are valid: a split can leak
 world lineage, replay can drift because control timing is underspecified, conversion can discard
 physical semantics that the target container has no native place to store, and a live virtual or AV
-state can drift from its authoritative revision. USS is useful only because these failures are
-observable and testable. The sidecar is the mechanism; the scientific claim is that explicit
+state can drift from its authoritative revision. WorldEpisode is useful only because these failures
+are observable and testable. The sidecar is the mechanism; the scientific claim is that explicit
 spatial-state semantics change what an embodied-agent result means. The contribution is therefore a
 set of falsifiable invariants: persistent entity identity must be consistent across observations and
 assets, timestamps must distinguish observation, command, and effective time, state roles must
@@ -32,26 +32,26 @@ lineage. A container adapter either preserves those invariants, externalizes the
 loss, or fails conformance.
 
 \paragraph{A small semantic core with multiple bindings.}
-USS has a small semantic core and multiple bindings. WorldEpisode is the robotics profile:
-LeRobotDataset v3 is the policy-training view; Rerun is the multirate physical-data view; NCore is
-the sensor/reconstruction capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the
-composed simulation-world view; glTF or SPZ is the Gaussian asset view; and a reference directory is
-the conformance profile. OpenUSD standardizes how the 3D world is composed, but USS standardizes how
-any agent, whether a physical robot, a video game character, or an autonomous vehicle, modifies state
-within that space over time without silent data corruption. A game-engine or AV profile should
-reuse the same invariant structure rather than inherit robotics-specific terminology.
+WorldEpisode has a small semantic core and multiple bindings: LeRobotDataset v3 is the
+policy-training view; Rerun is the multirate physical-data view; NCore is the sensor/reconstruction
+capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed simulation-world view;
+glTF or SPZ is the Gaussian asset view; and a reference directory is the conformance profile. OpenUSD
+standardizes how the 3D world is composed; WorldEpisode standardizes how a robot modifies state
+within that space over time without silent data corruption. The same invariant structure should
+generalize to a game-engine or AV profile, though only the robotics profile is implemented and
+evaluated here.
 
 \paragraph{Relationship to real-to-sim pipelines.}
-Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to USS. They are the
+Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to WorldEpisode. They are the
 systems that most need a state and episode contract. A reconstructed room can be excellent visual training
 data and still be unsafe for policy evaluation if foreground collision roles are missing, if the
 same world lineage leaks across splits, or if the replayed policy output is interpreted under the
-wrong hardware action contract. USS, through WorldEpisode, should be judged by whether it keeps
-those pipelines auditable as they scale, not by whether it serializes splats better than asset
-formats designed for that job.
+wrong hardware action contract. WorldEpisode should be judged by whether it keeps those pipelines
+auditable as they scale, not by whether it serializes splats better than asset formats designed for
+that job.
 
 \paragraph{Simulators as accountable adapters.}
-The same principle applies to physics and rendering engines. USS should not become a
+The same principle applies to physics and rendering engines. WorldEpisode should not become a
 MuJoCo wrapper, an Isaac wrapper, or a Genesis wrapper. It should define the contract those adapters
 must satisfy: ingest the invariant interface, declare extensions, and report replay assumptions and
 drift. This is a stronger runtime-neutral stance than claiming universal behavior. It lets a
@@ -61,7 +61,7 @@ whether the exported dataset is physically and temporally auditable.
 \paragraph{Lineage-safe evaluation.}
 Record-level random splits can leak the same reconstructed room, physical object, Gaussian asset,
 source video, state revision, map patch, or generated asset lineage across training and evaluation.
-USS supports split constraints such as \texttt{world\_lineage},
+WorldEpisode supports split constraints such as \texttt{world\_lineage},
 \texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
 \texttt{generated\_asset\_family}.
 
@@ -75,5 +75,5 @@ after the same policy protocol is rerun under the corrected split or timing cont
 \paragraph{Standards alignment.}
 The project aligns with standards bodies rather than antagonizing them. Static 3D robot-map
 exchange, humanoid dataset lifecycle, OpenLABEL annotation, glTF Gaussian splats, USD composition,
-and NCore capture conventions are all useful neighbors. WorldEpisode is an executable profile and
-bridge across those layers; USS is the broader state-contract vocabulary.
+and NCore capture conventions are all useful neighbors. WorldEpisode is the executable profile and
+bridge across those layers.
