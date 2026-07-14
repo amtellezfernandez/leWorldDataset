@@ -168,6 +168,8 @@ Rerun, MCAP, NCore, OpenUSD, and glTF are covered only as lighter binding-retent
 invariants are persistent identity, explicit frame and clock mappings, representation roles,
 temporal events, and provenance --- each backed by a machine-checkable rule (we call this general
 family Universal Spatial State, or USS, but evaluate only the robotics profile in this paper).
+Two corpus-level obligations follow from the invariants and carry the headline results:
+lineage-disjoint evaluation splits and loss-explicit conversion.
 
 We evaluate WorldEpisode on public robot-learning data. On ArmnetBench's public SO-101
 LeRobot release, a random episode split leaks every tested world lineage and yields 0.850 offline
@@ -190,16 +192,14 @@ Isaac/SAPIEN execution, external adoption, and production game or autonomous-dri
 explicit open gates.
 \end{abstract}
 
-% Spine order: failure -> five invariants (questions then graphs) -> sidecar contract
-% -> executable profile -> evidence -> limits -> positioning -> conclusion.
+% Spine order: failure (+ related work) -> the contract (questions, graphs, obligations)
+% -> the contract made executable -> evidence in three acts -> positioning -> limits -> conclusion.
 \input{sections/introduction}
 \input{sections/requirements}
-\input{sections/format}
 \input{sections/architecture}
-\input{sections/reference_implementation}
 \input{sections/evaluation}
-\input{sections/limitations}
 \input{sections/discussion}
+\input{sections/limitations}
 \input{sections/conclusion}
 
 \input{sections/open_contributions}

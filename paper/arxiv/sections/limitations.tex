@@ -70,25 +70,40 @@ The artifact keeps unfinished claims executable instead of hiding them. The curr
 is:
 \texttt{python3 tools/release\_readiness.py --strict-rfc}. The full-standard gate is:
 \texttt{python3 tools/release\_readiness.py --strict-full}. The latter is expected to fail until
-all open gates below are backed by committed reports. The same gates are indexed in
+the two gates boxed below are backed by committed reports and, additionally, external standard
+evidence exists: maintainer-reviewed diagnostics, an independently written reader/exporter, and at
+least one externally published WorldEpisode-compatible dataset. The same gates are indexed in
 \path{docs/experiments/open_reproduction_gates/open_reproduction_gates.json}.
+\end{openresult}
 
-\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=3pt]
-\item ACT/Diffusion leakage: run
-\texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}, then execute
-\path{docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh}. A paper update must commit
-the policy metrics, rollout traces or videos, and updated
-\path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
-\item Famous-benchmark inflation: run the targeted DROID subset rerun with optional Arrow/HTTP
-dependencies, using \path{tools/famous_benchmark_policy_rerun.py} with
-\texttt{--benchmark droid\_100 --required}, then require
-\texttt{python3 tools/benchmark\_inflation\_gate.py --required}. No benchmark may be described as
-inflated unless this gate records an inflation-proof valid rerun and a measured corrected-score
-drop.
-\item External standard evidence: add maintainer-reviewed diagnostics, an independently written
-reader/exporter, and at least one externally published WorldEpisode-compatible dataset before
-calling the project a mature interoperability standard.
-\end{itemize}
+\begin{openresult}{ACT/Diffusion and rollout impact}
+Status: open (referenced from Case 1). To close this gate, first regenerate the split packages and
+LeRobot job specs with \texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}. Then run the
+generated jobs with \texttt{bash docs/experiments/lerobot\_policy\_gate/run\_lerobot\_policy\_jobs.sh}
+inside a LeRobot training environment.
+
+Required artifacts: policy checkpoint digests, train/eval configs and seeds, offline action
+metrics for random and scene-disjoint splits, rollout traces or videos with content digests, and an
+updated \path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+
+Acceptance rule: at least one ACT or Diffusion Policy run must report both split protocols, and at
+least one simulator or physical rollout report must use the same split manifest. Until then, the
+paper claims only the offline Torch probe and the prepared gate.
+\end{openresult}
+
+\begin{openresult}{famous-benchmark score-inflation proof}
+Status: open (referenced from Case 7). A targeted DROID subset rerun can be attempted with
+\texttt{uv run --with pyarrow --with requests --with numpy python
+tools/famous\_benchmark\_policy\_rerun.py --benchmark droid\_100 --required}. The proof contract is
+then enforced with \texttt{python3 tools/benchmark\_inflation\_gate.py --required}.
+
+Required artifacts: benchmark-specific WorldEpisode conversion, lineage/timing audit, faithful
+published-protocol policy rerun, paired corrected evaluation under the same metric, and a measured
+baseline-minus-corrected score drop.
+
+Acceptance rule: the gate must contain at least one inflation-proof valid rerun report with
+\texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
+controls, not evidence that published scores are inflated.
 \end{openresult}
 
 \paragraph{Beyond robotics (future work).}

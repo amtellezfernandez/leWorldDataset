@@ -83,6 +83,21 @@ rather than less: a layered scene can be visually faithful while dropping an obj
 role, and a replayable trajectory is still wrong if the action vector is interpreted under a
 different controller contract at deployment time.
 
+\paragraph{Related work.}
+Documenting datasets is not new. Datasheets for Datasets~\citep{gebru2021datasheets} and model cards
+standardize prose descriptions of provenance and intended use; MLCommons
+Croissant~\citep{croissant2024} adds a machine-readable metadata layer for ML-ready datasets; and
+Open X-Embodiment~\citep{openx} aggregates robot data under a shared schema. Evaluation leakage is a
+well-documented driver of the reproducibility crisis in ML-based science~\citep{kapoor2023leakage}.
+WorldEpisode differs in three ways. First, it binds these fields to an \emph{immutable,
+content-addressed world revision} with closed identity, frame/clock, role, and provenance graphs, so
+cross-container agreement is checkable rather than merely described. Second, it is \emph{executable
+and fail-closed}: a one-line preflight blocks a native LeRobot or Rerun artifact that cannot prove
+the contract, and every conversion emits a machine-readable loss report. Third, it treats
+\emph{lineage-disjoint evaluation splits} as a first-class requirement with measured consequences,
+not as optional documentation. It is a contract and validator layered on existing containers, not a
+replacement format or a dataset card.
+
 WorldEpisode is:
 \begin{itemize}[leftmargin=*]
   \item \textbf{storage-neutral}: serializable through LeRobotDataset v3, Rerun, NCore, MCAP, game telemetry, AV logs, or a reference package;
@@ -108,8 +123,9 @@ engine audit, autonomous-driving fleet audit, or real-robot deployment study.
   every stronger claim bounded by an explicit open reproduction gate.
 \end{enumerate}
 
-\paragraph{Reader's guide.} Section~\ref{sec:questions} states the questions any valid state must
-answer, Section~\ref{sec:invariants} formalizes them as five graphs, Section~\ref{sec:contract}
-delivers them as a sidecar contract, Section~\ref{sec:profile} makes the contract executable,
-Section~\ref{sec:evidence} is the empirical core, and Section~\ref{sec:limits} states the boundary
-of every claim.
+\paragraph{Reader's guide.} Section~\ref{sec:questions} states the contract --- five coupled graphs
+and two corpus-level obligations, each mapped to requirement IDs and to the case that tests it.
+Section~\ref{sec:contract} delivers the contract as an executable sidecar. Section~\ref{sec:evidence}
+is the empirical core in three acts: what drift costs, what the contract catches, and how the audit
+scales. Section~\ref{sec:positioning} positions the result, and Section~\ref{sec:limits} states the
+boundary of every claim.

@@ -1,24 +1,22 @@
-\section{The Sidecar Contract}
+\section{The Sidecar Contract, Made Executable}
 \label{sec:contract}
 
-WorldEpisode is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
-dataset to become a USD scene, a game-engine telemetry log to become an AV replay format, or a USD
-scene to become a policy-training table. Instead, it records the relationships those containers
-need in order to agree about the same state: the state revision, persistent entities, space/time
-conventions, transition contract, asset roles, interaction events, provenance, and split lineage.
-\takeaway{WorldEpisode records the cross-container relationships that loaders otherwise leave
-implicit; it does not force any format to become another.}
-
-The sidecar is not a mandate to package a global robot corpus as millions of small folders. The
-single-episode record is the semantic unit. Production datasets add a manifest layer: globally
-scoped namespaces, URI resolvers, shard catalogs, materialized indexes, split manifests, and
-append-only release snapshots. Opening such a corpus starts from the manifest and its indexes; it
-does not require recursively scanning an object store or loading every episode.
+WorldEpisode delivers the contract as a sidecar blueprint around existing formats. It does not ask
+a LeRobot dataset to become a USD scene, a game-engine telemetry log to become an AV replay format,
+or a USD scene to become a policy-training table. Instead, it records the relationships those
+containers need in order to agree about the same state: the state revision, persistent entities,
+space/time conventions, transition contract, asset roles, interaction events, provenance, and split
+lineage. The sidecar is not a mandate to package a global robot corpus as millions of small
+folders: the single-episode record is the semantic unit, and production datasets add a manifest
+layer (namespaces, URI resolvers, shard catalogs, materialized indexes, split manifests,
+append-only snapshots) so that opening a corpus starts from the manifest and its indexes rather
+than from a recursive storage scan.
 
 Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset, log, and telemetry
 containers plug in on the left; world assets and replay targets plug in on the right; the
 WorldEpisode sidecar holds the semantics that would otherwise be scattered across undocumented
-loader assumptions.
+loader assumptions. This gives the paper its central rule: keep native containers for the data they
+are good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
 
 \begin{figure}[t]
 \centering
@@ -57,18 +55,13 @@ runtime targets.}
 \label{fig:worldepisode-bridge}
 \end{figure}
 
-This architecture gives the paper its central rule: keep native containers for the data they are
-good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
+\subsection{Runtime adapters: a meta-simulator contract}
 
-\subsection{WorldEpisode as a Meta-Simulator Contract}
-
-WorldEpisode is not tied to a single rendering or physics engine. It operates as a
-meta-simulator contract: a runtime becomes a trusted target by implementing an adapter that
-preserves the same semantic invariants and emits replay evidence. This keeps the integration
-direction clean. Datasets are not rewritten around simulator-native assumptions; simulators compile
-their scene loading, action interfaces, and replay reports against the WorldEpisode sidecar.
-
-The adapter contract has three layers:
+WorldEpisode is not tied to a single rendering or physics engine. A runtime becomes a trusted
+target by implementing an adapter that preserves the same semantic invariants and emits replay
+evidence, which keeps the integration direction clean: datasets are not rewritten around
+simulator-native assumptions; simulators compile their scene loading, action interfaces, and replay
+reports against the sidecar. The adapter contract has three layers:
 \begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
   \item \textbf{Invariant interface}: ingests immutable world revisions, frame and clock graphs,
   entity identity, representation roles, action channels, asset digests, provenance, and quality
@@ -88,3 +81,40 @@ mapping is emitted but untested, and SAPIEN remains adapter-required. The claim 
 simulator-independent physics but runtime-neutral accountability: every simulator reports against
 the same state contract, so cross-runtime drift becomes measurable rather than hidden inside loader
 conventions.
+
+\subsection{The executable robotics profile}
+\label{sec:profile}
+
+\paragraph{Complete action semantics.}
+An action vector is not portable without its operational contract. Each action channel must declare
+actuator, control mode, parameterization, reference frame, units, absolute/delta/velocity semantics,
+limits, command rate, command timestamp, effective timestamp, latency model, interpolation,
+normalization, gripper semantics, and missing-value policy. A vector such as
+\([0.01,0,0,0,0,0,1]\) is otherwise ambiguous: it could be a tool-frame delta, base-frame delta,
+velocity command, normalized policy output, or delayed target increment.
+
+\paragraph{Implementation artifact.}
+We implement the contract as four executable components: a JSON Schema for structural validity, a
+machine-readable conformance requirement file, an installable semantic validator, and a round-trip
+experiment runner. The validator maps each diagnostic to a stable requirement identifier such as
+\texttt{TIME.001}, \texttt{FRAME.002}, or \texttt{ASSET.002}. The experiment runner takes a
+WorldEpisode package, exports binding-native artifacts plus sidecars, reimports them, compares a
+versioned semantic projection, injects controlled faults, and writes reproducible result artifacts.
+The projection itself is published as \path{conformance/projections/uss-core-23.v0.json} and
+validated against \path{schemas/semantic-projection-v0.schema.json}. URDF Studio remains the initial
+implementation root, but the contract is represented independently in the public schema and
+validator.
+
+\paragraph{One-line preflight.}
+The validator is packaged as \texttt{worldepisode}. A blocking preflight can be run from the shell
+with \texttt{worldepisode preflight <dataset-or-manifest>} or from a training script with a single
+Python call such as \texttt{preflight\_lerobot(dataset.root).raise\_if\_failed()}. Native LeRobot
+folders and Rerun \texttt{.rrd} recordings are recognized directly; without a WorldEpisode
+manifest or sidecar, they fail closed on missing world revision, entity identity, representation
+role, action timing, frame/clock, split-lineage, and conversion-loss controls. This makes the
+semantic audit a pre-training check rather than a separate post-hoc documentation exercise. The
+repository also includes an active LeRobotDataset v3 converter, a scene-leakage and split-manifest
+tool, a control-replay tool, a dependency-free replay-adapter conformance harness, a dataset-scale
+manifest audit and performance benchmark, a clean-room reader that does not import
+\texttt{worldepisode}, and a meta-simulator adapter report covering MuJoCo, Genesis, Isaac, and
+SAPIEN. Section~\ref{sec:evidence} presents what each one measures.

@@ -1,13 +1,15 @@
-\section{Evidence: Failure Case Studies}
+\section{Evidence: What the Audit Finds}
 \label{sec:evidence}
 
-The experiments are written as failure investigations rather than as isolated unit tests. Each one
-starts from a failure mode that can make an embodied or virtual-agent result look better, cleaner,
-or more reproducible than it really is. All measured evidence here is robotics; two deterministic
-non-robotics pilots are deferred to the future-work discussion in Section~\ref{sec:limits}. Amber
-boxes mark work that is executable but not counted as a paper result: each states the command path,
-required artifacts, and acceptance rule needed before the claim can move from ``open'' to
-``measured.''
+The experiments are written as failure investigations rather than as isolated unit tests, and they
+run in three acts: what drift costs when it goes uncaught (Cases 1--3), what the contract catches
+and repairs (Cases 4--6), and how the same audit scales beyond one dataset (Cases 7--8). All
+measured evidence here is robotics; two deterministic non-robotics pilots are deferred to
+Section~\ref{sec:limits}. Results that are executable but not yet measured are marked open inline;
+their exact commands, required artifacts, and acceptance rules are consolidated in the open-gate
+boxes in Section~\ref{sec:limits}.
+
+\subsection{What drift costs}
 
 \paragraph{Case 1: scene-lineage leakage in evaluation splits (\texttt{SPLIT.001}).}
 The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
@@ -23,42 +25,74 @@ drops to 0.000. Mean episode normalized RMSE rises from 0.183 to 0.363, a \(1.98
 This is an offline action-imitation benchmark, not a physical rollout claim or a claim about
 state-of-the-art LeRobot policies. Its purpose is narrower and diagnostic: it exposes that a
 conventional split can reward memorizing a background world rather than learning a transferable
-manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
-ACT, Diffusion Policy, or another LeRobot-native policy.\collabmark{C1}
+manipulation behavior.\collabmark{C1}
 \takeaway{The number moved with the split, not the policy: a random split scores 0.850 by memorizing
 the scene, and a lineage-disjoint split drops the same probe to 0.000.}
 
-To verify that the split packages are executable beyond the original MLP probe, we also run a
-closed-form temporal ridge baseline over the committed compact LeRobot state/action packages. The
-baseline uses a three-frame state history and no video. It reaches 0.925 offline success on the
-random episode split and 0.420 on the scene-disjoint split, a 0.505 success-rate drop, while mean
-episode normalized RMSE rises from 0.157 to 0.255. This is still not ACT or Diffusion and not a
-rollout result, but it shows that the leakage penalty survives a second temporal policy-style
-baseline executed directly on the packaged LeRobot splits.
+The leakage penalty survives a second model class: a closed-form temporal ridge baseline with a
+three-frame state history, executed directly on the committed compact LeRobot state/action split
+packages, reaches 0.925 offline success on the random episode split and 0.420 on the scene-disjoint
+split, a 0.505 success-rate drop (mean episode normalized RMSE 0.157 to 0.255); this is still not
+ACT or Diffusion and not a rollout result. A generated
+memorization pilot with world/entity lineage labels shows the same shape: random splits reach 1.000
+accuracy while world-disjoint and entity-disjoint splits fall to 0.500 and 0.562.
 
-To keep that stronger claim from being implied before it is measured, the repository also emits an
+To keep the stronger claim from being implied before it is measured, the repository also emits an
 ACT/Diffusion gate from the same split manifest: train/test episode allowlists, four virtual split
 manifests with 27 digest-verified source files, four compact physical LeRobot state/action split
 packages totaling 241{,}470 rows, four LeRobot-native training jobs (\texttt{act} and
 \texttt{diffusion} on random and scene-disjoint splits), and a simulator or physical rollout
 contract. The gate is intentionally open in this release; no ACT, Diffusion Policy, IsaacLab, or
 hardware success number is claimed, and the compact packages omit video payloads until source
-videos are mirrored with committed digests.
+videos are mirrored with committed digests. The command path and acceptance rule are stated in
+Section~\ref{sec:limits}.
 
-\begin{openresult}{ACT/Diffusion and rollout impact}
-Status: open. To close this gate, first regenerate the split packages and LeRobot job specs with
-\texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}. Then run the generated jobs with
-\texttt{bash docs/experiments/lerobot\_policy\_gate/run\_lerobot\_policy\_jobs.sh} inside a
-LeRobot training environment.
+\paragraph{Case 2: action-timing and replay drift (\texttt{ACTION.002}).}
+LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
+commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}. On
+the public SO-101 trajectory, WorldEpisode records policy-output, enqueue, queue-consume, and
+motor-receive timestamp semantics, plus zero-order-hold interpolation and a constant-frame latency
+model.
 
-Required artifacts: policy checkpoint digests, train/eval configs and seeds, offline action
-metrics for random and scene-disjoint splits, rollout traces or videos with content digests, and an
-updated \path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+Estimating the effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the
+validation suffix, naive command-time alignment has joint RMSE 4.732 degrees. Timestamp-aware
+alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. We then execute the same
+WorldEpisode action contract through two minimal six-joint position-servo replay adapters. In
+MuJoCo, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
+degrees, a \(2.19\times\) improvement. Genesis same-trace replay gives the same measured profile:
+3.425 degrees under naive command-time replay and 1.563 degrees under timestamp-aware replay, also
+a \(2.19\times\) improvement. The two engines agree to roughly seven significant figures
+(MuJoCo 3.4247237 versus Genesis 3.4247236 naive) precisely because both integrate the same minimal
+six-joint position-servo model; we therefore report this as an adapter-conformance result --- the
+same action contract executes consistently across runtimes --- and explicitly not as evidence that
+the engines' underlying physics agree. The Isaac adapter is emitted as a ready mapping from the same
+contract, but is not tested in this environment. The failure avoided here is a common one: blaming
+a simulator or controller when the dataset never said when the command actually took effect.
+\takeaway{Declaring when a command actually takes effect cuts replay error roughly in half; the drift
+was a missing timing contract, not a bad simulator.}
 
-Acceptance rule: at least one ACT or Diffusion Policy run must report both split protocols, and at
-least one simulator or physical rollout report must use the same split manifest. Until then, the
-paper claims only the offline Torch probe and the prepared gate.
-\end{openresult}
+A dependency-free replay-adapter conformance harness guards additional runtime adapters: on
+constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
+naive scheduler fails while the contract-aware scheduler matches the expected trace with zero
+numerical error. Together with URDF Studio's shared \texttt{SimBackend} conformance suite and its
+one-episode MuJoCo--Genesis comparison report, these results close the narrow same-trace
+second-runtime replay gate for the minimal joint replay profile; they do not claim contact-rich
+task replay, Isaac/SAPIEN execution, or simulator-independent behavior.\collabmark{C5}
+
+\paragraph{Case 3: real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
+Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
+interactive physical assets. WorldEpisode targets the contract between those layers and the source
+robot episode. We therefore add two deterministic ablations. In the action-contract ablation, a
+policy succeeds in a simulator that interprets its output as absolute joint-radian targets, but the
+same vector fails under a deployment proxy whose controller expects delta-degree commands. In the
+representation-role ablation, an appearance-only Gaussian export drops the collision proxy; the
+straight-line policy succeeds in simulation and collides with the real foreground geometry under
+the deployment proxy. In both ablations the drifted contract has 2/2 simulated successes and 0/2
+deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
+controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
+enough without action contracts and representation roles.
+\takeaway{A visually faithful reconstruction still fails at deployment without the action contract and
+collision role, so appearance alone does not make a scene replay-safe.}
 
 Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
 families where explicit state semantics alter the outcome.
@@ -124,74 +158,9 @@ better for leakage and replay RMSE; higher is better for semantic retention.}
 \label{fig:evaluation-dashboard}
 \end{figure}
 
-\paragraph{Case 2: loss-explicit dataset conversion (\texttt{CONVERT.001}).}
-To test an actual LeRobotDataset rather than only a capability model, we implement
-\(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
-on five-episode batches from two pinned public datasets:
-\path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace} and
-\path{lerobot/pusht}~\citep{lerobot_pusht}. The converter downloads the real Parquet metadata and
-data shards, builds a schema-valid WorldEpisode manifest and sidecar, exports a compact
-LeRobotDataset v3 package, reads it back, and asserts exact equality.
+\subsection{What the contract catches}
 
-This is a two-dataset batch audit for active conversion, not a coverage claim for all LeRobot
-datasets. Across ten episodes, the round trip preserves 1,935 rows of source-native action tensors,
-1,935 state rows, sample timestamps, frame indices, episode indices, global sample indices, task
-indices, and camera video timestamp ranges with maximum absolute error 0.0. It also preserves the
-derived physical-frame records through the sidecar. More importantly, it does not fake missing
-semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
-reported as source-absent rather than guessed. This is the difference between a convenient
-conversion and an auditable one.\collabmark{C7}
-\takeaway{The round trip loses nothing it can preserve (maximum error 0.0) and explicitly names the
-fields it cannot recover, instead of silently inventing them.}
-
-\paragraph{Case 3: action-timing and replay drift (\texttt{ACTION.002}).}
-LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
-commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}. On
-the public SO-101 trajectory, WorldEpisode records policy-output, enqueue, queue-consume, and
-motor-receive timestamp semantics, plus zero-order-hold interpolation and a constant-frame latency
-model.
-
-Estimating the effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the
-validation suffix, naive command-time alignment has joint RMSE 4.732 degrees. Timestamp-aware
-alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. We then execute the same
-WorldEpisode action contract through two minimal six-joint position-servo replay adapters. In
-MuJoCo, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
-degrees, a \(2.19\times\) improvement. Genesis same-trace replay gives the same measured profile:
-3.425 degrees under naive command-time replay and 1.563 degrees under timestamp-aware replay, also
-a \(2.19\times\) improvement. The two engines agree to roughly seven significant figures
-(MuJoCo 3.4247237 versus Genesis 3.4247236 naive) precisely because both integrate the same minimal
-six-joint position-servo model; we therefore report this as an adapter-conformance result --- the
-same action contract executes consistently across runtimes --- and explicitly not as evidence that
-the engines' underlying physics agree. The Isaac adapter is emitted as a ready mapping from the same
-contract, but is not tested in this environment. The failure avoided here is a common one: blaming
-a simulator or controller when the dataset never said when the command actually took effect.
-
-A dependency-free replay-adapter conformance harness guards additional runtime adapters: on
-constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
-naive scheduler fails while the contract-aware scheduler matches the expected trace with zero
-numerical error. Together with URDF Studio's shared \texttt{SimBackend} conformance suite and its
-one-episode MuJoCo--Genesis comparison report, these results close the narrow same-trace
-second-runtime replay gate for the minimal joint replay profile; they do not claim contact-rich
-task replay, Isaac/SAPIEN execution, or simulator-independent behavior.\collabmark{C5}
-\takeaway{Declaring when a command actually takes effect cuts replay error roughly in half; the drift
-was a missing timing contract, not a bad simulator.}
-
-\paragraph{Case 4: real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
-Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
-interactive physical assets. WorldEpisode targets the contract between those layers and the source
-robot episode. We therefore add two deterministic ablations. In the action-contract ablation, a
-policy succeeds in a simulator that interprets its output as absolute joint-radian targets, but the
-same vector fails under a deployment proxy whose controller expects delta-degree commands. In the
-representation-role ablation, an appearance-only Gaussian export drops the collision proxy; the
-straight-line policy succeeds in simulation and collides with the real foreground geometry under
-the deployment proxy. In both ablations the drifted contract has 2/2 simulated successes and 0/2
-deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
-controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
-enough without action contracts and representation roles.
-\takeaway{A visually faithful reconstruction still fails at deployment without the action contract and
-collision role, so appearance alone does not make a scene replay-safe.}
-
-\paragraph{Case 5: validator fault detection (all requirement IDs).}
+\paragraph{Case 4: validator fault detection (all requirement IDs).}
 We inject 14 faults into the baseline package: missing clock domains, incomplete cross-clock
 mappings, unknown frames, missing transform intervals, unknown event entities, missing
 representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
@@ -199,12 +168,11 @@ missing delta sequences, missing provenance, and missing quality records. The va
 14 expected requirement failures with 1.000 recall and 0.933 precision. Two hand-authored
 independent fixtures also trigger the expected diagnostics. The single false-positive requirement is
 useful rather than harmful: removing an action reference frame triggers both \texttt{ACTION.001} and
-the downstream \texttt{FRAME.001} reference check.
-
-The same suite includes a simple unit sanity check from \path{lerobot/svla_so101_pickplace}. The
-first mirrored SO-101 frame has six joint values with maximum magnitude 98.924 in degrees and 1.727
-after radian conversion. Treating those degree values as radians would violate the action/state
-unit contract even though the tensor shape is valid.
+the downstream \texttt{FRAME.001} reference check. The same suite includes a unit sanity check from
+\path{lerobot/svla_so101_pickplace}: the first mirrored SO-101 frame has six joint values with
+maximum magnitude 98.924 in degrees and 1.727 after radian conversion, so treating those degree
+values as radians would violate the action/state unit contract even though the tensor shape is
+valid.
 
 To move beyond synthetic mutations, the experiment runner also writes a pilot natural-source corpus
 from committed public LeRobot artifacts and source-level public benchmark metadata. Across
@@ -230,70 +198,28 @@ injected-fault fixtures above plus one valid baseline and two independently auth
 independent fixture expects three requirement failures, so 17 fixtures carry 18 expected
 instances). This is not external adoption, but it verifies that the public artifacts are
 readable outside the reference SDK path.
-\takeaway{Every injected physical-coherence fault is caught with full recall, and the same validator
-runs as a single blocking line before a training job.}
 
-\paragraph{Case 6: dataset-scale manifests and indexes (\texttt{DATASET.001}).}
-To address production scale, we audit the dataset manifest in
-\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
-three resolver schemes, three registries, three shards, two indexes, one append-only version, and
-nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
-It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
-split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
-describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
-and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
-and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
-the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
-recursive storage discovery.
-\takeaway{A billion-episode-capacity corpus opens from its manifest and indexes in milliseconds,
-without a recursive storage scan.}
+\paragraph{Case 5: loss-explicit dataset conversion (\texttt{CONVERT.001}).}
+To test an actual LeRobotDataset rather than only a capability model, we implement
+\(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
+on five-episode batches from two pinned public datasets:
+\path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace} and
+\path{lerobot/pusht}~\citep{lerobot_pusht}. The converter downloads the real Parquet metadata and
+data shards, builds a schema-valid WorldEpisode manifest and sidecar, exports a compact
+LeRobotDataset v3 package, reads it back, and asserts exact equality.
 
-\paragraph{Case 7: source-level audit of famous benchmarks (\texttt{SPLIT.001}).}
-The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
-source-level call-out audit over five famous public robot-learning benchmarks: Open
-X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
-LIBERO~\citep{libero}, and CALVIN~\citep{calvin}. The audit asks whether public metadata exposes
-lineage splits, content-addressed world revisions, persistent entity identity, action timing
-contracts, frame/clock graphs, and replay or conversion-loss reports. All five benchmarks have at
-least one high-severity open control; the three real-robot datasets have five each. This is a
-call-out target list, not a claim that their published scores are inflated: a separate
-inflation-proof gate requires a benchmark-specific WorldEpisode conversion, lineage/timing audit,
-published-policy rerun, corrected evaluation, and measured score drop before any famous benchmark
-can be labeled inflated. A targeted DROID-100 LeRobot-subset rerun tool executes that path over 100
-public episodes and 32{,}212 frames. Its lineage source is only a task/camera-schema proxy, not a
-physical scene identifier; the corrected proxy split scores 0.516 versus 0.496 for the random
-split, so the measured score drop is negative. The proof gate therefore records one executed DROID
-subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
-famous-benchmark inflation claims in this release.
+This is a two-dataset batch audit for active conversion, not a coverage claim for all LeRobot
+datasets. Across ten episodes, the round trip preserves 1,935 rows of source-native action tensors,
+1,935 state rows, sample timestamps, frame indices, episode indices, global sample indices, task
+indices, and camera video timestamp ranges with maximum absolute error 0.0. It also preserves the
+derived physical-frame records through the sidecar. More importantly, it does not fake missing
+semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
+reported as source-absent rather than guessed. This is the difference between a convenient
+conversion and an auditable one.\collabmark{C7}
+\takeaway{The round trip loses nothing it can preserve (maximum error 0.0) and explicitly names the
+fields it cannot recover, instead of silently inventing them.}
 
-\begin{openresult}{famous-benchmark score-inflation proof}
-Status: open. A targeted DROID subset rerun can be attempted with
-\texttt{uv run --with pyarrow --with requests --with numpy python
-tools/famous\_benchmark\_policy\_rerun.py --benchmark droid\_100 --required}. The proof contract is
-then enforced with \texttt{python3 tools/benchmark\_inflation\_gate.py --required}.
-
-Required artifacts: benchmark-specific WorldEpisode conversion, lineage/timing audit, faithful
-published-protocol policy rerun, paired corrected evaluation under the same metric, and a measured
-baseline-minus-corrected score drop.
-
-Acceptance rule: the gate must contain at least one inflation-proof valid rerun report with
-\texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
-controls, not evidence that published scores are inflated.
-\end{openresult}
-\collabmark{C2}
-\takeaway{The famous benchmarks lack the public controls needed to rule out leakage; we flag that gap
-but refuse to call any score inflated without a measured rerun.}
-
-\paragraph{Case 8: world-grounded counterfactual augmentation (\texttt{ENTITY.001}).}
-We evaluate a shifted-camera/object-displacement regression task. Observations-only
-nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
-unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame
-identity and counterfactual camera augmentation increase proxy success to 0.592 over 120
-deterministic test cases.
-\takeaway{Grounding augmentation in world-frame identity beats both raw observations and unstructured
-3D side files on shifted-camera tests.}
-
-\paragraph{Binding retention.}
+\paragraph{Case 6: binding retention across containers (\texttt{CONVERT.001}).}
 The same executable artifacts measure how much of the semantic contract is preserved by native
 containers alone. Each binding writes a native payload and a WorldEpisode sidecar, then the
 experiment reimports both and checks exact equality against the versioned \texttt{uss-core-23}
@@ -310,8 +236,6 @@ of the contract, not an emergent property; the informative measurement is the na
 container leaves. A
 Gaussian asset binding alone preserves 17\% natively and 30\% with limited sidecar metadata,
 confirming that an asset format is not an episode--world contract.
-\takeaway{Native containers preserve only 17--39\% of the semantic contract and the sidecar restores
-it, so an asset or log format alone is not an episode--world contract.}
 
 \begin{table}[htbp]
 \centering
@@ -331,7 +255,39 @@ glTF Gaussian asset & 0.174 & 0.304 \\
 \end{tabular}
 \end{table}
 
-Finally, a generated memorization pilot with world/entity lineage labels shows the same shape:
-random splits reach 1.000 accuracy while world-disjoint and entity-disjoint splits fall to 0.500
-and 0.562, motivating lineage constraints beyond \texttt{world\_lineage} alone.
+\subsection{Scaling the audit}
+
+\paragraph{Case 7: source-level audit of famous benchmarks (\texttt{SPLIT.001}).}
+The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
+source-level call-out audit over five famous public robot-learning benchmarks: Open
+X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
+LIBERO~\citep{libero}, and CALVIN~\citep{calvin}. The audit asks whether public metadata exposes
+lineage splits, content-addressed world revisions, persistent entity identity, action timing
+contracts, frame/clock graphs, and replay or conversion-loss reports. All five benchmarks have at
+least one high-severity open control; the three real-robot datasets have five each. This is a
+call-out target list, not a claim that their published scores are inflated: a separate
+inflation-proof gate requires a benchmark-specific WorldEpisode conversion, lineage/timing audit,
+published-policy rerun, corrected evaluation, and measured score drop before any famous benchmark
+can be labeled inflated. A targeted DROID-100 LeRobot-subset rerun tool executes that path over 100
+public episodes and 32{,}212 frames. Its lineage source is only a task/camera-schema proxy, not a
+physical scene identifier; the corrected proxy split scores 0.516 versus 0.496 for the random
+split, so the measured score drop is negative. The proof gate therefore records one executed DROID
+subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
+famous-benchmark inflation claims in this release; its command path and acceptance rule are stated
+in Section~\ref{sec:limits}.\collabmark{C2}
+\takeaway{The famous benchmarks lack the public controls needed to rule out leakage; we flag that gap
+but refuse to call any score inflated without a measured rerun.}
+
+\paragraph{Case 8: dataset-scale manifests and indexes (\texttt{DATASET.001}).}
+To address production scale, we audit the dataset manifest in
+\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
+three resolver schemes, three registries, three shards, two indexes, one append-only version, and
+nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
+It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
+split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
+describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
+and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
+and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
+the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
+recursive storage discovery.
 \FloatBarrier

@@ -220,12 +220,15 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if "\\begin{openresult}{results not claimed in this release}" not in paper:
         errors.append("paper limitations section must include the amber open-result callout")
     evaluation = PAPER_EVALUATION.read_text(encoding="utf-8") if PAPER_EVALUATION.exists() else ""
+    # The detailed gate boxes live in the limitations section (the evaluation cases
+    # reference them); accept either location so the callouts stay renderable.
+    boxed_sections = evaluation + paper
     for callout in (
         "\\begin{openresult}{ACT/Diffusion and rollout impact}",
         "\\begin{openresult}{famous-benchmark score-inflation proof}",
     ):
-        if callout not in evaluation:
-            errors.append(f"paper evaluation section must include {callout}")
+        if callout not in boxed_sections:
+            errors.append(f"paper evaluation or limitations section must include {callout}")
     return errors
 
 

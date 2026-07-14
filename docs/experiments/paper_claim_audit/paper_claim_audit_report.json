@@ -346,11 +346,9 @@
     "paper/arxiv/sections/conclusion.tex",
     "paper/arxiv/sections/discussion.tex",
     "paper/arxiv/sections/evaluation.tex",
-    "paper/arxiv/sections/format.tex",
     "paper/arxiv/sections/introduction.tex",
     "paper/arxiv/sections/limitations.tex",
     "paper/arxiv/sections/open_contributions.tex",
-    "paper/arxiv/sections/reference_implementation.tex",
     "paper/arxiv/sections/requirements.tex"
   ],
   "schema": "worldepisode_paper_claim_audit_v1",

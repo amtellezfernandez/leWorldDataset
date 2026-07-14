@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "9a64ccfdfd6eb47ab1ad7ba3515a3c9518cbb30f2c0e5fce351b988f24966b80"
+      "sha256": "2743fa1e4db888f1b795208fe48e6225a5b77a43badbfed506a9e6548eac03d1"
     },
     {
       "category": "public_evidence",
@@ -70,7 +70,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/main.tex",
-      "sha256": "4a6e4e4690738141d8dd0eebc710b4d9c9cc5ef22d1e333acf70752980b8f40c"
+      "sha256": "643a490adb1113e5b68b66dc489f736a90806b1d212b00ff9b9b903dd1338969"
     },
     {
       "category": "public_evidence",
@@ -79,7 +79,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "6fae876b5002653f08341257030b46ade7b62cad609828951464518c76b82eab"
+      "sha256": "0b65ca712af93efbc5055f1e3b9f7748b4e0477f5b7d9efd7840b26f6d00b476"
     },
     {
       "category": "public_evidence",
@@ -88,7 +88,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "7847f95f89d35315a866ac9e866c91c05b278d466350547964da65b258b7f0a6"
+      "sha256": "a766b1cc266a23f7cee07d4b640eac7a63c6a8f512f76a5f4378cc2f45cbf6b5"
     },
     {
       "category": "public_evidence",
@@ -187,7 +187,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
-      "sha256": "42bf840c048b1eb7ed90c3601b45381386ef8ad1ba14533f105bc9fa6a73543d"
+      "sha256": "f3cbcc4b9c58182d3b00cbf994ba318a4c69ce26f2ae77260f75fb27fc9ba36a"
     },
     {
       "category": "public_evidence",
@@ -493,7 +493,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/open_reproduction_gates.py",
-      "sha256": "569e40c4830f8b0e1bc698353cc5b753be4bb1f4567532824ed6b70399f193fe"
+      "sha256": "236d62c79b7f3e825569d9c4e5df80f1fd59f5a47f361da1566ad730350ef679"
     },
     {
       "category": "release_script",
