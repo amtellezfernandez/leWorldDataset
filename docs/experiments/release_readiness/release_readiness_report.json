@@ -1,0 +1,395 @@
+{
+  "aggregate": {
+    "blocked_stronger_claim_count": 4,
+    "blocking_error_count": 0,
+    "check_count": 34,
+    "passed_count": 34,
+    "warning_failure_count": 0
+  },
+  "artifacts": {
+    "markdown": "docs/experiments/release_readiness/README.md",
+    "report": "docs/experiments/release_readiness/release_readiness_report.json"
+  },
+  "audit_date": "2026-07-13",
+  "blocked_stronger_claims": [
+    {
+      "blocked": true,
+      "blocker_id": "POLICY.ROLL.001",
+      "claim": "state-of-the-art policy or physical rollout impact",
+      "current_evidence": {
+        "act_diffusion_gate": "ready_not_executed",
+        "temporal_policy_baseline": {
+          "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+          "random_episode_nrmse_mean": 0.1572614852380231,
+          "random_episode_success_rate": 0.925,
+          "scene_disjoint_nrmse_mean": 0.25457434248891586,
+          "scene_disjoint_success_rate": 0.42,
+          "success_rate_drop": 0.5050000000000001
+        }
+      },
+      "required_evidence": "ACT or Diffusion Policy metrics plus high-fidelity simulator or hardware rollout reports."
+    },
+    {
+      "blocked": true,
+      "blocker_id": "BENCH.INFLATE.001",
+      "claim": "famous benchmark published scores are inflated",
+      "current_evidence": {
+        "audited_benchmark_count": 5,
+        "executed_rerun_report_count": 1,
+        "measured_inflation_claims": 0,
+        "minimum_score_drop_for_inflation": 0.05,
+        "ready_for_inflation_claim": false,
+        "rerun_report_count": 1,
+        "valid_rerun_report_count": 0
+      },
+      "required_evidence": "valid benchmark-specific conversion, lineage/timing audit, published-protocol rerun, corrected evaluation, and score delta."
+    },
+    {
+      "blocked": true,
+      "blocker_id": "NATURAL.001",
+      "claim": "natural failure prevalence is maintainer-confirmed",
+      "current_evidence": {
+        "dataset_count": 5,
+        "dataset_report_count": 5,
+        "dataset_specific_diagnostics_ready": true,
+        "maintainer_feedback_satisfied": false,
+        "source_level_only_report_count": 2
+      },
+      "required_evidence": "maintainer agreement/disagreement records for prevalence; pinned dataset-specific conversions for source-level benchmark gaps."
+    },
+    {
+      "blocked": false,
+      "blocker_id": "SIM.001",
+      "claim": "runtime-neutral replay equivalence across contact-rich simulator rollouts",
+      "current_evidence": {
+        "genesis_same_trace_tested": true,
+        "meta_simulator_aggregate": {
+          "adapter_required_count": 1,
+          "compliance_layer_count": 3,
+          "ready_untested_adapter_count": 1,
+          "runtime_target_count": 4,
+          "tested_adapter_count": 2
+        }
+      },
+      "required_evidence": "same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter."
+    },
+    {
+      "blocked": true,
+      "blocker_id": "ADOPT.001",
+      "claim": "mature external standard adoption",
+      "current_evidence": "internal clean-room reader only",
+      "required_evidence": "external independent implementation or external compatible dataset release."
+    }
+  ],
+  "checks": [
+    {
+      "boundary": "",
+      "check_id": "DOC.001",
+      "evidence": "README.md (6198 bytes)",
+      "name": "top-level README exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.002",
+      "evidence": "LICENSE (254 bytes)",
+      "name": "license exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.003",
+      "evidence": "GOVERNANCE.md (1298 bytes)",
+      "name": "governance exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.004",
+      "evidence": "spec/worldepisode-v0.1.md (12268 bytes)",
+      "name": "WorldEpisode RFC spec exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.005",
+      "evidence": "spec/le-world-layout-v0.1.md (5602 bytes)",
+      "name": "world layout RFC spec exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.006",
+      "evidence": "WorldEpisode.pdf (477191 bytes)",
+      "name": "paper PDF exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.007",
+      "evidence": "paper/arxiv/main.tex (6519 bytes)",
+      "name": "paper source exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.008",
+      "evidence": "docs/reviewer-concern-matrix.md (18269 bytes)",
+      "name": "reviewer concern matrix exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.009",
+      "evidence": "docs/experiments/results.json (180738 bytes)",
+      "name": "controlled results exist",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.010",
+      "evidence": "CITATION.cff (427 bytes)",
+      "name": "public citation metadata exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "DOC.011",
+      "evidence": ".github/workflows/ci.yml (1402 bytes)",
+      "name": "CI workflow exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "CI.001",
+      "evidence": "missing=[]",
+      "name": "CI workflow runs evidence gates",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.001",
+      "evidence": "pyproject.toml (1324 bytes)",
+      "name": "pyproject exists",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.002",
+      "evidence": "name='worldepisode', version='0.1.0'",
+      "name": "package metadata parses",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.003",
+      "evidence": "worldepisode='worldepisode.cli:main'",
+      "name": "console script is exposed",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.004",
+      "evidence": "license and authors present in pyproject.toml",
+      "name": "license and authors are declared",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PKG.005",
+      "evidence": "docs/experiments/package_install_smoke/package_install_smoke_report.json wheel=worldepisode-0.1.0-py3-none-any.whl",
+      "name": "wheel install smoke passes",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.001",
+      "evidence": "schema_errors=0 and semantic_errors=0",
+      "name": "baseline manifest validates",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.002",
+      "evidence": "two pinned public LeRobot batch reports with zero source-native errors",
+      "name": "active LeRobot round trips are exact",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.003",
+      "evidence": "random=1.0, disjoint=0.0, drop=0.85",
+      "name": "scene leakage result is measured",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.004",
+      "evidence": "policy jobs and compact split packages exist; metrics are not claimed",
+      "name": "ACT/Diffusion gate is explicit and not overclaimed",
+      "passed": true,
+      "severity": "warning"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.011",
+      "evidence": "random=0.925, scene=0.42, drop=0.5050000000000001",
+      "name": "temporal policy baseline is measured",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.005",
+      "evidence": "reruns=1, valid=0, claims=0",
+      "name": "famous benchmark inflation gate is fail-closed",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.006",
+      "evidence": "dataset manifest audit plus generated billion-episode-capacity catalog benchmark",
+      "name": "dataset-scale manifest and generated catalog checks pass",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.007",
+      "evidence": "status=pass, recall=1.0",
+      "name": "clean-room reader consumes public schema/fixtures",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.008",
+      "evidence": "LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance",
+      "name": "replay timing evidence is executable",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.009",
+      "evidence": "controlled proxy and runtime-neutral contract, not hardware/Isaac claim",
+      "name": "real-to-sim and meta-simulator boundaries are explicit",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "EVID.010",
+      "evidence": "datasets=5, reports=5, source_level_only=2; maintainer feedback still open",
+      "name": "natural failure corpus has scoped evidence",
+      "passed": true,
+      "severity": "warning"
+    },
+    {
+      "boundary": "",
+      "check_id": "GATE.001",
+      "evidence": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=4",
+      "name": "open reproduction gate index validates",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "GATE.002",
+      "evidence": "uncovered=[], commandless=[]",
+      "name": "blocked claims have reproduction commands",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "CLAIM.001",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=13, failed=0",
+      "name": "paper claims are evidence-backed",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PUBLIC.001",
+      "evidence": "docs/experiments/public_maturity/public_maturity_report.json violations=0",
+      "name": "public surface avoids draft-only framing",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "MANIFEST.001",
+      "evidence": "status=pass, entries=61, normalized=4",
+      "name": "release manifest validates",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "SUBMIT.001",
+      "evidence": "status=pass, claims=13, open_gates=4",
+      "name": "submission packet validates",
+      "passed": true,
+      "severity": "error"
+    }
+  ],
+  "claim_boundary": "A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full contact-rich simulator-neutral rollout claims are complete.",
+  "full_standard_ready": false,
+  "open_reproduction_gates": {
+    "aggregate": {
+      "command_count": 7,
+      "gate_count": 4,
+      "open_not_claimed_count": 4
+    },
+    "artifact": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
+    "validation": {
+      "errors": [],
+      "passed": true
+    }
+  },
+  "paper_claim_audit": {
+    "aggregate": {
+      "claim_count": 13,
+      "failed_claim_ids": [],
+      "failed_count": 0,
+      "missing_paper_pattern_count": 0,
+      "passed_count": 13
+    },
+    "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
+    "status": "pass"
+  },
+  "rfc_release_ready": true,
+  "schema": "worldepisode_release_readiness_v1",
+  "status": "rfc_release_ready",
+  "wayspan_pattern_reused": {
+    "adapted_principles": [
+      "tracked compact evidence artifacts",
+      "strict claim gate separated from status reports",
+      "public-review commands separated from private/heavy runtime work",
+      "claim-ready flags plus explicit remaining blockers"
+    ],
+    "source": "~/sota/wayspan/docs/benchmark_evidence_workflow.md"
+  }
+}

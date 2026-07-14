@@ -1,0 +1,88 @@
+{
+  "action_components": [
+    "shoulder_pan.pos",
+    "shoulder_lift.pos",
+    "elbow_flex.pos",
+    "wrist_flex.pos",
+    "wrist_roll.pos",
+    "gripper.pos"
+  ],
+  "episode_index": 2,
+  "physical_frames": [
+    {
+      "components": [
+        "shoulder_pan.pos",
+        "shoulder_lift.pos",
+        "elbow_flex.pos",
+        "wrist_flex.pos",
+        "wrist_roll.pos",
+        "gripper.pos"
+      ],
+      "frame_id": "so100_follower/joint_space",
+      "role": "state_action_joint_space",
+      "source_feature_keys": [
+        "action",
+        "observation.state"
+      ],
+      "source_status": "joint component names provided; units and robot/world calibration absent in LeRobot source",
+      "units_status": "source_absent"
+    },
+    {
+      "frame_id": "so100_follower/observation.images.side",
+      "role": "camera_sensor_frame",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "source_feature_keys": [
+        "observation.images.side"
+      ],
+      "source_status": "camera stream provided; extrinsics absent in LeRobot source",
+      "transform_status": "source_absent",
+      "video_info": {
+        "has_audio": false,
+        "video.channels": 3,
+        "video.codec": "av1",
+        "video.fps": 30,
+        "video.height": 480,
+        "video.is_depth_map": false,
+        "video.pix_fmt": "yuv420p",
+        "video.width": 640
+      }
+    },
+    {
+      "frame_id": "so100_follower/observation.images.up",
+      "role": "camera_sensor_frame",
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "source_feature_keys": [
+        "observation.images.up"
+      ],
+      "source_status": "camera stream provided; extrinsics absent in LeRobot source",
+      "transform_status": "source_absent",
+      "video_info": {
+        "has_audio": false,
+        "video.channels": 3,
+        "video.codec": "av1",
+        "video.fps": 30,
+        "video.height": 480,
+        "video.is_depth_map": false,
+        "video.pix_fmt": "yuv420p",
+        "video.width": 640
+      }
+    }
+  ],
+  "profile": "worldepisode-lerobot-v3-sidecar-0.1",
+  "source_absent_fields": [
+    "camera extrinsics",
+    "robot/world calibration transform",
+    "action units",
+    "controller latency model"
+  ],
+  "source_repo_id": "lerobot/svla_so101_pickplace",
+  "source_revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+}

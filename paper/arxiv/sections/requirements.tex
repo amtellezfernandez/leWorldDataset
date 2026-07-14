@@ -1,0 +1,149 @@
+\section{The Contract: Five Graphs and Two Corpus Obligations}
+\label{sec:questions}
+
+A robot-learning episode must answer a practical question: what must be known before it can be
+safely converted, replayed, synchronized, augmented, or used for evaluation? WorldEpisode answers
+it with five coupled graphs at the level of a single episode record, two corpus-level obligations
+that follow from those graphs, and one scale requirement for production datasets.
+Table~\ref{tab:contract-map} maps each question to the structure that answers it, the requirement
+IDs that make it checkable, and the case in Section~\ref{sec:evidence} that tests it.
+WorldEpisode specializes these requirements for robot-learning episodes.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{The contract at a glance: each question a valid episode must answer, the graph or
+obligation that answers it, the executable requirement IDs, and the evidence case that tests it.}
+\label{tab:contract-map}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.29\linewidth}
+                >{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.26\linewidth}
+                >{\raggedright\arraybackslash}p{0.12\linewidth}@{}}
+\toprule
+Question & Answered by & Requirements & Tested in \\
+\midrule
+Which state revision am I in? & world revision + ordered deltas & \texttt{WORLD.001}, \texttt{TRACE.001} & Case 4 \\
+What entities does it contain? & identity graph & \texttt{ENTITY.001} & Case 4 \\
+Where and when is it valid? & frame + clock graphs & \texttt{FRAME.001--2}, \texttt{TIME.001--2}, \texttt{ACTION.001--2} & Cases 2, 4 \\
+What is each asset safe for? & representation-role graph & \texttt{REP.001}, \texttt{ASSET.001--2} & Cases 3, 4 \\
+What actually happened? & temporal-event graph & \texttt{TRACE.001} & Case 4 \\
+Where did this come from? & provenance graph & \texttt{PROV.001}, \texttt{QUALITY.001} & Case 4 \\
+What was lost in conversion? & obligation: loss-explicit conversion & \texttt{CONVERT.001} & Cases 5, 6 \\
+Can the evaluation split leak? & obligation: lineage-safe splits & \texttt{SPLIT.001} & Cases 1, 7 \\
+Can this scale past one folder? & dataset manifest + indexes & \texttt{DATASET.001} & App.~\ref{app:scale} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The five coupled graphs}
+\label{sec:invariants}
+
+Figure~\ref{fig:five-graph-model} shows the five graphs that make a spatial state replayable and
+auditable rather than just stored. Making them mutually referential is what turns a silent error
+into a detectable one: an identity, timing, role, event, or lineage error becomes a broken
+reference instead of a hidden assumption.
+
+\begin{figure}[t]
+\centering
+\resizebox{0.90\linewidth}{!}{%
+\begin{tikzpicture}[font=\sffamily]
+  \node[wecard=weInk, fill=wePanel, font=\sffamily\scriptsize, text width=4.05cm, minimum height=1.55cm] (center) at (0,0)
+    {\textbf{WorldEpisode}\\state-integrity contract\\[2pt]
+     state revision\\+ ordered deltas};
+
+  \node[wecard=weBlue, font=\sffamily\scriptsize, text width=2.75cm, minimum height=1.0cm] (identity) at (0,2.45)
+    {\textbf{Identity}\\persistent entities};
+  \node[wecard=weCyan, font=\sffamily\scriptsize, text width=2.95cm, minimum height=1.0cm] (frame) at (4.0,0.85)
+    {\textbf{Frame + Clock}\\transforms, timing};
+  \node[wecard=weAmber, font=\sffamily\scriptsize, text width=2.85cm, minimum height=1.0cm] (role) at (2.05,-2.15)
+    {\textbf{State Roles}\\appearance, physics};
+  \node[wecard=weGreen, font=\sffamily\scriptsize, text width=2.85cm, minimum height=1.0cm] (event) at (-2.05,-2.15)
+    {\textbf{Temporal Events}\\contacts, patches};
+  \node[wecard=weRose, font=\sffamily\scriptsize, text width=2.95cm, minimum height=1.0cm] (prov) at (-4.0,0.85)
+    {\textbf{Provenance}\\lineage, uncertainty};
+
+  \draw[wearrow=weBlue] (identity.south) -- (center.north);
+  \draw[wearrow=weCyan] (frame.west) -- (center.east);
+  \draw[wearrow=weAmber] (role.north west) -- (center.south east);
+  \draw[wearrow=weGreen] (event.north east) -- (center.south west);
+  \draw[wearrow=weRose] (prov.east) -- (center.west);
+
+  \draw[very thick, draw=weLine] (identity) -- (frame) -- (role) -- (event) -- (prov) -- (identity);
+  \node[wechip=weViolet, fill=weViolet!10, font=\sffamily\tiny, text width=6.4cm, minimum height=0.36cm] at (0,-3.35)
+    {closed references + digest-verified assets + explicit loss reports};
+\end{tikzpicture}%
+}
+\caption{The five-graph model. WorldEpisode makes identity, frames/clocks, state roles, temporal events, and
+provenance mutually referential so conversion, synchronization, and replay errors become detectable
+instead of hidden.}
+\label{fig:five-graph-model}
+\end{figure}
+
+\paragraph{World revision and deltas (\texttt{WORLD.001}, \texttt{TRACE.001}).}
+Each record references one immutable, content-addressed world revision plus an ordered list of
+deltas; any change to geometry, scale, calibration, collision proxies, physical parameters, or
+object identity creates a new revision. Content hashes let two datasets prove they refer to the
+same world without relying on filenames.
+
+\paragraph{Identity graph (\texttt{ENTITY.001}).}
+Every physical or logical entity receives a persistent identifier, and the same
+\texttt{entity\_id} must be used by segmentation masks, Gaussian groups, meshes, collision bodies,
+simulator actors, language references, and interaction events. If a language command says ``pick up
+the mug,'' the perception mask, the simulator object, and the collision proxy must identify the
+same mug.
+
+\paragraph{Frame and clock graphs (\texttt{FRAME.001}, \texttt{TIME.001}, \texttt{ACTION.002}).}
+Every spatial value declares its frames, units, transform direction, and validity interval,
+consistent with and extending ROS conventions~\citep{rosrep103}; every stream declares a clock
+domain, timestamps, synchronization mapping, and estimated drift, with the rigor NCore demonstrates
+for pose graphs~\citep{ncore}. Actions declare command time and effective motor time rather than
+assuming those are the same instant. This graph turns a suspicious replay from ``the policy is
+bad'' into a diagnosable offset, transform-direction, or unit error.
+
+\paragraph{Representation-role graph (\texttt{REP.001}).}
+One entity can have many representations (splat, mesh, point cloud, collision proxy, mass/inertia
+record), each declaring a role and a digest-verified asset descriptor. The role field is essential:
+a splat may be valid for appearance but invalid for collision, while a simplified proxy may be
+valid for collision but unsuitable for visual training.
+
+\paragraph{Temporal-event graph (\texttt{TRACE.001}).}
+Records store interaction events --- contact, grasp, attachment, collision patch, reset,
+intervention, failure --- each referencing entities, time, confidence, and source, turning raw
+coordinate streams into auditable milestones.
+
+\paragraph{Provenance graph (\texttt{PROV.001}).}
+Every derived asset identifies its source episodes, sensors, reconstruction algorithm and version,
+calibration revision, hashes, creator, license, and quality metrics, mapping to existing provenance
+vocabularies rather than inventing an incompatible one.
+
+The full normative field lists are specified in the v0.1 RFC and its JSON Schemas; the paper keeps
+only what each graph must guarantee.
+
+\subsection{Two corpus-level obligations, plus scale}
+
+\paragraph{Loss-explicit conversion (\texttt{CONVERT.001}).}
+WorldEpisode reuses existing standards rather than replacing them. USD~\citep{usd} carries composed
+simulation worlds, glTF carries Gaussian appearance assets~\citep{gltf_gs}, NCore carries capture
+and pose-graph conventions~\citep{ncore}, Rerun carries physical-data recordings with column
+chunks~\citep{rerun}, ROS/MCAP carries logs, and domain-native engines carry their own telemetry.
+A converter may externalize or approximate fields, but it must emit a machine-readable loss report
+instead of silently discarding semantics. The standard permits lossy conversion; it forbids silent
+lossy conversion.
+
+\paragraph{Lineage-safe splits (\texttt{SPLIT.001}).}
+Record-level random splits are not enough when multiple records share a reconstructed room, map
+patch, physical object, source capture, calibration, generated asset lineage, or state ancestry ---
+exactly what the provenance graph records. A WorldEpisode split manifest can therefore enforce
+disjointness by constraints such as \texttt{world\_lineage}, \texttt{physical\_entity},
+\texttt{source\_capture}, \texttt{reconstruction\_run}, or \texttt{generated\_asset\_family}.
+
+\paragraph{Scale (\texttt{DATASET.001}).}
+Large robot corpora require a dataset manifest above the episode records: namespaces, resolver
+priority, shard catalogs, materialized indexes, split catalogs, and append-only versions. This lets
+a reader locate all SO-101 pick-place traces for a world-disjoint split by index lookup rather than
+by crawling storage paths.
+
+The initial WorldEpisode profile is intentionally narrow: rigid tabletop manipulation with
+fixed-base single- or dual-arm robots. That bounded domain keeps conformance executable rather than
+aspirational. Future profiles can extend this specification to humanoids, locomotion, deformables,
+fluids, multi-agent game worlds, and autonomous-driving logs.

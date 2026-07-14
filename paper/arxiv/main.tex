@@ -1,0 +1,193 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{placeins}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usetikzlibrary{arrows.meta,calc,fit,positioning,shapes.geometric}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+
+\definecolor{weBlue}{HTML}{2563EB}
+\definecolor{weCyan}{HTML}{0891B2}
+\definecolor{weGreen}{HTML}{16A34A}
+\definecolor{weAmber}{HTML}{F59E0B}
+\definecolor{weRose}{HTML}{E11D48}
+\definecolor{weViolet}{HTML}{7C3AED}
+\definecolor{weInk}{HTML}{111827}
+\definecolor{weSlate}{HTML}{64748B}
+\definecolor{wePanel}{HTML}{F8FAFC}
+\definecolor{weLine}{HTML}{CBD5E1}
+
+\newsavebox{\openresultbox}
+\newenvironment{openresult}[1]{%
+  \par\medskip\noindent
+  \begingroup
+  \setlength{\fboxsep}{8pt}%
+  \begin{lrbox}{\openresultbox}%
+  \begin{minipage}{0.93\linewidth}
+  \textbf{\textcolor{weAmber!85!black}{Open result, not claimed: #1}}\par\smallskip
+  \footnotesize
+  \setlength{\parskip}{3pt}
+  \setlength{\parindent}{0pt}
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \noindent\fcolorbox{weAmber!85!black}{weAmber!8}{\usebox{\openresultbox}}%
+  \endgroup
+  \par\medskip
+}
+
+\newsavebox{\keyboxsave}
+\newenvironment{keybox}[1]{%
+  \par\medskip\noindent
+  \begingroup
+  \setlength{\fboxsep}{9pt}%
+  \begin{lrbox}{\keyboxsave}%
+  \begin{minipage}{0.93\linewidth}
+  \textbf{\textcolor{weInk}{#1}}\par\smallskip
+  \small
+  \setlength{\parskip}{3pt}
+  \setlength{\parindent}{0pt}
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \noindent\fcolorbox{weSlate}{wePanel}{\usebox{\keyboxsave}}%
+  \endgroup
+  \par\medskip
+}
+
+\tikzset{
+  wecard/.style={
+    rounded corners=4pt,
+    draw=#1,
+    fill=#1!9,
+    very thick,
+    align=center,
+    inner sep=6pt,
+    font=\sffamily\small
+  },
+  wechip/.style={
+    rounded corners=3pt,
+    draw=#1,
+    fill=#1!12,
+    thick,
+    align=center,
+    inner xsep=5pt,
+    inner ysep=3pt,
+    font=\sffamily\scriptsize
+  },
+  wearrow/.style={-{Latex[length=3mm]}, very thick, draw=#1},
+  webar/.style={rounded corners=2pt, draw=none, fill=#1}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+% ---- Collaborator task-map switch (working build only) ----
+% \collabtrue renders the Open Contributions appendix and the inline HELP markers so
+% colleagues can pick up open work. The publication build (`make root-pdf`, the default)
+% defines \collaboff on the command line to hide all of it; `make collab-pdf` keeps it.
+\newif\ifcollab
+\collabtrue
+\ifdefined\collaboff\collabfalse\fi
+
+% One-line skimmable summary placed under a result or a dense section.
+\newcommand{\takeaway}[1]{\par\smallskip\noindent{\small\textcolor{weInk}{\textbf{Takeaway.}}~\textit{\textcolor{weSlate}{#1}}}\par\smallskip}
+
+% Section lead-in: one italic line stating the argument move and threading the spine.
+\newcommand{\lead}[1]{\par\vspace{-3pt}\noindent{\small\itshape\textcolor{weSlate}{#1}}\par\medskip}
+
+% Inline pointer placed next to a claim that is blocked on an open contribution.
+\newcommand{\collabmark}[1]{\ifcollab\,\colorbox{weViolet!16}{\scriptsize\sffamily\textbf{\textcolor{weViolet!75!black}{HELP: #1}}}\fi}
+
+% Boxed task card used in the Open Contributions appendix.
+\newcommand{\collabcard}[6]{%
+  \ifcollab
+  \par\smallskip\noindent
+  \setlength{\fboxsep}{7pt}%
+  \noindent\fcolorbox{weViolet!70!black}{weViolet!7}{%
+    \begin{minipage}{0.93\linewidth}
+      \footnotesize\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}%
+      \textbf{\textcolor{weViolet!72!black}{[#1] #2}}\par
+      \textbf{Where:} #3\par
+      \textbf{What is missing:} #4\par
+      \textbf{How to close it:} #5\par
+      \textbf{Needs:} #6\par
+      \textbf{Owner:} \underline{\hspace{4.5cm}}\quad\textbf{Target:} \underline{\hspace{3cm}}
+    \end{minipage}%
+  }%
+  \par\smallskip
+  \fi
+}
+
+\title{WorldEpisode: Auditing Silent State Drift in Robot-Learning Datasets}
+
+\author{
+  Alba Tellez Fernandez\\
+  URDF Studio
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Robot-learning datasets can be locally valid and behaviorally wrong: every file loads, but a
+command is replayed at the moment it was issued rather than when the motor executed it, the same
+reconstructed scene appears in both training and testing, or an asset's collision role no longer
+matches the state under evaluation. We call this \emph{silent state drift}. This paper presents
+\emph{WorldEpisode}, an executable state-integrity contract for robot-learning datasets: five
+machine-checkable invariants per episode (persistent identity, frame and clock mappings,
+representation roles, temporal events, provenance) plus the two corpus-level obligations that carry
+the headline results, lineage-disjoint evaluation splits and loss-explicit conversion.
+
+On a public SO-101 LeRobot release, a random episode split leaks every tested world lineage and
+yields 0.850 offline success for a behavioral-cloning probe; a scene-disjoint split reduces
+measured leakage to zero (0.000) and the same probe to 0.000. Declaring the inferred four-frame,
+133 ms actuation delay on a real trajectory reduces validation joint RMSE from 4.732 to 1.862
+degrees and same-trace MuJoCo/Genesis replay RMSE from 3.425 to 1.563 degrees. A round trip over
+ten public LeRobot episodes preserves 1,935 state/action rows with maximum numerical error 0.0
+while reporting source-absent semantics as explicit conversion loss, and the validator detects all
+14 injected fault classes. The paper claims no universal file format, no simulator-independent
+physics, and no benchmark score inflation without policy reruns; ACT/Diffusion rollouts,
+famous-benchmark reruns, Isaac/SAPIEN execution, and external adoption remain explicit open gates.
+\end{abstract}
+
+% Spine order: failure (+ related work) -> the contract (questions, graphs, obligations)
+% -> the contract made executable -> evidence in three acts -> positioning -> limits -> conclusion.
+\input{sections/introduction}
+\input{sections/requirements}
+\input{sections/architecture}
+\input{sections/evaluation}
+\input{sections/discussion}
+\input{sections/limitations}
+\input{sections/conclusion}
+
+\input{sections/appendix}
+\input{sections/open_contributions}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

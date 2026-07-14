@@ -1,0 +1,64 @@
+{
+  "approximated": [],
+  "discarded": [],
+  "episode_index": 3,
+  "externalized": [
+    "physical-frame records",
+    "source-absent semantic warnings",
+    "WorldEpisode manifest"
+  ],
+  "metrics": {
+    "action_rows": 159,
+    "action_tensor_sha256": "0bd1d36e640dca649b74d6a467ca90c3e61a295e8676c6c768af7875e0e9c8be",
+    "action_width": 2,
+    "discarded_fields": [],
+    "max_abs_action_error": 0.0,
+    "max_abs_episode_index_error": 0.0,
+    "max_abs_frame_index_error": 0.0,
+    "max_abs_index_error": 0.0,
+    "max_abs_state_error": 0.0,
+    "max_abs_task_index_error": 0.0,
+    "max_abs_timestamp_error": 0.0,
+    "max_abs_video_timestamp_error": 0.0,
+    "pass": true,
+    "physical_frame_records": 2,
+    "physical_frames_preserved": true,
+    "physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c",
+    "roundtrip_action_tensor_sha256": "0bd1d36e640dca649b74d6a467ca90c3e61a295e8676c6c768af7875e0e9c8be",
+    "roundtrip_physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c",
+    "roundtrip_timestamp_sha256": "566269a97cf744fbc133de3f9cca8417bd188fc81b7fce5752c0df243eba4c02",
+    "roundtrip_video_timestamp_sha256": "d6657eecda33f46fbe78344ce89036d962bad48bfc4c00ad04231d6c32ba7adc",
+    "source_absent_fields_tracked": 4,
+    "state_rows": 159,
+    "timestamp_count": 159,
+    "timestamp_sha256": "566269a97cf744fbc133de3f9cca8417bd188fc81b7fce5752c0df243eba4c02",
+    "video_streams": 1,
+    "video_timestamp_sha256": "d6657eecda33f46fbe78344ce89036d962bad48bfc4c00ad04231d6c32ba7adc",
+    "worldepisode_sidecar_physical_frames_sha256": "5ae5bda0ade1623f2d59a4c7fe63e5f0360af1c8e1b36b6e0aa5e2b241a07a0c"
+  },
+  "pass": true,
+  "preserved_zero_loss": [
+    "action tensor",
+    "observation.state tensor",
+    "sample timestamps",
+    "frame indices",
+    "episode indices",
+    "task indices",
+    "video timestamp ranges",
+    "derived physical-frame records"
+  ],
+  "source_absent": [
+    "camera extrinsics",
+    "robot/world calibration transform",
+    "action units",
+    "controller latency model"
+  ],
+  "source_profile": "lerobot-v3",
+  "source_repo_id": "lerobot/pusht",
+  "source_revision": "7628202a2180972f291ba1bc6723834921e72c19",
+  "target_profile": "worldepisode-0.1",
+  "warnings": [
+    "The public LeRobot source declares camera streams but not camera extrinsics.",
+    "The public LeRobot source declares joint component names but not action units or controller latency."
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "binding": "openusd-simready",
+  "fields": {
+    "embodiment.identity": {
+      "embodiment_id": "fixed_arm_demo"
+    },
+    "entities.asset_descriptors": [
+      {
+        "assets": [
+          {
+            "license": "CC-BY-4.0",
+            "media_type": "model/gltf-binary",
+            "mirrors": [
+              "assets/carton.glb"
+            ],
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "uri": "hf://organization/worldepisode-rigid-demo/assets/carton.glb"
+          },
+          {
+            "license": "CC-BY-4.0",
+            "media_type": "application/worldepisode-collision-proxy+json",
+            "mirrors": [
+              "assets/carton_collision.json"
+            ],
+            "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "uri": "s3://worldepisode-demo/assets/carton_collision.json"
+          }
+        ],
+        "entity_id": "carton_1"
+      }
+    ],
+    "entities.identity": [
+      {
+        "entity_id": "carton_1",
+        "entity_type": "rigid_object"
+      }
+    ],
+    "entities.representation_roles": [
+      {
+        "entity_id": "carton_1",
+        "representations": [
+          {
+            "coordinate_frame": "world",
+            "representation_id": "carton_visual",
+            "role": "appearance"
+          },
+          {
+            "coordinate_frame": "world",
+            "representation_id": "carton_collision",
+            "role": "collision"
+          }
+        ]
+      }
+    ],
+    "frame_graph.frames": [
+      {
+        "convention": "ros-rep-103",
+        "frame_id": "world",
+        "handedness": "right",
+        "units": "m",
+        "up_axis": "z"
+      },
+      {
+        "frame_id": "tool0",
+        "handedness": "right",
+        "units": "m",
+        "up_axis": "z"
+      }
+    ],
+    "frame_graph.transforms": [
+      {
+        "quaternion_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "source_frame": "tool0",
+        "target_frame": "world",
+        "translation_xyz": [
+          0.4,
+          0.0,
+          0.3
+        ],
+        "valid_interval": {
+          "clock_id": "episode_time",
+          "end": 30000000000,
+          "start": 0
+        }
+      }
+    ],
+    "replay.runtime_assumptions": {},
+    "world_revision.asset_descriptor": {
+      "license": "CC-BY-4.0",
+      "media_type": "application/vnd.worldepisode.layout+json",
+      "mirrors": [
+        "worlds/000000/world.layout.json"
+      ],
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "uri": "hf://organization/worldepisode-rigid-demo/worlds/000000/world.layout.json"
+    },
+    "world_revision.identity": {
+      "binding": "le-world-layout-v0.1",
+      "world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "native_fields": [
+    "embodiment.identity",
+    "entities.asset_descriptors",
+    "entities.identity",
+    "entities.representation_roles",
+    "frame_graph.frames",
+    "frame_graph.transforms",
+    "replay.runtime_assumptions",
+    "world_revision.asset_descriptor",
+    "world_revision.identity"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "aggregate": {
+    "case_count": 2,
+    "drifted_behavior_successes": 0,
+    "local_file_valid_count": 2,
+    "uss_corrected_successes": 2,
+    "uss_detections": 2
+  },
+  "artifacts": {
+    "markdown": "docs/experiments/uss_state_drift_pilots/README.md",
+    "report": "docs/experiments/uss_state_drift_pilots/state_drift_report.json"
+  },
+  "cases": [
+    {
+      "case_id": "game_engine_collision_patch_drift",
+      "claim_boundary": "Deterministic collision-state pilot; not measured on a production game engine.",
+      "domain": "virtual_agent_telemetry",
+      "drifted_behavior": {
+        "authoritative_asset_sha256": "9a63f1dc715c0f6747f1066c997af3fd3fe8a1956013d0a1fc0a06d5c1a81963",
+        "authoritative_path_success": false,
+        "client_asset_sha256": "a80b8543e07496f634a849f62e878996bbdbc37636cf7e38121793a4801df1fb",
+        "client_reports_path_success": true
+      },
+      "failure_story": "A client can load an old arena collision asset after a game patch, but the server's authoritative collision state has moved the obstacle into the avatar path.",
+      "local_file_valid": true,
+      "uss_contract": {
+        "corrected_behavior_success": true,
+        "detected": true,
+        "diagnostics": [
+          "ASSET.002",
+          "WORLD.001",
+          "REP.001"
+        ],
+        "required_asset_descriptor": {
+          "media_type": "model/vnd.engine-collision+json",
+          "mirrors": [
+            "assets/game/arena_collision_v18.json"
+          ],
+          "sha256": "9a63f1dc715c0f6747f1066c997af3fd3fe8a1956013d0a1fc0a06d5c1a81963",
+          "uri": "oci://example.invalid/game/arena@sha256:authoritative-patch"
+        },
+        "state_ancestry": [
+          "arena_v17",
+          "patch_collision_proxy_v18"
+        ],
+        "state_revision_id": "uss-state-9a63f1dc715c0f67"
+      }
+    },
+    {
+      "case_id": "autonomous_vehicle_clock_domain_drift",
+      "claim_boundary": "Deterministic clock-offset pilot; not measured on a public AV dataset.",
+      "domain": "autonomous_driving_log",
+      "drifted_behavior": {
+        "behavior_valid": false,
+        "camera_range_m": 18.0,
+        "ego_speed_mps": 15.0,
+        "lidar_range_m": 17.25,
+        "naive_fusion_error_m": 0.75,
+        "tolerance_m": 0.2,
+        "undeclared_clock_offset_s": 0.05
+      },
+      "failure_story": "A camera stream and a lidar stream both deserialize correctly, but the cloud replay assumes one clock domain and fuses samples separated by 50 ms.",
+      "local_file_valid": true,
+      "uss_contract": {
+        "clock_mapping": {
+          "drift_model": "constant_offset",
+          "estimated_error_s": 0.002,
+          "offset_s": 0.05,
+          "source_clock": "lidar_device_time",
+          "target_clock": "camera_exposure_midpoint"
+        },
+        "corrected_behavior_success": true,
+        "corrected_fusion_error_m": 0.0,
+        "detected": true,
+        "diagnostics": [
+          "TIME.001",
+          "TIME.002",
+          "FRAME.001"
+        ],
+        "state_transition_invariant": {
+          "max_fused_range_error_m": 0.2,
+          "requires_clock_domain_mapping": true
+        }
+      }
+    }
+  ],
+  "claim_boundary": "The cases test the USS vocabulary outside robotics. They are not measured production game-engine or autonomous-driving dataset results.",
+  "profile": "uss-state-drift-pilots-0.1",
+  "status": "deterministic_non_robotics_pilots"
+}

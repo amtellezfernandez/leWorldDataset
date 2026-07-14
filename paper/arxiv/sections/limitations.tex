@@ -1,0 +1,31 @@
+\section{Limitations and Open Gates}
+\label{sec:limits}
+
+The current evidence is deliberately scoped: it exposes hidden failure mechanisms rather than
+claiming full robot-learning, game-engine, or autonomous-driving generality. The boundary of every
+empirical claim is tabulated in Appendix~\ref{app:boundaries}, and each open gate's commands and
+acceptance rules are boxed in Appendix~\ref{app:gates}; this section states what matters most.
+
+\paragraph{Beyond robotics (future work).}
+All measured evidence in this paper is the WorldEpisode robotics profile; the broader Universal
+Spatial State framing is proposed, not demonstrated outside robotics. Two deterministic pilots only
+illustrate that the same vocabulary can express non-robotics drift. In a game-engine collision pilot,
+a client loads a stale arena collision asset after an authoritative patch, which the asset-digest,
+state-revision, and role checks catch. In an autonomous-driving clock pilot, camera and lidar logs
+deserialize correctly, but a 50 ms undeclared clock offset at 15 m/s creates a 0.75 m fusion error
+against a 0.20 m tolerance, which the declared clock mapping corrects to 0.0 m. These are
+illustrative pilots, not production game-engine or AV benchmark results. A stronger paper should add
+at least one public non-robotics corpus and an independently maintained adapter.\collabmark{C6}
+
+\paragraph{Principal limitations.}
+First, the leakage result is an offline behavioral-cloning audit, not a physical rollout: the Torch
+MLP probe and the temporal ridge baseline demonstrate that random splits can leak world lineage and
+inflate offline evaluation, but ACT and Diffusion Policy must be run on the committed split
+manifest (and the split packages' source videos mirrored with digests) before claiming impact on
+common LeRobot training recipes. Second, the reference implementation is single-sourced: the
+clean-room reader reduces the risk that the fixtures only work through the reference SDK, but it is
+an internal artifact, and the \texttt{worldepisode} package is not yet a released PyPI package or
+merged into upstream LeRobot or Rerun examples. The pilot natural-source corpus adds 19 cases from
+five public robot-learning datasets but does not prove prevalence in the wild; a stronger version
+of this paper should record whether dataset maintainers agree with representative
+diagnostics.\collabmark{C4}

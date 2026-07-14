@@ -1,0 +1,104 @@
+{
+  "active_dataset_report_count": 3,
+  "artifact": "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+  "available": true,
+  "case_count": 19,
+  "claim_boundary": "All five datasets have dataset-specific diagnostic reports. This improves auditability, but it is not a prevalence estimate and it is not maintainer-confirmed bug evidence.",
+  "dataset_report_count": 5,
+  "dataset_specific_diagnostics_ready": true,
+  "full_gate_satisfied": false,
+  "generated_from": "docs/experiments/natural_failure_corpus/manifest.json",
+  "maintainer_feedback_satisfied": false,
+  "remaining_for_prevalence_claim": [
+    "record maintainer agreement, disagreement, or no-response evidence",
+    "convert source-level DROID and BridgeData V2 gaps into pinned WorldEpisode manifests",
+    "run false-positive review before using the corpus as prevalence evidence"
+  ],
+  "reports": [
+    {
+      "case_count": 1,
+      "conversion_status": "active_lineage_split_audit",
+      "evidence_type": "active_lerobot_scene_leakage_audit",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "report": "docs/experiments/natural_failure_corpus/datasets/armnet_armnetbench_v01_lerobot_so101_2e5e89aee0e7.json",
+      "requirement_counts": {
+        "SPLIT.001": 1
+      },
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "case_count": 5,
+      "conversion_status": "source_level_public_metadata_only",
+      "evidence_type": "source_level_public_metadata_audit",
+      "repo_id": "benchmark/bridgedata_v2",
+      "report": "docs/experiments/natural_failure_corpus/datasets/benchmark_bridgedata_v2_source_level.json",
+      "requirement_counts": {
+        "ACTION.001": 1,
+        "ACTION.002": 1,
+        "ACTION.004": 1,
+        "CONVERT.001": 1,
+        "DATASET.003": 1,
+        "ENTITY.001": 1,
+        "REP.001": 1,
+        "REPLAY.001": 1,
+        "SPLIT.001": 1,
+        "TRACE.001": 1,
+        "WORLD.001": 1
+      },
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_count": 5,
+      "conversion_status": "source_level_public_metadata_only",
+      "evidence_type": "source_level_public_metadata_audit",
+      "repo_id": "benchmark/droid",
+      "report": "docs/experiments/natural_failure_corpus/datasets/benchmark_droid_source_level.json",
+      "requirement_counts": {
+        "ACTION.001": 1,
+        "ACTION.002": 1,
+        "ACTION.004": 1,
+        "CONVERT.001": 1,
+        "DATASET.003": 1,
+        "ENTITY.001": 1,
+        "REP.001": 1,
+        "REPLAY.001": 1,
+        "SPLIT.001": 1,
+        "TRACE.001": 1,
+        "WORLD.001": 1
+      },
+      "revision": "source-level-audit-2026-07-13"
+    },
+    {
+      "case_count": 4,
+      "conversion_status": "active_worldepisode_conversion_reports",
+      "evidence_type": "active_lerobot_conversion_reports",
+      "repo_id": "lerobot/pusht",
+      "report": "docs/experiments/natural_failure_corpus/datasets/lerobot_pusht_7628202a2180.json",
+      "requirement_counts": {
+        "ACTION.001": 1,
+        "ACTION.002": 1,
+        "ACTION.004": 1,
+        "FRAME.001": 2,
+        "FRAME.002": 2
+      },
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "case_count": 4,
+      "conversion_status": "active_worldepisode_conversion_reports",
+      "evidence_type": "active_lerobot_conversion_reports",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "report": "docs/experiments/natural_failure_corpus/datasets/lerobot_svla_so101_pickplace_f641879e2217.json",
+      "requirement_counts": {
+        "ACTION.001": 1,
+        "ACTION.002": 1,
+        "ACTION.004": 1,
+        "FRAME.001": 2,
+        "FRAME.002": 2
+      },
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    }
+  ],
+  "schema": "worldepisode_natural_failure_dataset_diagnostics_v1",
+  "source_level_only_report_count": 2
+}

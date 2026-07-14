@@ -1,0 +1,84 @@
+{
+  "schema_version": "le-world-layout-0.1",
+  "world_layout": {
+    "name": "minimal-static-world",
+    "objects": [
+      {
+        "id": "table_1",
+        "name": "Table",
+        "type": "cube",
+        "position_xyz": [0.5, 0.0, 0.35],
+        "rotation_rpy_rad": [0.0, 0.0, 0.0],
+        "size_xyz": [0.8, 0.5, 0.7],
+        "color": "#8a6f4d",
+        "physics": {
+          "fixed": true,
+          "collision": true,
+          "collision_geometry": {
+            "id": "table_box",
+            "kind": "box",
+            "size_xyz": [0.8, 0.5, 0.7]
+          },
+          "semantic_role": "support_surface"
+        },
+        "consistency": {
+          "physics_ref": "table_box",
+          "method": "primitive-source",
+          "status": "valid"
+        }
+      },
+      {
+        "id": "carton_1",
+        "name": "Carton",
+        "type": "mesh",
+        "position_xyz": [0.45, 0.0, 0.73],
+        "rotation_rpy_rad": [0.0, 0.0, 0.0],
+        "size_xyz": [0.12, 0.08, 0.16],
+        "color": "#cc3344",
+        "appearance": {
+          "representations": [
+            {
+              "id": "carton_visual",
+              "kind": "mesh",
+              "asset_ref": {
+                "uri": "hf://organization/worldepisode-rigid-demo/assets/carton.glb",
+                "media_type": "model/gltf-binary",
+                "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "mirrors": [
+                  "assets/carton.glb"
+                ],
+                "license": "CC-BY-4.0"
+              },
+              "scale_xyz": [1.0, 1.0, 1.0],
+              "semantic_role": "target"
+            }
+          ]
+        },
+        "physics": {
+          "fixed": false,
+          "collision": true,
+          "mass_kg": 0.2,
+          "collision_geometry": {
+            "id": "carton_proxy",
+            "kind": "box",
+            "size_xyz": [0.12, 0.08, 0.16]
+          },
+          "semantic_role": "target"
+        },
+        "consistency": {
+          "appearance_ref": "carton_visual",
+          "physics_ref": "carton_proxy",
+          "method": "bbox-fit",
+          "status": "valid"
+        }
+      }
+    ],
+    "scenario_time_ms": 0,
+    "scenario_duration_ms": 0,
+    "joint_positions": {},
+    "cameras": []
+  },
+  "environment": {
+    "frame_convention": "ros-rep-103"
+  }
+}

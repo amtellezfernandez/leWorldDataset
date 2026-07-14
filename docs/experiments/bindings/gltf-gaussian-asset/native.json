@@ -1,0 +1,68 @@
+{
+  "binding": "gltf-gaussian-asset",
+  "fields": {
+    "entities.asset_descriptors": [
+      {
+        "assets": [
+          {
+            "license": "CC-BY-4.0",
+            "media_type": "model/gltf-binary",
+            "mirrors": [
+              "assets/carton.glb"
+            ],
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "uri": "hf://organization/worldepisode-rigid-demo/assets/carton.glb"
+          },
+          {
+            "license": "CC-BY-4.0",
+            "media_type": "application/worldepisode-collision-proxy+json",
+            "mirrors": [
+              "assets/carton_collision.json"
+            ],
+            "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "uri": "s3://worldepisode-demo/assets/carton_collision.json"
+          }
+        ],
+        "entity_id": "carton_1"
+      }
+    ],
+    "entities.identity": [
+      {
+        "entity_id": "carton_1",
+        "entity_type": "rigid_object"
+      }
+    ],
+    "entities.representation_roles": [
+      {
+        "entity_id": "carton_1",
+        "representations": [
+          {
+            "coordinate_frame": "world",
+            "representation_id": "carton_visual",
+            "role": "appearance"
+          },
+          {
+            "coordinate_frame": "world",
+            "representation_id": "carton_collision",
+            "role": "collision"
+          }
+        ]
+      }
+    ],
+    "world_revision.asset_descriptor": {
+      "license": "CC-BY-4.0",
+      "media_type": "application/vnd.worldepisode.layout+json",
+      "mirrors": [
+        "worlds/000000/world.layout.json"
+      ],
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "uri": "hf://organization/worldepisode-rigid-demo/worlds/000000/world.layout.json"
+    }
+  },
+  "native_fields": [
+    "entities.asset_descriptors",
+    "entities.identity",
+    "entities.representation_roles",
+    "world_revision.asset_descriptor"
+  ]
+}

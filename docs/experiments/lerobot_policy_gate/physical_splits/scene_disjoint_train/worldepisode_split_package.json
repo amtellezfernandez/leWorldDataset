@@ -1,0 +1,1806 @@
+{
+  "claim_boundary": "This is a compact low-dimensional LeRobot split package for state/action policy reruns. It is digest-verified against the cached public source Parquet files and preserves action, state, timestamp, frame, task, reward, and done values. It deliberately does not claim to be a full vision dataset because the source video files were not part of the committed leakage audit cache.",
+  "episode_filter": {
+    "field": "episode_index",
+    "local_episode_map": [
+      {
+        "local_episode_index": 0,
+        "source_episode_index": 255
+      },
+      {
+        "local_episode_index": 1,
+        "source_episode_index": 256
+      },
+      {
+        "local_episode_index": 2,
+        "source_episode_index": 257
+      },
+      {
+        "local_episode_index": 3,
+        "source_episode_index": 258
+      },
+      {
+        "local_episode_index": 4,
+        "source_episode_index": 259
+      },
+      {
+        "local_episode_index": 5,
+        "source_episode_index": 260
+      },
+      {
+        "local_episode_index": 6,
+        "source_episode_index": 261
+      },
+      {
+        "local_episode_index": 7,
+        "source_episode_index": 262
+      },
+      {
+        "local_episode_index": 8,
+        "source_episode_index": 263
+      },
+      {
+        "local_episode_index": 9,
+        "source_episode_index": 264
+      },
+      {
+        "local_episode_index": 10,
+        "source_episode_index": 265
+      },
+      {
+        "local_episode_index": 11,
+        "source_episode_index": 266
+      },
+      {
+        "local_episode_index": 12,
+        "source_episode_index": 267
+      },
+      {
+        "local_episode_index": 13,
+        "source_episode_index": 268
+      },
+      {
+        "local_episode_index": 14,
+        "source_episode_index": 269
+      },
+      {
+        "local_episode_index": 15,
+        "source_episode_index": 270
+      },
+      {
+        "local_episode_index": 16,
+        "source_episode_index": 271
+      },
+      {
+        "local_episode_index": 17,
+        "source_episode_index": 272
+      },
+      {
+        "local_episode_index": 18,
+        "source_episode_index": 273
+      },
+      {
+        "local_episode_index": 19,
+        "source_episode_index": 274
+      },
+      {
+        "local_episode_index": 20,
+        "source_episode_index": 275
+      },
+      {
+        "local_episode_index": 21,
+        "source_episode_index": 276
+      },
+      {
+        "local_episode_index": 22,
+        "source_episode_index": 277
+      },
+      {
+        "local_episode_index": 23,
+        "source_episode_index": 278
+      },
+      {
+        "local_episode_index": 24,
+        "source_episode_index": 279
+      },
+      {
+        "local_episode_index": 25,
+        "source_episode_index": 280
+      },
+      {
+        "local_episode_index": 26,
+        "source_episode_index": 281
+      },
+      {
+        "local_episode_index": 27,
+        "source_episode_index": 282
+      },
+      {
+        "local_episode_index": 28,
+        "source_episode_index": 283
+      },
+      {
+        "local_episode_index": 29,
+        "source_episode_index": 284
+      },
+      {
+        "local_episode_index": 30,
+        "source_episode_index": 285
+      },
+      {
+        "local_episode_index": 31,
+        "source_episode_index": 286
+      },
+      {
+        "local_episode_index": 32,
+        "source_episode_index": 287
+      },
+      {
+        "local_episode_index": 33,
+        "source_episode_index": 288
+      },
+      {
+        "local_episode_index": 34,
+        "source_episode_index": 289
+      },
+      {
+        "local_episode_index": 35,
+        "source_episode_index": 290
+      },
+      {
+        "local_episode_index": 36,
+        "source_episode_index": 291
+      },
+      {
+        "local_episode_index": 37,
+        "source_episode_index": 292
+      },
+      {
+        "local_episode_index": 38,
+        "source_episode_index": 293
+      },
+      {
+        "local_episode_index": 39,
+        "source_episode_index": 294
+      },
+      {
+        "local_episode_index": 40,
+        "source_episode_index": 295
+      },
+      {
+        "local_episode_index": 41,
+        "source_episode_index": 296
+      },
+      {
+        "local_episode_index": 42,
+        "source_episode_index": 297
+      },
+      {
+        "local_episode_index": 43,
+        "source_episode_index": 298
+      },
+      {
+        "local_episode_index": 44,
+        "source_episode_index": 299
+      },
+      {
+        "local_episode_index": 45,
+        "source_episode_index": 300
+      },
+      {
+        "local_episode_index": 46,
+        "source_episode_index": 301
+      },
+      {
+        "local_episode_index": 47,
+        "source_episode_index": 302
+      },
+      {
+        "local_episode_index": 48,
+        "source_episode_index": 303
+      },
+      {
+        "local_episode_index": 49,
+        "source_episode_index": 304
+      },
+      {
+        "local_episode_index": 50,
+        "source_episode_index": 560
+      },
+      {
+        "local_episode_index": 51,
+        "source_episode_index": 561
+      },
+      {
+        "local_episode_index": 52,
+        "source_episode_index": 562
+      },
+      {
+        "local_episode_index": 53,
+        "source_episode_index": 563
+      },
+      {
+        "local_episode_index": 54,
+        "source_episode_index": 564
+      },
+      {
+        "local_episode_index": 55,
+        "source_episode_index": 565
+      },
+      {
+        "local_episode_index": 56,
+        "source_episode_index": 566
+      },
+      {
+        "local_episode_index": 57,
+        "source_episode_index": 567
+      },
+      {
+        "local_episode_index": 58,
+        "source_episode_index": 568
+      },
+      {
+        "local_episode_index": 59,
+        "source_episode_index": 569
+      },
+      {
+        "local_episode_index": 60,
+        "source_episode_index": 570
+      },
+      {
+        "local_episode_index": 61,
+        "source_episode_index": 571
+      },
+      {
+        "local_episode_index": 62,
+        "source_episode_index": 572
+      },
+      {
+        "local_episode_index": 63,
+        "source_episode_index": 573
+      },
+      {
+        "local_episode_index": 64,
+        "source_episode_index": 574
+      },
+      {
+        "local_episode_index": 65,
+        "source_episode_index": 575
+      },
+      {
+        "local_episode_index": 66,
+        "source_episode_index": 576
+      },
+      {
+        "local_episode_index": 67,
+        "source_episode_index": 577
+      },
+      {
+        "local_episode_index": 68,
+        "source_episode_index": 578
+      },
+      {
+        "local_episode_index": 69,
+        "source_episode_index": 579
+      },
+      {
+        "local_episode_index": 70,
+        "source_episode_index": 580
+      },
+      {
+        "local_episode_index": 71,
+        "source_episode_index": 581
+      },
+      {
+        "local_episode_index": 72,
+        "source_episode_index": 582
+      },
+      {
+        "local_episode_index": 73,
+        "source_episode_index": 583
+      },
+      {
+        "local_episode_index": 74,
+        "source_episode_index": 584
+      },
+      {
+        "local_episode_index": 75,
+        "source_episode_index": 585
+      },
+      {
+        "local_episode_index": 76,
+        "source_episode_index": 586
+      },
+      {
+        "local_episode_index": 77,
+        "source_episode_index": 587
+      },
+      {
+        "local_episode_index": 78,
+        "source_episode_index": 588
+      },
+      {
+        "local_episode_index": 79,
+        "source_episode_index": 589
+      },
+      {
+        "local_episode_index": 80,
+        "source_episode_index": 590
+      },
+      {
+        "local_episode_index": 81,
+        "source_episode_index": 591
+      },
+      {
+        "local_episode_index": 82,
+        "source_episode_index": 592
+      },
+      {
+        "local_episode_index": 83,
+        "source_episode_index": 593
+      },
+      {
+        "local_episode_index": 84,
+        "source_episode_index": 594
+      },
+      {
+        "local_episode_index": 85,
+        "source_episode_index": 595
+      },
+      {
+        "local_episode_index": 86,
+        "source_episode_index": 596
+      },
+      {
+        "local_episode_index": 87,
+        "source_episode_index": 597
+      },
+      {
+        "local_episode_index": 88,
+        "source_episode_index": 598
+      },
+      {
+        "local_episode_index": 89,
+        "source_episode_index": 599
+      },
+      {
+        "local_episode_index": 90,
+        "source_episode_index": 600
+      },
+      {
+        "local_episode_index": 91,
+        "source_episode_index": 601
+      },
+      {
+        "local_episode_index": 92,
+        "source_episode_index": 602
+      },
+      {
+        "local_episode_index": 93,
+        "source_episode_index": 603
+      },
+      {
+        "local_episode_index": 94,
+        "source_episode_index": 604
+      },
+      {
+        "local_episode_index": 95,
+        "source_episode_index": 605
+      },
+      {
+        "local_episode_index": 96,
+        "source_episode_index": 606
+      },
+      {
+        "local_episode_index": 97,
+        "source_episode_index": 607
+      },
+      {
+        "local_episode_index": 98,
+        "source_episode_index": 608
+      },
+      {
+        "local_episode_index": 99,
+        "source_episode_index": 609
+      },
+      {
+        "local_episode_index": 100,
+        "source_episode_index": 910
+      },
+      {
+        "local_episode_index": 101,
+        "source_episode_index": 911
+      },
+      {
+        "local_episode_index": 102,
+        "source_episode_index": 912
+      },
+      {
+        "local_episode_index": 103,
+        "source_episode_index": 913
+      },
+      {
+        "local_episode_index": 104,
+        "source_episode_index": 914
+      },
+      {
+        "local_episode_index": 105,
+        "source_episode_index": 915
+      },
+      {
+        "local_episode_index": 106,
+        "source_episode_index": 916
+      },
+      {
+        "local_episode_index": 107,
+        "source_episode_index": 917
+      },
+      {
+        "local_episode_index": 108,
+        "source_episode_index": 918
+      },
+      {
+        "local_episode_index": 109,
+        "source_episode_index": 919
+      },
+      {
+        "local_episode_index": 110,
+        "source_episode_index": 920
+      },
+      {
+        "local_episode_index": 111,
+        "source_episode_index": 921
+      },
+      {
+        "local_episode_index": 112,
+        "source_episode_index": 922
+      },
+      {
+        "local_episode_index": 113,
+        "source_episode_index": 923
+      },
+      {
+        "local_episode_index": 114,
+        "source_episode_index": 924
+      },
+      {
+        "local_episode_index": 115,
+        "source_episode_index": 925
+      },
+      {
+        "local_episode_index": 116,
+        "source_episode_index": 926
+      },
+      {
+        "local_episode_index": 117,
+        "source_episode_index": 927
+      },
+      {
+        "local_episode_index": 118,
+        "source_episode_index": 928
+      },
+      {
+        "local_episode_index": 119,
+        "source_episode_index": 929
+      },
+      {
+        "local_episode_index": 120,
+        "source_episode_index": 930
+      },
+      {
+        "local_episode_index": 121,
+        "source_episode_index": 931
+      },
+      {
+        "local_episode_index": 122,
+        "source_episode_index": 932
+      },
+      {
+        "local_episode_index": 123,
+        "source_episode_index": 933
+      },
+      {
+        "local_episode_index": 124,
+        "source_episode_index": 934
+      },
+      {
+        "local_episode_index": 125,
+        "source_episode_index": 935
+      },
+      {
+        "local_episode_index": 126,
+        "source_episode_index": 936
+      },
+      {
+        "local_episode_index": 127,
+        "source_episode_index": 937
+      },
+      {
+        "local_episode_index": 128,
+        "source_episode_index": 938
+      },
+      {
+        "local_episode_index": 129,
+        "source_episode_index": 939
+      },
+      {
+        "local_episode_index": 130,
+        "source_episode_index": 940
+      },
+      {
+        "local_episode_index": 131,
+        "source_episode_index": 941
+      },
+      {
+        "local_episode_index": 132,
+        "source_episode_index": 942
+      },
+      {
+        "local_episode_index": 133,
+        "source_episode_index": 943
+      },
+      {
+        "local_episode_index": 134,
+        "source_episode_index": 944
+      },
+      {
+        "local_episode_index": 135,
+        "source_episode_index": 945
+      },
+      {
+        "local_episode_index": 136,
+        "source_episode_index": 946
+      },
+      {
+        "local_episode_index": 137,
+        "source_episode_index": 947
+      },
+      {
+        "local_episode_index": 138,
+        "source_episode_index": 948
+      },
+      {
+        "local_episode_index": 139,
+        "source_episode_index": 949
+      },
+      {
+        "local_episode_index": 140,
+        "source_episode_index": 950
+      },
+      {
+        "local_episode_index": 141,
+        "source_episode_index": 951
+      },
+      {
+        "local_episode_index": 142,
+        "source_episode_index": 952
+      },
+      {
+        "local_episode_index": 143,
+        "source_episode_index": 953
+      },
+      {
+        "local_episode_index": 144,
+        "source_episode_index": 954
+      },
+      {
+        "local_episode_index": 145,
+        "source_episode_index": 955
+      },
+      {
+        "local_episode_index": 146,
+        "source_episode_index": 956
+      },
+      {
+        "local_episode_index": 147,
+        "source_episode_index": 957
+      },
+      {
+        "local_episode_index": 148,
+        "source_episode_index": 958
+      },
+      {
+        "local_episode_index": 149,
+        "source_episode_index": 959
+      },
+      {
+        "local_episode_index": 150,
+        "source_episode_index": 1200
+      },
+      {
+        "local_episode_index": 151,
+        "source_episode_index": 1201
+      },
+      {
+        "local_episode_index": 152,
+        "source_episode_index": 1202
+      },
+      {
+        "local_episode_index": 153,
+        "source_episode_index": 1203
+      },
+      {
+        "local_episode_index": 154,
+        "source_episode_index": 1204
+      },
+      {
+        "local_episode_index": 155,
+        "source_episode_index": 1205
+      },
+      {
+        "local_episode_index": 156,
+        "source_episode_index": 1206
+      },
+      {
+        "local_episode_index": 157,
+        "source_episode_index": 1207
+      },
+      {
+        "local_episode_index": 158,
+        "source_episode_index": 1208
+      },
+      {
+        "local_episode_index": 159,
+        "source_episode_index": 1209
+      },
+      {
+        "local_episode_index": 160,
+        "source_episode_index": 1210
+      },
+      {
+        "local_episode_index": 161,
+        "source_episode_index": 1211
+      },
+      {
+        "local_episode_index": 162,
+        "source_episode_index": 1212
+      },
+      {
+        "local_episode_index": 163,
+        "source_episode_index": 1213
+      },
+      {
+        "local_episode_index": 164,
+        "source_episode_index": 1214
+      },
+      {
+        "local_episode_index": 165,
+        "source_episode_index": 1215
+      },
+      {
+        "local_episode_index": 166,
+        "source_episode_index": 1216
+      },
+      {
+        "local_episode_index": 167,
+        "source_episode_index": 1217
+      },
+      {
+        "local_episode_index": 168,
+        "source_episode_index": 1218
+      },
+      {
+        "local_episode_index": 169,
+        "source_episode_index": 1219
+      },
+      {
+        "local_episode_index": 170,
+        "source_episode_index": 1220
+      },
+      {
+        "local_episode_index": 171,
+        "source_episode_index": 1221
+      },
+      {
+        "local_episode_index": 172,
+        "source_episode_index": 1222
+      },
+      {
+        "local_episode_index": 173,
+        "source_episode_index": 1223
+      },
+      {
+        "local_episode_index": 174,
+        "source_episode_index": 1224
+      },
+      {
+        "local_episode_index": 175,
+        "source_episode_index": 1225
+      },
+      {
+        "local_episode_index": 176,
+        "source_episode_index": 1226
+      },
+      {
+        "local_episode_index": 177,
+        "source_episode_index": 1227
+      },
+      {
+        "local_episode_index": 178,
+        "source_episode_index": 1228
+      },
+      {
+        "local_episode_index": 179,
+        "source_episode_index": 1229
+      },
+      {
+        "local_episode_index": 180,
+        "source_episode_index": 1230
+      },
+      {
+        "local_episode_index": 181,
+        "source_episode_index": 1231
+      },
+      {
+        "local_episode_index": 182,
+        "source_episode_index": 1232
+      },
+      {
+        "local_episode_index": 183,
+        "source_episode_index": 1233
+      },
+      {
+        "local_episode_index": 184,
+        "source_episode_index": 1234
+      },
+      {
+        "local_episode_index": 185,
+        "source_episode_index": 1235
+      },
+      {
+        "local_episode_index": 186,
+        "source_episode_index": 1236
+      },
+      {
+        "local_episode_index": 187,
+        "source_episode_index": 1237
+      },
+      {
+        "local_episode_index": 188,
+        "source_episode_index": 1238
+      },
+      {
+        "local_episode_index": 189,
+        "source_episode_index": 1239
+      },
+      {
+        "local_episode_index": 190,
+        "source_episode_index": 1240
+      },
+      {
+        "local_episode_index": 191,
+        "source_episode_index": 1241
+      },
+      {
+        "local_episode_index": 192,
+        "source_episode_index": 1242
+      },
+      {
+        "local_episode_index": 193,
+        "source_episode_index": 1243
+      },
+      {
+        "local_episode_index": 194,
+        "source_episode_index": 1244
+      },
+      {
+        "local_episode_index": 195,
+        "source_episode_index": 1245
+      },
+      {
+        "local_episode_index": 196,
+        "source_episode_index": 1246
+      },
+      {
+        "local_episode_index": 197,
+        "source_episode_index": 1247
+      },
+      {
+        "local_episode_index": 198,
+        "source_episode_index": 1248
+      },
+      {
+        "local_episode_index": 199,
+        "source_episode_index": 1249
+      },
+      {
+        "local_episode_index": 200,
+        "source_episode_index": 2159
+      },
+      {
+        "local_episode_index": 201,
+        "source_episode_index": 2160
+      },
+      {
+        "local_episode_index": 202,
+        "source_episode_index": 2161
+      },
+      {
+        "local_episode_index": 203,
+        "source_episode_index": 2162
+      },
+      {
+        "local_episode_index": 204,
+        "source_episode_index": 2163
+      },
+      {
+        "local_episode_index": 205,
+        "source_episode_index": 2164
+      },
+      {
+        "local_episode_index": 206,
+        "source_episode_index": 2165
+      },
+      {
+        "local_episode_index": 207,
+        "source_episode_index": 2166
+      },
+      {
+        "local_episode_index": 208,
+        "source_episode_index": 2167
+      },
+      {
+        "local_episode_index": 209,
+        "source_episode_index": 2168
+      },
+      {
+        "local_episode_index": 210,
+        "source_episode_index": 2169
+      },
+      {
+        "local_episode_index": 211,
+        "source_episode_index": 2170
+      },
+      {
+        "local_episode_index": 212,
+        "source_episode_index": 2171
+      },
+      {
+        "local_episode_index": 213,
+        "source_episode_index": 2172
+      },
+      {
+        "local_episode_index": 214,
+        "source_episode_index": 2173
+      },
+      {
+        "local_episode_index": 215,
+        "source_episode_index": 2174
+      },
+      {
+        "local_episode_index": 216,
+        "source_episode_index": 2175
+      },
+      {
+        "local_episode_index": 217,
+        "source_episode_index": 2176
+      },
+      {
+        "local_episode_index": 218,
+        "source_episode_index": 2177
+      },
+      {
+        "local_episode_index": 219,
+        "source_episode_index": 2178
+      },
+      {
+        "local_episode_index": 220,
+        "source_episode_index": 2179
+      },
+      {
+        "local_episode_index": 221,
+        "source_episode_index": 2180
+      },
+      {
+        "local_episode_index": 222,
+        "source_episode_index": 2181
+      },
+      {
+        "local_episode_index": 223,
+        "source_episode_index": 2182
+      },
+      {
+        "local_episode_index": 224,
+        "source_episode_index": 2183
+      },
+      {
+        "local_episode_index": 225,
+        "source_episode_index": 2184
+      },
+      {
+        "local_episode_index": 226,
+        "source_episode_index": 2185
+      },
+      {
+        "local_episode_index": 227,
+        "source_episode_index": 2186
+      },
+      {
+        "local_episode_index": 228,
+        "source_episode_index": 2187
+      },
+      {
+        "local_episode_index": 229,
+        "source_episode_index": 2188
+      },
+      {
+        "local_episode_index": 230,
+        "source_episode_index": 2189
+      },
+      {
+        "local_episode_index": 231,
+        "source_episode_index": 2190
+      },
+      {
+        "local_episode_index": 232,
+        "source_episode_index": 2191
+      },
+      {
+        "local_episode_index": 233,
+        "source_episode_index": 2192
+      },
+      {
+        "local_episode_index": 234,
+        "source_episode_index": 2193
+      },
+      {
+        "local_episode_index": 235,
+        "source_episode_index": 2194
+      },
+      {
+        "local_episode_index": 236,
+        "source_episode_index": 2195
+      },
+      {
+        "local_episode_index": 237,
+        "source_episode_index": 2196
+      },
+      {
+        "local_episode_index": 238,
+        "source_episode_index": 2197
+      },
+      {
+        "local_episode_index": 239,
+        "source_episode_index": 2198
+      },
+      {
+        "local_episode_index": 240,
+        "source_episode_index": 2199
+      },
+      {
+        "local_episode_index": 241,
+        "source_episode_index": 2200
+      },
+      {
+        "local_episode_index": 242,
+        "source_episode_index": 2201
+      },
+      {
+        "local_episode_index": 243,
+        "source_episode_index": 2202
+      },
+      {
+        "local_episode_index": 244,
+        "source_episode_index": 2203
+      },
+      {
+        "local_episode_index": 245,
+        "source_episode_index": 2204
+      },
+      {
+        "local_episode_index": 246,
+        "source_episode_index": 2205
+      },
+      {
+        "local_episode_index": 247,
+        "source_episode_index": 2206
+      },
+      {
+        "local_episode_index": 248,
+        "source_episode_index": 2207
+      },
+      {
+        "local_episode_index": 249,
+        "source_episode_index": 2208
+      },
+      {
+        "local_episode_index": 250,
+        "source_episode_index": 2449
+      },
+      {
+        "local_episode_index": 251,
+        "source_episode_index": 2450
+      },
+      {
+        "local_episode_index": 252,
+        "source_episode_index": 2451
+      },
+      {
+        "local_episode_index": 253,
+        "source_episode_index": 2452
+      },
+      {
+        "local_episode_index": 254,
+        "source_episode_index": 2453
+      },
+      {
+        "local_episode_index": 255,
+        "source_episode_index": 2454
+      },
+      {
+        "local_episode_index": 256,
+        "source_episode_index": 2455
+      },
+      {
+        "local_episode_index": 257,
+        "source_episode_index": 2456
+      },
+      {
+        "local_episode_index": 258,
+        "source_episode_index": 2457
+      },
+      {
+        "local_episode_index": 259,
+        "source_episode_index": 2458
+      },
+      {
+        "local_episode_index": 260,
+        "source_episode_index": 2459
+      },
+      {
+        "local_episode_index": 261,
+        "source_episode_index": 2460
+      },
+      {
+        "local_episode_index": 262,
+        "source_episode_index": 2461
+      },
+      {
+        "local_episode_index": 263,
+        "source_episode_index": 2462
+      },
+      {
+        "local_episode_index": 264,
+        "source_episode_index": 2463
+      },
+      {
+        "local_episode_index": 265,
+        "source_episode_index": 2464
+      },
+      {
+        "local_episode_index": 266,
+        "source_episode_index": 2465
+      },
+      {
+        "local_episode_index": 267,
+        "source_episode_index": 2466
+      },
+      {
+        "local_episode_index": 268,
+        "source_episode_index": 2467
+      },
+      {
+        "local_episode_index": 269,
+        "source_episode_index": 2468
+      },
+      {
+        "local_episode_index": 270,
+        "source_episode_index": 2469
+      },
+      {
+        "local_episode_index": 271,
+        "source_episode_index": 2470
+      },
+      {
+        "local_episode_index": 272,
+        "source_episode_index": 2471
+      },
+      {
+        "local_episode_index": 273,
+        "source_episode_index": 2472
+      },
+      {
+        "local_episode_index": 274,
+        "source_episode_index": 2473
+      },
+      {
+        "local_episode_index": 275,
+        "source_episode_index": 2474
+      },
+      {
+        "local_episode_index": 276,
+        "source_episode_index": 2475
+      },
+      {
+        "local_episode_index": 277,
+        "source_episode_index": 2476
+      },
+      {
+        "local_episode_index": 278,
+        "source_episode_index": 2477
+      },
+      {
+        "local_episode_index": 279,
+        "source_episode_index": 2478
+      },
+      {
+        "local_episode_index": 280,
+        "source_episode_index": 2479
+      },
+      {
+        "local_episode_index": 281,
+        "source_episode_index": 2480
+      },
+      {
+        "local_episode_index": 282,
+        "source_episode_index": 2481
+      },
+      {
+        "local_episode_index": 283,
+        "source_episode_index": 2482
+      },
+      {
+        "local_episode_index": 284,
+        "source_episode_index": 2483
+      },
+      {
+        "local_episode_index": 285,
+        "source_episode_index": 2484
+      },
+      {
+        "local_episode_index": 286,
+        "source_episode_index": 2485
+      },
+      {
+        "local_episode_index": 287,
+        "source_episode_index": 2486
+      },
+      {
+        "local_episode_index": 288,
+        "source_episode_index": 2487
+      },
+      {
+        "local_episode_index": 289,
+        "source_episode_index": 2488
+      },
+      {
+        "local_episode_index": 290,
+        "source_episode_index": 2489
+      },
+      {
+        "local_episode_index": 291,
+        "source_episode_index": 2490
+      },
+      {
+        "local_episode_index": 292,
+        "source_episode_index": 2491
+      },
+      {
+        "local_episode_index": 293,
+        "source_episode_index": 2492
+      },
+      {
+        "local_episode_index": 294,
+        "source_episode_index": 2493
+      },
+      {
+        "local_episode_index": 295,
+        "source_episode_index": 2494
+      },
+      {
+        "local_episode_index": 296,
+        "source_episode_index": 2495
+      },
+      {
+        "local_episode_index": 297,
+        "source_episode_index": 2496
+      },
+      {
+        "local_episode_index": 298,
+        "source_episode_index": 2497
+      },
+      {
+        "local_episode_index": 299,
+        "source_episode_index": 2498
+      }
+    ],
+    "local_episode_map_sha256": "9416b93bedcfe74505a1fd5c0e383a641d413066c8242ab64c6097b04dfd4d6a",
+    "source_episode_count": 300,
+    "source_episode_indices": [
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      910,
+      911,
+      912,
+      913,
+      914,
+      915,
+      916,
+      917,
+      918,
+      919,
+      920,
+      921,
+      922,
+      923,
+      924,
+      925,
+      926,
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937,
+      938,
+      939,
+      940,
+      941,
+      942,
+      943,
+      944,
+      945,
+      946,
+      947,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207,
+      1208,
+      1209,
+      1210,
+      1211,
+      1212,
+      1213,
+      1214,
+      1215,
+      1216,
+      1217,
+      1218,
+      1219,
+      1220,
+      1221,
+      1222,
+      1223,
+      1224,
+      1225,
+      1226,
+      1227,
+      1228,
+      1229,
+      1230,
+      1231,
+      1232,
+      1233,
+      1234,
+      1235,
+      1236,
+      1237,
+      1238,
+      1239,
+      1240,
+      1241,
+      1242,
+      1243,
+      1244,
+      1245,
+      1246,
+      1247,
+      1248,
+      1249,
+      2159,
+      2160,
+      2161,
+      2162,
+      2163,
+      2164,
+      2165,
+      2166,
+      2167,
+      2168,
+      2169,
+      2170,
+      2171,
+      2172,
+      2173,
+      2174,
+      2175,
+      2176,
+      2177,
+      2178,
+      2179,
+      2180,
+      2181,
+      2182,
+      2183,
+      2184,
+      2185,
+      2186,
+      2187,
+      2188,
+      2189,
+      2190,
+      2191,
+      2192,
+      2193,
+      2194,
+      2195,
+      2196,
+      2197,
+      2198,
+      2199,
+      2200,
+      2201,
+      2202,
+      2203,
+      2204,
+      2205,
+      2206,
+      2207,
+      2208,
+      2449,
+      2450,
+      2451,
+      2452,
+      2453,
+      2454,
+      2455,
+      2456,
+      2457,
+      2458,
+      2459,
+      2460,
+      2461,
+      2462,
+      2463,
+      2464,
+      2465,
+      2466,
+      2467,
+      2468,
+      2469,
+      2470,
+      2471,
+      2472,
+      2473,
+      2474,
+      2475,
+      2476,
+      2477,
+      2478,
+      2479,
+      2480,
+      2481,
+      2482,
+      2483,
+      2484,
+      2485,
+      2486,
+      2487,
+      2488,
+      2489,
+      2490,
+      2491,
+      2492,
+      2493,
+      2494,
+      2495,
+      2496,
+      2497,
+      2498
+    ],
+    "source_episode_indices_sha256": "11bbb64dd763002b5816d49868f5fd214910428f309e69fd2cb7f3e8ff18ae33",
+    "split_manifest_episode_indices_sha256": "11bbb64dd763002b5816d49868f5fd214910428f309e69fd2cb7f3e8ff18ae33"
+  },
+  "explicitly_remapped": [
+    "episode_index",
+    "index",
+    "meta/episodes dataset_from_index",
+    "meta/episodes dataset_to_index"
+  ],
+  "manifest": {
+    "media_type": "application/json",
+    "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/worldepisode_split_package.json"
+  },
+  "not_materialized": [
+    "video payload files",
+    "observation.images.* feature payloads"
+  ],
+  "outputs": {
+    "data": {
+      "bytes": 2130474,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/data/chunk-000/file-000.parquet",
+      "sha256": "975b3ce845a4087e24860505533f018f32a1d1af6b79453ea26f6cf1d4b94b71"
+    },
+    "episodes": {
+      "bytes": 331239,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/episodes/chunk-000/file-000.parquet",
+      "sha256": "49e003be7d5b99a1075ce9621d48a1886e7b81819a6755de89ea42d26de4c6d9"
+    },
+    "info": {
+      "bytes": 1903,
+      "media_type": "application/json",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/info.json",
+      "sha256": "f53e7f27721ff0659b2eec15685014bcaf7d6098adaa4e29e9ce19e5ea90c599"
+    },
+    "tasks": {
+      "bytes": 2534,
+      "media_type": "application/vnd.apache.parquet",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/tasks.parquet",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f"
+    }
+  },
+  "preserved_without_numeric_change": [
+    "action",
+    "observation.state",
+    "timestamp",
+    "frame_index",
+    "task_index",
+    "next.reward",
+    "next.done"
+  ],
+  "profile": "worldepisode-physical-lerobot-split-package-0.1",
+  "row_counts": {
+    "episodes": 300,
+    "frames": 100422,
+    "metadata_episode_rows": 300
+  },
+  "source_dataset": {
+    "local_cache_root": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+  },
+  "source_integrity": {
+    "source_files": [
+      {
+        "bytes": 168964,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-013.parquet",
+        "sha256": "21f6b9206c92107c9e3462b3d6dccc19d67ab04e961ab17beb7faa97340a3793",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet"
+      },
+      {
+        "bytes": 185354,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-014.parquet",
+        "sha256": "c7e4f337ca692a22cb31e52af93c858941825cc1e5be35173a0bcd7ecd7590dc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet"
+      },
+      {
+        "bytes": 212543,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-027.parquet",
+        "sha256": "62c344620ea3cceaa62a46895fd542f1bbabc2c4f473f8bf5c218a0b423764b5",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet"
+      },
+      {
+        "bytes": 181040,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-028.parquet",
+        "sha256": "a932030cdb13ecba62bf0659a299bd2e7cdb91db156c2650d6a32992f779dc99",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet"
+      },
+      {
+        "bytes": 322466,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-040.parquet",
+        "sha256": "e1e9cc6db2e7c7a00789821d253401acf8c244af10429827af7d519e37cafbe3",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet"
+      },
+      {
+        "bytes": 267573,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-041.parquet",
+        "sha256": "f67f8512b2019aa3bb94dc1445998e55016a62571fc7bd4a8880a10e252ce864",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet"
+      },
+      {
+        "bytes": 268803,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-052.parquet",
+        "sha256": "0e20903bc14ac7927b3950421894ea3e3939b56c1719ded863b051ae71883918",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet"
+      },
+      {
+        "bytes": 206664,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-053.parquet",
+        "sha256": "5b2a6b92124f8bb148af01a6f145793f741d87fd7fb80cc8985800d0225fd95b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet"
+      },
+      {
+        "bytes": 335315,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-066.parquet",
+        "sha256": "4b4915599acc6a54133ae69526ca4145adf02e0dfc6fb365bcc1098e938d1810",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet"
+      },
+      {
+        "bytes": 120686,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-078.parquet",
+        "sha256": "fdcb70fcd5cb3ea1619c8d159eb3abc13804aaae5e5f0102c27fd5d67fc75a2b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet"
+      },
+      {
+        "bytes": 22002,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-079.parquet",
+        "sha256": "fd4e317f99eba8e8556ae8274a41bdabdf9b2dd4756adba0315a752e599a7135",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet"
+      },
+      {
+        "bytes": 174527,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-080.parquet",
+        "sha256": "d00a6dcb02e538a30e5b8792592c919c78e0f6849cf02de8438e55c21941471a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet"
+      },
+      {
+        "bytes": 63747,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-095.parquet",
+        "sha256": "0cb99deb90529b2e9510d0b3580312fa826b3aa82842e4522010d322059b346e",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet"
+      },
+      {
+        "bytes": 227305,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-096.parquet",
+        "sha256": "6e4bddaece0756e454e7bfc9b7c66322f9ba706e8a63cb4cae25197019463443",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet"
+      },
+      {
+        "bytes": 237430,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-097.parquet",
+        "sha256": "9f00c6154fc0aa3729d57e4eced9bf21f72440c5668890b0bfca84707f1ea2bc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet"
+      },
+      {
+        "bytes": 198168,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-098.parquet",
+        "sha256": "a8292ee476bc6f42f8c06af6915ddf024f3e1b15ff8de54b31af5f1a187bf577",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet"
+      },
+      {
+        "bytes": 54442,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-099.parquet",
+        "sha256": "3a4dde0b110eae2868efd10cdafb91b772245289face9be0685c18a902da6d50",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet"
+      },
+      {
+        "bytes": 79559,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-100.parquet",
+        "sha256": "c12947de83885bb2370298fef3e69dc9a97ca30fd0e6d38bb65748a3b81923b7",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet"
+      },
+      {
+        "bytes": 80795,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-101.parquet",
+        "sha256": "8158700b45beb3333e85c0ec3367f2d4ce5aa8b536332f630692db5483eed596",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet"
+      },
+      {
+        "bytes": 22817,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-102.parquet",
+        "sha256": "ed68f11e6dc3122aa5c2e5ffbee8dd78e002bcf0a02010b6fc84a12994f5ed0a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet"
+      },
+      {
+        "bytes": 92894,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-116.parquet",
+        "sha256": "ac8818b6e5fa28de86c34ae209973e826fb1a0ab486f41142fcc4e4fa334c67c",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet"
+      },
+      {
+        "bytes": 111413,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-117.parquet",
+        "sha256": "ee67124ccb490313b2275ace08bfc49a820e7efa84e899edbcf5801c41ab7aef",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet"
+      },
+      {
+        "bytes": 119398,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-118.parquet",
+        "sha256": "ac4c02f451681ce5499294b64330201d1edaf53890f27bb004851e5ddeb54f06",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet"
+      },
+      {
+        "bytes": 96609,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "data/chunk-000/file-119.parquet",
+        "sha256": "d6561f7571e2fd39ff3e5278cfd9374ebc181a901e91ccee59a8f5854f2bf683",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet"
+      },
+      {
+        "bytes": 3865933,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/episodes/chunk-000/file-000.parquet",
+        "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet"
+      },
+      {
+        "bytes": 4878,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json",
+        "media_type": "application/json",
+        "path": "meta/info.json",
+        "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json"
+      },
+      {
+        "bytes": 2534,
+        "local_mirror": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "path": "meta/tasks.parquet",
+        "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet"
+      }
+    ],
+    "source_files_sha256": "fbf5fe0222b969529bd0edadc3a147b57ce7683b1a19d50fe9979060d3a9fd84",
+    "verified": true,
+    "verified_file_count": 27,
+    "verified_total_bytes": 7723859
+  },
+  "status": "physical_split_package_ready",
+  "target_dataset": {
+    "lerobot_split_alias": "train",
+    "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+    "partition": "train",
+    "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+    "split_name": "scene_disjoint"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "worldepisode-0.1",
+  "episode": {
+    "episode_id": "independent_bad_action",
+    "dataset_id": "independent_fixture"
+  },
+  "world_revision": {
+    "world_revision_id": "world_fixture@sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "asset": {
+      "uri": "worlds/fixture.json",
+      "media_type": "application/json",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  },
+  "embodiment": {
+    "embodiment_id": "fixture_arm"
+  },
+  "frame_graph": {
+    "frames": [
+      {
+        "frame_id": "world",
+        "units": "m"
+      },
+      {
+        "frame_id": "tool0",
+        "units": "m"
+      }
+    ],
+    "transforms": [
+      {
+        "source_frame": "tool0",
+        "target_frame": "world",
+        "valid_interval": {
+          "start": 0,
+          "end": 1,
+          "clock_id": "episode_time"
+        }
+      }
+    ]
+  },
+  "clock_graph": {
+    "clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "monotonic_episode"
+      }
+    ]
+  },
+  "entities": [],
+  "action_space": {
+    "channels": [
+      {
+        "name": "eef_delta",
+        "actuator": "arm",
+        "control_mode": "cartesian_position",
+        "parameterization": "delta_xyz",
+        "reference_frame": "tool0",
+        "units": "m",
+        "semantics": "delta"
+      }
+    ]
+  },
+  "trace": {
+    "binding": "independent-fixture",
+    "asset": {
+      "uri": "episodes/bad-action.parquet",
+      "media_type": "application/vnd.apache.parquet",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  },
+  "world_deltas": [],
+  "provenance": {
+    "source": "hand_authored_fixture",
+    "creator": "WorldEpisode"
+  },
+  "quality": {}
+}

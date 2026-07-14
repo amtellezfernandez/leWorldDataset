@@ -1,0 +1,987 @@
+{
+  "aggregate": {
+    "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+    "random_episode_nrmse_mean": 0.1572614852380231,
+    "random_episode_success_rate": 0.925,
+    "scene_disjoint_nrmse_mean": 0.25457434248891586,
+    "scene_disjoint_success_rate": 0.42,
+    "success_rate_drop": 0.5050000000000001
+  },
+  "artifacts": {
+    "json": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
+    "markdown": "docs/experiments/lerobot_temporal_policy_baseline/README.md"
+  },
+  "claim_boundary": "Measured offline temporal state/action baseline over committed compact LeRobot split packages. This is not ACT, Diffusion Policy, a vision-policy result, a simulator rollout, or a physical-robot rollout.",
+  "profile": "worldepisode-temporal-policy-baseline-0.1",
+  "source": {
+    "package_count": 4,
+    "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+    "source_files_verified": true,
+    "total_output_frames": 241470
+  },
+  "splits": {
+    "random_episode": {
+      "metrics": {
+        "episode_count": 80,
+        "episode_normalized_rmse_mean": 0.1572614852380231,
+        "episode_normalized_rmse_median": 0.14832023194749344,
+        "episode_normalized_rmse_p75": 0.20464305001300093,
+        "frame_count": 21745,
+        "frame_normalized_rmse": 0.15518585877367172,
+        "frame_rmse": 2.563375502026356,
+        "offline_success_count": 74,
+        "offline_success_rate": 0.925,
+        "offline_success_threshold": 0.25,
+        "per_episode": [
+          {
+            "episode_index": 0,
+            "frame_count": 190,
+            "normalized_rmse": 0.12438126155159807
+          },
+          {
+            "episode_index": 1,
+            "frame_count": 200,
+            "normalized_rmse": 0.0785283036546092
+          },
+          {
+            "episode_index": 2,
+            "frame_count": 230,
+            "normalized_rmse": 0.09487094089836914
+          },
+          {
+            "episode_index": 3,
+            "frame_count": 223,
+            "normalized_rmse": 0.08392083533946687
+          },
+          {
+            "episode_index": 4,
+            "frame_count": 202,
+            "normalized_rmse": 0.09733500261622897
+          },
+          {
+            "episode_index": 5,
+            "frame_count": 184,
+            "normalized_rmse": 0.09816084664929381
+          },
+          {
+            "episode_index": 6,
+            "frame_count": 237,
+            "normalized_rmse": 0.09983910105841744
+          },
+          {
+            "episode_index": 7,
+            "frame_count": 223,
+            "normalized_rmse": 0.09221930523626297
+          },
+          {
+            "episode_index": 8,
+            "frame_count": 206,
+            "normalized_rmse": 0.10164958415906952
+          },
+          {
+            "episode_index": 9,
+            "frame_count": 232,
+            "normalized_rmse": 0.1228400514484886
+          },
+          {
+            "episode_index": 10,
+            "frame_count": 219,
+            "normalized_rmse": 0.1343087640591581
+          },
+          {
+            "episode_index": 11,
+            "frame_count": 257,
+            "normalized_rmse": 0.21606228828640822
+          },
+          {
+            "episode_index": 12,
+            "frame_count": 252,
+            "normalized_rmse": 0.17362777730889828
+          },
+          {
+            "episode_index": 13,
+            "frame_count": 230,
+            "normalized_rmse": 0.13614841495757135
+          },
+          {
+            "episode_index": 14,
+            "frame_count": 284,
+            "normalized_rmse": 0.1690569021925969
+          },
+          {
+            "episode_index": 15,
+            "frame_count": 269,
+            "normalized_rmse": 0.23808542965822027
+          },
+          {
+            "episode_index": 16,
+            "frame_count": 245,
+            "normalized_rmse": 0.22782189250304508
+          },
+          {
+            "episode_index": 17,
+            "frame_count": 216,
+            "normalized_rmse": 0.19155616657502844
+          },
+          {
+            "episode_index": 18,
+            "frame_count": 232,
+            "normalized_rmse": 0.16751664431072893
+          },
+          {
+            "episode_index": 19,
+            "frame_count": 233,
+            "normalized_rmse": 0.2301498153470846
+          },
+          {
+            "episode_index": 20,
+            "frame_count": 608,
+            "normalized_rmse": 0.06712389045292122
+          },
+          {
+            "episode_index": 21,
+            "frame_count": 384,
+            "normalized_rmse": 0.07812280428005175
+          },
+          {
+            "episode_index": 22,
+            "frame_count": 419,
+            "normalized_rmse": 0.1077070612346448
+          },
+          {
+            "episode_index": 23,
+            "frame_count": 417,
+            "normalized_rmse": 0.11128567243050975
+          },
+          {
+            "episode_index": 24,
+            "frame_count": 438,
+            "normalized_rmse": 0.09719955112595403
+          },
+          {
+            "episode_index": 25,
+            "frame_count": 309,
+            "normalized_rmse": 0.10600846296837817
+          },
+          {
+            "episode_index": 26,
+            "frame_count": 633,
+            "normalized_rmse": 0.10995913326963484
+          },
+          {
+            "episode_index": 27,
+            "frame_count": 350,
+            "normalized_rmse": 0.11052289201451204
+          },
+          {
+            "episode_index": 28,
+            "frame_count": 382,
+            "normalized_rmse": 0.11052121465841266
+          },
+          {
+            "episode_index": 29,
+            "frame_count": 278,
+            "normalized_rmse": 0.0881041568252177
+          },
+          {
+            "episode_index": 30,
+            "frame_count": 478,
+            "normalized_rmse": 0.10708486542022445
+          },
+          {
+            "episode_index": 31,
+            "frame_count": 323,
+            "normalized_rmse": 0.08675100363271289
+          },
+          {
+            "episode_index": 32,
+            "frame_count": 272,
+            "normalized_rmse": 0.10354958902887075
+          },
+          {
+            "episode_index": 33,
+            "frame_count": 485,
+            "normalized_rmse": 0.09978234518779885
+          },
+          {
+            "episode_index": 34,
+            "frame_count": 216,
+            "normalized_rmse": 0.13246478396989664
+          },
+          {
+            "episode_index": 35,
+            "frame_count": 232,
+            "normalized_rmse": 0.10898333740520046
+          },
+          {
+            "episode_index": 36,
+            "frame_count": 283,
+            "normalized_rmse": 0.0879334190906311
+          },
+          {
+            "episode_index": 37,
+            "frame_count": 314,
+            "normalized_rmse": 0.10256304912840626
+          },
+          {
+            "episode_index": 38,
+            "frame_count": 192,
+            "normalized_rmse": 0.11000246134834868
+          },
+          {
+            "episode_index": 39,
+            "frame_count": 351,
+            "normalized_rmse": 0.10110263376513146
+          },
+          {
+            "episode_index": 40,
+            "frame_count": 226,
+            "normalized_rmse": 0.08069198952158638
+          },
+          {
+            "episode_index": 41,
+            "frame_count": 198,
+            "normalized_rmse": 0.11056572027405559
+          },
+          {
+            "episode_index": 42,
+            "frame_count": 225,
+            "normalized_rmse": 0.1831915442340019
+          },
+          {
+            "episode_index": 43,
+            "frame_count": 258,
+            "normalized_rmse": 0.24050200921241568
+          },
+          {
+            "episode_index": 44,
+            "frame_count": 239,
+            "normalized_rmse": 0.20117309017203872
+          },
+          {
+            "episode_index": 45,
+            "frame_count": 226,
+            "normalized_rmse": 0.15871810418473173
+          },
+          {
+            "episode_index": 46,
+            "frame_count": 231,
+            "normalized_rmse": 0.24514407893092147
+          },
+          {
+            "episode_index": 47,
+            "frame_count": 206,
+            "normalized_rmse": 0.21505292953588753
+          },
+          {
+            "episode_index": 48,
+            "frame_count": 168,
+            "normalized_rmse": 0.2218876426420035
+          },
+          {
+            "episode_index": 49,
+            "frame_count": 189,
+            "normalized_rmse": 0.24019820241813641
+          },
+          {
+            "episode_index": 50,
+            "frame_count": 146,
+            "normalized_rmse": 0.2465092341013356
+          },
+          {
+            "episode_index": 51,
+            "frame_count": 202,
+            "normalized_rmse": 0.25118880926747517
+          },
+          {
+            "episode_index": 52,
+            "frame_count": 181,
+            "normalized_rmse": 0.27860106898556647
+          },
+          {
+            "episode_index": 53,
+            "frame_count": 156,
+            "normalized_rmse": 0.2596644783717464
+          },
+          {
+            "episode_index": 54,
+            "frame_count": 158,
+            "normalized_rmse": 0.24284248862334376
+          },
+          {
+            "episode_index": 55,
+            "frame_count": 158,
+            "normalized_rmse": 0.2348035244728089
+          },
+          {
+            "episode_index": 56,
+            "frame_count": 169,
+            "normalized_rmse": 0.2470986814271768
+          },
+          {
+            "episode_index": 57,
+            "frame_count": 174,
+            "normalized_rmse": 0.26523591557937837
+          },
+          {
+            "episode_index": 58,
+            "frame_count": 169,
+            "normalized_rmse": 0.25457238915070785
+          },
+          {
+            "episode_index": 59,
+            "frame_count": 169,
+            "normalized_rmse": 0.2491366528457688
+          },
+          {
+            "episode_index": 60,
+            "frame_count": 172,
+            "normalized_rmse": 0.18652897938779586
+          },
+          {
+            "episode_index": 61,
+            "frame_count": 322,
+            "normalized_rmse": 0.18837549834181738
+          },
+          {
+            "episode_index": 62,
+            "frame_count": 167,
+            "normalized_rmse": 0.26800490109535907
+          },
+          {
+            "episode_index": 63,
+            "frame_count": 567,
+            "normalized_rmse": 0.10832125514286452
+          },
+          {
+            "episode_index": 64,
+            "frame_count": 396,
+            "normalized_rmse": 0.12987572079364637
+          },
+          {
+            "episode_index": 65,
+            "frame_count": 601,
+            "normalized_rmse": 0.13603506201959817
+          },
+          {
+            "episode_index": 66,
+            "frame_count": 543,
+            "normalized_rmse": 0.12029307347607392
+          },
+          {
+            "episode_index": 67,
+            "frame_count": 392,
+            "normalized_rmse": 0.11809626145552259
+          },
+          {
+            "episode_index": 68,
+            "frame_count": 351,
+            "normalized_rmse": 0.14733152739262476
+          },
+          {
+            "episode_index": 69,
+            "frame_count": 241,
+            "normalized_rmse": 0.14930893650236216
+          },
+          {
+            "episode_index": 70,
+            "frame_count": 224,
+            "normalized_rmse": 0.1619692105683683
+          },
+          {
+            "episode_index": 71,
+            "frame_count": 218,
+            "normalized_rmse": 0.1677895691046987
+          },
+          {
+            "episode_index": 72,
+            "frame_count": 202,
+            "normalized_rmse": 0.1874759187481117
+          },
+          {
+            "episode_index": 73,
+            "frame_count": 208,
+            "normalized_rmse": 0.15944451941871357
+          },
+          {
+            "episode_index": 74,
+            "frame_count": 240,
+            "normalized_rmse": 0.1577614093552648
+          },
+          {
+            "episode_index": 75,
+            "frame_count": 242,
+            "normalized_rmse": 0.15310918471163304
+          },
+          {
+            "episode_index": 76,
+            "frame_count": 241,
+            "normalized_rmse": 0.18159742373043813
+          },
+          {
+            "episode_index": 77,
+            "frame_count": 237,
+            "normalized_rmse": 0.17415016497190342
+          },
+          {
+            "episode_index": 78,
+            "frame_count": 191,
+            "normalized_rmse": 0.18016728240451635
+          },
+          {
+            "episode_index": 79,
+            "frame_count": 214,
+            "normalized_rmse": 0.17365271142144542
+          }
+        ]
+      },
+      "policy": {
+        "action_dim": 6,
+        "family": "closed_form_temporal_ridge_state_action",
+        "feature_dim": 24,
+        "history_frames": 3,
+        "ridge_lambda": 0.01,
+        "state_dim": 6,
+        "uses_previous_ground_truth_actions": false,
+        "uses_video": false
+      },
+      "split": "random_episode",
+      "test_frames": 21745,
+      "test_package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "train_frames": 98990,
+      "train_package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train"
+    },
+    "scene_disjoint": {
+      "metrics": {
+        "episode_count": 100,
+        "episode_normalized_rmse_mean": 0.25457434248891586,
+        "episode_normalized_rmse_median": 0.2620473001147364,
+        "episode_normalized_rmse_p75": 0.2842859438602856,
+        "frame_count": 20313,
+        "frame_normalized_rmse": 0.2530206042497452,
+        "frame_rmse": 3.478169207117213,
+        "offline_success_count": 42,
+        "offline_success_rate": 0.42,
+        "offline_success_threshold": 0.25,
+        "per_episode": [
+          {
+            "episode_index": 0,
+            "frame_count": 246,
+            "normalized_rmse": 0.25230798322340114
+          },
+          {
+            "episode_index": 1,
+            "frame_count": 265,
+            "normalized_rmse": 0.15030457654221832
+          },
+          {
+            "episode_index": 2,
+            "frame_count": 198,
+            "normalized_rmse": 0.23767414661882913
+          },
+          {
+            "episode_index": 3,
+            "frame_count": 272,
+            "normalized_rmse": 0.18949467014830906
+          },
+          {
+            "episode_index": 4,
+            "frame_count": 220,
+            "normalized_rmse": 0.22996410465791667
+          },
+          {
+            "episode_index": 5,
+            "frame_count": 225,
+            "normalized_rmse": 0.20262025437884165
+          },
+          {
+            "episode_index": 6,
+            "frame_count": 196,
+            "normalized_rmse": 0.21003983766147355
+          },
+          {
+            "episode_index": 7,
+            "frame_count": 258,
+            "normalized_rmse": 0.2634162815109814
+          },
+          {
+            "episode_index": 8,
+            "frame_count": 197,
+            "normalized_rmse": 0.20890616745266496
+          },
+          {
+            "episode_index": 9,
+            "frame_count": 239,
+            "normalized_rmse": 0.21807805398863975
+          },
+          {
+            "episode_index": 10,
+            "frame_count": 273,
+            "normalized_rmse": 0.17627466509848622
+          },
+          {
+            "episode_index": 11,
+            "frame_count": 207,
+            "normalized_rmse": 0.18010359887146732
+          },
+          {
+            "episode_index": 12,
+            "frame_count": 226,
+            "normalized_rmse": 0.17184752398861378
+          },
+          {
+            "episode_index": 13,
+            "frame_count": 196,
+            "normalized_rmse": 0.29056480104609156
+          },
+          {
+            "episode_index": 14,
+            "frame_count": 231,
+            "normalized_rmse": 0.26716656612656753
+          },
+          {
+            "episode_index": 15,
+            "frame_count": 254,
+            "normalized_rmse": 0.18494150946654261
+          },
+          {
+            "episode_index": 16,
+            "frame_count": 272,
+            "normalized_rmse": 0.21890281518480922
+          },
+          {
+            "episode_index": 17,
+            "frame_count": 227,
+            "normalized_rmse": 0.2668762543824643
+          },
+          {
+            "episode_index": 18,
+            "frame_count": 217,
+            "normalized_rmse": 0.24643212637854486
+          },
+          {
+            "episode_index": 19,
+            "frame_count": 314,
+            "normalized_rmse": 0.18260817745137659
+          },
+          {
+            "episode_index": 20,
+            "frame_count": 239,
+            "normalized_rmse": 0.23409230082414464
+          },
+          {
+            "episode_index": 21,
+            "frame_count": 206,
+            "normalized_rmse": 0.2391631723074193
+          },
+          {
+            "episode_index": 22,
+            "frame_count": 217,
+            "normalized_rmse": 0.27390592381753015
+          },
+          {
+            "episode_index": 23,
+            "frame_count": 190,
+            "normalized_rmse": 0.2778465358452728
+          },
+          {
+            "episode_index": 24,
+            "frame_count": 189,
+            "normalized_rmse": 0.27593343465883413
+          },
+          {
+            "episode_index": 25,
+            "frame_count": 321,
+            "normalized_rmse": 0.17817974504665493
+          },
+          {
+            "episode_index": 26,
+            "frame_count": 259,
+            "normalized_rmse": 0.18122593967684933
+          },
+          {
+            "episode_index": 27,
+            "frame_count": 210,
+            "normalized_rmse": 0.24787217979860002
+          },
+          {
+            "episode_index": 28,
+            "frame_count": 234,
+            "normalized_rmse": 0.2618147296099135
+          },
+          {
+            "episode_index": 29,
+            "frame_count": 218,
+            "normalized_rmse": 0.21133369558668577
+          },
+          {
+            "episode_index": 30,
+            "frame_count": 272,
+            "normalized_rmse": 0.24390374255848515
+          },
+          {
+            "episode_index": 31,
+            "frame_count": 192,
+            "normalized_rmse": 0.20608032662348907
+          },
+          {
+            "episode_index": 32,
+            "frame_count": 205,
+            "normalized_rmse": 0.2845091079249266
+          },
+          {
+            "episode_index": 33,
+            "frame_count": 204,
+            "normalized_rmse": 0.27673925405256117
+          },
+          {
+            "episode_index": 34,
+            "frame_count": 170,
+            "normalized_rmse": 0.24950366533511578
+          },
+          {
+            "episode_index": 35,
+            "frame_count": 266,
+            "normalized_rmse": 0.2622798706195593
+          },
+          {
+            "episode_index": 36,
+            "frame_count": 205,
+            "normalized_rmse": 0.28440850981751464
+          },
+          {
+            "episode_index": 37,
+            "frame_count": 274,
+            "normalized_rmse": 0.189416193083524
+          },
+          {
+            "episode_index": 38,
+            "frame_count": 172,
+            "normalized_rmse": 0.29625218017329263
+          },
+          {
+            "episode_index": 39,
+            "frame_count": 161,
+            "normalized_rmse": 0.2654583868712046
+          },
+          {
+            "episode_index": 40,
+            "frame_count": 177,
+            "normalized_rmse": 0.2842450885412093
+          },
+          {
+            "episode_index": 41,
+            "frame_count": 216,
+            "normalized_rmse": 0.3131429808194074
+          },
+          {
+            "episode_index": 42,
+            "frame_count": 168,
+            "normalized_rmse": 0.24062737589037092
+          },
+          {
+            "episode_index": 43,
+            "frame_count": 230,
+            "normalized_rmse": 0.2521757547168604
+          },
+          {
+            "episode_index": 44,
+            "frame_count": 189,
+            "normalized_rmse": 0.26681414738937936
+          },
+          {
+            "episode_index": 45,
+            "frame_count": 235,
+            "normalized_rmse": 0.2282083816075675
+          },
+          {
+            "episode_index": 46,
+            "frame_count": 304,
+            "normalized_rmse": 0.18596778717759546
+          },
+          {
+            "episode_index": 47,
+            "frame_count": 175,
+            "normalized_rmse": 0.29407739973406005
+          },
+          {
+            "episode_index": 48,
+            "frame_count": 173,
+            "normalized_rmse": 0.2890422782423593
+          },
+          {
+            "episode_index": 49,
+            "frame_count": 182,
+            "normalized_rmse": 0.22910068242244672
+          },
+          {
+            "episode_index": 50,
+            "frame_count": 242,
+            "normalized_rmse": 0.23607099595300662
+          },
+          {
+            "episode_index": 51,
+            "frame_count": 158,
+            "normalized_rmse": 0.2520015524121629
+          },
+          {
+            "episode_index": 52,
+            "frame_count": 141,
+            "normalized_rmse": 0.27880243830700185
+          },
+          {
+            "episode_index": 53,
+            "frame_count": 149,
+            "normalized_rmse": 0.28170126477659085
+          },
+          {
+            "episode_index": 54,
+            "frame_count": 132,
+            "normalized_rmse": 0.2541687027222638
+          },
+          {
+            "episode_index": 55,
+            "frame_count": 160,
+            "normalized_rmse": 0.26937915177296434
+          },
+          {
+            "episode_index": 56,
+            "frame_count": 146,
+            "normalized_rmse": 0.26271739261022387
+          },
+          {
+            "episode_index": 57,
+            "frame_count": 171,
+            "normalized_rmse": 0.2335612429368612
+          },
+          {
+            "episode_index": 58,
+            "frame_count": 147,
+            "normalized_rmse": 0.23145080283625752
+          },
+          {
+            "episode_index": 59,
+            "frame_count": 202,
+            "normalized_rmse": 0.2742062282725238
+          },
+          {
+            "episode_index": 60,
+            "frame_count": 172,
+            "normalized_rmse": 0.24329966954934473
+          },
+          {
+            "episode_index": 61,
+            "frame_count": 183,
+            "normalized_rmse": 0.21604707659630407
+          },
+          {
+            "episode_index": 62,
+            "frame_count": 200,
+            "normalized_rmse": 0.26630770912738944
+          },
+          {
+            "episode_index": 63,
+            "frame_count": 190,
+            "normalized_rmse": 0.23452114284104406
+          },
+          {
+            "episode_index": 64,
+            "frame_count": 175,
+            "normalized_rmse": 0.2397641945531717
+          },
+          {
+            "episode_index": 65,
+            "frame_count": 187,
+            "normalized_rmse": 0.24047512400416968
+          },
+          {
+            "episode_index": 66,
+            "frame_count": 226,
+            "normalized_rmse": 0.23787764073406664
+          },
+          {
+            "episode_index": 67,
+            "frame_count": 181,
+            "normalized_rmse": 0.30595673941033386
+          },
+          {
+            "episode_index": 68,
+            "frame_count": 213,
+            "normalized_rmse": 0.2929482258343442
+          },
+          {
+            "episode_index": 69,
+            "frame_count": 156,
+            "normalized_rmse": 0.2917082601927974
+          },
+          {
+            "episode_index": 70,
+            "frame_count": 201,
+            "normalized_rmse": 0.278545498810997
+          },
+          {
+            "episode_index": 71,
+            "frame_count": 179,
+            "normalized_rmse": 0.2854202720224198
+          },
+          {
+            "episode_index": 72,
+            "frame_count": 158,
+            "normalized_rmse": 0.2819419849079726
+          },
+          {
+            "episode_index": 73,
+            "frame_count": 151,
+            "normalized_rmse": 0.36213643814944013
+          },
+          {
+            "episode_index": 74,
+            "frame_count": 181,
+            "normalized_rmse": 0.2559354650252542
+          },
+          {
+            "episode_index": 75,
+            "frame_count": 194,
+            "normalized_rmse": 0.28295685105533047
+          },
+          {
+            "episode_index": 76,
+            "frame_count": 158,
+            "normalized_rmse": 0.2564293630596424
+          },
+          {
+            "episode_index": 77,
+            "frame_count": 236,
+            "normalized_rmse": 0.28933581959381555
+          },
+          {
+            "episode_index": 78,
+            "frame_count": 182,
+            "normalized_rmse": 0.271176219251533
+          },
+          {
+            "episode_index": 79,
+            "frame_count": 178,
+            "normalized_rmse": 0.2972816556497767
+          },
+          {
+            "episode_index": 80,
+            "frame_count": 164,
+            "normalized_rmse": 0.28582263516995304
+          },
+          {
+            "episode_index": 81,
+            "frame_count": 179,
+            "normalized_rmse": 0.32379113181499214
+          },
+          {
+            "episode_index": 82,
+            "frame_count": 169,
+            "normalized_rmse": 0.2747848693406736
+          },
+          {
+            "episode_index": 83,
+            "frame_count": 174,
+            "normalized_rmse": 0.2915897729290703
+          },
+          {
+            "episode_index": 84,
+            "frame_count": 169,
+            "normalized_rmse": 0.28914690326643566
+          },
+          {
+            "episode_index": 85,
+            "frame_count": 169,
+            "normalized_rmse": 0.2822748623339432
+          },
+          {
+            "episode_index": 86,
+            "frame_count": 172,
+            "normalized_rmse": 0.204452949161739
+          },
+          {
+            "episode_index": 87,
+            "frame_count": 162,
+            "normalized_rmse": 0.28765466651054333
+          },
+          {
+            "episode_index": 88,
+            "frame_count": 277,
+            "normalized_rmse": 0.23596926847533256
+          },
+          {
+            "episode_index": 89,
+            "frame_count": 159,
+            "normalized_rmse": 0.31454607988643024
+          },
+          {
+            "episode_index": 90,
+            "frame_count": 164,
+            "normalized_rmse": 0.30172430481044127
+          },
+          {
+            "episode_index": 91,
+            "frame_count": 202,
+            "normalized_rmse": 0.25619934855780474
+          },
+          {
+            "episode_index": 92,
+            "frame_count": 322,
+            "normalized_rmse": 0.20470117803816887
+          },
+          {
+            "episode_index": 93,
+            "frame_count": 210,
+            "normalized_rmse": 0.2450770483364949
+          },
+          {
+            "episode_index": 94,
+            "frame_count": 191,
+            "normalized_rmse": 0.2698838173614222
+          },
+          {
+            "episode_index": 95,
+            "frame_count": 215,
+            "normalized_rmse": 0.2714166190752312
+          },
+          {
+            "episode_index": 96,
+            "frame_count": 167,
+            "normalized_rmse": 0.29870977235026686
+          },
+          {
+            "episode_index": 97,
+            "frame_count": 183,
+            "normalized_rmse": 0.3400034907681738
+          },
+          {
+            "episode_index": 98,
+            "frame_count": 169,
+            "normalized_rmse": 0.3119922641328053
+          },
+          {
+            "episode_index": 99,
+            "frame_count": 161,
+            "normalized_rmse": 0.29172325865158616
+          }
+        ]
+      },
+      "policy": {
+        "action_dim": 6,
+        "family": "closed_form_temporal_ridge_state_action",
+        "feature_dim": 24,
+        "history_frames": 3,
+        "ridge_lambda": 0.01,
+        "state_dim": 6,
+        "uses_previous_ground_truth_actions": false,
+        "uses_video": false
+      },
+      "split": "scene_disjoint",
+      "test_frames": 20313,
+      "test_package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "train_frames": 100422,
+      "train_package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train"
+    }
+  },
+  "status": "measured_offline_temporal_baseline"
+}

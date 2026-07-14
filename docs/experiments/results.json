@@ -1,0 +1,4658 @@
+{
+  "baseline_schema_errors": 0,
+  "baseline_semantic_errors": 0,
+  "benchmark_callout_audit": {
+    "aggregate": {
+      "benchmark_count": 5,
+      "benchmarks_with_high_severity_open_controls": 5,
+      "checks": {
+        "WE-CALLOUT.001": {
+          "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+          "requirement_ids": [
+            "SPLIT.001",
+            "DATASET.003"
+          ],
+          "severities": {
+            "high": 4,
+            "info": 1
+          },
+          "statuses": {
+            "needs_targeted_audit": 4,
+            "public_evidence_missing": 1
+          }
+        },
+        "WE-CALLOUT.002": {
+          "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+          "requirement_ids": [
+            "WORLD.001",
+            "TRACE.001"
+          ],
+          "severities": {
+            "high": 5
+          },
+          "statuses": {
+            "needs_targeted_audit": 2,
+            "public_evidence_missing": 3
+          }
+        },
+        "WE-CALLOUT.003": {
+          "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+          "requirement_ids": [
+            "ENTITY.001",
+            "REP.001"
+          ],
+          "severities": {
+            "high": 3,
+            "medium": 2
+          },
+          "statuses": {
+            "partial_public_evidence": 2,
+            "public_evidence_missing": 3
+          }
+        },
+        "WE-CALLOUT.004": {
+          "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+          "requirement_ids": [
+            "ACTION.001",
+            "ACTION.002",
+            "ACTION.004"
+          ],
+          "severities": {
+            "high": 5
+          },
+          "statuses": {
+            "partial_public_evidence": 3,
+            "public_evidence_missing": 2
+          }
+        },
+        "WE-CALLOUT.005": {
+          "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+          "requirement_ids": [
+            "FRAME.001",
+            "FRAME.002",
+            "TIME.001",
+            "TIME.002"
+          ],
+          "severities": {
+            "medium": 5
+          },
+          "statuses": {
+            "partial_public_evidence": 5
+          }
+        },
+        "WE-CALLOUT.006": {
+          "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+          "requirement_ids": [
+            "REPLAY.001",
+            "CONVERT.001"
+          ],
+          "severities": {
+            "high": 3,
+            "medium": 2
+          },
+          "statuses": {
+            "needs_targeted_audit": 2,
+            "public_evidence_missing": 3
+          }
+        }
+      },
+      "measured_inflation_claims": 0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/benchmark_callout_audit/README.md",
+      "report": "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json"
+    },
+    "audit_date": "2026-07-13",
+    "benchmarks": [
+      {
+        "benchmark_id": "open_x_embodiment",
+        "code_or_data_url": "https://github.com/google-deepmind/open_x_embodiment",
+        "domain": "real_robot_multi_embodiment",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "missing_public_world_lineage_split_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "partial_action_semantics_public_evidence_but_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_dataset_specific_frame_time_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "cross-robot dataset aggregation",
+          "standardized action/observation loading through Open X-Embodiment tooling",
+          "generalist RT-X policy evaluation"
+        ],
+        "name": "Open X-Embodiment / RT-X",
+        "rank": 1,
+        "scale_public_claim": "22 robots, 21 institutions, hundreds of skills/tasks in a standardized cross-embodiment release",
+        "selection_reason": "large multi-institution, multi-robot generalist policy dataset and model benchmark",
+        "source_check": null,
+        "source_url": "https://robotics-transformer-x.github.io/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "droid",
+        "code_or_data_url": "https://github.com/droid-dataset/droid",
+        "domain": "real_robot_in_the_wild_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "partial_scene_metadata_expected_but_lineage_disjoint_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "missing_public_command_effective_latency_contract_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_raw_sensor_calibration_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "large real-world scene diversity",
+          "public robot platform and data collection stack",
+          "raw and RLDS dataset formats"
+        ],
+        "name": "DROID",
+        "rank": 2,
+        "scale_public_claim": "76k demonstration trajectories, 350h of interaction data, hundreds of scenes, dozens of tasks",
+        "selection_reason": "large in-the-wild robot manipulation dataset with public RLDS/raw releases",
+        "source_check": null,
+        "source_url": "https://droid-dataset.github.io/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "bridgedata_v2",
+        "code_or_data_url": "https://github.com/rail-berkeley/bridge_data_v2",
+        "domain": "real_robot_low_cost_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "environment_metadata_exists_but_lineage_disjoint_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "missing_public_content_addressed_world_revision_evidence",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "missing_public_cross_representation_entity_identity_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "missing_public_command_effective_latency_contract_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "partial_dataset_specific_frame_time_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "missing_public_loss_report_and_replay_tolerance_evidence",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "high",
+            "status": "public_evidence_missing"
+          }
+        ],
+        "known_strengths": [
+          "large real robot trajectory corpus",
+          "environment and task diversity",
+          "goal-image and language-conditioned learning support"
+        ],
+        "name": "BridgeData V2",
+        "rank": 3,
+        "scale_public_claim": "60,096 trajectories across 24 environments on a publicly available low-cost robot",
+        "selection_reason": "large real-world manipulation dataset used for scalable imitation and offline RL",
+        "source_check": null,
+        "source_url": "https://rail-berkeley.github.io/bridgedata/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 5,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "libero",
+        "code_or_data_url": "https://github.com/Lifelong-Robot-Learning/LIBERO",
+        "domain": "simulated_lifelong_robot_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "controlled_task_splits_exist_but_world_lineage_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "info",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "sim_environment_defined_but_content_addressed_world_revision_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "partial_sim_object_identity_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "sim_action_contract_expected_but_command_effective_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "sim_frame_time_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "partial_runtime_evidence_but_loss_report_missing",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "medium",
+            "status": "needs_targeted_audit"
+          }
+        ],
+        "known_strengths": [
+          "controlled distribution-shift suites",
+          "language-conditioned manipulation tasks",
+          "simulated reproducibility"
+        ],
+        "name": "LIBERO",
+        "rank": 4,
+        "scale_public_claim": "130 tasks across four suites for spatial, object, goal, and mixed transfer",
+        "selection_reason": "widely used lifelong robot learning and VLA evaluation benchmark",
+        "source_check": null,
+        "source_url": "https://libero-project.github.io/main.html",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 2,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      },
+      {
+        "benchmark_id": "calvin",
+        "code_or_data_url": "https://github.com/mees/calvin",
+        "domain": "simulated_language_conditioned_long_horizon_manipulation",
+        "findings": [
+          {
+            "check_id": "WE-CALLOUT.001",
+            "finding": "environment_splits_exist_but_asset_lineage_split_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+            "requirement_ids": [
+              "SPLIT.001",
+              "DATASET.003"
+            ],
+            "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.002",
+            "finding": "sim_environment_defined_but_content_addressed_world_revision_evidence_missing",
+            "measured_in_this_repo": false,
+            "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+            "requirement_ids": [
+              "WORLD.001",
+              "TRACE.001"
+            ],
+            "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision.",
+            "severity": "high",
+            "status": "needs_targeted_audit"
+          },
+          {
+            "check_id": "WE-CALLOUT.003",
+            "finding": "partial_sim_object_identity_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+            "requirement_ids": [
+              "ENTITY.001",
+              "REP.001"
+            ],
+            "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.004",
+            "finding": "sim_action_contract_expected_but_command_effective_latency_not_normative",
+            "measured_in_this_repo": false,
+            "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+            "requirement_ids": [
+              "ACTION.001",
+              "ACTION.002",
+              "ACTION.004"
+            ],
+            "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time.",
+            "severity": "high",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.005",
+            "finding": "sim_frame_time_evidence_expected",
+            "measured_in_this_repo": false,
+            "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+            "requirement_ids": [
+              "FRAME.001",
+              "FRAME.002",
+              "TIME.001",
+              "TIME.002"
+            ],
+            "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records.",
+            "severity": "medium",
+            "status": "partial_public_evidence"
+          },
+          {
+            "check_id": "WE-CALLOUT.006",
+            "finding": "partial_runtime_evidence_but_loss_report_missing",
+            "measured_in_this_repo": false,
+            "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+            "requirement_ids": [
+              "REPLAY.001",
+              "CONVERT.001"
+            ],
+            "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators.",
+            "severity": "medium",
+            "status": "needs_targeted_audit"
+          }
+        ],
+        "known_strengths": [
+          "long-horizon task chaining",
+          "language-conditioned policy evaluation",
+          "controlled simulated environments"
+        ],
+        "name": "CALVIN",
+        "rank": 5,
+        "scale_public_claim": "open-source simulated benchmark for long-horizon language-conditioned manipulation",
+        "selection_reason": "canonical long-horizon language-conditioned manipulation benchmark",
+        "source_check": null,
+        "source_url": "https://calvin.cs.uni-freiburg.de/",
+        "summary": {
+          "callout_level": "requires_worldepisode_audit_before_generalization_claim",
+          "high_severity_open_controls": 3,
+          "measured_leakage_or_delay_in_this_repo": false
+        }
+      }
+    ],
+    "checks": [
+      {
+        "check_id": "WE-CALLOUT.001",
+        "question": "Does the public benchmark expose world/scene lineage IDs and lineage-disjoint splits?",
+        "requirement_ids": [
+          "SPLIT.001",
+          "DATASET.003"
+        ],
+        "risk_if_missing": "Random or task-level splits may evaluate on scenes, assets, or capture lineages already seen in training."
+      },
+      {
+        "check_id": "WE-CALLOUT.002",
+        "question": "Does each episode bind to an immutable, content-addressed world or environment revision?",
+        "requirement_ids": [
+          "WORLD.001",
+          "TRACE.001"
+        ],
+        "risk_if_missing": "A policy result cannot prove whether train and test referenced the same reconstructed or simulated world revision."
+      },
+      {
+        "check_id": "WE-CALLOUT.003",
+        "question": "Are persistent physical entity IDs carried across observations, assets, simulator actors, and annotations?",
+        "requirement_ids": [
+          "ENTITY.001",
+          "REP.001"
+        ],
+        "risk_if_missing": "Object, asset, and annotation leakage cannot be audited across representations."
+      },
+      {
+        "check_id": "WE-CALLOUT.004",
+        "question": "Are action units, reference frames, absolute/delta semantics, command time, effective time, and latency model explicit?",
+        "requirement_ids": [
+          "ACTION.001",
+          "ACTION.002",
+          "ACTION.004"
+        ],
+        "risk_if_missing": "Replay and cross-dataset conversion may silently reinterpret an action vector or apply it at the wrong time."
+      },
+      {
+        "check_id": "WE-CALLOUT.005",
+        "question": "Are frames, transform directions, clock domains, and cross-clock mappings explicit enough for replay?",
+        "requirement_ids": [
+          "FRAME.001",
+          "FRAME.002",
+          "TIME.001",
+          "TIME.002"
+        ],
+        "risk_if_missing": "Camera/robot alignment and asynchronous sensor streams may be valid tensors but invalid physical records."
+      },
+      {
+        "check_id": "WE-CALLOUT.006",
+        "question": "Are simulator/runtime assumptions and conversion-loss reports available for published policy scores?",
+        "requirement_ids": [
+          "REPLAY.001",
+          "CONVERT.001"
+        ],
+        "risk_if_missing": "A benchmark score may be hard to reproduce or compare across policy stacks and simulators."
+      }
+    ],
+    "claim_boundary": "Findings identify missing or unverified public evidence for WorldEpisode controls. They are not claims that benchmark scores are inflated.",
+    "contrast_measured_case": {
+      "artifact": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+      "dataset": "armnet/armnetbench_v01_lerobot_so101",
+      "random_offline_bc_success": 0.85,
+      "random_split_leakage": 1.0,
+      "scene_disjoint_leakage": 0.0,
+      "scene_disjoint_offline_bc_success": 0.0
+    },
+    "profile": "worldepisode-famous-benchmark-callout-0.1",
+    "required_next_steps": [
+      "run tools/famous_benchmark_policy_rerun.py --benchmark droid_100 with working Hugging Face access",
+      "pass tools/benchmark_inflation_gate.py --required before claiming score inflation",
+      "convert each benchmark into a WorldEpisode dataset manifest or sidecar",
+      "derive or import world_lineage identifiers from scene, environment, asset, or capture metadata",
+      "audit official train/eval splits for world, entity, source-capture, and asset-lineage leakage",
+      "extract action units, frames, absolute/delta semantics, command timestamps, effective timestamps, and latency models",
+      "rerun at least one published policy protocol under lineage-disjoint splits or timestamp-aware replay"
+    ],
+    "scope": "source_level_public_metadata_audit",
+    "status": "prepared_not_measured"
+  },
+  "benchmark_inflation_gate": {
+    "aggregate": {
+      "audited_benchmark_count": 5,
+      "executed_rerun_report_count": 1,
+      "measured_inflation_claims": 0,
+      "minimum_score_drop_for_inflation": 0.05,
+      "ready_for_inflation_claim": false,
+      "rerun_report_count": 1,
+      "valid_rerun_report_count": 0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/benchmark_inflation_gate/README.md",
+      "report": "docs/experiments/benchmark_inflation_gate/gate_report.json"
+    },
+    "audit_date": "2026-07-13",
+    "audited_benchmark_ids": [
+      "open_x_embodiment",
+      "droid",
+      "bridgedata_v2",
+      "libero",
+      "calvin"
+    ],
+    "callout_report": "docs/experiments/benchmark_callout_audit/benchmark_callout_report.json",
+    "claim_boundary": "This gate only counts benchmark-score inflation when a benchmark-specific conversion, split/timing audit, and policy rerun report pass. Source-level metadata gaps do not count as score-inflation evidence.",
+    "current_claim_policy": "The paper may call famous benchmarks unaudited with respect to WorldEpisode controls, but must not call their scores inflated until this gate has at least one measured inflation claim.",
+    "profile": "worldepisode-famous-benchmark-inflation-gate-0.1",
+    "required_tests": [
+      {
+        "evidence": "A WorldEpisode manifest/sidecar for the benchmark subset, plus conversion report with loss accounting and source data revision.",
+        "name": "benchmark_specific_worldepisode_conversion",
+        "test_id": "BENCH-INFLATE.001"
+      },
+      {
+        "evidence": "A split or replay audit showing the original protocol leaks world/entity/source lineage or omits timing semantics, and the corrected protocol removes that failure.",
+        "name": "lineage_or_timing_audit",
+        "test_id": "BENCH-INFLATE.002"
+      },
+      {
+        "evidence": "A rerun of a published policy protocol or faithful reproduction, with policy code, configuration, seeds, and evaluation command recorded.",
+        "name": "published_protocol_rerun",
+        "test_id": "BENCH-INFLATE.003"
+      },
+      {
+        "evidence": "The same policy evaluated under the corrected lineage-disjoint split or timestamp-aware replay with the same metric and tolerance envelope.",
+        "name": "paired_corrected_evaluation",
+        "test_id": "BENCH-INFLATE.004"
+      },
+      {
+        "evidence": "A positive baseline-minus-corrected score drop with enough seeds or paired episodes to support the claim being made.",
+        "name": "measured_score_delta",
+        "test_id": "BENCH-INFLATE.005"
+      }
+    ],
+    "rerun_dir": "docs/experiments/benchmark_reruns",
+    "rerun_reports": [
+      {
+        "baseline_score": 0.4958081537296595,
+        "benchmark_id": "droid",
+        "claim_boundary": "Valid rerun evidence can support an inflation claim only for this benchmark, policy, protocol, subset, metric, and seed set.",
+        "corrected_score": 0.515540983544114,
+        "errors": [
+          "lineage_source.sufficient_for_score_inflation_claim must be true for split-leakage inflation claims",
+          "published_protocol must mark published_leaderboard_reproduction or faithful_published_protocol_reproduction true",
+          "baseline_score must be greater than corrected_score for inflation"
+        ],
+        "executed": true,
+        "lineage_source_sufficient": false,
+        "measured_inflation": false,
+        "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
+        "published_protocol_sufficient": false,
+        "score_drop": -0.019732829814454567,
+        "valid": false
+      }
+    ],
+    "status": "measured_famous_benchmark_inflation_not_proven"
+  },
+  "cleanroom_reader": {
+    "aggregate": {
+      "case_count": 17,
+      "expected_requirement_count": 18,
+      "false_positive_requirement_count": 11,
+      "fixture_set_count": 2,
+      "hit_requirement_count": 18,
+      "recall": 1.0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/cleanroom_reader/README.md",
+      "report": "docs/experiments/cleanroom_reader/cleanroom_reader_report.json"
+    },
+    "claim_boundary": "This is an internal clean-room reader check. It demonstrates that the public schema and fixtures can be consumed without the reference SDK, but it is not an external implementation or independent adoption.",
+    "fixture_sets": [
+      {
+        "case_count": 15,
+        "cases": [
+          {
+            "detected": [],
+            "expected": [],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "valid/minimal.worldepisode.json",
+            "section": "valid"
+          },
+          {
+            "detected": [
+              "SCHEMA.001",
+              "TIME.001"
+            ],
+            "expected": [
+              "TIME.001"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/TIME.001_missing_clock_domain.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "TIME.002"
+            ],
+            "expected": [
+              "TIME.002"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/TIME.002_mapping_without_drift_or_error.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "FRAME.001"
+            ],
+            "expected": [
+              "FRAME.001"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/FRAME.001_unknown_representation_frame.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "FRAME.002",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "FRAME.002"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/FRAME.002_missing_transform_interval.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ENTITY.001"
+            ],
+            "expected": [
+              "ENTITY.001"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/ENTITY.001_unknown_event_entity.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "REP.001",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "REP.001"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/REP.001_missing_representation_role.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ASSET.001",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "ASSET.001"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/ASSET.001_bad_digest.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ASSET.002",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "ASSET.002"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/ASSET.002_digest_mismatch.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ACTION.001",
+              "FRAME.001",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "ACTION.001"
+            ],
+            "false_positive_requirements": [
+              "FRAME.001",
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/ACTION.001_missing_action_frame.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ACTION.002",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "ACTION.002"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/ACTION.002_missing_effective_time.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "WORLD.001"
+            ],
+            "expected": [
+              "WORLD.001"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/WORLD.001_non_content_addressed_world.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "TRACE.001"
+            ],
+            "expected": [
+              "TRACE.001"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/TRACE.001_missing_delta_sequence.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "PROV.001",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "PROV.001"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/PROV.001_missing_provenance.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "QUALITY.001"
+            ],
+            "expected": [
+              "QUALITY.001"
+            ],
+            "false_positive_requirements": [],
+            "fixture_set": "pilot",
+            "pass": true,
+            "path": "invalid/QUALITY.001_missing_quality.worldepisode.json",
+            "section": "invalid"
+          }
+        ],
+        "expected_requirement_count": 14,
+        "false_positive_requirement_count": 9,
+        "hit_requirement_count": 14,
+        "manifest": "conformance/fixtures/pilot/manifest.json",
+        "pass": true,
+        "recall": 1.0
+      },
+      {
+        "case_count": 2,
+        "cases": [
+          {
+            "detected": [
+              "SCHEMA.001",
+              "TIME.001",
+              "TRACE.001",
+              "WORLD.001"
+            ],
+            "expected": [
+              "TIME.001",
+              "TRACE.001",
+              "WORLD.001"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "independent",
+            "pass": true,
+            "path": "invalid/no_clock_no_world.worldepisode.json",
+            "section": "invalid"
+          },
+          {
+            "detected": [
+              "ACTION.002",
+              "SCHEMA.001"
+            ],
+            "expected": [
+              "ACTION.002"
+            ],
+            "false_positive_requirements": [
+              "SCHEMA.001"
+            ],
+            "fixture_set": "independent",
+            "pass": true,
+            "path": "invalid/action_missing_timing.worldepisode.json",
+            "section": "invalid"
+          }
+        ],
+        "expected_requirement_count": 4,
+        "false_positive_requirement_count": 2,
+        "hit_requirement_count": 4,
+        "manifest": "conformance/fixtures/independent/manifest.json",
+        "pass": true,
+        "recall": 1.0
+      }
+    ],
+    "minimal_example": "examples/minimal.worldepisode.json",
+    "minimal_summary": {
+      "action_channel_count": 1,
+      "asset_count": 5,
+      "clock_count": 1,
+      "dataset_id": "worldepisode-rigid-demo",
+      "delta_count": 0,
+      "entity_count": 1,
+      "episode_id": "episode_000001",
+      "event_count": 1,
+      "frame_count": 2,
+      "world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "pass": true,
+    "profile": "worldepisode-cleanroom-reader-0.1",
+    "schema": "schemas/worldepisode-core-v0.schema.json",
+    "status": "pass"
+  },
+  "dataset_scale_audit": {
+    "aggregate": {
+      "asset_descriptor_count": 9,
+      "asset_uri_schemes": [
+        "hf",
+        "oci",
+        "s3"
+      ],
+      "assets_with_local_mirrors": 9,
+      "error_count": 0,
+      "has_asset_digest_index": true,
+      "has_split_manifest_shard": true,
+      "has_world_lineage_index": true,
+      "index_count": 2,
+      "local_mirror_count": 9,
+      "namespace_count": 5,
+      "registry_count": 3,
+      "resolver_count": 3,
+      "shard_count": 3,
+      "version_count": 1,
+      "warning_count": 0
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/dataset_scale_audit/README.md",
+      "report": "docs/experiments/dataset_scale_audit/scale_audit_report.json"
+    },
+    "claim_boundary": "This audit validates catalog invariants for scalable manifests. It is not a billion-episode latency, cache, or federation benchmark.",
+    "diagnostics": [],
+    "manifest": "examples/scalable-corpus.worldepisode-dataset.json",
+    "pass": true,
+    "profile": "worldepisode-dataset-scale-audit-0.1",
+    "schema": "schemas/worldepisode-dataset-v0.schema.json",
+    "status": "pass"
+  },
+  "dataset_scale_performance": {
+    "artifacts": {
+      "markdown": "docs/experiments/dataset_scale_performance/README.md",
+      "report": "docs/experiments/dataset_scale_performance/performance_report.json"
+    },
+    "claim_boundary": "This benchmark measures catalog-side behavior for a generated billion-episode-capacity descriptor set. It does not materialize a billion episode rows, load payload bytes, measure network storage, or prove multi-institution production throughput.",
+    "digest_cache": {
+      "asset_descriptor_count": 32779,
+      "cache_hit_count": 24584,
+      "cache_hit_rate": 0.749992,
+      "cache_miss_count": 8195,
+      "digest_mismatches": 0
+    },
+    "generated_catalog": {
+      "asset_descriptor_count": 32779,
+      "config_sha256": "e651c7a2632b64bfc88df515b82830b6d22bebcd18936f3c9139d31b09110e5b",
+      "described_episode_capacity": 1073741824,
+      "episodes_materialized": 0,
+      "index_count": 3,
+      "json_catalog_bytes": 24588169,
+      "registry_count": 6,
+      "resolver_count": 5,
+      "sha256": "11a190f76a6b5c29401aee5e6fd07952ac94ce7a91a117ee8920a081ac65e861",
+      "total_shard_count": 32769,
+      "trace_shard_count": 32768
+    },
+    "partition_pruning": {
+      "all_queries_pruned": true,
+      "max_candidate_shards": 3,
+      "max_reduction_ratio": 9.155e-05,
+      "queries": [
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "so101",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "train",
+          "task_id": "task_00",
+          "world_lineage_bucket": "0000"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_07",
+          "world_lineage_bucket": "0007"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_19",
+          "world_lineage_bucket": "0013"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_31",
+          "world_lineage_bucket": "001f"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_11",
+          "world_lineage_bucket": "002b"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "test",
+          "task_id": "task_07",
+          "world_lineage_bucket": "0047"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "validation",
+          "task_id": "task_31",
+          "world_lineage_bucket": "007f"
+        },
+        {
+          "candidate_shards": 3,
+          "embodiment_id": "ur5",
+          "full_scan_shards": 32768,
+          "reduction_ratio": 9.155e-05,
+          "split": "test",
+          "task_id": "task_27",
+          "world_lineage_bucket": "00fb"
+        }
+      ],
+      "query_count": 8
+    },
+    "pass": true,
+    "profile": "worldepisode-dataset-scale-performance-0.1",
+    "resolver_routing": {
+      "missing_resolver_count": 0,
+      "missing_resolver_examples": [],
+      "scheme_counts": {
+        "hf": 6558,
+        "ipfs": 6555,
+        "oci": 6555,
+        "relative": 6555,
+        "s3": 6556
+      }
+    },
+    "status": "pass",
+    "timings_ms": {
+      "catalog_open_parse_and_index": 152.408,
+      "digest_cache_resolution": 6.256,
+      "partition_pruning_queries": 0.191,
+      "resolver_routing": 62.79
+    }
+  },
+  "independent_fixture_check": {
+    "available": true,
+    "cases": [
+      {
+        "detected": [
+          "TIME.001",
+          "TRACE.001",
+          "WORLD.001"
+        ],
+        "expected": [
+          "TIME.001",
+          "TRACE.001",
+          "WORLD.001"
+        ],
+        "pass": true,
+        "path": "invalid/no_clock_no_world.worldepisode.json"
+      },
+      {
+        "detected": [
+          "ACTION.002"
+        ],
+        "expected": [
+          "ACTION.002"
+        ],
+        "pass": true,
+        "path": "invalid/action_missing_timing.worldepisode.json"
+      }
+    ],
+    "manifest": "conformance/fixtures/independent/manifest.json",
+    "n_cases": 2,
+    "recall": 1.0
+  },
+  "lerobot_active_roundtrip": {
+    "active_rerun_unavailable": "pyarrow is required for the active LeRobot round-trip. Install experiment dependencies with `python3 -m pip install -r requirements-experiments.txt` or run through `uv run --with-requirements requirements-experiments.txt`.",
+    "artifacts": {
+      "conversion_report": "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
+      "exported_lerobot_v3": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3",
+      "source_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/source_manifest.json",
+      "worldepisode_manifest": "docs/experiments/lerobot_worldepisode_roundtrip/worldepisode.manifest.json",
+      "worldepisode_sidecar": "docs/experiments/lerobot_worldepisode_roundtrip/worldepisode.sidecar.json"
+    },
+    "available": true,
+    "batch_roundtrip": {
+      "all_physical_frames_preserved": true,
+      "available": true,
+      "discarded_fields": [],
+      "episode_count": 5,
+      "episode_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "max_errors": {
+        "max_abs_action_error": 0.0,
+        "max_abs_episode_index_error": 0.0,
+        "max_abs_frame_index_error": 0.0,
+        "max_abs_index_error": 0.0,
+        "max_abs_state_error": 0.0,
+        "max_abs_task_index_error": 0.0,
+        "max_abs_timestamp_error": 0.0,
+        "max_abs_video_timestamp_error": 0.0
+      },
+      "pass": true,
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "reports": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/roundtrip_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/roundtrip_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/roundtrip_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/roundtrip_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/roundtrip_report.json"
+      ],
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "total_action_rows": 1197,
+      "total_state_rows": 1197
+    },
+    "episode_index": 0,
+    "explicitly_tracked_source_absent_fields": [
+      "camera extrinsics",
+      "robot/world calibration transform",
+      "action units",
+      "controller latency model"
+    ],
+    "metrics": {
+      "action_rows": 303,
+      "action_tensor_sha256": "b17a728f3c71760fb21414c10b3cc37dbfcaffe236b098bae5d17950e2d1b546",
+      "action_width": 6,
+      "discarded_fields": [],
+      "max_abs_action_error": 0.0,
+      "max_abs_episode_index_error": 0.0,
+      "max_abs_frame_index_error": 0.0,
+      "max_abs_index_error": 0.0,
+      "max_abs_state_error": 0.0,
+      "max_abs_task_index_error": 0.0,
+      "max_abs_timestamp_error": 0.0,
+      "max_abs_video_timestamp_error": 0.0,
+      "pass": true,
+      "physical_frame_records": 3,
+      "physical_frames_preserved": true,
+      "physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+      "roundtrip_action_tensor_sha256": "b17a728f3c71760fb21414c10b3cc37dbfcaffe236b098bae5d17950e2d1b546",
+      "roundtrip_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272",
+      "roundtrip_timestamp_sha256": "24bc09d4e0486288c6527f07e1b0e1a2a84c691a398c2a7cb8a9a169d96fb0f0",
+      "roundtrip_video_timestamp_sha256": "6290ea27d159c0269b2678cf4a918d6bfcec181bf1bf0cfdefc374e38dc02c4a",
+      "source_absent_fields_tracked": 4,
+      "state_rows": 303,
+      "timestamp_count": 303,
+      "timestamp_sha256": "24bc09d4e0486288c6527f07e1b0e1a2a84c691a398c2a7cb8a9a169d96fb0f0",
+      "video_streams": 2,
+      "video_timestamp_sha256": "6290ea27d159c0269b2678cf4a918d6bfcec181bf1bf0cfdefc374e38dc02c4a",
+      "worldepisode_sidecar_physical_frames_sha256": "30516d915d4c860f512393c05629bb3e715cdd1868f8a80dd99e3ac617e93272"
+    },
+    "pass": true,
+    "repo_id": "lerobot/svla_so101_pickplace",
+    "reused_committed_artifact": true,
+    "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+    "secondary_batch_roundtrips": [
+      {
+        "all_physical_frames_preserved": true,
+        "artifact": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json",
+        "available": true,
+        "discarded_fields": [],
+        "episode_count": 5,
+        "episode_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "max_errors": {
+          "max_abs_action_error": 0.0,
+          "max_abs_episode_index_error": 0.0,
+          "max_abs_frame_index_error": 0.0,
+          "max_abs_index_error": 0.0,
+          "max_abs_state_error": 0.0,
+          "max_abs_task_index_error": 0.0,
+          "max_abs_timestamp_error": 0.0,
+          "max_abs_video_timestamp_error": 0.0
+        },
+        "pass": true,
+        "repo_id": "lerobot/pusht",
+        "reports": [
+          "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/roundtrip_report.json",
+          "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/roundtrip_report.json",
+          "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/roundtrip_report.json",
+          "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/roundtrip_report.json",
+          "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/roundtrip_report.json"
+        ],
+        "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+        "total_action_rows": 738,
+        "total_state_rows": 738
+      }
+    ]
+  },
+  "lerobot_policy_gate": {
+    "artifacts": {
+      "jobs": "docs/experiments/lerobot_policy_gate/train_eval_jobs.json",
+      "materialized_split_manifest": "docs/experiments/lerobot_policy_gate/materialized_splits/manifest.json",
+      "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+      "random_episode_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/split_episodes.json",
+      "random_episode_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "random_episode_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_test.lerobot_split_manifest.json",
+      "random_episode_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "random_episode_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_train.lerobot_split_manifest.json",
+      "report": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+      "rollout_contract": "docs/experiments/lerobot_policy_gate/rollout_contract.json",
+      "run_script": "docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
+      "scene_disjoint_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/split_episodes.json",
+      "scene_disjoint_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "scene_disjoint_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_test.lerobot_split_manifest.json",
+      "scene_disjoint_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "scene_disjoint_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_train.lerobot_split_manifest.json"
+    },
+    "available": true,
+    "closure_required": [
+      "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
+      "evaluate each checkpoint on the corresponding test split with action-error metrics",
+      "run at least one high-fidelity simulator or physical rollout using the same split manifest",
+      "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces",
+      "mirror source videos before claiming any vision-policy result from the compact split packages"
+    ],
+    "environment": {
+      "cuda_visible_devices": null,
+      "lerobot_eval": null,
+      "lerobot_importable": false,
+      "lerobot_rollout": null,
+      "lerobot_train": null,
+      "python": "/usr/bin/python3"
+    },
+    "executions": [],
+    "jobs": [
+      {
+        "high_fidelity_sim_eval": {
+          "command_template": [
+            "lerobot-eval",
+            "--policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+            "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+            "--policy.device=cuda",
+            "--eval.n_episodes=20"
+          ],
+          "required": true,
+          "requires_env_binding": true,
+          "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+        },
+        "job_id": "act_random_episode_worldepisode_leakage",
+        "materialized_datasets_required": {
+          "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+          "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+          "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+        },
+        "offline_action_eval": {
+          "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+          "metrics": [
+            "episode_normalized_rmse_mean",
+            "episode_normalized_rmse_median",
+            "episode_success_rate_at_declared_threshold",
+            "per_world_lineage_success_rate"
+          ],
+          "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+          "required_report": "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/offline_action_eval.json"
+        },
+        "physical_rollout": {
+          "command_template": [
+            "lerobot-rollout",
+            "--policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--robot.type=so101",
+            "--eval.n_episodes=20"
+          ],
+          "required_for_full_claim": true,
+          "requires_robot_binding": true,
+          "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+        },
+        "policy_type": "act",
+        "required_result_files": [
+          "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/train_metrics.json",
+          "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/offline_action_eval.json",
+          "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/rollout_report.json"
+        ],
+        "source_dataset": {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        },
+        "split": "random_episode",
+        "train": {
+          "command": [
+            "lerobot-train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+            "--policy.type=act",
+            "--output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage",
+            "--job_name=act_random_episode_worldepisode_leakage",
+            "--policy.device=cuda",
+            "--steps=20000",
+            "--seed=17",
+            "--wandb.enable=false"
+          ],
+          "expected_checkpoint": "outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+          "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        }
+      },
+      {
+        "high_fidelity_sim_eval": {
+          "command_template": [
+            "lerobot-eval",
+            "--policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+            "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+            "--policy.device=cuda",
+            "--eval.n_episodes=20"
+          ],
+          "required": true,
+          "requires_env_binding": true,
+          "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+        },
+        "job_id": "diffusion_random_episode_worldepisode_leakage",
+        "materialized_datasets_required": {
+          "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+          "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+          "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+        },
+        "offline_action_eval": {
+          "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+          "metrics": [
+            "episode_normalized_rmse_mean",
+            "episode_normalized_rmse_median",
+            "episode_success_rate_at_declared_threshold",
+            "per_world_lineage_success_rate"
+          ],
+          "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+          "required_report": "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/offline_action_eval.json"
+        },
+        "physical_rollout": {
+          "command_template": [
+            "lerobot-rollout",
+            "--policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--robot.type=so101",
+            "--eval.n_episodes=20"
+          ],
+          "required_for_full_claim": true,
+          "requires_robot_binding": true,
+          "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+        },
+        "policy_type": "diffusion",
+        "required_result_files": [
+          "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/train_metrics.json",
+          "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/offline_action_eval.json",
+          "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/rollout_report.json"
+        ],
+        "source_dataset": {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        },
+        "split": "random_episode",
+        "train": {
+          "command": [
+            "lerobot-train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+            "--policy.type=diffusion",
+            "--output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage",
+            "--job_name=diffusion_random_episode_worldepisode_leakage",
+            "--policy.device=cuda",
+            "--steps=20000",
+            "--seed=17",
+            "--wandb.enable=false"
+          ],
+          "expected_checkpoint": "outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+          "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        }
+      },
+      {
+        "high_fidelity_sim_eval": {
+          "command_template": [
+            "lerobot-eval",
+            "--policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+            "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+            "--policy.device=cuda",
+            "--eval.n_episodes=20"
+          ],
+          "required": true,
+          "requires_env_binding": true,
+          "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+        },
+        "job_id": "act_scene_disjoint_worldepisode_leakage",
+        "materialized_datasets_required": {
+          "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+          "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+          "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+          "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
+        },
+        "offline_action_eval": {
+          "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+          "metrics": [
+            "episode_normalized_rmse_mean",
+            "episode_normalized_rmse_median",
+            "episode_success_rate_at_declared_threshold",
+            "per_world_lineage_success_rate"
+          ],
+          "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+          "required_report": "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/offline_action_eval.json"
+        },
+        "physical_rollout": {
+          "command_template": [
+            "lerobot-rollout",
+            "--policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--robot.type=so101",
+            "--eval.n_episodes=20"
+          ],
+          "required_for_full_claim": true,
+          "requires_robot_binding": true,
+          "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+        },
+        "policy_type": "act",
+        "required_result_files": [
+          "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/train_metrics.json",
+          "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/offline_action_eval.json",
+          "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/rollout_report.json"
+        ],
+        "source_dataset": {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        },
+        "split": "scene_disjoint",
+        "train": {
+          "command": [
+            "lerobot-train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+            "--policy.type=act",
+            "--output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage",
+            "--job_name=act_scene_disjoint_worldepisode_leakage",
+            "--policy.device=cuda",
+            "--steps=20000",
+            "--seed=17",
+            "--wandb.enable=false"
+          ],
+          "expected_checkpoint": "outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+          "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        }
+      },
+      {
+        "high_fidelity_sim_eval": {
+          "command_template": [
+            "lerobot-eval",
+            "--policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+            "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+            "--policy.device=cuda",
+            "--eval.n_episodes=20"
+          ],
+          "required": true,
+          "requires_env_binding": true,
+          "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+        },
+        "job_id": "diffusion_scene_disjoint_worldepisode_leakage",
+        "materialized_datasets_required": {
+          "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+          "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+          "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+          "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
+        },
+        "offline_action_eval": {
+          "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+          "metrics": [
+            "episode_normalized_rmse_mean",
+            "episode_normalized_rmse_median",
+            "episode_success_rate_at_declared_threshold",
+            "per_world_lineage_success_rate"
+          ],
+          "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+          "required_report": "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/offline_action_eval.json"
+        },
+        "physical_rollout": {
+          "command_template": [
+            "lerobot-rollout",
+            "--policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+            "--robot.type=so101",
+            "--eval.n_episodes=20"
+          ],
+          "required_for_full_claim": true,
+          "requires_robot_binding": true,
+          "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+        },
+        "policy_type": "diffusion",
+        "required_result_files": [
+          "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/train_metrics.json",
+          "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/offline_action_eval.json",
+          "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/rollout_report.json"
+        ],
+        "source_dataset": {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        },
+        "split": "scene_disjoint",
+        "train": {
+          "command": [
+            "lerobot-train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+            "--policy.type=diffusion",
+            "--output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage",
+            "--job_name=diffusion_scene_disjoint_worldepisode_leakage",
+            "--policy.device=cuda",
+            "--steps=20000",
+            "--seed=17",
+            "--wandb.enable=false"
+          ],
+          "expected_checkpoint": "outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+          "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        }
+      }
+    ],
+    "materialized_split_manifests": {
+      "all_membership_counts_match": true,
+      "all_train_test_overlaps_zero": true,
+      "claim_boundary": "Virtual manifests make split materialization deterministic for LeRobot-native policy jobs. They do not replace committed train/eval metrics or physical rollout reports.",
+      "manifest_count": 4,
+      "profile": "worldepisode-lerobot-split-materialization-0.1",
+      "source_file_count": 27,
+      "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+      "status": "virtual_materialization_manifests_ready",
+      "target_datasets": [
+        {
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "split_name": "random_episode"
+        },
+        {
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "split_name": "random_episode"
+        },
+        {
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+          "split_name": "scene_disjoint"
+        },
+        {
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "split_name": "scene_disjoint"
+        }
+      ]
+    },
+    "pass": false,
+    "physical_split_packages": {
+      "all_membership_counts_match": true,
+      "all_train_test_overlaps_zero": true,
+      "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. They are ready for state/action ACT or Diffusion reruns and still require external video mirroring before any vision-policy result can be claimed.",
+      "package_count": 4,
+      "package_root": "docs/experiments/lerobot_policy_gate/physical_splits",
+      "packages": [
+        {
+          "episodes": 320,
+          "frames": 98990,
+          "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/worldepisode_split_package.json",
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "split_name": "random_episode"
+        },
+        {
+          "episodes": 80,
+          "frames": 21745,
+          "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/worldepisode_split_package.json",
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+          "split_name": "random_episode"
+        },
+        {
+          "episodes": 300,
+          "frames": 100422,
+          "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+          "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/worldepisode_split_package.json",
+          "partition": "train",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+          "split_name": "scene_disjoint"
+        },
+        {
+          "episodes": 100,
+          "frames": 20313,
+          "local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "manifest": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/worldepisode_split_package.json",
+          "partition": "test",
+          "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+          "split_name": "scene_disjoint"
+        }
+      ],
+      "profile": "worldepisode-physical-lerobot-split-packages-0.1",
+      "source_cache_root": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_file_count": 27,
+      "source_files_verified": true,
+      "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+      "status": "physical_split_packages_ready",
+      "total_output_bytes": 6245649,
+      "total_output_frames": 241470
+    },
+    "policies": [
+      "act",
+      "diffusion"
+    ],
+    "profile": "worldepisode-act-diffusion-leakage-gate-0.1",
+    "ready_to_execute": false,
+    "result_files_present": {
+      "act_random_episode_worldepisode_leakage": [],
+      "act_scene_disjoint_worldepisode_leakage": [],
+      "diffusion_random_episode_worldepisode_leakage": [],
+      "diffusion_scene_disjoint_worldepisode_leakage": []
+    },
+    "rollout_contract": {
+      "acceptance_rule": "The leakage claim is closed only when ACT or Diffusion reports exist for both random_episode and scene_disjoint splits, and at least one high-fidelity simulator or physical rollout report is available with the same split manifest.",
+      "minimum_rollout_episodes_per_policy_split": 20,
+      "profile": "worldepisode-policy-rollout-gate-0.1",
+      "required_metrics": [
+        "train_loss_curve",
+        "offline_action_nrmse_by_episode",
+        "success_rate_by_split",
+        "success_rate_by_world_lineage",
+        "failure_modes",
+        "video_or_trace_uris_with_sha256",
+        "simulator_or_robot_runtime_manifest"
+      ],
+      "required_policy_types": [
+        "act",
+        "diffusion"
+      ],
+      "required_splits": [
+        "random_episode",
+        "scene_disjoint"
+      ],
+      "sim_ready_but_not_executed_here": true
+    },
+    "source_dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "robot_type": "so-101",
+      "teleoperated_reference_episodes": 400
+    },
+    "source_leakage_report": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+    "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+    "splits": {
+      "random_episode": {
+        "heldout_task_indices": [],
+        "leakage_rate": 1.0,
+        "test_count": 80,
+        "test_leaked_episode_count": 80,
+        "test_world_lineage_count": 8,
+        "train_count": 320,
+        "train_world_lineage_count": 8
+      },
+      "scene_disjoint": {
+        "heldout_task_indices": [
+          3,
+          4
+        ],
+        "leakage_rate": 0.0,
+        "test_count": 100,
+        "test_leaked_episode_count": 0,
+        "test_world_lineage_count": 2,
+        "train_count": 300,
+        "train_world_lineage_count": 6
+      }
+    },
+    "status": "ready_not_executed"
+  },
+  "lerobot_public_sample": {
+    "degree_interpreted_as_radian_max_abs": 98.92424,
+    "ee_within_0_5m_workspace": true,
+    "ee_xyz_m": [
+      0.1044,
+      -0.00242,
+      0.07292
+    ],
+    "joint_count": 6,
+    "max_abs_joint_deg": 98.92424,
+    "max_abs_joint_rad": 1.72655,
+    "source": "lerobot/svla_so101_pickplace episode 0 frame 0, offline mirrored fixture",
+    "unit_contract_required": true
+  },
+  "lerobot_scene_leakage": {
+    "artifacts": {
+      "bc_episode_errors": "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json",
+      "report": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+      "split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+      "world_lineage": "docs/experiments/lerobot_scene_leakage/world_lineage.json"
+    },
+    "available": true,
+    "bc_policy_family": "torch_mlp_bc_state_action",
+    "dataset": {
+      "policy_types": [
+        "act",
+        "diffusion",
+        "grootn1.7",
+        "molmoact2",
+        "pi0",
+        "pi0.5",
+        "smolvla",
+        "teleoperated"
+      ],
+      "robot_type": "so-101",
+      "teleoperated_reference_episodes": 400,
+      "total_episodes": 2499,
+      "total_frames": 1127881,
+      "total_tasks": 8
+    },
+    "heldout_scene_task_indices": [
+      3,
+      4
+    ],
+    "heldout_scene_tasks": [
+      "Put the eye drops into the basket",
+      "Put the eye drops on the shelf"
+    ],
+    "lineage_count": 8,
+    "native_lerobot_policy_training": {
+      "available": false,
+      "reason": "The native `lerobot` Python package is not installed in this execution environment; this artifact trains an executable Torch MLP BC baseline over LeRobot tensors instead.",
+      "recommended_next_run": "Install LeRobot and repeat the split manifest with ACT or Diffusion Policy."
+    },
+    "pass": true,
+    "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "source_files": {
+      "data/chunk-000/file-013.parquet": {
+        "bytes": 168964,
+        "sha256": "21f6b9206c92107c9e3462b3d6dccc19d67ab04e961ab17beb7faa97340a3793",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet"
+      },
+      "data/chunk-000/file-014.parquet": {
+        "bytes": 185354,
+        "sha256": "c7e4f337ca692a22cb31e52af93c858941825cc1e5be35173a0bcd7ecd7590dc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet"
+      },
+      "data/chunk-000/file-027.parquet": {
+        "bytes": 212543,
+        "sha256": "62c344620ea3cceaa62a46895fd542f1bbabc2c4f473f8bf5c218a0b423764b5",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet"
+      },
+      "data/chunk-000/file-028.parquet": {
+        "bytes": 181040,
+        "sha256": "a932030cdb13ecba62bf0659a299bd2e7cdb91db156c2650d6a32992f779dc99",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet"
+      },
+      "data/chunk-000/file-040.parquet": {
+        "bytes": 322466,
+        "sha256": "e1e9cc6db2e7c7a00789821d253401acf8c244af10429827af7d519e37cafbe3",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet"
+      },
+      "data/chunk-000/file-041.parquet": {
+        "bytes": 267573,
+        "sha256": "f67f8512b2019aa3bb94dc1445998e55016a62571fc7bd4a8880a10e252ce864",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet"
+      },
+      "data/chunk-000/file-052.parquet": {
+        "bytes": 268803,
+        "sha256": "0e20903bc14ac7927b3950421894ea3e3939b56c1719ded863b051ae71883918",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet"
+      },
+      "data/chunk-000/file-053.parquet": {
+        "bytes": 206664,
+        "sha256": "5b2a6b92124f8bb148af01a6f145793f741d87fd7fb80cc8985800d0225fd95b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet"
+      },
+      "data/chunk-000/file-066.parquet": {
+        "bytes": 335315,
+        "sha256": "4b4915599acc6a54133ae69526ca4145adf02e0dfc6fb365bcc1098e938d1810",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet"
+      },
+      "data/chunk-000/file-078.parquet": {
+        "bytes": 120686,
+        "sha256": "fdcb70fcd5cb3ea1619c8d159eb3abc13804aaae5e5f0102c27fd5d67fc75a2b",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet"
+      },
+      "data/chunk-000/file-079.parquet": {
+        "bytes": 22002,
+        "sha256": "fd4e317f99eba8e8556ae8274a41bdabdf9b2dd4756adba0315a752e599a7135",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet"
+      },
+      "data/chunk-000/file-080.parquet": {
+        "bytes": 174527,
+        "sha256": "d00a6dcb02e538a30e5b8792592c919c78e0f6849cf02de8438e55c21941471a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet"
+      },
+      "data/chunk-000/file-095.parquet": {
+        "bytes": 63747,
+        "sha256": "0cb99deb90529b2e9510d0b3580312fa826b3aa82842e4522010d322059b346e",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet"
+      },
+      "data/chunk-000/file-096.parquet": {
+        "bytes": 227305,
+        "sha256": "6e4bddaece0756e454e7bfc9b7c66322f9ba706e8a63cb4cae25197019463443",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet"
+      },
+      "data/chunk-000/file-097.parquet": {
+        "bytes": 237430,
+        "sha256": "9f00c6154fc0aa3729d57e4eced9bf21f72440c5668890b0bfca84707f1ea2bc",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet"
+      },
+      "data/chunk-000/file-098.parquet": {
+        "bytes": 198168,
+        "sha256": "a8292ee476bc6f42f8c06af6915ddf024f3e1b15ff8de54b31af5f1a187bf577",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet"
+      },
+      "data/chunk-000/file-099.parquet": {
+        "bytes": 54442,
+        "sha256": "3a4dde0b110eae2868efd10cdafb91b772245289face9be0685c18a902da6d50",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet"
+      },
+      "data/chunk-000/file-100.parquet": {
+        "bytes": 79559,
+        "sha256": "c12947de83885bb2370298fef3e69dc9a97ca30fd0e6d38bb65748a3b81923b7",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet"
+      },
+      "data/chunk-000/file-101.parquet": {
+        "bytes": 80795,
+        "sha256": "8158700b45beb3333e85c0ec3367f2d4ce5aa8b536332f630692db5483eed596",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet"
+      },
+      "data/chunk-000/file-102.parquet": {
+        "bytes": 22817,
+        "sha256": "ed68f11e6dc3122aa5c2e5ffbee8dd78e002bcf0a02010b6fc84a12994f5ed0a",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet"
+      },
+      "data/chunk-000/file-116.parquet": {
+        "bytes": 92894,
+        "sha256": "ac8818b6e5fa28de86c34ae209973e826fb1a0ab486f41142fcc4e4fa334c67c",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet"
+      },
+      "data/chunk-000/file-117.parquet": {
+        "bytes": 111413,
+        "sha256": "ee67124ccb490313b2275ace08bfc49a820e7efa84e899edbcf5801c41ab7aef",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet"
+      },
+      "data/chunk-000/file-118.parquet": {
+        "bytes": 119398,
+        "sha256": "ac4c02f451681ce5499294b64330201d1edaf53890f27bb004851e5ddeb54f06",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet"
+      },
+      "data/chunk-000/file-119.parquet": {
+        "bytes": 96609,
+        "sha256": "d6561f7571e2fd39ff3e5278cfd9374ebc181a901e91ccee59a8f5854f2bf683",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet"
+      },
+      "meta/episodes/chunk-000/file-000.parquet": {
+        "bytes": 3865933,
+        "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet"
+      },
+      "meta/info.json": {
+        "bytes": 4878,
+        "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json"
+      },
+      "meta/tasks.parquet": {
+        "bytes": 2534,
+        "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+        "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet"
+      }
+    },
+    "splits": {
+      "random_episode": {
+        "bc": {
+          "episode_normalized_rmse_mean": 0.18338675796985626,
+          "episode_normalized_rmse_median": 0.1649058759212494,
+          "episode_normalized_rmse_p75": 0.22310929000377655,
+          "frame_normalized_rmse": 0.17923957109451294,
+          "frame_rmse": 4.2352752685546875,
+          "offline_bc_success_count": 68,
+          "offline_bc_success_rate": 0.85,
+          "offline_bc_success_threshold": 0.25,
+          "policy": {
+            "batch_size": 2048,
+            "epochs": 12,
+            "final_train_loss": 0.03062331596655505,
+            "hidden_units": [
+              64,
+              64
+            ],
+            "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+            "policy_family": "torch_mlp_bc_state_action",
+            "seed": 0,
+            "target_std": [
+              18.854467391967773,
+              46.47117233276367,
+              43.48992156982422,
+              21.27655029296875,
+              43.842960357666016,
+              11.578439712524414
+            ]
+          },
+          "test_frames": 21745,
+          "train_frames": 98990
+        },
+        "heldout_task_indices": [],
+        "leakage_rate": 1.0,
+        "name": "random_episode",
+        "test_count": 80,
+        "test_leaked_episode_count": 80,
+        "test_lineages_seen_in_train": [
+          "sha256:00b45a94b0a7a6b1a4c3a96fa2b4f96adb70c1c333df9c3423fdc580f7020905",
+          "sha256:05b67d9c2d2186d2c69b4ad4a74007ef4449e2aec06048b3f207f10cb39054b3",
+          "sha256:2e6aa6dc27f59d7362c11f5475a6dce54f6e09fef3f2ccfaff857078ee311f3f",
+          "sha256:321e5fc1a1989baef9d3f35966f824da7623c34a9d1f344f8f9c0ee8a95bedc2",
+          "sha256:47e29dcafdafceb3f4d60312e4e20e6f71a05b8210e8659d8d37452402797439",
+          "sha256:653fdb37115a415f4b2e40c4fcc0f7bafdbb07837dc9c838a8598d5ab8ca9d21",
+          "sha256:aff10155878fc4b79de4266223a3aded4a0373706783511e9f8724fa5b969b90",
+          "sha256:de9aaec96e0bcf46ab0bed6648ad3fc9adb5b36ba64218549fab991deb1a78dc"
+        ],
+        "test_world_lineage_count": 8,
+        "train_count": 320,
+        "train_world_lineage_count": 8
+      },
+      "scene_disjoint": {
+        "bc": {
+          "episode_normalized_rmse_mean": 0.36347562074661255,
+          "episode_normalized_rmse_median": 0.3662126958370209,
+          "episode_normalized_rmse_p75": 0.3970993757247925,
+          "frame_normalized_rmse": 0.3599465787410736,
+          "frame_rmse": 9.032227516174316,
+          "offline_bc_success_count": 0,
+          "offline_bc_success_rate": 0.0,
+          "offline_bc_success_threshold": 0.25,
+          "policy": {
+            "batch_size": 2048,
+            "epochs": 12,
+            "final_train_loss": 0.025517686121165752,
+            "hidden_units": [
+              64,
+              64
+            ],
+            "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+            "policy_family": "torch_mlp_bc_state_action",
+            "seed": 0,
+            "target_std": [
+              17.841846466064453,
+              45.34649658203125,
+              42.26961898803711,
+              21.681333541870117,
+              45.71479415893555,
+              10.971376419067383
+            ]
+          },
+          "test_frames": 20313,
+          "train_frames": 100422
+        },
+        "heldout_task_indices": [
+          3,
+          4
+        ],
+        "leakage_rate": 0.0,
+        "name": "scene_disjoint",
+        "test_count": 100,
+        "test_leaked_episode_count": 0,
+        "test_lineages_seen_in_train": [],
+        "test_world_lineage_count": 2,
+        "train_count": 300,
+        "train_world_lineage_count": 6
+      }
+    },
+    "summary": {
+      "episode_nrmse_ratio_scene_over_random": 1.9820167212201762,
+      "random_episode_nrmse_mean": 0.18338675796985626,
+      "random_leakage_rate": 1.0,
+      "random_offline_bc_success_rate": 0.85,
+      "scene_disjoint_episode_nrmse_mean": 0.36347562074661255,
+      "scene_disjoint_leakage_rate": 0.0,
+      "scene_disjoint_offline_bc_success_rate": 0.0,
+      "success_rate_drop": 0.85
+    }
+  },
+  "lerobot_style_episode_set": {
+    "action_count": 9,
+    "artifact": "docs/experiments/recorded_episodes/so101_lerobot_style_episode.json",
+    "declared_latency_ms": 20,
+    "duration_ms": 900,
+    "frame_count": 10,
+    "has_command_and_effective_timestamps": true
+  },
+  "lerobot_temporal_policy_baseline": {
+    "aggregate": {
+      "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+      "random_episode_nrmse_mean": 0.1572614852380231,
+      "random_episode_success_rate": 0.925,
+      "scene_disjoint_nrmse_mean": 0.25457434248891586,
+      "scene_disjoint_success_rate": 0.42,
+      "success_rate_drop": 0.5050000000000001
+    },
+    "artifacts": {
+      "json": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
+      "markdown": "docs/experiments/lerobot_temporal_policy_baseline/README.md"
+    },
+    "claim_boundary": "Measured offline temporal state/action baseline over committed compact LeRobot split packages. This is not ACT, Diffusion Policy, a vision-policy result, a simulator rollout, or a physical-robot rollout.",
+    "profile": "worldepisode-temporal-policy-baseline-0.1",
+    "source": {
+      "package_count": 4,
+      "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+      "source_files_verified": true,
+      "total_output_frames": 241470
+    },
+    "splits": {
+      "random_episode": {
+        "metrics": {
+          "episode_count": 80,
+          "episode_normalized_rmse_mean": 0.1572614852380231,
+          "episode_normalized_rmse_median": 0.14832023194749344,
+          "episode_normalized_rmse_p75": 0.20464305001300093,
+          "frame_count": 21745,
+          "frame_normalized_rmse": 0.15518585877367172,
+          "frame_rmse": 2.563375502026356,
+          "offline_success_count": 74,
+          "offline_success_rate": 0.925,
+          "offline_success_threshold": 0.25,
+          "per_episode": [
+            {
+              "episode_index": 0,
+              "frame_count": 190,
+              "normalized_rmse": 0.12438126155159807
+            },
+            {
+              "episode_index": 1,
+              "frame_count": 200,
+              "normalized_rmse": 0.0785283036546092
+            },
+            {
+              "episode_index": 2,
+              "frame_count": 230,
+              "normalized_rmse": 0.09487094089836914
+            },
+            {
+              "episode_index": 3,
+              "frame_count": 223,
+              "normalized_rmse": 0.08392083533946687
+            },
+            {
+              "episode_index": 4,
+              "frame_count": 202,
+              "normalized_rmse": 0.09733500261622897
+            },
+            {
+              "episode_index": 5,
+              "frame_count": 184,
+              "normalized_rmse": 0.09816084664929381
+            },
+            {
+              "episode_index": 6,
+              "frame_count": 237,
+              "normalized_rmse": 0.09983910105841744
+            },
+            {
+              "episode_index": 7,
+              "frame_count": 223,
+              "normalized_rmse": 0.09221930523626297
+            },
+            {
+              "episode_index": 8,
+              "frame_count": 206,
+              "normalized_rmse": 0.10164958415906952
+            },
+            {
+              "episode_index": 9,
+              "frame_count": 232,
+              "normalized_rmse": 0.1228400514484886
+            },
+            {
+              "episode_index": 10,
+              "frame_count": 219,
+              "normalized_rmse": 0.1343087640591581
+            },
+            {
+              "episode_index": 11,
+              "frame_count": 257,
+              "normalized_rmse": 0.21606228828640822
+            },
+            {
+              "episode_index": 12,
+              "frame_count": 252,
+              "normalized_rmse": 0.17362777730889828
+            },
+            {
+              "episode_index": 13,
+              "frame_count": 230,
+              "normalized_rmse": 0.13614841495757135
+            },
+            {
+              "episode_index": 14,
+              "frame_count": 284,
+              "normalized_rmse": 0.1690569021925969
+            },
+            {
+              "episode_index": 15,
+              "frame_count": 269,
+              "normalized_rmse": 0.23808542965822027
+            },
+            {
+              "episode_index": 16,
+              "frame_count": 245,
+              "normalized_rmse": 0.22782189250304508
+            },
+            {
+              "episode_index": 17,
+              "frame_count": 216,
+              "normalized_rmse": 0.19155616657502844
+            },
+            {
+              "episode_index": 18,
+              "frame_count": 232,
+              "normalized_rmse": 0.16751664431072893
+            },
+            {
+              "episode_index": 19,
+              "frame_count": 233,
+              "normalized_rmse": 0.2301498153470846
+            },
+            {
+              "episode_index": 20,
+              "frame_count": 608,
+              "normalized_rmse": 0.06712389045292122
+            },
+            {
+              "episode_index": 21,
+              "frame_count": 384,
+              "normalized_rmse": 0.07812280428005175
+            },
+            {
+              "episode_index": 22,
+              "frame_count": 419,
+              "normalized_rmse": 0.1077070612346448
+            },
+            {
+              "episode_index": 23,
+              "frame_count": 417,
+              "normalized_rmse": 0.11128567243050975
+            },
+            {
+              "episode_index": 24,
+              "frame_count": 438,
+              "normalized_rmse": 0.09719955112595403
+            },
+            {
+              "episode_index": 25,
+              "frame_count": 309,
+              "normalized_rmse": 0.10600846296837817
+            },
+            {
+              "episode_index": 26,
+              "frame_count": 633,
+              "normalized_rmse": 0.10995913326963484
+            },
+            {
+              "episode_index": 27,
+              "frame_count": 350,
+              "normalized_rmse": 0.11052289201451204
+            },
+            {
+              "episode_index": 28,
+              "frame_count": 382,
+              "normalized_rmse": 0.11052121465841266
+            },
+            {
+              "episode_index": 29,
+              "frame_count": 278,
+              "normalized_rmse": 0.0881041568252177
+            },
+            {
+              "episode_index": 30,
+              "frame_count": 478,
+              "normalized_rmse": 0.10708486542022445
+            },
+            {
+              "episode_index": 31,
+              "frame_count": 323,
+              "normalized_rmse": 0.08675100363271289
+            },
+            {
+              "episode_index": 32,
+              "frame_count": 272,
+              "normalized_rmse": 0.10354958902887075
+            },
+            {
+              "episode_index": 33,
+              "frame_count": 485,
+              "normalized_rmse": 0.09978234518779885
+            },
+            {
+              "episode_index": 34,
+              "frame_count": 216,
+              "normalized_rmse": 0.13246478396989664
+            },
+            {
+              "episode_index": 35,
+              "frame_count": 232,
+              "normalized_rmse": 0.10898333740520046
+            },
+            {
+              "episode_index": 36,
+              "frame_count": 283,
+              "normalized_rmse": 0.0879334190906311
+            },
+            {
+              "episode_index": 37,
+              "frame_count": 314,
+              "normalized_rmse": 0.10256304912840626
+            },
+            {
+              "episode_index": 38,
+              "frame_count": 192,
+              "normalized_rmse": 0.11000246134834868
+            },
+            {
+              "episode_index": 39,
+              "frame_count": 351,
+              "normalized_rmse": 0.10110263376513146
+            },
+            {
+              "episode_index": 40,
+              "frame_count": 226,
+              "normalized_rmse": 0.08069198952158638
+            },
+            {
+              "episode_index": 41,
+              "frame_count": 198,
+              "normalized_rmse": 0.11056572027405559
+            },
+            {
+              "episode_index": 42,
+              "frame_count": 225,
+              "normalized_rmse": 0.1831915442340019
+            },
+            {
+              "episode_index": 43,
+              "frame_count": 258,
+              "normalized_rmse": 0.24050200921241568
+            },
+            {
+              "episode_index": 44,
+              "frame_count": 239,
+              "normalized_rmse": 0.20117309017203872
+            },
+            {
+              "episode_index": 45,
+              "frame_count": 226,
+              "normalized_rmse": 0.15871810418473173
+            },
+            {
+              "episode_index": 46,
+              "frame_count": 231,
+              "normalized_rmse": 0.24514407893092147
+            },
+            {
+              "episode_index": 47,
+              "frame_count": 206,
+              "normalized_rmse": 0.21505292953588753
+            },
+            {
+              "episode_index": 48,
+              "frame_count": 168,
+              "normalized_rmse": 0.2218876426420035
+            },
+            {
+              "episode_index": 49,
+              "frame_count": 189,
+              "normalized_rmse": 0.24019820241813641
+            },
+            {
+              "episode_index": 50,
+              "frame_count": 146,
+              "normalized_rmse": 0.2465092341013356
+            },
+            {
+              "episode_index": 51,
+              "frame_count": 202,
+              "normalized_rmse": 0.25118880926747517
+            },
+            {
+              "episode_index": 52,
+              "frame_count": 181,
+              "normalized_rmse": 0.27860106898556647
+            },
+            {
+              "episode_index": 53,
+              "frame_count": 156,
+              "normalized_rmse": 0.2596644783717464
+            },
+            {
+              "episode_index": 54,
+              "frame_count": 158,
+              "normalized_rmse": 0.24284248862334376
+            },
+            {
+              "episode_index": 55,
+              "frame_count": 158,
+              "normalized_rmse": 0.2348035244728089
+            },
+            {
+              "episode_index": 56,
+              "frame_count": 169,
+              "normalized_rmse": 0.2470986814271768
+            },
+            {
+              "episode_index": 57,
+              "frame_count": 174,
+              "normalized_rmse": 0.26523591557937837
+            },
+            {
+              "episode_index": 58,
+              "frame_count": 169,
+              "normalized_rmse": 0.25457238915070785
+            },
+            {
+              "episode_index": 59,
+              "frame_count": 169,
+              "normalized_rmse": 0.2491366528457688
+            },
+            {
+              "episode_index": 60,
+              "frame_count": 172,
+              "normalized_rmse": 0.18652897938779586
+            },
+            {
+              "episode_index": 61,
+              "frame_count": 322,
+              "normalized_rmse": 0.18837549834181738
+            },
+            {
+              "episode_index": 62,
+              "frame_count": 167,
+              "normalized_rmse": 0.26800490109535907
+            },
+            {
+              "episode_index": 63,
+              "frame_count": 567,
+              "normalized_rmse": 0.10832125514286452
+            },
+            {
+              "episode_index": 64,
+              "frame_count": 396,
+              "normalized_rmse": 0.12987572079364637
+            },
+            {
+              "episode_index": 65,
+              "frame_count": 601,
+              "normalized_rmse": 0.13603506201959817
+            },
+            {
+              "episode_index": 66,
+              "frame_count": 543,
+              "normalized_rmse": 0.12029307347607392
+            },
+            {
+              "episode_index": 67,
+              "frame_count": 392,
+              "normalized_rmse": 0.11809626145552259
+            },
+            {
+              "episode_index": 68,
+              "frame_count": 351,
+              "normalized_rmse": 0.14733152739262476
+            },
+            {
+              "episode_index": 69,
+              "frame_count": 241,
+              "normalized_rmse": 0.14930893650236216
+            },
+            {
+              "episode_index": 70,
+              "frame_count": 224,
+              "normalized_rmse": 0.1619692105683683
+            },
+            {
+              "episode_index": 71,
+              "frame_count": 218,
+              "normalized_rmse": 0.1677895691046987
+            },
+            {
+              "episode_index": 72,
+              "frame_count": 202,
+              "normalized_rmse": 0.1874759187481117
+            },
+            {
+              "episode_index": 73,
+              "frame_count": 208,
+              "normalized_rmse": 0.15944451941871357
+            },
+            {
+              "episode_index": 74,
+              "frame_count": 240,
+              "normalized_rmse": 0.1577614093552648
+            },
+            {
+              "episode_index": 75,
+              "frame_count": 242,
+              "normalized_rmse": 0.15310918471163304
+            },
+            {
+              "episode_index": 76,
+              "frame_count": 241,
+              "normalized_rmse": 0.18159742373043813
+            },
+            {
+              "episode_index": 77,
+              "frame_count": 237,
+              "normalized_rmse": 0.17415016497190342
+            },
+            {
+              "episode_index": 78,
+              "frame_count": 191,
+              "normalized_rmse": 0.18016728240451635
+            },
+            {
+              "episode_index": 79,
+              "frame_count": 214,
+              "normalized_rmse": 0.17365271142144542
+            }
+          ]
+        },
+        "policy": {
+          "action_dim": 6,
+          "family": "closed_form_temporal_ridge_state_action",
+          "feature_dim": 24,
+          "history_frames": 3,
+          "ridge_lambda": 0.01,
+          "state_dim": 6,
+          "uses_previous_ground_truth_actions": false,
+          "uses_video": false
+        },
+        "split": "random_episode",
+        "test_frames": 21745,
+        "test_package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+        "train_frames": 98990,
+        "train_package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train"
+      },
+      "scene_disjoint": {
+        "metrics": {
+          "episode_count": 100,
+          "episode_normalized_rmse_mean": 0.25457434248891586,
+          "episode_normalized_rmse_median": 0.2620473001147364,
+          "episode_normalized_rmse_p75": 0.2842859438602856,
+          "frame_count": 20313,
+          "frame_normalized_rmse": 0.2530206042497452,
+          "frame_rmse": 3.478169207117213,
+          "offline_success_count": 42,
+          "offline_success_rate": 0.42,
+          "offline_success_threshold": 0.25,
+          "per_episode": [
+            {
+              "episode_index": 0,
+              "frame_count": 246,
+              "normalized_rmse": 0.25230798322340114
+            },
+            {
+              "episode_index": 1,
+              "frame_count": 265,
+              "normalized_rmse": 0.15030457654221832
+            },
+            {
+              "episode_index": 2,
+              "frame_count": 198,
+              "normalized_rmse": 0.23767414661882913
+            },
+            {
+              "episode_index": 3,
+              "frame_count": 272,
+              "normalized_rmse": 0.18949467014830906
+            },
+            {
+              "episode_index": 4,
+              "frame_count": 220,
+              "normalized_rmse": 0.22996410465791667
+            },
+            {
+              "episode_index": 5,
+              "frame_count": 225,
+              "normalized_rmse": 0.20262025437884165
+            },
+            {
+              "episode_index": 6,
+              "frame_count": 196,
+              "normalized_rmse": 0.21003983766147355
+            },
+            {
+              "episode_index": 7,
+              "frame_count": 258,
+              "normalized_rmse": 0.2634162815109814
+            },
+            {
+              "episode_index": 8,
+              "frame_count": 197,
+              "normalized_rmse": 0.20890616745266496
+            },
+            {
+              "episode_index": 9,
+              "frame_count": 239,
+              "normalized_rmse": 0.21807805398863975
+            },
+            {
+              "episode_index": 10,
+              "frame_count": 273,
+              "normalized_rmse": 0.17627466509848622
+            },
+            {
+              "episode_index": 11,
+              "frame_count": 207,
+              "normalized_rmse": 0.18010359887146732
+            },
+            {
+              "episode_index": 12,
+              "frame_count": 226,
+              "normalized_rmse": 0.17184752398861378
+            },
+            {
+              "episode_index": 13,
+              "frame_count": 196,
+              "normalized_rmse": 0.29056480104609156
+            },
+            {
+              "episode_index": 14,
+              "frame_count": 231,
+              "normalized_rmse": 0.26716656612656753
+            },
+            {
+              "episode_index": 15,
+              "frame_count": 254,
+              "normalized_rmse": 0.18494150946654261
+            },
+            {
+              "episode_index": 16,
+              "frame_count": 272,
+              "normalized_rmse": 0.21890281518480922
+            },
+            {
+              "episode_index": 17,
+              "frame_count": 227,
+              "normalized_rmse": 0.2668762543824643
+            },
+            {
+              "episode_index": 18,
+              "frame_count": 217,
+              "normalized_rmse": 0.24643212637854486
+            },
+            {
+              "episode_index": 19,
+              "frame_count": 314,
+              "normalized_rmse": 0.18260817745137659
+            },
+            {
+              "episode_index": 20,
+              "frame_count": 239,
+              "normalized_rmse": 0.23409230082414464
+            },
+            {
+              "episode_index": 21,
+              "frame_count": 206,
+              "normalized_rmse": 0.2391631723074193
+            },
+            {
+              "episode_index": 22,
+              "frame_count": 217,
+              "normalized_rmse": 0.27390592381753015
+            },
+            {
+              "episode_index": 23,
+              "frame_count": 190,
+              "normalized_rmse": 0.2778465358452728
+            },
+            {
+              "episode_index": 24,
+              "frame_count": 189,
+              "normalized_rmse": 0.27593343465883413
+            },
+            {
+              "episode_index": 25,
+              "frame_count": 321,
+              "normalized_rmse": 0.17817974504665493
+            },
+            {
+              "episode_index": 26,
+              "frame_count": 259,
+              "normalized_rmse": 0.18122593967684933
+            },
+            {
+              "episode_index": 27,
+              "frame_count": 210,
+              "normalized_rmse": 0.24787217979860002
+            },
+            {
+              "episode_index": 28,
+              "frame_count": 234,
+              "normalized_rmse": 0.2618147296099135
+            },
+            {
+              "episode_index": 29,
+              "frame_count": 218,
+              "normalized_rmse": 0.21133369558668577
+            },
+            {
+              "episode_index": 30,
+              "frame_count": 272,
+              "normalized_rmse": 0.24390374255848515
+            },
+            {
+              "episode_index": 31,
+              "frame_count": 192,
+              "normalized_rmse": 0.20608032662348907
+            },
+            {
+              "episode_index": 32,
+              "frame_count": 205,
+              "normalized_rmse": 0.2845091079249266
+            },
+            {
+              "episode_index": 33,
+              "frame_count": 204,
+              "normalized_rmse": 0.27673925405256117
+            },
+            {
+              "episode_index": 34,
+              "frame_count": 170,
+              "normalized_rmse": 0.24950366533511578
+            },
+            {
+              "episode_index": 35,
+              "frame_count": 266,
+              "normalized_rmse": 0.2622798706195593
+            },
+            {
+              "episode_index": 36,
+              "frame_count": 205,
+              "normalized_rmse": 0.28440850981751464
+            },
+            {
+              "episode_index": 37,
+              "frame_count": 274,
+              "normalized_rmse": 0.189416193083524
+            },
+            {
+              "episode_index": 38,
+              "frame_count": 172,
+              "normalized_rmse": 0.29625218017329263
+            },
+            {
+              "episode_index": 39,
+              "frame_count": 161,
+              "normalized_rmse": 0.2654583868712046
+            },
+            {
+              "episode_index": 40,
+              "frame_count": 177,
+              "normalized_rmse": 0.2842450885412093
+            },
+            {
+              "episode_index": 41,
+              "frame_count": 216,
+              "normalized_rmse": 0.3131429808194074
+            },
+            {
+              "episode_index": 42,
+              "frame_count": 168,
+              "normalized_rmse": 0.24062737589037092
+            },
+            {
+              "episode_index": 43,
+              "frame_count": 230,
+              "normalized_rmse": 0.2521757547168604
+            },
+            {
+              "episode_index": 44,
+              "frame_count": 189,
+              "normalized_rmse": 0.26681414738937936
+            },
+            {
+              "episode_index": 45,
+              "frame_count": 235,
+              "normalized_rmse": 0.2282083816075675
+            },
+            {
+              "episode_index": 46,
+              "frame_count": 304,
+              "normalized_rmse": 0.18596778717759546
+            },
+            {
+              "episode_index": 47,
+              "frame_count": 175,
+              "normalized_rmse": 0.29407739973406005
+            },
+            {
+              "episode_index": 48,
+              "frame_count": 173,
+              "normalized_rmse": 0.2890422782423593
+            },
+            {
+              "episode_index": 49,
+              "frame_count": 182,
+              "normalized_rmse": 0.22910068242244672
+            },
+            {
+              "episode_index": 50,
+              "frame_count": 242,
+              "normalized_rmse": 0.23607099595300662
+            },
+            {
+              "episode_index": 51,
+              "frame_count": 158,
+              "normalized_rmse": 0.2520015524121629
+            },
+            {
+              "episode_index": 52,
+              "frame_count": 141,
+              "normalized_rmse": 0.27880243830700185
+            },
+            {
+              "episode_index": 53,
+              "frame_count": 149,
+              "normalized_rmse": 0.28170126477659085
+            },
+            {
+              "episode_index": 54,
+              "frame_count": 132,
+              "normalized_rmse": 0.2541687027222638
+            },
+            {
+              "episode_index": 55,
+              "frame_count": 160,
+              "normalized_rmse": 0.26937915177296434
+            },
+            {
+              "episode_index": 56,
+              "frame_count": 146,
+              "normalized_rmse": 0.26271739261022387
+            },
+            {
+              "episode_index": 57,
+              "frame_count": 171,
+              "normalized_rmse": 0.2335612429368612
+            },
+            {
+              "episode_index": 58,
+              "frame_count": 147,
+              "normalized_rmse": 0.23145080283625752
+            },
+            {
+              "episode_index": 59,
+              "frame_count": 202,
+              "normalized_rmse": 0.2742062282725238
+            },
+            {
+              "episode_index": 60,
+              "frame_count": 172,
+              "normalized_rmse": 0.24329966954934473
+            },
+            {
+              "episode_index": 61,
+              "frame_count": 183,
+              "normalized_rmse": 0.21604707659630407
+            },
+            {
+              "episode_index": 62,
+              "frame_count": 200,
+              "normalized_rmse": 0.26630770912738944
+            },
+            {
+              "episode_index": 63,
+              "frame_count": 190,
+              "normalized_rmse": 0.23452114284104406
+            },
+            {
+              "episode_index": 64,
+              "frame_count": 175,
+              "normalized_rmse": 0.2397641945531717
+            },
+            {
+              "episode_index": 65,
+              "frame_count": 187,
+              "normalized_rmse": 0.24047512400416968
+            },
+            {
+              "episode_index": 66,
+              "frame_count": 226,
+              "normalized_rmse": 0.23787764073406664
+            },
+            {
+              "episode_index": 67,
+              "frame_count": 181,
+              "normalized_rmse": 0.30595673941033386
+            },
+            {
+              "episode_index": 68,
+              "frame_count": 213,
+              "normalized_rmse": 0.2929482258343442
+            },
+            {
+              "episode_index": 69,
+              "frame_count": 156,
+              "normalized_rmse": 0.2917082601927974
+            },
+            {
+              "episode_index": 70,
+              "frame_count": 201,
+              "normalized_rmse": 0.278545498810997
+            },
+            {
+              "episode_index": 71,
+              "frame_count": 179,
+              "normalized_rmse": 0.2854202720224198
+            },
+            {
+              "episode_index": 72,
+              "frame_count": 158,
+              "normalized_rmse": 0.2819419849079726
+            },
+            {
+              "episode_index": 73,
+              "frame_count": 151,
+              "normalized_rmse": 0.36213643814944013
+            },
+            {
+              "episode_index": 74,
+              "frame_count": 181,
+              "normalized_rmse": 0.2559354650252542
+            },
+            {
+              "episode_index": 75,
+              "frame_count": 194,
+              "normalized_rmse": 0.28295685105533047
+            },
+            {
+              "episode_index": 76,
+              "frame_count": 158,
+              "normalized_rmse": 0.2564293630596424
+            },
+            {
+              "episode_index": 77,
+              "frame_count": 236,
+              "normalized_rmse": 0.28933581959381555
+            },
+            {
+              "episode_index": 78,
+              "frame_count": 182,
+              "normalized_rmse": 0.271176219251533
+            },
+            {
+              "episode_index": 79,
+              "frame_count": 178,
+              "normalized_rmse": 0.2972816556497767
+            },
+            {
+              "episode_index": 80,
+              "frame_count": 164,
+              "normalized_rmse": 0.28582263516995304
+            },
+            {
+              "episode_index": 81,
+              "frame_count": 179,
+              "normalized_rmse": 0.32379113181499214
+            },
+            {
+              "episode_index": 82,
+              "frame_count": 169,
+              "normalized_rmse": 0.2747848693406736
+            },
+            {
+              "episode_index": 83,
+              "frame_count": 174,
+              "normalized_rmse": 0.2915897729290703
+            },
+            {
+              "episode_index": 84,
+              "frame_count": 169,
+              "normalized_rmse": 0.28914690326643566
+            },
+            {
+              "episode_index": 85,
+              "frame_count": 169,
+              "normalized_rmse": 0.2822748623339432
+            },
+            {
+              "episode_index": 86,
+              "frame_count": 172,
+              "normalized_rmse": 0.204452949161739
+            },
+            {
+              "episode_index": 87,
+              "frame_count": 162,
+              "normalized_rmse": 0.28765466651054333
+            },
+            {
+              "episode_index": 88,
+              "frame_count": 277,
+              "normalized_rmse": 0.23596926847533256
+            },
+            {
+              "episode_index": 89,
+              "frame_count": 159,
+              "normalized_rmse": 0.31454607988643024
+            },
+            {
+              "episode_index": 90,
+              "frame_count": 164,
+              "normalized_rmse": 0.30172430481044127
+            },
+            {
+              "episode_index": 91,
+              "frame_count": 202,
+              "normalized_rmse": 0.25619934855780474
+            },
+            {
+              "episode_index": 92,
+              "frame_count": 322,
+              "normalized_rmse": 0.20470117803816887
+            },
+            {
+              "episode_index": 93,
+              "frame_count": 210,
+              "normalized_rmse": 0.2450770483364949
+            },
+            {
+              "episode_index": 94,
+              "frame_count": 191,
+              "normalized_rmse": 0.2698838173614222
+            },
+            {
+              "episode_index": 95,
+              "frame_count": 215,
+              "normalized_rmse": 0.2714166190752312
+            },
+            {
+              "episode_index": 96,
+              "frame_count": 167,
+              "normalized_rmse": 0.29870977235026686
+            },
+            {
+              "episode_index": 97,
+              "frame_count": 183,
+              "normalized_rmse": 0.3400034907681738
+            },
+            {
+              "episode_index": 98,
+              "frame_count": 169,
+              "normalized_rmse": 0.3119922641328053
+            },
+            {
+              "episode_index": 99,
+              "frame_count": 161,
+              "normalized_rmse": 0.29172325865158616
+            }
+          ]
+        },
+        "policy": {
+          "action_dim": 6,
+          "family": "closed_form_temporal_ridge_state_action",
+          "feature_dim": 24,
+          "history_frames": 3,
+          "ridge_lambda": 0.01,
+          "state_dim": 6,
+          "uses_previous_ground_truth_actions": false,
+          "uses_video": false
+        },
+        "split": "scene_disjoint",
+        "test_frames": 20313,
+        "test_package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+        "train_frames": 100422,
+        "train_package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train"
+      }
+    },
+    "status": "measured_offline_temporal_baseline"
+  },
+  "meta_simulator_contract": {
+    "aggregate": {
+      "adapter_required_count": 1,
+      "compliance_layer_count": 3,
+      "ready_untested_adapter_count": 1,
+      "runtime_target_count": 4,
+      "tested_adapter_count": 2
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/meta_simulator_contract/README.md",
+      "report": "docs/experiments/meta_simulator_contract/adapter_contract_report.json"
+    },
+    "claim_boundary": "The report defines adapter compliance. It does not claim equivalent physics or tested runtime results for every simulator.",
+    "layers": [
+      {
+        "description": "Adapter ingests immutable world revisions, frame/clock graphs, entity identity, representation roles, action channels, asset digests, and quality records.",
+        "layer_id": "META-SIM.001",
+        "name": "invariant_interface",
+        "requirement_ids": [
+          "WORLD.001",
+          "TRACE.001",
+          "FRAME.001",
+          "FRAME.002",
+          "TIME.001",
+          "TIME.002",
+          "ENTITY.001",
+          "REP.001",
+          "ACTION.001",
+          "ACTION.002",
+          "ASSET.001",
+          "QUALITY.001"
+        ]
+      },
+      {
+        "description": "Adapter may register runtime-specific roles, events, material models, deformable metrics, or fluid/container states without weakening the core sidecar contract.",
+        "layer_id": "META-SIM.002",
+        "name": "asynchronous_schema_extension",
+        "requirement_ids": [
+          "REP.001",
+          "ENTITY.001",
+          "PROV.001",
+          "CONVERT.001"
+        ]
+      },
+      {
+        "description": "Adapter declares runtime, version, solver, timestep, actuator parameters, command and effective timestamps, latency model, initialization state, and tolerance envelope.",
+        "layer_id": "META-SIM.003",
+        "name": "deterministic_replay_accountability",
+        "requirement_ids": [
+          "REPLAY.001",
+          "ACTION.002",
+          "ACTION.004",
+          "TIME.002",
+          "CONVERT.001"
+        ]
+      }
+    ],
+    "profile": "worldepisode-meta-simulator-contract-0.1",
+    "runtime_targets": [
+      {
+        "adapter_status": "tested_replay_and_urdf_studio_episode_backend",
+        "claim_boundary": "WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace; URDF Studio also tests MuJoCo as an episode backend in the shared scenario runner.",
+        "evidence": {
+          "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+          "rmse_improvement_over_naive": 2.191019226228591,
+          "tested": true,
+          "urdf_studio": {
+            "conformance_smoke": {
+              "command": ".venv/bin/python3 -m pytest backend/tests/test_sim_backend_conformance.py backend/tests/test_scenario_run_orchestrator.py backend/tests/test_scenario_runner_mujoco.py backend/tests/test_world_layout_transfer_check_script.py",
+              "covered_backends": [
+                "fake",
+                "mujoco",
+                "genesis"
+              ],
+              "result": "24 passed, 12 warnings in 27.22s"
+            },
+            "cross_sim_smoke": {
+              "backends": [
+                "genesis",
+                "mujoco"
+              ],
+              "command": ".venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
+              "episodes": 1,
+              "final_joint_rmse_rad": 0.050246577859076866,
+              "final_object_pose_delta_m": {
+                "carton_1": 0.059700834823395076
+              },
+              "genesis_success_rate": 1.0,
+              "mean_time_to_success_s": {
+                "genesis": 5.0,
+                "mujoco": 4.999999999999671
+              },
+              "mujoco_success_rate": 1.0,
+              "scenario_id": "carton_sorting_0001",
+              "schema": "scenario_comparison_report.v1",
+              "success_agreement_rate": 1.0,
+              "trajectory_split": {
+                "metric": "joint_rmse_rad",
+                "t_ms": 60,
+                "threshold": 0.05,
+                "value": 0.06762661282092075
+              }
+            },
+            "observed_commit": "99f1bf0",
+            "source": "URDF Studio sibling implementation"
+          }
+        },
+        "extension_policy": "core rigid-body replay only in current artifact",
+        "implemented_layers": [
+          "META-SIM.001",
+          "META-SIM.003"
+        ],
+        "runtime_family": "contact_dynamics",
+        "runtime_id": "mujoco"
+      },
+      {
+        "adapter_status": "adapter_contract_ready_untested",
+        "claim_boundary": "Adapter mapping only; no Isaac runtime result is claimed.",
+        "evidence": {
+          "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+          "ready": true,
+          "reason": "Isaac Sim is not installed in this execution environment.",
+          "tested": false
+        },
+        "extension_policy": "ready mapping emitted; runtime execution not available in this environment",
+        "implemented_layers": [
+          "META-SIM.001",
+          "META-SIM.003"
+        ],
+        "runtime_family": "gpu_parallel_simulation",
+        "runtime_id": "isaac_sim"
+      },
+      {
+        "adapter_status": "tested_replay_and_urdf_studio_episode_backend",
+        "claim_boundary": "Genesis is tested on the same LeRobot trace with a minimal position-servo adapter and separately as a URDF Studio episode backend. This is not a contact-rich task rollout and does not claim Isaac or SAPIEN coverage.",
+        "evidence": {
+          "ready": true,
+          "same_trace_replay": {
+            "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+            "claim_boundary": "Same LeRobot replay trace and action timing contract as MuJoCo, using a minimal Genesis MJCF position-servo adapter. This is still a simple joint replay, not a task-level contact-rich hardware rollout.",
+            "naive_command_time": {
+              "final_joint_rmse_deg": 0.3767891535186242,
+              "joint_rmse_deg": 3.42472358784787
+            },
+            "rmse_improvement_over_naive": 2.1910191616359143,
+            "runtime": {
+              "backend": "cpu",
+              "genesis_version": "1.1.0",
+              "python_executable": "python3"
+            },
+            "timestamp_aware": {
+              "final_joint_rmse_deg": 0.37678914381917183,
+              "joint_rmse_deg": 1.5630733166618296
+            }
+          },
+          "tested": true,
+          "urdf_studio": {
+            "code_paths": [
+              "backend/services/sim_backends/base.py",
+              "backend/services/sim_backends/mujoco_backend.py",
+              "backend/services/sim_backends/genesis_backend.py",
+              "backend/scripts/scenario_run.py",
+              "backend/tests/test_sim_backend_conformance.py"
+            ],
+            "conformance_smoke": {
+              "command": ".venv/bin/python3 -m pytest backend/tests/test_sim_backend_conformance.py backend/tests/test_scenario_run_orchestrator.py backend/tests/test_scenario_runner_mujoco.py backend/tests/test_world_layout_transfer_check_script.py",
+              "covered_backends": [
+                "fake",
+                "mujoco",
+                "genesis"
+              ],
+              "result": "24 passed, 12 warnings in 27.22s"
+            },
+            "cross_sim_smoke": {
+              "backends": [
+                "genesis",
+                "mujoco"
+              ],
+              "command": ".venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
+              "episodes": 1,
+              "final_joint_rmse_rad": 0.050246577859076866,
+              "final_object_pose_delta_m": {
+                "carton_1": 0.059700834823395076
+              },
+              "genesis_success_rate": 1.0,
+              "mean_time_to_success_s": {
+                "genesis": 5.0,
+                "mujoco": 4.999999999999671
+              },
+              "mujoco_success_rate": 1.0,
+              "scenario_id": "carton_sorting_0001",
+              "schema": "scenario_comparison_report.v1",
+              "success_agreement_rate": 1.0,
+              "trajectory_split": {
+                "metric": "joint_rmse_rad",
+                "t_ms": 60,
+                "threshold": 0.05,
+                "value": 0.06762661282092075
+              }
+            },
+            "observed_commit": "99f1bf0",
+            "source": "URDF Studio sibling implementation"
+          }
+        },
+        "extension_policy": "WorldEpisode executes the same LeRobot control-replay trace through a minimal Genesis MJCF position-servo adapter. URDF Studio separately compiles the scenario scene, action interface, episode manifest, and trace/comparison report against Genesis.",
+        "implemented_layers": [
+          "META-SIM.001",
+          "META-SIM.003"
+        ],
+        "runtime_family": "parallel_robotics_simulation",
+        "runtime_id": "genesis"
+      },
+      {
+        "adapter_status": "adapter_required",
+        "claim_boundary": "No SAPIEN adapter or runtime result is claimed.",
+        "evidence": {
+          "ready": false,
+          "tested": false
+        },
+        "extension_policy": "Adapter should register articulation, contact, rendering, and optional soft-body extensions without changing the WorldEpisode core.",
+        "implemented_layers": [],
+        "runtime_family": "interactive_articulation_and_rendering",
+        "runtime_id": "sapien"
+      }
+    ],
+    "status": "runtime_neutral_adapter_contract",
+    "urdf_studio_evidence": {
+      "claim_boundary": "URDF Studio proves a shared episode-backend contract and one MuJoCo/Genesis scenario comparison. It does not prove Isaac or SAPIEN replay and is separate from the minimal LeRobot control-replay trace now executed by the WorldEpisode Genesis adapter.",
+      "code_paths": [
+        "backend/services/sim_backends/base.py",
+        "backend/services/sim_backends/mujoco_backend.py",
+        "backend/services/sim_backends/genesis_backend.py",
+        "backend/scripts/scenario_run.py",
+        "backend/tests/test_sim_backend_conformance.py"
+      ],
+      "conformance_smoke": {
+        "command": ".venv/bin/python3 -m pytest backend/tests/test_sim_backend_conformance.py backend/tests/test_scenario_run_orchestrator.py backend/tests/test_scenario_runner_mujoco.py backend/tests/test_world_layout_transfer_check_script.py",
+        "covered_backends": [
+          "fake",
+          "mujoco",
+          "genesis"
+        ],
+        "result": "24 passed, 12 warnings in 27.22s"
+      },
+      "cross_sim_smoke": {
+        "backends": [
+          "genesis",
+          "mujoco"
+        ],
+        "command": ".venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1",
+        "episodes": 1,
+        "final_joint_rmse_rad": 0.050246577859076866,
+        "final_object_pose_delta_m": {
+          "carton_1": 0.059700834823395076
+        },
+        "genesis_success_rate": 1.0,
+        "mean_time_to_success_s": {
+          "genesis": 5.0,
+          "mujoco": 4.999999999999671
+        },
+        "mujoco_success_rate": 1.0,
+        "scenario_id": "carton_sorting_0001",
+        "schema": "scenario_comparison_report.v1",
+        "success_agreement_rate": 1.0,
+        "trajectory_split": {
+          "metric": "joint_rmse_rad",
+          "t_ms": 60,
+          "threshold": 0.05,
+          "value": 0.06762661282092075
+        }
+      },
+      "local_branch": "paper/cross-sim-benchmark",
+      "observed_commit": "99f1bf0",
+      "observed_on": "2026-07-13",
+      "repository": "amtellezfernandez/urdf-studio",
+      "source": "URDF Studio sibling implementation"
+    }
+  },
+  "natural_failure_corpus": {
+    "active_dataset_report_count": 3,
+    "artifact": "docs/experiments/natural_failure_corpus/manifest.json",
+    "available": true,
+    "case_count": 19,
+    "dataset_count": 5,
+    "dataset_count_gate_satisfied": true,
+    "dataset_diagnostics_artifact": "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+    "dataset_report_count": 5,
+    "dataset_specific_diagnostics_ready": true,
+    "evidence_tiers": {
+      "active_lerobot_conversion_reports": 2,
+      "active_lerobot_scene_leakage_audit": 1,
+      "source_level_public_metadata_audit": 2
+    },
+    "full_gate_satisfied": false,
+    "maintainer_feedback_satisfied": false,
+    "requirement_counts": {
+      "ACTION.001": 4,
+      "ACTION.002": 4,
+      "ACTION.004": 4,
+      "CONVERT.001": 2,
+      "DATASET.003": 2,
+      "ENTITY.001": 2,
+      "FRAME.001": 4,
+      "FRAME.002": 4,
+      "REP.001": 2,
+      "REPLAY.001": 2,
+      "SPLIT.001": 3,
+      "TRACE.001": 2,
+      "WORLD.001": 2
+    },
+    "source_level_only_report_count": 2
+  },
+  "preflight_validator": {
+    "artifact": "docs/experiments/preflight/preflight_report.json",
+    "available": true,
+    "cases": [
+      {
+        "case": "valid_worldepisode_manifest",
+        "expected_ok": true,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 0
+          },
+          "diagnostics": [],
+          "fail_on": "warning",
+          "kind": "worldepisode",
+          "ok": true,
+          "summary": {
+            "document_kind": "worldepisode"
+          },
+          "target": "examples/minimal.worldepisode.json"
+        }
+      },
+      {
+        "case": "invalid_worldepisode_fixture",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 2,
+            "info": 0,
+            "warning": 0
+          },
+          "diagnostics": [
+            {
+              "hint": "Validate the document against the published JSON Schema before training.",
+              "location": "/action_space/channels/0",
+              "message": "'effective_timestamp_semantics' is a required property",
+              "requirement": "SCHEMA.001",
+              "severity": "error"
+            },
+            {
+              "location": "/action_space/channels/0",
+              "message": "Action channel lacks command/effective timestamp semantics.",
+              "requirement": "ACTION.002",
+              "severity": "error"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "worldepisode",
+          "ok": false,
+          "summary": {
+            "document_kind": "worldepisode"
+          },
+          "target": "conformance/fixtures/pilot/invalid/ACTION.002_missing_effective_time.worldepisode.json"
+        }
+      },
+      {
+        "case": "native_lerobot_without_sidecar",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 10
+          },
+          "diagnostics": [
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/world_revision",
+              "message": "No immutable, content-addressed world revision is bound to this native LeRobot dataset.",
+              "requirement": "WORLD.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/entities",
+              "message": "No persistent entity identity graph is available across observations, assets, and annotations.",
+              "requirement": "ENTITY.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/entities/*/representations",
+              "message": "No representation-role graph declares appearance, collision, semantic, or learned roles.",
+              "requirement": "REP.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/frame_graph",
+              "message": "Native LeRobot metadata does not provide a complete frame graph with explicit transform directions.",
+              "requirement": "FRAME.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/frame_graph/transforms",
+              "message": "Native LeRobot metadata does not provide transform validity intervals.",
+              "requirement": "FRAME.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/clock_graph/mappings",
+              "message": "Native LeRobot metadata does not provide cross-clock drift/error mappings.",
+              "requirement": "TIME.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/action_space/channels",
+              "message": "Action units, reference frames, and absolute/delta/velocity semantics are not normative.",
+              "requirement": "ACTION.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/action_space/channels",
+              "message": "Command-time versus effective-time semantics and latency model are absent.",
+              "requirement": "ACTION.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/splits",
+              "message": "No world-lineage-disjoint split manifest is attached.",
+              "requirement": "SPLIT.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest/sidecar before treating this dataset as replay-safe.",
+              "location": "/conversion_report",
+              "message": "No machine-readable conversion-loss report is attached.",
+              "requirement": "CONVERT.001",
+              "severity": "warning"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "lerobot",
+          "ok": false,
+          "summary": {
+            "data_parquet_files": 1,
+            "feature_count": 3,
+            "info_json": true,
+            "sidecar_status": "missing",
+            "video_feature_count": 0,
+            "video_mp4_files": 0,
+            "worldepisode_sidecar_found": false
+          },
+          "target": "docs/experiments/preflight/native_lerobot_without_sidecar"
+        }
+      },
+      {
+        "case": "rerun_without_sidecar",
+        "expected_ok": false,
+        "report": {
+          "counts": {
+            "error": 0,
+            "info": 0,
+            "warning": 6
+          },
+          "diagnostics": [
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/world_revision",
+              "message": "Rerun recordings do not by themselves declare immutable world revisions.",
+              "requirement": "WORLD.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/action_space/channels",
+              "message": "Rerun streams do not by themselves make action units and frames normative.",
+              "requirement": "ACTION.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/action_space/channels",
+              "message": "Rerun streams do not by themselves declare command/effective timing and latency.",
+              "requirement": "ACTION.002",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/entities",
+              "message": "Persistent cross-representation entity identity requires a WorldEpisode sidecar.",
+              "requirement": "ENTITY.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/entities/*/representations",
+              "message": "Representation roles require a WorldEpisode sidecar.",
+              "requirement": "REP.001",
+              "severity": "warning"
+            },
+            {
+              "hint": "Attach a WorldEpisode manifest beside the .rrd file.",
+              "location": "/conversion_report",
+              "message": "Replay/conversion loss must be reported outside the .rrd stream.",
+              "requirement": "CONVERT.001",
+              "severity": "warning"
+            }
+          ],
+          "fail_on": "warning",
+          "kind": "rerun",
+          "ok": false,
+          "summary": {
+            "rrd_path_exists": true,
+            "sidecar_status": "missing",
+            "worldepisode_sidecar_found": false
+          },
+          "target": "docs/experiments/preflight/recording_without_sidecar.rrd"
+        }
+      }
+    ],
+    "commands": [
+      "python3 -m pip install -e .",
+      "worldepisode preflight <dataset-or-manifest>",
+      "python3 - <<'PY'\nfrom worldepisode import preflight_lerobot\npreflight_lerobot('/path/to/lerobot').raise_if_failed()\nPY"
+    ],
+    "failures": [],
+    "pass": true,
+    "profile": "worldepisode-preflight-0.1"
+  },
+  "realtosim_contract_drift": {
+    "ablations": {
+      "action_contract_drift": {
+        "drifted": {
+          "deployment_error_rad": 0.30532863655276726,
+          "deployment_success": false,
+          "failure_at_first_control_cycle": true,
+          "hardware_interpretation": "delta_joint_command_deg",
+          "policy_output": [
+            0.12,
+            -0.25,
+            0.55,
+            0.22,
+            -0.1,
+            0.08
+          ],
+          "sim_action_interpretation": "absolute_joint_target_rad",
+          "sim_error_rad": 0.0,
+          "sim_success": true
+        },
+        "failure_mode": "A policy that succeeds in a simulator with absolute-radian actions is deployed to a controller whose source contract expects delta-degree commands.",
+        "name": "action_contract_drift",
+        "start_rad": [
+          0.0,
+          -0.4,
+          0.7,
+          0.1,
+          -0.2,
+          0.0
+        ],
+        "success_gap_sim_to_deployment": 1,
+        "target_rad": [
+          0.12,
+          -0.25,
+          0.55,
+          0.22,
+          -0.1,
+          0.08
+        ],
+        "tolerance_rad": 0.035,
+        "worldepisode": {
+          "action_contract": {
+            "command_timestamp_semantics": "policy_sample_time",
+            "effective_timestamp_semantics": "motor_apply_time",
+            "hardware_command_semantics": "delta",
+            "hardware_command_units": "deg",
+            "policy_output_semantics": "absolute",
+            "policy_output_units": "rad",
+            "reference_frame": "joint_space"
+          },
+          "converted_hardware_command_deg": [
+            6.875493541569878,
+            8.59436692696235,
+            -8.594366926962344,
+            6.875493541569878,
+            5.729577951308233,
+            4.583662361046586
+          ],
+          "deployment_error_rad": 1.3877787807814457e-17,
+          "deployment_success": true
+        },
+        "worldepisode_requirement_ids": [
+          "ACTION.001",
+          "ACTION.002",
+          "REPLAY.001",
+          "CONVERT.001"
+        ]
+      },
+      "representation_role_drift": {
+        "collision_proxy": {
+          "xmax": 0.57,
+          "xmin": 0.43,
+          "ymax": 0.08,
+          "ymin": -0.08
+        },
+        "drifted": {
+          "deployment_success": false,
+          "exported_roles": [
+            "appearance"
+          ],
+          "planned_path": "straight_line",
+          "real_collision_step": 11,
+          "sim_collision_proxy_present": false,
+          "sim_success": true
+        },
+        "failure_mode": "A real-to-sim export keeps the Gaussian visual layer but drops the collision role, so a straight-line policy succeeds in simulation and collides with the real foreground object.",
+        "name": "representation_role_drift",
+        "roles": {
+          "appearance": "gaussian_splat_visual_context",
+          "collision": "box_collision_proxy",
+          "semantics": "foreground_obstacle"
+        },
+        "success_gap_sim_to_deployment": 1,
+        "worldepisode": {
+          "deployment_success": true,
+          "exported_roles": [
+            "appearance",
+            "collision",
+            "semantics"
+          ],
+          "planned_path": "role_aware_detour",
+          "real_collision_step": null,
+          "sim_collision_proxy_present": true
+        },
+        "worldepisode_requirement_ids": [
+          "REP.001",
+          "ENTITY.001",
+          "WORLD.001",
+          "REPLAY.001"
+        ]
+      }
+    },
+    "aggregate": {
+      "ablation_count": 2,
+      "drifted_deployment_successes": 0,
+      "drifted_sim_successes": 2,
+      "worldepisode_deployment_successes": 2
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/realtosim_contract_drift/README.md",
+      "report": "docs/experiments/realtosim_contract_drift/contract_drift_report.json"
+    },
+    "claim_boundary": "This deterministic experiment isolates contract drift mechanisms. It does not claim a measured real-robot deployment result.",
+    "hype_cycle_positioning": "Real-to-sim systems can reconstruct visually faithful and physically useful scenes. WorldEpisode defines the cross-container contract that keeps those scenes tied to the episode, action interface, physical roles, and replay assumptions.",
+    "profile": "worldepisode-realtosim-contract-drift-0.1",
+    "status": "controlled_proxy_not_hardware_rollout"
+  },
+  "replay_adapter_conformance": {
+    "aggregate": {
+      "case_count": 3,
+      "contract_aware_passes": 3,
+      "naive_failures": 3
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/replay_adapter_conformance/README.md",
+      "report": "docs/experiments/replay_adapter_conformance/adapter_conformance_report.json"
+    },
+    "cases": [
+      {
+        "case_id": "constant_frame_delay_scheduler",
+        "contract": {
+          "effective_timestamp_semantics": "sample_timestamp + delay_frames * sample_period",
+          "interpolation": "zero_order_hold",
+          "latency_model": {
+            "delay_frames": 4,
+            "type": "constant_frame_delay"
+          }
+        },
+        "contract_aware": {
+          "pass": true,
+          "rmse": 0.0,
+          "scheduler": "effective_time"
+        },
+        "naive": {
+          "pass": false,
+          "rmse": 0.5713150933672192,
+          "scheduler": "command_time"
+        },
+        "requirement_ids": [
+          "ACTION.002",
+          "TIME.002",
+          "REPLAY.001"
+        ]
+      },
+      {
+        "case_id": "zero_order_hold_missing_command",
+        "contract": {
+          "interpolation": "zero_order_hold",
+          "missing_value_policy": "hold_last"
+        },
+        "contract_aware": {
+          "pass": true,
+          "rmse": 0.0,
+          "scheduler": "hold_last_valid_command"
+        },
+        "naive": {
+          "pass": false,
+          "rmse": 0.7266360849833979,
+          "scheduler": "missing_command_as_zero"
+        },
+        "requirement_ids": [
+          "ACTION.002",
+          "REPLAY.001"
+        ]
+      },
+      {
+        "case_id": "asynchronous_queue_selection",
+        "contract": {
+          "queue_consume_timestamp_semantics": "fixed-rate low-level control loop consume time",
+          "selection_policy": "latest_valid_command_before_effective_time"
+        },
+        "contract_aware": {
+          "pass": true,
+          "rmse": 0.0,
+          "scheduler": "latest_valid_before_consume_time"
+        },
+        "naive": {
+          "pass": false,
+          "rmse": 0.6708203932499369,
+          "scheduler": "array_index_order"
+        },
+        "requirement_ids": [
+          "ACTION.002",
+          "TIME.002",
+          "REPLAY.001"
+        ]
+      }
+    ],
+    "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a contact-rich physics rollout and does not replace multi-runtime task replay.",
+    "profile": "worldepisode-replay-adapter-conformance-0.1",
+    "status": "tested_reference_scheduler_not_physics_simulator"
+  },
+  "rq1_binding_retention": {
+    "artifact_root": "docs/experiments/bindings",
+    "bindings": [
+      {
+        "artifact_dir": "docs/experiments/bindings/worldepisode-reference",
+        "binding": "worldepisode-reference",
+        "discarded": [],
+        "externalized": [],
+        "native_preserved": 23,
+        "native_retention": 1.0,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/lerobot-v3-native",
+        "binding": "lerobot-v3-native",
+        "discarded": [],
+        "externalized": [
+          "action_space.timing_contract",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "events.interactions",
+          "frame_graph.frames",
+          "frame_graph.transforms",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 6,
+        "native_retention": 0.261,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/rerun-rrd",
+        "binding": "rerun-rrd",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.representation_roles",
+          "episode.task_outcome",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 8,
+        "native_retention": 0.348,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/ncore",
+        "binding": "ncore",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.binding",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 7,
+        "native_retention": 0.304,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/mcap-ros2",
+        "binding": "mcap-ros2",
+        "discarded": [],
+        "externalized": [
+          "action_space.timing_contract",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "entities.asset_descriptors",
+          "entities.identity",
+          "entities.representation_roles",
+          "episode.task_outcome",
+          "events.interactions",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "world_deltas.ordered_state_changes",
+          "world_revision.asset_descriptor",
+          "world_revision.identity"
+        ],
+        "native_preserved": 6,
+        "native_retention": 0.261,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/openusd-simready",
+        "binding": "openusd-simready",
+        "discarded": [],
+        "externalized": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "clock_graph.clocks",
+          "clock_graph.mappings",
+          "embodiment.urdf_asset",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "provenance.derivation",
+          "quality.uncertainty",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "trace.binding",
+          "world_deltas.ordered_state_changes"
+        ],
+        "native_preserved": 9,
+        "native_retention": 0.391,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 1.0
+      },
+      {
+        "artifact_dir": "docs/experiments/bindings/gltf-gaussian-asset",
+        "binding": "gltf-gaussian-asset",
+        "discarded": [
+          "action_space.control_contract",
+          "action_space.timing_contract",
+          "clock_graph.clocks",
+          "clock_graph.mappings",
+          "embodiment.identity",
+          "embodiment.urdf_asset",
+          "episode.identity",
+          "episode.task_outcome",
+          "events.interactions",
+          "frame_graph.frames",
+          "frame_graph.transforms",
+          "replay.runtime_assumptions",
+          "splits.lineage_constraints",
+          "trace.asset_descriptor",
+          "trace.binding",
+          "world_deltas.ordered_state_changes"
+        ],
+        "externalized": [
+          "provenance.derivation",
+          "quality.uncertainty",
+          "world_revision.identity"
+        ],
+        "native_preserved": 4,
+        "native_retention": 0.174,
+        "total_fields": 23,
+        "with_worldepisode_sidecar": 0.304
+      }
+    ],
+    "fields": [
+      "episode.identity",
+      "episode.task_outcome",
+      "world_revision.identity",
+      "world_revision.asset_descriptor",
+      "embodiment.identity",
+      "embodiment.urdf_asset",
+      "frame_graph.frames",
+      "frame_graph.transforms",
+      "clock_graph.clocks",
+      "clock_graph.mappings",
+      "entities.identity",
+      "entities.representation_roles",
+      "entities.asset_descriptors",
+      "action_space.control_contract",
+      "action_space.timing_contract",
+      "trace.binding",
+      "trace.asset_descriptor",
+      "events.interactions",
+      "world_deltas.ordered_state_changes",
+      "provenance.derivation",
+      "quality.uncertainty",
+      "splits.lineage_constraints",
+      "replay.runtime_assumptions"
+    ],
+    "projection_profile": {
+      "artifact": "conformance/projections/uss-core-23.v0.json",
+      "binding_model_count": 7,
+      "claim_boundary": "This profile is a versioned pilot projection for binding-retention experiments. It is not a universal score of any external format and should be revised through external review before becoming normative.",
+      "field_count": 23,
+      "profile_id": "uss-core-23",
+      "schema": "schemas/semantic-projection-v0.schema.json",
+      "status": "active",
+      "version": "0.1.0"
+    }
+  },
+  "rq2_fault_detection": {
+    "cases": [
+      {
+        "case": "TIME.001_missing_clock_domain",
+        "detected": [
+          "TIME.001"
+        ],
+        "expected": [
+          "TIME.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "TIME.002_mapping_without_drift_or_error",
+        "detected": [
+          "TIME.002"
+        ],
+        "expected": [
+          "TIME.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "FRAME.001_unknown_representation_frame",
+        "detected": [
+          "FRAME.001"
+        ],
+        "expected": [
+          "FRAME.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "FRAME.002_missing_transform_interval",
+        "detected": [
+          "FRAME.002"
+        ],
+        "expected": [
+          "FRAME.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ENTITY.001_unknown_event_entity",
+        "detected": [
+          "ENTITY.001"
+        ],
+        "expected": [
+          "ENTITY.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "REP.001_missing_representation_role",
+        "detected": [
+          "REP.001"
+        ],
+        "expected": [
+          "REP.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ASSET.001_bad_digest",
+        "detected": [
+          "ASSET.001"
+        ],
+        "expected": [
+          "ASSET.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ASSET.002_digest_mismatch",
+        "detected": [
+          "ASSET.002"
+        ],
+        "expected": [
+          "ASSET.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "ACTION.001_missing_action_frame",
+        "detected": [
+          "ACTION.001",
+          "FRAME.001"
+        ],
+        "expected": [
+          "ACTION.001"
+        ],
+        "false_positive_requirements": [
+          "FRAME.001"
+        ],
+        "pass": true
+      },
+      {
+        "case": "ACTION.002_missing_effective_time",
+        "detected": [
+          "ACTION.002"
+        ],
+        "expected": [
+          "ACTION.002"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "WORLD.001_non_content_addressed_world",
+        "detected": [
+          "WORLD.001"
+        ],
+        "expected": [
+          "WORLD.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "TRACE.001_missing_delta_sequence",
+        "detected": [
+          "TRACE.001"
+        ],
+        "expected": [
+          "TRACE.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "PROV.001_missing_provenance",
+        "detected": [
+          "PROV.001"
+        ],
+        "expected": [
+          "PROV.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      },
+      {
+        "case": "QUALITY.001_missing_quality",
+        "detected": [
+          "QUALITY.001"
+        ],
+        "expected": [
+          "QUALITY.001"
+        ],
+        "false_positive_requirements": [],
+        "pass": true
+      }
+    ],
+    "false_negative_requirements": 0,
+    "false_positive_requirements": 1,
+    "n_cases": 14,
+    "precision": 0.933,
+    "recall": 1.0,
+    "true_positive_requirements": 14
+  },
+  "rq3_replay": {
+    "alignment": {
+      "calibration_by_delay": [
+        {
+          "delay_frames": 0,
+          "joint_rmse_deg": 3.388358192384155
+        },
+        {
+          "delay_frames": 1,
+          "joint_rmse_deg": 2.68334568508476
+        },
+        {
+          "delay_frames": 2,
+          "joint_rmse_deg": 1.9949978942203184
+        },
+        {
+          "delay_frames": 3,
+          "joint_rmse_deg": 1.3849369442142896
+        },
+        {
+          "delay_frames": 4,
+          "joint_rmse_deg": 1.0476693522987472
+        },
+        {
+          "delay_frames": 5,
+          "joint_rmse_deg": 1.2202684703044544
+        },
+        {
+          "delay_frames": 6,
+          "joint_rmse_deg": 1.729175129720638
+        },
+        {
+          "delay_frames": 7,
+          "joint_rmse_deg": 2.337575258707417
+        }
+      ],
+      "full_by_delay": [
+        {
+          "delay_frames": 0,
+          "joint_rmse_deg": 3.984340509867802
+        },
+        {
+          "delay_frames": 1,
+          "joint_rmse_deg": 3.161498618084714
+        },
+        {
+          "delay_frames": 2,
+          "joint_rmse_deg": 2.369204447337189
+        },
+        {
+          "delay_frames": 3,
+          "joint_rmse_deg": 1.7072032069398149
+        },
+        {
+          "delay_frames": 4,
+          "joint_rmse_deg": 1.4323014943742967
+        },
+        {
+          "delay_frames": 5,
+          "joint_rmse_deg": 1.7390533943428876
+        },
+        {
+          "delay_frames": 6,
+          "joint_rmse_deg": 2.395234541302811
+        },
+        {
+          "delay_frames": 7,
+          "joint_rmse_deg": 3.168724385627652
+        }
+      ],
+      "inferred_effective_delay_frames": 4,
+      "inferred_effective_delay_s": 0.1333332061767578,
+      "validation_by_delay": [
+        {
+          "delay_frames": 0,
+          "joint_rmse_deg": 4.732222905942676
+        },
+        {
+          "delay_frames": 1,
+          "joint_rmse_deg": 3.760498962246461
+        },
+        {
+          "delay_frames": 2,
+          "joint_rmse_deg": 2.8347887117274597
+        },
+        {
+          "delay_frames": 3,
+          "joint_rmse_deg": 2.0959354769364356
+        },
+        {
+          "delay_frames": 4,
+          "joint_rmse_deg": 1.861898224847853
+        },
+        {
+          "delay_frames": 5,
+          "joint_rmse_deg": 2.3026106928887993
+        },
+        {
+          "delay_frames": 6,
+          "joint_rmse_deg": 3.132533618132824
+        },
+        {
+          "delay_frames": 7,
+          "joint_rmse_deg": 4.102514221117706
+        }
+      ],
+      "validation_improvement_over_naive": 2.5416120187393028,
+      "validation_naive_rmse_deg": 4.732222905942676,
+      "validation_timestamp_aware_rmse_deg": 1.861898224847853
+    },
+    "available": true,
+    "calibration_fraction": 0.6,
+    "calibration_samples": 181,
+    "joint_count": 6,
+    "pass": true,
+    "sample_count": 303,
+    "sample_period_s": 0.03333330154418945,
+    "sample_rate_hz": 30.000028610256777,
+    "simulators": {
+      "genesis": {
+        "backend": "genesis",
+        "claim_boundary": "Same LeRobot replay trace and action timing contract as MuJoCo, using a minimal Genesis MJCF position-servo adapter. This is still a simple joint replay, not a task-level contact-rich hardware rollout.",
+        "kp": 20.0,
+        "kv": 1.0,
+        "model": "minimal six-joint MJCF position-servo adapter",
+        "naive_command_time": {
+          "final_joint_rmse_deg": 0.3767891535186242,
+          "joint_rmse_deg": 3.42472358784787
+        },
+        "python_executable": "python3",
+        "ready": true,
+        "rmse_improvement_over_naive": 2.1910191616359143,
+        "runtime": {
+          "backend": "cpu",
+          "genesis_version": "1.1.0",
+          "python_executable": "python3"
+        },
+        "tested": true,
+        "timestamp_aware": {
+          "final_joint_rmse_deg": 0.37678914381917183,
+          "joint_rmse_deg": 1.5630733166618296
+        },
+        "timestep_s": 0.03333330154418945
+      },
+      "isaac": {
+        "adapter_contract": {
+          "expected_mapping": [
+            "policy_output_timestamp_semantics",
+            "action_enqueue_timestamp_semantics",
+            "queue_consume_timestamp_semantics",
+            "motor_receive_timestamp_semantics",
+            "latency_model",
+            "interpolation"
+          ],
+          "input": "worldepisode_action_contract"
+        },
+        "backend": "isaac-sim",
+        "ready": true,
+        "reason": "Isaac Sim is not installed in this execution environment.",
+        "tested": false
+      },
+      "mujoco": {
+        "backend": "mujoco",
+        "kp": 20.0,
+        "kv": 1.0,
+        "model": "minimal six-joint position-servo adapter",
+        "naive_command_time": {
+          "final_joint_rmse_deg": 0.37679009508326555,
+          "joint_rmse_deg": 3.4247236915825052
+        },
+        "rmse_improvement_over_naive": 2.191019226228591,
+        "tested": true,
+        "timestamp_aware": {
+          "final_joint_rmse_deg": 0.3767900654698427,
+          "joint_rmse_deg": 1.563073317926787
+        },
+        "timestep_s": 0.03333330154418945
+      }
+    },
+    "source_trace": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+    "validation_samples": 122,
+    "worldepisode_action_contract": {
+      "action_chunking": {
+        "chunk_size": "source_absent",
+        "horizon": "source_absent",
+        "stride": "source_absent",
+        "supported_fields": [
+          "chunk_id",
+          "chunk_index",
+          "horizon",
+          "producer_timestamp",
+          "consumer_timestamp"
+        ]
+      },
+      "action_enqueue_timestamp_semantics": "command enters an action queue/chunk buffer",
+      "command_rate_hz": 30.000028610256777,
+      "control_mode": "joint_position",
+      "effective_timestamp_semantics": "effective_time = sample_timestamp + 4 sample periods",
+      "interpolation": "zero_order_hold",
+      "latency_model": {
+        "delay_frames": 4,
+        "delay_s": 0.1333332061767578,
+        "estimated_from": "argmin action[t-delay] -> observation.state[t] joint RMSE on calibration prefix",
+        "type": "constant_frame_delay"
+      },
+      "missing_value_policy": "hold_last",
+      "motor_receive_timestamp_semantics": "estimated effective motor target time",
+      "parameterization": "absolute_joint_vector",
+      "policy_output_timestamp_semantics": "policy inference output time; may be asynchronous",
+      "profile": "worldepisode-control-loop-0.1",
+      "queue_consume_timestamp_semantics": "fixed-rate low-level control loop consumes the selected command",
+      "selection_policy": "latest_valid_command_before_effective_time",
+      "source_binding": "lerobot-v3",
+      "units": "position_units_inferred_degrees"
+    }
+  },
+  "rq4_counterfactual_robustness": {
+    "observations_only_success": 0.292,
+    "test_cases": 120,
+    "unstructured_3d_side_files_success": 0.342,
+    "worldepisode_counterfactual_success": 0.592
+  },
+  "rq5_split_leakage": {
+    "entity_disjoint_split": {
+      "accuracy": 0.562,
+      "leakage_rate": 0.0
+    },
+    "random_episode_split": {
+      "accuracy": 1.0,
+      "leakage_rate": 1.0
+    },
+    "world_disjoint_split": {
+      "accuracy": 0.5,
+      "leakage_rate": 0.0
+    }
+  },
+  "source_example": "examples/minimal.worldepisode.json",
+  "uss_state_drift_pilots": {
+    "aggregate": {
+      "case_count": 2,
+      "drifted_behavior_successes": 0,
+      "local_file_valid_count": 2,
+      "uss_corrected_successes": 2,
+      "uss_detections": 2
+    },
+    "artifacts": {
+      "markdown": "docs/experiments/uss_state_drift_pilots/README.md",
+      "report": "docs/experiments/uss_state_drift_pilots/state_drift_report.json"
+    },
+    "cases": [
+      {
+        "case_id": "game_engine_collision_patch_drift",
+        "claim_boundary": "Deterministic collision-state pilot; not measured on a production game engine.",
+        "domain": "virtual_agent_telemetry",
+        "drifted_behavior": {
+          "authoritative_asset_sha256": "9a63f1dc715c0f6747f1066c997af3fd3fe8a1956013d0a1fc0a06d5c1a81963",
+          "authoritative_path_success": false,
+          "client_asset_sha256": "a80b8543e07496f634a849f62e878996bbdbc37636cf7e38121793a4801df1fb",
+          "client_reports_path_success": true
+        },
+        "failure_story": "A client can load an old arena collision asset after a game patch, but the server's authoritative collision state has moved the obstacle into the avatar path.",
+        "local_file_valid": true,
+        "uss_contract": {
+          "corrected_behavior_success": true,
+          "detected": true,
+          "diagnostics": [
+            "ASSET.002",
+            "WORLD.001",
+            "REP.001"
+          ],
+          "required_asset_descriptor": {
+            "media_type": "model/vnd.engine-collision+json",
+            "mirrors": [
+              "assets/game/arena_collision_v18.json"
+            ],
+            "sha256": "9a63f1dc715c0f6747f1066c997af3fd3fe8a1956013d0a1fc0a06d5c1a81963",
+            "uri": "oci://example.invalid/game/arena@sha256:authoritative-patch"
+          },
+          "state_ancestry": [
+            "arena_v17",
+            "patch_collision_proxy_v18"
+          ],
+          "state_revision_id": "uss-state-9a63f1dc715c0f67"
+        }
+      },
+      {
+        "case_id": "autonomous_vehicle_clock_domain_drift",
+        "claim_boundary": "Deterministic clock-offset pilot; not measured on a public AV dataset.",
+        "domain": "autonomous_driving_log",
+        "drifted_behavior": {
+          "behavior_valid": false,
+          "camera_range_m": 18.0,
+          "ego_speed_mps": 15.0,
+          "lidar_range_m": 17.25,
+          "naive_fusion_error_m": 0.75,
+          "tolerance_m": 0.2,
+          "undeclared_clock_offset_s": 0.05
+        },
+        "failure_story": "A camera stream and a lidar stream both deserialize correctly, but the cloud replay assumes one clock domain and fuses samples separated by 50 ms.",
+        "local_file_valid": true,
+        "uss_contract": {
+          "clock_mapping": {
+            "drift_model": "constant_offset",
+            "estimated_error_s": 0.002,
+            "offset_s": 0.05,
+            "source_clock": "lidar_device_time",
+            "target_clock": "camera_exposure_midpoint"
+          },
+          "corrected_behavior_success": true,
+          "corrected_fusion_error_m": 0.0,
+          "detected": true,
+          "diagnostics": [
+            "TIME.001",
+            "TIME.002",
+            "FRAME.001"
+          ],
+          "state_transition_invariant": {
+            "max_fused_range_error_m": 0.2,
+            "requires_clock_domain_mapping": true
+          }
+        }
+      }
+    ],
+    "claim_boundary": "The cases test the USS vocabulary outside robotics. They are not measured production game-engine or autonomous-driving dataset results.",
+    "profile": "uss-state-drift-pilots-0.1",
+    "status": "deterministic_non_robotics_pilots"
+  }
+}

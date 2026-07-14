@@ -1,0 +1,372 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://worldepisode.org/schemas/worldepisode-dataset-v0.schema.json",
+  "title": "WorldEpisode Dataset Manifest v0 RFC",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset",
+    "namespaces",
+    "resolvers",
+    "registries",
+    "shards",
+    "indexes",
+    "versions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "worldepisode-dataset-0.1"
+    },
+    "dataset": {
+      "$ref": "#/$defs/dataset"
+    },
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/namespace"
+      },
+      "minItems": 1
+    },
+    "resolvers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/resolver"
+      },
+      "minItems": 1
+    },
+    "registries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/registry"
+      },
+      "minItems": 1
+    },
+    "shards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/shard"
+      },
+      "minItems": 1
+    },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/index"
+      }
+    },
+    "versions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/version"
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "assetDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "media_type", "sha256"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mirrors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "license": {
+          "type": "string"
+        }
+      }
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "name", "version", "versioning_policy"],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "versioning_policy": {
+          "type": "string",
+          "enum": ["append_only_snapshots"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "homepage": {
+          "type": "string"
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "namespace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prefix", "uri", "scope"],
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "dataset",
+            "episode",
+            "world",
+            "entity",
+            "asset",
+            "embodiment",
+            "task",
+            "provenance",
+            "split",
+            "other"
+          ]
+        }
+      }
+    },
+    "resolver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheme", "priority", "cache_policy"],
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endpoint": {
+          "type": "string"
+        },
+        "cache_policy": {
+          "type": "string",
+          "enum": [
+            "digest_verified_remote",
+            "local_mirror_first",
+            "content_addressed",
+            "offline_required"
+          ]
+        },
+        "mirror_priority": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_id", "kind", "asset", "primary_keys"],
+      "properties": {
+        "registry_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "world_revisions",
+            "entities",
+            "embodiments",
+            "action_spaces",
+            "tasks",
+            "schemas",
+            "provenance",
+            "quality",
+            "conversion_reports"
+          ]
+        },
+        "asset": {
+          "$ref": "#/$defs/assetDescriptor"
+        },
+        "primary_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "partitionValue": {
+      "type": ["string", "number", "boolean", "null"]
+    },
+    "shard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shard_id", "kind", "asset", "schema_ref", "partition"],
+      "properties": {
+        "shard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "episode_trace",
+            "episode_events",
+            "world_revision",
+            "entity_index",
+            "asset_index",
+            "split_manifest",
+            "provenance",
+            "quality",
+            "conversion_report"
+          ]
+        },
+        "asset": {
+          "$ref": "#/$defs/assetDescriptor"
+        },
+        "schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "partition": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/partitionValue"
+          }
+        },
+        "statistics": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "index": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index_id", "kind", "asset", "keys"],
+      "properties": {
+        "index_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "episode_lookup",
+            "world_lineage",
+            "entity_lookup",
+            "asset_digest",
+            "split_membership",
+            "time_range",
+            "embodiment_task",
+            "custom"
+          ]
+        },
+        "asset": {
+          "$ref": "#/$defs/assetDescriptor"
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "covers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version_id", "created_at", "snapshot_manifest"],
+      "properties": {
+        "version_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_version_id": {
+          "type": "string"
+        },
+        "snapshot_manifest": {
+          "$ref": "#/$defs/assetDescriptor"
+        },
+        "change_log": {
+          "type": "string"
+        },
+        "tombstones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

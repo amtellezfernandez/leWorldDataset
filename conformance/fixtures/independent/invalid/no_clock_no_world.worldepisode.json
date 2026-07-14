@@ -1,0 +1,47 @@
+{
+  "schema_version": "worldepisode-0.1",
+  "episode": {
+    "episode_id": "independent_bad_clock",
+    "dataset_id": "independent_fixture"
+  },
+  "world_revision": {
+    "world_revision_id": "mutable_world_name",
+    "asset": {
+      "uri": "worlds/mutable.json",
+      "media_type": "application/json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "embodiment": {
+    "embodiment_id": "fixture_arm"
+  },
+  "frame_graph": {
+    "frames": [
+      {
+        "frame_id": "world",
+        "units": "m"
+      }
+    ],
+    "transforms": []
+  },
+  "clock_graph": {
+    "clocks": []
+  },
+  "entities": [],
+  "action_space": {
+    "channels": []
+  },
+  "trace": {
+    "binding": "independent-fixture",
+    "asset": {
+      "uri": "episodes/bad.parquet",
+      "media_type": "application/vnd.apache.parquet",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "provenance": {
+    "source": "hand_authored_fixture",
+    "creator": "WorldEpisode"
+  },
+  "quality": {}
+}

@@ -1,0 +1,28 @@
+{
+  "approximated": [
+    "world_lineage"
+  ],
+  "discarded": [
+    "video payloads"
+  ],
+  "externalized": [
+    "source file URI",
+    "source file sha256",
+    "lineage-disjoint split manifest"
+  ],
+  "preserved": [
+    "observation.state",
+    "action",
+    "timestamp",
+    "frame_index",
+    "episode_index",
+    "task_index",
+    "low-dimensional policy tensors"
+  ],
+  "source_profile": "public_lerobot_subset",
+  "source_revision": "87301a2d2e99340e2010c9ef0f1d8e780b08aaf9",
+  "target_profile": "worldepisode-famous-benchmark-subset-0.1",
+  "warnings": [
+    "The mirrored public metadata did not expose a distinct physical scene, site, or capture-lineage column. The corrected split is therefore a proxy stress test, not proof of scene-leakage inflation in the original benchmark."
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "aggregate": {
+    "claim_count": 13,
+    "failed_claim_ids": [],
+    "failed_count": 0,
+    "missing_paper_pattern_count": 0,
+    "passed_count": 13
+  },
+  "artifacts": {
+    "json": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
+    "markdown": "docs/experiments/paper_claim_audit/README.md"
+  },
+  "audit_date": "2026-07-13",
+  "claims": [
+    {
+      "boundary": "Offline action-imitation result; not ACT/Diffusion or physical rollout success.",
+      "claim": "ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split.",
+      "claim_id": "CLAIM.LEAKAGE.001",
+      "evidence": {
+        "random_leakage_rate": 1.0,
+        "random_offline_bc_success_rate": 0.85,
+        "scene_disjoint_leakage_rate": 0.0,
+        "scene_disjoint_offline_bc_success_rate": 0.0
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+        "docs/experiments/lerobot_scene_leakage/split_manifest.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "0.850",
+        "0.000",
+        "leakage to zero",
+        "offline BC success"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open.",
+      "claim": "Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
+      "claim_id": "CLAIM.REPLAY.001",
+      "evidence": {
+        "delay_frames": 4,
+        "delay_s": 0.1333332061767578,
+        "genesis_naive_rmse_deg": 3.42472358784787,
+        "genesis_timestamp_aware_rmse_deg": 1.5630733166618296,
+        "isaac_tested": false,
+        "mujoco_naive_rmse_deg": 3.4247236915825052,
+        "mujoco_timestamp_aware_rmse_deg": 1.563073317926787,
+        "validation_naive_rmse_deg": 4.732222905942676,
+        "validation_timestamp_aware_rmse_deg": 1.861898224847853
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_control_replay/control_replay_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "four 30 Hz frames",
+        "133 ms",
+        "4.732",
+        "1.862",
+        "3.425",
+        "1.563",
+        "Genesis same-trace replay",
+        "3.425",
+        "1.563",
+        "Isaac adapter is emitted as a ready mapping",
+        "not tested in this environment"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Two five-episode batch audits; not full LeRobot coverage.",
+      "claim": "Two public LeRobotDataset batches round-trip exactly through WorldEpisode.",
+      "claim_id": "CLAIM.ROUNDTRIP.001",
+      "evidence": {
+        "datasets": [
+          "lerobot/svla_so101_pickplace",
+          "lerobot/pusht"
+        ],
+        "max_error": 0.0,
+        "total_action_rows": 1935,
+        "total_episodes": 10
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
+        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "Across ten episodes",
+        "1,935",
+        "maximum absolute error 0.0",
+        "source-absent rather than guessed"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
+      "claim": "Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+      "claim_id": "CLAIM.TEMPORAL_POLICY.001",
+      "evidence": {
+        "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
+        "random_episode_success_rate": 0.925,
+        "scene_disjoint_success_rate": 0.42,
+        "success_rate_drop": 0.5050000000000001
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "temporal ridge",
+        "0.925",
+        "0.420",
+        "0.505",
+        "not ACT or Diffusion"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Pilot projection score, not a universal storage-format ranking.",
+      "claim": "Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections.",
+      "claim_id": "CLAIM.BINDING.001",
+      "evidence": {
+        "binding_count": 7,
+        "dataset_log_world_sidecar_ok": true,
+        "native_retention_max": 0.391,
+        "native_retention_min": 0.174
+      },
+      "evidence_artifacts": [
+        "docs/experiments/bindings"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "Across seven pilot bindings",
+        "17--39\\%",
+        "sidecars recover that projection"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Injected and hand-authored fixtures; natural prevalence remains open.",
+      "claim": "Validator detects all injected fault classes and independent fixture failures.",
+      "claim_id": "CLAIM.VALIDATOR.001",
+      "evidence": {
+        "fault_case_count": 14,
+        "fault_precision": 0.933,
+        "fault_recall": 1.0,
+        "independent_case_count": 2,
+        "independent_recall": 1.0
+      },
+      "evidence_artifacts": [
+        "docs/experiments/fault_detection/fault_detection_report.json",
+        "conformance/fixtures/independent/manifest.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "14 expected requirement failures",
+        "1.000 recall",
+        "0.933 precision",
+        "Two hand-authored independent fixtures"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Scoped natural-source corpus, not maintainer-confirmed prevalence.",
+      "claim": "Pilot natural-source corpus records 19 cases across five public robot-learning datasets.",
+      "claim_id": "CLAIM.NATURAL.001",
+      "evidence": {
+        "case_count": 19,
+        "dataset_count": 5,
+        "maintainer_feedback_satisfied": false
+      },
+      "evidence_artifacts": [
+        "docs/experiments/natural_failure_corpus/manifest.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "records 19 observed",
+        "five public robot-learning datasets",
+        "not claimed as maintainer-confirmed"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence.",
+      "claim": "Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+      "claim_id": "CLAIM.NATURAL_DIAGNOSTICS.001",
+      "evidence": {
+        "case_count": 19,
+        "dataset_count": 5,
+        "dataset_report_count": 5,
+        "dataset_specific_diagnostics_ready": true,
+        "maintainer_feedback_satisfied": false,
+        "source_level_only_report_count": 2
+      },
+      "evidence_artifacts": [
+        "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
+        "docs/experiments/natural_failure_corpus/README.md"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "dataset-specific diagnostic reports",
+        "source-level-only",
+        "not claimed as maintainer-confirmed"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Deterministic pilots, not production game or AV dataset results.",
+      "claim": "Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
+      "claim_id": "CLAIM.USS.001",
+      "evidence": {
+        "case_count": 2,
+        "local_file_valid_count": 2,
+        "status": "deterministic_non_robotics_pilots",
+        "uss_detections": 2
+      },
+      "evidence_artifacts": [
+        "docs/experiments/uss_state_drift_pilots/state_drift_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "50 ms undeclared clock offset",
+        "0.75 m fusion error",
+        "0.20 m tolerance",
+        "not production game-engine or AV benchmark results"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun.",
+      "claim": "Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode.",
+      "claim_id": "CLAIM.REALTOSIM.001",
+      "evidence": {
+        "ablation_count": 2,
+        "drifted_deployment_successes": 0,
+        "drifted_sim_successes": 2,
+        "status": "controlled_proxy_not_hardware_rollout",
+        "worldepisode_deployment_successes": 2
+      },
+      "evidence_artifacts": [
+        "docs/experiments/realtosim_contract_drift/contract_drift_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "2/2 simulated successes",
+        "0/2 deployment successes",
+        "recovers 2/2 deployment successes",
+        "controlled proxy, not a RoboSnap or hardware rerun"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Catalog-side evidence only; does not materialize a billion rows or payload bytes.",
+      "claim": "Generated catalog benchmark describes a billion-episode-capacity sharded corpus.",
+      "claim_id": "CLAIM.SCALE.001",
+      "evidence": {
+        "described_episode_capacity": 1073741824,
+        "episodes_materialized": 0,
+        "status": "pass",
+        "trace_shard_count": 32768
+      },
+      "evidence_artifacts": [
+        "docs/experiments/dataset_scale_performance/performance_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "32{,}768",
+        "1{,}073{,}741{,}824",
+        "Catalog-side benchmark only"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Source-level call-out audit; no published-score inflation claim.",
+      "claim": "Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
+      "claim_id": "CLAIM.BENCHMARK_BOUNDARY.001",
+      "evidence": {
+        "audited_benchmark_count": 5,
+        "executed_rerun_report_count": 1,
+        "measured_inflation_claims": 0,
+        "ready_for_inflation_claim": false,
+        "valid_rerun_report_count": 0
+      },
+      "evidence_artifacts": [
+        "docs/experiments/benchmark_inflation_gate/gate_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "one executed DROID subset rerun",
+        "zero inflation-proof famous-benchmark rerun reports",
+        "zero measured",
+        "not a claim that their published scores are inflated"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Open gates are unclaimed results, not paper results.",
+      "claim": "Open results are visibly and machine-readably marked as not claimed.",
+      "claim_id": "CLAIM.OPEN_GATES.001",
+      "evidence": {
+        "aggregate": {
+          "command_count": 7,
+          "gate_count": 4,
+          "open_not_claimed_count": 4
+        },
+        "schema": "worldepisode_open_reproduction_gates_v1",
+        "validation": {
+          "errors": [],
+          "passed": true
+        }
+      },
+      "evidence_artifacts": [
+        "docs/experiments/open_reproduction_gates/open_reproduction_gates.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "\\begin{openresult}{ACT/Diffusion and rollout impact}",
+        "\\begin{openresult}{famous-benchmark score-inflation proof}",
+        "\\begin{openresult}{results not claimed in this release}",
+        "Open result, not claimed",
+        "open_reproduction_gates.json"
+      ],
+      "passed": true
+    }
+  ],
+  "evidence_root": "docs/experiments/results.json",
+  "paper_sources": [
+    "paper/arxiv/main.tex",
+    "paper/arxiv/sections/appendix.tex",
+    "paper/arxiv/sections/architecture.tex",
+    "paper/arxiv/sections/conclusion.tex",
+    "paper/arxiv/sections/discussion.tex",
+    "paper/arxiv/sections/evaluation.tex",
+    "paper/arxiv/sections/introduction.tex",
+    "paper/arxiv/sections/limitations.tex",
+    "paper/arxiv/sections/open_contributions.tex",
+    "paper/arxiv/sections/requirements.tex"
+  ],
+  "schema": "worldepisode_paper_claim_audit_v1",
+  "status": "pass"
+}

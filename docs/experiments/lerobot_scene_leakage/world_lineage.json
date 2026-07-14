@@ -1,0 +1,666 @@
+[
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 305,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Insert the colourful ring into the central wooden peg",
+    "task_index": 0,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:de9aaec96e0bcf46ab0bed6648ad3fc9adb5b36ba64218549fab991deb1a78dc"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 350,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Insert the missing tool into the empty slot on the toolbox",
+    "task_index": 1,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:aff10155878fc4b79de4266223a3aded4a0373706783511e9f8724fa5b969b90"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 320,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Push the Displayport cable into the cable holder on the white block",
+    "task_index": 2,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:321e5fc1a1989baef9d3f35966f824da7623c34a9d1f344f8f9c0ee8a95bedc2"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 290,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Put the eye drops into the basket",
+    "task_index": 3,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:2e6aa6dc27f59d7362c11f5475a6dce54f6e09fef3f2ccfaff857078ee311f3f"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 349,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Put the eye drops on the shelf",
+    "task_index": 4,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:05b67d9c2d2186d2c69b4ad4a74007ef4449e2aec06048b3f207f10cb39054b3"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 290,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Remove the power cable from cable holder",
+    "task_index": 5,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:653fdb37115a415f4b2e40c4fcc0f7bafdbb07837dc9c838a8598d5ab8ca9d21"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 290,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+    "task_index": 6,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:47e29dcafdafceb3f4d60312e4e20e6f71a05b8210e8659d8d37452402797439"
+  },
+  {
+    "camera_features": {
+      "observation.images.front": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.top": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 576,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1024
+        },
+        "shape": [
+          576,
+          1024,
+          3
+        ]
+      },
+      "observation.images.wrist": {
+        "info": {
+          "has_audio": false,
+          "video.channels": 3,
+          "video.codec": "av1",
+          "video.crf": null,
+          "video.extra_options": {},
+          "video.fast_decode": null,
+          "video.fps": 20,
+          "video.g": null,
+          "video.height": 720,
+          "video.is_depth_map": false,
+          "video.pix_fmt": "yuv420p",
+          "video.preset": null,
+          "video.video_backend": "pyav",
+          "video.width": 1280
+        },
+        "shape": [
+          720,
+          1280,
+          3
+        ]
+      }
+    },
+    "episode_count": 305,
+    "profile": "worldepisode-world-lineage-0.1",
+    "robot_type": "so-101",
+    "scope": "task_scene_camera_layout",
+    "source_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "source_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "task": "Stack the colouful blocks on top of each other",
+    "task_index": 7,
+    "teleoperated_episode_count": 50,
+    "world_lineage": "sha256:00b45a94b0a7a6b1a4c3a96fa2b4f96adb70c1c333df9c3423fdc580f7020905"
+  }
+]

@@ -1,0 +1,28 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+Robot-learning failures often arrive disguised as clean data: valid tensors, valid videos, valid
+scene files, and invalid state assumptions. WorldEpisode makes those
+assumptions explicit. It binds interaction data to immutable state revisions, gives persistent
+identity to entities, declares space/time/transition semantics, assigns roles to assets, records
+events and provenance, and reports conversion loss instead of hiding it.
+
+In the reference experiments, those requirements expose a 0.850 offline random-split success rate
+that collapses to 0.000 under scene-disjoint evaluation, reduce LeRobot replay drift on a real SO-101
+trajectory by modeling a four-frame action delay, and catch every injected physically incoherent
+package before deployment. A real-to-sim pipeline can report simulated success while failing under
+deployment proxies when action contracts or representation roles drift; the same vocabulary catches
+that drift in deterministic pilots outside robotics as well. The validator ships as a one-line
+preflight command, and the simulator pathway is an adapter compliance contract rather than a
+dependency on one runtime.
+
+These are scoped results, not a completed standardization claim. The call-out audit identifies Open
+X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN as priority targets for this protocol, but it
+does not claim their scores are inflated without reruns; the inflation-proof gate currently records
+one executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero
+measured inflation claims. The non-robotics pilots are vocabulary checks, not production game-engine or
+AV evaluations. Gaussian splats remain a high-value
+appearance profile, but the durable contribution is the spatial-state contract around them. The
+next step is to scale the same protocol to larger multi-robot datasets, stronger LeRobot-native
+policies, real or high-fidelity rollout evaluation, natural failure corpora, non-robotics
+adapters, and independently maintained bindings.

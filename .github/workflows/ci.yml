@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package
+        run: python -m pip install -e .
+
+      - name: Validate examples and compile tools
+        run: make validate
+
+      - name: Regenerate controlled experiment summary
+        run: python tools/run_experiments.py
+
+      - name: Check open reproduction gates
+        run: python tools/open_reproduction_gates.py --strict
+
+      - name: Check paper claims against evidence
+        run: python tools/paper_claim_audit.py --strict
+
+      - name: Build submission packet
+        run: python tools/submission_packet.py --strict
+
+      - name: Check public maturity language
+        run: python tools/public_maturity_audit.py --strict
+
+      - name: Smoke-test wheel install
+        run: python tools/package_install_smoke.py --strict
+
+      - name: Verify release manifest
+        run: python tools/release_manifest.py --verify --strict
+
+      - name: Check RFC release readiness
+        run: python tools/release_readiness.py --strict-rfc
+
+      - name: Check generated artifact freshness
+        run: python tools/artifact_freshness.py --strict

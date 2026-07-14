@@ -1,0 +1,128 @@
+{
+  "chunks_size": 1000,
+  "codebase_version": "v3.0",
+  "data_files_size_in_mb": 100,
+  "data_path": "data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet",
+  "features": {
+    "action": {
+      "dtype": "float32",
+      "fps": 10.0,
+      "names": {
+        "motors": [
+          "motor_0",
+          "motor_1"
+        ]
+      },
+      "shape": [
+        2
+      ]
+    },
+    "episode_index": {
+      "dtype": "int64",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "frame_index": {
+      "dtype": "int64",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "index": {
+      "dtype": "int64",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "next.done": {
+      "dtype": "bool",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "next.reward": {
+      "dtype": "float32",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "next.success": {
+      "dtype": "bool",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "observation.image": {
+      "dtype": "video",
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ],
+      "shape": [
+        96,
+        96,
+        3
+      ],
+      "video_info": {
+        "has_audio": false,
+        "video.codec": "av1",
+        "video.fps": 10.0,
+        "video.is_depth_map": false,
+        "video.pix_fmt": "yuv420p"
+      }
+    },
+    "observation.state": {
+      "dtype": "float32",
+      "fps": 10.0,
+      "names": {
+        "motors": [
+          "motor_0",
+          "motor_1"
+        ]
+      },
+      "shape": [
+        2
+      ]
+    },
+    "task_index": {
+      "dtype": "int64",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    },
+    "timestamp": {
+      "dtype": "float32",
+      "fps": 10.0,
+      "names": null,
+      "shape": [
+        1
+      ]
+    }
+  },
+  "fps": 10,
+  "robot_type": "unknown",
+  "splits": {
+    "train": "0:1"
+  },
+  "total_episodes": 1,
+  "total_frames": 161,
+  "total_tasks": 1,
+  "video_files_size_in_mb": 500,
+  "video_path": "videos/{video_key}/chunk-{chunk_index:03d}/file-{file_index:03d}.mp4"
+}

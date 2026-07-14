@@ -1,0 +1,298 @@
+[
+  {
+    "high_fidelity_sim_eval": {
+      "command_template": [
+        "lerobot-eval",
+        "--policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+        "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+        "--policy.device=cuda",
+        "--eval.n_episodes=20"
+      ],
+      "required": true,
+      "requires_env_binding": true,
+      "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+    },
+    "job_id": "act_random_episode_worldepisode_leakage",
+    "materialized_datasets_required": {
+      "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+      "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+      "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+    },
+    "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+      "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "metrics": [
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "episode_success_rate_at_declared_threshold",
+        "per_world_lineage_success_rate"
+      ],
+      "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+      "required_report": "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/offline_action_eval.json"
+    },
+    "physical_rollout": {
+      "command_template": [
+        "lerobot-rollout",
+        "--policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--robot.type=so101",
+        "--eval.n_episodes=20"
+      ],
+      "required_for_full_claim": true,
+      "requires_robot_binding": true,
+      "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+    },
+    "policy_type": "act",
+    "required_result_files": [
+      "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/train_metrics.json",
+      "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/offline_action_eval.json",
+      "docs/experiments/lerobot_policy_gate/results/act_random_episode_worldepisode_leakage/rollout_report.json"
+    ],
+    "source_dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    "split": "random_episode",
+    "train": {
+      "command": [
+        "lerobot-train",
+        "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+        "--policy.type=act",
+        "--output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage",
+        "--job_name=act_random_episode_worldepisode_leakage",
+        "--policy.device=cuda",
+        "--steps=20000",
+        "--seed=17",
+        "--wandb.enable=false"
+      ],
+      "expected_checkpoint": "outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+    }
+  },
+  {
+    "high_fidelity_sim_eval": {
+      "command_template": [
+        "lerobot-eval",
+        "--policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+        "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+        "--policy.device=cuda",
+        "--eval.n_episodes=20"
+      ],
+      "required": true,
+      "requires_env_binding": true,
+      "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+    },
+    "job_id": "diffusion_random_episode_worldepisode_leakage",
+    "materialized_datasets_required": {
+      "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+      "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+      "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+    },
+    "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_test",
+      "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
+      "metrics": [
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "episode_success_rate_at_declared_threshold",
+        "per_world_lineage_success_rate"
+      ],
+      "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+      "required_report": "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/offline_action_eval.json"
+    },
+    "physical_rollout": {
+      "command_template": [
+        "lerobot-rollout",
+        "--policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--robot.type=so101",
+        "--eval.n_episodes=20"
+      ],
+      "required_for_full_claim": true,
+      "requires_robot_binding": true,
+      "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+    },
+    "policy_type": "diffusion",
+    "required_result_files": [
+      "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/train_metrics.json",
+      "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/offline_action_eval.json",
+      "docs/experiments/lerobot_policy_gate/results/diffusion_random_episode_worldepisode_leakage/rollout_report.json"
+    ],
+    "source_dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    "split": "random_episode",
+    "train": {
+      "command": [
+        "lerobot-train",
+        "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+        "--policy.type=diffusion",
+        "--output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage",
+        "--job_name=diffusion_random_episode_worldepisode_leakage",
+        "--policy.device=cuda",
+        "--steps=20000",
+        "--seed=17",
+        "--wandb.enable=false"
+      ],
+      "expected_checkpoint": "outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+    }
+  },
+  {
+    "high_fidelity_sim_eval": {
+      "command_template": [
+        "lerobot-eval",
+        "--policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+        "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+        "--policy.device=cuda",
+        "--eval.n_episodes=20"
+      ],
+      "required": true,
+      "requires_env_binding": true,
+      "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+    },
+    "job_id": "act_scene_disjoint_worldepisode_leakage",
+    "materialized_datasets_required": {
+      "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+      "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+      "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
+    },
+    "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+      "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "metrics": [
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "episode_success_rate_at_declared_threshold",
+        "per_world_lineage_success_rate"
+      ],
+      "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+      "required_report": "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/offline_action_eval.json"
+    },
+    "physical_rollout": {
+      "command_template": [
+        "lerobot-rollout",
+        "--policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--robot.type=so101",
+        "--eval.n_episodes=20"
+      ],
+      "required_for_full_claim": true,
+      "requires_robot_binding": true,
+      "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+    },
+    "policy_type": "act",
+    "required_result_files": [
+      "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/train_metrics.json",
+      "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/offline_action_eval.json",
+      "docs/experiments/lerobot_policy_gate/results/act_scene_disjoint_worldepisode_leakage/rollout_report.json"
+    ],
+    "source_dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    "split": "scene_disjoint",
+    "train": {
+      "command": [
+        "lerobot-train",
+        "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+        "--policy.type=act",
+        "--output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage",
+        "--job_name=act_scene_disjoint_worldepisode_leakage",
+        "--policy.device=cuda",
+        "--steps=20000",
+        "--seed=17",
+        "--wandb.enable=false"
+      ],
+      "expected_checkpoint": "outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+    }
+  },
+  {
+    "high_fidelity_sim_eval": {
+      "command_template": [
+        "lerobot-eval",
+        "--policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--env.type=isaaclab_arena_or_registered_worldepisode_env",
+        "--env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK",
+        "--policy.device=cuda",
+        "--eval.n_episodes=20"
+      ],
+      "required": true,
+      "requires_env_binding": true,
+      "shell_template": "lerobot-eval --policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --env.type=isaaclab_arena_or_registered_worldepisode_env --env.task=MATCH_WORLD_LINEAGE_HELDOUT_TASK --policy.device=cuda --eval.n_episodes=20"
+    },
+    "job_id": "diffusion_scene_disjoint_worldepisode_leakage",
+    "materialized_datasets_required": {
+      "test_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "test_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "test_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+      "train_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
+      "train_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+      "train_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train"
+    },
+    "offline_action_eval": {
+      "dataset_local_path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "dataset_repo_id": "worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_test",
+      "episode_allowlist": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
+      "metrics": [
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "episode_success_rate_at_declared_threshold",
+        "per_world_lineage_success_rate"
+      ],
+      "note": "Run policy inference over the materialized held-out test split and write this report. The repository does not claim this result until the report exists.",
+      "required_report": "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/offline_action_eval.json"
+    },
+    "physical_rollout": {
+      "command_template": [
+        "lerobot-rollout",
+        "--policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+        "--robot.type=so101",
+        "--eval.n_episodes=20"
+      ],
+      "required_for_full_claim": true,
+      "requires_robot_binding": true,
+      "shell_template": "lerobot-rollout --policy.path=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model --robot.type=so101 --eval.n_episodes=20"
+    },
+    "policy_type": "diffusion",
+    "required_result_files": [
+      "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/train_metrics.json",
+      "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/offline_action_eval.json",
+      "docs/experiments/lerobot_policy_gate/results/diffusion_scene_disjoint_worldepisode_leakage/rollout_report.json"
+    ],
+    "source_dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    "split": "scene_disjoint",
+    "train": {
+      "command": [
+        "lerobot-train",
+        "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+        "--policy.type=diffusion",
+        "--output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage",
+        "--job_name=diffusion_scene_disjoint_worldepisode_leakage",
+        "--policy.device=cuda",
+        "--steps=20000",
+        "--seed=17",
+        "--wandb.enable=false"
+      ],
+      "expected_checkpoint": "outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+    }
+  }
+]

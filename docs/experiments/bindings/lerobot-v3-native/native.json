@@ -1,0 +1,53 @@
+{
+  "binding": "lerobot-v3-native",
+  "fields": {
+    "action_space.control_contract": [
+      {
+        "actuator": "right_arm",
+        "control_mode": "cartesian_position",
+        "name": "eef_delta_xyz",
+        "parameterization": "delta_xyz",
+        "reference_frame": "tool0",
+        "semantics": "delta",
+        "units": "m"
+      }
+    ],
+    "clock_graph.clocks": [
+      {
+        "clock_id": "episode_time",
+        "domain": "monotonic_episode",
+        "units": "ns"
+      }
+    ],
+    "episode.identity": {
+      "dataset_id": "worldepisode-rigid-demo",
+      "episode_id": "episode_000001"
+    },
+    "episode.task_outcome": {
+      "outcome": "success",
+      "split": "train",
+      "task": {
+        "instruction": "Pick the carton from the table.",
+        "task_id": "pick_carton"
+      }
+    },
+    "trace.asset_descriptor": {
+      "license": "CC-BY-4.0",
+      "media_type": "application/vnd.apache.parquet",
+      "mirrors": [
+        "episodes/episode_000001/trace.parquet"
+      ],
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "uri": "ipfs://bafybeigdyrzt4v3exampletrace"
+    },
+    "trace.binding": "lerobot-v3"
+  },
+  "native_fields": [
+    "action_space.control_contract",
+    "clock_graph.clocks",
+    "episode.identity",
+    "episode.task_outcome",
+    "trace.asset_descriptor",
+    "trace.binding"
+  ]
+}

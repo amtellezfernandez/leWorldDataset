@@ -1,0 +1,51 @@
+{
+  "action_components": {
+    "motors": [
+      "motor_0",
+      "motor_1"
+    ]
+  },
+  "episode_index": 0,
+  "physical_frames": [
+    {
+      "components": {
+        "motors": [
+          "motor_0",
+          "motor_1"
+        ]
+      },
+      "frame_id": "unknown/joint_space",
+      "role": "state_action_joint_space",
+      "source_feature_keys": [
+        "action",
+        "observation.state"
+      ],
+      "source_status": "joint component names provided; units and robot/world calibration absent in LeRobot source",
+      "units_status": "source_absent"
+    },
+    {
+      "frame_id": "unknown/observation.image",
+      "role": "camera_sensor_frame",
+      "shape": [
+        96,
+        96,
+        3
+      ],
+      "source_feature_keys": [
+        "observation.image"
+      ],
+      "source_status": "camera stream provided; extrinsics absent in LeRobot source",
+      "transform_status": "source_absent",
+      "video_info": {}
+    }
+  ],
+  "profile": "worldepisode-lerobot-v3-sidecar-0.1",
+  "source_absent_fields": [
+    "camera extrinsics",
+    "robot/world calibration transform",
+    "action units",
+    "controller latency model"
+  ],
+  "source_repo_id": "lerobot/pusht",
+  "source_revision": "7628202a2180972f291ba1bc6723834921e72c19"
+}

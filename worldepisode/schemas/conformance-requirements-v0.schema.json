@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://worldepisode.org/schemas/conformance-requirements-v0.schema.json",
+  "title": "WorldEpisode Conformance Requirements v0 RFC",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "requirements", "profiles"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "version": {
+      "const": "worldepisode-conformance-0.1"
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/requirement"
+      },
+      "minItems": 1
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Z]+\\.[0-9]{3}$"
+        },
+        "uniqueItems": true
+      }
+    }
+  },
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "level", "severity", "rule", "targets"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]+\\.[0-9]{3}$"
+        },
+        "level": {
+          "type": "string",
+          "enum": ["MUST", "SHOULD", "MAY"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["error", "warning", "info"]
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

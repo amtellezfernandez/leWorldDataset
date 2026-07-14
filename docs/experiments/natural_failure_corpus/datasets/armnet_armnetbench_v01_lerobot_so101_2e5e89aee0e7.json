@@ -1,0 +1,49 @@
+{
+  "action_rows": null,
+  "case_count": 1,
+  "cases": [
+    {
+      "case_id": "armnet__armnetbench_v01_lerobot_so101::random_episode_scene_lineage_leakage",
+      "diagnostic_status": "lineage_disjoint_split_required_for_valid_evaluation",
+      "evidence_files": [
+        "docs/experiments/lerobot_scene_leakage/leakage_report.json"
+      ],
+      "evidence_type": "natural_split_lineage_leakage",
+      "maintainer_feedback": "not_requested",
+      "observation": "A standard random episode split leaks all tested world-lineage groups (leakage rate 1.000).",
+      "observed_episodes": 400,
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "requirement_ids": [
+        "SPLIT.001"
+      ],
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    }
+  ],
+  "claim_boundary": "Dataset-specific diagnostic report, not maintainer-confirmed prevalence. Source-level-only reports are evidence of missing public controls, not measured benchmark score inflation.",
+  "conversion_status": "active_lineage_split_audit",
+  "evidence_files": [
+    "docs/experiments/lerobot_scene_leakage/leakage_report.json"
+  ],
+  "evidence_strength": "lineage split behavior was measured from the committed LeRobot audit artifact",
+  "evidence_type": "active_lerobot_scene_leakage_audit",
+  "maintainer_feedback": {
+    "satisfied": false,
+    "status": "not_requested"
+  },
+  "next_steps": [
+    "run policy evaluations beyond the offline probes before making rollout claims",
+    "request maintainer review of the split-lineage grouping"
+  ],
+  "observed_episode_count": 0,
+  "observed_episode_indices": [],
+  "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+  "requirement_counts": {
+    "SPLIT.001": 1
+  },
+  "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+  "schema": "worldepisode_natural_failure_dataset_report_v1",
+  "source_absent_fields": {},
+  "source_profile": "lerobot-v3",
+  "state_rows": null,
+  "warnings": []
+}

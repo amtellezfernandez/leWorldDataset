@@ -1,0 +1,13 @@
+{
+  "description": "Hand-authored independent fixtures for semantic validator checks.",
+  "invalid": [
+    {
+      "path": "invalid/no_clock_no_world.worldepisode.json",
+      "expected_requirements": ["TIME.001", "WORLD.001", "TRACE.001"]
+    },
+    {
+      "path": "invalid/action_missing_timing.worldepisode.json",
+      "expected_requirements": ["ACTION.002"]
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "schema_version": "worldepisode-dataset-0.1",
+  "dataset": {
+    "dataset_id": "we://amtellezfernandez/leworlddataset",
+    "name": "LeWorldDataset scalable corpus example",
+    "version": "v0.1.0",
+    "versioning_policy": "append_only_snapshots",
+    "description": "Illustrative dataset-scale manifest for sharded WorldEpisode corpora.",
+    "license": "CC-BY-4.0",
+    "homepage": "https://github.com/amtellezfernandez/leWorldDataset",
+    "owners": [
+      "URDF Studio"
+    ]
+  },
+  "namespaces": [
+    {
+      "prefix": "dataset",
+      "uri": "we://amtellezfernandez/leworlddataset",
+      "scope": "dataset"
+    },
+    {
+      "prefix": "episode",
+      "uri": "we://amtellezfernandez/leworlddataset/episode/",
+      "scope": "episode"
+    },
+    {
+      "prefix": "world",
+      "uri": "we://amtellezfernandez/leworlddataset/world/",
+      "scope": "world"
+    },
+    {
+      "prefix": "entity",
+      "uri": "we://amtellezfernandez/leworlddataset/entity/",
+      "scope": "entity"
+    },
+    {
+      "prefix": "asset",
+      "uri": "we://amtellezfernandez/leworlddataset/asset/",
+      "scope": "asset"
+    }
+  ],
+  "resolvers": [
+    {
+      "scheme": "hf",
+      "priority": 10,
+      "endpoint": "hf://amtellezfernandez/leWorldDataset",
+      "cache_policy": "digest_verified_remote",
+      "mirror_priority": [
+        "local",
+        "hf"
+      ]
+    },
+    {
+      "scheme": "s3",
+      "priority": 20,
+      "endpoint": "s3://leworlddataset",
+      "cache_policy": "local_mirror_first",
+      "mirror_priority": [
+        "local",
+        "s3"
+      ]
+    },
+    {
+      "scheme": "oci",
+      "priority": 30,
+      "endpoint": "oci://ghcr.io/amtellezfernandez/leworlddataset",
+      "cache_policy": "content_addressed"
+    }
+  ],
+  "registries": [
+    {
+      "registry_id": "world_revision_registry",
+      "kind": "world_revisions",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/registries/world_revisions.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mirrors": [
+          "registries/world_revisions.parquet"
+        ],
+        "byte_size": 1048576,
+        "row_count": 50,
+        "license": "CC-BY-4.0"
+      },
+      "primary_keys": [
+        "world_revision_id"
+      ]
+    },
+    {
+      "registry_id": "entity_registry",
+      "kind": "entities",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/registries/entities.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "mirrors": [
+          "registries/entities.parquet"
+        ],
+        "byte_size": 2097152,
+        "row_count": 12000,
+        "license": "CC-BY-4.0"
+      },
+      "primary_keys": [
+        "entity_id",
+        "world_lineage_id"
+      ]
+    },
+    {
+      "registry_id": "embodiment_registry",
+      "kind": "embodiments",
+      "asset": {
+        "uri": "oci://ghcr.io/amtellezfernandez/leworlddataset/embodiments:v0.1.0",
+        "media_type": "application/vnd.worldepisode.embodiments+json",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "mirrors": [
+          "registries/embodiments.json"
+        ],
+        "byte_size": 65536,
+        "row_count": 3,
+        "license": "Apache-2.0"
+      },
+      "primary_keys": [
+        "embodiment_id"
+      ]
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "trace_so101_pickplace_train_0000",
+      "kind": "episode_trace",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/shards/robot=so101/task=pickplace/split=train/part-0000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "mirrors": [
+          "shards/robot=so101/task=pickplace/split=train/part-0000.parquet"
+        ],
+        "byte_size": 268435456,
+        "row_count": 250000,
+        "license": "CC-BY-4.0"
+      },
+      "schema_ref": "https://worldepisode.org/schemas/worldepisode-trace-arrow-v0",
+      "partition": {
+        "embodiment_id": "so101",
+        "robot_family": "so101",
+        "task_id": "pickplace",
+        "split": "train",
+        "collection_site": "lab_a",
+        "world_lineage_bucket": "0000"
+      },
+      "statistics": {
+        "episode_count": 500,
+        "min_timestamp_ns": 0,
+        "max_timestamp_ns": 30000000000
+      },
+      "columns": [
+        "episode_id",
+        "timestamp_ns",
+        "observation.state",
+        "action",
+        "world_revision_id"
+      ]
+    },
+    {
+      "shard_id": "events_so101_pickplace_train_0000",
+      "kind": "episode_events",
+      "asset": {
+        "uri": "s3://leworlddataset/shards/robot=so101/task=pickplace/split=train/events-0000.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "mirrors": [
+          "shards/robot=so101/task=pickplace/split=train/events-0000.parquet"
+        ],
+        "byte_size": 8388608,
+        "row_count": 4000,
+        "license": "CC-BY-4.0"
+      },
+      "schema_ref": "https://worldepisode.org/schemas/worldepisode-events-arrow-v0",
+      "partition": {
+        "embodiment_id": "so101",
+        "task_id": "pickplace",
+        "split": "train",
+        "collection_site": "lab_a"
+      },
+      "statistics": {
+        "episode_count": 500,
+        "event_types": [
+          "contact_began",
+          "grasp_established",
+          "grasp_released"
+        ]
+      }
+    },
+    {
+      "shard_id": "split_world_disjoint_v0",
+      "kind": "split_manifest",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/splits/world_disjoint_v0.json",
+        "media_type": "application/vnd.worldepisode.splits+json",
+        "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "mirrors": [
+          "splits/world_disjoint_v0.json"
+        ],
+        "byte_size": 32768,
+        "row_count": 1000,
+        "license": "CC-BY-4.0"
+      },
+      "schema_ref": "https://worldepisode.org/schemas/worldepisode-splits-v0",
+      "partition": {
+        "split_policy": "world_lineage_disjoint",
+        "version": "v0"
+      },
+      "statistics": {
+        "train_episodes": 800,
+        "validation_episodes": 100,
+        "test_episodes": 100
+      }
+    }
+  ],
+  "indexes": [
+    {
+      "index_id": "episode_by_world_lineage",
+      "kind": "world_lineage",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/indexes/episode_by_world_lineage.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "mirrors": [
+          "indexes/episode_by_world_lineage.parquet"
+        ],
+        "byte_size": 4194304,
+        "row_count": 1000,
+        "license": "CC-BY-4.0"
+      },
+      "keys": [
+        "world_lineage_id",
+        "world_revision_id",
+        "episode_id"
+      ],
+      "covers": [
+        "trace_so101_pickplace_train_0000",
+        "events_so101_pickplace_train_0000"
+      ]
+    },
+    {
+      "index_id": "asset_digest_index",
+      "kind": "asset_digest",
+      "asset": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/indexes/asset_digest.parquet",
+        "media_type": "application/vnd.apache.parquet",
+        "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "mirrors": [
+          "indexes/asset_digest.parquet"
+        ],
+        "byte_size": 1048576,
+        "row_count": 20000,
+        "license": "CC-BY-4.0"
+      },
+      "keys": [
+        "sha256",
+        "uri",
+        "media_type"
+      ],
+      "covers": [
+        "world_revision_registry",
+        "entity_registry",
+        "trace_so101_pickplace_train_0000"
+      ]
+    }
+  ],
+  "versions": [
+    {
+      "version_id": "v0.1.0",
+      "created_at": "2026-07-13T00:00:00Z",
+      "snapshot_manifest": {
+        "uri": "hf://amtellezfernandez/leWorldDataset/manifests/worldepisode-dataset-v0.1.0.json",
+        "media_type": "application/vnd.worldepisode.dataset-manifest+json",
+        "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "mirrors": [
+          "manifests/worldepisode-dataset-v0.1.0.json"
+        ],
+        "byte_size": 65536,
+        "license": "CC-BY-4.0"
+      },
+      "change_log": "Initial scalable corpus manifest example.",
+      "tombstones": []
+    }
+  ]
+}

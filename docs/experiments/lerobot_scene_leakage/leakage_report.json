@@ -1,0 +1,291 @@
+{
+  "artifacts": {
+    "bc_episode_errors": "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json",
+    "report": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+    "split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+    "world_lineage": "docs/experiments/lerobot_scene_leakage/world_lineage.json"
+  },
+  "available": true,
+  "bc_policy_family": "torch_mlp_bc_state_action",
+  "dataset": {
+    "policy_types": [
+      "act",
+      "diffusion",
+      "grootn1.7",
+      "molmoact2",
+      "pi0",
+      "pi0.5",
+      "smolvla",
+      "teleoperated"
+    ],
+    "robot_type": "so-101",
+    "teleoperated_reference_episodes": 400,
+    "total_episodes": 2499,
+    "total_frames": 1127881,
+    "total_tasks": 8
+  },
+  "heldout_scene_task_indices": [
+    3,
+    4
+  ],
+  "heldout_scene_tasks": [
+    "Put the eye drops into the basket",
+    "Put the eye drops on the shelf"
+  ],
+  "lineage_count": 8,
+  "native_lerobot_policy_training": {
+    "available": false,
+    "reason": "The native `lerobot` Python package is not installed in this execution environment; this artifact trains an executable Torch MLP BC baseline over LeRobot tensors instead.",
+    "recommended_next_run": "Install LeRobot and repeat the split manifest with ACT or Diffusion Policy."
+  },
+  "pass": true,
+  "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+  "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+  "source_files": {
+    "data/chunk-000/file-013.parquet": {
+      "bytes": 168964,
+      "sha256": "21f6b9206c92107c9e3462b3d6dccc19d67ab04e961ab17beb7faa97340a3793",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-013.parquet"
+    },
+    "data/chunk-000/file-014.parquet": {
+      "bytes": 185354,
+      "sha256": "c7e4f337ca692a22cb31e52af93c858941825cc1e5be35173a0bcd7ecd7590dc",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-014.parquet"
+    },
+    "data/chunk-000/file-027.parquet": {
+      "bytes": 212543,
+      "sha256": "62c344620ea3cceaa62a46895fd542f1bbabc2c4f473f8bf5c218a0b423764b5",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-027.parquet"
+    },
+    "data/chunk-000/file-028.parquet": {
+      "bytes": 181040,
+      "sha256": "a932030cdb13ecba62bf0659a299bd2e7cdb91db156c2650d6a32992f779dc99",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-028.parquet"
+    },
+    "data/chunk-000/file-040.parquet": {
+      "bytes": 322466,
+      "sha256": "e1e9cc6db2e7c7a00789821d253401acf8c244af10429827af7d519e37cafbe3",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-040.parquet"
+    },
+    "data/chunk-000/file-041.parquet": {
+      "bytes": 267573,
+      "sha256": "f67f8512b2019aa3bb94dc1445998e55016a62571fc7bd4a8880a10e252ce864",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-041.parquet"
+    },
+    "data/chunk-000/file-052.parquet": {
+      "bytes": 268803,
+      "sha256": "0e20903bc14ac7927b3950421894ea3e3939b56c1719ded863b051ae71883918",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-052.parquet"
+    },
+    "data/chunk-000/file-053.parquet": {
+      "bytes": 206664,
+      "sha256": "5b2a6b92124f8bb148af01a6f145793f741d87fd7fb80cc8985800d0225fd95b",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-053.parquet"
+    },
+    "data/chunk-000/file-066.parquet": {
+      "bytes": 335315,
+      "sha256": "4b4915599acc6a54133ae69526ca4145adf02e0dfc6fb365bcc1098e938d1810",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-066.parquet"
+    },
+    "data/chunk-000/file-078.parquet": {
+      "bytes": 120686,
+      "sha256": "fdcb70fcd5cb3ea1619c8d159eb3abc13804aaae5e5f0102c27fd5d67fc75a2b",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-078.parquet"
+    },
+    "data/chunk-000/file-079.parquet": {
+      "bytes": 22002,
+      "sha256": "fd4e317f99eba8e8556ae8274a41bdabdf9b2dd4756adba0315a752e599a7135",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-079.parquet"
+    },
+    "data/chunk-000/file-080.parquet": {
+      "bytes": 174527,
+      "sha256": "d00a6dcb02e538a30e5b8792592c919c78e0f6849cf02de8438e55c21941471a",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-080.parquet"
+    },
+    "data/chunk-000/file-095.parquet": {
+      "bytes": 63747,
+      "sha256": "0cb99deb90529b2e9510d0b3580312fa826b3aa82842e4522010d322059b346e",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-095.parquet"
+    },
+    "data/chunk-000/file-096.parquet": {
+      "bytes": 227305,
+      "sha256": "6e4bddaece0756e454e7bfc9b7c66322f9ba706e8a63cb4cae25197019463443",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-096.parquet"
+    },
+    "data/chunk-000/file-097.parquet": {
+      "bytes": 237430,
+      "sha256": "9f00c6154fc0aa3729d57e4eced9bf21f72440c5668890b0bfca84707f1ea2bc",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-097.parquet"
+    },
+    "data/chunk-000/file-098.parquet": {
+      "bytes": 198168,
+      "sha256": "a8292ee476bc6f42f8c06af6915ddf024f3e1b15ff8de54b31af5f1a187bf577",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-098.parquet"
+    },
+    "data/chunk-000/file-099.parquet": {
+      "bytes": 54442,
+      "sha256": "3a4dde0b110eae2868efd10cdafb91b772245289face9be0685c18a902da6d50",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-099.parquet"
+    },
+    "data/chunk-000/file-100.parquet": {
+      "bytes": 79559,
+      "sha256": "c12947de83885bb2370298fef3e69dc9a97ca30fd0e6d38bb65748a3b81923b7",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-100.parquet"
+    },
+    "data/chunk-000/file-101.parquet": {
+      "bytes": 80795,
+      "sha256": "8158700b45beb3333e85c0ec3367f2d4ce5aa8b536332f630692db5483eed596",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-101.parquet"
+    },
+    "data/chunk-000/file-102.parquet": {
+      "bytes": 22817,
+      "sha256": "ed68f11e6dc3122aa5c2e5ffbee8dd78e002bcf0a02010b6fc84a12994f5ed0a",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-102.parquet"
+    },
+    "data/chunk-000/file-116.parquet": {
+      "bytes": 92894,
+      "sha256": "ac8818b6e5fa28de86c34ae209973e826fb1a0ab486f41142fcc4e4fa334c67c",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-116.parquet"
+    },
+    "data/chunk-000/file-117.parquet": {
+      "bytes": 111413,
+      "sha256": "ee67124ccb490313b2275ace08bfc49a820e7efa84e899edbcf5801c41ab7aef",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-117.parquet"
+    },
+    "data/chunk-000/file-118.parquet": {
+      "bytes": 119398,
+      "sha256": "ac4c02f451681ce5499294b64330201d1edaf53890f27bb004851e5ddeb54f06",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-118.parquet"
+    },
+    "data/chunk-000/file-119.parquet": {
+      "bytes": 96609,
+      "sha256": "d6561f7571e2fd39ff3e5278cfd9374ebc181a901e91ccee59a8f5854f2bf683",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-119.parquet"
+    },
+    "meta/episodes/chunk-000/file-000.parquet": {
+      "bytes": 3865933,
+      "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet"
+    },
+    "meta/info.json": {
+      "bytes": 4878,
+      "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json"
+    },
+    "meta/tasks.parquet": {
+      "bytes": 2534,
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+      "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet"
+    }
+  },
+  "splits": {
+    "random_episode": {
+      "bc": {
+        "episode_normalized_rmse_mean": 0.18338675796985626,
+        "episode_normalized_rmse_median": 0.1649058759212494,
+        "episode_normalized_rmse_p75": 0.22310929000377655,
+        "frame_normalized_rmse": 0.17923957109451294,
+        "frame_rmse": 4.2352752685546875,
+        "offline_bc_success_count": 68,
+        "offline_bc_success_rate": 0.85,
+        "offline_bc_success_threshold": 0.25,
+        "policy": {
+          "batch_size": 2048,
+          "epochs": 12,
+          "final_train_loss": 0.03062331596655505,
+          "hidden_units": [
+            64,
+            64
+          ],
+          "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+          "policy_family": "torch_mlp_bc_state_action",
+          "seed": 0,
+          "target_std": [
+            18.854467391967773,
+            46.47117233276367,
+            43.48992156982422,
+            21.27655029296875,
+            43.842960357666016,
+            11.578439712524414
+          ]
+        },
+        "test_frames": 21745,
+        "train_frames": 98990
+      },
+      "heldout_task_indices": [],
+      "leakage_rate": 1.0,
+      "name": "random_episode",
+      "test_count": 80,
+      "test_leaked_episode_count": 80,
+      "test_lineages_seen_in_train": [
+        "sha256:00b45a94b0a7a6b1a4c3a96fa2b4f96adb70c1c333df9c3423fdc580f7020905",
+        "sha256:05b67d9c2d2186d2c69b4ad4a74007ef4449e2aec06048b3f207f10cb39054b3",
+        "sha256:2e6aa6dc27f59d7362c11f5475a6dce54f6e09fef3f2ccfaff857078ee311f3f",
+        "sha256:321e5fc1a1989baef9d3f35966f824da7623c34a9d1f344f8f9c0ee8a95bedc2",
+        "sha256:47e29dcafdafceb3f4d60312e4e20e6f71a05b8210e8659d8d37452402797439",
+        "sha256:653fdb37115a415f4b2e40c4fcc0f7bafdbb07837dc9c838a8598d5ab8ca9d21",
+        "sha256:aff10155878fc4b79de4266223a3aded4a0373706783511e9f8724fa5b969b90",
+        "sha256:de9aaec96e0bcf46ab0bed6648ad3fc9adb5b36ba64218549fab991deb1a78dc"
+      ],
+      "test_world_lineage_count": 8,
+      "train_count": 320,
+      "train_world_lineage_count": 8
+    },
+    "scene_disjoint": {
+      "bc": {
+        "episode_normalized_rmse_mean": 0.36347562074661255,
+        "episode_normalized_rmse_median": 0.3662126958370209,
+        "episode_normalized_rmse_p75": 0.3970993757247925,
+        "frame_normalized_rmse": 0.3599465787410736,
+        "frame_rmse": 9.032227516174316,
+        "offline_bc_success_count": 0,
+        "offline_bc_success_rate": 0.0,
+        "offline_bc_success_threshold": 0.25,
+        "policy": {
+          "batch_size": 2048,
+          "epochs": 12,
+          "final_train_loss": 0.025517686121165752,
+          "hidden_units": [
+            64,
+            64
+          ],
+          "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+          "policy_family": "torch_mlp_bc_state_action",
+          "seed": 0,
+          "target_std": [
+            17.841846466064453,
+            45.34649658203125,
+            42.26961898803711,
+            21.681333541870117,
+            45.71479415893555,
+            10.971376419067383
+          ]
+        },
+        "test_frames": 20313,
+        "train_frames": 100422
+      },
+      "heldout_task_indices": [
+        3,
+        4
+      ],
+      "leakage_rate": 0.0,
+      "name": "scene_disjoint",
+      "test_count": 100,
+      "test_leaked_episode_count": 0,
+      "test_lineages_seen_in_train": [],
+      "test_world_lineage_count": 2,
+      "train_count": 300,
+      "train_world_lineage_count": 6
+    }
+  },
+  "summary": {
+    "episode_nrmse_ratio_scene_over_random": 1.9820167212201762,
+    "random_episode_nrmse_mean": 0.18338675796985626,
+    "random_leakage_rate": 1.0,
+    "random_offline_bc_success_rate": 0.85,
+    "scene_disjoint_episode_nrmse_mean": 0.36347562074661255,
+    "scene_disjoint_leakage_rate": 0.0,
+    "scene_disjoint_offline_bc_success_rate": 0.0,
+    "success_rate_drop": 0.85
+  }
+}

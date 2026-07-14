@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldepisode"
+version = "0.1.0"
+description = "WorldEpisode semantic validator and preflight checks for robot-learning datasets."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [
+  { name = "URDF Studio maintainers" }
+]
+dependencies = [
+  "jsonschema>=4.0"
+]
+keywords = ["robotics", "datasets", "lerobot", "rerun", "validation"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering"
+]
+
+[project.optional-dependencies]
+lerobot = [
+  "huggingface-hub>=0.23",
+  "pyarrow>=15.0"
+]
+rerun = [
+  "rerun-sdk>=0.23"
+]
+all = [
+  "huggingface-hub>=0.23",
+  "pyarrow>=15.0",
+  "rerun-sdk>=0.23"
+]
+dev = [
+  "pytest>=7.0"
+]
+
+[project.scripts]
+worldepisode = "worldepisode.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["worldepisode*"]
+
+[tool.setuptools.package-data]
+worldepisode = ["schemas/*.json", "py.typed"]
+
+[tool.setuptools]
+license-files = ["LICENSE-APACHE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

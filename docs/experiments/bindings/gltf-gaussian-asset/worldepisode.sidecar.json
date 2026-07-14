@@ -1,0 +1,27 @@
+{
+  "externalized_fields": [
+    "provenance.derivation",
+    "quality.uncertainty",
+    "world_revision.identity"
+  ],
+  "fields": {
+    "provenance.derivation": {
+      "creator": "URDF Studio",
+      "license": "CC0-1.0",
+      "software": "worldepisode v0.1 tools",
+      "source": "demo_capture"
+    },
+    "quality.uncertainty": {
+      "conformance_profiles": [
+        "WE-Core",
+        "WE-Rigid-Manipulation"
+      ]
+    },
+    "world_revision.identity": {
+      "binding": "le-world-layout-v0.1",
+      "world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "profile": "worldepisode-sidecar-0.1",
+  "source_world_revision_id": "world_demo_tabletop@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

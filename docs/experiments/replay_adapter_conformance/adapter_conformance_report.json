@@ -1,0 +1,85 @@
+{
+  "aggregate": {
+    "case_count": 3,
+    "contract_aware_passes": 3,
+    "naive_failures": 3
+  },
+  "artifacts": {
+    "markdown": "docs/experiments/replay_adapter_conformance/README.md",
+    "report": "docs/experiments/replay_adapter_conformance/adapter_conformance_report.json"
+  },
+  "cases": [
+    {
+      "case_id": "constant_frame_delay_scheduler",
+      "contract": {
+        "effective_timestamp_semantics": "sample_timestamp + delay_frames * sample_period",
+        "interpolation": "zero_order_hold",
+        "latency_model": {
+          "delay_frames": 4,
+          "type": "constant_frame_delay"
+        }
+      },
+      "contract_aware": {
+        "pass": true,
+        "rmse": 0.0,
+        "scheduler": "effective_time"
+      },
+      "naive": {
+        "pass": false,
+        "rmse": 0.5713150933672192,
+        "scheduler": "command_time"
+      },
+      "requirement_ids": [
+        "ACTION.002",
+        "TIME.002",
+        "REPLAY.001"
+      ]
+    },
+    {
+      "case_id": "zero_order_hold_missing_command",
+      "contract": {
+        "interpolation": "zero_order_hold",
+        "missing_value_policy": "hold_last"
+      },
+      "contract_aware": {
+        "pass": true,
+        "rmse": 0.0,
+        "scheduler": "hold_last_valid_command"
+      },
+      "naive": {
+        "pass": false,
+        "rmse": 0.7266360849833979,
+        "scheduler": "missing_command_as_zero"
+      },
+      "requirement_ids": [
+        "ACTION.002",
+        "REPLAY.001"
+      ]
+    },
+    {
+      "case_id": "asynchronous_queue_selection",
+      "contract": {
+        "queue_consume_timestamp_semantics": "fixed-rate low-level control loop consume time",
+        "selection_policy": "latest_valid_command_before_effective_time"
+      },
+      "contract_aware": {
+        "pass": true,
+        "rmse": 0.0,
+        "scheduler": "latest_valid_before_consume_time"
+      },
+      "naive": {
+        "pass": false,
+        "rmse": 0.6708203932499369,
+        "scheduler": "array_index_order"
+      },
+      "requirement_ids": [
+        "ACTION.002",
+        "TIME.002",
+        "REPLAY.001"
+      ]
+    }
+  ],
+  "claim_boundary": "This harness tests timing, queue, interpolation, and missing-command semantics. It is not a contact-rich physics rollout and does not replace multi-runtime task replay.",
+  "profile": "worldepisode-replay-adapter-conformance-0.1",
+  "status": "tested_reference_scheduler_not_physics_simulator"
+}

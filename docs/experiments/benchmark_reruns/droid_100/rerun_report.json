@@ -1,0 +1,86 @@
+{
+  "audit_date": "2026-07-13",
+  "available": true,
+  "benchmark_id": "droid",
+  "benchmark_subset": {
+    "episode_count": 100,
+    "frame_count": 32212,
+    "name": "DROID 100 LeRobot subset",
+    "repo_id": "lerobot/droid_100",
+    "revision": "87301a2d2e99340e2010c9ef0f1d8e780b08aaf9",
+    "source_file_count": 4,
+    "source_files_sha256": "1641b092efe81556b364a51630a8dbb01856b9aff1a15c52ca07f7122473829b"
+  },
+  "claim_boundary": "Small public DROID LeRobot mirror. This is a bounded offline state/action rerun, not a reproduction of a DROID leaderboard or a hardware rollout. The report is valid evidence for this subset and metric only. It is not a published-score inflation claim unless the strict proof gate accepts it.",
+  "evaluation": {
+    "baseline_score": 0.4958081537296595,
+    "baseline_split": "random_episode",
+    "corrected_score": 0.515540983544114,
+    "corrected_split": "lineage_disjoint",
+    "lineage_disjoint": {
+      "action_nrmse": 0.9397099976910597,
+      "action_rmse": 0.22452773812469587,
+      "offline_action_agreement_score": 0.515540983544114,
+      "policy": {
+        "action_width": 7,
+        "feature_count": 56,
+        "model": "closed_form_ridge_regression",
+        "normalization": "train_split_standard_score",
+        "ridge_lambda": 0.001
+      },
+      "test_frames": 16314,
+      "train_frames": 15898
+    },
+    "metric": "offline_action_agreement_score = 1 / (1 + action_nrmse)",
+    "random_episode": {
+      "action_nrmse": 1.016909146163926,
+      "action_rmse": 0.2362599140394565,
+      "offline_action_agreement_score": 0.4958081537296595,
+      "policy": {
+        "action_width": 7,
+        "feature_count": 56,
+        "model": "closed_form_ridge_regression",
+        "normalization": "train_split_standard_score",
+        "ridge_lambda": 0.001
+      },
+      "test_frames": 8307,
+      "train_frames": 23905
+    },
+    "score_drop": -0.019732829814454567,
+    "seed_count": 1
+  },
+  "policy": {
+    "family": "offline_behavior_cloning_probe",
+    "implementation": "tools/famous_benchmark_policy_rerun.py",
+    "name": "ridge_bc_state_action",
+    "random_seed": 17
+  },
+  "published_protocol": {
+    "faithful_reproduction_scope": "Uses the public benchmark tensors and paired random-vs-lineage-disjoint split audit, but does not reproduce a published DROID/BridgeData policy protocol.",
+    "name": "bounded_offline_lerobot_state_action_probe",
+    "published_leaderboard_reproduction": false,
+    "source": "tools/famous_benchmark_policy_rerun.py"
+  },
+  "schema": "worldepisode_benchmark_rerun_report.v1",
+  "split_or_timing_audit": {
+    "baseline_lineage_overlap": 0.55,
+    "corrected_lineage_overlap": 0,
+    "lineage_count": 47,
+    "lineage_source": {
+      "column": "task_index + task text + camera feature schema",
+      "kind": "task_camera_schema_proxy",
+      "reason": "The mirrored public metadata did not expose a distinct physical scene, site, or capture-lineage column. The corrected split is therefore a proxy stress test, not proof of scene-leakage inflation in the original benchmark.",
+      "sufficient_for_score_inflation_claim": false
+    },
+    "pass": true,
+    "timestamp_or_latency_fixed": false
+  },
+  "worldepisode_conversion": {
+    "conversion_report": "docs/experiments/benchmark_reruns/droid_100/conversion_report.json",
+    "lineage_manifest": "docs/experiments/benchmark_reruns/droid_100/lineage_manifest.json",
+    "manifest": "docs/experiments/benchmark_reruns/droid_100/worldepisode.manifest.json",
+    "pass": true,
+    "source_digest_verified": true,
+    "split_manifest": "docs/experiments/benchmark_reruns/droid_100/split_manifest.json"
+  }
+}
