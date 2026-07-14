@@ -1,5 +1,7 @@
-\section{Universal Spatial State Architecture}
-\label{sec:architecture}
+\section{The Sidecar Contract}
+\label{sec:contract}
+\lead{How the five invariants are delivered: a sidecar wrapped around existing formats, plus a
+runtime-neutral adapter contract, so no container has to become another.}
 
 USS is implemented as a sidecar blueprint around existing formats. It does not ask a LeRobot
 dataset to become a USD scene, a game-engine telemetry log to become an AV replay format, or a USD
@@ -7,6 +9,8 @@ scene to become a policy-training table. Instead, it records the relationships t
 need in order to agree about the same state: the state revision, persistent entities, space/time
 conventions, transition contract, asset roles, interaction events, provenance, and split lineage.
 WorldEpisode is the robotics profile of this architecture.
+\takeaway{USS records the cross-container relationships that loaders otherwise leave implicit; it
+does not force any format to become another.}
 
 The sidecar is not a mandate to package a global robot corpus as millions of small folders. The
 single-episode record is the semantic unit. Production datasets add a manifest layer: globally
@@ -67,13 +71,17 @@ preserves the same semantic invariants and emits replay evidence. This keeps the
 direction clean. Datasets are not rewritten around simulator-native assumptions; simulators compile
 their scene loading, action interfaces, and replay reports against the USS sidecar.
 
-The adapter contract has three layers. First, the \emph{invariant interface} ingests immutable
-world revisions, frame and clock graphs, entity identity, representation roles, action channels,
-asset digests, provenance, and quality records. Second, \emph{asynchronous schema extension}
-allows an engine to register cloth, deformable, fluid, articulation, material, or procedural-scene
-extensions without weakening the core episode record. Third, \emph{deterministic replay
-accountability} records runtime identity, version, solver, timestep, actuator parameters,
-initialization state, command/effective timing, latency, tolerance envelopes, and measured drift.
+The adapter contract has three layers:
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
+  \item \textbf{Invariant interface}: ingests immutable world revisions, frame and clock graphs,
+  entity identity, representation roles, action channels, asset digests, provenance, and quality
+  records.
+  \item \textbf{Asynchronous schema extension}: lets an engine register cloth, deformable, fluid,
+  articulation, material, or procedural-scene extensions without weakening the core episode record.
+  \item \textbf{Deterministic replay accountability}: records runtime identity, version, solver,
+  timestep, actuator parameters, initialization state, command/effective timing, latency, tolerance
+  envelopes, and measured drift.
+\end{itemize}
 
 The current implementation reflects this boundary across two codebases. WorldEpisode has tested
 minimal MuJoCo and Genesis replay adapters for the same LeRobot control-loop trace. URDF Studio,

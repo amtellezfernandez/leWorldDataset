@@ -1,6 +1,24 @@
-\section{Discussion}
+\section{Positioning}
+\label{sec:positioning}
+\lead{Where WorldEpisode sits relative to existing formats, simulators, benchmarks, and standards
+bodies.}
 
-\paragraph{Why this is not only infrastructure.}
+\subsection{Related work}
+Documenting datasets is not new. Datasheets for Datasets~\citep{gebru2021datasheets} and model cards
+standardize prose descriptions of provenance and intended use; MLCommons
+Croissant~\citep{croissant2024} adds a machine-readable metadata layer for ML-ready datasets; and
+Open X-Embodiment~\citep{openx} aggregates robot data under a shared schema. Evaluation leakage is a
+well-documented driver of the reproducibility crisis in ML-based science~\citep{kapoor2023leakage}.
+WorldEpisode differs in three ways. First, it binds these fields to an \emph{immutable,
+content-addressed world revision} with closed identity, frame/clock, role, and provenance graphs, so
+cross-container agreement is checkable rather than merely described. Second, it is \emph{executable
+and fail-closed}: a one-line preflight blocks a native LeRobot or Rerun artifact that cannot prove
+the contract, and every conversion emits a machine-readable loss report. Third, it treats
+\emph{lineage-disjoint evaluation splits} as a first-class requirement with measured consequences,
+not as optional documentation. It is a contract and validator layered on existing containers, not a
+replacement format or a dataset card.
+
+\paragraph{A contribution of falsifiable invariants.}
 The experiments show several ways a result can be wrong while the files are valid: a split can leak
 world lineage, replay can drift because control timing is underspecified, conversion can discard
 physical semantics that the target container has no native place to store, and a live virtual or AV
@@ -13,7 +31,7 @@ separate appearance from physics, and evaluation splits must be able to exclude 
 lineage. A container adapter either preserves those invariants, externalizes them with declared
 loss, or fails conformance.
 
-\paragraph{Not another monolithic binary.}
+\paragraph{A small semantic core with multiple bindings.}
 USS has a small semantic core and multiple bindings. WorldEpisode is the robotics profile:
 LeRobotDataset v3 is the policy-training view; Rerun is the multirate physical-data view; NCore is
 the sensor/reconstruction capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the
@@ -23,7 +41,7 @@ any agent, whether a physical robot, a video game character, or an autonomous ve
 within that space over time without silent data corruption. A game-engine or AV profile should
 reuse the same invariant structure rather than inherit robotics-specific terminology.
 
-\paragraph{Real-to-sim as the proving ground.}
+\paragraph{Relationship to real-to-sim pipelines.}
 Gaussian-splat and OpenUSD real-to-sim pipelines are not competitors to USS. They are the
 systems that most need a state and episode contract. A reconstructed room can be excellent visual training
 data and still be unsafe for policy evaluation if foreground collision roles are missing, if the
@@ -47,7 +65,7 @@ USS supports split constraints such as \texttt{world\_lineage},
 \texttt{physical\_entity}, \texttt{source\_capture}, \texttt{reconstruction\_run}, and
 \texttt{generated\_asset\_family}.
 
-\paragraph{Call-outs without overclaiming.}
+\paragraph{Auditing benchmarks without overclaiming.}
 The practical target is to make famous benchmarks auditable, not to accuse them without a rerun.
 When public metadata cannot answer whether train and test share a scene lineage, asset family,
 source capture, action timing convention, or simulator assumption, WorldEpisode should mark the

@@ -349,6 +349,7 @@
     "paper/arxiv/sections/format.tex",
     "paper/arxiv/sections/introduction.tex",
     "paper/arxiv/sections/limitations.tex",
+    "paper/arxiv/sections/open_contributions.tex",
     "paper/arxiv/sections/reference_implementation.tex",
     "paper/arxiv/sections/requirements.tex"
   ],

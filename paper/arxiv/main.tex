@@ -52,6 +52,25 @@
   \par\medskip
 }
 
+\newsavebox{\keyboxsave}
+\newenvironment{keybox}[1]{%
+  \par\medskip\noindent
+  \begingroup
+  \setlength{\fboxsep}{9pt}%
+  \begin{lrbox}{\keyboxsave}%
+  \begin{minipage}{0.93\linewidth}
+  \textbf{\textcolor{weInk}{#1}}\par\smallskip
+  \small
+  \setlength{\parskip}{3pt}
+  \setlength{\parindent}{0pt}
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \noindent\fcolorbox{weSlate}{wePanel}{\usebox{\keyboxsave}}%
+  \endgroup
+  \par\medskip
+}
+
 \tikzset{
   wecard/.style={
     rounded corners=4pt,
@@ -83,7 +102,42 @@
   urlcolor=blue
 }
 
-\title{Universal Spatial State: Diagnosing and Correcting Silent State Drift across Embodied and Virtual Agent Datasets}
+% ---- Collaborator task-map switch (working build only) ----
+% \collabtrue renders the Open Contributions appendix and the inline HELP markers so
+% colleagues can pick up open work. Set \collabfalse for an external submission build.
+\newif\ifcollab
+\collabtrue
+
+% One-line skimmable summary placed under a result or a dense section.
+\newcommand{\takeaway}[1]{\par\smallskip\noindent{\small\textcolor{weInk}{\textbf{Takeaway.}}~\textit{\textcolor{weSlate}{#1}}}\par\smallskip}
+
+% Section lead-in: one italic line stating the argument move and threading the spine.
+\newcommand{\lead}[1]{\par\vspace{-3pt}\noindent{\small\itshape\textcolor{weSlate}{#1}}\par\medskip}
+
+% Inline pointer placed next to a claim that is blocked on an open contribution.
+\newcommand{\collabmark}[1]{\ifcollab\,\colorbox{weViolet!16}{\scriptsize\sffamily\textbf{\textcolor{weViolet!75!black}{HELP: #1}}}\fi}
+
+% Boxed task card used in the Open Contributions appendix.
+\newcommand{\collabcard}[6]{%
+  \ifcollab
+  \par\smallskip\noindent
+  \setlength{\fboxsep}{7pt}%
+  \noindent\fcolorbox{weViolet!70!black}{weViolet!7}{%
+    \begin{minipage}{0.93\linewidth}
+      \footnotesize\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}%
+      \textbf{\textcolor{weViolet!72!black}{[#1] #2}}\par
+      \textbf{Where:} #3\par
+      \textbf{What is missing:} #4\par
+      \textbf{How to close it:} #5\par
+      \textbf{Needs:} #6\par
+      \textbf{Owner:} \underline{\hspace{4.5cm}}\quad\textbf{Target:} \underline{\hspace{3cm}}
+    \end{minipage}%
+  }%
+  \par\smallskip
+  \fi
+}
+
+\title{WorldEpisode: Auditing Silent State Drift in Robot-Learning Datasets}
 
 \author{
   Alba Tellez Fernandez\\
@@ -106,14 +160,14 @@ asset can render while its collision role, coordinate frame, or digest no longer
 under evaluation. We call this failure mode \emph{silent state drift}: the bytes are readable, but the
 state assumptions that make replay, training, or deployment meaningful have drifted.
 
-This paper introduces \emph{Universal Spatial State} (USS), a storage-, representation-, and
-runtime-neutral sidecar contract for auditing that drift. USS does not replace LeRobotDataset, Rerun,
-MCAP, NCore, OpenUSD, glTF, simulator formats, game telemetry, or autonomous-driving logs. Instead,
-it specifies the state invariants those containers must preserve: persistent identity, explicit frame
-and clock graphs, state and asset roles, transition and action semantics, temporal events,
-provenance, quality records, content-addressed assets, and lineage-aware splits. \emph{WorldEpisode}
-is the robotics reference profile that makes the USS contract executable for robot-learning
-episodes, reconstructed worlds, conversion reports, validators, and replay adapters.
+This paper presents \emph{WorldEpisode}, an executable state-integrity contract for robot-learning
+datasets. Rather than adding another file format, it specifies the invariants an episode must
+preserve on top of existing containers such as LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, and
+glTF: persistent identity, explicit frame and clock graphs, state and asset roles, transition and
+action semantics, temporal events, provenance, quality records, content-addressed assets, and
+lineage-aware splits. We refer to this family of invariants as Universal Spatial State (USS), a
+vocabulary intended to generalize beyond robotics; robotics is the profile we implement, and the
+only domain in which we report measured evidence in this paper.
 
 We evaluate WorldEpisode as a stress test of the broader USS claim. On ArmnetBench's public SO-101
 LeRobot release, a random episode split leaks every tested world lineage and yields 0.850 offline
@@ -124,9 +178,9 @@ timestamp-aware action contract reduces same-trace MuJoCo and Genesis replay RMS
 1.563 degrees. A programmatic LeRobotDataset-to-WorldEpisode-to-LeRobotDataset round trip over ten
 public episodes preserves 1,935 state/action rows, timestamps, video timestamp ranges, and
 physical-frame records with maximum numerical error 0.0 while reporting source-absent semantics as
-explicit conversion loss. The validator detects all 14 injected physical-coherence fault classes,
-and deterministic game-engine and autonomous-driving pilots show that the same invariant vocabulary
-also catches non-robotics state drift.
+explicit conversion loss. The validator detects all 14 injected physical-coherence fault classes.
+Deterministic game-engine and autonomous-driving pilots only sketch how the same vocabulary might
+extend beyond robotics; they are illustrative, not measured evidence.
 
 The contribution is a tested state-integrity layer and audit protocol for deciding whether spatial
 data can be trusted for conversion, replay, evaluation, and deployment. The paper does not claim a
@@ -136,15 +190,19 @@ Isaac/SAPIEN execution, external adoption, and production game or autonomous-dri
 explicit open gates.
 \end{abstract}
 
+% Spine order: failure -> five invariants (questions then graphs) -> sidecar contract
+% -> executable profile -> evidence -> limits -> positioning -> conclusion.
 \input{sections/introduction}
 \input{sections/requirements}
-\input{sections/architecture}
 \input{sections/format}
+\input{sections/architecture}
 \input{sections/reference_implementation}
 \input{sections/evaluation}
 \input{sections/limitations}
 \input{sections/discussion}
 \input{sections/conclusion}
+
+\input{sections/open_contributions}
 
 \bibliographystyle{plainnat}
 \bibliography{references}

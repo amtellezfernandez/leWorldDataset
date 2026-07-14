@@ -1,30 +1,22 @@
-\section{Failure Case Studies}
+\section{Evidence: Failure Case Studies}
+\label{sec:evidence}
+\lead{The empirical core. Each case is a file that passes local validation, the requirement it
+violates, and what changes once the contract is enforced. Requirement IDs in each heading tie the
+result back to Section~\ref{sec:questions}.}
 
 The experiments are written as failure investigations rather than as isolated unit tests. Each one
 starts from a failure mode that can make an embodied or virtual-agent result look better, cleaner,
-or more reproducible than it really is. Robotics provides the deep measured stress test; two
-deterministic USS pilots check that the same state-invariant vocabulary also applies outside robot
-episodes.
+or more reproducible than it really is. All measured evidence here is robotics; two deterministic
+non-robotics pilots are deferred to the future-work discussion in Section~\ref{sec:limits}, where
+they are framed as illustrative rather than measured.
 
-\paragraph{How to read amber boxes.}
+\paragraph{Reading the open-result boxes.}
 Amber boxes mark work that is executable but not counted as a paper result. Each box states the
 exact command path, required artifacts, and acceptance rule needed before the corresponding claim
 can move from ``open'' to ``measured.'' These boxes are intentionally visible in the PDF so a reader
 can reproduce or close the missing evidence without reading the repository internals.
 
-\paragraph{Case 0: the valid file with the wrong live state.}
-USS is evaluated outside robotics with two deliberately small pilots. In the game-engine collision
-case, a client can still load an old arena collision asset, but an authoritative patch moves the
-obstacle into the avatar path. The stale client path looks valid locally, fails against the
-authoritative state, and is caught by the asset digest, state revision, and role checks
-(\texttt{ASSET.002}, \texttt{WORLD.001}, \texttt{REP.001}). In the autonomous-driving clock case,
-camera and lidar logs deserialize correctly, but a 50 ms undeclared clock offset at 15 m/s creates a
-0.75 m fusion error against a 0.20 m tolerance. The USS clock mapping corrects the error to 0.0 m
-and triggers \texttt{TIME.001}, \texttt{TIME.002}, and \texttt{FRAME.001}. These pilots support the
-terminology shift from episodes to state; they are not production game-engine or AV benchmark
-results.
-
-\paragraph{Case 1: the split that faked success.}
+\paragraph{Case 1: scene-lineage leakage in evaluation splits (\texttt{SPLIT.001}).}
 The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
 reason. We audit ArmnetBench v0.1's single-arm SO-101 LeRobot release~\citep{armnetbench_lerobot_so101}
 by deriving eight WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene and
@@ -39,7 +31,9 @@ This is an offline action-imitation benchmark, not a physical rollout claim or a
 state-of-the-art LeRobot policies. Its purpose is narrower and diagnostic: it exposes that a
 conventional split can reward memorizing a background world rather than learning a transferable
 manipulation behavior. The committed split manifest makes the same leakage audit repeatable with
-ACT, Diffusion Policy, or another LeRobot-native policy.
+ACT, Diffusion Policy, or another LeRobot-native policy.\collabmark{C1}
+\takeaway{The number moved with the split, not the policy: a random split scores 0.850 by memorizing
+the scene, and a lineage-disjoint split drops the same probe to 0.000.}
 
 To verify that the split packages are executable beyond the original MLP probe, we also run a
 closed-form temporal ridge baseline over the committed compact LeRobot state/action packages. The
@@ -138,7 +132,7 @@ better for leakage and replay RMSE; higher is better for semantic retention.}
 \label{fig:evaluation-dashboard}
 \end{figure}
 
-\paragraph{Case 2: the converter that refuses to invent missing physics.}
+\paragraph{Case 2: loss-explicit dataset conversion (\texttt{CONVERT.001}).}
 To test an actual LeRobotDataset rather than only a capability model, we implement
 \(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
 on five-episode batches from two pinned public datasets:
@@ -154,9 +148,11 @@ indices, and camera video timestamp ranges with maximum absolute error 0.0. It a
 derived physical-frame records through the sidecar. More importantly, it does not fake missing
 semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
 reported as source-absent rather than guessed. This is the difference between a convenient
-conversion and an auditable one.
+conversion and an auditable one.\collabmark{C7}
+\takeaway{The round trip loses nothing it can preserve (maximum error 0.0) and explicitly names the
+fields it cannot recover, instead of silently inventing them.}
 
-\paragraph{Case 3: the replay that drifted because time was underspecified.}
+\paragraph{Case 3: action-timing and replay drift (\texttt{ACTION.002}).}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
 commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}. On
 the public SO-101 trajectory, WorldEpisode records policy-output, enqueue, queue-consume, and
@@ -170,7 +166,11 @@ WorldEpisode action contract through two minimal six-joint position-servo replay
 MuJoCo, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
 degrees, a \(2.19\times\) improvement. Genesis same-trace replay gives the same measured profile:
 3.425 degrees under naive command-time replay and 1.563 degrees under timestamp-aware replay, also
-a \(2.19\times\) improvement. The Isaac adapter is emitted as a ready mapping from the same
+a \(2.19\times\) improvement. The two engines agree to roughly seven significant figures
+(MuJoCo 3.4247237 versus Genesis 3.4247236 naive) precisely because both integrate the same minimal
+six-joint position-servo model; we therefore report this as an adapter-conformance result --- the
+same action contract executes consistently across runtimes --- and explicitly not as evidence that
+the engines' underlying physics agree. The Isaac adapter is emitted as a ready mapping from the same
 contract, but is not tested in this environment. The failure avoided here is a common one: blaming
 a simulator or controller when the dataset never said when the command actually took effect.
 
@@ -184,9 +184,11 @@ evidence, we also record URDF Studio's shared \texttt{SimBackend} conformance su
 Genesis and its one-episode carton-sorting MuJoCo--Genesis comparison report with matched task
 success and measured trajectory divergence. These results close the narrow same-trace
 second-runtime replay gate for the minimal joint replay profile. They do not claim contact-rich
-task replay, Isaac/SAPIEN execution, or simulator-independent behavior.
+task replay, Isaac/SAPIEN execution, or simulator-independent behavior.\collabmark{C5}
+\takeaway{Declaring when a command actually takes effect cuts replay error roughly in half; the drift
+was a missing timing contract, not a bad simulator.}
 
-\paragraph{Case 4: real-to-sim contract drift.}
+\paragraph{Case 4: real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
 Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
 interactive physical assets. WorldEpisode targets the contract between those layers and the source
 robot episode. We therefore add two deterministic ablations. In the action-contract ablation, a
@@ -198,8 +200,10 @@ the deployment proxy. In both ablations the drifted contract has 2/2 simulated s
 deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
 controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
 enough without action contracts and representation roles.
+\takeaway{A visually faithful reconstruction still fails at deployment without the action contract and
+collision role, so appearance alone does not make a scene replay-safe.}
 
-\paragraph{Case 5: the validator that catches physically impossible packages.}
+\paragraph{Case 5: validator fault detection (all requirement IDs).}
 We inject 14 faults into the baseline package: missing clock domains, incomplete cross-clock
 mappings, unknown frames, missing transform intervals, unknown event entities, missing
 representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
@@ -226,7 +230,7 @@ dataset bugs or measured score-inflation results; they are naturally occurring s
 metadata gaps, or evaluation risks that a WorldEpisode audit must make explicit.
 The runner also emits dataset-specific diagnostic reports for all five datasets; the DROID and
 BridgeData V2 reports are explicitly marked source-level-only until pinned WorldEpisode conversions
-and false-positive review are available.
+and false-positive review are available.\collabmark{C3}
 
 The same validator is exposed as a pre-training command rather than only as an experiment script.
 The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid
@@ -238,8 +242,10 @@ the \texttt{worldepisode} package. It parses the public schema, summarizes the m
 catches all 18 expected requirement instances across 17 pilot and independently authored fixtures
 with 1.000 recall. This is not external adoption, but it verifies that the public artifacts are
 readable outside the reference SDK path.
+\takeaway{Every injected physical-coherence fault is caught with full recall, and the same validator
+runs as a single blocking line before a training job.}
 
-\paragraph{Case 6: the corpus that should not require a filesystem crawl.}
+\paragraph{Case 6: dataset-scale manifests and indexes (\texttt{DATASET.001}).}
 To address production scale, we audit the dataset manifest in
 \path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
 three resolver schemes, three registries, three shards, two indexes, one append-only version, and
@@ -251,8 +257,10 @@ and indexing the generated JSON catalog, eight partition-pruning queries, digest
 and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
 the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
 recursive storage discovery.
+\takeaway{A billion-episode-capacity corpus opens from its manifest and indexes in milliseconds,
+without a recursive storage scan.}
 
-\paragraph{Case 7: the famous benchmarks that still need call-out audits.}
+\paragraph{Case 7: source-level audit of famous benchmarks (\texttt{SPLIT.001}).}
 The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
 source-level call-out audit over five famous public robot-learning benchmarks: Open
 X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
@@ -289,13 +297,18 @@ Acceptance rule: the gate must contain at least one inflation-proof valid rerun 
 \texttt{measured\_inflation=true}. Source-level metadata gaps alone are evidence of missing
 controls, not evidence that published scores are inflated.
 \end{openresult}
+\collabmark{C2}
+\takeaway{The famous benchmarks lack the public controls needed to rule out leakage; we flag that gap
+but refuse to call any score inflated without a measured rerun.}
 
-\paragraph{Case 8: augmentation that uses the world rather than a side file.}
+\paragraph{Case 8: world-grounded counterfactual augmentation (\texttt{ENTITY.001}).}
 We evaluate a shifted-camera/object-displacement regression task. Observations-only
 nearest-neighbor control reaches the proxy success threshold on 0.292 of shifted test cases. Adding
 unstructured 3D side information increases proxy success to 0.342. WorldEpisode-style world-frame
 identity and counterfactual camera augmentation increase proxy success to 0.592 over 120
 deterministic test cases.
+\takeaway{Grounding augmentation in world-frame identity beats both raw observations and unstructured
+3D side files on shifted-camera tests.}
 
 \paragraph{Binding retention.}
 The same executable artifacts measure how much of the semantic contract is preserved by native
@@ -308,9 +321,14 @@ and asset descriptor, events, ordered deltas, provenance, quality, split lineage
 assumptions. This is an executable pilot projection, not a universal score of each format's value.
 Across seven pilot bindings, Table~\ref{tab:binding-retention} shows that common
 containers preserve 17--39\% of this projection natively, while WorldEpisode sidecars recover that
-projection for the tested dataset/log/world bindings. A
+projection for the tested dataset/log/world bindings. The sidecar column is by construction: because
+the sidecar serializes the projection fields directly, the 1.000 entries verify lossless round-trip
+of the contract, not an emergent property; the informative measurement is the native gap each
+container leaves. A
 Gaussian asset binding alone preserves 17\% natively and 30\% with limited sidecar metadata,
 confirming that an asset format is not an episode--world contract.
+\takeaway{Native containers preserve only 17--39\% of the semantic contract and the sidecar restores
+it, so an asset or log format alone is not an episode--world contract.}
 
 \begin{table}[htbp]
 \centering

@@ -1,4 +1,8 @@
-\section{Problem Statement}
+\section{What a Valid Spatial State Must Answer}
+\label{sec:questions}
+\lead{The spine starts here: five questions any interactive spatial state must answer before it is
+converted, replayed, or evaluated, plus one question of scale. Each maps to a stable requirement ID
+that Section~\ref{sec:profile} enforces and Section~\ref{sec:evidence} tests.}
 
 USS starts from a practical question: what must be known before an interactive spatial state can be
 safely converted, replayed, synchronized, augmented, or used for evaluation? A valid state record
@@ -6,7 +10,7 @@ must answer five questions. A production dataset must also answer how those reco
 sharded, indexed, resolved, and versioned without turning storage layout into the semantic API.
 WorldEpisode specializes these requirements for robot-learning episodes.
 
-\paragraph{Which state revision am I in?}
+\paragraph{Which state revision am I in? (\texttt{WORLD.001}, \texttt{TRACE.001})}
 Each record references one immutable, content-addressed state or world revision plus an ordered list
 of state-specific deltas. In robotics this is a base world plus episode deltas; in a game engine it
 may be a map patch plus live actor state; in an AV replay it may be a map/sensor-calibration
@@ -15,14 +19,14 @@ physical parameters, entity decomposition, object identity, or task-relevant fix
 revision. This makes it detectable when two datasets silently use the same filename for different
 states, or different filenames for the same state.
 
-\paragraph{What entities does the state contain?}
+\paragraph{What entities does the state contain? (\texttt{ENTITY.001})}
 Objects, robot links, vehicles, sensors, avatars, fixtures, support surfaces, semantic regions, and
 generated assets must have persistent identifiers. A mug in a segmentation mask, a Gaussian group,
 a collision mesh, a simulator actor, a language annotation, and a contact event should resolve to
 the same entity when they refer to the same physical object. A game obstacle or AV tracked object
 needs the same identity discipline across telemetry, assets, and runtime actors.
 
-\paragraph{Where and when is this state valid?}
+\paragraph{Where and when is this state valid? (\texttt{FRAME.001}, \texttt{TIME.001}, \texttt{ACTION.002})}
 Spatial values declare their frames, units, transform direction, validity interval, and calibration
 revision. Streams declare clock domains, timestamps, synchronization mappings, and timing error
 where available. Actions declare command time and effective motor time rather than assuming those
@@ -30,7 +34,7 @@ are the same instant. USS calls these state transition invariants: a control inp
 server patch, or sensor fusion event is only meaningful under its declared timing, frame, unit, and
 latency contract.
 
-\paragraph{What was preserved or lost during conversion?}
+\paragraph{What was preserved or lost during conversion? (\texttt{CONVERT.001})}
 WorldEpisode reuses existing standards rather than replacing them. USD~\citep{usd} carries composed
 simulation worlds, glTF carries Gaussian appearance assets~\citep{gltf_gs}, NCore carries capture
 and pose-graph conventions~\citep{ncore}, Rerun carries physical-data recordings with column
@@ -38,13 +42,13 @@ chunks~\citep{rerun}, ROS/MCAP carries logs, and domain-native engines carry the
 A converter may externalize or approximate fields, but it must emit a machine-readable loss report
 instead of silently discarding semantics.
 
-\paragraph{Can the evaluation split leak?}
+\paragraph{Can the evaluation split leak? (\texttt{SPLIT.001})}
 Record-level random splits are not enough when multiple records share a reconstructed room, map
 patch, physical object, source capture, calibration, generated asset lineage, or state ancestry. A
 USS split manifest can enforce disjointness by state lineage, physical entity, source capture,
 reconstruction run, generated asset family, or collection site.
 
-\paragraph{Can this scale past one dataset folder?}
+\paragraph{Can this scale past one dataset folder? (\texttt{DATASET.001})}
 Large robot corpora require a dataset manifest above the episode records. The manifest declares
 namespaces, resolver priority, shard catalogs, materialized indexes, split catalogs, and append-only
 versions. This lets a reader locate all SO-101 pick-place traces for a world-disjoint split by

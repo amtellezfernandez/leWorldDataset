@@ -1,4 +1,23 @@
 \section{Introduction}
+\label{sec:intro}
+
+\begin{keybox}{Summary}
+\textbf{The problem.} Interactive spatial datasets can pass every local loader and still be
+behaviorally wrong: joint values in an undeclared unit, command timestamps replayed as
+motor-effective time, train and test sharing the same reconstructed scene, a dropped collision role,
+or an undeclared clock offset. We call this \emph{silent state drift} --- the bytes are readable, but
+the state assumptions that make replay, training, or deployment meaningful have drifted.\par
+\textbf{Why it goes uncaught.} LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, and glTF each store a
+piece, but none bind an episode to an immutable world revision with persistent identity, frame and
+clock mappings, action-timing, representation roles, and provenance. The file validates; the contract
+does not exist.\par
+\textbf{Why it matters.} The result is weeks of wasted training, benchmark scores inflated by scene
+leakage, and real-to-sim gaps blamed on the simulator rather than the data contract.\par
+\textbf{What this paper contributes.} \emph{WorldEpisode}, an executable sidecar contract of those
+invariants for robot-learning datasets: a validator and a one-line preflight that turn silent
+failures into hard, auditable errors before training or deployment. We frame the invariants under a
+broader banner, Universal Spatial State (USS), but evaluate only the robotics profile here.
+\end{keybox}
 
 Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. The loss
 curves are smooth, the simulator reports an 85\% success rate, and every Parquet, video, and scene
@@ -15,13 +34,47 @@ different clock domains. A cloud digital twin can point to the right-looking ass
 the wrong content digest. In each case the file is valid and the behavior is not. We call this
 failure class \emph{silent state drift}.
 
-This paper introduces Universal Spatial State (USS), a sidecar contract for making silent state
-drift auditable. USS is not a file format. It is a set of invariants that bind interactive spatial
-data to immutable state revisions: persistent identity, explicit space/time mappings, role semantics,
-transition contracts, temporal events, provenance, quality records, and lineage-aware splits.
-WorldEpisode is the robotics-heavy USS profile implemented and evaluated in this repository.
-Robotics is the deepest current stress test because it combines real hardware, asynchronous control,
-multi-camera data, reconstructed worlds, simulator exports, and policy evaluation.
+Table~\ref{tab:failure-motivation} makes the stakes concrete before any evaluation: each row is a file
+that still loads, the behavior it silently breaks, and the USS control that catches it. The rest of
+the paper turns each control into an executable requirement and measures what happens when it is
+missing.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Failure modes that pass local validation but break behavior, and the USS control that
+catches each. Requirement IDs are defined in the requirements section.}
+\label{tab:failure-motivation}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
+                >{\raggedright\arraybackslash}p{0.40\linewidth}
+                >{\raggedright\arraybackslash}p{0.22\linewidth}@{}}
+\toprule
+File still loads, but\ldots & Silent consequence & USS control \\
+\midrule
+joint values use an undeclared unit & controller misreads the scale; policy misses the object &
+\texttt{ACTION.001} \\
+command time is replayed as motor-effective time & replay and deployment drift off the real
+trajectory & \texttt{ACTION.002} \\
+a random split shares a reconstructed scene across train and test & success is inflated and does not
+transfer & \texttt{SPLIT.001} \\
+a real-to-sim export keeps appearance but drops the collision proxy & the policy collides with
+geometry it cannot see & \texttt{REP.001} \\
+camera and lidar logs are fused across clock domains & spatial fusion error beyond tolerance &
+\texttt{TIME.002} \\
+an asset URI looks right but its content digest changed & the wrong geometry is used under evaluation
+& \texttt{ASSET.002} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This paper introduces \emph{WorldEpisode}, a sidecar contract for making silent state drift auditable
+in robot-learning datasets. It is not a file format. It is a set of invariants that bind episode data
+to immutable state revisions: persistent identity, explicit space/time mappings, role semantics,
+transition contracts, temporal events, provenance, quality records, and lineage-aware splits. We call
+the general family of invariants Universal Spatial State (USS); robotics is the profile we implement
+and evaluate, chosen because it is the deepest current stress test --- it combines real hardware,
+asynchronous control, multi-camera data, reconstructed worlds, simulator exports, and policy
+evaluation.
 
 Existing formats solve important pieces of this chain. The LeRobot library vertically integrates
 robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
@@ -67,3 +120,25 @@ leakage, and counterfactual augmentation, plus two deterministic USS pilots outs
 empirical claims in this release are intentionally bounded: they demonstrate executable failure
 mechanisms and auditable conversion semantics, not a completed multi-lab benchmark, production game
 engine audit, autonomous-driving fleet audit, or real-robot deployment study.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
+  \item \textbf{WorldEpisode}, an executable state-integrity contract for robot-learning datasets,
+  expressed as five graphs of invariants (identity; frames and clocks; representation roles; temporal
+  state and events; provenance and lineage), with a JSON Schema, a semantic validator, and a
+  one-line fail-closed preflight for native LeRobot and Rerun artifacts.
+  \item \textbf{USS}, the broader vocabulary these invariants generalize toward, proposed as storage-,
+  representation-, and runtime-neutral but evaluated in this paper only for robotics.
+  \item \textbf{Loss-explicit binding}: round-trip conversions that emit machine-readable loss reports,
+  with measured native-versus-sidecar semantic retention.
+  \item \textbf{Controlled failure studies}: scene-lineage leakage, action-timing replay drift, and
+  real-to-sim contract drift, plus two non-robotics pilots --- each an executable mechanism, with
+  every stronger claim bounded by an explicit open reproduction gate.
+\end{enumerate}
+
+\paragraph{Reader's guide.} A reader who only wants the motivation can stop after
+Table~\ref{tab:failure-motivation}. The rest follows one spine: Section~\ref{sec:questions} states the
+five questions any valid state must answer, Section~\ref{sec:invariants} formalizes them as five
+graphs, Section~\ref{sec:contract} delivers them as a sidecar contract, Section~\ref{sec:profile}
+makes the contract executable, Section~\ref{sec:evidence} is the empirical core with each result
+tagged by the requirement it proves, and Section~\ref{sec:limits} states the boundary of every claim.

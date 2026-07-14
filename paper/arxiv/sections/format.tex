@@ -1,9 +1,14 @@
-\section{Five Questions, Five Graphs}
+\section{The Five Invariants}
+\label{sec:invariants}
+\lead{The same five questions from Section~\ref{sec:questions}, now formalized as five coupled graphs.
+Making them mutually referential is what turns a silent error into a detectable one.}
 
 Figure~\ref{fig:five-graph-model} shows the five coupled graphs that make a spatial state
 replayable and auditable rather than just stored. Each graph answers a question that appears during
 debugging: what object is this, where and when is it, what is the asset safe to do, what physically
 or virtually happened, and where did this data come from?
+\takeaway{Five graphs answer five debugging questions and are made mutually referential, so an
+identity, timing, role, event, or lineage error becomes detectable instead of hidden.}
 
 \begin{figure}[t]
 \centering
@@ -41,7 +46,7 @@ instead of hidden.}
 \label{fig:five-graph-model}
 \end{figure}
 
-\subsection{What object am I looking at?}
+\subsection{Identity graph: what object is this? (\texttt{ENTITY.001})}
 
 Every physical or logical entity receives a persistent identifier: robot, link, gripper, vehicle,
 avatar, sensor, rigid object, articulated object, fixture, support surface, region, human, light, or
@@ -52,7 +57,7 @@ trajectories, grasp events, and attachment events. The real-world fix is simple:
 command says ``pick up the mug,'' the perception mask, the simulator object, and the collision
 proxy must identify the same mug.
 
-\subsection{Where is it, and exactly when?}
+\subsection{Frame and clock graph: where is it, and exactly when? (\texttt{FRAME.001}, \texttt{TIME.001})}
 
 Every spatial value declares source frame, target frame, units, handedness, up axis, transform
 direction, quaternion convention, validity interval, calibration revision, and uncertainty where
@@ -63,7 +68,7 @@ kind of rigor USS requires across the whole state record~\citep{ncore}. This gra
 suspicious replay from ``the policy is bad'' or ``the engine is wrong'' into a diagnosable offset,
 transform direction, or unit error.
 
-\subsection{What is this asset safe to be used for?}
+\subsection{Representation-role graph: what is this asset safe for? (\texttt{REP.001})}
 
 One physical or virtual entity can have many representations: Gaussian splat appearance, textured
 render mesh, metric surface mesh, depth point cloud, collision proxy, mass/inertia record, semantic
@@ -76,7 +81,7 @@ asset to live in one folder. The role field is essential: a splat may be valid f
 invalid for collision, while a simplified proxy may be valid for collision but unsuitable for visual
 training.
 
-\subsection{Did the robot actually grab the object?}
+\subsection{Temporal-event graph: what actually happened? (\texttt{TRACE.001})}
 
 Spatial records do not store only poses. They record interaction events: contact begin/end, grasp
 establish/release, attachment create/remove, support, containment, map or collision patch,
@@ -86,7 +91,7 @@ optionally evidence. This turns raw coordinate streams into milestones such as `
 established,'' ``object dropped,'' ``authoritative collision patch applied,'' or ``intervention
 occurred.''
 
-\subsection{Where did this data come from?}
+\subsection{Provenance graph: where did this come from? (\texttt{PROV.001}, \texttt{SPLIT.001})}
 
 Every derived asset identifies source episodes, source sensors and intervals, reconstruction
 algorithm, software version, model/checkpoint hash, configuration, calibration revision, manual

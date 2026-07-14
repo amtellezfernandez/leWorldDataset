@@ -1,4 +1,6 @@
-\section{Limitations and Scope}
+\section{Limitations and Open Gates}
+\label{sec:limits}
+\lead{What the evidence supports, and, explicitly, what it does not yet support.}
 
 The current evidence is deliberately scoped. It is meant to expose hidden failure mechanisms, not
 to claim full robot-learning, game-engine, or autonomous-driving generality.
@@ -95,13 +97,16 @@ The current profile targets rigid tabletop manipulation with fixed-base single- 
 Humanoids, locomotion, deformables, fluids, and multi-agent environments require later profiles and
 new conformance fixtures.
 
-\paragraph{USS generality.}
-The paper title and framing are broader than robotics, but the strong empirical evidence is still
-the WorldEpisode robotics profile. The game-engine and autonomous-driving examples are deterministic
-pilots that test whether the same state-invariant vocabulary can express non-robotics drift. They
-do not prove prevalence or effectiveness on production game, simulation, or AV datasets. A stronger
-USS paper should add at least one public non-robotics corpus and an independently maintained
-adapter.
+\paragraph{Beyond robotics (future work).}
+All measured evidence in this paper is the WorldEpisode robotics profile; the broader Universal
+Spatial State framing is proposed, not demonstrated outside robotics. Two deterministic pilots only
+illustrate that the same vocabulary can express non-robotics drift. In a game-engine collision pilot,
+a client loads a stale arena collision asset after an authoritative patch, which the asset-digest,
+state-revision, and role checks catch. In an autonomous-driving clock pilot, camera and lidar logs
+deserialize correctly, but a 50 ms undeclared clock offset at 15 m/s creates a 0.75 m fusion error
+against a 0.20 m tolerance, which the declared clock mapping corrects to 0.0 m. These are
+illustrative pilots, not production game-engine or AV benchmark results. A stronger paper should add
+at least one public non-robotics corpus and an independently maintained adapter.\collabmark{C6}
 
 \paragraph{Offline leakage result.}
 The ArmnetBench experiment is an offline behavioral-cloning audit, not a physical rollout. Its
@@ -138,7 +143,7 @@ The converter, validator, and reports are executable, but independent implementa
 needed before the project should be treated as a mature interoperability standard. The clean-room
 reader reduces the risk that the fixtures only work through the reference SDK, but it is still an
 internal artifact. The next empirical step is to run the same protocol on larger multi-camera
-manipulation datasets and externally maintained adapters.
+manipulation datasets and externally maintained adapters.\collabmark{C4}
 
 \paragraph{Preflight distribution.}
 The repository packages a local \texttt{worldepisode} preflight CLI and Python API, but it is not

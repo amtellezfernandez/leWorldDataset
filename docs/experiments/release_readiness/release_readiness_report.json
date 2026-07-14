@@ -133,7 +133,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "paper/arxiv/main.tex (5590 bytes)",
+      "evidence": "paper/arxiv/main.tex (6769 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"
