@@ -236,3 +236,31 @@ The initial requirement namespace is:
 - `WE-Counterfactual`: entity-level decomposition and editable world deltas.
 
 The v1 target is rigid tabletop manipulation with fixed-base single- or dual-arm robots.
+
+## 9. Scope Boundaries: Non-Spatial State
+
+WorldEpisode is a sidecar contract for spatial state integrity. It is not a general episode ledger,
+and it MUST NOT be extended to carry every signal a hybrid system produces. The following classes of
+data belong in their native containers, referenced by URI or timestamp from WorldEpisode, not
+embedded in it:
+
+- **Continuous cognitive or reasoning traces** (chain-of-thought, planner logs, LLM/VLM token
+  streams) belong in standard text or structured logs. WorldEpisode records only the high-level
+  temporal milestone an event represents (Section 2.4), such as `subgoal completion` or
+  `failure detection`, referencing the log interval that explains it rather than embedding the
+  trace.
+- **Raw, high-frequency telemetry** (multi-camera video, full-rate joint/force streams, LIDAR)
+  belongs in the binding's native container (LeRobot, Rerun, MCAP), addressed through the
+  representation-role graph's `asset.uri` (Section 2.3), not duplicated into the sidecar.
+- **Digital-interface state** (UI clicks, barcode/RFID scans, WMS/PDA terminal inputs) is an
+  application-level log. When such an input changes control authority or task state in a way that
+  matters to the episode -- for example, an operator taking over from an autonomous policy, or a
+  scan confirming a handoff -- it SHOULD be represented minimally as an `intervention` or
+  `subgoal completion` event (Section 2.4) referencing the source log, not as a new custom field or
+  property profile.
+- **Dynamic resource arbitration** (which controller has authority over which actuator at time `t`)
+  is an action-channel concern. It is declared through the action-space contract's control-mode and
+  selection-policy fields (Section 3), not through a parallel arbitration schema.
+
+A binding MAY carry additional non-spatial fields for its own purposes. WorldEpisode conformance
+requirements never depend on those fields, and a conformant reader MUST be able to ignore them.

@@ -32,10 +32,14 @@ lineage. A container adapter either preserves those invariants, externalizes the
 loss, or fails conformance.
 
 \paragraph{A small semantic core with multiple bindings.}
-WorldEpisode has a small semantic core and multiple bindings: LeRobotDataset v3 is the
-policy-training view; Rerun is the multirate physical-data view; NCore is the sensor/reconstruction
-capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed simulation-world view;
-glTF or SPZ is the Gaussian asset view; and a reference directory is the conformance profile. OpenUSD
+WorldEpisode has a small semantic core and multiple bindings, evaluated at very different depths.
+LeRobotDataset v3 is the policy-training view and the only binding exercised with active,
+real-data experiments in this paper (conversion, leakage, and replay-timing results in
+Section~\ref{sec:evidence}). Rerun is the multirate physical-data view; NCore is the
+sensor/reconstruction capture view; MCAP/ROS is the raw log view; OpenUSD/SimReady is the composed
+simulation-world view; and glTF or SPZ is the Gaussian asset view --- these five are covered only as
+binding-retention pilots (Table~\ref{tab:binding-retention}), not active experiments. A reference
+directory is the conformance profile. OpenUSD
 standardizes how the 3D world is composed; WorldEpisode standardizes how a robot modifies state
 within that space over time without silent data corruption. The same invariant structure should
 generalize to a game-engine or AV profile, though only the robotics profile is implemented and

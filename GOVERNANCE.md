@@ -8,8 +8,8 @@ WorldEpisode is governed as an open interoperability profile, not as a single-pr
 
 - Specification text, schemas, examples, and paper-adjacent documentation in this repository: CC0
   1.0 Universal, as declared in `LICENSE`.
-- Future SDK and validator implementation code: Apache-2.0 by default unless a file states
-  otherwise.
+- SDK and validator implementation code (the `worldepisode` package): Apache License 2.0, as
+  declared in `LICENSE-APACHE`, unless a file states otherwise.
 - Dataset assets: explicit per-asset license in the asset descriptor.
 
 ## Process

@@ -151,20 +151,21 @@
 \maketitle
 
 \begin{abstract}
-Interactive spatial datasets can be locally valid and behaviorally wrong. A robot log can load while
-commands are replayed at command time instead of motor-effective time; a benchmark can report strong
-policy performance while the same reconstructed scene appears in both train and test; a simulator
-asset can render while its collision role, coordinate frame, or digest no longer matches the state
-under evaluation. We call this failure mode \emph{silent state drift}: the bytes are readable, but the
-state assumptions that make replay, training, or deployment meaningful have drifted.
+Interactive spatial datasets can be locally valid and behaviorally wrong: every file loads, but the
+behavior is not what it seems. A robot log can load while a command is replayed at the moment it was
+issued rather than the moment the motor actually executed it; a benchmark can report a strong policy
+score while the same reconstructed scene appears in both training and testing; a simulator asset can
+render correctly while its collision role, coordinate frame, or content digest no longer matches the
+state under evaluation. We call this failure mode \emph{silent state drift}: the bytes are readable,
+but the assumptions that make replay, training, or deployment meaningful have quietly drifted.
 
 This paper presents \emph{WorldEpisode}, an executable state-integrity contract for robot-learning
-datasets. Rather than adding another file format, it specifies the invariants an episode must
-preserve on top of existing containers such as LeRobotDataset, Rerun, MCAP, NCore, OpenUSD, and
-glTF: persistent identity, explicit frame and clock graphs, state and asset roles, transition and
-action semantics, temporal events, provenance, quality records, content-addressed assets, and
-lineage-aware splits (we call this general family of invariants Universal Spatial State, or USS, but
-evaluate only the robotics profile in this paper).
+datasets. Rather than adding another file format, it specifies five invariants that any episode must
+preserve. LeRobotDataset v3 is the container we evaluate in depth with real, downloaded public data;
+Rerun, MCAP, NCore, OpenUSD, and glTF are covered only as lighter binding-retention pilots. The five
+invariants are persistent identity, explicit frame and clock mappings, representation roles,
+temporal events, and provenance --- each backed by a machine-checkable rule (we call this general
+family Universal Spatial State, or USS, but evaluate only the robotics profile in this paper).
 
 We evaluate WorldEpisode on public robot-learning data. On ArmnetBench's public SO-101
 LeRobot release, a random episode split leaks every tested world lineage and yields 0.850 offline

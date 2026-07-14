@@ -41,26 +41,35 @@ missing.
 requirement that catches each. Requirement IDs are defined in Section~\ref{sec:questions}.}
 \label{tab:failure-motivation}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
-                >{\raggedright\arraybackslash}p{0.40\linewidth}
-                >{\raggedright\arraybackslash}p{0.22\linewidth}@{}}
+                >{\raggedright\arraybackslash}p{0.36\linewidth}
+                >{\raggedright\arraybackslash}p{0.26\linewidth}@{}}
 \toprule
 File still loads, but\ldots & Silent consequence & Requirement \\
 \midrule
 joint values use an undeclared unit & controller misreads the scale; policy misses the object &
-\texttt{ACTION.001} \\
+\texttt{ACTION.001} (declare units) \\
 command time is replayed as motor-effective time & replay and deployment drift off the real
-trajectory & \texttt{ACTION.002} \\
+trajectory & \texttt{ACTION.002} (declare timing) \\
 a random split shares a reconstructed scene across train and test & success is inflated and does not
-transfer & \texttt{SPLIT.001} \\
+transfer & \texttt{SPLIT.001} (lineage-disjoint splits) \\
 a real-to-sim export keeps appearance but drops the collision proxy & the policy collides with
-geometry it cannot see & \texttt{REP.001} \\
+geometry it cannot see & \texttt{REP.001} (declare asset role) \\
 camera and lidar logs are fused across clock domains & spatial fusion error beyond tolerance &
-\texttt{TIME.002} \\
+\texttt{TIME.002} (declare clock drift) \\
 an asset URI looks right but its content digest changed & the wrong geometry is used under evaluation
-& \texttt{ASSET.002} \\
+& \texttt{ASSET.002} (verify digest) \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Every requirement ID follows \texttt{AREA.number}: \texttt{ACTION} is the action-channel contract
+(units, frame, command/effective timing), \texttt{TIME}/\texttt{FRAME} are clocks and spatial frames,
+\texttt{REP} is representation role, \texttt{ASSET} is asset identity and digest, \texttt{SPLIT} is
+evaluation-split lineage, \texttt{WORLD}/\texttt{TRACE} are the world revision and its episode
+deltas, \texttt{PROV}/\texttt{QUALITY} are provenance and uncertainty, and \texttt{DATASET} is
+corpus scale; the number distinguishes rules within an area. Section~\ref{sec:questions} defines all
+of them. Once this prefix is known, every later \texttt{AREA.number} tag in the paper is readable on
+sight without flipping back to a table.
 
 Robotics is the profile implemented and evaluated here because it is the deepest current stress
 test: it combines real hardware, asynchronous control, multi-camera data, reconstructed worlds,
@@ -70,9 +79,12 @@ Existing formats solve important pieces of this chain. The LeRobot library verti
 robot learning from motor interfaces through dataset collection, storage, streaming, policies, and
 deployment~\citep{lerobot}. The current LeRobotDataset v3 layout stores high-frequency states,
 actions, and timestamps in Parquet, visual streams in MP4 shards, and episode indexing in metadata
-rather than filenames~\citep{lerobot_v3}. Rerun provides a physical-data layer and storage target
-for multimodal recordings. NCore documents explicit pose graphs and sensor conventions. OpenUSD,
-SimReady, glTF, and simulator-native formats describe composed worlds and assets. Gaussian splats
+rather than filenames~\citep{lerobot_v3}. LeRobotDataset v3 is therefore the container this paper
+evaluates in depth, with active experiments on real downloaded data; the remaining containers below
+are covered only as lighter binding-retention pilots in Section~\ref{sec:evidence}. Rerun provides a
+physical-data layer and storage target for multimodal recordings. NCore documents explicit pose
+graphs and sensor conventions. OpenUSD, SimReady, glTF, and simulator-native formats describe
+composed worlds and assets. Gaussian splats
 are also moving into standard asset containers through glTF's \texttt{KHR\_gaussian\_splatting}
 extension~\citep{khronos_gs, gltf_gs}. Recent real-to-sim systems such as RoboSnap and DROID-Sim
 show that Gaussian-splat environments can support trajectory replay, synthetic data generation, and

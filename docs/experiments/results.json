@@ -1246,10 +1246,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 152.972,
-      "digest_cache_resolution": 8.587,
-      "partition_pruning_queries": 0.175,
-      "resolver_routing": 57.092
+      "catalog_open_parse_and_index": 152.408,
+      "digest_cache_resolution": 6.256,
+      "partition_pruning_queries": 0.191,
+      "resolver_routing": 62.79
     }
   },
   "independent_fixture_check": {

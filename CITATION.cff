@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use Universal Spatial State or WorldEpisode in academic work, please cite this software release and the accompanying paper."
-title: "Universal Spatial State / WorldEpisode"
+message: "If you use WorldEpisode or its Universal Spatial State (USS) vocabulary in academic work, please cite this software release and the accompanying paper."
+title: "WorldEpisode"
 authors:
   - family-names: "Tellez Fernandez"
     given-names: "Alba"

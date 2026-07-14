@@ -1,15 +1,16 @@
-# USS / WorldEpisode Research Plan
+# WorldEpisode Research Plan
 
 Status: evidence roadmap.
 
 The paper should answer scientific questions, not only publish a schema.
 
-The paper-level frame is Universal Spatial State (USS): a runtime-neutral contract for detecting
-silent state drift across embodied and virtual spatial pipelines. WorldEpisode is the concrete
-robotics-heavy USS profile. The intended structure is universal theory with grounded proof:
-domain-agnostic invariants first, then robotics as the deepest current stress test, plus lightweight
-game-engine and autonomous-driving pilots to prevent the broader framing from being purely
-aspirational.
+WorldEpisode is a runtime-neutral contract for detecting silent state drift in robot-learning
+datasets, and the only domain with measured evidence. We call the general family of invariants
+Universal Spatial State (USS); the executed paper mentions USS once, as an aside, rather than
+building the paper-level frame around it, to avoid overclaiming generality beyond the measured
+robotics evidence. Robotics is the deepest current stress test; lightweight game-engine and
+autonomous-driving pilots are demoted to a future-work note rather than treated as part of the core
+argument.
 
 ## RQ1: Semantic Preservation Across Bindings
 
@@ -155,10 +156,10 @@ simulation while colliding with real foreground geometry when the collision role
 does not replace a RoboSnap/DROID-Sim rerun, but it states the methodological claim that visual
 reconstruction must be bound to action contracts and representation roles.
 
-## USS Generality Pilots
+## Generalization Beyond Robotics (Pilots)
 
-Use `tools/uss_state_drift_pilots.py` to keep the broader Universal Spatial State claim executable.
-The current pilots cover:
+Use `tools/uss_state_drift_pilots.py` to keep the broader Universal Spatial State claim executable
+as a future-work check, not a paper-level thesis. The current pilots cover:
 
 - a game-engine collision patch where a client asset remains structurally valid but no longer
   matches the authoritative collision state;

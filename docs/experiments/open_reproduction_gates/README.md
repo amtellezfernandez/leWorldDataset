@@ -44,7 +44,7 @@ Claim: famous benchmark published scores are inflated
 
 Status: `open_not_claimed`.
 
-Boundary: The paper may call famous benchmarks unaudited with respect to USS controls, but it must not call published scores inflated until a benchmark-specific rerun passes.
+Boundary: The paper may call famous benchmarks unaudited with respect to WorldEpisode's controls, but it must not call published scores inflated until a benchmark-specific rerun passes.
 
 Commands:
 

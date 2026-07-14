@@ -70,8 +70,9 @@ GATES: list[dict[str, Any]] = [
         "claim": "famous benchmark published scores are inflated",
         "status": "open_not_claimed",
         "paper_boundary": (
-            "The paper may call famous benchmarks unaudited with respect to USS controls, but it "
-            "must not call published scores inflated until a benchmark-specific rerun passes."
+            "The paper may call famous benchmarks unaudited with respect to WorldEpisode's "
+            "controls, but it must not call published scores inflated until a benchmark-specific "
+            "rerun passes."
         ),
         "commands": [
             {

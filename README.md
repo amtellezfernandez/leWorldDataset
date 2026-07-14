@@ -1,13 +1,11 @@
-# Universal Spatial State (USS) / WorldEpisode
+# WorldEpisode (Universal Spatial State)
 
-Universal Spatial State (USS) is the paper-level contract for diagnosing and correcting silent
-state drift across embodied and virtual spatial pipelines. It targets failures where local files
-still load, but behavior is invalid because state ancestry, asset identity, frame/clock mappings,
-representation roles, transition semantics, or provenance drifted.
-
-`WorldEpisode` is the robotics-heavy USS reference profile in this repository. It binds
-robot-learning episodes to immutable, versioned, replayable 3D worlds and provides the concrete
-schemas, validator, converters, and experiments used by the paper.
+`WorldEpisode` is an executable state-integrity contract for diagnosing and correcting silent state
+drift in robot-learning datasets. It targets failures where local files still load, but behavior is
+invalid because state ancestry, asset identity, frame/clock mappings, representation roles,
+transition semantics, or provenance drifted. We call the general family of invariants Universal
+Spatial State (USS); WorldEpisode is the robotics profile implemented and evaluated in this
+repository, and the only domain with measured evidence.
 
 The goal is not to create another monolithic file format. The goal is to define the semantic
 contract that can be bound into LeRobotDataset, Rerun, NCore, MCAP, OpenUSD, glTF Gaussian splats,
@@ -15,13 +13,12 @@ GSDF-style assets, game-engine telemetry, autonomous-driving logs, object storag
 package layout. Large corpora are described through a dataset manifest and index layer, not by
 treating a folder tree as the semantic API.
 
-OpenUSD standardizes how the 3D world is composed, but USS standardizes how any agent, whether a
-physical robot, a video game character, or an autonomous vehicle, modifies state within that space
-over time without silent data corruption.
+OpenUSD standardizes how the 3D world is composed; WorldEpisode standardizes how a robot modifies
+state within that space over time without silent data corruption.
 
 ## Paper
 
-- [WorldEpisode.pdf](WorldEpisode.pdf) - current USS / WorldEpisode paper build
+- [WorldEpisode.pdf](WorldEpisode.pdf) - current WorldEpisode paper build
 - [arXiv LaTeX source](paper/arxiv/main.tex)
 
 ## Repository Layout
@@ -37,7 +34,7 @@ over time without silent data corruption.
 
 ## Core Position
 
-USS is:
+WorldEpisode is:
 
 - **storage-neutral**: it can be serialized in LeRobot, Rerun, NCore, MCAP, or a reference package;
 - **representation-neutral**: appearance and state can use splats, meshes, NeRFs, point clouds, collision proxies, telemetry streams, or future representations;
@@ -48,9 +45,9 @@ USS is:
 - **dataset-scale**: production corpora use globally scoped IDs, shard catalogs, materialized
   indexes, resolver registries, and append-only dataset snapshots.
 
-WorldEpisode instantiates USS for robot-learning episodes. Gaussian splats are a high-value profile
-and demonstration, not the core claim. The stronger claim is persistent, verifiable spatial-state
-interoperability, with robotics used as the hardest current stress test.
+WorldEpisode is the executable robotics instantiation of the broader USS vocabulary. Gaussian splats
+are a high-value profile and demonstration, not the core claim. The stronger claim is persistent,
+verifiable spatial-state interoperability, with robotics used as the hardest current stress test.
 
 ## Evidence-Gated RFC Artifacts
 
@@ -424,4 +421,6 @@ as one profile within the broader USS spatial-state norm.
 ## License
 
 Specification text, schemas, examples, and paper-adjacent documentation are released under CC0 1.0
-Universal. Dataset assets and future SDK code should declare their own licenses.
+Universal (`LICENSE`). The `worldepisode` reference validator, preflight CLI, and Python API are
+released under Apache License 2.0 (`LICENSE-APACHE`). Dataset assets should declare their own
+licenses.

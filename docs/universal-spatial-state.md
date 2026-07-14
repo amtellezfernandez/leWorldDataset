@@ -1,9 +1,11 @@
-# Universal Spatial State
+# Universal Spatial State (Framing Note)
 
-Status: framing note for the paper.
+Status: framing note; superseded as the paper's primary framing (see below).
 
-Universal Spatial State (USS) is the umbrella contract. WorldEpisode is the robotics-heavy profile
-implemented in this repository.
+WorldEpisode is the robotics profile implemented and evaluated in this repository, and the only
+domain with measured evidence. Universal Spatial State (USS) is the umbrella vocabulary its
+invariants generalize toward; the paper mentions USS once, as an aside, rather than as a co-equal
+claim. This note maps that vocabulary for possible future non-robotics profiles.
 
 The shift from "episode" to "state" changes the scope. An episode is usually a retrospective
 recording. A state contract can also describe live synchronization between a simulator, a physical
@@ -29,6 +31,10 @@ over time without silent data corruption.
 | Replay assumptions | Runtime accountability | The solver, timing, adapter, and tolerance assumptions under which a runtime result is meaningful. |
 
 ## Paper Strategy
+
+This was the original plan; the executed paper instead leads with WorldEpisode throughout and
+demotes points 1 and 4 below to a single future-work note (Limitations, "Beyond robotics"), to avoid
+overclaiming generality beyond the measured robotics evidence.
 
 The paper should use a universal theory and grounded proof structure:
 

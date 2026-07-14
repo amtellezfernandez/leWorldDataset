@@ -68,7 +68,7 @@
           "purpose": "enforce the score-inflation proof contract"
         }
       ],
-      "paper_boundary": "The paper may call famous benchmarks unaudited with respect to USS controls, but it must not call published scores inflated until a benchmark-specific rerun passes.",
+      "paper_boundary": "The paper may call famous benchmarks unaudited with respect to WorldEpisode's controls, but it must not call published scores inflated until a benchmark-specific rerun passes.",
       "required_artifacts": [
         "benchmark-specific WorldEpisode conversion",
         "lineage/timing audit proving the corrected protocol removes the failure",
