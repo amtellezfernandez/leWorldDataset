@@ -408,6 +408,48 @@ def replace_or_append_column(pa: Any, table: Any, name: str, values: list[Any], 
     return table.append_column(name, array)
 
 
+def aggregate_episode_stats(
+    source_rows: dict[int, dict[str, Any]],
+    source_episodes: list[int],
+    feature_name: str,
+) -> dict[str, Any]:
+    import numpy as np
+
+    stat_names = ("min", "max", "mean", "std", "count", "q01", "q10", "q50", "q90", "q99")
+    values = {
+        stat: np.asarray(
+            [
+                source_rows[episode][f"stats/{feature_name}/{stat}"]
+                for episode in source_episodes
+            ],
+            dtype=np.float64,
+        )
+        for stat in stat_names
+    }
+    counts = values["count"]
+    means = values["mean"]
+    while counts.ndim < means.ndim:
+        counts = np.expand_dims(counts, axis=-1)
+    total_count = counts.sum(axis=0)
+    total_mean = (means * counts).sum(axis=0) / total_count
+    total_variance = (
+        ((values["std"] ** 2) + (means - total_mean) ** 2) * counts
+    ).sum(axis=0) / total_count
+    aggregate = {
+        "min": values["min"].min(axis=0),
+        "max": values["max"].max(axis=0),
+        "mean": total_mean,
+        "std": np.sqrt(total_variance),
+        "count": total_count,
+    }
+    for quantile in ("q01", "q10", "q50", "q90", "q99"):
+        aggregate[quantile] = (values[quantile] * counts).sum(axis=0) / total_count
+    return {
+        stat: np.atleast_1d(value).tolist()
+        for stat, value in aggregate.items()
+    }
+
+
 def materialize_package(
     package_dir: Path,
     source_root: Path,
@@ -444,6 +486,15 @@ def materialize_package(
     info["video_path"] = plan["video_path_template"]
     write_json(info_path, info)
 
+    stats_path = package_dir / "meta" / "stats.json"
+    stats = load_json(stats_path)
+    stats[camera_key] = aggregate_episode_stats(
+        source_video_rows,
+        source_episodes,
+        camera_key,
+    )
+    write_json(stats_path, stats)
+
     required_paths = next(
         item["video_paths"]
         for item in plan["packages"]
@@ -473,6 +524,7 @@ def materialize_package(
         "video_asset_count": len(required_paths),
         "episodes": descriptor(package_meta_path),
         "info": descriptor(info_path),
+        "stats": descriptor(stats_path),
         "links": links,
     }
 
@@ -495,7 +547,12 @@ def materialize(
     verified = download_and_verify_assets(plan, source_root, download=download)
     _pa, pq = import_pyarrow()
     camera_key = plan["camera_key"]
-    columns = ["episode_index", *video_columns(camera_key)]
+    stat_names = ("min", "max", "mean", "std", "count", "q01", "q10", "q50", "q90", "q99")
+    columns = [
+        "episode_index",
+        *video_columns(camera_key),
+        *(f"stats/{camera_key}/{stat}" for stat in stat_names),
+    ]
     source_episode_path = source_root / "meta" / "episodes" / "chunk-000" / "file-000.parquet"
     source_table = pq.read_table(source_episode_path, columns=columns)
     source_rows = {
