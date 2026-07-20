@@ -104,3 +104,10 @@ def test_comparison_rejects_runtime_initial_state_mismatch():
         assert "initial states" in str(exc)
     else:
         raise AssertionError("mismatched initial states should fail")
+
+
+def test_numeric_normalization_is_stable_across_libm_scale_noise():
+    left = {"metric": 40.59804501386309, "nested": [0.009006994767989345]}
+    right = {"metric": 40.598045013859824, "nested": [0.009006994767988991]}
+
+    assert MODULE.normalize_numeric(left) == MODULE.normalize_numeric(right)

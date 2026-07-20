@@ -67,6 +67,19 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def normalize_numeric(payload: Any) -> Any:
+    """Stabilize derived floats across supported Python/libm builds."""
+    if isinstance(payload, dict):
+        return {key: normalize_numeric(value) for key, value in payload.items()}
+    if isinstance(payload, list):
+        return [normalize_numeric(value) for value in payload]
+    if isinstance(payload, float):
+        if not math.isfinite(payload):
+            raise ContactReplayError("derived analysis contains a non-finite value")
+        return float(f"{payload:.12g}")
+    return payload
+
+
 def relative(path: Path) -> str:
     try:
         return str(path.resolve().relative_to(ROOT))
@@ -1033,10 +1046,12 @@ def execute_protocol(protocol_path: Path, output_dir: Path) -> dict[str, Any]:
                 "log": relative(log_path),
             }
 
-    analysis = compare_runtime_reports(
-        protocol,
-        runtime_reports["mujoco"],
-        runtime_reports["genesis"],
+    analysis = normalize_numeric(
+        compare_runtime_reports(
+            protocol,
+            runtime_reports["mujoco"],
+            runtime_reports["genesis"],
+        )
     )
     preregistration_check = bool(preregistration["committed_before_required_execution"])
     analysis["acceptance"]["checks"]["protocol_committed_before_required_execution"] = (
@@ -1093,10 +1108,12 @@ def check_committed_report(
         if not path.is_file() or sha256_file(path) != artifact.get("sha256"):
             raise ContactReplayError(f"{runtime_id} runtime artifact is missing or stale")
         runtime_reports[runtime_id] = load_json(path)
-    expected_analysis = compare_runtime_reports(
-        protocol,
-        runtime_reports["mujoco"],
-        runtime_reports["genesis"],
+    expected_analysis = normalize_numeric(
+        compare_runtime_reports(
+            protocol,
+            runtime_reports["mujoco"],
+            runtime_reports["genesis"],
+        )
     )
     expected_analysis["acceptance"]["checks"][
         "protocol_committed_before_required_execution"
