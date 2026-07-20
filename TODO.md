@@ -61,6 +61,13 @@ baseline.
     with a 95% CI excluding zero across at least two controller configurations.
 
 - [ ] **Add contact-rich cross-simulator replay (`REPLAY.001`).**
+  - Preregistered protocol: `docs/experiments/contact_rich_replay/protocol.json` fixes two tasks,
+    16 seeded initial states per task, runtime versions, kinematic action trajectories, metrics,
+    bootstrap procedure, claim boundary, and completion checks before the required runtime run.
+    `tools/contact_rich_cross_sim_replay.py` keeps MuJoCo and Genesis execution in separate
+    processes and derives every comparison from retained raw trajectories and contact traces.
+  - Execute the committed protocol in both pinned runtimes; do not tune task geometry, actions,
+    outcomes, or analysis after inspecting the required run.
   - Use the same world revision, initial state, action contract, and tolerance envelope in MuJoCo and
     Genesis; add Isaac Sim or SAPIEN only after the core two-runtime protocol is stable.
   - Measure object trajectory error, contact precision/recall/F1, grasp-state agreement, final pose

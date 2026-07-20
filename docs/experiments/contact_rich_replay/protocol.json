@@ -1,0 +1,196 @@
+{
+  "acceptance": {
+    "minimum_contact_samples_per_runtime_task": 1,
+    "minimum_scenarios_per_task": 8,
+    "required_runtime_ids": [
+      "mujoco",
+      "genesis"
+    ],
+    "required_task_count": 2
+  },
+  "analysis": {
+    "bootstrap_resamples": 20000,
+    "bootstrap_seed": 2027,
+    "confidence_level": 0.95,
+    "contact_comparison": {
+      "genesis_role": "comparison",
+      "method": "frame_and_channel_aligned_binary_contact_samples",
+      "mujoco_role": "reference_not_physical_ground_truth"
+    },
+    "object_trajectory_error": "root_mean_square_euclidean_position_error_m",
+    "orientation_error": "quaternion_geodesic_angle_deg",
+    "uncertainty_unit": "initial_state_scenario"
+  },
+  "claim_boundary": "This protocol measures agreement between two simulators under the same declared primitive world, initial states, kinematic actor poses, and sample clock. Neither simulator is physical ground truth, and the protocol does not claim equivalent physics.",
+  "profile": "worldepisode-contact-rich-cross-simulator-replay-protocol-0.1",
+  "protocol_id": "REPLAY.001.contact-rich.v1",
+  "requirements": [
+    "REPLAY.001",
+    "ACTION.001",
+    "ACTION.002",
+    "TIME.002",
+    "WORLD.001"
+  ],
+  "runtime_environment": {
+    "genesis": {
+      "backend": "cpu",
+      "genesis_world_version": "1.2.2",
+      "precision": "64",
+      "torch_version": "2.8.0+cpu"
+    },
+    "mujoco": {
+      "mujoco_version": "3.3.7",
+      "precision": "float64"
+    },
+    "numpy_version": "2.4.6",
+    "python_version": "3.11"
+  },
+  "scenario_generation": {
+    "method": "independent_seeded_uniform_draws_per_task",
+    "scenario_count_per_task": 16,
+    "seed": 2027
+  },
+  "simulation": {
+    "actor_contract": "sampled_kinematic_pose",
+    "gravity_m_s2": [
+      0.0,
+      0.0,
+      -9.81
+    ],
+    "object_density_kg_m3": 500.0,
+    "settle_steps": 50,
+    "surface_friction": 0.5,
+    "time_step_s": 0.005
+  },
+  "status": "preregistered_before_required_runtime_execution",
+  "tasks": [
+    {
+      "action": {
+        "hold_steps": 40,
+        "move_steps": 300,
+        "pusher_end_m": [
+          0.36,
+          0.0,
+          0.035
+        ],
+        "pusher_start_m": [
+          -0.12,
+          0.0,
+          0.035
+        ],
+        "trajectory": "cubic_smoothstep"
+      },
+      "actors": [
+        {
+          "actor_id": "pusher",
+          "size_m": [
+            0.04,
+            0.16,
+            0.07
+          ]
+        }
+      ],
+      "contact_channels": [
+        "pusher"
+      ],
+      "initial_state_distribution": {
+        "object_x_offset_m": [
+          -0.01,
+          0.01
+        ],
+        "object_y_offset_m": [
+          -0.025,
+          0.025
+        ],
+        "object_yaw_deg": [
+          -5.0,
+          5.0
+        ]
+      },
+      "object": {
+        "nominal_position_m": [
+          0.0,
+          0.0,
+          0.0305
+        ],
+        "size_m": [
+          0.06,
+          0.06,
+          0.06
+        ]
+      },
+      "outcome": {
+        "maximum_abs_y_m": 0.1,
+        "minimum_final_x_m": 0.3,
+        "type": "final_object_position"
+      },
+      "task_id": "straight_push"
+    },
+    {
+      "action": {
+        "close_steps": 160,
+        "finger_center_x_m": 0.0,
+        "finger_center_z_m": 0.035,
+        "final_half_separation_m": 0.035,
+        "hold_steps": 80,
+        "initial_half_separation_m": 0.1,
+        "trajectory": "cubic_smoothstep"
+      },
+      "actors": [
+        {
+          "actor_id": "left_finger",
+          "size_m": [
+            0.14,
+            0.02,
+            0.07
+          ]
+        },
+        {
+          "actor_id": "right_finger",
+          "size_m": [
+            0.14,
+            0.02,
+            0.07
+          ]
+        }
+      ],
+      "contact_channels": [
+        "left_finger",
+        "right_finger"
+      ],
+      "grasp_definition": "simultaneous_left_and_right_object_contact",
+      "initial_state_distribution": {
+        "object_x_offset_m": [
+          -0.015,
+          0.015
+        ],
+        "object_y_offset_m": [
+          -0.004,
+          0.004
+        ],
+        "object_yaw_deg": [
+          -3.0,
+          3.0
+        ]
+      },
+      "object": {
+        "nominal_position_m": [
+          0.0,
+          0.0,
+          0.0305
+        ],
+        "size_m": [
+          0.06,
+          0.06,
+          0.06
+        ]
+      },
+      "outcome": {
+        "evaluation_window_steps": 40,
+        "minimum_grasp_fraction": 0.75,
+        "type": "sustained_parallel_jaw_capture"
+      },
+      "task_id": "parallel_jaw_capture"
+    }
+  ]
+}
