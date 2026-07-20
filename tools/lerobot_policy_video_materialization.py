@@ -4,9 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import os
+import platform
+import resource
+import shutil
+import socket
+import time
 from pathlib import Path
 from typing import Any
 
@@ -535,7 +541,11 @@ def materialize(
     plan: dict[str, Any],
     *,
     download: bool,
+    repository_commit: str,
 ) -> dict[str, Any]:
+    started_utc = dt.datetime.now(dt.timezone.utc).isoformat()
+    started = time.perf_counter()
+    usage_before = resource.getrusage(resource.RUSAGE_SELF)
     errors = validate_asset_plan(plan, require_current_script=True)
     if errors:
         raise ValueError("; ".join(errors))
@@ -569,6 +579,11 @@ def materialize(
         )
         for package_dir in package_directories(packages_root)
     ]
+    usage_after = resource.getrusage(resource.RUSAGE_SELF)
+    wall_time = time.perf_counter() - started
+    user_cpu = usage_after.ru_utime - usage_before.ru_utime
+    system_cpu = usage_after.ru_stime - usage_before.ru_stime
+    disk = shutil.disk_usage(source_root)
     return {
         "profile": REPORT_PROFILE,
         "status": "front_camera_materialized",
@@ -586,6 +601,38 @@ def materialize(
         "packages": packages,
         "script": relative(Path(__file__)),
         "script_sha256": sha256_file(Path(__file__)),
+        "execution": {
+            "started_utc": started_utc,
+            "finished_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+            "repository_commit": repository_commit,
+            "command": (
+                "uv run --with pyarrow --with huggingface-hub "
+                "python tools/lerobot_policy_video_materialization.py --materialize"
+                + (" --download" if download else "")
+            ),
+            "host": {
+                "hostname": socket.gethostname(),
+                "uname": " ".join(platform.uname()),
+                "machine": platform.machine(),
+                "cpu_logical_count": os.cpu_count(),
+                "total_ram_bytes": int(
+                    os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+                ),
+                "storage_total_bytes": disk.total,
+                "storage_free_bytes": disk.free,
+            },
+            "compute": {
+                "wall_time_seconds": round(wall_time, 6),
+                "user_cpu_seconds": round(user_cpu, 6),
+                "system_cpu_seconds": round(system_cpu, 6),
+                "cpu_utilization_percent": round(
+                    100.0 * (user_cpu + system_cpu) / wall_time,
+                    6,
+                ),
+                "max_rss_bytes": int(usage_after.ru_maxrss * 1024),
+            },
+            "runner": "remote_dgx_spark_uv",
+        },
         "claim_boundary": (
             "The compact split packages now expose one source camera with digest-verified source "
             "media. This establishes loader and training-input compatibility only; it does not "
@@ -609,6 +656,7 @@ def main() -> int:
         default=DEFAULT_MATERIALIZATION_REPORT,
     )
     parser.add_argument("--download", action="store_true")
+    parser.add_argument("--repository-commit", default="not_available")
     parser.add_argument("--strict", action="store_true")
     args = parser.parse_args()
 
@@ -645,6 +693,7 @@ def main() -> int:
         source_root,
         plan,
         download=args.download,
+        repository_commit=args.repository_commit,
     )
     write_json(args.materialization_report, report)
     print(

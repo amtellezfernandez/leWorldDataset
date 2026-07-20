@@ -227,7 +227,7 @@
   ],
   "profile": "worldepisode-lerobot-video-asset-plan-0.1",
   "script": "tools/lerobot_policy_video_materialization.py",
-  "script_sha256": "f55bd17f2d038d6ecd42093b3e6763dfd10b6c5c81f17a481b20331e0a96f85e",
+  "script_sha256": "3d3cf78b3ea333db3a7e44a516727731b9041bdad154c895d57a1baabc0d9dfc",
   "source": {
     "episodes": {
       "path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
