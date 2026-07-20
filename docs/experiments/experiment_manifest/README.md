@@ -13,6 +13,7 @@ Principal paper experiments and the shared controlled suite. Derived paper rende
 | `lerobot_conversion_scale` | measured | lerobot/svla_so101_pickplace@f641879e2217, lerobot/pusht@7628202a2180, armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7 | 48.24 | 393.3 | `docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log` |
 | `lerobot_multitrajectory_timing` | measured_partial_action_002 | armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7 | 1.20 | 247.6 | `docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log` |
 | `lerobot_act_diffusion_compatibility_preflight` | blocked_missing_required_observation_modality | armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7 | 10.61 | 894.4 | `docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log` |
+| `lerobot_act_diffusion_front_camera_smoke` | training_step_smoke_passed | armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7 | 24.80 | 2464.6 | `docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log` |
 
 ## Validation
 

@@ -1,6 +1,6 @@
 # LeRobot ACT/Diffusion Leakage Gate
 
-Status: blocked_missing_required_observation_modality
+Status: ready_for_policy_training
 
 This directory is the executable gate for the reviewer concern that the leakage result must be
 tested with stronger LeRobot-native policies. It is intentionally not marked closed until ACT or
@@ -34,6 +34,16 @@ Physical package boundary: Physical split packages are committed compact low-dim
 
 This probe validates the committed low-dimensional package loader and the pinned LeRobot ACT/Diffusion model-construction path. It is not a policy result. Both policies stop before training because joint proprioception alone does not satisfy their observation contract. Source videos were not mirrored, and joint positions must not be relabeled as environment state.
 
+## Front-Camera Vision Smoke
+
+- Vision smoke report: `docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json`
+- Current input descriptors match the probe: True
+- Image features: ['observation.images.front']
+- ACT/Diffusion completed a training step: True
+- Probe status: training_step_smoke_passed
+
+This one-step probe validates source-image decoding and pinned ACT/Diffusion training-input compatibility. A completed optimization step is not a policy-quality or rollout result.
+
 ## Jobs
 
 | Job | Policy | Split | Local train package |
@@ -45,11 +55,10 @@ This probe validates the committed low-dimensional package loader and the pinned
 
 ## Run
 
-1. Materialize source images or a semantically valid environment-state input and regenerate the split packages.
-2. Rerun the compatibility audit until both policies complete the one-step smoke test.
-3. Run `bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh` in an environment with LeRobot installed.
-4. Evaluate each checkpoint with the offline action-evaluation contract.
-5. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
-6. Save the required result files listed per job.
+1. Run `bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh` in an environment with LeRobot installed; it
+   materializes the pinned front camera before training.
+2. Evaluate each checkpoint with the offline action-evaluation contract.
+3. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
+4. Save the required result files listed per job.
 
 The gate remains open while `policy_gate_report.json` has `"pass": false`.

@@ -1,0 +1,59 @@
+started_utc=2026-07-20T15:48:57Z
+host_uname=Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+machine=aarch64
+cpu_logical_count=20
+total_ram_bytes=130663170048
+storage_total_bytes=3937360351232
+storage_free_bytes=324410212352
+gpu_info=NVIDIA GB10, 580.159.03, [N/A]
+git_commit=ce90f3e062656194f8eecec5f74f8820b177e6f7
+code_sha256=ad005fb27a5fff8b50219cb3a23df7195d9941fe0a369180022e777f46d7b0ed
+converter_code_sha256=db7546d06ab885d7e024bc47cb980ee9776b380cfe3bcab57f54eaea530f61f5
+command=uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required
+{
+  "aggregate": {
+    "action_row_count": 43601,
+    "dataset_count": 3,
+    "episode_count": 271,
+    "maximum_numerical_error": 0.0,
+    "maximum_worker_rss_bytes": 412426240,
+    "multi_camera_dataset_count": 2,
+    "orchestrator_wall_time_seconds": 48.11816880101105,
+    "semantic_loss_field_count": 4,
+    "semantic_loss_occurrence_count": 1084,
+    "source_input_bytes": 5485027,
+    "state_row_count": 43601,
+    "temporary_output_bytes": 18354903,
+    "worker_wall_time_seconds": 47.851019216061104
+  },
+  "artifacts": {
+    "json": "docs/experiments/lerobot_conversion_scale/scale_report.json",
+    "markdown": "docs/experiments/lerobot_conversion_scale/README.md"
+  },
+  "errors": [],
+  "status": "pass"
+}
+	Command being timed: "env UV_NO_PROGRESS=1 uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required"
+	User time (seconds): 45.72
+	System time (seconds): 1.75
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:48.24
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 402760
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 193706
+	Voluntary context switches: 52532
+	Involuntary context switches: 728
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 57456
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+finished_utc=2026-07-20T15:49:46Z

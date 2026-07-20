@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 126,
+    "entry_count": 135,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 98,
-    "release_script_count": 28
+    "public_evidence_count": 105,
+    "release_script_count": 30
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "33580770468a2f7e1a1495108df323ba604fc7ba36f1701980b3800c823e0658"
+      "sha256": "dd74f362cc53b48f086cce3741682d261e4a8b505978b908cbdf758d29fa36a2"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "5f85d61a9d3390479861c0d4200b21fe41ba4d049ec0795fe58071813454acbe"
+      "sha256": "d4a7becbe3214107ae0ab5489ac5861532b3e81df046a354d39a51dfd78e26b5"
     },
     {
       "category": "public_evidence",
@@ -61,7 +61,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "TODO.md",
-      "sha256": "ce285b2cfc1e3eb9a923a8dac8df53ca9c8decf422504b6ccaf9626e7996a287"
+      "sha256": "f3fff9061925c50360f23001db10221b60405438b4c1025afb4bf1b19aa575f1"
     },
     {
       "category": "public_evidence",
@@ -133,7 +133,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/generated/experiment_values.tex",
-      "sha256": "eccb88390b7fa9f8b8ec05c7996a095cc7e166cde207256b5b30897aa36186d6"
+      "sha256": "5b5e36b20af5016de94987ccd88b1298750a22afa6f20f64ef0892fd995656ae"
     },
     {
       "category": "public_evidence",
@@ -187,7 +187,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "1c9af15e517a37ad93b757ed28a0f83137da690b7beaa32ff906aea31951f8d2"
+      "sha256": "c014baad4b024bd3d9fd584a0c35e3c5104347c2b18576e5d19f92ffc4941458"
     },
     {
       "category": "public_evidence",
@@ -205,7 +205,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "2f78090e38fc6cec1fe467a260fb9c2eaa4f7261bd6a9c784ad431df58408f90"
+      "sha256": "2ed32f34daba086ba85fc8089326eb2d1df1530b7f36be550abe23f7820784ed"
     },
     {
       "category": "public_evidence",
@@ -223,7 +223,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/appendix.tex",
-      "sha256": "56e66f428a33ff6ac31b50c50a63c6a366baa36835740353743dadbea47d69de"
+      "sha256": "69df2d07f5ec274324779d1334f6f14df14f34fca789c6a7258561c2b23b0d7d"
     },
     {
       "category": "public_evidence",
@@ -280,7 +280,7 @@
         "(Partition-pruning query time: )[0-9]+(?:\\.[0-9]+)?( ms)"
       ],
       "path": "docs/experiments/RESULTS.md",
-      "sha256": "7cacdfa6ac710855c26ae92964936b3c4e2910da5743b4442284560f8922a409"
+      "sha256": "5891919fabedd6f26a0ff641701ce07f860f1d4d0a574ba3edb4a8a64fa79b99"
     },
     {
       "category": "public_evidence",
@@ -291,7 +291,7 @@
         "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
       ],
       "path": "docs/experiments/results.json",
-      "sha256": "a74aa8d45231d612e848cb3d1b9389bf994715079817e41db3ad2ef35dbc2986"
+      "sha256": "a3b5d0c4a353487cfe6ec7ab657769cf55f19423b84cedf052373f23ab4d68b0"
     },
     {
       "category": "public_evidence",
@@ -322,7 +322,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
-      "sha256": "5599cd231d8284b00739a14e22597d4a86d40f638b41f3113784e2d8535f87f8"
+      "sha256": "77e402376142bd6dca7e24702e6545e6f29e18a3f44a886a289e40ccd18284a4"
     },
     {
       "category": "public_evidence",
@@ -349,7 +349,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
-      "sha256": "8b00495fc1b1d3596e4878c854f5564790e521a2c27ae96b942d5ebd996838c5"
+      "sha256": "0034253a0d20c76a3b7907ec003d7f2621348cc963d3e5ead7507ab4d69b5b03"
     },
     {
       "category": "public_evidence",
@@ -502,7 +502,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/lerobot_policy_gate/README.md",
-      "sha256": "57e2387c2bad892cdeac6d61676cfd665f1e2cb365dd9c239baacd224a9bbd91"
+      "sha256": "0964e50f29800dbcabbbeb413dc7aa3ffebf0e29d9e7e8f18c49cdd2ea289a8f"
     },
     {
       "category": "public_evidence",
@@ -511,7 +511,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
-      "sha256": "621a0527964d0c8644c8399b150aaeea3207d104278c8cc652aabcd192da2e25"
+      "sha256": "1e123be1435906d59aaad1bb9a6798c5641a163699832f524111c64f40dccd13"
     },
     {
       "category": "public_evidence",
@@ -521,6 +521,42 @@
       "normalizers_applied": [],
       "path": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
       "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+      "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+      "sha256": "ab3a8d94bc9d00bd412017945f67a6dd8659cf76a8aba0e3a7c5ef87ca85c3ca"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+      "sha256": "80aa828efc82de67d8aebee6e555b217336ea8942d4ef2ab41db2c04daccc1ef"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json",
+      "sha256": "4d93015ae858ffc98156f01eed65b24e353ac3ba33ec1bb1292e04e90cb5f3f0"
     },
     {
       "category": "public_evidence",
@@ -556,7 +592,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
-      "sha256": "bdb7ab078ce2f66f08d4dd39114c6ba55197e03e5c29d5f0c003c9aafb018b06"
+      "sha256": "c04e5ec159cd73d51338042f561af1f4bbd5d0bc4cd441af5b94d3198c65abc0"
     },
     {
       "category": "public_evidence",
@@ -565,7 +601,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/README.md",
-      "sha256": "7ca4cdd86b47235e649610dd7c68abbd8325b503819ba2628d529d06dcabc1de"
+      "sha256": "339fe0bef8376488066ced7109b71f63e6cf977e32a712e1a7c9a4debd006094"
     },
     {
       "category": "public_evidence",
@@ -574,7 +610,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/experiment_manifest.json",
-      "sha256": "fdd5de833175c39cb303514c23519ca46dfdac69ef8701597f8464d6e2006862"
+      "sha256": "fd5f6bb0bff26ff024aa740949559a5695d728acdbd81002df57fa328e276fda"
     },
     {
       "category": "public_evidence",
@@ -592,7 +628,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/citation_source_audit/citation_source_audit.json",
-      "sha256": "6e8cdc8524c6a75841ad52dc0750bc088cf8421620ff8bdfbc8ac3e9622104cb"
+      "sha256": "05336e0e759916fe6677fb091ba16627c0ca78acdf03210e69780d2a2d5514c1"
     },
     {
       "category": "public_evidence",
@@ -601,7 +637,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/third_party_asset_audit/README.md",
-      "sha256": "29f7a9fff385c6169b08782bec0624a1b0ef0c714d7c403e6efc4a2085b54ab5"
+      "sha256": "e5ddb2bf749c70869d5bce2c5a3573aa1110dd773ca5133a019e844dad96fe73"
     },
     {
       "category": "public_evidence",
@@ -610,7 +646,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/third_party_asset_audit/asset_audit.json",
-      "sha256": "5b7e046488ee1a003e9f5dd8e3702d62d6e73417e7863ca37dfe92b65722162e"
+      "sha256": "82daf44c34f6590a923bbc7df002221cc462fa5a0b8fe1f185d06add1985419d"
     },
     {
       "category": "public_evidence",
@@ -619,7 +655,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "28ff6bd6d90c1e634fb080e2e14f6743a2a0da469766cdb1ac615cc55e14ec79"
+      "sha256": "05f4121609ec9db88ab1dd452a93119c137e5c2ab83f7722b1cf6e4622e239cb"
     },
     {
       "category": "public_evidence",
@@ -628,7 +664,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "53901b0e2388addad37f54e9707afec4dfa5b62ad4a54b2f78c84347469f78c8"
+      "sha256": "b00d68d65e122a0bfa561c913d17330649e12d38524ba8c582df48d800014007"
     },
     {
       "category": "public_evidence",
@@ -726,8 +762,35 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "docs/experiments/run_logs/lerobot_policy_video_materialization_dgx_spark.log",
+      "sha256": "18adffd7836e789837ee735cd5c28cad68eca21452918be5f5d9b3c29330f869"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+      "sha256": "6eda7135014b60a5486340f5f16d79cbc5714f8f426744f3f0e8a3fc544f0ed3"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log",
+      "sha256": "05870f3d612be3b4fb6755dfb9b612e82a091463f2b012c43700a56741328eb9"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "docs/experiments/run_logs/paper_build_local.log",
-      "sha256": "090d651b9757e65eb21f0accde361032d650998139a550c334114a95c6fc3afb"
+      "sha256": "4fbd915d9121dca297265be0896ecd2342f123ec3f81bfe690b0d788128ef28a"
     },
     {
       "category": "public_evidence",
@@ -880,7 +943,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reviewer-concern-matrix.md",
-      "sha256": "2b393aa3eb37c0bc001e6cf221ffb7d5b4b2e1788169e15ecdf48ffe4257c347"
+      "sha256": "56e0ef96764fa7b5a4580ed1e766602d1a2df8cb781a6a1f60d743407450dc1c"
     },
     {
       "category": "public_evidence",
@@ -925,7 +988,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "cab3cc76248cdb9341765bb1b3f194b40a26a50e1358a7824699df0a54fa2d05"
+      "sha256": "1f93ce9fe4b242d6b81c3ca09517c3d1e54cea0b2aa862ad9e5cd740ca47652d"
     },
     {
       "category": "release_script",
@@ -943,7 +1006,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/open_reproduction_gates.py",
-      "sha256": "97d17499d76ad4bdf442af2ad16734c5882a1204c1274d4ed8a59b8f9e5255ab"
+      "sha256": "7699b39f9f398b6c2fed555d51bb3fff4f1b5f62824af1a48b60cb66510e8057"
     },
     {
       "category": "release_script",
@@ -952,7 +1015,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_claim_audit.py",
-      "sha256": "e002795174217911fe1ff6be42cf7a146e94399fa39293ddea3b3ec2d31c437b"
+      "sha256": "6e13f3da1cbd7614d9e2d17c371c94a6a8eabdf6b60b9e3bb266d5d635b410d5"
     },
     {
       "category": "release_script",
@@ -970,7 +1033,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/experiment_manifest.py",
-      "sha256": "3e309989564891ceae26018d498eaf78a5dc8627c28f690711a74a329de03198"
+      "sha256": "7c0ea0920062a31559d5c48c27a4e414b097014ee120023139a630f830332a24"
     },
     {
       "category": "release_script",
@@ -1006,7 +1069,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_experiment_values.py",
-      "sha256": "7cd546489a04c701db0bb93f5b0c448e10180131f5908a544226598a9eddd3c8"
+      "sha256": "d75877d37f58133778fcb11f41a1810100ff7980854b9d322479b3f1aaabc2cc"
     },
     {
       "category": "release_script",
@@ -1077,8 +1140,26 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "tools/lerobot_policy_video_materialization.py",
+      "sha256": "dae4074700375f426d9cee5ea7193edaccd8dd5a5e5f78e3c24519ea1880cb22"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/lerobot_policy_vision_smoke.py",
+      "sha256": "98ee78efcaf15502794a03123955a80f56232d144699eb227c274f0348f9dd21"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "tools/lerobot_policy_leakage_gate.py",
-      "sha256": "a0e93e248b82b6803cb6e7e37eabbc82d6c065b7f96c71a9cb335dd112d4e8d3"
+      "sha256": "6ffc99c57961b54231d0619a1a20f9930a772c8a8f154123403028dd3ec03a14"
     },
     {
       "category": "release_script",
@@ -1132,7 +1213,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "f2d35eba3a6ab013e19dd804ea3fc364ddb53b2ce2b1c1f71c993b917bc6175d"
+      "sha256": "df6e36fce14e299ef34e0afbbefb6913469c2b92b5488fc4e037761dc3d093df"
     },
     {
       "category": "release_script",
@@ -1141,7 +1222,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "16990dd4972c0980b644779597b6183b3278b1a7051b77eb36ec731d848c26d2"
+      "sha256": "8dcaa7c94c3ac65b30dad417de4a690b936339b3a1f5d355f77b4f525b5a7719"
     },
     {
       "category": "release_script",
@@ -1150,7 +1231,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "27b157ff60c9fbf8743a112c7263fd1d8ba8d7fbcf0516cb3c15c480defaf8e9"
+      "sha256": "d6b9ea5996f4144f8be807ca60e951d8d3e3234ca90a5e9a524c53ebe2447519"
     },
     {
       "category": "release_script",

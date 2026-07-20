@@ -123,7 +123,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 ## ACT/Diffusion Policy Leakage Gate
 
 - Gate artifact: `docs/experiments/lerobot_policy_gate/policy_gate_report.json`
-- Status: blocked_missing_required_observation_modality
+- Status: ready_for_policy_training
 - Gate satisfied: False
 - Policies: act, diffusion
 - Jobs prepared: 4
@@ -200,8 +200,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588182
-- Catalog open, parse, and index: 514.232 ms
-- Partition-pruning query time: 0.595 ms
+- Catalog open, parse, and index: 202.697 ms
+- Partition-pruning query time: 0.312 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0

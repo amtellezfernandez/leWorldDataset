@@ -1,0 +1,10 @@
+Using CPython 3.12.13
+Creating virtual environment at: .venv
+   Building worldepisode @ file:///home/atellez/worldepisode-policy-11aa8a2
+      Built worldepisode @ file:///home/atellez/worldepisode-policy-11aa8a2
+Installed 7 packages in 2ms
+{
+  "status": "front_camera_materialized",
+  "verified_asset_count": 24,
+  "package_count": 4
+}

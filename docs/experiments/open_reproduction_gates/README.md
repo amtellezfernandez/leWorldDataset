@@ -22,6 +22,12 @@ Commands:
   python3 tools/lerobot_policy_leakage_gate.py
   ```
 
+- validate the pinned front-camera training-input preflight
+
+  ```bash
+  python3 tools/lerobot_policy_video_materialization.py --check --strict && python3 tools/lerobot_policy_vision_smoke.py --check --strict
+  ```
+
 - run generated ACT/Diffusion jobs in a LeRobot environment
 
   ```bash

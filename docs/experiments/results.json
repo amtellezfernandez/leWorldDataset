@@ -1249,10 +1249,10 @@
     },
     "status": "pass",
     "timings_ms": {
-      "catalog_open_parse_and_index": 514.232,
-      "digest_cache_resolution": 28.153,
-      "partition_pruning_queries": 0.595,
-      "resolver_routing": 176.155
+      "catalog_open_parse_and_index": 202.697,
+      "digest_cache_resolution": 14.103,
+      "partition_pruning_queries": 0.312,
+      "resolver_routing": 123.44
     }
   },
   "independent_fixture_check": {
@@ -3410,6 +3410,8 @@
       "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
       "policy_compatibility_log": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
       "policy_compatibility_report": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+      "policy_vision_smoke_log": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+      "policy_vision_smoke_report": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
       "random_episode_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/split_episodes.json",
       "random_episode_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
       "random_episode_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_test.lerobot_split_manifest.json",
@@ -3422,16 +3424,15 @@
       "scene_disjoint_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/test_episodes.json",
       "scene_disjoint_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_test.lerobot_split_manifest.json",
       "scene_disjoint_train": "docs/experiments/lerobot_policy_gate/episode_allowlists/scene_disjoint/train_episodes.json",
-      "scene_disjoint_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_train.lerobot_split_manifest.json"
+      "scene_disjoint_train_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/scene_disjoint_train.lerobot_split_manifest.json",
+      "video_materialization_report": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json"
     },
     "available": true,
     "closure_required": [
-      "materialize source observation images or a semantically valid observation.environment_state feature required by LeRobot 0.6.0 ACT and Diffusion",
       "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
       "evaluate each checkpoint on the corresponding test split with action-error metrics",
       "run at least one high-fidelity simulator or physical rollout using the same split manifest",
-      "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces",
-      "mirror source videos before claiming any vision-policy result from the compact split packages"
+      "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces"
     ],
     "environment": {
       "cuda_visible_devices": null,
@@ -4092,7 +4093,212 @@
         "diffusion": "https://github.com/huggingface/lerobot/blob/v0.6.0/src/lerobot/policies/diffusion/configuration_diffusion.py"
       }
     },
-    "policy_inputs_ready": false,
+    "policy_inputs_ready": true,
+    "policy_vision_smoke": {
+      "all_policy_probes_completed_training_step": true,
+      "artifacts": {
+        "report": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+        "run_log": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log"
+      },
+      "claim_boundary": "This one-step probe validates source-image decoding and pinned ACT/Diffusion training-input compatibility. A completed optimization step is not a policy-quality or rollout result.",
+      "dataset": {
+        "loader": {
+          "episode_count": 320,
+          "feature_keys": [
+            "action",
+            "episode_index",
+            "frame_index",
+            "index",
+            "next.done",
+            "next.reward",
+            "observation.images.front",
+            "observation.state",
+            "task_index",
+            "timestamp"
+          ],
+          "frame_count": 98990,
+          "image_feature_keys": [
+            "observation.images.front"
+          ],
+          "sample_shapes": {
+            "action": [
+              6
+            ],
+            "episode_index": [],
+            "frame_index": [],
+            "index": [],
+            "next.done": [],
+            "next.reward": [],
+            "observation.images.front": [
+              3,
+              576,
+              1024
+            ],
+            "observation.state": [
+              6
+            ],
+            "task_index": [],
+            "timestamp": []
+          },
+          "stats_feature_keys": [
+            "action",
+            "observation.images.front",
+            "observation.state"
+          ],
+          "success": true
+        },
+        "package_files": [
+          {
+            "bytes": 2115046,
+            "path": "data/chunk-000/file-000.parquet",
+            "sha256": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc"
+          },
+          {
+            "bytes": 350673,
+            "path": "meta/episodes/chunk-000/file-000.parquet",
+            "sha256": "3682c8bf26d33b8be7e8f41ab24801180dfdccac93d0fa3cad323b6e95a6268d"
+          },
+          {
+            "bytes": 2415,
+            "path": "meta/info.json",
+            "sha256": "1686528ff2705a85e512d40240497f15740496be2068d037cff45f1a111033f4"
+          },
+          {
+            "bytes": 5207,
+            "path": "meta/stats.json",
+            "sha256": "faf945e04ba62b444f8b5471ada6e7f840b38bb0b437206222c5610c04ce3ba6"
+          },
+          {
+            "bytes": 2534,
+            "path": "meta/tasks.parquet",
+            "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f"
+          }
+        ],
+        "package_role": "front_camera_random_episode_train_smoke",
+        "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+      },
+      "environment": {
+        "cuda_available": true,
+        "cuda_device_count": 1,
+        "cuda_devices": [
+          {
+            "compute_capability": "12.1",
+            "index": 0,
+            "name": "NVIDIA GB10",
+            "total_memory_bytes": 130663170048
+          }
+        ],
+        "hostname": "golden-apple",
+        "lerobot_version": "0.6.0",
+        "machine": "aarch64",
+        "platform": "Linux-6.17.0-1026-nvidia-aarch64-with-glibc2.39",
+        "python_version": "3.12.13",
+        "torch_version": "2.11.0+cu130"
+      },
+      "execution": {
+        "command": "uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' python tools/lerobot_policy_vision_smoke.py --strict",
+        "compute": {
+          "cpu_utilization_percent": 132.605008,
+          "max_rss_bytes": 2584334336,
+          "system_cpu_seconds": 9.544342,
+          "user_cpu_seconds": 23.338605,
+          "wall_time_seconds": 24.797666
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T18:24:55.669183+00:00",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10",
+          "hostname": "golden-apple",
+          "machine": "aarch64",
+          "storage_free_bytes": 318284226560,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+        },
+        "repository_commit": "11aa8a2ffa4035d9f283a7b0d66f0823e05924b8",
+        "runner": "remote_dgx_spark_uv_isolated",
+        "started_utc": "2026-07-20T18:24:30.773537+00:00"
+      },
+      "fresh_for_current_inputs": true,
+      "freshness_errors": [],
+      "lerobot_version": "0.6.0",
+      "media_integrity": {
+        "asset_plan": {
+          "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+          "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44",
+          "size_bytes": 12560
+        },
+        "materialization_report": {
+          "path": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+          "sha256": "ab3a8d94bc9d00bd412017945f67a6dd8659cf76a8aba0e3a7c5ef87ca85c3ca",
+          "size_bytes": 41487
+        }
+      },
+      "pass": true,
+      "policy_probes": [
+        {
+          "command_template": [
+            "python",
+            "-m",
+            "lerobot.scripts.lerobot_train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+            "--dataset.root=$DATASET_ROOT",
+            "--policy.type=act",
+            "--policy.push_to_hub=false",
+            "--output_dir=$WORK_DIR/act",
+            "--job_name=act_compatibility_smoke",
+            "--policy.device=cuda",
+            "--steps=1",
+            "--batch_size=2",
+            "--num_workers=0",
+            "--save_checkpoint=false",
+            "--wandb.enable=false",
+            "--seed=17"
+          ],
+          "duration_seconds": 9.162544,
+          "expected_modality_error_observed": false,
+          "normalized_traceback_sha256": "6c10cdaab1e6d3c8c03bc3408990096b9ec6594c087638eae12e4cf868e6f153",
+          "policy": "act",
+          "return_code": 0,
+          "status": "completed",
+          "terminal_error": "",
+          "training_step_completed": true
+        },
+        {
+          "command_template": [
+            "python",
+            "-m",
+            "lerobot.scripts.lerobot_train",
+            "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+            "--dataset.root=$DATASET_ROOT",
+            "--policy.type=diffusion",
+            "--policy.push_to_hub=false",
+            "--output_dir=$WORK_DIR/diffusion",
+            "--job_name=diffusion_compatibility_smoke",
+            "--policy.device=cuda",
+            "--steps=1",
+            "--batch_size=2",
+            "--num_workers=0",
+            "--save_checkpoint=false",
+            "--wandb.enable=false",
+            "--seed=17"
+          ],
+          "duration_seconds": 14.116329,
+          "expected_modality_error_observed": false,
+          "normalized_traceback_sha256": "a9eeb375b953a108a77c7037d5a38e04b95c305da439bd18dbe6f9da922bf35d",
+          "policy": "diffusion",
+          "return_code": 0,
+          "status": "completed",
+          "terminal_error": "",
+          "training_step_completed": true
+        }
+      ],
+      "profile": "worldepisode-lerobot-policy-vision-smoke-0.1",
+      "script": "tools/lerobot_policy_vision_smoke.py",
+      "script_sha256": "98ee78efcaf15502794a03123955a80f56232d144699eb227c274f0348f9dd21",
+      "status": "training_step_smoke_passed"
+    },
     "profile": "worldepisode-act-diffusion-leakage-gate-0.1",
     "ready_to_execute": false,
     "result_files_present": {
@@ -4171,7 +4377,578 @@
         "train_world_lineage_count": 6
       }
     },
-    "status": "blocked_missing_required_observation_modality"
+    "status": "ready_for_policy_training",
+    "video_materialization": {
+      "asset_plan": {
+        "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+        "sha256": "64479526c98778273d84d0e6d44200a579d034d7f6970180ed7bdc8679ef1d01"
+      },
+      "camera_key": "observation.images.front",
+      "claim_boundary": "The compact split packages now expose one source camera with digest-verified source media. This establishes loader and training-input compatibility only; it does not establish policy quality or rollout impact.",
+      "execution": {
+        "command": "uv run --with pyarrow --with numpy --with huggingface-hub python tools/lerobot_policy_video_materialization.py --materialize",
+        "compute": {
+          "cpu_utilization_percent": 211.796921,
+          "max_rss_bytes": 182030336,
+          "system_cpu_seconds": 0.115891,
+          "user_cpu_seconds": 2.342091,
+          "wall_time_seconds": 1.160537
+        },
+        "finished_utc": "2026-07-20T18:24:23.836579+00:00",
+        "host": {
+          "cpu_logical_count": 20,
+          "hostname": "golden-apple",
+          "machine": "aarch64",
+          "storage_free_bytes": 318293172224,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+        },
+        "repository_commit": "11aa8a2ffa4035d9f283a7b0d66f0823e05924b8",
+        "runner": "remote_dgx_spark_uv",
+        "started_utc": "2026-07-20T18:24:22.675837+00:00"
+      },
+      "packages": [
+        {
+          "episode_count": 320,
+          "episodes": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/meta/episodes/chunk-000/file-000.parquet",
+            "sha256": "3682c8bf26d33b8be7e8f41ab24801180dfdccac93d0fa3cad323b6e95a6268d",
+            "size_bytes": 350673
+          },
+          "info": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/meta/info.json",
+            "sha256": "1686528ff2705a85e512d40240497f15740496be2068d037cff45f1a111033f4",
+            "size_bytes": 2415
+          },
+          "links": [
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-013.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-013.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-014.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-014.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-027.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-027.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-028.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-028.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-047.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-047.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-048.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-048.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-064.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-064.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-065.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-065.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-079.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-079.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-091.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-091.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-092.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-092.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-093.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-093.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-117.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-117.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-118.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-118.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-119.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-119.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-120.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-120.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-121.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-121.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-122.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-122.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-123.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-123.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-139.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-139.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-140.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-140.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-141.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-141.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/videos/observation.images.front/chunk-000/file-142.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-142.mp4"
+            }
+          ],
+          "package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "stats": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/meta/stats.json",
+            "sha256": "faf945e04ba62b444f8b5471ada6e7f840b38bb0b437206222c5610c04ce3ba6",
+            "size_bytes": 5207
+          },
+          "video_asset_count": 23
+        },
+        {
+          "episode_count": 80,
+          "episodes": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/episodes/chunk-000/file-000.parquet",
+            "sha256": "2a860723109cc1ccedc27ef274bc98c1aff293c6067dcbeaada90aacafc1c21c",
+            "size_bytes": 157835
+          },
+          "info": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/info.json",
+            "sha256": "1d6011b79739df781fbf3fd01c8f14c1366996396679b8670671397c03f213ac",
+            "size_bytes": 2413
+          },
+          "links": [
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-013.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-013.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-014.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-014.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-027.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-027.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-028.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-028.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-047.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-047.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-048.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-048.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-064.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-064.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-065.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-065.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-079.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-079.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-091.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-091.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-093.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-093.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-118.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-118.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-119.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-119.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-120.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-120.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-124.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-124.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-139.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-139.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-140.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-140.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-141.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-141.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/videos/observation.images.front/chunk-000/file-142.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-142.mp4"
+            }
+          ],
+          "package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "stats": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/stats.json",
+            "sha256": "e931c504e6400319f3a5b23ca2c9e30b5ee3bebde0a3dbe9cc12950d01f0bea7",
+            "size_bytes": 5222
+          },
+          "video_asset_count": 19
+        },
+        {
+          "episode_count": 300,
+          "episodes": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/episodes/chunk-000/file-000.parquet",
+            "sha256": "aef0982a7b52a79ce2b46a77e1541bed6d245957218a47e2c41c99a1985d4f34",
+            "size_bytes": 335756
+          },
+          "info": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/info.json",
+            "sha256": "d5de90dbe68ab14b62e4ef6e2d16322c2af7a33fd40243e5db3a5d72c96c9c6e",
+            "size_bytes": 2416
+          },
+          "links": [
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-013.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-013.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-014.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-014.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-027.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-027.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-028.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-028.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-047.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-047.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-048.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-048.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-064.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-064.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-065.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-065.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-117.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-117.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-118.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-118.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-119.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-119.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-120.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-120.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-121.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-121.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-122.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-122.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-123.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-123.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-124.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-124.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-139.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-139.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-140.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-140.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-141.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-141.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/videos/observation.images.front/chunk-000/file-142.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-142.mp4"
+            }
+          ],
+          "package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+          "stats": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/stats.json",
+            "sha256": "796e66bc902581010c79ba6629b56fbb016cfb414e7e705ee2635f1f6d991561",
+            "size_bytes": 5207
+          },
+          "video_asset_count": 20
+        },
+        {
+          "episode_count": 100,
+          "episodes": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/episodes/chunk-000/file-000.parquet",
+            "sha256": "58faf3fd148a7a0ab0126cddaeaed3d4890a236eedab262e475fa9dd934f0f8b",
+            "size_bytes": 171121
+          },
+          "info": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/info.json",
+            "sha256": "dd97216ca3991ca1fcf444869b9659ebbb46f54a9e37e16349ba399d5646a841",
+            "size_bytes": 2415
+          },
+          "links": [
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/videos/observation.images.front/chunk-000/file-079.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-079.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/videos/observation.images.front/chunk-000/file-091.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-091.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/videos/observation.images.front/chunk-000/file-092.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-092.mp4"
+            },
+            {
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/videos/observation.images.front/chunk-000/file-093.mp4",
+              "source_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-093.mp4"
+            }
+          ],
+          "package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+          "stats": {
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/stats.json",
+            "sha256": "55524d9811672adf4c21ebd4051e670f477af2388782a08131247897578983cc",
+            "size_bytes": 5199
+          },
+          "video_asset_count": 4
+        }
+      ],
+      "pass": true,
+      "profile": "worldepisode-lerobot-video-materialization-0.1",
+      "script": "tools/lerobot_policy_video_materialization.py",
+      "script_sha256": "dae4074700375f426d9cee5ea7193edaccd8dd5a5e5f78e3c24519ea1880cb22",
+      "source": {
+        "episodes": {
+          "path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
+          "repo_path": "meta/episodes/chunk-000/file-000.parquet",
+          "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+          "size_bytes": 3865933
+        },
+        "info": {
+          "path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json",
+          "repo_path": "meta/info.json",
+          "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+          "size_bytes": 4878
+        },
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "repo_type": "dataset",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      },
+      "status": "front_camera_materialized",
+      "verified_asset_count": 24,
+      "verified_assets": [
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-013.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-013.mp4",
+          "sha256": "29138d1921afb7fcef126a24f1fd29d3492636e58f4f5b8280fe4637b70bc6bf",
+          "size_bytes": 70626467
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-014.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-014.mp4",
+          "sha256": "616815aba36ca783f12d524575529214b45f06d32257c666a55cc7ff11859fb3",
+          "size_bytes": 76516130
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-027.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-027.mp4",
+          "sha256": "cb09a7dd30e9aa1c633bd6399422fc2e206b67581ef0d0d058f74d4d0a511c94",
+          "size_bytes": 86122880
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-028.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-028.mp4",
+          "sha256": "d3d67246402cbbfcbc640d42200b890452f181d169655ab59535a28a8b82020b",
+          "size_bytes": 74718820
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-047.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-047.mp4",
+          "sha256": "f4e4b3b30f1636303ba9c5f8218560fb2e6d89c97095b64a23c651ff6f3c4e5d",
+          "size_bytes": 184266424
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-048.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-048.mp4",
+          "sha256": "4e13c60e072c9b326f9eaddf6e7a8b51af489feb59dfe774a1c7b987b3f6d5c0",
+          "size_bytes": 143803178
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-064.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-064.mp4",
+          "sha256": "215e0635a242869dda4edeac9645506b63d62d33d176ba7a912bfc604f052d84",
+          "size_bytes": 137108635
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-065.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-065.mp4",
+          "sha256": "16f00ac1133a668659dcf28e0b2b92d42c5f74aef62b5fcb36eef134e32910c6",
+          "size_bytes": 99120127
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-079.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-079.mp4",
+          "sha256": "b5e8e4c4cb6846014dd47b8f1875695423545e729fead4ed19db52ce6c71327f",
+          "size_bytes": 164235644
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-091.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-091.mp4",
+          "sha256": "0dc9959c3f3d7888866a92f03454076cddbf7cf57c9769c3fb4fbdf8d852cd54",
+          "size_bytes": 52594519
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-092.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-092.mp4",
+          "sha256": "27b5d76e042e93f5983c74249459ce3c0956db78a41252b6e49062aef7630c87",
+          "size_bytes": 5914500
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-093.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-093.mp4",
+          "sha256": "b17031b4d06991a4495f44553b70fe45e80c38bfd1a43206a8432a6ce874a765",
+          "size_bytes": 79625675
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-117.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-117.mp4",
+          "sha256": "c5a7b9d3a27210901aeb142dbbc874af748c1020ed5cb40eb3fc8f6bf133f1a6",
+          "size_bytes": 28129871
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-118.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-118.mp4",
+          "sha256": "ceefa618753b315b4f3ae69af035e132a9d994fc3ca1f072b010974a73b5fcff",
+          "size_bytes": 123528304
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-119.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-119.mp4",
+          "sha256": "9f907f9a7c8c9e1c334d377cfa22eed842d24425d3a05085e0086cb70599f1fb",
+          "size_bytes": 121435638
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-120.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-120.mp4",
+          "sha256": "5e23bcb6ed92ecd6f1a5bb6ae5c53c459a9be07f2c75076a7520cd3e547dc3a6",
+          "size_bytes": 92094327
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-121.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-121.mp4",
+          "sha256": "9b4d4edeff2c2bd6240517c8cb56c092fd36443d5feebb5c6e0bcfea0481a67e",
+          "size_bytes": 19088374
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-122.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-122.mp4",
+          "sha256": "28c2e53b8f15990d2a9adfef31e9ecb749672aef2b542d249a73349a2eb6af94",
+          "size_bytes": 32528758
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-123.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-123.mp4",
+          "sha256": "5dd3e17cf7b33023ab41625ec72a760d44eaef276a9195dd938f4e1c16b6c9ca",
+          "size_bytes": 34518281
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-124.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-124.mp4",
+          "sha256": "cccf2886e08eff4211e47f25d093c83d76c4ab139c83c5ef75b9e938c9b3b5df",
+          "size_bytes": 5969447
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-139.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-139.mp4",
+          "sha256": "b0f7c127e6944211f704d2cacfeeb0a10df2ae5f9b5848468dcd94259a9c54a4",
+          "size_bytes": 53595968
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-140.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-140.mp4",
+          "sha256": "2b186e6381791f575f92e4b6cd8833556f7ddfbe35901ff9788f95cefd7fd390",
+          "size_bytes": 61548749
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-141.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-141.mp4",
+          "sha256": "7d6a2e087669d27f14cc63b9c7caf6451db717d24775cfdf91875a970824789d",
+          "size_bytes": 67829718
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/videos/observation.images.front/chunk-000/file-142.mp4",
+          "path": "videos/observation.images.front/chunk-000/file-142.mp4",
+          "sha256": "ca0d794c509d79c5c287aa54ac34a442336ba4dab99466b99350bb8e439ae26e",
+          "size_bytes": 49760333
+        }
+      ],
+      "verified_source_metadata": [
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json",
+          "repo_path": "meta/info.json",
+          "role": "info",
+          "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+          "size_bytes": 4878
+        },
+        {
+          "local_path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
+          "repo_path": "meta/episodes/chunk-000/file-000.parquet",
+          "role": "episodes",
+          "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+          "size_bytes": 3865933
+        }
+      ],
+      "verified_total_size_bytes": 1864680767
+    }
   },
   "lerobot_public_sample": {
     "degree_interpreted_as_radian_max_abs": 98.92424,

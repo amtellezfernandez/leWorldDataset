@@ -1,0 +1,68 @@
+started_utc=2026-07-20T17:43:55Z
+command=uv run --no-project --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required
+git_commit=ce90f3e062656194f8eecec5f74f8820b177e6f7
+script_code_sha256=f9e094e5397d888684314bbbfc05bf6d1094d7b34cdfbfd74ddece86be958ed7
+host_uname=Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+machine=aarch64
+cpu_logical_count=20
+total_ram_bytes=130663170048
+storage_total_bytes=3937360351232
+storage_free_bytes=320401072128
+gpu_info=NVIDIA GB10, [N/A]
+uv_version=uv 0.11.14 (aarch64-unknown-linux-gnu)
+python_version=3.12.13
+numpy_version=2.5.1
+pyarrow_version=25.0.0
+{
+  "artifacts": {
+    "json": "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+    "readme": "docs/experiments/lerobot_multitrajectory_timing/README.md"
+  },
+  "calibration": {
+    "episodes": 320,
+    "selected_delay_frames": 3
+  },
+  "errors": [],
+  "evaluation": {
+    "episodes": 80,
+    "improvement": {
+      "ci_high": 3.286379900096777,
+      "ci_low": 2.890437421707884,
+      "confidence_level": 0.95,
+      "direction": "zero_delay_rmse_minus_frozen_delay_rmse",
+      "estimate": 3.0871198488550853,
+      "improved_episode_count": 80,
+      "method": "paired_percentile_episode_bootstrap",
+      "non_improved_episode_count": 0,
+      "resamples": 20000,
+      "sample_size_episodes": 80,
+      "seed": 2027
+    },
+    "tasks": 8
+  },
+  "status": "pass"
+}
+	Command being timed: "/home/atellez/.local/bin/uv run --no-project --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required"
+	User time (seconds): 2.36
+	System time (seconds): 0.11
+	Percent of CPU this job got: 205%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 253576
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 48887
+	Voluntary context switches: 135
+	Involuntary context switches: 83
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 288
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+finished_utc=2026-07-20T17:43:57Z

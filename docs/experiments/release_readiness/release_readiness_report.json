@@ -3,8 +3,8 @@
     "blocked_stronger_claim_count": 4,
     "blocking_error_count": 0,
     "check_count": 38,
-    "passed_count": 37,
-    "warning_failure_count": 1
+    "passed_count": 38,
+    "warning_failure_count": 0
   },
   "artifacts": {
     "markdown": "docs/experiments/release_readiness/README.md",
@@ -17,7 +17,7 @@
       "blocker_id": "POLICY.ROLL.001",
       "claim": "state-of-the-art policy or physical rollout impact",
       "current_evidence": {
-        "act_diffusion_gate": "blocked_missing_required_observation_modality",
+        "act_diffusion_gate": "ready_for_policy_training",
         "temporal_policy_baseline": {
           "episode_nrmse_ratio_scene_over_random": 1.618796503820317,
           "random_episode_nrmse_mean": 0.15726148523804215,
@@ -125,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (303767 bytes)",
+      "evidence": "WorldEpisode.pdf (304032 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -141,7 +141,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18515 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18762 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -149,7 +149,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (285122 bytes)",
+      "evidence": "docs/experiments/results.json (336537 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -245,9 +245,9 @@
     {
       "boundary": "",
       "check_id": "EVID.004",
-      "evidence": "policy jobs and compact split packages exist; metrics are not claimed",
+      "evidence": "front-camera ACT/Diffusion smoke passes; policy metrics and rollouts are not claimed",
       "name": "ACT/Diffusion gate is explicit and not overclaimed",
-      "passed": false,
+      "passed": true,
       "severity": "warning"
     },
     {
@@ -325,7 +325,7 @@
     {
       "boundary": "",
       "check_id": "CLAIM.001",
-      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=14, failed=0",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=15, failed=0",
       "name": "paper claims are evidence-backed",
       "passed": true,
       "severity": "error"
@@ -333,7 +333,7 @@
     {
       "boundary": "",
       "check_id": "PROV.001",
-      "evidence": "docs/experiments/experiment_manifest/experiment_manifest.json experiments=7, errors=[]",
+      "evidence": "docs/experiments/experiment_manifest/experiment_manifest.json experiments=8, errors=[]",
       "name": "principal experiments have validated provenance",
       "passed": true,
       "severity": "error"
@@ -373,7 +373,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=126, normalized=4",
+      "evidence": "status=pass, entries=135, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
@@ -381,7 +381,7 @@
     {
       "boundary": "",
       "check_id": "SUBMIT.001",
-      "evidence": "status=pass, claims=14, open_gates=4",
+      "evidence": "status=pass, claims=15, open_gates=4",
       "name": "submission packet validates",
       "passed": true,
       "severity": "error"
@@ -391,7 +391,7 @@
   "full_standard_ready": false,
   "open_reproduction_gates": {
     "aggregate": {
-      "command_count": 7,
+      "command_count": 8,
       "gate_count": 4,
       "open_not_claimed_count": 4
     },
@@ -403,11 +403,11 @@
   },
   "paper_claim_audit": {
     "aggregate": {
-      "claim_count": 14,
+      "claim_count": 15,
       "failed_claim_ids": [],
       "failed_count": 0,
       "missing_paper_pattern_count": 0,
-      "passed_count": 14
+      "passed_count": 15
     },
     "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "status": "pass"

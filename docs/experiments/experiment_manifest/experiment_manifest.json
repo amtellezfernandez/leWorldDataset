@@ -1,8 +1,8 @@
 {
   "aggregate": {
-    "experiment_count": 7,
+    "experiment_count": 8,
     "measured_count": 6,
-    "remote_run_count": 6
+    "remote_run_count": 7
   },
   "experiments": [
     {
@@ -372,14 +372,14 @@
       "experiment_id": "controlled_contract_suite",
       "outputs": [
         {
-          "bytes": 285122,
+          "bytes": 336537,
           "path": "docs/experiments/results.json",
-          "sha256": "8997063d8e8be3f2c3859459639e49d4839034f28a001437d9149aa30db26e67"
+          "sha256": "8d9457899f55b80798b5f57fb1fef23c6419c7b4fa350cbe2e05e3c84ae16e9f"
         },
         {
-          "bytes": 17351,
+          "bytes": 17331,
           "path": "docs/experiments/RESULTS.md",
-          "sha256": "2f520fce0421ce73095c26077c1f0e24ec2cca55bcbc8b1a7cc5c2697b328649"
+          "sha256": "9c2d38558d1abea54906c56813801ff21f7d1947f2a9601ed166b696f828fd35"
         }
       ],
       "seed_policy": {
@@ -832,9 +832,9 @@
           "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
         },
         {
-          "bytes": 41218,
+          "bytes": 91080,
           "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
-          "sha256": "621a0527964d0c8644c8399b150aaeea3207d104278c8cc652aabcd192da2e25"
+          "sha256": "1e123be1435906d59aaad1bb9a6798c5641a163699832f524111c64f40dccd13"
         }
       ],
       "seed_policy": {
@@ -858,13 +858,202 @@
         }
       },
       "status": "blocked_missing_required_observation_modality"
+    },
+    {
+      "claim_boundary": "This one-step probe validates source-image decoding and pinned ACT/Diffusion training-input compatibility. A completed optimization step is not a policy-quality or rollout result.",
+      "code": [
+        {
+          "bytes": 25564,
+          "path": "tools/lerobot_policy_video_materialization.py",
+          "sha256": "dae4074700375f426d9cee5ea7193edaccd8dd5a5e5f78e3c24519ea1880cb22"
+        },
+        {
+          "bytes": 12055,
+          "path": "tools/lerobot_policy_vision_smoke.py",
+          "sha256": "98ee78efcaf15502794a03123955a80f56232d144699eb227c274f0348f9dd21"
+        }
+      ],
+      "configuration": {
+        "camera_key": "observation.images.front",
+        "lerobot_version": "0.6.0",
+        "materialized_package_count": 4,
+        "policy_probes": [
+          {
+            "command_template": [
+              "python",
+              "-m",
+              "lerobot.scripts.lerobot_train",
+              "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+              "--dataset.root=$DATASET_ROOT",
+              "--policy.type=act",
+              "--policy.push_to_hub=false",
+              "--output_dir=$WORK_DIR/act",
+              "--job_name=act_compatibility_smoke",
+              "--policy.device=cuda",
+              "--steps=1",
+              "--batch_size=2",
+              "--num_workers=0",
+              "--save_checkpoint=false",
+              "--wandb.enable=false",
+              "--seed=17"
+            ],
+            "policy": "act"
+          },
+          {
+            "command_template": [
+              "python",
+              "-m",
+              "lerobot.scripts.lerobot_train",
+              "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+              "--dataset.root=$DATASET_ROOT",
+              "--policy.type=diffusion",
+              "--policy.push_to_hub=false",
+              "--output_dir=$WORK_DIR/diffusion",
+              "--job_name=diffusion_compatibility_smoke",
+              "--policy.device=cuda",
+              "--steps=1",
+              "--batch_size=2",
+              "--num_workers=0",
+              "--save_checkpoint=false",
+              "--wandb.enable=false",
+              "--seed=17"
+            ],
+            "policy": "diffusion"
+          }
+        ],
+        "source_video_asset_count": 24,
+        "source_video_total_size_bytes": 1864680767
+      },
+      "datasets": [
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "source_digest": "4ccabba3698109e1a3a908af23dedd0dc38bead0e1bdad4c39ee51e40ef9ba72"
+        }
+      ],
+      "execution": {
+        "command": "uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' python tools/lerobot_policy_vision_smoke.py --strict",
+        "compute": {
+          "cpu_utilization_percent": 132.605008,
+          "max_rss_bytes": 2584334336,
+          "system_cpu_seconds": 9.544342,
+          "user_cpu_seconds": 23.338605,
+          "wall_time_seconds": 24.797666
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T18:24:55.669183+00:00",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10",
+          "hostname": "golden-apple",
+          "machine": "aarch64",
+          "storage_free_bytes": 318284226560,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+        },
+        "log": {
+          "bytes": 14761,
+          "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+          "sha256": "6eda7135014b60a5486340f5f16d79cbc5714f8f426744f3f0e8a3fc544f0ed3"
+        },
+        "preliminary_runs": [
+          {
+            "command": "uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' python tools/lerobot_policy_vision_smoke.py --strict",
+            "compute": {
+              "cpu_utilization_percent": 142.255349,
+              "max_rss_bytes": 992382976,
+              "system_cpu_seconds": 1.303953,
+              "user_cpu_seconds": 19.821686,
+              "wall_time_seconds": 14.850506
+            },
+            "exit_status": 1,
+            "finished_utc": "2026-07-20T18:09:31.664475+00:00",
+            "host": {
+              "cpu_logical_count": 20,
+              "gpu_info": "NVIDIA GB10",
+              "hostname": "golden-apple",
+              "machine": "aarch64",
+              "storage_free_bytes": 318407499776,
+              "storage_total_bytes": 3937360351232,
+              "total_ram_bytes": 130663170048,
+              "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+            },
+            "log": {
+              "bytes": 2976,
+              "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log",
+              "sha256": "05870f3d612be3b4fb6755dfb9b612e82a091463f2b012c43700a56741328eb9"
+            },
+            "repository_commit": "9c4d5af94ff6f0cb4389a13018fe68302c728c46",
+            "runner": "remote_dgx_spark_uv_isolated",
+            "started_utc": "2026-07-20T18:09:16.671770+00:00",
+            "status": "failed_preliminary"
+          }
+        ],
+        "repository_commit": "11aa8a2ffa4035d9f283a7b0d66f0823e05924b8",
+        "runner": "remote_dgx_spark_uv_isolated",
+        "started_utc": "2026-07-20T18:24:30.773537+00:00"
+      },
+      "experiment_id": "lerobot_act_diffusion_front_camera_smoke",
+      "outputs": [
+        {
+          "bytes": 12560,
+          "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+          "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44"
+        },
+        {
+          "bytes": 41487,
+          "path": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+          "sha256": "ab3a8d94bc9d00bd412017945f67a6dd8659cf76a8aba0e3a7c5ef87ca85c3ca"
+        },
+        {
+          "bytes": 6659,
+          "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+          "sha256": "80aa828efc82de67d8aebee6e555b217336ea8942d4ef2ab41db2c04daccc1ef"
+        },
+        {
+          "bytes": 6637,
+          "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json",
+          "sha256": "4d93015ae858ffc98156f01eed65b24e353ac3ba33ec1bb1292e04e90cb5f3f0"
+        },
+        {
+          "bytes": 91080,
+          "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+          "sha256": "1e123be1435906d59aaad1bb9a6798c5641a163699832f524111c64f40dccd13"
+        }
+      ],
+      "seed_policy": {
+        "kind": "fixed_vision_smoke_seed",
+        "values": [
+          17
+        ]
+      },
+      "split": {
+        "asset_plan": {
+          "bytes": 12560,
+          "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+          "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44"
+        },
+        "kind": "front_camera_random_episode_train_smoke",
+        "physical_split_manifest": {
+          "bytes": 2771,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+          "sha256": "999bee80b6bc28e0d65b71fcf1fe084eb7a28b65fa1bb544c67f9b7ca48c07b9"
+        },
+        "source_split": {
+          "bytes": 12628,
+          "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+          "sha256": "51852d83a6d6204ab03b26c5740ef11453dafbee77b4ad842e4e1f3bec6fa0d6"
+        }
+      },
+      "status": "training_step_smoke_passed"
     }
   ],
   "generated_from": [
     {
-      "bytes": 285122,
+      "bytes": 336537,
       "path": "docs/experiments/results.json",
-      "sha256": "8997063d8e8be3f2c3859459639e49d4839034f28a001437d9149aa30db26e67"
+      "sha256": "8d9457899f55b80798b5f57fb1fef23c6419c7b4fa350cbe2e05e3c84ae16e9f"
     },
     {
       "bytes": 36808,
@@ -937,9 +1126,29 @@
       "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
     },
     {
-      "bytes": 41218,
+      "bytes": 6659,
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+      "sha256": "80aa828efc82de67d8aebee6e555b217336ea8942d4ef2ab41db2c04daccc1ef"
+    },
+    {
+      "bytes": 6637,
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json",
+      "sha256": "4d93015ae858ffc98156f01eed65b24e353ac3ba33ec1bb1292e04e90cb5f3f0"
+    },
+    {
+      "bytes": 12560,
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+      "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44"
+    },
+    {
+      "bytes": 41487,
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+      "sha256": "ab3a8d94bc9d00bd412017945f67a6dd8659cf76a8aba0e3a7c5ef87ca85c3ca"
+    },
+    {
+      "bytes": 91080,
       "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
-      "sha256": "621a0527964d0c8644c8399b150aaeea3207d104278c8cc652aabcd192da2e25"
+      "sha256": "1e123be1435906d59aaad1bb9a6798c5641a163699832f524111c64f40dccd13"
     },
     {
       "bytes": 2771,
@@ -950,6 +1159,16 @@
       "bytes": 4298,
       "path": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
       "sha256": "9fc33440d9c8e757eb3e3ef69867943d77c5404102b83c2f19995ebe28d162e8"
+    },
+    {
+      "bytes": 14761,
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+      "sha256": "6eda7135014b60a5486340f5f16d79cbc5714f8f426744f3f0e8a3fc544f0ed3"
+    },
+    {
+      "bytes": 2976,
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log",
+      "sha256": "05870f3d612be3b4fb6755dfb9b612e82a091463f2b012c43700a56741328eb9"
     },
     {
       "bytes": 1847,

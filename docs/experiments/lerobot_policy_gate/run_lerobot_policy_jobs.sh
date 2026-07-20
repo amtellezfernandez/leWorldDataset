@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Local compact split packages are under docs/experiments/lerobot_policy_gate/physical_splits.
-# LeRobot 0.6.0 ACT and Diffusion also require an image or environment-state input.
-# Do not run these jobs until a semantically valid required modality has been materialized.
+# Materialize the pinned source front camera before starting policy training.
+uv run --with pyarrow --with numpy --with huggingface-hub python tools/lerobot_policy_video_materialization.py --materialize --download
 
 # act on random_episode
 lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false

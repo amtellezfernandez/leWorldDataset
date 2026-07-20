@@ -6,8 +6,8 @@ This report ties the main quantitative and boundary claims in the paper source t
 
 ## Summary
 
-- Claims checked: 14
-- Passed: 14
+- Claims checked: 15
+- Passed: 15
 - Failed: 0
 
 ## Claims
@@ -15,6 +15,7 @@ This report ties the main quantitative and boundary claims in the paper source t
 | Claim ID | Pass | Claim | Boundary |
 |---|---:|---|---|
 | CLAIM.LEAKAGE.001 | True | ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded holdout changes offline imitation metrics. | Task--scene proxy shift confounded with task identity; offline action imitation only, not scene-only leakage, ACT/Diffusion, or rollout success. |
+| CLAIM.POLICY_VISION_SMOKE.001 | True | Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera and complete the CUDA smoke optimization step. | Input compatibility only; no trained checkpoint, held-out policy metric, simulator rollout, or physical rollout. |
 | CLAIM.TIMING.001 | True | A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks. | Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller. |
 | CLAIM.REPLAY.001 | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
 | CLAIM.ROUNDTRIP.001 | True | Complete pinned source shards from multiple public LeRobotDatasets round-trip exactly through WorldEpisode. | One complete pinned Parquet shard per dataset; not full corpora or source-video conversion throughput. |

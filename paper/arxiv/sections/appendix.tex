@@ -166,9 +166,9 @@ least one externally published WorldEpisode-compatible dataset. The same gates a
 Result: \ExpActDiffusionResult. Rollout impact: \ExpRolloutImpactResult. Scene-only leakage:
 \ExpSceneOnlyLeakageResult. First replace the task-derived proxy with physical
 scene/source-capture IDs and construct task-stratified random and scene-lineage-disjoint splits.
-Then regenerate split packages and LeRobot job specs and run ACT/Diffusion inside a LeRobot training
-environment. Before training, materialize source images or a semantically valid environment-state
-feature and require the compatibility preflight to complete a training step.
+Then regenerate split packages and LeRobot job specs for those physical-lineage splits and run the
+generated ACT/Diffusion jobs inside a pinned LeRobot training environment. The committed
+front-camera materializer and successful compatibility smoke are prerequisites, not policy evidence.
 
 Required artifacts: a proof that task support is identical across protocols and scene lineage is
 disjoint, policy checkpoint digests, train/eval configs with at least five seeds, offline action

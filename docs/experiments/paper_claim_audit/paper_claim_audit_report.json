@@ -4,11 +4,11 @@
     "docs/experiments/lerobot_multitrajectory_timing/timing_report.json"
   ],
   "aggregate": {
-    "claim_count": 14,
+    "claim_count": 15,
     "failed_claim_ids": [],
     "failed_count": 0,
     "missing_paper_pattern_count": 0,
-    "passed_count": 14
+    "passed_count": 15
   },
   "artifacts": {
     "json": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
@@ -43,6 +43,33 @@
         "also a task-disjoint shift",
         "does not establish scene-only leakage",
         "crossed seed--episode bootstrap CI"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Input compatibility only; no trained checkpoint, held-out policy metric, simulator rollout, or physical rollout.",
+      "claim": "Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera and complete the CUDA smoke optimization step.",
+      "claim_id": "CLAIM.POLICY_VISION_SMOKE.001",
+      "evidence": {
+        "policy_gate_pass": false,
+        "probe_count": 2,
+        "training_step_count": 2,
+        "verified_asset_count": 24,
+        "vision_smoke_status": "training_step_smoke_passed"
+      },
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+        "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+        "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+        "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "\\ExpPolicyVisionAssetCount{} source front-camera files",
+        "\\ExpPolicyVisionTrainingStepCount{}/\\ExpPolicyVisionProbeCount{} pinned",
+        "closes input compatibility only",
+        "no trained checkpoint"
       ],
       "passed": true
     },
@@ -366,7 +393,7 @@
       "claim_id": "CLAIM.OPEN_GATES.001",
       "evidence": {
         "aggregate": {
-          "command_count": 7,
+          "command_count": 8,
           "gate_count": 4,
           "open_not_claimed_count": 4
         },

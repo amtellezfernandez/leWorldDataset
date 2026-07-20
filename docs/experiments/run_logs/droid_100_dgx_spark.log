@@ -1,0 +1,49 @@
+started_utc=2026-07-20T14:58:09Z
+host_uname=Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+machine=aarch64
+cpu_logical_count=20
+total_ram_bytes=130663170048
+storage_total_bytes=3937360351232
+storage_free_bytes=324412391424
+gpu_info=NVIDIA GB10, 580.159.03, [N/A]
+git_commit=ce90f3e062656194f8eecec5f74f8820b177e6f7
+code_sha256=378481f06aa4d9c346cab7a48cb4bb27082b9f15f0c4fbf294bc83e199bf9aed
+command=python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required
+{
+  "available": true,
+  "baseline_score": 0.495808153684657,
+  "benchmark_id": "droid",
+  "corrected_score": 0.5155409835289252,
+  "lineage_source": {
+    "column": "task_index + task text + camera feature schema",
+    "kind": "task_camera_schema_proxy",
+    "reason": "The mirrored public metadata did not expose a distinct physical scene, site, or capture-lineage column. The corrected split is therefore a proxy stress test, not proof of scene-leakage inflation in the original benchmark.",
+    "sufficient_for_score_inflation_claim": false
+  },
+  "report": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
+  "score_drop": -0.019732829844268163
+}
+	Command being timed: "env UV_NO_PROGRESS=1 uv run --with pyarrow --with requests --with numpy python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required"
+	User time (seconds): 2.41
+	System time (seconds): 0.08
+	Percent of CPU this job got: 398%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.62
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 228320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 44221
+	Voluntary context switches: 272
+	Involuntary context switches: 153
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 9672
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+finished_utc=2026-07-20T14:58:10Z

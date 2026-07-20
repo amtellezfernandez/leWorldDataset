@@ -1,0 +1,39 @@
+started_utc=2026-07-20T14:36:13Z
+Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+NVIDIA GB10, 580.159.03, [N/A]
+ce90f3e062656194f8eecec5f74f8820b177e6f7
+command=uv run --with torch --with pyarrow --with requests --with numpy python tools/lerobot_scene_leakage_experiment.py --seeds 0,1,2,3,4 --epochs 12 --device cuda --required
+{
+  "episode_nrmse_ratio_scene_over_random": 2.077491356715266,
+  "random_episode_nrmse_mean": 0.18315773606300353,
+  "random_leakage_rate": 1.0,
+  "random_offline_bc_success_rate": 0.8525,
+  "scene_disjoint_episode_nrmse_mean": 0.3805086135864258,
+  "scene_disjoint_leakage_rate": 0.0,
+  "scene_disjoint_offline_bc_success_rate": 0.0,
+  "success_rate_drop": 0.8525
+}
+	Command being timed: "env UV_NO_PROGRESS=1 uv run --with torch --with pyarrow --with requests --with numpy python tools/lerobot_scene_leakage_experiment.py --seeds 0,1,2,3,4 --epochs 12 --device cuda --required"
+	User time (seconds): 45.45
+	System time (seconds): 1.51
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:46.69
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1546988
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 303642
+	Voluntary context switches: 30130
+	Involuntary context switches: 586
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 608
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+finished_utc=2026-07-20T14:37:00Z

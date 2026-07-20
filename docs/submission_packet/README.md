@@ -6,7 +6,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 
 ## Summary
 
-- Paper claims checked: 14
+- Paper claims checked: 15
 - Failed checked claims: 0
 - Open results not claimed: 4
 - Missing required public artifacts: 0
@@ -45,7 +45,14 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log` | True | True |
 | `docs/experiments/lerobot_policy_gate/policy_gate_report.json` | True | True |
 | `docs/experiments/lerobot_policy_gate/policy_compatibility_report.json` | True | True |
+| `docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json` | True | True |
+| `docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json` | True | True |
+| `docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json` | True | True |
+| `docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json` | True | True |
 | `docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log` | True | True |
+| `docs/experiments/run_logs/lerobot_policy_video_materialization_dgx_spark.log` | True | True |
+| `docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log` | True | True |
+| `docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log` | True | True |
 | `docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log` | True | True |
 | `docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log` | True | True |
 | `docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log` | True | True |
@@ -70,6 +77,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | Claim | Pass | Text | Boundary |
 |---|---:|---|---|
 | `CLAIM.LEAKAGE.001` | True | ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded holdout changes offline imitation metrics. | Task--scene proxy shift confounded with task identity; offline action imitation only, not scene-only leakage, ACT/Diffusion, or rollout success. |
+| `CLAIM.POLICY_VISION_SMOKE.001` | True | Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera and complete the CUDA smoke optimization step. | Input compatibility only; no trained checkpoint, held-out policy metric, simulator rollout, or physical rollout. |
 | `CLAIM.TIMING.001` | True | A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks. | Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller. |
 | `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
 | `CLAIM.ROUNDTRIP.001` | True | Complete pinned source shards from multiple public LeRobotDatasets round-trip exactly through WorldEpisode. | One complete pinned Parquet shard per dataset; not full corpora or source-video conversion throughput. |
@@ -105,6 +113,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | regenerate complete-shard LeRobot conversion-scale evidence | `uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required` |
 | regenerate held-out multi-trajectory timing evidence | `uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required` |
 | validate pinned LeRobot policy compatibility evidence | `python3 tools/lerobot_policy_compatibility_audit.py --check --strict` |
+| validate pinned LeRobot front-camera and policy smoke evidence | `python3 tools/lerobot_policy_video_materialization.py --check --strict && python3 tools/lerobot_policy_vision_smoke.py --check --strict` |
 | regenerate and validate experiment provenance | `python3 tools/experiment_manifest.py --strict` |
 | audit every paper citation | `python3 tools/citation_source_audit.py --strict` |
 | audit third-party assets and redistributed source rows | `python3 tools/third_party_asset_audit.py --strict` |

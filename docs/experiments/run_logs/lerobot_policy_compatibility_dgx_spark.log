@@ -1,0 +1,67 @@
+WorldEpisode LeRobot policy compatibility audit
+status=blocked_missing_required_observation_modality
+host=golden-apple
+machine=aarch64
+python=3.12.13
+lerobot=0.6.0
+torch=2.11.0+cu130
+cuda_available=true
+cuda_devices=[{"compute_capability": "12.1", "index": 0, "name": "NVIDIA GB10", "total_memory_bytes": 130663170048}]
+dataset_episodes=320
+dataset_frames=98990
+dataset_features=["action", "episode_index", "frame_index", "index", "next.done", "next.reward", "observation.state", "task_index", "timestamp"]
+dataset_stats_features=["action", "observation.state"]
+
+[act]
+status=blocked_missing_required_observation_modality
+return_code=1
+duration_seconds=4.599967
+command=["python", "-m", "lerobot.scripts.lerobot_train", "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train", "--dataset.root=$DATASET_ROOT", "--policy.type=act", "--policy.push_to_hub=false", "--output_dir=$WORK_DIR/act", "--job_name=act_compatibility_smoke", "--policy.device=cuda", "--steps=1", "--batch_size=2", "--num_workers=0", "--save_checkpoint=false", "--wandb.enable=false", "--seed=17"]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 777, in <module>
+    main()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 773, in main
+    train()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/configs/parser.py", line 320, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 293, in train
+    policy = make_policy(
+             ^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/factory.py", line 643, in make_policy
+    policy = policy_cls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/act/modeling_act.py", line 62, in __init__
+    config.validate_features()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/act/configuration_act.py", line 164, in validate_features
+    raise ValueError("You must provide at least one image or the environment state among the inputs.")
+ValueError: You must provide at least one image or the environment state among the inputs.
+
+[diffusion]
+status=blocked_missing_required_observation_modality
+return_code=1
+duration_seconds=4.490151
+command=["python", "-m", "lerobot.scripts.lerobot_train", "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train", "--dataset.root=$DATASET_ROOT", "--policy.type=diffusion", "--policy.push_to_hub=false", "--output_dir=$WORK_DIR/diffusion", "--job_name=diffusion_compatibility_smoke", "--policy.device=cuda", "--steps=1", "--batch_size=2", "--num_workers=0", "--save_checkpoint=false", "--wandb.enable=false", "--seed=17"]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 777, in <module>
+    main()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 773, in main
+    train()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/configs/parser.py", line 320, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/scripts/lerobot_train.py", line 293, in train
+    policy = make_policy(
+             ^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/factory.py", line 643, in make_policy
+    policy = policy_cls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/diffusion/modeling_diffusion.py", line 78, in __init__
+    config.validate_features()
+  File "$UV_ENV/lib/python3.12/site-packages/lerobot/policies/diffusion/configuration_diffusion.py", line 228, in validate_features
+    raise ValueError("You must provide at least one image or the environment state among the inputs.")
+ValueError: You must provide at least one image or the environment state among the inputs.

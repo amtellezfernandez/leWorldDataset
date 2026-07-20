@@ -1,0 +1,40 @@
+started_utc=2026-07-20T14:58:48Z
+host_uname=Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+machine=aarch64
+cpu_logical_count=20
+total_ram_bytes=130663170048
+storage_total_bytes=3937360351232
+storage_free_bytes=324412391424
+gpu_info=NVIDIA GB10, 580.159.03, [N/A]
+git_commit=ce90f3e062656194f8eecec5f74f8820b177e6f7
+code_sha256=20192bf01051a70d5edfd1cdd11653865cf86528182f9ff5a7a1bda9bf8cb544
+temporal_code_sha256=168345270a48d451e474c55a49b50433285660b19f88866a83499cda690ebf1b
+command=WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE=1 python tools/run_experiments.py
+Wrote docs/experiments/results.json
+Wrote docs/experiments/RESULTS.md
+Fault detection: precision=0.933, recall=1.000
+Counterfactual success: 0.292 -> 0.592
+	Command being timed: "env WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE=1 UV_NO_PROGRESS=1 uv run --with torch --with pyarrow --with requests --with numpy python tools/run_experiments.py"
+	User time (seconds): 5.13
+	System time (seconds): 0.27
+	Percent of CPU this job got: 140%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 641236
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 115857
+	Voluntary context switches: 2463
+	Involuntary context switches: 139
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 20600
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+finished_utc=2026-07-20T14:58:52Z

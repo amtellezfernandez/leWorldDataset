@@ -16,6 +16,7 @@
         "armnet_task_scene_proxy_temporal_ridge",
         "controlled_contract_suite",
         "lerobot_act_diffusion_compatibility_preflight",
+        "lerobot_act_diffusion_front_camera_smoke",
         "lerobot_conversion_scale",
         "lerobot_multitrajectory_timing"
       ],

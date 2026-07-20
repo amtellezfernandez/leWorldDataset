@@ -1,0 +1,39 @@
+started_utc=2026-07-20T15:47:15Z
+host_uname=Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+machine=aarch64
+cpu_logical_count=20
+total_ram_bytes=130663170048
+storage_total_bytes=3937360351232
+storage_free_bytes=324412166144
+gpu_info=NVIDIA GB10, 580.159.03, [N/A]
+git_commit=ce90f3e062656194f8eecec5f74f8820b177e6f7
+code_sha256=ae467110461c0d8409358d764701dd471778a4d248c55b46fefe47b3528be1c0
+converter_code_sha256=7271a3dd1e212ffd84e5645890e271526854e0212d43252d4c0624385ff5e9cf
+command=uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required
+Installed 6 packages in 7ms
+conversion scale: svla_so101_pickplace worker failed with exit 1: conversion-scale worker: '/tmp/worldepisode-scale-svla_so101_pickplace-a4wbambn/episode_000000/exported_lerobot_v3' is not in the subpath of '/home/atellez/worldepisode-neurips2027'
+Command exited with non-zero status 1
+	Command being timed: "env UV_NO_PROGRESS=1 uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required"
+	User time (seconds): 0.39
+	System time (seconds): 0.11
+	Percent of CPU this job got: 75%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.67
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 139016
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 10
+	Minor (reclaiming a frame) page faults: 27065
+	Voluntary context switches: 427
+	Involuntary context switches: 21
+	Swaps: 0
+	File system inputs: 1944
+	File system outputs: 8520
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+finished_utc=2026-07-20T15:47:15Z

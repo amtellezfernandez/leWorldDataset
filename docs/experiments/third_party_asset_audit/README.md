@@ -8,7 +8,7 @@ Third-party datasets named by the experiment manifest, source-derived Parquet fi
 
 | Dataset | Pinned revision | License expression | Experiments |
 |---|---|---|---|
-| `armnet/armnetbench_v01_lerobot_so101` | `2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84` | `Apache-2.0` | `armnet_task_scene_proxy_mlp`, `armnet_task_scene_proxy_temporal_ridge`, `controlled_contract_suite`, `lerobot_act_diffusion_compatibility_preflight`, `lerobot_conversion_scale`, `lerobot_multitrajectory_timing` |
+| `armnet/armnetbench_v01_lerobot_so101` | `2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84` | `Apache-2.0` | `armnet_task_scene_proxy_mlp`, `armnet_task_scene_proxy_temporal_ridge`, `controlled_contract_suite`, `lerobot_act_diffusion_compatibility_preflight`, `lerobot_act_diffusion_front_camera_smoke`, `lerobot_conversion_scale`, `lerobot_multitrajectory_timing` |
 | `lerobot/droid_100` | `87301a2d2e99340e2010c9ef0f1d8e780b08aaf9` | `MIT AND CC-BY-4.0` | `droid_100_proxy_ridge_rerun` |
 | `lerobot/pusht` | `7628202a2180972f291ba1bc6723834921e72c19` | `MIT` | `controlled_contract_suite`, `lerobot_conversion_scale` |
 | `lerobot/svla_so101_pickplace` | `f641879e22172be7e8161d5e6c1503c2d2feb657` | `Apache-2.0` | `controlled_contract_suite`, `lerobot_conversion_scale` |

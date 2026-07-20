@@ -18,6 +18,18 @@
       "passed": true
     },
     {
+      "boundary": "Input compatibility only; no trained checkpoint, held-out policy metric, simulator rollout, or physical rollout.",
+      "claim": "Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera and complete the CUDA smoke optimization step.",
+      "claim_id": "CLAIM.POLICY_VISION_SMOKE.001",
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+        "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+        "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+        "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log"
+      ],
+      "passed": true
+    },
+    {
       "boundary": "Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller.",
       "claim": "A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks.",
       "claim_id": "CLAIM.TIMING.001",
@@ -156,6 +168,15 @@
             "docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh"
           ],
           "purpose": "regenerate split packages and LeRobot job specs"
+        },
+        {
+          "command": "python3 tools/lerobot_policy_video_materialization.py --check --strict && python3 tools/lerobot_policy_vision_smoke.py --check --strict",
+          "expected_outputs": [
+            "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+            "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+            "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json"
+          ],
+          "purpose": "validate the pinned front-camera training-input preflight"
         },
         {
           "command": "bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
@@ -297,6 +318,10 @@
     {
       "command": "python3 tools/lerobot_policy_compatibility_audit.py --check --strict",
       "name": "validate pinned LeRobot policy compatibility evidence"
+    },
+    {
+      "command": "python3 tools/lerobot_policy_video_materialization.py --check --strict && python3 tools/lerobot_policy_vision_smoke.py --check --strict",
+      "name": "validate pinned LeRobot front-camera and policy smoke evidence"
     },
     {
       "command": "python3 tools/experiment_manifest.py --strict",
@@ -508,7 +533,42 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_policy_video_materialization_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log"
     },
     {
       "exists": true,
@@ -607,7 +667,7 @@
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
     "open_result_gate_count": 4,
-    "paper_claim_count": 14,
+    "paper_claim_count": 15,
     "results_sections": [
       "baseline_schema_errors",
       "baseline_semantic_errors",
