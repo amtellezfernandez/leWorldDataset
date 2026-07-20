@@ -1,0 +1,302 @@
+{
+  "action_dimension": 6,
+  "checks": {
+    "normalization_finite_and_positive": true,
+    "paired_actions_exact": true,
+    "paired_frame_indices_exact": true,
+    "paired_timestamps_exact": true,
+    "source_episode_set_matches_protocol": true,
+    "task_counts_match_protocol": true
+  },
+  "episodes": [
+    {
+      "frame_count": 225,
+      "frame_index_sha256": "34618413e0eb3a9cb7b8ff17362e7ea6d360264c4cda7dd4859823211f0ebff3",
+      "random_local_episode_index": 42,
+      "source_episode_index": 1554,
+      "target_action_sha256": "788edb23e833bb789b0617278f0bc650dcbe8a11219913ff0bfdbc6770e6b498",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 5,
+      "task_index": 4,
+      "timestamp_sha256": "636bbe21c114b75e4c42ae0899cd7fb4987e9edc687030666e5f747d5181bbe0"
+    },
+    {
+      "frame_count": 258,
+      "frame_index_sha256": "1ff5fb2e8e7c04a8f0d882377e6a30df2bb614b36f02b69d4cefc3f72fa148c5",
+      "random_local_episode_index": 43,
+      "source_episode_index": 1556,
+      "target_action_sha256": "a2ae5605b089f363dbbb74cf6c92fdb963cf904b52eeff4f316ae84ed4d52828",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 7,
+      "task_index": 4,
+      "timestamp_sha256": "136fad8c303b7a847a470ca70e1d41d4df23ab9b9ef8a463737d58bfa0a09033"
+    },
+    {
+      "frame_count": 239,
+      "frame_index_sha256": "8675ad9e31fb68173e82c96fa822911dacf82e7495b3ff4bf3b89045326656eb",
+      "random_local_episode_index": 44,
+      "source_episode_index": 1558,
+      "target_action_sha256": "5ce0dba93d5a9919732272aa1c4488eed874166d35b1f3b9359ec6356f26c1a7",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 9,
+      "task_index": 4,
+      "timestamp_sha256": "edb4f37304464aaf49c92c90793ac0053188909699bcbe11ce453dc3ceafb936"
+    },
+    {
+      "frame_count": 226,
+      "frame_index_sha256": "306092d7e2fe6e8f59a2a12b81a1bd77c27d9002f21b26e9fd8c575b14159690",
+      "random_local_episode_index": 45,
+      "source_episode_index": 1561,
+      "target_action_sha256": "04f84811dbcebd33a7b98b35597f57ec994af0917e9947ad8a71f78c17aa2283",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 12,
+      "task_index": 4,
+      "timestamp_sha256": "c09fff06454d18f7dde177d106fa3aa62c5c6a3220a18579381dfdcd46faa866"
+    },
+    {
+      "frame_count": 231,
+      "frame_index_sha256": "2d0357763afc885b4974808bdc035d78a6452a09507b5c9e3bf7e5cf6abb37a4",
+      "random_local_episode_index": 46,
+      "source_episode_index": 1563,
+      "target_action_sha256": "136af80fe696cd8d45621849f9904844af5d6a7224b5283c490a097590ff4cdb",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 14,
+      "task_index": 4,
+      "timestamp_sha256": "cd3560beb819e0af711f56064e803d3b1c76ffad981173b8624a0cccff1f5514"
+    },
+    {
+      "frame_count": 206,
+      "frame_index_sha256": "6346104536698bf980a57aea8e549cc094d8f5f5cd5c606ddd7851da4976cf94",
+      "random_local_episode_index": 47,
+      "source_episode_index": 1570,
+      "target_action_sha256": "453d1e1980bf3049e5d57ea3e8e8ee0ceca48da0ba1308d5731686e6bcca803f",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 21,
+      "task_index": 4,
+      "timestamp_sha256": "09ab33e26dd1f590c82310616ff28b2ab758b5127437f6160df01af96ae67656"
+    },
+    {
+      "frame_count": 168,
+      "frame_index_sha256": "1d9eab4d6a040a951015fe5d75e9c0d4de6ea4ac175f6f682d49896ad4d5e475",
+      "random_local_episode_index": 48,
+      "source_episode_index": 1591,
+      "target_action_sha256": "c91c90af4b8313702e37554539bdf7f387493698c80a7f1db20e773f8f7b7652",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 42,
+      "task_index": 4,
+      "timestamp_sha256": "b662e7c870ad98c2a15088d30e3672e9427f56d8d6af6435a16c7bd55b422a2d"
+    },
+    {
+      "frame_count": 189,
+      "frame_index_sha256": "2429e8ab4038a9141cabfa4354c2376600bc40af0d7550a32765daee4d7d7845",
+      "random_local_episode_index": 49,
+      "source_episode_index": 1593,
+      "target_action_sha256": "e96deab41b49c6081b736656f0b55c4eaccfa093b47749958c86e3ce3fe9aaee",
+      "task": "Put the eye drops on the shelf",
+      "task_confounded_lineage_holdout_local_episode_index": 44,
+      "task_index": 4,
+      "timestamp_sha256": "f953e958a0af5320d56398b194df969f5e82940b922031136dd47cc208dbe6e2"
+    },
+    {
+      "frame_count": 146,
+      "frame_index_sha256": "c1f1685f1a875b8288e57e1abc849fac36fabc775b08dc6420149c0dbb03a13e",
+      "random_local_episode_index": 50,
+      "source_episode_index": 1845,
+      "target_action_sha256": "9dd897674710807a5471494bea27c122d83814ef1cfd84ef2a0c59a765cb9716",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 56,
+      "task_index": 3,
+      "timestamp_sha256": "551b1538dda9a0738d738156103cd313de67a469f5d9e25599b195be39dbbaf0"
+    },
+    {
+      "frame_count": 202,
+      "frame_index_sha256": "876553373776f0cb629c70a8b629499e16523e7b21b7d46f7c9e941992a7147b",
+      "random_local_episode_index": 51,
+      "source_episode_index": 1848,
+      "target_action_sha256": "558df57404f993e7299c901d47581ad15d7806546b5f9e017b30e89a9b1221a4",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 59,
+      "task_index": 3,
+      "timestamp_sha256": "d86766ce04f5d4ddd57f6f04125f415d06a12a5d2c444bf0a7d9e57fc72b95c4"
+    },
+    {
+      "frame_count": 181,
+      "frame_index_sha256": "811fc6a164a8ff2b9c58defc8a6dbd3e2b611a6937ac00c4831d4c42cab2e48b",
+      "random_local_episode_index": 52,
+      "source_episode_index": 1856,
+      "target_action_sha256": "42b652ac69a4f0b732ad3e47ec36618e0b060e0bbdb88abe481a77b94452a1b7",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 67,
+      "task_index": 3,
+      "timestamp_sha256": "e8a90bdbe4acb3f0ea60b40e73e3d0aade862fe040a26d6878cc1441f1065cfc"
+    },
+    {
+      "frame_count": 156,
+      "frame_index_sha256": "16325a049f859da43911c35ec3c10e5d064bd5a3fe1dd07477e21096d3cd2f09",
+      "random_local_episode_index": 53,
+      "source_episode_index": 1858,
+      "target_action_sha256": "62c625246d8b7b3da70df1119db1807d18ee592b8caee4315634c707df301688",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 69,
+      "task_index": 3,
+      "timestamp_sha256": "097e2b377946373194c066775f37328af2fc23f097ebf4d9dd980dd4383017ca"
+    },
+    {
+      "frame_count": 158,
+      "frame_index_sha256": "76a013db57b6a62c2634b2e6f5923c7fc4db01c979c9a8fc3640568185a03763",
+      "random_local_episode_index": 54,
+      "source_episode_index": 1861,
+      "target_action_sha256": "2f0e0a6f143f181f19f7399b9f5f1f38e5a87e28c737725d26fd7a0c0cd86299",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 72,
+      "task_index": 3,
+      "timestamp_sha256": "ff06fef9d587e25a154a9cfa6146362f6e65e3b18922068d0be95bef5d459670"
+    },
+    {
+      "frame_count": 158,
+      "frame_index_sha256": "76a013db57b6a62c2634b2e6f5923c7fc4db01c979c9a8fc3640568185a03763",
+      "random_local_episode_index": 55,
+      "source_episode_index": 1865,
+      "target_action_sha256": "805a70746e7a082b58c72c6cca46b0ff933553616505612c5851919d5268ebfd",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 76,
+      "task_index": 3,
+      "timestamp_sha256": "ff06fef9d587e25a154a9cfa6146362f6e65e3b18922068d0be95bef5d459670"
+    },
+    {
+      "frame_count": 169,
+      "frame_index_sha256": "2383d4b278a7c631851ef94aa326130e194d217af2944904f4b04b28c086eb48",
+      "random_local_episode_index": 56,
+      "source_episode_index": 1871,
+      "target_action_sha256": "700c2b86df5961be765eeb2e762dc85f5e0a814fd048b2b2310713326f03b44b",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 82,
+      "task_index": 3,
+      "timestamp_sha256": "b88d7c892a95d4a018064e482e5a6f0d9f42fff5955fd10b7980c1ab911490d2"
+    },
+    {
+      "frame_count": 174,
+      "frame_index_sha256": "dd9741c25b2485b4e7956f48a06ae787b0d6e4eaea1176957550d5be64356d06",
+      "random_local_episode_index": 57,
+      "source_episode_index": 1872,
+      "target_action_sha256": "d767a2e5bc8f3841f9e648450b8c5a22af87bee4c4cde7861dce9266067f85b0",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 83,
+      "task_index": 3,
+      "timestamp_sha256": "8ed5a23d626f1aa1e0cd8f693941b5b8e2260a4b47aea7b5b73e3f06b197cfe1"
+    },
+    {
+      "frame_count": 169,
+      "frame_index_sha256": "2383d4b278a7c631851ef94aa326130e194d217af2944904f4b04b28c086eb48",
+      "random_local_episode_index": 58,
+      "source_episode_index": 1873,
+      "target_action_sha256": "7ae918b194a82c752bcafa1adcbc1fbca4911aa40d77cb89a9c8bfc7f1c765ef",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 84,
+      "task_index": 3,
+      "timestamp_sha256": "b88d7c892a95d4a018064e482e5a6f0d9f42fff5955fd10b7980c1ab911490d2"
+    },
+    {
+      "frame_count": 169,
+      "frame_index_sha256": "2383d4b278a7c631851ef94aa326130e194d217af2944904f4b04b28c086eb48",
+      "random_local_episode_index": 59,
+      "source_episode_index": 1874,
+      "target_action_sha256": "d04ef38e77a45ea9a4b5b06663264cbf377a63b1f233cf710ed45d86910f54f4",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 85,
+      "task_index": 3,
+      "timestamp_sha256": "b88d7c892a95d4a018064e482e5a6f0d9f42fff5955fd10b7980c1ab911490d2"
+    },
+    {
+      "frame_count": 172,
+      "frame_index_sha256": "a34e15748201dd61637420620341a53ac40289579391683efdd5a9d8a41ffcf3",
+      "random_local_episode_index": 60,
+      "source_episode_index": 1875,
+      "target_action_sha256": "6642e122b3bac83fcb9bb9e4c419661f77ae6d84704d9d503bb712531b8b3cf4",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 86,
+      "task_index": 3,
+      "timestamp_sha256": "d3319a8b14c6fadf57f9452a908da48473355c87c2b211f7d6befc05b8b451c0"
+    },
+    {
+      "frame_count": 322,
+      "frame_index_sha256": "9e30078f4882e86b5df2bde79d51bcdff87b0d9ebbe7f0a2ca218c58c2231dde",
+      "random_local_episode_index": 61,
+      "source_episode_index": 1881,
+      "target_action_sha256": "6839d6d8cc36a7689f9ae5f36248f5fff2d1b00ca39f0a359ffb8a147310ab6a",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 92,
+      "task_index": 3,
+      "timestamp_sha256": "b0614589cb979745f21d9e38f90c09b3d6cb661a262d02bbfe53d7ceac6605e0"
+    },
+    {
+      "frame_count": 167,
+      "frame_index_sha256": "c27322e5d55f3ea818f9922f8c015e7e6ba8d369d3e439360091cdfff9ebb97b",
+      "random_local_episode_index": 62,
+      "source_episode_index": 1885,
+      "target_action_sha256": "89c7788a40a31a4808dd8e63a4e1f4732a9214adeb7094ab732df1eae6ae787b",
+      "task": "Put the eye drops into the basket",
+      "task_confounded_lineage_holdout_local_episode_index": 96,
+      "task_index": 3,
+      "timestamp_sha256": "7f641a81aaef7eb51892acbefb3b1514718ba867cb60efdce52d424fac6d7486"
+    }
+  ],
+  "frame_count": 4085,
+  "normalization": {
+    "action_scale": [
+      19.4910507347513,
+      47.28704472156111,
+      47.348841338365126,
+      17.640426949436772,
+      17.319055435457848,
+      14.308858040929145
+    ],
+    "epsilon": 1e-06,
+    "formula": "maximum(population_standard_deviation_of_ground_truth_joint_over_all_shared_frames, epsilon)",
+    "ground_truth_population_std": [
+      19.4910507347513,
+      47.28704472156111,
+      47.348841338365126,
+      17.640426949436772,
+      17.319055435457848,
+      14.308858040929145
+    ]
+  },
+  "paired_target_stream_sha256": "df4223857a3df98f7955f6a80418512bcd3fff73dbcf438b82d853cbed449c1d",
+  "pass": true,
+  "profile": "worldepisode-lerobot-offline-policy-evaluation-reference-0.1",
+  "protocol": {
+    "path": "docs/experiments/lerobot_policy_full_training/protocol.json",
+    "sha256": "52b0d92c7104c839ac0aa54978fe6733feb680a6c06879ff9df104ed127ea0c4"
+  },
+  "selection_rule": "sorted_source_episode_intersection_of_random_episode_test_and_scene_disjoint_test",
+  "source_episode_count": 21,
+  "source_episode_indices": [
+    1554,
+    1556,
+    1558,
+    1561,
+    1563,
+    1570,
+    1591,
+    1593,
+    1845,
+    1848,
+    1856,
+    1858,
+    1861,
+    1865,
+    1871,
+    1872,
+    1873,
+    1874,
+    1875,
+    1881,
+    1885
+  ],
+  "source_episode_indices_sha256": "5389daad774cf84e200e4ed80249dea7661cfb2ce09491afae53539bcfb0e653",
+  "task_counts": {
+    "Put the eye drops into the basket": 13,
+    "Put the eye drops on the shelf": 8
+  }
+}

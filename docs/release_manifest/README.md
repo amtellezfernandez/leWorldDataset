@@ -6,9 +6,9 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 ## Summary
 
-- Entries: 149
-- Public evidence artifacts: 116
-- Release scripts: 33
+- Entries: 155
+- Public evidence artifacts: 121
+- Release scripts: 34
 - Normalized timing digests: 4
 - Missing artifacts: 0
 - Empty artifacts: 0
@@ -20,10 +20,10 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
 | `WorldEpisode.pdf` | public_evidence | exact | `551f2ef501a7c430` |
-| `WorldEpisode-supplement.zip` | public_evidence | exact | `859833145845d607` |
+| `WorldEpisode-supplement.zip` | public_evidence | exact | `63e7097a10a549ac` |
 | `README.md` | public_evidence | exact | `fc19d507a4367b50` |
 | `THIRD_PARTY_ASSETS.md` | public_evidence | exact | `7d27eec228630e01` |
-| `TODO.md` | public_evidence | exact | `b99ad067d147ebac` |
+| `TODO.md` | public_evidence | exact | `8115eb50a2809fe5` |
 | `third_party_licenses/README.md` | public_evidence | exact | `b6932775e0d8047c` |
 | `third_party_licenses/pusht-MIT.txt` | public_evidence | exact | `304e99a48271e108` |
 | `spec/worldepisode-v0.1.md` | public_evidence | exact | `245a953769413e3d` |
@@ -83,14 +83,19 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/experiments/lerobot_policy_gate/rollout_contract.json` | public_evidence | exact | `0062384aba1e8529` |
 | `docs/experiments/lerobot_policy_gate/physical_splits/manifest.json` | public_evidence | exact | `999bee80b6bc28e0` |
 | `docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh` | public_evidence | exact | `c04e5ec159cd73d5` |
+| `docs/experiments/lerobot_policy_full_training/README.md` | public_evidence | exact | `d53f5b389fee4e79` |
+| `docs/experiments/lerobot_policy_full_training/protocol.json` | public_evidence | exact | `52b0d92c7104c839` |
+| `docs/experiments/lerobot_policy_full_training/jobs.json` | public_evidence | exact | `bac0aea58bf79e95` |
+| `docs/experiments/lerobot_policy_full_training/evaluation_reference.json` | public_evidence | exact | `2ab28e2a3c8f550f` |
+| `docs/experiments/lerobot_policy_full_training/run_jobs.sh` | public_evidence | exact | `d954043e759a9cb7` |
 | `docs/experiments/experiment_manifest/README.md` | public_evidence | exact | `a4c1505804734a52` |
 | `docs/experiments/experiment_manifest/experiment_manifest.json` | public_evidence | exact | `09e8fe2dd4e1d308` |
 | `docs/experiments/citation_source_audit/README.md` | public_evidence | exact | `be8acacd24357053` |
 | `docs/experiments/citation_source_audit/citation_source_audit.json` | public_evidence | exact | `12ae377d0d214828` |
 | `docs/experiments/third_party_asset_audit/README.md` | public_evidence | exact | `e5ddb2bf749c7086` |
 | `docs/experiments/third_party_asset_audit/asset_audit.json` | public_evidence | exact | `82daf44c34f6590a` |
-| `docs/anonymous_supplement/README.md` | public_evidence | exact | `afc2061bcbe5f1a2` |
-| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `7d462e2a16c539cd` |
+| `docs/anonymous_supplement/README.md` | public_evidence | exact | `9bfc337646c58b15` |
+| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `416626a5abf8b014` |
 | `docs/experiments/anonymity_audit/README.md` | public_evidence | exact | `f336656c4ad49e16` |
 | `docs/experiments/anonymity_audit/anonymity_report.json` | public_evidence | exact | `8f2c3a7e055dbd8e` |
 | `docs/experiments/neurips_submission/README.md` | public_evidence | exact | `3c0b007df5d94cfd` |
@@ -136,7 +141,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `GOVERNANCE.md` | public_evidence | exact | `00db931e8bfa6960` |
 | `CITATION.cff` | public_evidence | exact | `b416c4fbe9a2c3b8` |
 | `.github/workflows/ci.yml` | release_script | exact | `09f46535f7f985db` |
-| `Makefile` | release_script | exact | `5170557ecf73d24c` |
+| `Makefile` | release_script | exact | `6a19fd53d50e8d8d` |
 | `tools/run_experiments.py` | release_script | exact | `d7a838e8a03b29f3` |
 | `tools/open_reproduction_gates.py` | release_script | exact | `3875d4b4b215f320` |
 | `tools/paper_claim_audit.py` | release_script | exact | `50af447f3641950e` |
@@ -159,12 +164,13 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `tools/lerobot_policy_video_materialization.py` | release_script | exact | `dae4074700375f42` |
 | `tools/lerobot_policy_vision_smoke.py` | release_script | exact | `98ee78efcaf15502` |
 | `tools/lerobot_policy_leakage_gate.py` | release_script | exact | `6ffc99c57961b542` |
+| `tools/lerobot_policy_full_training.py` | release_script | exact | `4c6ae6963ac51c41` |
 | `tools/lerobot_scene_leakage_experiment.py` | release_script | exact | `28af6fa76943d3cc` |
 | `tools/lerobot_worldepisode_roundtrip.py` | release_script | exact | `db7546d06ab885d7` |
 | `tools/lerobot_temporal_policy_baseline.py` | release_script | exact | `168345270a48d451` |
 | `tools/public_maturity_audit.py` | release_script | exact | `2c6f3ed15c56efb6` |
 | `tools/package_install_smoke.py` | release_script | exact | `3a71a0846173ff5f` |
-| `tools/release_manifest.py` | release_script | exact | `4e04345ab965e971` |
+| `tools/release_manifest.py` | release_script | exact | `c6882fbd64490391` |
 | `tools/submission_packet.py` | release_script | exact | `fdb2811ee5b1b125` |
 | `tools/release_readiness.py` | release_script | exact | `2adffeaebbde3fbf` |
 | `tools/artifact_freshness.py` | release_script | exact | `872fb2ac81b56cfc` |

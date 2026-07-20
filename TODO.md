@@ -37,6 +37,13 @@ baseline.
     metadata, required MP4 paths, byte sizes, and LFS SHA-256 digests. Remote materialization
     verifies every asset and all four split packages; pinned ACT and Diffusion paths both complete
     their CUDA smoke optimization step.
+  - Preregistered offline training protocol:
+    `docs/experiments/lerobot_policy_full_training/protocol.json` fixes ACT and Diffusion, both
+    current split packages, five matched seeds, 20,000 optimizer steps, checkpoint/log provenance,
+    and paired teacher-observation evaluation before the required run. The evaluation reference
+    proves byte-identical actions, frame indices, and timestamps for the exact 21 source episodes
+    shared by both test packages. This can establish common-policy offline action error only; the
+    current lineage holdout is task-confounded and the required 20 jobs have not yet run.
   - The preflight closes training-input compatibility only. Full matched-seed training, held-out
     action metrics, checkpoints, and rollouts remain open.
   - Execute ACT and Diffusion jobs for both split protocols with matched hyperparameters and seeds.

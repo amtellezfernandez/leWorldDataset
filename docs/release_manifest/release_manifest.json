@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 149,
+    "entry_count": 155,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 116,
-    "release_script_count": 33
+    "public_evidence_count": 121,
+    "release_script_count": 34
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "859833145845d60794861d48ad292e79734af08f2cc267aca23e1a44f9004e18"
+      "sha256": "63e7097a10a549ac7239123a78969cd604706d617588e2de5b6a0de420e064af"
     },
     {
       "category": "public_evidence",
@@ -61,7 +61,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "TODO.md",
-      "sha256": "b99ad067d147ebacc45cc1da0777c65313b0741a9f2f386244afb996808c9071"
+      "sha256": "8115eb50a2809fe5002ceb6401b0e7e6d79aa098f8ee009bf03e5fe2d4ad30b8"
     },
     {
       "category": "public_evidence",
@@ -609,6 +609,51 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_full_training/README.md",
+      "sha256": "d53f5b389fee4e798e8cf7f3a5a9d8370d1cfdc1dcee385dae8d2a33e46c8706"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_full_training/protocol.json",
+      "sha256": "52b0d92c7104c839ac0aa54978fe6733feb680a6c06879ff9df104ed127ea0c4"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_full_training/jobs.json",
+      "sha256": "bac0aea58bf79e9546b30c2b705b0a7e1bcbf5ff6e13158924619fd18b2d03ed"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_full_training/evaluation_reference.json",
+      "sha256": "2ab28e2a3c8f550fee9896425324020ffd08369a6d980c0ee19616b65c11a8f7"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/lerobot_policy_full_training/run_jobs.sh",
+      "sha256": "d954043e759a9cb73db4c12d4ff1eccf36301c9a2936cedca50ce01975eb3bdd"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/README.md",
       "sha256": "a4c1505804734a523a2b844eeda3a87338fcb571f46130d32ec3916e787dd4cb"
     },
@@ -664,7 +709,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "afc2061bcbe5f1a26bc6a1729b6124f17243c84f79411159db4d934aaf16fb72"
+      "sha256": "9bfc337646c58b15119e28e8ccf87d234297cadb5917392ac8594dcae6f84767"
     },
     {
       "category": "public_evidence",
@@ -673,7 +718,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "7d462e2a16c539cd7fd33a1cb4678c33d9f5547cee0ecb2520b14089584ec804"
+      "sha256": "416626a5abf8b0142e2e25cd27bf05c847a29681bc7f09e1025a4fa183beaa78"
     },
     {
       "category": "public_evidence",
@@ -1087,7 +1132,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "5170557ecf73d24c017fdc2a3f4f7c6d7a57c1919e5b192a6f51ab132444924a"
+      "sha256": "6a19fd53d50e8d8d10b230e01190bff5e5d6fbbf145e2246fbce9fe07a16e868"
     },
     {
       "category": "release_script",
@@ -1293,6 +1338,15 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "tools/lerobot_policy_full_training.py",
+      "sha256": "4c6ae6963ac51c41588b9835db9ed31c7addbcd1a3a14ec8dcc623e415eaad0e"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "tools/lerobot_scene_leakage_experiment.py",
       "sha256": "28af6fa76943d3ccdea2967e0ec84c3d5b8efd63775258036aa22e65b575b391"
     },
@@ -1339,7 +1393,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "4e04345ab965e9717893fbbbee3c81f7276841bd1f491324143d7ee8ff44ae9c"
+      "sha256": "c6882fbd644903916200fa4e152ae990566a3a5d13da5bba67e54132ef883644"
     },
     {
       "category": "release_script",

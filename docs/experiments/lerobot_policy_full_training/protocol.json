@@ -1,0 +1,143 @@
+{
+  "acceptance": {
+    "all_jobs_must_complete": true,
+    "minimum_seed_count_per_policy_split": 5,
+    "no_nonfinite_predictions_or_metrics": true,
+    "require_checkpoint_config_and_log_digests": true,
+    "require_exact_evaluation_episode_set": true,
+    "require_protocol_committed_before_execution": true,
+    "required_job_count": 20
+  },
+  "analysis": {
+    "bootstrap_resamples": 20000,
+    "bootstrap_seed": 2027,
+    "confidence_level": 0.95,
+    "effect": "task_confounded_lineage_holdout_minus_random_episode",
+    "resampling_unit": "paired_crossed_training_seed_and_source_episode"
+  },
+  "claim_boundary": {
+    "does_not_establish": [
+      "closed_loop_task_success",
+      "physical_robot_rollout_impact",
+      "simulator_rollout_impact",
+      "scene_only_leakage",
+      "task_support_matched_scene_leakage"
+    ],
+    "establishes_if_accepted": [
+      "five_seed_ACT_offline_action_prediction_for_both_current_split_conditions",
+      "five_seed_Diffusion_offline_action_prediction_for_both_current_split_conditions",
+      "paired_teacher_observation_action_error_on_the_exact_shared_source_episodes"
+    ],
+    "statement": "This is sequential teacher-observation action prediction with each policy's native action queue. It is not a closed-loop rollout. The current lineage holdout removes two tasks from training because the available lineage key includes task identity; it is therefore a task-confounded holdout and cannot isolate scene leakage."
+  },
+  "evaluation": {
+    "action_key": "action",
+    "action_scale": {
+      "epsilon": 1e-06,
+      "formula": "maximum(population_standard_deviation_of_ground_truth_joint_over_all_shared_frames, epsilon)",
+      "reference_condition": "random_episode_test",
+      "scope": "one_common_per_joint_scale_for_every_policy_split_and_seed"
+    },
+    "episode_selection": {
+      "expected_episode_count": 21,
+      "expected_source_episode_indices": [
+        1554,
+        1556,
+        1558,
+        1561,
+        1563,
+        1570,
+        1591,
+        1593,
+        1845,
+        1848,
+        1856,
+        1858,
+        1861,
+        1865,
+        1871,
+        1872,
+        1873,
+        1874,
+        1875,
+        1881,
+        1885
+      ],
+      "expected_source_episode_indices_sha256": "5389daad774cf84e200e4ed80249dea7661cfb2ce09491afae53539bcfb0e653",
+      "expected_task_counts": {
+        "Put the eye drops into the basket": 13,
+        "Put the eye drops on the shelf": 8
+      },
+      "rule": "sorted_source_episode_intersection_of_random_episode_test_and_scene_disjoint_test"
+    },
+    "metrics": {
+      "primary": "episode_normalized_rmse_mean",
+      "report": [
+        "frame_normalized_rmse",
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "per_episode_normalized_rmse",
+        "per_joint_rmse",
+        "per_joint_normalized_rmse",
+        "seed_level_mean_and_sample_standard_deviation",
+        "paired_hierarchical_bootstrap_95_percent_interval"
+      ],
+      "success_threshold": null
+    },
+    "mode": "sequential_teacher_observation_native_action_queue",
+    "policy_reset": "at_each_episode_boundary",
+    "raw_prediction_storage": "compressed_npz_float32_predictions_targets_and_indices"
+  },
+  "profile": "worldepisode-lerobot-offline-policy-protocol-0.1",
+  "protocol_id": "POLICY.OFFLINE.001.armnet.v1",
+  "runtime": {
+    "device": "cuda",
+    "lerobot_requirement": "lerobot[training,diffusion]==0.6.0",
+    "lerobot_version": "0.6.0",
+    "python": "3.12",
+    "uv_isolated": true
+  },
+  "source": {
+    "camera_key": "observation.images.front",
+    "dataset_repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "dataset_revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "front_camera_asset_manifest": "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+    "physical_split_root": "docs/experiments/lerobot_policy_gate/physical_splits",
+    "split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json"
+  },
+  "training": {
+    "batch_size": 8,
+    "cudnn_deterministic": true,
+    "environment_evaluation_frequency": 0,
+    "evaluation_steps": 0,
+    "log_frequency": 100,
+    "num_workers": 4,
+    "policies": [
+      "act",
+      "diffusion"
+    ],
+    "save_checkpoint": true,
+    "save_frequency": 5000,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "split_conditions": [
+      {
+        "id": "random_episode",
+        "interpretation": "random episode split; the two evaluation tasks are represented in training",
+        "package_split_name": "random_episode"
+      },
+      {
+        "id": "task_confounded_lineage_holdout",
+        "interpretation": "zero overlap under a lineage proxy that includes task identity; the two evaluation tasks are absent from training",
+        "package_split_name": "scene_disjoint"
+      }
+    ],
+    "steps": 20000,
+    "wandb": false
+  }
+}

@@ -386,7 +386,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=149, normalized=4",
+      "evidence": "status=pass, entries=155, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
