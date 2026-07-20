@@ -6,32 +6,71 @@
     "private": true
   },
   "snapshot": {
-    "git_commit": "a7dc01ce671d9c5b7c13987c18949b6632780747",
-    "path": "snapshots/a7dc01c",
-    "huggingface_commit": "442ee48368186e46b23fe8695ae5c73a454ccf8e",
-    "manifest_sha256": "41715bd5086cc1275bd99ee113dd42314e1ccbecedb5d186aa835999b0b0d979"
+    "git_commit": "ef7cc490e9ae14568bdb0539643f930e0693dd1b",
+    "path": "snapshots/ef7cc49",
+    "huggingface_commit": "adf9157ee60356a6a9748320e0d186f6054a9a51",
+    "manifest_sha256": "35fbf5bd2f41eb7092ef7d8386cc0d756f5e699686380888a7aeedefa1dfb666"
   },
   "verification": {
-    "method": "snapshot_download at the pinned Hugging Face commit followed by SHA-256 comparison",
+    "method": "forced snapshot_download at the pinned Hugging Face commit followed by size and SHA-256 comparison, bundle clone, and git fsck",
     "passed": true,
-    "verified_file_count": 13,
-    "verified_bytes": 23098817
+    "verified_file_count": 24,
+    "verified_bytes": 23654223
+  },
+  "source_media_recovery": {
+    "mirrored": false,
+    "repository": "armnet/armnetbench_v01_lerobot_so101",
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "asset_manifest": "policy_reports/front_camera_asset_manifest.json",
+    "asset_count": 24,
+    "source_bytes": 1864680767,
+    "verification": "per-file LFS SHA-256"
   },
   "files": [
     {
       "path": "artifacts/WorldEpisode-supplement.zip",
-      "size_bytes": 6594140,
-      "sha256": "5f85d61a9d3390479861c0d4200b21fe41ba4d049ec0795fe58071813454acbe"
+      "size_bytes": 6632073,
+      "sha256": "d4a7becbe3214107ae0ab5489ac5861532b3e81df046a354d39a51dfd78e26b5"
     },
     {
       "path": "artifacts/WorldEpisode.pdf",
-      "size_bytes": 303767,
-      "sha256": "33580770468a2f7e1a1495108df323ba604fc7ba36f1701980b3800c823e0658"
+      "size_bytes": 304032,
+      "sha256": "dd74f362cc53b48f086cce3741682d261e4a8b505978b908cbdf758d29fa36a2"
     },
     {
-      "path": "artifacts/worldepisode-a7dc01c.bundle",
-      "size_bytes": 16111990,
-      "sha256": "f9ac37ae3a8ba000cb19dbe55950d10048400ffdb338e2c2dbe2f95e4626f1da"
+      "path": "artifacts/worldepisode-ef7cc49.bundle",
+      "size_bytes": 16444844,
+      "sha256": "2d1104fd7d3f39f511372552fd09a3908aa93aebf3072f702e1c8403022f2c29"
+    },
+    {
+      "path": "policy_reports/front_camera_asset_manifest.json",
+      "size_bytes": 12560,
+      "sha256": "feff75aab15e54036da995dbdeb90ea8932590ee50ef40199b77edb6c8d49a44"
+    },
+    {
+      "path": "policy_reports/front_camera_materialization_report.json",
+      "size_bytes": 41487,
+      "sha256": "ab3a8d94bc9d00bd412017945f67a6dd8659cf76a8aba0e3a7c5ef87ca85c3ca"
+    },
+    {
+      "path": "policy_reports/policy_compatibility_report.json",
+      "size_bytes": 6858,
+      "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
+    },
+    {
+      "path": "policy_reports/policy_gate_report.json",
+      "size_bytes": 91080,
+      "sha256": "1e123be1435906d59aaad1bb9a6798c5641a163699832f524111c64f40dccd13"
+    },
+    {
+      "path": "policy_reports/policy_vision_smoke_failed_01_report.json",
+      "size_bytes": 6637,
+      "sha256": "4d93015ae858ffc98156f01eed65b24e353ac3ba33ec1bb1292e04e90cb5f3f0"
+    },
+    {
+      "path": "policy_reports/policy_vision_smoke_report.json",
+      "size_bytes": 6659,
+      "sha256": "80aa828efc82de67d8aebee6e555b217336ea8942d4ef2ab41db2c04daccc1ef"
     },
     {
       "path": "run_logs/controlled_suite_dgx_spark.log",
@@ -69,14 +108,39 @@
       "sha256": "9fc33440d9c8e757eb3e3ef69867943d77c5404102b83c2f19995ebe28d162e8"
     },
     {
+      "path": "run_logs/lerobot_policy_video_materialization_dgx_spark.log",
+      "size_bytes": 337,
+      "sha256": "18adffd7836e789837ee735cd5c28cad68eca21452918be5f5d9b3c29330f869"
+    },
+    {
+      "path": "run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+      "size_bytes": 14761,
+      "sha256": "6eda7135014b60a5486340f5f16d79cbc5714f8f426744f3f0e8a3fc544f0ed3"
+    },
+    {
+      "path": "run_logs/lerobot_policy_vision_smoke_execution_dgx_spark.log",
+      "size_bytes": 89,
+      "sha256": "50ffcb7da1a87dcdbac3031de9893e6c8148c36f919250645dce2e27d0cd1563"
+    },
+    {
+      "path": "run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log",
+      "size_bytes": 2976,
+      "sha256": "05870f3d612be3b4fb6755dfb9b612e82a091463f2b012c43700a56741328eb9"
+    },
+    {
+      "path": "run_logs/lerobot_policy_vision_smoke_time_dgx_spark.log",
+      "size_bytes": 931,
+      "sha256": "501b591cf4a0f8587635dc7bb565fd39df89ffa264f0a672f369c4767f402de4"
+    },
+    {
       "path": "run_logs/lerobot_scene_leakage_dgx_spark.log",
       "size_bytes": 1732,
       "sha256": "a91ba3685d310484db260dc9f9444d77b37af438e95ec85ccac61ce6355f3881"
     },
     {
       "path": "run_logs/paper_build_local.log",
-      "size_bytes": 69852,
-      "sha256": "090d651b9757e65eb21f0accde361032d650998139a550c334114a95c6fc3afb"
+      "size_bytes": 69831,
+      "sha256": "4fbd915d9121dca297265be0896ecd2342f123ec3f81bfe690b0d788128ef28a"
     },
     {
       "path": "run_logs/remote_tests_dgx_spark.log",
