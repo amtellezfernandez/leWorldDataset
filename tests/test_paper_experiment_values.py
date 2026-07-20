@@ -45,8 +45,16 @@ def test_generated_values_match_committed_tex() -> None:
 def test_generated_values_include_open_result_placeholder() -> None:
     rendered = _render()
     assert r"\newcommand{\ExpActDiffusionResult}{\PaperNotDefinedYet}" in rendered
-    assert r"\newcommand{\ExpOfflinePolicyResult}{\PaperNotDefinedYet}" in rendered
-    assert r"\newcommand{\ExpActRandomNrmse}{\PaperNotDefinedYet}" in rendered
+    offline_policy = _read_optional_json(POLICY_OFFLINE_REPORT_PATH)
+    if offline_policy is not None and offline_policy.get("pass") is True:
+        assert (
+            r"\newcommand{\ExpOfflinePolicyResult}{\textit{Defined in current reports}}"
+            in rendered
+        )
+        assert r"\newcommand{\ExpActRandomNrmse}{\PaperNotDefinedYet}" not in rendered
+    else:
+        assert r"\newcommand{\ExpOfflinePolicyResult}{\PaperNotDefinedYet}" in rendered
+        assert r"\newcommand{\ExpActRandomNrmse}{\PaperNotDefinedYet}" in rendered
     assert r"\newcommand{\ExpPolicyCompatibilityLeRobotVersion}{0.6.0}" in rendered
     assert r"\newcommand{\ExpPolicyCompatibilityTrainingStepCount}{0}" in rendered
     assert r"\newcommand{\ExpPolicyCompatibilityExpectedBlockerCount}{2}" in rendered
