@@ -113,6 +113,11 @@ baseline.
     older committed experiments still need the same provenance backfilled.
 - [x] Add a validated machine-readable experiment manifest linking dataset revision, split digest,
   config, seed policy, exact code digest, repository commit, output report, and compute use.
+- [x] Store a verified recovery snapshot of the Git history, paper, supplement, and retained run
+  logs in a private Hugging Face dataset repository; pin its immutable commit and file digests in
+  `docs/huggingface-recovery.json`.
+- [ ] Upload every future policy checkpoint and rollout trace to the recovery repository before
+  deleting its DGX Spark working directory.
 
 ## Submission and Paper
 

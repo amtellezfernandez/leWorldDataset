@@ -71,6 +71,7 @@ this `docs/` directory; run commands from the repository root.
 - [Third-party asset notices](../THIRD_PARTY_ASSETS.md)
 - [Anonymous supplementary archive report](anonymous_supplement)
 - [Submission PDF and ZIP anonymity audit](experiments/anonymity_audit)
+- [Maintainer recovery snapshots](huggingface-recovery.md)
 
 ## Release gates and packets
 

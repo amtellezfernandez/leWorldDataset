@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "repository": {
+    "id": "amtellezfernandez/worldepisode-experiment-recovery",
+    "type": "dataset",
+    "private": true
+  },
+  "snapshot": {
+    "git_commit": "a7dc01ce671d9c5b7c13987c18949b6632780747",
+    "path": "snapshots/a7dc01c",
+    "huggingface_commit": "442ee48368186e46b23fe8695ae5c73a454ccf8e",
+    "manifest_sha256": "41715bd5086cc1275bd99ee113dd42314e1ccbecedb5d186aa835999b0b0d979"
+  },
+  "verification": {
+    "method": "snapshot_download at the pinned Hugging Face commit followed by SHA-256 comparison",
+    "passed": true,
+    "verified_file_count": 13,
+    "verified_bytes": 23098817
+  },
+  "files": [
+    {
+      "path": "artifacts/WorldEpisode-supplement.zip",
+      "size_bytes": 6594140,
+      "sha256": "5f85d61a9d3390479861c0d4200b21fe41ba4d049ec0795fe58071813454acbe"
+    },
+    {
+      "path": "artifacts/WorldEpisode.pdf",
+      "size_bytes": 303767,
+      "sha256": "33580770468a2f7e1a1495108df323ba604fc7ba36f1701980b3800c823e0658"
+    },
+    {
+      "path": "artifacts/worldepisode-a7dc01c.bundle",
+      "size_bytes": 16111990,
+      "sha256": "f9ac37ae3a8ba000cb19dbe55950d10048400ffdb338e2c2dbe2f95e4626f1da"
+    },
+    {
+      "path": "run_logs/controlled_suite_dgx_spark.log",
+      "size_bytes": 1725,
+      "sha256": "053c10a9941f3f49b6990f36b132c9e8ac9cb65439ed7afbbdb361889cde60e0"
+    },
+    {
+      "path": "run_logs/droid_100_dgx_spark.log",
+      "size_bytes": 2140,
+      "sha256": "74f44ca7752efaaa41968c2a91b634023542e859e59f43366c353a9a1640fdd0"
+    },
+    {
+      "path": "run_logs/lerobot_conversion_scale_dgx_spark.log",
+      "size_bytes": 2253,
+      "sha256": "2c77da4a84617c0f10ffa1d5a24eb9f2493f0ad216cc506e535681ff3bd85ddb"
+    },
+    {
+      "path": "run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
+      "size_bytes": 1847,
+      "sha256": "7bf27bfacf30a8af68aeddd1a0812a2f92cfc2879e2d189704306aa48415db1c"
+    },
+    {
+      "path": "run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
+      "size_bytes": 1666,
+      "sha256": "3f4333ff1a86fbf2c6415d044c9c92ae2490b39867fa0d88165663557c90bf21"
+    },
+    {
+      "path": "run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
+      "size_bytes": 2392,
+      "sha256": "1c2cbd5b1c236d59d3d5d01d91ba08c920e9e614801815d3209fef5ab1e5edff"
+    },
+    {
+      "path": "run_logs/lerobot_policy_compatibility_dgx_spark.log",
+      "size_bytes": 4298,
+      "sha256": "9fc33440d9c8e757eb3e3ef69867943d77c5404102b83c2f19995ebe28d162e8"
+    },
+    {
+      "path": "run_logs/lerobot_scene_leakage_dgx_spark.log",
+      "size_bytes": 1732,
+      "sha256": "a91ba3685d310484db260dc9f9444d77b37af438e95ec85ccac61ce6355f3881"
+    },
+    {
+      "path": "run_logs/paper_build_local.log",
+      "size_bytes": 69852,
+      "sha256": "090d651b9757e65eb21f0accde361032d650998139a550c334114a95c6fc3afb"
+    },
+    {
+      "path": "run_logs/remote_tests_dgx_spark.log",
+      "size_bytes": 1015,
+      "sha256": "c3719b1a27266a88cec38cf2b59e4bc3c885cc41858b5d72182a1524f7aa296f"
+    }
+  ]
+}
