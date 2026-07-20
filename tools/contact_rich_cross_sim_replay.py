@@ -299,6 +299,25 @@ def machine_manifest() -> dict[str, Any]:
     }
 
 
+def process_compute_manifest(
+    started_monotonic: float,
+    started_usage: resource.struct_rusage,
+) -> dict[str, float]:
+    finished_monotonic = time.monotonic()
+    finished_usage = resource.getrusage(resource.RUSAGE_SELF)
+    wall_time = finished_monotonic - started_monotonic
+    user_time = finished_usage.ru_utime - started_usage.ru_utime
+    system_time = finished_usage.ru_stime - started_usage.ru_stime
+    return {
+        "wall_time_seconds": wall_time,
+        "user_cpu_seconds": user_time,
+        "system_cpu_seconds": system_time,
+        "cpu_utilization_percent": (
+            100.0 * (user_time + system_time) / wall_time if wall_time > 0.0 else 0.0
+        ),
+    }
+
+
 def mujoco_xml(protocol: dict[str, Any], task: dict[str, Any]) -> str:
     simulation = protocol["simulation"]
     friction = float(simulation["surface_friction"])
@@ -342,6 +361,7 @@ def mujoco_xml(protocol: dict[str, Any], task: dict[str, Any]) -> str:
 
 def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
     started = time.monotonic()
+    started_usage = resource.getrusage(resource.RUSAGE_SELF)
     started_utc = datetime.now(timezone.utc).isoformat()
     try:
         import mujoco
@@ -443,6 +463,7 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
             "scenarios": scenario_rows,
             "step_count": task_step_count(task),
         }
+    compute = process_compute_manifest(started, started_usage)
     return {
         "profile": "worldepisode-contact-rich-runtime-report-0.1",
         "protocol_sha256": sha256_payload(protocol),
@@ -458,7 +479,7 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
             "contact_role": "reference_not_physical_ground_truth",
             "started_utc": started_utc,
             "finished_utc": datetime.now(timezone.utc).isoformat(),
-            "wall_time_seconds": time.monotonic() - started,
+            "wall_time_seconds": compute["wall_time_seconds"],
         },
         "execution": {
             "script": relative(Path(__file__)),
@@ -466,6 +487,7 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
             "repository_commit": git_output("rev-parse", "HEAD"),
             "exit_status": 0,
             "preliminary_runs": [],
+            "compute": compute,
         },
         "tasks": tasks_payload,
         "tested": True,
@@ -474,6 +496,7 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
 
 def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
     started = time.monotonic()
+    started_usage = resource.getrusage(resource.RUSAGE_SELF)
     started_utc = datetime.now(timezone.utc).isoformat()
     try:
         import genesis as gs
@@ -587,6 +610,7 @@ def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
             "scenarios": scenario_rows,
             "step_count": task_step_count(task),
         }
+    compute = process_compute_manifest(started, started_usage)
     return {
         "profile": "worldepisode-contact-rich-runtime-report-0.1",
         "protocol_sha256": sha256_payload(protocol),
@@ -602,7 +626,7 @@ def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
             "contact_role": "comparison_not_physical_ground_truth",
             "started_utc": started_utc,
             "finished_utc": datetime.now(timezone.utc).isoformat(),
-            "wall_time_seconds": time.monotonic() - started,
+            "wall_time_seconds": compute["wall_time_seconds"],
         },
         "execution": {
             "script": relative(Path(__file__)),
@@ -610,6 +634,7 @@ def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
             "repository_commit": git_output("rev-parse", "HEAD"),
             "exit_status": 0,
             "preliminary_runs": [],
+            "compute": compute,
         },
         "tasks": tasks_payload,
         "tested": True,
