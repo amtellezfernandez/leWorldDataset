@@ -7,6 +7,7 @@ validate:
 	python3 tools/lerobot_conversion_scale.py --check --required
 	uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --check --required
 	python3 tools/lerobot_policy_compatibility_audit.py --check --strict
+	python3 tools/lerobot_policy_video_materialization.py --check --strict
 	python3 tools/experiment_manifest.py --check --strict
 	python3 tools/citation_source_audit.py --check --strict
 	python3 tools/third_party_asset_audit.py --check --strict

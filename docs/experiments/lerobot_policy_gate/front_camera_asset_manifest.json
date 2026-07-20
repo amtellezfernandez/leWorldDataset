@@ -1,0 +1,280 @@
+{
+  "asset_count": 24,
+  "assets": [
+    {
+      "path": "videos/observation.images.front/chunk-000/file-013.mp4",
+      "sha256": "29138d1921afb7fcef126a24f1fd29d3492636e58f4f5b8280fe4637b70bc6bf",
+      "size_bytes": 70626467
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-014.mp4",
+      "sha256": "616815aba36ca783f12d524575529214b45f06d32257c666a55cc7ff11859fb3",
+      "size_bytes": 76516130
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-027.mp4",
+      "sha256": "cb09a7dd30e9aa1c633bd6399422fc2e206b67581ef0d0d058f74d4d0a511c94",
+      "size_bytes": 86122880
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-028.mp4",
+      "sha256": "d3d67246402cbbfcbc640d42200b890452f181d169655ab59535a28a8b82020b",
+      "size_bytes": 74718820
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-047.mp4",
+      "sha256": "f4e4b3b30f1636303ba9c5f8218560fb2e6d89c97095b64a23c651ff6f3c4e5d",
+      "size_bytes": 184266424
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-048.mp4",
+      "sha256": "4e13c60e072c9b326f9eaddf6e7a8b51af489feb59dfe774a1c7b987b3f6d5c0",
+      "size_bytes": 143803178
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-064.mp4",
+      "sha256": "215e0635a242869dda4edeac9645506b63d62d33d176ba7a912bfc604f052d84",
+      "size_bytes": 137108635
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-065.mp4",
+      "sha256": "16f00ac1133a668659dcf28e0b2b92d42c5f74aef62b5fcb36eef134e32910c6",
+      "size_bytes": 99120127
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-079.mp4",
+      "sha256": "b5e8e4c4cb6846014dd47b8f1875695423545e729fead4ed19db52ce6c71327f",
+      "size_bytes": 164235644
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-091.mp4",
+      "sha256": "0dc9959c3f3d7888866a92f03454076cddbf7cf57c9769c3fb4fbdf8d852cd54",
+      "size_bytes": 52594519
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-092.mp4",
+      "sha256": "27b5d76e042e93f5983c74249459ce3c0956db78a41252b6e49062aef7630c87",
+      "size_bytes": 5914500
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-093.mp4",
+      "sha256": "b17031b4d06991a4495f44553b70fe45e80c38bfd1a43206a8432a6ce874a765",
+      "size_bytes": 79625675
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-117.mp4",
+      "sha256": "c5a7b9d3a27210901aeb142dbbc874af748c1020ed5cb40eb3fc8f6bf133f1a6",
+      "size_bytes": 28129871
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-118.mp4",
+      "sha256": "ceefa618753b315b4f3ae69af035e132a9d994fc3ca1f072b010974a73b5fcff",
+      "size_bytes": 123528304
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-119.mp4",
+      "sha256": "9f907f9a7c8c9e1c334d377cfa22eed842d24425d3a05085e0086cb70599f1fb",
+      "size_bytes": 121435638
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-120.mp4",
+      "sha256": "5e23bcb6ed92ecd6f1a5bb6ae5c53c459a9be07f2c75076a7520cd3e547dc3a6",
+      "size_bytes": 92094327
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-121.mp4",
+      "sha256": "9b4d4edeff2c2bd6240517c8cb56c092fd36443d5feebb5c6e0bcfea0481a67e",
+      "size_bytes": 19088374
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-122.mp4",
+      "sha256": "28c2e53b8f15990d2a9adfef31e9ecb749672aef2b542d249a73349a2eb6af94",
+      "size_bytes": 32528758
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-123.mp4",
+      "sha256": "5dd3e17cf7b33023ab41625ec72a760d44eaef276a9195dd938f4e1c16b6c9ca",
+      "size_bytes": 34518281
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-124.mp4",
+      "sha256": "cccf2886e08eff4211e47f25d093c83d76c4ab139c83c5ef75b9e938c9b3b5df",
+      "size_bytes": 5969447
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-139.mp4",
+      "sha256": "b0f7c127e6944211f704d2cacfeeb0a10df2ae5f9b5848468dcd94259a9c54a4",
+      "size_bytes": 53595968
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-140.mp4",
+      "sha256": "2b186e6381791f575f92e4b6cd8833556f7ddfbe35901ff9788f95cefd7fd390",
+      "size_bytes": 61548749
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-141.mp4",
+      "sha256": "7d6a2e087669d27f14cc63b9c7caf6451db717d24775cfdf91875a970824789d",
+      "size_bytes": 67829718
+    },
+    {
+      "path": "videos/observation.images.front/chunk-000/file-142.mp4",
+      "sha256": "ca0d794c509d79c5c287aa54ac34a442336ba4dab99466b99350bb8e439ae26e",
+      "size_bytes": 49760333
+    }
+  ],
+  "assets_sha256": "4ccabba3698109e1a3a908af23dedd0dc38bead0e1bdad4c39ee51e40ef9ba72",
+  "camera_key": "observation.images.front",
+  "claim_boundary": "This plan pins the source front-camera files required by the selected episodes. It is a media-integrity and package-compatibility artifact, not a policy result.",
+  "packages": [
+    {
+      "package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+      "source_episode_count": 320,
+      "source_episode_indices_sha256": "ff5eb13cfaf9470808c10b43d765220e8112d28164884d253839dfbb12c275d9",
+      "video_asset_count": 23,
+      "video_paths": [
+        "videos/observation.images.front/chunk-000/file-013.mp4",
+        "videos/observation.images.front/chunk-000/file-014.mp4",
+        "videos/observation.images.front/chunk-000/file-027.mp4",
+        "videos/observation.images.front/chunk-000/file-028.mp4",
+        "videos/observation.images.front/chunk-000/file-047.mp4",
+        "videos/observation.images.front/chunk-000/file-048.mp4",
+        "videos/observation.images.front/chunk-000/file-064.mp4",
+        "videos/observation.images.front/chunk-000/file-065.mp4",
+        "videos/observation.images.front/chunk-000/file-079.mp4",
+        "videos/observation.images.front/chunk-000/file-091.mp4",
+        "videos/observation.images.front/chunk-000/file-092.mp4",
+        "videos/observation.images.front/chunk-000/file-093.mp4",
+        "videos/observation.images.front/chunk-000/file-117.mp4",
+        "videos/observation.images.front/chunk-000/file-118.mp4",
+        "videos/observation.images.front/chunk-000/file-119.mp4",
+        "videos/observation.images.front/chunk-000/file-120.mp4",
+        "videos/observation.images.front/chunk-000/file-121.mp4",
+        "videos/observation.images.front/chunk-000/file-122.mp4",
+        "videos/observation.images.front/chunk-000/file-123.mp4",
+        "videos/observation.images.front/chunk-000/file-139.mp4",
+        "videos/observation.images.front/chunk-000/file-140.mp4",
+        "videos/observation.images.front/chunk-000/file-141.mp4",
+        "videos/observation.images.front/chunk-000/file-142.mp4"
+      ]
+    },
+    {
+      "package": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "source_episode_count": 80,
+      "source_episode_indices_sha256": "2124c69c56deee2b372677ef060b689e501410c52f51b6b963e6d36f6ceee775",
+      "video_asset_count": 19,
+      "video_paths": [
+        "videos/observation.images.front/chunk-000/file-013.mp4",
+        "videos/observation.images.front/chunk-000/file-014.mp4",
+        "videos/observation.images.front/chunk-000/file-027.mp4",
+        "videos/observation.images.front/chunk-000/file-028.mp4",
+        "videos/observation.images.front/chunk-000/file-047.mp4",
+        "videos/observation.images.front/chunk-000/file-048.mp4",
+        "videos/observation.images.front/chunk-000/file-064.mp4",
+        "videos/observation.images.front/chunk-000/file-065.mp4",
+        "videos/observation.images.front/chunk-000/file-079.mp4",
+        "videos/observation.images.front/chunk-000/file-091.mp4",
+        "videos/observation.images.front/chunk-000/file-093.mp4",
+        "videos/observation.images.front/chunk-000/file-118.mp4",
+        "videos/observation.images.front/chunk-000/file-119.mp4",
+        "videos/observation.images.front/chunk-000/file-120.mp4",
+        "videos/observation.images.front/chunk-000/file-124.mp4",
+        "videos/observation.images.front/chunk-000/file-139.mp4",
+        "videos/observation.images.front/chunk-000/file-140.mp4",
+        "videos/observation.images.front/chunk-000/file-141.mp4",
+        "videos/observation.images.front/chunk-000/file-142.mp4"
+      ]
+    },
+    {
+      "package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
+      "source_episode_count": 300,
+      "source_episode_indices_sha256": "11bbb64dd763002b5816d49868f5fd214910428f309e69fd2cb7f3e8ff18ae33",
+      "video_asset_count": 20,
+      "video_paths": [
+        "videos/observation.images.front/chunk-000/file-013.mp4",
+        "videos/observation.images.front/chunk-000/file-014.mp4",
+        "videos/observation.images.front/chunk-000/file-027.mp4",
+        "videos/observation.images.front/chunk-000/file-028.mp4",
+        "videos/observation.images.front/chunk-000/file-047.mp4",
+        "videos/observation.images.front/chunk-000/file-048.mp4",
+        "videos/observation.images.front/chunk-000/file-064.mp4",
+        "videos/observation.images.front/chunk-000/file-065.mp4",
+        "videos/observation.images.front/chunk-000/file-117.mp4",
+        "videos/observation.images.front/chunk-000/file-118.mp4",
+        "videos/observation.images.front/chunk-000/file-119.mp4",
+        "videos/observation.images.front/chunk-000/file-120.mp4",
+        "videos/observation.images.front/chunk-000/file-121.mp4",
+        "videos/observation.images.front/chunk-000/file-122.mp4",
+        "videos/observation.images.front/chunk-000/file-123.mp4",
+        "videos/observation.images.front/chunk-000/file-124.mp4",
+        "videos/observation.images.front/chunk-000/file-139.mp4",
+        "videos/observation.images.front/chunk-000/file-140.mp4",
+        "videos/observation.images.front/chunk-000/file-141.mp4",
+        "videos/observation.images.front/chunk-000/file-142.mp4"
+      ]
+    },
+    {
+      "package": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test",
+      "source_episode_count": 100,
+      "source_episode_indices_sha256": "052dc08683e6effd1d6f1afda09da942ca8867402c29f90d2764316a8d26a9fe",
+      "video_asset_count": 4,
+      "video_paths": [
+        "videos/observation.images.front/chunk-000/file-079.mp4",
+        "videos/observation.images.front/chunk-000/file-091.mp4",
+        "videos/observation.images.front/chunk-000/file-092.mp4",
+        "videos/observation.images.front/chunk-000/file-093.mp4"
+      ]
+    }
+  ],
+  "profile": "worldepisode-lerobot-video-asset-plan-0.1",
+  "script": "tools/lerobot_policy_video_materialization.py",
+  "script_sha256": "a22b89c9f9944c3469379b5f3fc75220061a944c90f7984b7f67177b5b176925",
+  "source": {
+    "episodes": {
+      "path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet",
+      "repo_path": "meta/episodes/chunk-000/file-000.parquet",
+      "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+      "size_bytes": 3865933
+    },
+    "info": {
+      "path": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json",
+      "repo_path": "meta/info.json",
+      "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+      "size_bytes": 4878
+    },
+    "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+    "repo_type": "dataset",
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+  },
+  "status": "source_video_assets_pinned",
+  "total_size_bytes": 1864680767,
+  "video_feature": {
+    "dtype": "video",
+    "info": {
+      "has_audio": false,
+      "video.channels": 3,
+      "video.codec": "av1",
+      "video.crf": null,
+      "video.extra_options": {},
+      "video.fast_decode": null,
+      "video.fps": 20,
+      "video.g": null,
+      "video.height": 576,
+      "video.is_depth_map": false,
+      "video.pix_fmt": "yuv420p",
+      "video.preset": null,
+      "video.video_backend": "pyav",
+      "video.width": 1024
+    },
+    "names": [
+      "height",
+      "width",
+      "channels"
+    ],
+    "shape": [
+      576,
+      1024,
+      3
+    ]
+  },
+  "video_path_template": "videos/{video_key}/chunk-{chunk_index:03d}/file-{file_index:03d}.mp4"
+}

@@ -140,6 +140,27 @@ uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
 
 The gate remains blocked until source images or a semantically valid environment-state feature are
 materialized. Vision-policy claims also require mirrored video assets with committed digests.
+Generate and validate the pinned front-camera asset plan without downloading video payloads:
+
+```bash
+uv run --with pyarrow --with huggingface-hub \
+  python tools/lerobot_policy_video_materialization.py --plan
+python3 tools/lerobot_policy_video_materialization.py --check --strict
+```
+
+On the remote training host, materialize only the files in that plan and run the one-step vision
+smoke test:
+
+```bash
+uv run --with pyarrow --with huggingface-hub \
+  python tools/lerobot_policy_video_materialization.py --materialize --download
+uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
+  python tools/lerobot_policy_vision_smoke.py --strict
+```
+
+The asset manifest pins the source repository revision, source metadata digests, and every required
+MP4 LFS SHA-256. The materializer preserves source video timestamps and file indices; it does not
+copy image values into a different semantic feature.
 
 ## Control-loop replay
 

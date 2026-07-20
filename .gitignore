@@ -17,5 +17,6 @@ build/
 !/WorldEpisode.pdf
 !/WorldEpisode-collab.pdf
 /WorldEpisode-supplement.zip
+docs/experiments/lerobot_policy_gate/physical_splits/*/videos/
 *.run.xml
 *.synctex.gz

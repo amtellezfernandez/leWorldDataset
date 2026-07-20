@@ -33,7 +33,9 @@ baseline.
     `observation.environment_state`.
   - Do not relabel joint positions as environment state to bypass the policy contract. The generated
     jobs remain blocked until the required source modality is materialized.
-  - Mirror source videos with committed digests before making any vision-policy claim.
+  - Completed media plan: the generated front-camera asset manifest pins the source revision,
+    metadata, required MP4 paths, byte sizes, and LFS SHA-256 digests. Remote materialization and
+    the one-step vision smoke remain to be executed.
   - Execute ACT and Diffusion jobs for both split protocols with matched hyperparameters and seeds.
   - Evaluate checkpoints in one high-fidelity simulator or on the source robot using the same split
     manifest.
