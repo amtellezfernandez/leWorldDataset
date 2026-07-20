@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 155,
+    "entry_count": 156,
     "missing_count": 0,
     "normalized_digest_count": 4,
     "public_evidence_count": 121,
-    "release_script_count": 34
+    "release_script_count": 35
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "63e7097a10a549ac7239123a78969cd604706d617588e2de5b6a0de420e064af"
+      "sha256": "92b4527f5539eb37ead1f1691c330b9d4a7da9c47ebd3b0b4118b66b26016045"
     },
     {
       "category": "public_evidence",
@@ -709,7 +709,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "9bfc337646c58b15119e28e8ccf87d234297cadb5917392ac8594dcae6f84767"
+      "sha256": "a2a6c10a0813f9355bf3a6b75c193aaf46769110ea3df3fab8ca2c4d00922bd0"
     },
     {
       "category": "public_evidence",
@@ -718,7 +718,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "416626a5abf8b0142e2e25cd27bf05c847a29681bc7f09e1025a4fa183beaa78"
+      "sha256": "bcbfa387b744411b3f408e69d1d94c2d489b4e12eb1dbc1f1124e176320e3e16"
     },
     {
       "category": "public_evidence",
@@ -1132,7 +1132,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "6a19fd53d50e8d8d10b230e01190bff5e5d6fbbf145e2246fbce9fe07a16e868"
+      "sha256": "059f0f30dae264ab6cf8485843a834789008f2683e0ac7a5777262cd79389211"
     },
     {
       "category": "release_script",
@@ -1214,6 +1214,15 @@
       "normalizers_applied": [],
       "path": "tools/huggingface_recovery_pointer.py",
       "sha256": "34ac09592bb2a9519e0e375fa39f63914a278966a7c247caf6b0ee612207f58d"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/huggingface_policy_archive.py",
+      "sha256": "e8fc4b5834c12e8ab48f0fe6ea43ba3c1dd9d340da57057a8e3cbc9843db22aa"
     },
     {
       "category": "release_script",
@@ -1393,7 +1402,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "c6882fbd644903916200fa4e152ae990566a3a5d13da5bba67e54132ef883644"
+      "sha256": "5c51024b7c3d7f831be8b5343be6bcd5673418bc096f4809c94062fc5b0bcd78"
     },
     {
       "category": "release_script",

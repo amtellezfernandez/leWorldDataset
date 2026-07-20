@@ -153,6 +153,7 @@ RELEASE_SCRIPTS = [
     "tools/dataset_license_registry.py",
     "tools/third_party_asset_audit.py",
     "tools/huggingface_recovery_pointer.py",
+    "tools/huggingface_policy_archive.py",
     "tools/paper_experiment_values.py",
     "tools/build_anonymous_supplement.py",
     "tools/submission_anonymity_audit.py",

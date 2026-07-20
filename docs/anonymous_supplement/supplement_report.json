@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 7782840,
-    "entry_count": 434,
+    "bytes": 7789344,
+    "entry_count": 436,
     "path": "WorldEpisode-supplement.zip",
-    "sha256": "63e7097a10a549ac7239123a78969cd604706d617588e2de5b6a0de420e064af"
+    "sha256": "92b4527f5539eb37ead1f1691c330b9d4a7da9c47ebd3b0b4118b66b26016045"
   },
   "artifacts": {
     "json": "docs/anonymous_supplement/supplement_report.json",

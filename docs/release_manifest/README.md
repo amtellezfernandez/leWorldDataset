@@ -6,9 +6,9 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 
 ## Summary
 
-- Entries: 155
+- Entries: 156
 - Public evidence artifacts: 121
-- Release scripts: 34
+- Release scripts: 35
 - Normalized timing digests: 4
 - Missing artifacts: 0
 - Empty artifacts: 0
@@ -20,7 +20,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
 | `WorldEpisode.pdf` | public_evidence | exact | `551f2ef501a7c430` |
-| `WorldEpisode-supplement.zip` | public_evidence | exact | `63e7097a10a549ac` |
+| `WorldEpisode-supplement.zip` | public_evidence | exact | `92b4527f5539eb37` |
 | `README.md` | public_evidence | exact | `fc19d507a4367b50` |
 | `THIRD_PARTY_ASSETS.md` | public_evidence | exact | `7d27eec228630e01` |
 | `TODO.md` | public_evidence | exact | `8115eb50a2809fe5` |
@@ -94,8 +94,8 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/experiments/citation_source_audit/citation_source_audit.json` | public_evidence | exact | `12ae377d0d214828` |
 | `docs/experiments/third_party_asset_audit/README.md` | public_evidence | exact | `e5ddb2bf749c7086` |
 | `docs/experiments/third_party_asset_audit/asset_audit.json` | public_evidence | exact | `82daf44c34f6590a` |
-| `docs/anonymous_supplement/README.md` | public_evidence | exact | `9bfc337646c58b15` |
-| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `416626a5abf8b014` |
+| `docs/anonymous_supplement/README.md` | public_evidence | exact | `a2a6c10a0813f935` |
+| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `bcbfa387b744411b` |
 | `docs/experiments/anonymity_audit/README.md` | public_evidence | exact | `f336656c4ad49e16` |
 | `docs/experiments/anonymity_audit/anonymity_report.json` | public_evidence | exact | `8f2c3a7e055dbd8e` |
 | `docs/experiments/neurips_submission/README.md` | public_evidence | exact | `3c0b007df5d94cfd` |
@@ -141,7 +141,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `GOVERNANCE.md` | public_evidence | exact | `00db931e8bfa6960` |
 | `CITATION.cff` | public_evidence | exact | `b416c4fbe9a2c3b8` |
 | `.github/workflows/ci.yml` | release_script | exact | `09f46535f7f985db` |
-| `Makefile` | release_script | exact | `6a19fd53d50e8d8d` |
+| `Makefile` | release_script | exact | `059f0f30dae264ab` |
 | `tools/run_experiments.py` | release_script | exact | `d7a838e8a03b29f3` |
 | `tools/open_reproduction_gates.py` | release_script | exact | `3875d4b4b215f320` |
 | `tools/paper_claim_audit.py` | release_script | exact | `50af447f3641950e` |
@@ -151,6 +151,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `tools/dataset_license_registry.py` | release_script | exact | `1587e0f4bbf9cbca` |
 | `tools/third_party_asset_audit.py` | release_script | exact | `af2807464d2e82b2` |
 | `tools/huggingface_recovery_pointer.py` | release_script | exact | `34ac09592bb2a951` |
+| `tools/huggingface_policy_archive.py` | release_script | exact | `e8fc4b5834c12e8a` |
 | `tools/paper_experiment_values.py` | release_script | exact | `ccb48ca318748f9c` |
 | `tools/build_anonymous_supplement.py` | release_script | exact | `e64373010c2c8595` |
 | `tools/submission_anonymity_audit.py` | release_script | exact | `558fd94fa7f2ea02` |
@@ -170,7 +171,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `tools/lerobot_temporal_policy_baseline.py` | release_script | exact | `168345270a48d451` |
 | `tools/public_maturity_audit.py` | release_script | exact | `2c6f3ed15c56efb6` |
 | `tools/package_install_smoke.py` | release_script | exact | `3a71a0846173ff5f` |
-| `tools/release_manifest.py` | release_script | exact | `c6882fbd64490391` |
+| `tools/release_manifest.py` | release_script | exact | `5c51024b7c3d7f83` |
 | `tools/submission_packet.py` | release_script | exact | `fdb2811ee5b1b125` |
 | `tools/release_readiness.py` | release_script | exact | `2adffeaebbde3fbf` |
 | `tools/artifact_freshness.py` | release_script | exact | `872fb2ac81b56cfc` |

@@ -15,6 +15,7 @@ validate:
 	python3 tools/citation_source_audit.py --check --strict
 	python3 tools/third_party_asset_audit.py --check --strict
 	python3 tools/huggingface_recovery_pointer.py --check
+	python3 tools/huggingface_policy_archive.py --check
 	python3 tools/build_anonymous_supplement.py --check --strict
 	python3 tools/submission_anonymity_audit.py --check --strict
 	python3 tools/neurips_submission_audit.py --check --strict
