@@ -28,6 +28,14 @@ EXPERIMENT_MANIFEST_PATH = (
 ASSET_AUDIT_PATH = (
     ROOT / "docs/experiments/third_party_asset_audit/asset_audit.json"
 )
+POLICY_OFFLINE_REPORT_PATH = (
+    ROOT
+    / "docs/experiments/lerobot_policy_full_training/offline_policy_report.json"
+)
+POLICY_OFFLINE_REFERENCE_PATH = (
+    ROOT
+    / "docs/experiments/lerobot_policy_full_training/evaluation_reference.json"
+)
 OUTPUT_PATH = ROOT / "paper/arxiv/generated/experiment_values.tex"
 VOLATILE_RESULT_KEYS = {
     "catalog_open_parse_and_index",
@@ -51,6 +59,12 @@ def _read_json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise PaperValueError(f"expected a JSON object in {path}")
     return value
+
+
+def _read_optional_json(path: Path) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    return _read_json(path)
 
 
 def _get(document: dict[str, Any], path: str) -> Any:
@@ -132,6 +146,202 @@ def _dataset_license(asset_audit: dict[str, Any], repo_id: str) -> str:
     raise PaperValueError(f"asset audit has no active dataset record for {repo_id}")
 
 
+def _offline_policy_macro_values(
+    report: dict[str, Any] | None,
+    reference: dict[str, Any],
+) -> tuple[list[tuple[str, str]], bool]:
+    names = [
+        "ExpOfflinePolicyJobCount",
+        "ExpOfflinePolicySeedCount",
+        "ExpOfflinePolicyEpisodeCount",
+        "ExpOfflinePolicyFrameCount",
+        "ExpOfflinePolicyBootstrapResamples",
+        "ExpOfflinePolicyConfidencePercent",
+        "ExpOfflinePolicyTrainingHours",
+        "ExpOfflinePolicyEvaluationHours",
+        "ExpActRandomNrmse",
+        "ExpActRandomNrmseCiLow",
+        "ExpActRandomNrmseCiHigh",
+        "ExpActRandomNrmseSeedStd",
+        "ExpActHeldoutNrmse",
+        "ExpActHeldoutNrmseCiLow",
+        "ExpActHeldoutNrmseCiHigh",
+        "ExpActHeldoutNrmseSeedStd",
+        "ExpActNrmseDifference",
+        "ExpActNrmseDifferenceCiLow",
+        "ExpActNrmseDifferenceCiHigh",
+        "ExpDiffusionRandomNrmse",
+        "ExpDiffusionRandomNrmseCiLow",
+        "ExpDiffusionRandomNrmseCiHigh",
+        "ExpDiffusionRandomNrmseSeedStd",
+        "ExpDiffusionHeldoutNrmse",
+        "ExpDiffusionHeldoutNrmseCiLow",
+        "ExpDiffusionHeldoutNrmseCiHigh",
+        "ExpDiffusionHeldoutNrmseSeedStd",
+        "ExpDiffusionNrmseDifference",
+        "ExpDiffusionNrmseDifferenceCiLow",
+        "ExpDiffusionNrmseDifferenceCiHigh",
+    ]
+    if report is None:
+        return [(name, r"\PaperNotDefinedYet") for name in names], False
+
+    if report.get("profile") != "worldepisode-lerobot-offline-policy-report-0.1":
+        raise PaperValueError("paper found an unexpected offline policy report profile")
+    if report.get("pass") is not True:
+        return [(name, r"\PaperNotDefinedYet") for name in names], False
+    if report.get("status") != "offline_policy_experiment_complete":
+        raise PaperValueError("passing offline policy report has an unexpected status")
+    if reference.get("profile") != (
+        "worldepisode-lerobot-offline-policy-evaluation-reference-0.1"
+    ):
+        raise PaperValueError("paper found an unexpected policy evaluation reference profile")
+    if reference.get("pass") is not True:
+        raise PaperValueError("policy evaluation reference does not pass")
+    if _get(report, "analysis.metric") != "episode_normalized_rmse_mean":
+        raise PaperValueError("offline policy report uses an unexpected primary metric")
+    if _get(report, "completed_job_count") != _get(report, "required_job_count"):
+        raise PaperValueError("offline policy report does not contain every required job")
+
+    policies = _get(report, "analysis.policies")
+    if not isinstance(policies, dict) or set(policies) != {"act", "diffusion"}:
+        raise PaperValueError("offline policy report must contain ACT and Diffusion results")
+
+    def result(policy: str, result_name: str) -> dict[str, Any]:
+        if result_name == "random":
+            value = _get(policies, f"{policy}.splits.random_episode")
+        elif result_name == "heldout":
+            value = _get(
+                policies,
+                f"{policy}.splits.task_confounded_lineage_holdout",
+            )
+        else:
+            value = _get(policies, f"{policy}.paired_effect")
+        if not isinstance(value, dict):
+            raise PaperValueError(
+                f"offline policy {policy} {result_name} result must be an object"
+            )
+        return value
+
+    act_random = result("act", "random")
+    act_heldout = result("act", "heldout")
+    act_effect = result("act", "effect")
+    diffusion_random = result("diffusion", "random")
+    diffusion_heldout = result("diffusion", "heldout")
+    diffusion_effect = result("diffusion", "effect")
+    split_results = [act_random, act_heldout, diffusion_random, diffusion_heldout]
+    seed_counts = {
+        _as_int(value.get("seed_count"), "offline policy seed count")
+        for value in split_results
+    }
+    episode_counts = {
+        _as_int(value.get("episode_count"), "offline policy episode count")
+        for value in split_results
+    }
+    if len(seed_counts) != 1 or len(episode_counts) != 1:
+        raise PaperValueError("offline policy result dimensions are inconsistent")
+    seed_count = next(iter(seed_counts))
+    episode_count = next(iter(episode_counts))
+    if episode_count != _as_int(
+        _get(reference, "source_episode_count"),
+        "policy evaluation reference episode count",
+    ):
+        raise PaperValueError("offline policy report and reference episode counts differ")
+
+    confidence_levels = {
+        _as_number(value.get("confidence_level"), "offline policy confidence level")
+        for value in [*split_results, act_effect, diffusion_effect]
+    }
+    resample_counts = {
+        _as_int(value.get("resamples"), "offline policy bootstrap resamples")
+        for value in [*split_results, act_effect, diffusion_effect]
+    }
+    if len(confidence_levels) != 1 or len(resample_counts) != 1:
+        raise PaperValueError("offline policy bootstrap settings are inconsistent")
+    confidence_level = next(iter(confidence_levels))
+    resamples = next(iter(resample_counts))
+
+    def metric_values(
+        prefix: str,
+        value: dict[str, Any],
+        *,
+        seed_std: bool,
+    ) -> list[tuple[str, str]]:
+        rendered = [
+            (prefix, _fixed(value.get("estimate"), 4, f"{prefix} estimate")),
+            (f"{prefix}CiLow", _fixed(value.get("ci_low"), 4, f"{prefix} CI low")),
+            (f"{prefix}CiHigh", _fixed(value.get("ci_high"), 4, f"{prefix} CI high")),
+        ]
+        if seed_std:
+            rendered.append(
+                (
+                    f"{prefix}SeedStd",
+                    _fixed(value.get("seed_sample_std"), 4, f"{prefix} seed SD"),
+                )
+            )
+        return rendered
+
+    values = [
+        (
+            "ExpOfflinePolicyJobCount",
+            _tex_int(_get(report, "completed_job_count"), "offline policy job count"),
+        ),
+        ("ExpOfflinePolicySeedCount", _tex_int(seed_count, "offline policy seed count")),
+        (
+            "ExpOfflinePolicyEpisodeCount",
+            _tex_int(episode_count, "offline policy episode count"),
+        ),
+        (
+            "ExpOfflinePolicyFrameCount",
+            _tex_int(_get(reference, "frame_count"), "offline policy frame count"),
+        ),
+        (
+            "ExpOfflinePolicyBootstrapResamples",
+            _tex_int(resamples, "offline policy bootstrap resamples"),
+        ),
+        (
+            "ExpOfflinePolicyConfidencePercent",
+            _percent_integer(confidence_level, "offline policy confidence level"),
+        ),
+        (
+            "ExpOfflinePolicyTrainingHours",
+            _fixed(
+                _as_number(
+                    _get(report, "compute.training_wall_time_seconds"),
+                    "offline policy training wall time",
+                )
+                / 3600.0,
+                1,
+                "offline policy training hours",
+            ),
+        ),
+        (
+            "ExpOfflinePolicyEvaluationHours",
+            _fixed(
+                _as_number(
+                    _get(report, "compute.evaluation_wall_time_seconds"),
+                    "offline policy evaluation wall time",
+                )
+                / 3600.0,
+                1,
+                "offline policy evaluation hours",
+            ),
+        ),
+        *metric_values("ExpActRandomNrmse", act_random, seed_std=True),
+        *metric_values("ExpActHeldoutNrmse", act_heldout, seed_std=True),
+        *metric_values("ExpActNrmseDifference", act_effect, seed_std=False),
+        *metric_values("ExpDiffusionRandomNrmse", diffusion_random, seed_std=True),
+        *metric_values("ExpDiffusionHeldoutNrmse", diffusion_heldout, seed_std=True),
+        *metric_values(
+            "ExpDiffusionNrmseDifference",
+            diffusion_effect,
+            seed_std=False,
+        ),
+    ]
+    if [name for name, _ in values] != names:
+        raise PaperValueError("offline policy paper macro order is incomplete")
+    return values, True
+
+
 def _maximum_roundtrip_error(results: dict[str, Any]) -> float:
     roundtrip = _get(results, "lerobot_active_roundtrip")
     reports = [_get(roundtrip, "batch_roundtrip")]
@@ -182,6 +392,8 @@ def generate_tex(
     multitrajectory_timing: dict[str, Any],
     experiment_manifest: dict[str, Any],
     asset_audit: dict[str, Any],
+    offline_policy: dict[str, Any] | None = None,
+    offline_policy_reference: dict[str, Any] | None = None,
 ) -> str:
     """Render all experiment-derived values used by the paper."""
 
@@ -227,6 +439,12 @@ def generate_tex(
         raise PaperValueError("paper requires the validated third-party asset audit")
     if _get(asset_audit, "validation.passed") is not True:
         raise PaperValueError("third-party asset audit validation did not pass")
+    if offline_policy_reference is None:
+        offline_policy_reference = _read_json(POLICY_OFFLINE_REFERENCE_PATH)
+    offline_policy_values, offline_policy_ready = _offline_policy_macro_values(
+        offline_policy,
+        offline_policy_reference,
+    )
 
     mlp_provenance = _experiment(experiment_manifest, "armnet_task_scene_proxy_mlp")
     droid_provenance = _experiment(experiment_manifest, "droid_100_proxy_ridge_rerun")
@@ -651,12 +869,14 @@ def generate_tex(
         ("ExpAvToleranceMeters", _fixed(_get(av_pilot, "drifted_behavior.tolerance_m"), 2, "AV tolerance")),
         ("ExpAvCorrectedErrorMeters", _fixed(_get(av_pilot, "uss_contract.corrected_fusion_error_m"), 1, "AV corrected error")),
         ("ExpNonrobotPilotCount", _tex_int(_get(results, "uss_state_drift_pilots.aggregate.case_count"), "non-robotics pilot count")),
+        *offline_policy_values,
     ]
 
     policy_ready = bool(_get(results, "lerobot_policy_gate.pass"))
     benchmark_ready = bool(_get(benchmark_gate, "aggregate.ready_for_inflation_claim"))
     maintainer_ready = bool(_get(results, "natural_failure_corpus.maintainer_feedback_satisfied"))
     open_values = [
+        ("ExpOfflinePolicyResult", offline_policy_ready),
         ("ExpSceneOnlyLeakageResult", policy_ready),
         ("ExpActDiffusionResult", policy_ready),
         ("ExpRolloutImpactResult", policy_ready),
@@ -673,8 +893,14 @@ def generate_tex(
         f"% Source: {MULTITRAJECTORY_TIMING_PATH.relative_to(ROOT)} sha256={_source_digest(MULTITRAJECTORY_TIMING_PATH)}",
         f"% Source: {EXPERIMENT_MANIFEST_PATH.relative_to(ROOT)} sha256={_source_digest(EXPERIMENT_MANIFEST_PATH)}",
         f"% Source: {ASSET_AUDIT_PATH.relative_to(ROOT)} sha256={_source_digest(ASSET_AUDIT_PATH)}",
+        f"% Source: {POLICY_OFFLINE_REFERENCE_PATH.relative_to(ROOT)} sha256={_source_digest(POLICY_OFFLINE_REFERENCE_PATH)}",
         r"\providecommand{\PaperNotDefinedYet}{\textit{Not defined yet}}",
     ]
+    if offline_policy is not None:
+        lines.append(
+            f"% Source: {POLICY_OFFLINE_REPORT_PATH.relative_to(ROOT)} "
+            f"sha256={_source_digest(POLICY_OFFLINE_REPORT_PATH)}"
+        )
     lines.extend(_macro(name, value) for name, value in values)
     lines.extend(
         _macro(name, r"\PaperNotDefinedYet" if not ready else r"\textit{Defined in current reports}")
@@ -710,6 +936,8 @@ def main(argv: list[str] | None = None) -> int:
             _read_json(MULTITRAJECTORY_TIMING_PATH),
             _read_json(EXPERIMENT_MANIFEST_PATH),
             _read_json(ASSET_AUDIT_PATH),
+            _read_optional_json(POLICY_OFFLINE_REPORT_PATH),
+            _read_json(POLICY_OFFLINE_REFERENCE_PATH),
         )
     except PaperValueError as exc:
         print(f"paper experiment values: ERROR: {exc}", file=sys.stderr)

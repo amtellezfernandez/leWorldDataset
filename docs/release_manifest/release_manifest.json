@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "92b4527f5539eb37ead1f1691c330b9d4a7da9c47ebd3b0b4118b66b26016045"
+      "sha256": "c68b0edfaf7a99e379e00b6e99a7065d9dcdd9c9baaaecd67fc0d74b3f530cbe"
     },
     {
       "category": "public_evidence",
@@ -133,7 +133,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/generated/experiment_values.tex",
-      "sha256": "66db5beebc32a4064f5bb348420240396bf771ac1e525fdb3ba3f7676d936e74"
+      "sha256": "04ba77036507d4741708f757fb130d326eedd01501e5bae74c2c97f5497ef1d6"
     },
     {
       "category": "public_evidence",
@@ -709,7 +709,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "a2a6c10a0813f9355bf3a6b75c193aaf46769110ea3df3fab8ca2c4d00922bd0"
+      "sha256": "ff239ca81a9d1af38ba019e0dfce0be9177b378efac757165d16116f29b63a82"
     },
     {
       "category": "public_evidence",
@@ -718,7 +718,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "bcbfa387b744411b3f408e69d1d94c2d489b4e12eb1dbc1f1124e176320e3e16"
+      "sha256": "6cac96816bcf0b265018b2819ae7701b32bb05db7077e729950836a11127cc22"
     },
     {
       "category": "public_evidence",
@@ -1231,7 +1231,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_experiment_values.py",
-      "sha256": "ccb48ca318748f9ce7255eb1fad30bd331c2e15cf34dfb80dc221bcec41c267a"
+      "sha256": "dbeca74e06e4492ce41acd37e454b1a0d49ac6b6d36510ef010181ef602b151d"
     },
     {
       "category": "release_script",

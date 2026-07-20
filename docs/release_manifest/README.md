@@ -20,7 +20,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | Path | Category | Digest Mode | SHA-256 Prefix |
 |---|---|---|---|
 | `WorldEpisode.pdf` | public_evidence | exact | `551f2ef501a7c430` |
-| `WorldEpisode-supplement.zip` | public_evidence | exact | `92b4527f5539eb37` |
+| `WorldEpisode-supplement.zip` | public_evidence | exact | `c68b0edfaf7a99e3` |
 | `README.md` | public_evidence | exact | `fc19d507a4367b50` |
 | `THIRD_PARTY_ASSETS.md` | public_evidence | exact | `7d27eec228630e01` |
 | `TODO.md` | public_evidence | exact | `8115eb50a2809fe5` |
@@ -31,7 +31,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `paper/le-world-layout.md` | public_evidence | exact | `51549aaafa85c61e` |
 | `paper/arxiv/main.tex` | public_evidence | exact | `ed2ec4671ae9c0bc` |
 | `paper/arxiv/checklist.tex` | public_evidence | exact | `fe82276d24b6fbf8` |
-| `paper/arxiv/generated/experiment_values.tex` | public_evidence | exact | `66db5beebc32a406` |
+| `paper/arxiv/generated/experiment_values.tex` | public_evidence | exact | `04ba77036507d474` |
 | `paper/arxiv/submission_config.json` | public_evidence | exact | `7104c3c269013ab0` |
 | `paper/arxiv/neurips_2026.sty` | public_evidence | exact | `c3fc2894e83d2517` |
 | `paper/arxiv/references.bib` | public_evidence | exact | `08905a7f169dce51` |
@@ -94,8 +94,8 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `docs/experiments/citation_source_audit/citation_source_audit.json` | public_evidence | exact | `12ae377d0d214828` |
 | `docs/experiments/third_party_asset_audit/README.md` | public_evidence | exact | `e5ddb2bf749c7086` |
 | `docs/experiments/third_party_asset_audit/asset_audit.json` | public_evidence | exact | `82daf44c34f6590a` |
-| `docs/anonymous_supplement/README.md` | public_evidence | exact | `a2a6c10a0813f935` |
-| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `bcbfa387b744411b` |
+| `docs/anonymous_supplement/README.md` | public_evidence | exact | `ff239ca81a9d1af3` |
+| `docs/anonymous_supplement/supplement_report.json` | public_evidence | exact | `6cac96816bcf0b26` |
 | `docs/experiments/anonymity_audit/README.md` | public_evidence | exact | `f336656c4ad49e16` |
 | `docs/experiments/anonymity_audit/anonymity_report.json` | public_evidence | exact | `8f2c3a7e055dbd8e` |
 | `docs/experiments/neurips_submission/README.md` | public_evidence | exact | `3c0b007df5d94cfd` |
@@ -152,7 +152,7 @@ Exact digests are used for stable artifacts. Timing-jitter reports are hashed af
 | `tools/third_party_asset_audit.py` | release_script | exact | `af2807464d2e82b2` |
 | `tools/huggingface_recovery_pointer.py` | release_script | exact | `34ac09592bb2a951` |
 | `tools/huggingface_policy_archive.py` | release_script | exact | `e8fc4b5834c12e8a` |
-| `tools/paper_experiment_values.py` | release_script | exact | `ccb48ca318748f9c` |
+| `tools/paper_experiment_values.py` | release_script | exact | `dbeca74e06e4492c` |
 | `tools/build_anonymous_supplement.py` | release_script | exact | `e64373010c2c8595` |
 | `tools/submission_anonymity_audit.py` | release_script | exact | `558fd94fa7f2ea02` |
 | `tools/neurips_submission_audit.py` | release_script | exact | `29589728ac28eaed` |
