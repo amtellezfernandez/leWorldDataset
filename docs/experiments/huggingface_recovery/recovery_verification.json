@@ -1,4 +1,7 @@
 {
+  "bundle_fsck_passed": true,
+  "bundle_head": "7822fc9469def6e131cac02c26f70bb635fa709c",
+  "errors": [],
   "files": [
     {
       "path": "artifacts/WorldEpisode-supplement.zip",
@@ -171,43 +174,12 @@
       "size_bytes": 1015
     }
   ],
-  "generated_by": {
-    "script": "tools/huggingface_recovery_pointer.py",
-    "verification_report": "docs/experiments/huggingface_recovery/recovery_verification.json"
-  },
-  "previous_snapshots": [
-    {
-      "git_commit": "ef7cc490e9ae14568bdb0539643f930e0693dd1b",
-      "huggingface_commit": "adf9157ee60356a6a9748320e0d186f6054a9a51",
-      "manifest_sha256": "35fbf5bd2f41eb7092ef7d8386cc0d756f5e699686380888a7aeedefa1dfb666",
-      "path": "snapshots/ef7cc49"
-    }
-  ],
-  "repository": {
-    "id": "amtellezfernandez/worldepisode-experiment-recovery",
-    "private": true,
-    "type": "dataset"
-  },
-  "schema_version": 1,
-  "snapshot": {
-    "git_commit": "7822fc9469def6e131cac02c26f70bb635fa709c",
-    "huggingface_commit": "926edb4979f3e50129158f16dbfceef3820f1eb0",
-    "manifest_sha256": "6ad261b47099c2183e8c111cb8703f9e49ec7b6bf6352c2421a531e8e12445d0",
-    "path": "snapshots/7822fc9"
-  },
-  "source_media_recovery": {
-    "asset_count": 24,
-    "asset_manifest": "policy_reports/front_camera_asset_manifest.json",
-    "mirrored": false,
-    "repository": "armnet/armnetbench_v01_lerobot_so101",
-    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
-    "source_bytes": 1864680767,
-    "verification": "per-file LFS SHA-256"
-  },
-  "verification": {
-    "method": "forced snapshot_download at the pinned Hugging Face commit followed by size and SHA-256 comparison, bundle clone, and git fsck",
-    "passed": true,
-    "verified_bytes": 24841901,
-    "verified_file_count": 34
-  }
+  "huggingface_commit": "926edb4979f3e50129158f16dbfceef3820f1eb0",
+  "manifest_sha256": "6ad261b47099c2183e8c111cb8703f9e49ec7b6bf6352c2421a531e8e12445d0",
+  "passed": true,
+  "repository": "amtellezfernandez/worldepisode-experiment-recovery",
+  "schema": "worldepisode_recovery_verification_v1",
+  "snapshot_path": "snapshots/7822fc9",
+  "verified_bytes": 24841901,
+  "verified_file_count": 34
 }

@@ -56,7 +56,7 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
 | ANON.001 | anonymous paper and supplement pass identity audit | True | error | supplement=docs/anonymous_supplement/supplement_report.json, audit=docs/experiments/anonymity_audit/anonymity_report.json |
 | FORMAT.001 | NeurIPS submission format is audited | True | error | status=provisional_ready_pending_target_author_kit, main_content_last_page=9, page_limit=9, target_requirements_final=False |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=145, normalized=4 |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=149, normalized=4 |
 | SUBMIT.001 | submission packet validates | True | error | status=pass, claims=16, open_gates=5 |
 
 ## Blocked Stronger Claims

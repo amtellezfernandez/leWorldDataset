@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 145,
+    "entry_count": 149,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 113,
-    "release_script_count": 32
+    "public_evidence_count": 116,
+    "release_script_count": 33
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "e86929d7201324a4983f71c8ab705b6be487dad24f466bacd789c0ad8d716233"
+      "sha256": "859833145845d60794861d48ad292e79734af08f2cc267aca23e1a44f9004e18"
     },
     {
       "category": "public_evidence",
@@ -664,7 +664,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "a645be36b2ccb7e103fa355091f070404781ca897623cbcde7ee4aa4a53a43f4"
+      "sha256": "afc2061bcbe5f1a26bc6a1729b6124f17243c84f79411159db4d934aaf16fb72"
     },
     {
       "category": "public_evidence",
@@ -673,7 +673,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "db9024dfb59e3d088d984a91dee640b8412ee92bee54282e86682aa691d86a3c"
+      "sha256": "7d462e2a16c539cd7fd33a1cb4678c33d9f5547cee0ecb2520b14089584ec804"
     },
     {
       "category": "public_evidence",
@@ -906,6 +906,15 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "docs/experiments/huggingface_recovery/recovery_verification.json",
+      "sha256": "5a716b5d5f4caedc963c95007c838e977252ecc6f9efc60e16ae028e98adbcea"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "docs/experiments/meta_simulator_contract/adapter_contract_report.json",
       "sha256": "f1bd79e4953dace594d94afdbe453a1430cbad234b5b7048d4e8cf6cccdeee92"
     },
@@ -1032,6 +1041,24 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "docs/huggingface-recovery.md",
+      "sha256": "34231004faf98112310b578faf50b2c45aa2e6c51903ec7ad8edf7052c9ce09d"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/huggingface-recovery.json",
+      "sha256": "8becb377f9574488882d807dfcd860babcb27c5294a99d118fd243257948e684"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "GOVERNANCE.md",
       "sha256": "00db931e8bfa696076cd5d5f978e14d64a8756199b27f22f5ba90faa22fc2ea3"
     },
@@ -1060,7 +1087,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "4c806ca4ee0569e41f5f342167430a982b5badfc5774b4e9ad1eec530a27b921"
+      "sha256": "5170557ecf73d24c017fdc2a3f4f7c6d7a57c1919e5b192a6f51ab132444924a"
     },
     {
       "category": "release_script",
@@ -1133,6 +1160,15 @@
       "normalizers_applied": [],
       "path": "tools/third_party_asset_audit.py",
       "sha256": "af2807464d2e82b2ef4286c4d9e0e273656e9ffd59210ced23e5f38cd6a2faea"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/huggingface_recovery_pointer.py",
+      "sha256": "34ac09592bb2a9519e0e375fa39f63914a278966a7c247caf6b0ee612207f58d"
     },
     {
       "category": "release_script",
@@ -1303,7 +1339,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "5bd9ece61c9f3933b75392b562dda6db52e9c2da1507ca378832708edfc34207"
+      "sha256": "4e04345ab965e9717893fbbbee3c81f7276841bd1f491324143d7ee8ff44ae9c"
     },
     {
       "category": "release_script",
