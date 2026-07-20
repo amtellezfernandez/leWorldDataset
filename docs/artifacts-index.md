@@ -6,8 +6,9 @@ this `docs/` directory; run commands from the repository root.
 ## Paper and specification
 
 - [Paper PDF (publication build)](../WorldEpisode.pdf)
-- [Collaborator working PDF](../WorldEpisode-collab.pdf)
 - [arXiv LaTeX paper](../paper/arxiv/main.tex)
+- [Generated paper experiment values](../paper/arxiv/generated/experiment_values.tex)
+- [Experiment roadmap](../TODO.md)
 - [Markdown paper notes](../paper/le-world-layout.md)
 - [USS framing note](universal-spatial-state.md)
 - [WorldEpisode v0.1 RFC spec](../spec/worldepisode-v0.1.md)
@@ -45,8 +46,12 @@ this `docs/` directory; run commands from the repository root.
 - [Controlled experiment results](experiments/RESULTS.md)
 - [Binding round-trip artifacts](experiments/bindings)
 - [Active LeRobot round-trip artifacts](experiments/lerobot_worldepisode_roundtrip)
+- [Complete-shard LeRobot conversion-scale benchmark](experiments/lerobot_conversion_scale)
+- [Held-out multi-trajectory timing audit](experiments/lerobot_multitrajectory_timing)
 - [Active LeRobot scene-leakage artifacts](experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](experiments/lerobot_policy_gate)
+  The directory includes a pinned remote compatibility report; the prepared jobs are blocked by
+  missing image/environment-state inputs and are not policy results.
 - [Active LeRobot control-replay artifacts](experiments/lerobot_control_replay)
 - [Famous benchmark call-out artifacts](experiments/benchmark_callout_audit)
 - [Famous benchmark inflation-gate artifacts](experiments/benchmark_inflation_gate)
@@ -60,6 +65,12 @@ this `docs/` directory; run commands from the repository root.
 - [Pilot natural-source failure corpus](experiments/natural_failure_corpus/manifest.json)
 - [Natural-source dataset diagnostics](experiments/natural_failure_corpus/dataset_diagnostics.json)
 - [Single-line preflight artifacts](experiments/preflight/preflight_report.json)
+- [Principal experiment provenance and compute manifest](experiments/experiment_manifest)
+- [Citation-by-citation source audit](experiments/citation_source_audit)
+- [Third-party dataset and redistributed-asset audit](experiments/third_party_asset_audit)
+- [Third-party asset notices](../THIRD_PARTY_ASSETS.md)
+- [Anonymous supplementary archive report](anonymous_supplement)
+- [Submission PDF and ZIP anonymity audit](experiments/anonymity_audit)
 
 ## Release gates and packets
 

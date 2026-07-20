@@ -54,23 +54,41 @@
     ],
     "source_dataset": {
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_license": {
+        "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+        "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+        "evidence": {
+          "dataset_card": {
+            "declared_license": "apache-2.0",
+            "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+            "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+          },
+          "upstream": []
+        },
+        "license_expression": "Apache-2.0",
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "schema": "worldepisode_source_license_v1"
+      }
     },
     "split": "random_episode",
     "train": {
       "command": [
         "lerobot-train",
         "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+        "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
         "--policy.type=act",
         "--output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage",
         "--job_name=act_random_episode_worldepisode_leakage",
         "--policy.device=cuda",
+        "--policy.push_to_hub=false",
         "--steps=20000",
         "--seed=17",
         "--wandb.enable=false"
       ],
       "expected_checkpoint": "outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
-      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
     }
   },
   {
@@ -128,23 +146,41 @@
     ],
     "source_dataset": {
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_license": {
+        "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+        "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+        "evidence": {
+          "dataset_card": {
+            "declared_license": "apache-2.0",
+            "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+            "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+          },
+          "upstream": []
+        },
+        "license_expression": "Apache-2.0",
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "schema": "worldepisode_source_license_v1"
+      }
     },
     "split": "random_episode",
     "train": {
       "command": [
         "lerobot-train",
         "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+        "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
         "--policy.type=diffusion",
         "--output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage",
         "--job_name=diffusion_random_episode_worldepisode_leakage",
         "--policy.device=cuda",
+        "--policy.push_to_hub=false",
         "--steps=20000",
         "--seed=17",
         "--wandb.enable=false"
       ],
       "expected_checkpoint": "outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
-      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
     }
   },
   {
@@ -202,23 +238,41 @@
     ],
     "source_dataset": {
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_license": {
+        "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+        "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+        "evidence": {
+          "dataset_card": {
+            "declared_license": "apache-2.0",
+            "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+            "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+          },
+          "upstream": []
+        },
+        "license_expression": "Apache-2.0",
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "schema": "worldepisode_source_license_v1"
+      }
     },
     "split": "scene_disjoint",
     "train": {
       "command": [
         "lerobot-train",
         "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+        "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
         "--policy.type=act",
         "--output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage",
         "--job_name=act_scene_disjoint_worldepisode_leakage",
         "--policy.device=cuda",
+        "--policy.push_to_hub=false",
         "--steps=20000",
         "--seed=17",
         "--wandb.enable=false"
       ],
       "expected_checkpoint": "outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
-      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
     }
   },
   {
@@ -276,23 +330,41 @@
     ],
     "source_dataset": {
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "source_license": {
+        "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+        "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+        "evidence": {
+          "dataset_card": {
+            "declared_license": "apache-2.0",
+            "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+            "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+          },
+          "upstream": []
+        },
+        "license_expression": "Apache-2.0",
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "schema": "worldepisode_source_license_v1"
+      }
     },
     "split": "scene_disjoint",
     "train": {
       "command": [
         "lerobot-train",
         "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+        "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
         "--policy.type=diffusion",
         "--output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage",
         "--job_name=diffusion_scene_disjoint_worldepisode_leakage",
         "--policy.device=cuda",
+        "--policy.push_to_hub=false",
         "--steps=20000",
         "--seed=17",
         "--wandb.enable=false"
       ],
       "expected_checkpoint": "outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
-      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+      "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
     }
   }
 ]

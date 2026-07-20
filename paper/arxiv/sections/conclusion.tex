@@ -7,22 +7,16 @@ assumptions explicit. It binds interaction data to immutable state revisions, gi
 identity to entities, declares space/time/transition semantics, assigns roles to assets, records
 events and provenance, and reports conversion loss instead of hiding it.
 
-In the reference experiments, those requirements expose a 0.850 offline random-split success rate
-that collapses to 0.000 under scene-disjoint evaluation, reduce LeRobot replay drift on a real SO-101
-trajectory by modeling a four-frame action delay, and catch every injected physically incoherent
-package before deployment. A real-to-sim pipeline can report simulated success while failing under
-deployment proxies when action contracts or representation roles drift; the same vocabulary catches
-that drift in deterministic pilots outside robotics as well. The validator ships as a one-line
-preflight command, and the simulator pathway is an adapter compliance contract rather than a
-dependency on one runtime.
+In the reference experiments, a random split overlaps every task--scene proxy lineage; a
+task-confounded holdout increases mean episode nRMSE from \ExpMlpRandomNrmse{} to
+\ExpMlpHeldoutNrmse{} for the MLP and from \ExpTemporalRandomNrmse{} to
+\ExpTemporalHeldoutNrmse{} for deterministic temporal ridge. This diagnoses an invalid random split
+but does not isolate scene leakage. Modeling a \ExpReplayDelayFrames-frame action delay
+reduces held-out alignment error on \ExpReplayTraceCount{} SO-101 \ExpReplayTraceNoun{}, and the
+validator catches every injected fault class. The contribution is the auditable contract and its
+failure boundaries, not a claim of physical rollout improvement.
 
-These are scoped results, not a completed standardization claim. The call-out audit identifies Open
-X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN as priority targets for this protocol, but it
-does not claim their scores are inflated without reruns; the inflation-proof gate currently records
-one executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero
-measured inflation claims. The non-robotics pilots are vocabulary checks, not production game-engine or
-AV evaluations. Gaussian splats remain a high-value
-appearance profile, but the durable contribution is the spatial-state contract around them. The
-next step is to scale the same protocol to larger multi-robot datasets, stronger LeRobot-native
-policies, real or high-fidelity rollout evaluation, natural failure corpora, non-robotics
-adapters, and independently maintained bindings.
+The next experiments must disentangle task from physical scene lineage, run ACT/Diffusion and
+rollouts over matched seeds, test delay on multiple trajectories, and add contact-rich replay.
+Until then, the paper makes no famous-benchmark inflation, simulator-independent physics, or
+mature-standard claim.

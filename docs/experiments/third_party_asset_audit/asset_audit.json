@@ -1,0 +1,742 @@
+{
+  "active_datasets": [
+    {
+      "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "apache-2.0",
+          "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+          "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+        },
+        "upstream": []
+      },
+      "experiment_ids": [
+        "armnet_task_scene_proxy_mlp",
+        "armnet_task_scene_proxy_temporal_ridge",
+        "controlled_contract_suite",
+        "lerobot_act_diffusion_compatibility_preflight",
+        "lerobot_conversion_scale",
+        "lerobot_multitrajectory_timing"
+      ],
+      "license_expression": "Apache-2.0",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "schema": "worldepisode_source_license_v1"
+    },
+    {
+      "attribution": "lerobot/droid_100, pinned revision 87301a2d2e99340e2010c9ef0f1d8e780b08aaf9; derived from DROID by Khazatsky et al.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "mit",
+          "sha256": "153177e2fdbbab7f3bd77137b0411f29e591535c71c9c78adbe34d45a36ea3ab",
+          "url": "https://huggingface.co/datasets/lerobot/droid_100/resolve/87301a2d2e99340e2010c9ef0f1d8e780b08aaf9/README.md"
+        },
+        "upstream": [
+          {
+            "evidence": "The DROID paper states that the full dataset is released under CC-BY 4.0.",
+            "license": "CC-BY-4.0",
+            "url": "https://arxiv.org/abs/2403.12945"
+          }
+        ]
+      },
+      "experiment_ids": [
+        "droid_100_proxy_ridge_rerun"
+      ],
+      "license_expression": "MIT AND CC-BY-4.0",
+      "repo_id": "lerobot/droid_100",
+      "revision": "87301a2d2e99340e2010c9ef0f1d8e780b08aaf9",
+      "schema": "worldepisode_source_license_v1"
+    },
+    {
+      "attribution": "PushT LeRobot conversion, pinned revision 7628202a2180972f291ba1bc6723834921e72c19; PushT data and task from Diffusion Policy, Columbia Artificial Intelligence and Robotics Lab.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "mit",
+          "sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+          "url": "https://huggingface.co/datasets/lerobot/pusht/resolve/7628202a2180972f291ba1bc6723834921e72c19/README.md"
+        },
+        "upstream": [
+          {
+            "copyright": "Copyright (c) 2023 Columbia Artificial Intelligence and Robotics Lab",
+            "license": "MIT",
+            "url": "https://github.com/real-stanford/diffusion_policy/blob/main/LICENSE"
+          }
+        ]
+      },
+      "experiment_ids": [
+        "controlled_contract_suite",
+        "lerobot_conversion_scale"
+      ],
+      "license_expression": "MIT",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "schema": "worldepisode_source_license_v1"
+    },
+    {
+      "attribution": "svla_so101_pickplace, LeRobot, pinned revision f641879e22172be7e8161d5e6c1503c2d2feb657.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "apache-2.0",
+          "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+          "url": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace/resolve/f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+        },
+        "upstream": []
+      },
+      "experiment_ids": [
+        "controlled_contract_suite",
+        "lerobot_conversion_scale"
+      ],
+      "license_expression": "Apache-2.0",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "schema": "worldepisode_source_license_v1"
+    }
+  ],
+  "aggregate": {
+    "active_dataset_count": 4,
+    "authored_parquet_fixture_count": 1,
+    "context_only_dataset_count": 4,
+    "error_count": 0,
+    "external_software_count": 6,
+    "redistributed_parquet_bytes": 6736270,
+    "redistributed_parquet_count": 48,
+    "source_license_file_count": 16,
+    "source_media_count": 0
+  },
+  "artifacts": {
+    "json": "docs/experiments/third_party_asset_audit/asset_audit.json",
+    "markdown": "docs/experiments/third_party_asset_audit/README.md",
+    "notice": "THIRD_PARTY_ASSETS.md"
+  },
+  "authored_parquet_fixtures": [
+    {
+      "bytes": 4,
+      "license_expression": "CC0-1.0",
+      "path": "docs/experiments/preflight/native_lerobot_without_sidecar/data/chunk-000/file-000.parquet",
+      "purpose": "four-byte PAR1 sentinel used to test fail-closed preflight",
+      "sha256": "fbc62d3b511368ee275ddc74117d8689b430e1427220e25d30816201d89ca7b6"
+    }
+  ],
+  "context_only_datasets": [
+    {
+      "license_expression": "CC-BY-4.0",
+      "name": "BridgeData V2",
+      "source": "https://rail-berkeley.github.io/bridgedata/",
+      "use": "related-work and source-level audit only; no rows or media redistributed"
+    },
+    {
+      "license_expression": "dataset-specific",
+      "name": "Open X-Embodiment",
+      "source": "https://robotics-transformer-x.github.io/",
+      "use": "related-work and source-level audit only; no component dataset redistributed"
+    },
+    {
+      "license_expression": "MIT (source code)",
+      "name": "LIBERO",
+      "source": "https://github.com/Lifelong-Robot-Learning/LIBERO",
+      "use": "source-level benchmark audit only; no code, rows, or media redistributed"
+    },
+    {
+      "license_expression": "MIT (source code)",
+      "name": "CALVIN",
+      "source": "https://github.com/mees/calvin",
+      "use": "source-level benchmark audit only; no code, rows, or media redistributed"
+    }
+  ],
+  "external_software": [
+    {
+      "license_expression": "Apache-2.0",
+      "name": "LeRobot",
+      "source": "https://github.com/huggingface/lerobot",
+      "use": "dataset conventions and public dataset mirrors; not vendored"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "name": "MuJoCo",
+      "source": "https://github.com/google-deepmind/mujoco",
+      "use": "runtime replay experiment; installed dependency, not vendored"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "name": "Genesis",
+      "source": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "use": "runtime replay experiment; installed dependency, not vendored"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "name": "PyArrow",
+      "source": "https://github.com/apache/arrow",
+      "use": "Parquet experiment I/O; installed dependency, not vendored"
+    },
+    {
+      "license_expression": "BSD-3-Clause",
+      "name": "scikit-learn",
+      "source": "https://github.com/scikit-learn/scikit-learn",
+      "use": "controlled baselines; installed dependency, not vendored"
+    },
+    {
+      "license_expression": "BSD-3-Clause",
+      "name": "PyTorch",
+      "source": "https://github.com/pytorch/pytorch",
+      "use": "MLP experiment; installed dependency, not vendored"
+    }
+  ],
+  "redistributed_source_rows": [
+    {
+      "bytes": 512944,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/data/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "a3134ede097612b7b0489d4bfb4ce5a961c1d5a9ee0c3b7d8dbafe1b30380167",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 155080,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "ed1e768a80590af7109956ae52587a19a3d4ea5ace52a48be2277efb20708810",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2534,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/meta/tasks.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2115046,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/data/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 345970,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "3493f4554ef47cff7bc7c2cc0c1f4f3fb49b4f9eed07c69c8942a0a2d12e1757",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2534,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/meta/tasks.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 468745,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/data/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "a754dab0c6eaa60c3ce203e613ffe64c57200b85509429380694d15f96ae0cb8",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 168410,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "98f7289006f5202e2dbbe20bb16dcf689e9654ee8587c6ad6bb7339920554f65",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2534,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/tasks.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2130474,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/data/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "975b3ce845a4087e24860505533f018f32a1d1af6b79453ea26f6cf1d4b94b71",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 331239,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "49e003be7d5b99a1075ce9621d48a1886e7b81819a6755de89ea42d26de4c6d9",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 2534,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/meta/tasks.parquet",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+      "source_license_file": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 15045,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "2f0bb3aa112d000bea4795c395890a489a4720f81c4e929e27bda853b7f05ca4",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29365,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "6b8e31821965a81e164fe6cd49bc976ab96e0d5f8537f0fd00afaf1870bc09b1",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 15092,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "957eee611559dfb9a0190b7bec8c6afa96cd5e570f10005981a5f135e96693ff",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29360,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "4f47b8d19f9132148e829b2a3c8b5c43b9b00151e5ea2165314f141988c6b489",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 14028,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "54244e8223637aceb689d9791175337e6d52b3a433d910dae5f576ee949e5e80",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29355,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "02540beb8221b94678901287469092b72a08900bf4418e0fa167ca5b048f4d6d",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 11666,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "17d604e5b7afdd18676076e9cc30bd3497a15dfef91c58b27edf1423d359342c",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29365,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "95d6a0ffa08536f1f8d4b13e0d95e09af8d94099f45f0aa09c36231f076af10f",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 13088,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "67bbcbaf813f1126279d182c1c2527e9c815b612fc5af2ac1976da327ae9aba7",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29356,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "ee920ece69dc699eb1af7cf6fa6179c4096419f0c34ca19f56a6a5ec8b5cf2d5",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 15045,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "2f0bb3aa112d000bea4795c395890a489a4720f81c4e929e27bda853b7f05ca4",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 29365,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "6b8e31821965a81e164fe6cd49bc976ab96e0d5f8537f0fd00afaf1870bc09b1",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 973,
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "sha256": "24be8cbb29b8a1fca5b7a1c1c6ceecd83dc71cb3713ac48172f319bf656ce482",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 7697,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "87912233fa456d6dea316438b8d4af410cdd96ee2fbe50a2df8f5bc19a97e50e",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30376,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "21626f70821ce46547c09c95f18f2c7c6d9a01a0821f14aa35cc43869cfcdd95",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 6352,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "3a48e8366bb48aaf84fdef0264a089b839f782f59c10ebdde92c1a8c99b55196",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30376,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "59fa1362afcbeab6473924b347541819f082d7c104e496b6658478d7a29e0098",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 7044,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "db948d622dbbedb28cc69065d76d18473aa1d0462982f5c17dacb7b80e3e061a",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30375,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "14a781d2420aa2b6f6a9d04022e0848e88d6a897b99c45ddd090cda5c7c10897",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 7627,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "84174b48dbc1c8761a7d45d7dd742c7a0804c1dd8200f18d7e98b0119085f4c6",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30375,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "58ebc140d0b29cb6563a3229097d3c58b4ea129d7a093b2aef6155f836f84063",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 7539,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "cf7603042a8bc6f093b4a43e759ce6cbc47fb593bb4b11694357a2fe978d9d9e",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30376,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "4cc4b1d2356282022f736f8baeca636d4548bf16c5e8a42f70d8a54f7783487d",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 7697,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/data/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "87912233fa456d6dea316438b8d4af410cdd96ee2fbe50a2df8f5bc19a97e50e",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 30376,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/meta/episodes/chunk-000/file-000.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "21626f70821ce46547c09c95f18f2c7c6d9a01a0821f14aa35cc43869cfcdd95",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
+    {
+      "bytes": 1008,
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/meta/tasks.parquet",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "sha256": "e00548447697c5d69597170179038b70ea2ddb37db709f4b40ac1e67aa2e8e12",
+      "source_license_file": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/SOURCE_LICENSE.json"
+    }
+  ],
+  "redistribution_policy": {
+    "source_media_included": false,
+    "source_rows": "Source-derived rows retain the source dataset license expression and an adjacent SOURCE_LICENSE.json.",
+    "worldepisode_metadata": "WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0 unless a file says otherwise."
+  },
+  "schema": "worldepisode_third_party_asset_audit_v1",
+  "scope": "Third-party datasets named by the experiment manifest, source-derived Parquet files distributed under docs/experiments, directly used external software, context-only benchmark datasets, and the vendored NeurIPS style file. This is a provenance and notice audit, not legal advice or legal clearance.",
+  "source_license_files": [
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/SOURCE_LICENSE.json",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/SOURCE_LICENSE.json",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/SOURCE_LICENSE.json",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train/SOURCE_LICENSE.json",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "Apache-2.0",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000000/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000002/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000003/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000004/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    },
+    {
+      "license_expression": "MIT",
+      "path": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/exported_lerobot_v3/SOURCE_LICENSE.json",
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+    }
+  ],
+  "validation": {
+    "errors": [],
+    "passed": true
+  },
+  "vendored_assets": [
+    {
+      "expected_sha256": "c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a",
+      "license_expression": "NOASSERTION",
+      "path": "paper/arxiv/neurips_2026.sty",
+      "sha256": "c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a",
+      "source": "official NeurIPS 2026 author kit",
+      "source_url": "https://neurips.cc/Conferences/2026/PaperInformation/StyleFiles",
+      "terms": "Conference-provided submission style required to compile the paper; no separate SPDX or license statement was present in the distributed file."
+    }
+  ]
+}

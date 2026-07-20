@@ -1,7 +1,7 @@
 {
   "chunks_size": 1000,
   "codebase_version": "v3.0",
-  "data_files_size_in_mb": 2.115046,
+  "data_files_size_in_mb": 100,
   "data_path": "data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet",
   "features": {
     "action": {
@@ -90,12 +90,6 @@
   "total_episodes": 320,
   "total_frames": 98990,
   "total_tasks": 8,
-  "video_files_size_in_mb": 0,
-  "worldepisode_split_package": {
-    "local_split_alias": "train",
-    "mode": "low_dimensional_state_action_package",
-    "partition": "train",
-    "split_name": "random_episode",
-    "video_payloads": "external_not_materialized"
-  }
+  "video_files_size_in_mb": 200,
+  "video_path": null
 }

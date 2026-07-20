@@ -4,7 +4,7 @@
     "markdown": "docs/experiments/package_install_smoke/README.md"
   },
   "audit_date": "2026-07-13",
-  "build_backend": "uv",
+  "build_backend": "pip",
   "checks": {
     "api_preflight_passed": true,
     "cli_preflight_passed": true,
@@ -15,45 +15,34 @@
   "commands": [
     {
       "command": [
-        "uv",
-        "build",
-        "--wheel",
-        "--out-dir",
-        "$TMPDIR/wheels"
-      ],
-      "passed": true,
-      "returncode": 0,
-      "stderr": "/PKG-INFO\nwriting dependency_links to worldepisode.egg-info/dependency_links.txt\nwriting entry points to worldepisode.egg-info/entry_points.txt\nwriting requirements to worldepisode.egg-info/requires.txt\nwriting top-level names to worldepisode.egg-info/top_level.txt\nreading manifest file 'worldepisode.egg-info/SOURCES.txt'\nadding license file 'LICENSE-APACHE'\nwriting manifest file 'worldepisode.egg-info/SOURCES.txt'\ncopying worldepisode/py.typed -> build/lib/worldepisode\ncopying worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/le-world-layout-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-core-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/conformance-requirements-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/conformance-requirements-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/le-world-layout-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-core-v0.schema.json -> build/lib/worldepisode/schemas\ncopying worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/lib/worldepisode/schemas\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_lib\ncreating build/bdist.linux-x86_64/wheel\ncreating build/bdist.linux-x86_64/wheel/worldepisode\ncopying build/lib/worldepisode/py.typed -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/__init__.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/validator.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/__main__.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/preflight.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncopying build/lib/worldepisode/cli.py -> build/bdist.linux-x86_64/wheel/./worldepisode\ncreating build/bdist.linux-x86_64/wheel/worldepisode/schemas\ncopying build/lib/worldepisode/schemas/worldepisode-dataset-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/le-world-layout-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/__init__.py -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/worldepisode-core-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\ncopying build/lib/worldepisode/schemas/conformance-requirements-v0.schema.json -> build/bdist.linux-x86_64/wheel/./worldepisode/schemas\nrunning install_egg_info\nCopying worldepisode.egg-info to build/bdist.linux-x86_64/wheel/./worldepisode-0.1.0-py3.12.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/worldepisode-0.1.0.dist-info/WHEEL\ncreating '$TMPDIR/wheels/.tmp-<build>/worldepisode-0.1.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'worldepisode/__init__.py'\nadding 'worldepisode/__main__.py'\nadding 'worldepisode/cli.py'\nadding 'worldepisode/preflight.py'\nadding 'worldepisode/py.typed'\nadding 'worldepisode/validator.py'\nadding 'worldepisode/schemas/__init__.py'\nadding 'worldepisode/schemas/conformance-requirements-v0.schema.json'\nadding 'worldepisode/schemas/le-world-layout-v0.schema.json'\nadding 'worldepisode/schemas/worldepisode-core-v0.schema.json'\nadding 'worldepisode/schemas/worldepisode-dataset-v0.schema.json'\nadding 'worldepisode-0.1.0.dist-info/licenses/LICENSE-APACHE'\nadding 'worldepisode-0.1.0.dist-info/METADATA'\nadding 'worldepisode-0.1.0.dist-info/WHEEL'\nadding 'worldepisode-0.1.0.dist-info/entry_points.txt'\nadding 'worldepisode-0.1.0.dist-info/top_level.txt'\nadding 'worldepisode-0.1.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built $TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl\n",
-      "stdout": ""
-    },
-    {
-      "command": [
-        "uv",
-        "venv",
-        "--python",
         "/usr/bin/python3",
-        "--system-site-packages",
-        "$TMPDIR/venv"
+        "-m",
+        "pip",
+        "wheel",
+        "--no-deps",
+        "--no-build-isolation",
+        "--wheel-dir",
+        "$TMPDIR/wheels",
+        "."
       ],
       "passed": true,
       "returncode": 0,
-      "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: $TMPDIR/venv\nActivate with: source $TMPDIR/venv/bin/activate\n",
-      "stdout": ""
+      "stderr": "WARNING: The directory '/home/amdev/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\n",
+      "stdout": "Processing $REPO\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: worldepisode\n  Building wheel for worldepisode (pyproject.toml): started\n  Building wheel for worldepisode (pyproject.toml): finished with status 'done'\n  Created wheel for worldepisode: filename=worldepisode-0.1.0-py3-none-any.whl size=27455 sha256=484c5d518365b259a26b10f483828ab05e0b828a191ba8044036ee762958520f\n  Stored in directory: /tmp/pip-ephem-wheel-cache-zksoq0a9/wheels/30/25/4b/d1f10db22ec9a7116888f3beb4cd2c648802fd7a435d9a905c\nSuccessfully built worldepisode\n"
     },
     {
       "command": [
-        "uv",
+        "$TMPDIR/venv/bin/python",
+        "-m",
         "pip",
         "install",
-        "--python",
-        "$TMPDIR/venv/bin/python",
         "--no-deps",
         "$TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl"
       ],
       "passed": true,
       "returncode": 0,
-      "stderr": "Using Python 3.12.3 environment at: $TMPDIR/venv\nResolved 1 package in <duration>\nPrepared 1 package in <duration>\nInstalled 1 package in <duration>\n + worldepisode==0.1.0 (from file://$TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl)\n",
-      "stdout": ""
+      "stderr": "WARNING: The directory '/home/amdev/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\n",
+      "stdout": "Processing $TMPDIR/wheels/worldepisode-0.1.0-py3-none-any.whl\nInstalling collected packages: worldepisode\nSuccessfully installed worldepisode-0.1.0\n"
     },
     {
       "command": [
@@ -88,6 +77,6 @@
   "wheel": {
     "built": true,
     "filename": "worldepisode-0.1.0-py3-none-any.whl",
-    "size_bytes": 27425
+    "size_bytes": 27455
   }
 }

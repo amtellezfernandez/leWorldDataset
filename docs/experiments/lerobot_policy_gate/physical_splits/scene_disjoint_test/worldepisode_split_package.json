@@ -539,10 +539,22 @@
       "sha256": "98f7289006f5202e2dbbe20bb16dcf689e9654ee8587c6ad6bb7339920554f65"
     },
     "info": {
-      "bytes": 1901,
+      "bytes": 1684,
       "media_type": "application/json",
       "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/info.json",
-      "sha256": "9589f13493d4b8387125b41552263d8b649ccd23f24b2e4203e8af91aecf6b58"
+      "sha256": "a088c5f072eeeb29f6e6936485ca66473c65082b915cc43b6fbacab79ee0a91e"
+    },
+    "source_license": {
+      "bytes": 844,
+      "media_type": "application/json",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/SOURCE_LICENSE.json",
+      "sha256": "a67974147236aae672fb33b26ec8eb258bce9774600ce14dd4afd522be0c9af4"
+    },
+    "stats": {
+      "bytes": 3206,
+      "media_type": "application/json",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_test/meta/stats.json",
+      "sha256": "e01fb4fea8cff915319ea35973b0086c8b4e6658a0132c869fd3c0d40fd94b02"
     },
     "tasks": {
       "bytes": 2534,
@@ -569,7 +581,23 @@
   "source_dataset": {
     "local_cache_root": ".cache/worldepisode/lerobot_scene_leakage/armnet__armnetbench_v01_lerobot_so101/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
     "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+    "source_license": {
+      "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "apache-2.0",
+          "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+          "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+        },
+        "upstream": []
+      },
+      "license_expression": "Apache-2.0",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "schema": "worldepisode_source_license_v1"
+    }
   },
   "source_integrity": {
     "source_files": [

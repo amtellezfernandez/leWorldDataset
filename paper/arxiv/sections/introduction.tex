@@ -1,109 +1,46 @@
 \section{Introduction}
 \label{sec:intro}
 
-Imagine training a behavioral-cloning policy for three weeks on a public robot dataset. Every
-Parquet, video, and scene file passes its local loader and the simulator reports an 85\% success
-rate; deployed on the real arm, the policy immediately misses the object. Nothing was corrupt: the
-dataset encoded joint values in a unit the controller did not declare, the replay script treated
-command timestamps as motor-effective timestamps, and the random split let the policy see the same
-reconstructed room in both training and evaluation. We call this failure class \emph{silent state
-drift}. The same pattern appears outside robotics as well; Section~\ref{sec:limits} returns to that
-point as future work, since this paper's measured evidence is entirely robotics.
-Table~\ref{tab:failure-motivation} makes the stakes concrete: each row is a file that still loads,
-the behavior it silently breaks, and the requirement that catches it. The rest of the paper turns
-each requirement into an executable rule and measures what happens when it is missing.
+Robot-learning data can be structurally valid yet behaviorally wrong. A tensor can have the expected
+shape but an undeclared unit; a command timestamp can be mistaken for motor-effective time; an asset
+can retain its appearance while losing its collision role; or an episode-level split can put related
+world captures in both training and evaluation. Each artifact still loads, so ordinary schema and
+container checks miss the failure. We call this class \emph{silent state drift}: the stored
+observation, action, asset, or split no longer denotes the physical state assumed by training,
+replay, or evaluation.
 
-\begin{table}[t]
-\centering
-\small
-\caption{Failure modes that pass local validation but break behavior, and the WorldEpisode
-requirement that catches each. Requirement IDs are defined in Section~\ref{sec:questions}.}
-\label{tab:failure-motivation}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
-                >{\raggedright\arraybackslash}p{0.36\linewidth}
-                >{\raggedright\arraybackslash}p{0.26\linewidth}@{}}
-\toprule
-File still loads, but\ldots & Silent consequence & Requirement \\
-\midrule
-joint values use an undeclared unit & controller misreads the scale; policy misses the object &
-\texttt{ACTION.001} (declare units) \\
-command time is replayed as motor-effective time & replay and deployment drift off the real
-trajectory & \texttt{ACTION.002} (declare timing) \\
-a random split shares a reconstructed scene across train and test & success is inflated and does not
-transfer & \texttt{SPLIT.001} (lineage-disjoint splits) \\
-a real-to-sim export keeps appearance but drops the collision proxy & the policy collides with
-geometry it cannot see & \texttt{REP.001} (declare asset role) \\
-camera and lidar logs are fused across clock domains & spatial fusion error beyond tolerance &
-\texttt{TIME.002} (declare clock drift) \\
-an asset URI looks right but its content digest changed & the wrong geometry is used under evaluation
-& \texttt{ASSET.002} (verify digest) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Requirement IDs follow \texttt{AREA.number}: \texttt{ACTION} is the action-channel contract (units,
-frame, command/effective timing), \texttt{TIME}/\texttt{FRAME} are clocks and spatial frames,
-\texttt{REP} is representation role, \texttt{ASSET} is asset identity and digest, \texttt{SPLIT} is
-evaluation-split lineage, \texttt{WORLD}/\texttt{TRACE} are the world revision and its episode
-deltas, \texttt{PROV}/\texttt{QUALITY} are provenance and uncertainty, and \texttt{DATASET} is
-corpus scale. Section~\ref{sec:questions} defines all of them. Robot learning is the domain
-evaluated here because it is a deep stress test: real hardware, asynchronous control, multi-camera
-data, reconstructed worlds, simulator exports, and policy evaluation.
-
-Existing formats solve important pieces of this chain. LeRobot vertically integrates robot learning
-from motor interfaces through dataset collection, policies, and deployment~\citep{lerobot};
-LeRobotDataset v3 stores high-frequency states, actions, and timestamps in Parquet, visual streams
-in MP4 shards, and episode indexing in metadata~\citep{lerobot_v3}, and is the container this paper
-evaluates in depth with active experiments on real downloaded data. Rerun provides a physical-data
-layer for multimodal recordings, NCore documents explicit pose graphs and sensor conventions, and
-OpenUSD, SimReady, glTF, and simulator-native formats describe composed worlds and assets, with
-Gaussian splats entering standard containers through glTF's \texttt{KHR\_gaussian\_splatting}
-extension~\citep{khronos_gs, gltf_gs}; these are covered as lighter binding-retention pilots in
-Section~\ref{sec:evidence}. Recent real-to-sim systems such as RoboSnap and DROID-Sim show that
-Gaussian-splat environments can support trajectory replay, synthetic data generation, and policy
-evaluation at dataset scale~\citep{robosnap}. That progress makes the missing contract more urgent
-rather than less: a layered scene can be visually faithful while dropping an object's collision
-role, and a replayable trajectory is still wrong if the action vector is interpreted under a
-different controller contract at deployment time.
+Robot learning is a demanding test case because it combines asynchronous control, multi-camera
+recordings, reconstructed scenes, simulator exports, and policy evaluation. LeRobot integrates
+collection, datasets, policies, and deployment~\citep{lerobot}; LeRobotDataset v3 stores state,
+action, timestamps, video, and episode indexes~\citep{lerobot_v3}. Rerun and NCore cover multimodal
+logs and pose conventions, while OpenUSD and glTF describe worlds and assets~\citep{usd,ncore,gltf_gs}.
+These containers are complementary, but none by itself proves that the same entities, frames,
+clocks, action semantics, asset roles, and source lineages survive conversion.
 
 \paragraph{Related work.}
-Documenting datasets is not new. Datasheets for Datasets~\citep{gebru2021datasheets} and model cards
-standardize prose descriptions of provenance and intended use; MLCommons
+Documenting datasets is not new. Datasheets for Datasets~\citep{gebru2021datasheets} and model
+cards~\citep{mitchell2019modelcards} standardize prose descriptions of provenance and intended use; MLCommons
 Croissant~\citep{croissant2024} adds a machine-readable metadata layer for ML-ready datasets; and
 Open X-Embodiment~\citep{openx} aggregates robot data under a shared schema. Evaluation leakage is a
 well-documented driver of the reproducibility crisis in ML-based science~\citep{kapoor2023leakage}.
-WorldEpisode differs in three ways. First, it binds these fields to an \emph{immutable,
-content-addressed world revision} with closed identity, frame/clock, role, and provenance graphs, so
-cross-container agreement is checkable rather than merely described. Second, it is \emph{executable
-and fail-closed}: a one-line preflight blocks a native LeRobot or Rerun artifact that cannot prove
-the contract, and every conversion emits a machine-readable loss report. Third, it treats
-\emph{lineage-disjoint evaluation splits} as a first-class requirement with measured consequences,
-not as optional documentation. It is a contract and validator layered on existing containers, not a
-replacement format or a dataset card.
-
-The contract is designed to be neutral to storage container, asset representation, and runtime,
-and to make conversion loss explicit rather than silent. This paper claims that neutrality only as
-far as the evidence reaches: LeRobotDataset v3 in depth on real downloaded data, five further
-containers as binding-retention pilots, two runtimes (MuJoCo, Genesis) as tested same-trace replay
-adapters, and a loss report on every conversion. Where a mapping is designed but untested --- Isaac
-Sim, SAPIEN, game engines, autonomous-driving logs --- the paper says so instead of claiming it.
-The empirical claims are bounded accordingly: they demonstrate executable failure mechanisms and
-auditable conversion semantics, not a completed multi-lab benchmark or a real-robot deployment
-study.
+WorldEpisode differs by making cross-container assumptions executable. It binds each episode to an
+immutable world revision and closed identity, frame/clock, representation-role, event, and
+provenance graphs; a fail-closed validator reports stable requirement IDs, and each conversion emits
+machine-readable loss. It is a sidecar contract over existing containers, not a replacement format
+or dataset card.
 
 \paragraph{Contributions.}
 \begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
-  \item \textbf{WorldEpisode}, an executable state-integrity contract for robot-learning datasets,
-  expressed as five graphs of invariants (identity; frames and clocks; representation roles; temporal
-  state and events; provenance and lineage), with a JSON Schema, a semantic validator, and a
-  one-line fail-closed preflight for native LeRobot and Rerun artifacts.
-  \item \textbf{Loss-explicit binding}: round-trip conversions that emit machine-readable loss reports,
-  with measured native-versus-sidecar semantic retention.
-  \item \textbf{Controlled failure studies}: scene-lineage leakage, action-timing replay drift, and
-  real-to-sim contract drift, plus two non-robotics pilots --- each an executable mechanism, with
-  every stronger claim bounded by an explicit open reproduction gate.
+  \item An executable state-integrity contract with five coupled graphs, JSON Schema, semantic
+  validator, conformance fixtures, and fail-closed LeRobot/Rerun preflight.
+  \item Loss-explicit LeRobot conversion, including exact round trips over
+  \ExpConversionScaleEpisodeCount{} public episodes from \ExpConversionScaleDatasetCount{} datasets
+  and a
+  versioned binding-retention audit.
+  \item Empirical audits of a task--scene-proxy split and action timing, with episode-level
+  uncertainty intervals and explicit boundaries for the confounded split, single-controller
+  telemetry, same-trace simulator replay, and controlled proxy experiments.
 \end{enumerate}
 
 Section~\ref{sec:questions} states the contract, Section~\ref{sec:contract} makes it executable,
-Section~\ref{sec:evidence} reports what the audit finds, and Section~\ref{sec:limits} states the
-boundary of every claim, with the full evidence-boundary table and gate commands in the appendix.
+Section~\ref{sec:evidence} reports the audits, and Section~\ref{sec:limits} states their limits.

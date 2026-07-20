@@ -5,6 +5,11 @@
   "source_dataset_total_episodes": 50,
   "source_dataset_total_frames": 11939,
   "source_files": {
+    "README.md": {
+      "bytes": 3710,
+      "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+      "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+    },
     "data/chunk-000/file-000.parquet": {
       "bytes": 369943,
       "sha256": "579ad57e2454359fa9f2c0e83525991bd2e0305b7b2914d0b1181da3c6ad9949",
@@ -30,5 +35,21 @@
       "sha256": "1040cdef3328ec4376587152647df8e725e80a04210c426f891719e691c88533",
       "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/tasks.parquet"
     }
+  },
+  "source_license": {
+    "attribution": "svla_so101_pickplace, LeRobot, pinned revision f641879e22172be7e8161d5e6c1503c2d2feb657.",
+    "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+    "evidence": {
+      "dataset_card": {
+        "declared_license": "apache-2.0",
+        "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+        "url": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace/resolve/f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+      },
+      "upstream": []
+    },
+    "license_expression": "Apache-2.0",
+    "repo_id": "lerobot/svla_so101_pickplace",
+    "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+    "schema": "worldepisode_source_license_v1"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "artifacts": {
+    "json": "docs/experiments/anonymity_audit/anonymity_report.json",
+    "markdown": "docs/experiments/anonymity_audit/README.md"
+  },
+  "paper": {
+    "author_metadata_empty": true,
+    "encrypted": "no",
+    "identity_pattern_matches": 0,
+    "javascript": "no",
+    "pages": 21,
+    "path": "WorldEpisode.pdf"
+  },
+  "schema": "worldepisode_submission_anonymity_audit_v1",
+  "status": "pass",
+  "supplement": {
+    "builder_report": "docs/anonymous_supplement/supplement_report.json",
+    "identity_pattern_matches": 0,
+    "local_environment_included": false,
+    "path": "WorldEpisode-supplement.zip",
+    "source_control_history_included": false,
+    "unsafe_names": []
+  },
+  "validation": {
+    "errors": [],
+    "passed": true,
+    "pdfinfo_used": true,
+    "pdftotext_used": true
+  }
+}

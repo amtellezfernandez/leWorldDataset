@@ -1,0 +1,181 @@
+{
+  "claim_boundary": [
+    "Torch MLP intervals use a crossed bootstrap over optimization seeds and held-out episodes.",
+    "The same sampled MLP seeds are paired across protocols; random and held-out episodes are resampled independently.",
+    "Five optimization seeds remain a small sample of training variability; the temporal ridge estimator is deterministic.",
+    "The held-out protocol is task-scene-proxy-disjoint because task identity is part of the lineage key; it does not isolate scene overlap from task shift.",
+    "Intervals quantify offline imitation only and are not rollout-success intervals."
+  ],
+  "confidence_level": 0.95,
+  "generated_from": [
+    "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json",
+    "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+    "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+  ],
+  "models": {
+    "temporal_ridge": {
+      "protocol_difference": {
+        "nrmse_increase_heldout_minus_random": {
+          "baseline_sample_size_episodes": 80,
+          "ci_high": 0.11223989598031814,
+          "ci_low": 0.08200654205430569,
+          "confidence_level": 0.95,
+          "direction": "heldout_minus_baseline",
+          "estimate": 0.0973128572508909,
+          "heldout_sample_size_episodes": 100,
+          "method": "independent_percentile_episode_bootstrap",
+          "resamples": 20000,
+          "seed": 1651136571595164403
+        },
+        "success_drop_random_minus_heldout": {
+          "baseline_sample_size_episodes": 80,
+          "ci_high": 0.615,
+          "ci_low": 0.39,
+          "confidence_level": 0.95,
+          "direction": "baseline_minus_heldout",
+          "estimate": 0.5050000000000001,
+          "heldout_sample_size_episodes": 100,
+          "method": "independent_percentile_episode_bootstrap",
+          "resamples": 20000,
+          "seed": 7107849809500390015
+        }
+      },
+      "splits": {
+        "random_episode": {
+          "episode_nrmse_mean": {
+            "ci_high": 0.17044385214963528,
+            "ci_low": 0.14477645974885217,
+            "confidence_level": 0.95,
+            "estimate": 0.15726148523804212,
+            "method": "percentile_episode_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 80,
+            "seed": 5236989830344700173
+          },
+          "offline_success_rate": {
+            "ci_high": 0.9651747507069949,
+            "ci_low": 0.8458798391878072,
+            "confidence_level": 0.95,
+            "estimate": 0.925,
+            "method": "wilson_score",
+            "sample_size_episodes": 80,
+            "successes": 74
+          }
+        },
+        "scene_disjoint": {
+          "episode_nrmse_mean": {
+            "ci_high": 0.26245538944669733,
+            "ci_low": 0.24672477414759786,
+            "confidence_level": 0.95,
+            "estimate": 0.254574342488933,
+            "method": "percentile_episode_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 100,
+            "seed": 11669861929000961223
+          },
+          "offline_success_rate": {
+            "ci_high": 0.5179351329695703,
+            "ci_low": 0.3279838267435473,
+            "confidence_level": 0.95,
+            "estimate": 0.42,
+            "method": "wilson_score",
+            "sample_size_episodes": 100,
+            "successes": 42
+          }
+        }
+      },
+      "success_threshold_nrmse": 0.25
+    },
+    "torch_mlp_bc": {
+      "protocol_difference": {
+        "nrmse_increase_heldout_minus_random": {
+          "baseline_sample_size_episodes": 80,
+          "ci_high": 0.2192610106674023,
+          "ci_low": 0.17662107707299293,
+          "confidence_level": 0.95,
+          "direction": "heldout_minus_baseline",
+          "estimate": 0.19735087588429454,
+          "heldout_sample_size_episodes": 100,
+          "method": "paired_training_seed_independent_episode_percentile_bootstrap",
+          "resamples": 20000,
+          "seed": 12311828652340698330,
+          "training_seed_count": 5
+        },
+        "success_drop_random_minus_heldout": {
+          "baseline_sample_size_episodes": 80,
+          "ci_high": 0.925,
+          "ci_low": 0.7725,
+          "confidence_level": 0.95,
+          "direction": "baseline_minus_heldout",
+          "estimate": 0.8525,
+          "heldout_sample_size_episodes": 100,
+          "method": "paired_training_seed_independent_episode_percentile_bootstrap",
+          "resamples": 20000,
+          "seed": 10807850232389340171,
+          "training_seed_count": 5
+        }
+      },
+      "splits": {
+        "random_episode": {
+          "episode_nrmse_mean": {
+            "ci_high": 0.1955246106046252,
+            "ci_low": 0.17119087264733387,
+            "confidence_level": 0.95,
+            "estimate": 0.18315773710608482,
+            "method": "crossed_training_seed_episode_percentile_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 80,
+            "seed": 13047626483365570207,
+            "training_seed_count": 5
+          },
+          "offline_success_rate": {
+            "ci_high": 0.9225,
+            "ci_low": 0.7725,
+            "confidence_level": 0.95,
+            "estimate": 0.8525,
+            "method": "crossed_training_seed_episode_percentile_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 80,
+            "seed": 2437314771089977536,
+            "training_seed_count": 5
+          },
+          "seed_variation": {
+            "episode_nrmse_mean_sample_std": 0.0013017228365065465,
+            "offline_success_rate_sample_std": 0.01629800601300662
+          }
+        },
+        "scene_disjoint": {
+          "episode_nrmse_mean": {
+            "ci_high": 0.3993022039934993,
+            "ci_low": 0.3639950942963362,
+            "confidence_level": 0.95,
+            "estimate": 0.38050861299037936,
+            "method": "crossed_training_seed_episode_percentile_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 100,
+            "seed": 9529533052420183058,
+            "training_seed_count": 5
+          },
+          "offline_success_rate": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence_level": 0.95,
+            "estimate": 0.0,
+            "method": "crossed_training_seed_episode_percentile_bootstrap",
+            "resamples": 20000,
+            "sample_size_episodes": 100,
+            "seed": 8691806222151039414,
+            "training_seed_count": 5
+          },
+          "seed_variation": {
+            "episode_nrmse_mean_sample_std": 0.020269897816756435,
+            "offline_success_rate_sample_std": 0.0
+          }
+        }
+      },
+      "success_threshold_nrmse": 0.25
+    }
+  },
+  "profile": "worldepisode-statistical-analysis-0.2",
+  "resampling_unit": "crossed training seed and held-out episode for the MLP; held-out episode for deterministic temporal ridge"
+}

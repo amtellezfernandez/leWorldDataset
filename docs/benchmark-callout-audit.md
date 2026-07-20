@@ -2,10 +2,11 @@
 
 Status: source-level audit, not a completed benchmark rerun.
 
-The paper has one measured leakage result today: the ArmnetBench LeRobot audit where a random split
-leaks all tested scene lineages and the offline BC probe drops from 0.850 to 0.000 when the split is
-scene-disjoint. To scale that finding responsibly, the next step is to apply the same
-WorldEpisode checks to famous public benchmarks.
+The ArmnetBench LeRobot audit currently measures a task--scene proxy holdout, not scene-only
+leakage: task identity is part of the proxy key and the holdout removes tasks. To obtain a
+benchmark-level leakage result responsibly, the next step is to use physical scene/source lineage,
+preserve task support across protocols, and apply the same WorldEpisode checks to a public
+benchmark.
 
 Run:
 

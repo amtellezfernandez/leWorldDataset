@@ -7,12 +7,24 @@
   "claim_policy": "Only claims listed as passed in the paper claim audit are treated as measured. Open reproduction gates are executable reviewer tasks, not paper results.",
   "measured_claims": [
     {
-      "boundary": "Offline action-imitation result; not ACT/Diffusion or physical rollout success.",
-      "claim": "ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split.",
+      "boundary": "Task--scene proxy shift confounded with task identity; offline action imitation only, not scene-only leakage, ACT/Diffusion, or rollout success.",
+      "claim": "ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded holdout changes offline imitation metrics.",
       "claim_id": "CLAIM.LEAKAGE.001",
       "evidence_artifacts": [
         "docs/experiments/lerobot_scene_leakage/leakage_report.json",
-        "docs/experiments/lerobot_scene_leakage/split_manifest.json"
+        "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+        "docs/experiments/statistical_analysis/statistical_report.json"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller.",
+      "claim": "A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks.",
+      "claim_id": "CLAIM.TIMING.001",
+      "evidence_artifacts": [
+        "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+        "docs/experiments/lerobot_multitrajectory_timing/README.md",
+        "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log"
       ],
       "passed": true
     },
@@ -26,18 +38,19 @@
       "passed": true
     },
     {
-      "boundary": "Two five-episode batch audits; not full LeRobot coverage.",
-      "claim": "Two public LeRobotDataset batches round-trip exactly through WorldEpisode.",
+      "boundary": "One complete pinned Parquet shard per dataset; not full corpora or source-video conversion throughput.",
+      "claim": "Complete pinned source shards from multiple public LeRobotDatasets round-trip exactly through WorldEpisode.",
       "claim_id": "CLAIM.ROUNDTRIP.001",
       "evidence_artifacts": [
-        "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
-        "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json"
+        "docs/experiments/lerobot_conversion_scale/scale_report.json",
+        "docs/experiments/experiment_manifest/experiment_manifest.json",
+        "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log"
       ],
       "passed": true
     },
     {
-      "boundary": "Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
-      "claim": "Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+      "boundary": "Task-confounded offline temporal state/action baseline; not a scene-only, vision-policy, ACT, Diffusion, or rollout result.",
+      "claim": "Temporal state/action baseline changes under the task--scene proxy holdout.",
       "claim_id": "CLAIM.TEMPORAL_POLICY.001",
       "evidence_artifacts": [
         "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
@@ -46,7 +59,7 @@
     },
     {
       "boundary": "Pilot projection score, not a universal storage-format ranking.",
-      "claim": "Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections.",
+      "claim": "Pilot bindings inventory native and sidecar retention for a versioned projection.",
       "claim_id": "CLAIM.BINDING.001",
       "evidence_artifacts": [
         "docs/experiments/bindings"
@@ -65,7 +78,7 @@
     },
     {
       "boundary": "Scoped natural-source corpus, not maintainer-confirmed prevalence.",
-      "claim": "Pilot natural-source corpus records 19 cases across five public robot-learning datasets.",
+      "claim": "Pilot natural-source audit records scoped cases across public dataset sources.",
       "claim_id": "CLAIM.NATURAL.001",
       "evidence_artifacts": [
         "docs/experiments/natural_failure_corpus/manifest.json"
@@ -74,7 +87,7 @@
     },
     {
       "boundary": "Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence.",
-      "claim": "Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+      "claim": "Natural-source audit distinguishes active artifacts from source-level metadata reviews.",
       "claim_id": "CLAIM.NATURAL_DIAGNOSTICS.001",
       "evidence_artifacts": [
         "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
@@ -84,7 +97,7 @@
     },
     {
       "boundary": "Deterministic pilots, not production game or AV dataset results.",
-      "claim": "Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
+      "claim": "Deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
       "claim_id": "CLAIM.USS.001",
       "evidence_artifacts": [
         "docs/experiments/uss_state_drift_pilots/state_drift_report.json"
@@ -102,7 +115,7 @@
     },
     {
       "boundary": "Catalog-side evidence only; does not materialize a billion rows or payload bytes.",
-      "claim": "Generated catalog benchmark describes a billion-episode-capacity sharded corpus.",
+      "claim": "Generated catalog benchmark describes a large-capacity sharded corpus.",
       "claim_id": "CLAIM.SCALE.001",
       "evidence_artifacts": [
         "docs/experiments/dataset_scale_performance/performance_report.json"
@@ -266,6 +279,50 @@
       "name": "regenerate measured temporal policy baseline"
     },
     {
+      "command": "uv run --with torch --with pyarrow --with requests --with numpy python tools/lerobot_scene_leakage_experiment.py --seeds 0,1,2,3,4 --epochs 12 --device auto --required",
+      "name": "regenerate five-seed task--scene proxy audit"
+    },
+    {
+      "command": "python3 tools/experiment_statistics.py",
+      "name": "regenerate seed-and-episode uncertainty intervals"
+    },
+    {
+      "command": "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required",
+      "name": "regenerate complete-shard LeRobot conversion-scale evidence"
+    },
+    {
+      "command": "uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required",
+      "name": "regenerate held-out multi-trajectory timing evidence"
+    },
+    {
+      "command": "python3 tools/lerobot_policy_compatibility_audit.py --check --strict",
+      "name": "validate pinned LeRobot policy compatibility evidence"
+    },
+    {
+      "command": "python3 tools/experiment_manifest.py --strict",
+      "name": "regenerate and validate experiment provenance"
+    },
+    {
+      "command": "python3 tools/citation_source_audit.py --strict",
+      "name": "audit every paper citation"
+    },
+    {
+      "command": "python3 tools/third_party_asset_audit.py --strict",
+      "name": "audit third-party assets and redistributed source rows"
+    },
+    {
+      "command": "python3 tools/build_anonymous_supplement.py --strict",
+      "name": "build the anonymous supplementary archive"
+    },
+    {
+      "command": "python3 tools/submission_anonymity_audit.py --strict",
+      "name": "audit PDF and supplement anonymity"
+    },
+    {
+      "command": "python3 tools/paper_experiment_values.py",
+      "name": "regenerate paper values from experiment reports"
+    },
+    {
       "command": "python3 tools/open_reproduction_gates.py --strict",
       "name": "validate open unclaimed-result gates"
     },
@@ -311,7 +368,32 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "WorldEpisode-supplement.zip"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "README.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "THIRD_PARTY_ASSETS.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "TODO.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "third_party_licenses/README.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "third_party_licenses/pusht-MIT.txt"
     },
     {
       "exists": true,
@@ -332,6 +414,16 @@
       "exists": true,
       "nonempty": true,
       "path": "paper/arxiv/main.tex"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "paper/arxiv/checklist.tex"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "paper/arxiv/generated/experiment_values.tex"
     },
     {
       "exists": true,
@@ -361,7 +453,107 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "docs/experiments/lerobot_scene_leakage/leakage_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_conversion_scale/README.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_conversion_scale/scale_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_multitrajectory_timing/README.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_multitrajectory_timing/timing_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/statistical_analysis/statistical_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/experiment_manifest/experiment_manifest.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/citation_source_audit/citation_source_audit.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/third_party_asset_audit/asset_audit.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/anonymous_supplement/supplement_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/anonymity_audit/anonymity_report.json"
     },
     {
       "exists": true,
@@ -415,7 +607,7 @@
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
     "open_result_gate_count": 4,
-    "paper_claim_count": 13,
+    "paper_claim_count": 14,
     "results_sections": [
       "baseline_schema_errors",
       "baseline_semantic_errors",
@@ -426,6 +618,8 @@
       "dataset_scale_performance",
       "independent_fixture_check",
       "lerobot_active_roundtrip",
+      "lerobot_conversion_scale",
+      "lerobot_multitrajectory_timing",
       "lerobot_policy_gate",
       "lerobot_public_sample",
       "lerobot_scene_leakage",

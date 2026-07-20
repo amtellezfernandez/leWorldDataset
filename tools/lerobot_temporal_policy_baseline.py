@@ -274,13 +274,14 @@ Status: `{report["status"]}`.
 
 {report["claim_boundary"]}
 
-| Split | Train Frames | Test Frames | Episode nRMSE Mean | Offline Success |
+| Split | Train Frames | Test Frames | Episode nRMSE Mean | Thresholded Imitation Rate |
 |---|---:|---:|---:|---:|
 {chr(10).join(rows)}
 
-Success-rate drop: `{report["aggregate"]["success_rate_drop"]:.3f}`.
+Primary task--scene proxy holdout/random nRMSE ratio:
+`{report["aggregate"]["episode_nrmse_ratio_scene_over_random"]:.2f}x`.
 
-Scene/random nRMSE ratio: `{report["aggregate"]["episode_nrmse_ratio_scene_over_random"]:.2f}x`.
+Secondary thresholded imitation-rate drop: `{report["aggregate"]["success_rate_drop"]:.3f}`.
 """
 
 

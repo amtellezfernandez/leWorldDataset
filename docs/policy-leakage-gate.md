@@ -2,12 +2,12 @@
 
 Status: prepared, not executed.
 
-The current leakage result uses an offline Torch MLP behavioral-cloning probe and a measured
-temporal ridge state/action baseline over the committed compact LeRobot split packages. The
-temporal baseline reaches `0.925` offline success on the random split and `0.420` on the
-scene-disjoint split, a `0.505` drop. That is useful as a diagnostic, but it is still not enough to
-claim that lineage-safe splits change results for modern ACT or Diffusion Policy training recipes.
-The next gate is therefore explicit:
+The current result uses an offline Torch MLP behavioral-cloning probe and a measured temporal ridge
+state/action baseline over the committed compact LeRobot split packages. The legacy
+`scene_disjoint` split is actually a task--scene proxy holdout because task identity is part of its
+lineage key. The metric change is useful as a diagnostic, but it does not isolate scene leakage and
+is not enough to claim that lineage-safe splits change modern ACT or Diffusion Policy results. The
+next gate is therefore explicit:
 
 ```bash
 python3 tools/lerobot_policy_leakage_gate.py
@@ -19,7 +19,7 @@ and writes:
 
 - `docs/experiments/lerobot_policy_gate/policy_gate_report.json`;
 - ACT and Diffusion training jobs in `train_eval_jobs.json`;
-- train/test episode allowlists for the random and scene-disjoint splits;
+- train/test episode allowlists for the random and legacy task--scene proxy holdout splits;
 - virtual split materialization manifests in `materialized_splits/`, with source file digests and
   split-membership hashes;
 - compact low-dimensional LeRobot split packages in `physical_splits/`, with source-file digest
@@ -46,8 +46,8 @@ evaluation path. The generated report records whether those CLIs are present in 
 environment.
 
 This is not a completed ACT/Diffusion empirical result. It is the executable gate that prevents the
-paper from overclaiming the MLP and temporal-ridge leakage results as if they already covered ACT,
-Diffusion Policy, IsaacLab, or hardware rollouts.
+paper from overclaiming the MLP and temporal-ridge proxy-holdout results as if they isolated scene
+leakage or already covered ACT, Diffusion Policy, IsaacLab, or hardware rollouts.
 
 The committed physical split packages are also bounded: they are state/action packages for
 low-dimensional policy reruns. They preserve action, state, timestamp, frame, task, reward, and

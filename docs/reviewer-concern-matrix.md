@@ -9,11 +9,11 @@ the claim at the same scope as the evidence.
 | Concern | Current evidence | Current paper status | Remaining closure gate |
 |---|---|---|---|
 | "This is only infrastructure." | Five-graph contract, conformance requirements, validators, binding artifacts, leakage/replay/conversion experiments, and an internal clean-room reader that does not import the reference SDK. | Mitigated. Discussion frames the contribution as falsifiable invariants rather than an SDK. | External independent adapter or dataset using the invariants without relying on the original implementation. |
-| Offline leakage is not real robot success. | ArmnetBench LeRobot audit over 400 teleoperated reference episodes; random split leakage 1.000; scene-disjoint leakage 0.000; Torch BC probe drops 0.850 to 0.000 offline score; temporal ridge over committed LeRobot split packages drops 0.925 to 0.420; ACT/Diffusion gate now emits LeRobot-native jobs, virtual split manifests, compact physical state/action split packages, and rollout requirements. | Mitigated by scope. Abstract, evaluation, and limitations call this offline imitation evidence and mark the stronger policy gate open. | Run ACT/Diffusion jobs, then evaluate in high-fidelity simulation or on hardware; mirror source videos first for any vision-policy claim. |
-| LeRobot round trip is too small. | Active pinned batch round trips over `lerobot/svla_so101_pickplace` and `lerobot/pusht`, episodes 0--4 each; 1,935 action/state rows; action/state/timestamp/index/video timestamp max error 0.0; source-absent fields tracked. | Closed for current scope. Evaluation calls this a two-dataset batch audit, not broad LeRobot coverage. | Extend only if claiming broad LeRobot coverage beyond the current paper scope. |
-| Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors, measured temporal ridge baseline over compact LeRobot packages, and `tools/lerobot_policy_leakage_gate.py`, which prepares ACT and Diffusion Policy jobs and compact physical state/action split packages for the same split manifest. | Mitigated but open for SOTA. The paper avoids claiming ACT/Diffusion or rollout impact. | Run the generated ACT/Diffusion jobs and commit train, offline eval, and rollout reports. |
-| Replay experiment is narrow. | Real SO-101 trajectory alignment; inferred 4-frame delay; validation RMSE 4.732 to 1.862 deg; MuJoCo replay 3.425 to 1.563 deg; Genesis same-trace replay 3.425 to 1.563 deg; Isaac mapping emitted but untested; `tools/replay_adapter_conformance.py` checks delay, hold-last, missing-command, and async queue scheduler semantics; URDF Studio separately tests MuJoCo and Genesis episode backends. | Mitigated by scope. Limitations state one WorldEpisode LeRobot replay trace, minimal MuJoCo/Genesis position-servo adapters, Isaac/SAPIEN untested, no contact-rich task rollout, and scheduler conformance only. | Run at least two trajectories, a second robot/dataset, and contact-rich replay with declared tolerance envelopes. |
-| Runtime-neutral claim overstates evidence. | `tools/meta_simulator_contract.py` defines three adapter compliance layers; WorldEpisode reports MuJoCo and Genesis replay tested, Isaac ready/untested, and URDF Studio `SimBackend` conformance passed for fake, MuJoCo, and Genesis with a one-episode carton-sorting comparison; SAPIEN remains adapter-required. | Mitigated for adapter availability. The paper can claim a meta-simulator adapter contract plus same-trace MuJoCo/Genesis minimal replay evidence, not equal physics or Isaac/SAPIEN replay evidence. | Run contact-rich task replay through multiple simulators and add Isaac/SAPIEN runtime reports before claiming broader simulator neutrality. |
+| Offline proxy-holdout evidence is not scene leakage or robot success. | ArmnetBench LeRobot audit over 400 teleoperated reference episodes; the current lineage key includes task identity, and the holdout removes tasks. Two offline probes change materially under that task--scene proxy shift; ACT/Diffusion jobs and rollout requirements are prepared but unexecuted. | Mitigated by scope. Abstract, evaluation, and limitations state the task confound and keep scene-only, stronger-policy, and rollout results open. | Obtain physical scene/source IDs, preserve task support, run multiple-seed ACT/Diffusion jobs, then evaluate in simulation or on hardware. |
+| LeRobot round trip is too small. | Exact complete-shard conversion over 271 episodes and 43,601 paired action/state rows from pinned SVLA, PushT, and ArmnetBench releases; two are multi-camera. The ten committed per-episode packages remain inspectable evidence. | Mitigated for selected-shard low-dimensional conversion. Evaluation states that source video payloads and full corpora are not measured. | Add full-corpus and video-payload throughput only if making broader conversion-scale claims. |
+| Policy baseline is weak. | Executable Torch MLP BC probe over real LeRobot tensors, measured temporal ridge baseline over compact LeRobot packages, and `tools/lerobot_policy_leakage_gate.py`, which prepares local-root ACT and Diffusion jobs for the same split manifest. A pinned LeRobot 0.6.0 remote probe verifies package loading and records that both policies reject the state-only schema before training because an image or environment-state input is required. | Mitigated but open for SOTA. The paper avoids claiming ACT/Diffusion or rollout impact, and the gate reports a concrete modality blocker rather than readiness. | Mirror source images or add a semantically valid environment-state feature, rerun the compatibility preflight, then train and commit offline eval and rollout reports. |
+| Replay experiment is narrow. | One lag is selected from 320 SO-101 calibration trajectories and evaluated on 80 source-episode-disjoint trajectories across eight tasks with paired bootstrap intervals; same-trace MuJoCo/Genesis adapter checks and scheduler conformance remain separate. | Mitigated for repeated telemetry alignment. The paper states that the source has no motor-effective timestamps, covers one robot/controller configuration, and that simulator adapters still use one trace. | Instrument command/queue/motor timestamps, repeat on a second controller, and run contact-rich replay with declared tolerance envelopes. |
+| Runtime-neutral claim overstates evidence. | `tools/meta_simulator_contract.py` defines three adapter compliance layers; WorldEpisode reports MuJoCo and Genesis minimal replay tested, Isaac ready/untested, and SAPIEN adapter-required. | Mitigated for adapter availability. The paper can claim a meta-simulator adapter contract plus same-trace MuJoCo/Genesis minimal replay evidence, not equal physics or Isaac/SAPIEN replay evidence. | Run contact-rich task replay through multiple simulators and add Isaac/SAPIEN runtime reports before claiming broader simulator neutrality. |
 | Generalization beyond robotics is overbroad. | `tools/uss_state_drift_pilots.py` emits deterministic game-engine collision-patch and autonomous-driving clock-domain pilots, while robotics remains the deep stress test. | Mitigated as framing only. The paper mentions the broader Universal Spatial State (USS) vocabulary once, as an aside; it does not claim production game/AV systems have been benchmarked. | Run at least one public game/simulation telemetry corpus or AV log through a WorldEpisode-style adapter and report measured drift diagnostics. |
 | Validator faults are synthetic. | 14 injected requirement faults; precision 0.933, recall 1.000; two independent hand-authored invalid fixtures; pilot natural-source corpus over five public datasets with 19 cases. | Mitigated further. Dataset-count gate is met, while maintainer feedback and dataset-specific conversions remain open. | Record maintainer agreement/disagreement for representative diagnostics and convert source-level metadata gaps into dataset-specific manifests where stronger claims are needed. |
 | Validator is too tedious to adopt. | `pyproject.toml` packages `worldepisode`; `worldepisode preflight` and `from worldepisode import preflight_lerobot` provide blocking one-line checks; `docs/experiments/preflight/preflight_report.json` covers valid WorldEpisode, invalid WorldEpisode, native LeRobot without sidecar, and Rerun without sidecar. | Mitigated for local/reference adoption. The paper can claim an installable preflight surface, not ecosystem adoption. | Publish to PyPI or merge equivalent hooks upstream in LeRobot/Rerun examples. |
@@ -29,16 +29,20 @@ the claim at the same scope as the evidence.
 
 1. **ACT/Diffusion leakage gate**
    - Input: `docs/experiments/lerobot_scene_leakage/split_manifest.json`.
-   - Required output: random-vs-scene-disjoint policy results using at least one LeRobot-native
-     sequence model.
-   - Current output: `tools/lerobot_policy_leakage_gate.py` writes ACT and Diffusion job specs,
-     episode allowlists, virtual split manifests with source file digests, compact physical
-     state/action LeRobot split packages, rollout requirements, and
-     `docs/experiments/lerobot_policy_gate/policy_gate_report.json`. The separate
-     `tools/lerobot_temporal_policy_baseline.py` report measures a temporal ridge baseline on
-     those packages: 0.925 random-episode success versus 0.420 scene-disjoint success.
-   - Remaining output: trained checkpoints, offline action metrics, high-fidelity simulator or
-     physical rollout reports, and mirrored video assets for any vision-policy result.
+   - Required output: task-stratified random-vs-physical-scene-disjoint policy results using at
+     least one LeRobot-native sequence model.
+   - Current output: `tools/lerobot_policy_leakage_gate.py` writes ACT and Diffusion job specs with
+     explicit local roots, episode allowlists, virtual split manifests with source file digests,
+     compact physical state/action LeRobot split packages with normalization statistics, rollout
+     requirements, and `docs/experiments/lerobot_policy_gate/policy_gate_report.json`.
+     `tools/lerobot_policy_compatibility_audit.py` records a pinned DGX Spark probe in
+     `docs/experiments/lerobot_policy_gate/policy_compatibility_report.json`; both policies reject
+     the state-only input contract before the first training step. The separate
+     `tools/lerobot_temporal_policy_baseline.py` report measures a temporal ridge baseline on the
+     current task-confounded packages.
+   - Remaining output: mirrored source images or a semantically valid environment-state feature,
+     trained checkpoints, offline action metrics, and high-fidelity simulator or physical rollout
+     reports.
    - Claim unlocked: lineage-safe splitting affects a stronger robot-learning baseline, not only a
      Torch MLP probe.
 
@@ -89,9 +93,8 @@ the claim at the same scope as the evidence.
      `docs/experiments/lerobot_control_replay/action_contract.json`.
    - Current output: `docs/experiments/meta_simulator_contract/adapter_contract_report.json`
      defines adapter compliance layers, records tested WorldEpisode MuJoCo and Genesis replay
-     adapters for the same LeRobot trace, one ready/untested Isaac mapping, and URDF Studio
-     companion evidence where fake, MuJoCo, and Genesis pass `SimBackend` conformance and a
-     MuJoCo--Genesis one-episode scenario comparison.
+     adapters for the same LeRobot trace and one ready/untested Isaac mapping. External
+     collaboration is Not defined yet.
      `docs/experiments/replay_adapter_conformance/adapter_conformance_report.json` adds
      dependency-free scheduler conformance for delay, zero-order hold, missing-command, and async
      queue semantics.

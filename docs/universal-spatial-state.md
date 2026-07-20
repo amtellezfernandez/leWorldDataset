@@ -52,7 +52,7 @@ The paper should use a universal theory and grounded proof structure:
 The current strong evidence remains robotics:
 
 - public LeRobot conversion round trips;
-- ArmnetBench scene-lineage leakage;
+- ArmnetBench task--scene proxy overlap, with task shift explicitly confounded;
 - SO-101 control-loop replay drift;
 - MuJoCo timestamp-aware replay;
 - validator and preflight artifacts;

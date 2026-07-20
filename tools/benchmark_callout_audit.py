@@ -19,6 +19,9 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "benchmark_callout_audit"
+DEFAULT_LEAKAGE_REPORT = (
+    ROOT / "docs" / "experiments" / "lerobot_scene_leakage" / "leakage_report.json"
+)
 AUDIT_DATE = "2026-07-13"
 
 
@@ -357,7 +360,47 @@ lineage is available, or when the policy protocol is not a published-protocol re
 """
 
 
-def build_callout_audit(output_dir: Path = DEFAULT_OUTPUT_DIR, refresh_sources: bool = False) -> dict[str, Any]:
+def measured_contrast(leakage_report_path: Path) -> dict[str, Any]:
+    try:
+        artifact = str(leakage_report_path.relative_to(ROOT))
+    except ValueError:
+        artifact = str(leakage_report_path)
+    try:
+        with leakage_report_path.open("r", encoding="utf-8") as handle:
+            leakage = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return {
+            "available": False,
+            "artifact": artifact,
+            "reason": f"current leakage report is unavailable: {exc}",
+        }
+    if not leakage.get("available"):
+        return {
+            "available": False,
+            "artifact": artifact,
+            "reason": leakage.get("reason", "current leakage experiment is unavailable"),
+        }
+
+    random_split = leakage["splits"]["random_episode"]
+    heldout_split = leakage["splits"]["scene_disjoint"]
+    return {
+        "available": True,
+        "artifact": artifact,
+        "dataset": leakage["repo_id"],
+        "revision": leakage["revision"],
+        "seed_count": len(leakage["bc_seeds"]),
+        "random_split_leakage": random_split["leakage_rate"],
+        "scene_disjoint_leakage": heldout_split["leakage_rate"],
+        "random_offline_bc_success": random_split["bc"]["offline_bc_success_rate"],
+        "scene_disjoint_offline_bc_success": heldout_split["bc"]["offline_bc_success_rate"],
+    }
+
+
+def build_callout_audit(
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    refresh_sources: bool = False,
+    leakage_report_path: Path = DEFAULT_LEAKAGE_REPORT,
+) -> dict[str, Any]:
     rows = benchmark_rows(refresh_sources=refresh_sources)
     report = {
         "profile": "worldepisode-famous-benchmark-callout-0.1",
@@ -380,14 +423,7 @@ def build_callout_audit(output_dir: Path = DEFAULT_OUTPUT_DIR, refresh_sources: 
             "extract action units, frames, absolute/delta semantics, command timestamps, effective timestamps, and latency models",
             "rerun at least one published policy protocol under lineage-disjoint splits or timestamp-aware replay",
         ],
-        "contrast_measured_case": {
-            "artifact": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
-            "dataset": "armnet/armnetbench_v01_lerobot_so101",
-            "random_split_leakage": 1.0,
-            "scene_disjoint_leakage": 0.0,
-            "random_offline_bc_success": 0.85,
-            "scene_disjoint_offline_bc_success": 0.0,
-        },
+        "contrast_measured_case": measured_contrast(leakage_report_path),
         "artifacts": {
             "report": str((output_dir / "benchmark_callout_report.json").relative_to(ROOT)),
             "markdown": str((output_dir / "README.md").relative_to(ROOT)),

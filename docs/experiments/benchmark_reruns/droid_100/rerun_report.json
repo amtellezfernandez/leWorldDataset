@@ -13,14 +13,14 @@
   },
   "claim_boundary": "Small public DROID LeRobot mirror. This is a bounded offline state/action rerun, not a reproduction of a DROID leaderboard or a hardware rollout. The report is valid evidence for this subset and metric only. It is not a published-score inflation claim unless the strict proof gate accepts it.",
   "evaluation": {
-    "baseline_score": 0.4958081537296595,
+    "baseline_score": 0.495808153684657,
     "baseline_split": "random_episode",
-    "corrected_score": 0.515540983544114,
+    "corrected_score": 0.5155409835289252,
     "corrected_split": "lineage_disjoint",
     "lineage_disjoint": {
-      "action_nrmse": 0.9397099976910597,
-      "action_rmse": 0.22452773812469587,
-      "offline_action_agreement_score": 0.515540983544114,
+      "action_nrmse": 0.9397099977482072,
+      "action_rmse": 0.22452773813908486,
+      "offline_action_agreement_score": 0.5155409835289252,
       "policy": {
         "action_width": 7,
         "feature_count": 56,
@@ -33,9 +33,9 @@
     },
     "metric": "offline_action_agreement_score = 1 / (1 + action_nrmse)",
     "random_episode": {
-      "action_nrmse": 1.016909146163926,
-      "action_rmse": 0.2362599140394565,
-      "offline_action_agreement_score": 0.4958081537296595,
+      "action_nrmse": 1.0169091463469926,
+      "action_rmse": 0.2362599140858262,
+      "offline_action_agreement_score": 0.495808153684657,
       "policy": {
         "action_width": 7,
         "feature_count": 56,
@@ -46,7 +46,7 @@
       "test_frames": 8307,
       "train_frames": 23905
     },
-    "score_drop": -0.019732829814454567,
+    "score_drop": -0.019732829844268163,
     "seed_count": 1
   },
   "policy": {

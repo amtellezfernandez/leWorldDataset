@@ -20,17 +20,44 @@ AUDIT_DATE = "2026-07-13"
 
 REQUIRED_PUBLIC_ARTIFACTS = [
     "WorldEpisode.pdf",
+    "WorldEpisode-supplement.zip",
     "README.md",
+    "THIRD_PARTY_ASSETS.md",
+    "TODO.md",
+    "third_party_licenses/README.md",
+    "third_party_licenses/pusht-MIT.txt",
     "spec/worldepisode-v0.1.md",
     "spec/le-world-layout-v0.1.md",
     "paper/le-world-layout.md",
     "paper/arxiv/main.tex",
+    "paper/arxiv/checklist.tex",
+    "paper/arxiv/generated/experiment_values.tex",
     "schemas/worldepisode-core-v0.schema.json",
     "schemas/worldepisode-dataset-v0.schema.json",
     "conformance/requirements.v0.json",
     "conformance/projections/uss-core-23.v0.json",
     "docs/experiments/results.json",
+    "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+    "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json",
+    "docs/experiments/lerobot_scene_leakage/split_manifest.json",
     "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
+    "docs/experiments/lerobot_conversion_scale/README.md",
+    "docs/experiments/lerobot_conversion_scale/scale_report.json",
+    "docs/experiments/lerobot_multitrajectory_timing/README.md",
+    "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+    "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
+    "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+    "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+    "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+    "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log",
+    "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
+    "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
+    "docs/experiments/statistical_analysis/statistical_report.json",
+    "docs/experiments/experiment_manifest/experiment_manifest.json",
+    "docs/experiments/citation_source_audit/citation_source_audit.json",
+    "docs/experiments/third_party_asset_audit/asset_audit.json",
+    "docs/anonymous_supplement/supplement_report.json",
+    "docs/experiments/anonymity_audit/anonymity_report.json",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "docs/experiments/package_install_smoke/package_install_smoke_report.json",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
@@ -54,6 +81,60 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "regenerate measured temporal policy baseline",
         "command": "uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict",
+    },
+    {
+        "name": "regenerate five-seed task--scene proxy audit",
+        "command": (
+            "uv run --with torch --with pyarrow --with requests --with numpy "
+            "python tools/lerobot_scene_leakage_experiment.py "
+            "--seeds 0,1,2,3,4 --epochs 12 --device auto --required"
+        ),
+    },
+    {
+        "name": "regenerate seed-and-episode uncertainty intervals",
+        "command": "python3 tools/experiment_statistics.py",
+    },
+    {
+        "name": "regenerate complete-shard LeRobot conversion-scale evidence",
+        "command": (
+            "uv run --with pyarrow --with requests "
+            "python tools/lerobot_conversion_scale.py --required"
+        ),
+    },
+    {
+        "name": "regenerate held-out multi-trajectory timing evidence",
+        "command": (
+            "uv run --with pyarrow --with numpy "
+            "python tools/lerobot_multitrajectory_timing_audit.py --required"
+        ),
+    },
+    {
+        "name": "validate pinned LeRobot policy compatibility evidence",
+        "command": "python3 tools/lerobot_policy_compatibility_audit.py --check --strict",
+    },
+    {
+        "name": "regenerate and validate experiment provenance",
+        "command": "python3 tools/experiment_manifest.py --strict",
+    },
+    {
+        "name": "audit every paper citation",
+        "command": "python3 tools/citation_source_audit.py --strict",
+    },
+    {
+        "name": "audit third-party assets and redistributed source rows",
+        "command": "python3 tools/third_party_asset_audit.py --strict",
+    },
+    {
+        "name": "build the anonymous supplementary archive",
+        "command": "python3 tools/build_anonymous_supplement.py --strict",
+    },
+    {
+        "name": "audit PDF and supplement anonymity",
+        "command": "python3 tools/submission_anonymity_audit.py --strict",
+    },
+    {
+        "name": "regenerate paper values from experiment reports",
+        "command": "python3 tools/paper_experiment_values.py",
     },
     {
         "name": "validate open unclaimed-result gates",

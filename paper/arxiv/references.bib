@@ -1,19 +1,3 @@
-@misc{urdf,
-  author = {{Open Robotics}},
-  title = {{URDF}: Unified Robot Description Format},
-  year = {2026},
-  howpublished = {\url{https://wiki.ros.org/urdf}},
-  note = {Accessed 2026-07-13}
-}
-
-@misc{khronos_gs,
-  author = {{The Khronos Group}},
-  title = {{Khronos Announces glTF Gaussian Splatting Extension}},
-  year = {2026},
-  howpublished = {\url{https://www.khronos.org/news/press/gltf-gaussian-splatting-press-release}},
-  note = {Accessed 2026-07-13}
-}
-
 @inproceedings{lerobot,
   author = {Cadene, Remi and Aliberts, Simon and Capuano, Francesco and Aractingi, Michel and Zouitine, Adil and Kooijmans, Pepijn and Choghari, Jade and Russi, Martino and Pascal, Caroline and Palma, Steven and Shukor, Mustafa and Moss, Jess and Soare, Alexander and Aubakirova, Dana and Lhoest, Quentin and Gallouedec, Quentin and Wolf, Thomas},
   title = {{LeRobot}: An Open-Source Library for End-to-End Robot Learning},
@@ -63,14 +47,6 @@
   note = {Accessed 2026-07-13}
 }
 
-@misc{robosnap,
-  author = {{RoboSnap Authors}},
-  title = {{RoboSnap: One-Shot Real-to-Sim Scene Generation for Generalizable Robot Learning and Evaluation}},
-  year = {2026},
-  howpublished = {\url{https://arxiv.org/html/2607.06699v1}},
-  note = {Accessed 2026-07-13}
-}
-
 @misc{rerun,
   author = {{Rerun}},
   title = {{A new data layer for robot learning}},
@@ -87,12 +63,22 @@
   note = {Accessed 2026-07-13}
 }
 
-@misc{mujoco,
-  author = {{Google DeepMind}},
-  title = {{MuJoCo}: Multi-Joint dynamics with Contact},
-  year = {2026},
-  howpublished = {\url{https://mujoco.org/}},
-  note = {Accessed 2026-07-13}
+@inproceedings{mujoco,
+  author = {Todorov, Emanuel and Erez, Tom and Tassa, Yuval},
+  title = {{MuJoCo}: A Physics Engine for Model-Based Control},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems},
+  pages = {5026--5033},
+  year = {2012},
+  doi = {10.1109/IROS.2012.6386109},
+  url = {https://doi.org/10.1109/IROS.2012.6386109}
+}
+
+@misc{genesis,
+  author = {{Genesis Authors}},
+  title = {{Genesis}: A Generative and Universal Physics Engine for Robotics and Beyond},
+  year = {2024},
+  howpublished = {\url{https://github.com/Genesis-Embodied-AI/Genesis}},
+  note = {Version 0.3.3 used in the replay experiment; accessed 2026-07-20}
 }
 
 @misc{usd,
@@ -111,45 +97,56 @@
   note = {Accessed 2026-07-13}
 }
 
-@misc{openx,
+@inproceedings{openx,
   author = {{Open X-Embodiment Collaboration}},
   title = {{Open X-Embodiment}: Robotic Learning Datasets and RT-X Models},
-  year = {2023},
-  howpublished = {\url{https://robotics-transformer-x.github.io/}},
-  note = {Accessed 2026-07-13}
+  booktitle = {IEEE International Conference on Robotics and Automation},
+  pages = {6892--6903},
+  year = {2024},
+  doi = {10.1109/ICRA57147.2024.10611477},
+  url = {https://doi.org/10.1109/ICRA57147.2024.10611477}
 }
 
-@misc{droid,
-  author = {{DROID Dataset Authors}},
+@inproceedings{droid,
+  author = {Khazatsky, Alexander and Pertsch, Karl and Nair, Suraj and Balakrishna, Ashwin and Dasari, Sudeep and Karamcheti, Siddharth and Nasiriany, Soroush and Srirama, Mohan Kumar and others},
   title = {{DROID}: A Large-Scale In-the-Wild Robot Manipulation Dataset},
+  booktitle = {Robotics: Science and Systems},
   year = {2024},
-  howpublished = {\url{https://droid-dataset.github.io/}},
-  note = {Accessed 2026-07-13}
+  url = {https://www.roboticsproceedings.org/rss20/p120.html},
+  note = {Dataset released under CC-BY-4.0}
 }
 
 @inproceedings{bridgedata,
-  author = {Walke, Homer and Black, Kevin and Lee, Abraham and Kim, Moo Jin and Du, Max and Zheng, Chongyi and Vuong, Quan and Hansen-Estruch, Philippe and He, Andre and Myers, Vivek and Fang, Kuan and Finn, Chelsea and Levine, Sergey},
+  author = {Walke, Homer Rich and Black, Kevin and Zhao, Tony Z. and Vuong, Quan and Zheng, Chongyi and Hansen-Estruch, Philippe and He, Andre Wang and Myers, Vivek and Kim, Moo Jin and Du, Max and Lee, Abraham and Fang, Kuan and Finn, Chelsea and Levine, Sergey},
   title = {{BridgeData V2}: A Dataset for Robot Learning at Scale},
-  booktitle = {Conference on Robot Learning},
+  booktitle = {Proceedings of the 7th Conference on Robot Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {229},
+  pages = {1723--1736},
   year = {2023},
-  howpublished = {\url{https://rail-berkeley.github.io/bridgedata/}},
-  note = {Accessed 2026-07-13}
+  url = {https://proceedings.mlr.press/v229/walke23a.html},
+  note = {Dataset released under CC-BY-4.0}
 }
 
-@misc{libero,
-  author = {{LIBERO Authors}},
+@inproceedings{libero,
+  author = {Liu, Bo and Zhu, Yifeng and Gao, Chongkai and Feng, Yihao and Liu, Qiang and Zhu, Yuke and Stone, Peter},
   title = {{LIBERO}: Benchmarking Knowledge Transfer for Lifelong Robot Learning},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume = {36},
   year = {2023},
-  howpublished = {\url{https://libero-project.github.io/main.html}},
-  note = {Accessed 2026-07-13}
+  url = {https://proceedings.neurips.cc/paper_files/paper/2023/hash/8c3c666820ea055a77726d66fc7d447f-Abstract-Datasets_and_Benchmarks.html}
 }
 
-@misc{calvin,
-  author = {{CALVIN Authors}},
+@article{calvin,
+  author = {Mees, Oier and Hermann, Lukas and Rosete-Beas, Erick and Burgard, Wolfram},
   title = {{CALVIN}: A Benchmark for Language-Conditioned Policy Learning for Long-Horizon Robot Manipulation Tasks},
-  year = {2021},
-  howpublished = {\url{https://calvin.cs.uni-freiburg.de/}},
-  note = {Accessed 2026-07-13}
+  journal = {IEEE Robotics and Automation Letters},
+  volume = {7},
+  number = {3},
+  pages = {7327--7334},
+  year = {2022},
+  doi = {10.1109/LRA.2022.3180108},
+  url = {https://doi.org/10.1109/LRA.2022.3180108}
 }
 
 @article{gebru2021datasheets,
@@ -159,7 +156,19 @@
   volume = {64},
   number = {12},
   pages = {86--92},
-  year = {2021}
+  year = {2021},
+  doi = {10.1145/3458723},
+  url = {https://doi.org/10.1145/3458723}
+}
+
+@inproceedings{mitchell2019modelcards,
+  author = {Mitchell, Margaret and Wu, Simone and Zaldivar, Andrew and Barnes, Parker and Vasserman, Lucy and Hutchinson, Ben and Spitzer, Elena and Raji, Inioluwa Deborah and Gebru, Timnit},
+  title = {Model Cards for Model Reporting},
+  booktitle = {Proceedings of the Conference on Fairness, Accountability, and Transparency},
+  pages = {220--229},
+  year = {2019},
+  doi = {10.1145/3287560.3287596},
+  url = {https://doi.org/10.1145/3287560.3287596}
 }
 
 @article{kapoor2023leakage,
@@ -168,13 +177,19 @@
   journal = {Patterns},
   volume = {4},
   number = {9},
-  year = {2023}
+  pages = {100804},
+  year = {2023},
+  doi = {10.1016/j.patter.2023.100804},
+  url = {https://doi.org/10.1016/j.patter.2023.100804}
 }
 
-@misc{croissant2024,
-  author = {{MLCommons}},
+@inproceedings{croissant2024,
+  author = {Akhtar, Mubashara and Benjelloun, Omar and Conforti, Costanza and Foschini, Luca and Gijsbers, Pieter and Giner-Miguelez, Joan and Goswami, Sujata and Jain, Nitisha and Karamousadakis, Michalis and Krishna, Satyapriya and Kuchnik, Michael and Lesage, Sylvain and Lhoest, Quentin and Marcenac, Pierre and Maskey, Manil and Mattson, Peter and Oala, Luis and Oderinwale, Hamidah and Ruyssen, Pierre and Santos, Tim and Shinde, Rajat and Simperl, Elena and Suresh, Arjun and Thomas, Goeffry and Tykhonov, Slava and Vanschoren, Joaquin and Varma, Susheel and van der Velde, Jos and Vogler, Steffen and Wu, Carole-Jean and Zhang, Luyao},
   title = {Croissant: A Metadata Format for {ML}-Ready Datasets},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume = {37},
+  pages = {82133--82148},
   year = {2024},
-  howpublished = {\url{https://mlcommons.org/croissant/}},
-  note = {Accessed 2026-07-13}
+  doi = {10.52202/079017-2610},
+  url = {https://proceedings.neurips.cc/paper_files/paper/2024/file/9547b09b722f2948ff3ddb5d86002bc0-Paper-Datasets_and_Benchmarks_Track.pdf}
 }

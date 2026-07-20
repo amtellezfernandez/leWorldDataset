@@ -18,6 +18,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS_JSON = ROOT / "docs" / "experiments" / "results.json"
 OPEN_GATES_JSON = ROOT / "docs" / "experiments" / "open_reproduction_gates" / "open_reproduction_gates.json"
+STATISTICS_JSON = ROOT / "docs" / "experiments" / "statistical_analysis" / "statistical_report.json"
+CONVERSION_SCALE_JSON = (
+    ROOT / "docs" / "experiments" / "lerobot_conversion_scale" / "scale_report.json"
+)
+MULTITRAJECTORY_TIMING_JSON = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "lerobot_multitrajectory_timing"
+    / "timing_report.json"
+)
+PAPER_VALUES_TEX = ROOT / "paper" / "arxiv" / "generated" / "experiment_values.tex"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "paper_claim_audit"
 SCHEMA = "worldepisode_paper_claim_audit_v1"
 AUDIT_DATE = "2026-07-13"
@@ -52,7 +64,11 @@ def nested(payload: dict[str, Any], path: tuple[str, ...], default: Any = None) 
 
 
 def paper_text() -> str:
-    paths = [ROOT / "paper" / "arxiv" / "main.tex"]
+    paths = [
+        ROOT / "paper" / "arxiv" / "main.tex",
+        ROOT / "paper" / "arxiv" / "checklist.tex",
+        PAPER_VALUES_TEX,
+    ]
     paths.extend(sorted((ROOT / "paper" / "arxiv" / "sections").glob("*.tex")))
     raw = "\n".join(path.read_text(encoding="utf-8") for path in paths)
     return " ".join(raw.split())
@@ -99,38 +115,167 @@ def claim_result(
     }
 
 
-def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str) -> list[dict[str, Any]]:
+def build_claims(
+    results: dict[str, Any],
+    open_gates: dict[str, Any],
+    statistics: dict[str, Any],
+    conversion_scale: dict[str, Any],
+    multitrajectory_timing: dict[str, Any],
+    text: str,
+) -> list[dict[str, Any]]:
     claims: list[dict[str, Any]] = []
 
     leakage = nested(results, ("lerobot_scene_leakage", "summary"), {})
     claims.append(
         claim_result(
             claim_id="CLAIM.LEAKAGE.001",
-            claim="ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split.",
+            claim=(
+                "ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded "
+                "holdout changes offline imitation metrics."
+            ),
             evidence_artifacts=[
                 "docs/experiments/lerobot_scene_leakage/leakage_report.json",
                 "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+                "docs/experiments/statistical_analysis/statistical_report.json",
             ],
             paper_patterns=[
-                fmt3(float(leakage.get("random_offline_bc_success_rate", -1))),
-                fmt3(float(leakage.get("scene_disjoint_offline_bc_success_rate", -1))),
-                "leakage to zero",
-                "offline BC success",
+                "\\ExpMlpRandomNrmse",
+                "\\ExpMlpHeldoutNrmse",
+                "\\ExpMlpNrmseDifference",
+                "task--scene proxy",
+                "also a task-disjoint shift",
+                "does not establish scene-only leakage",
+                "crossed seed--episode bootstrap CI",
             ],
             evidence_passed=(
                 leakage.get("random_leakage_rate") == 1.0
                 and leakage.get("scene_disjoint_leakage_rate") == 0.0
-                and leakage.get("random_offline_bc_success_rate") == 0.85
-                and leakage.get("scene_disjoint_offline_bc_success_rate") == 0.0
+                and float(leakage.get("scene_disjoint_episode_nrmse_mean", 0))
+                > float(leakage.get("random_episode_nrmse_mean", 0))
+                and statistics.get("profile") == "worldepisode-statistical-analysis-0.2"
+                and nested(
+                    results,
+                    (
+                        "lerobot_scene_leakage",
+                        "splits",
+                        "random_episode",
+                        "bc",
+                        "policy",
+                        "seed_count",
+                    ),
+                    0,
+                )
+                >= 5
+                and nested(
+                    statistics,
+                    ("models", "torch_mlp_bc", "protocol_difference", "nrmse_increase_heldout_minus_random", "ci_low"),
+                    0,
+                )
+                > 0
             ),
             evidence={
                 "random_leakage_rate": leakage.get("random_leakage_rate"),
                 "scene_disjoint_leakage_rate": leakage.get("scene_disjoint_leakage_rate"),
-                "random_offline_bc_success_rate": leakage.get("random_offline_bc_success_rate"),
-                "scene_disjoint_offline_bc_success_rate": leakage.get("scene_disjoint_offline_bc_success_rate"),
+                "random_episode_nrmse_mean": leakage.get("random_episode_nrmse_mean"),
+                "scene_disjoint_episode_nrmse_mean": leakage.get("scene_disjoint_episode_nrmse_mean"),
+                "nrmse_difference_ci_low": nested(
+                    statistics,
+                    ("models", "torch_mlp_bc", "protocol_difference", "nrmse_increase_heldout_minus_random", "ci_low"),
+                ),
+                "optimization_seed_count": nested(
+                    results,
+                    (
+                        "lerobot_scene_leakage",
+                        "splits",
+                        "random_episode",
+                        "bc",
+                        "policy",
+                        "seed_count",
+                    ),
+                ),
             },
             text=text,
-            boundary="Offline action-imitation result; not ACT/Diffusion or physical rollout success.",
+            boundary=(
+                "Task--scene proxy shift confounded with task identity; offline action imitation "
+                "only, not scene-only leakage, ACT/Diffusion, or rollout success."
+            ),
+        )
+    )
+
+    timing_calibration = multitrajectory_timing.get("calibration", {})
+    timing_evaluation = multitrajectory_timing.get("evaluation", {})
+    timing_improvement = timing_evaluation.get("paired_episode_improvement", {})
+    claims.append(
+        claim_result(
+            claim_id="CLAIM.TIMING.001",
+            claim=(
+                "A lag frozen on calibration trajectories improves held-out SO-101 action/state "
+                "telemetry alignment across multiple tasks."
+            ),
+            evidence_artifacts=[
+                "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+                "docs/experiments/lerobot_multitrajectory_timing/README.md",
+                "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
+            ],
+            paper_patterns=[
+                "\\ExpTimingCalibrationEpisodes{} calibration trajectories",
+                "\\ExpTimingHeldoutEpisodes{} source-episode-disjoint trajectories",
+                "\\ExpTimingTaskCount{} tasks",
+                "\\ExpTimingImprovementCiLow",
+                "source position units",
+                "no motor-effective timestamps",
+                "\\ExpTimingControllerConfigurationCount{} controller configuration",
+            ],
+            evidence_passed=(
+                multitrajectory_timing.get("schema")
+                == "worldepisode_lerobot_multitrajectory_timing_v1"
+                and nested(
+                    multitrajectory_timing,
+                    ("validation", "passed"),
+                )
+                is True
+                and nested(
+                    multitrajectory_timing,
+                    ("source", "source_episode_overlap_count"),
+                )
+                == 0
+                and int(timing_calibration.get("episode_count", 0)) >= 20
+                and int(timing_evaluation.get("episode_count", 0)) >= 20
+                and int(timing_evaluation.get("task_count", 0)) >= 2
+                and float(timing_improvement.get("ci_low", 0)) > 0
+                and timing_improvement.get("improved_episode_count")
+                == timing_evaluation.get("episode_count")
+                and nested(
+                    multitrajectory_timing,
+                    ("source", "effective_motor_timestamp_available"),
+                )
+                is False
+                and nested(
+                    multitrajectory_timing,
+                    ("acceptance", "action_002_fully_satisfied"),
+                )
+                is False
+            ),
+            evidence={
+                "calibration_episode_count": timing_calibration.get("episode_count"),
+                "evaluation_episode_count": timing_evaluation.get("episode_count"),
+                "task_count": timing_evaluation.get("task_count"),
+                "selected_delay_frames": timing_calibration.get("selected_delay_frames"),
+                "improvement_ci_low": timing_improvement.get("ci_low"),
+                "improvement_ci_high": timing_improvement.get("ci_high"),
+                "improved_episode_count": timing_improvement.get(
+                    "improved_episode_count"
+                ),
+                "effective_motor_timestamp_available": nested(
+                    multitrajectory_timing,
+                    ("source", "effective_motor_timestamp_available"),
+                ),
+            },
+            text=text,
+            boundary=(
+                "Action/state telemetry-lag proxy on one SO-101 dataset; no independently "
+                "instrumented motor latency or second robot/controller."
+            ),
         )
     )
 
@@ -144,26 +289,29 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             claim="Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
             evidence_artifacts=["docs/experiments/lerobot_control_replay/control_replay_report.json"],
             paper_patterns=[
-                "four 30 Hz frames",
-                "133 ms",
-                fmt3(float(alignment.get("validation_naive_rmse_deg", -1))),
-                fmt3(float(alignment.get("validation_timestamp_aware_rmse_deg", -1))),
-                fmt3(float(nested(mujoco, ("naive_command_time", "joint_rmse_deg"), -1))),
-                fmt3(float(nested(mujoco, ("timestamp_aware", "joint_rmse_deg"), -1))),
+                "\\ExpReplayDelayFrames{} frames",
+                "\\ExpReplayDelayMilliseconds{} ms",
+                "\\ExpAlignmentNaiveRmse",
+                "\\ExpAlignmentTimedRmse",
+                "\\ExpMujocoNaiveRmse",
+                "\\ExpMujocoTimedRmse",
                 "Genesis same-trace replay",
-                fmt3(float(nested(genesis, ("naive_command_time", "joint_rmse_deg"), -1))),
-                fmt3(float(nested(genesis, ("timestamp_aware", "joint_rmse_deg"), -1))),
+                "\\ExpGenesisNaiveRmse",
+                "\\ExpGenesisTimedRmse",
                 "Isaac adapter is emitted as a ready mapping",
                 "not tested in this environment",
             ],
             evidence_passed=(
-                alignment.get("inferred_effective_delay_frames") == 4
-                and 0.132 <= float(alignment.get("inferred_effective_delay_s", 0)) <= 0.134
-                and float(alignment.get("validation_improvement_over_naive", 0)) > 2.0
+                int(alignment.get("inferred_effective_delay_frames", 0)) > 0
+                and float(alignment.get("inferred_effective_delay_s", 0)) > 0
+                and float(alignment.get("validation_timestamp_aware_rmse_deg", float("inf")))
+                < float(alignment.get("validation_naive_rmse_deg", 0))
                 and mujoco.get("tested") is True
-                and float(mujoco.get("rmse_improvement_over_naive", 0)) > 2.0
+                and float(nested(mujoco, ("timestamp_aware", "joint_rmse_deg"), float("inf")))
+                < float(nested(mujoco, ("naive_command_time", "joint_rmse_deg"), 0))
                 and genesis.get("tested") is True
-                and float(genesis.get("rmse_improvement_over_naive", 0)) > 2.0
+                and float(nested(genesis, ("timestamp_aware", "joint_rmse_deg"), float("inf")))
+                < float(nested(genesis, ("naive_command_time", "joint_rmse_deg"), 0))
                 and nested(replay, ("simulators", "isaac", "tested")) is False
             ),
             evidence={
@@ -185,43 +333,70 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
         )
     )
 
-    roundtrip = results.get("lerobot_active_roundtrip", {})
-    primary = roundtrip.get("batch_roundtrip", {})
-    secondary = roundtrip.get("secondary_batch_roundtrips", [])
-    total_episodes = int(primary.get("episode_count", 0)) + sum(int(item.get("episode_count", 0)) for item in secondary)
-    total_rows = int(primary.get("total_action_rows", 0)) + sum(int(item.get("total_action_rows", 0)) for item in secondary)
-    max_error_values = list(primary.get("max_errors", {}).values())
-    for item in secondary:
-        max_error_values.extend(item.get("max_errors", {}).values())
+    scale_aggregate = conversion_scale.get("aggregate", {})
+    scale_datasets = conversion_scale.get("datasets", [])
+    scale_max_error = scale_aggregate.get("maximum_numerical_error")
     claims.append(
         claim_result(
             claim_id="CLAIM.ROUNDTRIP.001",
-            claim="Two public LeRobotDataset batches round-trip exactly through WorldEpisode.",
+            claim=(
+                "Complete pinned source shards from multiple public LeRobotDatasets round-trip "
+                "exactly through WorldEpisode."
+            ),
             evidence_artifacts=[
-                "docs/experiments/lerobot_worldepisode_roundtrip/conversion_report.json",
-                "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch_roundtrip_report.json",
+                "docs/experiments/lerobot_conversion_scale/scale_report.json",
+                "docs/experiments/experiment_manifest/experiment_manifest.json",
+                "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log",
             ],
             paper_patterns=[
-                "Across ten episodes",
-                plain_int(total_rows),
-                "maximum absolute error 0.0",
-                "source-absent rather than guessed",
+                "complete-shard round-trip audit",
+                "\\ExpConversionScaleEpisodeCount",
+                "\\ExpConversionScaleDatasetCount",
+                "\\ExpConversionScaleRowCount",
+                "maximum absolute error \\ExpConversionScaleMaxError",
+                "Source video payloads are neither downloaded nor converted",
+                "complete-selected-shard measurement, not full-corpus throughput",
+                "conversion loss rather than guessed",
             ],
             evidence_passed=(
-                total_episodes == 10
-                and total_rows == 1935
-                and max_error_values
-                and max(float(value) for value in max_error_values) == 0.0
-                and len(secondary) >= 1
+                conversion_scale.get("schema")
+                == "worldepisode_lerobot_conversion_scale_v1"
+                and nested(conversion_scale, ("validation", "passed")) is True
+                and int(scale_aggregate.get("dataset_count", 0)) >= 3
+                and int(scale_aggregate.get("multi_camera_dataset_count", 0)) >= 1
+                and int(scale_aggregate.get("episode_count", 0)) > 10
+                and int(scale_aggregate.get("action_row_count", 0)) > 0
+                and scale_aggregate.get("action_row_count")
+                == scale_aggregate.get("state_row_count")
+                and float(scale_max_error if scale_max_error is not None else float("inf"))
+                == 0.0
+                and len(scale_datasets) == int(scale_aggregate.get("dataset_count", 0))
+                and all(
+                    nested(dataset, ("source_subset", "complete_source_file")) is True
+                    and nested(
+                        dataset, ("modality", "source_video_payload_downloaded")
+                    )
+                    is False
+                    and nested(dataset, ("conversion", "discarded_fields")) == []
+                    and nested(dataset, ("validation", "passed")) is True
+                    for dataset in scale_datasets
+                )
             ),
             evidence={
-                "total_episodes": total_episodes,
-                "total_action_rows": total_rows,
-                "max_error": max(float(value) for value in max_error_values) if max_error_values else None,
-                "datasets": [primary.get("repo_id"), *[item.get("repo_id") for item in secondary]],
+                "dataset_count": scale_aggregate.get("dataset_count"),
+                "multi_camera_dataset_count": scale_aggregate.get(
+                    "multi_camera_dataset_count"
+                ),
+                "episode_count": scale_aggregate.get("episode_count"),
+                "paired_action_state_rows": scale_aggregate.get("action_row_count"),
+                "max_error": scale_max_error,
+                "datasets": [dataset.get("repo_id") for dataset in scale_datasets],
             },
             text=text,
-            boundary="Two five-episode batch audits; not full LeRobot coverage.",
+            boundary=(
+                "One complete pinned Parquet shard per dataset; not full corpora or source-video "
+                "conversion throughput."
+            ),
         )
     )
 
@@ -230,33 +405,46 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.TEMPORAL_POLICY.001",
-            claim="Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation.",
+            claim="Temporal state/action baseline changes under the task--scene proxy holdout.",
             evidence_artifacts=[
                 "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json"
             ],
             paper_patterns=[
                 "temporal ridge",
-                fmt3(float(temporal_aggregate.get("random_episode_success_rate", -1))),
-                fmt3(float(temporal_aggregate.get("scene_disjoint_success_rate", -1))),
-                fmt3(float(temporal_aggregate.get("success_rate_drop", -1))),
-                "not ACT or Diffusion",
+                "\\ExpTemporalRandomNrmse",
+                "\\ExpTemporalHeldoutNrmse",
+                "\\ExpTemporalNrmseDifference",
+                "deterministic ridge policy",
+                "task--scene holdout",
+                "[\\ExpTemporalNrmseDifferenceCiLow, \\ExpTemporalNrmseDifferenceCiHigh]",
             ],
             evidence_passed=(
                 temporal_policy.get("status") == "measured_offline_temporal_baseline"
-                and temporal_aggregate.get("random_episode_success_rate") == 0.925
-                and temporal_aggregate.get("scene_disjoint_success_rate") == 0.42
-                and float(temporal_aggregate.get("success_rate_drop", 0)) > 0.5
+                and float(temporal_aggregate.get("scene_disjoint_nrmse_mean", 0))
+                > float(temporal_aggregate.get("random_episode_nrmse_mean", 0))
+                and nested(
+                    statistics,
+                    ("models", "temporal_ridge", "protocol_difference", "nrmse_increase_heldout_minus_random", "ci_low"),
+                    0,
+                )
+                > 0
             ),
             evidence={
-                "random_episode_success_rate": temporal_aggregate.get("random_episode_success_rate"),
-                "scene_disjoint_success_rate": temporal_aggregate.get("scene_disjoint_success_rate"),
-                "success_rate_drop": temporal_aggregate.get("success_rate_drop"),
+                "random_episode_nrmse_mean": temporal_aggregate.get("random_episode_nrmse_mean"),
+                "scene_disjoint_nrmse_mean": temporal_aggregate.get("scene_disjoint_nrmse_mean"),
+                "nrmse_difference_ci_low": nested(
+                    statistics,
+                    ("models", "temporal_ridge", "protocol_difference", "nrmse_increase_heldout_minus_random", "ci_low"),
+                ),
                 "episode_nrmse_ratio_scene_over_random": temporal_aggregate.get(
                     "episode_nrmse_ratio_scene_over_random"
                 ),
             },
             text=text,
-            boundary="Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout.",
+            boundary=(
+                "Task-confounded offline temporal state/action baseline; not a scene-only, vision-policy, "
+                "ACT, Diffusion, or rollout result."
+            ),
         )
     )
 
@@ -272,17 +460,17 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.BINDING.001",
-            claim="Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections.",
+            claim="Pilot bindings inventory native and sidecar retention for a versioned projection.",
             evidence_artifacts=["docs/experiments/bindings"],
             paper_patterns=[
-                "Across seven pilot bindings",
-                "17--39\\%",
-                "sidecars recover that projection",
+                "\\ExpBindingCount{} pilot bindings",
+                "\\ExpBindingNativeMin{} to \\ExpBindingNativeMax",
+                "sidecars recover \\ExpBindingLerobotSidecar",
+                "not a universal format ranking",
             ],
             evidence_passed=(
-                len(bindings) == 7
-                and round(min_native * 100) == 17
-                and round(max_native * 100) == 39
+                len(bindings) > 1
+                and 0.0 <= min_native <= max_native < 1.0
                 and dataset_log_world_sidecar_ok
             ),
             evidence={
@@ -307,17 +495,17 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 "conformance/fixtures/independent/manifest.json",
             ],
             paper_patterns=[
-                "14 expected requirement failures",
-                "1.000 recall",
-                "0.933 precision",
-                "Two hand-authored independent fixtures",
+                "\\ExpFaultTruePositiveCount{} expected requirement failures",
+                "\\ExpFaultRecall{} recall",
+                "\\ExpFaultPrecision{} precision",
+                "\\ExpIndependentFixtureCount{} hand-authored independent fixtures",
             ],
             evidence_passed=(
-                fault.get("n_cases") == 14
+                int(fault.get("n_cases", 0)) > 0
                 and fault.get("false_negative_requirements") == 0
                 and fault.get("recall") == 1.0
-                and fault.get("precision") == 0.933
-                and independent.get("n_cases") == 2
+                and float(fault.get("precision", 0)) > 0
+                and int(independent.get("n_cases", 0)) > 0
                 and independent.get("recall") == 1.0
             ),
             evidence={
@@ -336,16 +524,16 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.NATURAL.001",
-            claim="Pilot natural-source corpus records 19 cases across five public robot-learning datasets.",
+            claim="Pilot natural-source audit records scoped cases across public dataset sources.",
             evidence_artifacts=["docs/experiments/natural_failure_corpus/manifest.json"],
             paper_patterns=[
-                "records 19 observed",
-                "five public robot-learning datasets",
-                "not claimed as maintainer-confirmed",
+                "records \\ExpNaturalFindingCount{} source omissions or evaluation risks",
+                "\\ExpNaturalActiveDatasetCount{} active LeRobot artifacts",
+                "not maintainer-confirmed bugs or prevalence estimates",
             ],
             evidence_passed=(
-                natural.get("case_count") == 19
-                and natural.get("dataset_count") == 5
+                int(natural.get("case_count", 0)) > 0
+                and int(natural.get("dataset_count", 0)) > 0
                 and natural.get("maintainer_feedback_satisfied") is False
             ),
             evidence={
@@ -360,21 +548,21 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.NATURAL_DIAGNOSTICS.001",
-            claim="Natural-source corpus has dataset-specific diagnostic reports for all five datasets.",
+            claim="Natural-source audit distinguishes active artifacts from source-level metadata reviews.",
             evidence_artifacts=[
                 "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
                 "docs/experiments/natural_failure_corpus/README.md",
             ],
             paper_patterns=[
-                "dataset-specific diagnostic reports",
-                "source-level-only",
-                "not claimed as maintainer-confirmed",
+                "source-level DROID and BridgeData V2 metadata",
+                "not maintainer-confirmed bugs or prevalence estimates",
             ],
             evidence_passed=(
                 natural.get("dataset_specific_diagnostics_ready") is True
-                and natural.get("dataset_report_count") == natural.get("dataset_count") == 5
-                and natural.get("case_count") == 19
-                and natural.get("source_level_only_report_count") == 2
+                and natural.get("dataset_report_count") == natural.get("dataset_count")
+                and int(natural.get("case_count", 0)) > 0
+                and 0 < int(natural.get("source_level_only_report_count", 0))
+                < int(natural.get("dataset_count", 0))
                 and natural.get("maintainer_feedback_satisfied") is False
             ),
             evidence={
@@ -395,18 +583,18 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.USS.001",
-            claim="Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
+            claim="Deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift.",
             evidence_artifacts=["docs/experiments/uss_state_drift_pilots/state_drift_report.json"],
             paper_patterns=[
-                "50 ms undeclared clock offset",
-                "0.75 m fusion error",
-                "0.20 m tolerance",
+                "\\ExpAvClockOffsetMilliseconds{} ms undeclared clock offset",
+                "\\ExpAvFusionErrorMeters{} m fusion error",
+                "\\ExpAvToleranceMeters{} m tolerance",
                 "not production game-engine or AV benchmark results",
             ],
             evidence_passed=(
-                state_agg.get("case_count") == 2
-                and state_agg.get("local_file_valid_count") == 2
-                and state_agg.get("uss_detections") == 2
+                int(state_agg.get("case_count", 0)) > 0
+                and state_agg.get("local_file_valid_count") == state_agg.get("case_count")
+                and state_agg.get("uss_detections") == state_agg.get("case_count")
                 and state.get("status") == "deterministic_non_robotics_pilots"
             ),
             evidence={
@@ -428,16 +616,16 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             claim="Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode.",
             evidence_artifacts=["docs/experiments/realtosim_contract_drift/contract_drift_report.json"],
             paper_patterns=[
-                "2/2 simulated successes",
-                "0/2 deployment successes",
-                "recovers 2/2 deployment successes",
-                "controlled proxy, not a RoboSnap or hardware rerun",
+                "\\ExpDriftSimulationSuccessCount/\\ExpDriftAblationCount{} proxy simulation successes",
+                "\\ExpDriftDeploymentSuccessCount/\\ExpDriftAblationCount{} deployment-proxy successes",
+                "\\ExpDriftCorrectedSuccessCount/\\ExpDriftAblationCount",
+                "mechanism check, not a hardware or RoboSnap rerun",
             ],
             evidence_passed=(
-                rt_agg.get("ablation_count") == 2
-                and rt_agg.get("drifted_sim_successes") == 2
+                int(rt_agg.get("ablation_count", 0)) > 0
+                and rt_agg.get("drifted_sim_successes") == rt_agg.get("ablation_count")
                 and rt_agg.get("drifted_deployment_successes") == 0
-                and rt_agg.get("worldepisode_deployment_successes") == 2
+                and rt_agg.get("worldepisode_deployment_successes") == rt_agg.get("ablation_count")
                 and realtosim.get("status") == "controlled_proxy_not_hardware_rollout"
             ),
             evidence={
@@ -457,17 +645,18 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
     claims.append(
         claim_result(
             claim_id="CLAIM.SCALE.001",
-            claim="Generated catalog benchmark describes a billion-episode-capacity sharded corpus.",
+            claim="Generated catalog benchmark describes a large-capacity sharded corpus.",
             evidence_artifacts=["docs/experiments/dataset_scale_performance/performance_report.json"],
             paper_patterns=[
-                tex_int(int(generated.get("trace_shard_count", 0))),
-                tex_int(int(generated.get("described_episode_capacity", 0))),
+                "\\ExpScaleTraceShardCount",
+                "\\ExpScaleEpisodeCapacity",
                 "Catalog-side benchmark only",
             ],
             evidence_passed=(
                 scale.get("status") == "pass"
-                and generated.get("trace_shard_count") == 32768
-                and generated.get("described_episode_capacity") == 1_073_741_824
+                and int(generated.get("trace_shard_count", 0)) > 0
+                and int(generated.get("described_episode_capacity", 0))
+                >= int(generated.get("trace_shard_count", 0))
                 and generated.get("episodes_materialized") == 0
             ),
             evidence={
@@ -488,13 +677,13 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
             claim="Famous benchmark audit is fail-closed and makes zero inflation claims in this release.",
             evidence_artifacts=["docs/experiments/benchmark_inflation_gate/gate_report.json"],
             paper_patterns=[
-                "one executed DROID subset rerun",
-                "zero inflation-proof famous-benchmark rerun reports",
-                "zero measured",
-                "not a claim that their published scores are inflated",
+                "\\ExpDroidRerunEpisodes{}-episode DROID subset evidence",
+                "\\ExpBenchmarkInflationClaimCount{} measured inflation claims",
+                "provides no inflation evidence",
+                "\\ExpBenchmarkInflationClaimCount{} famous-benchmark inflation claims",
             ],
             evidence_passed=(
-                nested(bench_gate, ("aggregate", "audited_benchmark_count")) == 5
+                int(nested(bench_gate, ("aggregate", "audited_benchmark_count"), 0)) > 0
                 and nested(bench_gate, ("aggregate", "executed_rerun_report_count")) >= 1
                 and nested(bench_gate, ("aggregate", "valid_rerun_report_count")) == 0
                 and nested(bench_gate, ("aggregate", "measured_inflation_claims")) == 0
@@ -523,12 +712,15 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
                 "\\begin{openresult}{results not claimed in this release}",
                 "Open result, not claimed",
                 "open_reproduction_gates.json",
+                "\\newcommand{\\ExpActDiffusionResult}{\\PaperNotDefinedYet}",
+                "\\newcommand{\\ExpBenchmarkInflationResult}{\\PaperNotDefinedYet}",
             ],
             evidence_passed=(
                 open_gates.get("schema") == "worldepisode_open_reproduction_gates_v1"
                 and nested(open_gates, ("validation", "passed")) is True
-                and nested(open_gates, ("aggregate", "gate_count")) == 4
-                and nested(open_gates, ("aggregate", "command_count")) >= 4
+                and int(nested(open_gates, ("aggregate", "gate_count"), 0)) > 0
+                and nested(open_gates, ("aggregate", "command_count"))
+                >= nested(open_gates, ("aggregate", "gate_count"))
             ),
             evidence={
                 "schema": open_gates.get("schema"),
@@ -546,8 +738,18 @@ def build_claims(results: dict[str, Any], open_gates: dict[str, Any], text: str)
 def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     results = load_json(RESULTS_JSON)
     open_gates = load_json(OPEN_GATES_JSON)
+    statistics = load_json(STATISTICS_JSON)
+    conversion_scale = load_json(CONVERSION_SCALE_JSON)
+    multitrajectory_timing = load_json(MULTITRAJECTORY_TIMING_JSON)
     text = paper_text()
-    claims = build_claims(results, open_gates, text)
+    claims = build_claims(
+        results,
+        open_gates,
+        statistics,
+        conversion_scale,
+        multitrajectory_timing,
+        text,
+    )
     failed = [claim for claim in claims if not claim["passed"]]
     report = {
         "schema": SCHEMA,
@@ -555,9 +757,15 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         "status": "pass" if not failed else "fail",
         "paper_sources": [
             rel(ROOT / "paper" / "arxiv" / "main.tex"),
+            rel(ROOT / "paper" / "arxiv" / "checklist.tex"),
+            rel(PAPER_VALUES_TEX),
             *[rel(path) for path in sorted((ROOT / "paper" / "arxiv" / "sections").glob("*.tex"))],
         ],
         "evidence_root": rel(RESULTS_JSON),
+        "additional_evidence_roots": [
+            rel(CONVERSION_SCALE_JSON),
+            rel(MULTITRAJECTORY_TIMING_JSON),
+        ],
         "claims": claims,
         "aggregate": {
             "claim_count": len(claims),

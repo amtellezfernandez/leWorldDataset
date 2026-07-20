@@ -1,0 +1,971 @@
+{
+  "aggregate": {
+    "experiment_count": 7,
+    "measured_count": 6,
+    "remote_run_count": 6
+  },
+  "experiments": [
+    {
+      "claim_boundary": "Task identity is part of the proxy lineage; this is offline imitation evidence, not scene-only leakage or rollout success.",
+      "code": [
+        {
+          "bytes": 32181,
+          "path": "tools/lerobot_scene_leakage_experiment.py",
+          "sha256": "28af6fa76943d3ccdea2967e0ec84c3d5b8efd63775258036aa22e65b575b391"
+        }
+      ],
+      "configuration": {
+        "epochs": 12,
+        "offline_bc_success_threshold": 0.25,
+        "random_split_seed": 17,
+        "requested_device": "cuda",
+        "scene_holdout_task_indices": [
+          3,
+          4
+        ],
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "datasets": [
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        }
+      ],
+      "execution": {
+        "command": "uv run --with torch --with pyarrow --with requests --with numpy python tools/lerobot_scene_leakage_experiment.py --seeds 0,1,2,3,4 --epochs 12 --device cuda --required",
+        "compute": {
+          "cpu_utilization_percent": 100.0,
+          "max_rss_bytes": 1584115712,
+          "system_cpu_seconds": 1.51,
+          "user_cpu_seconds": 45.45,
+          "wall_time_seconds": 46.69
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T14:37:00Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 324418568192,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 1732,
+          "path": "docs/experiments/run_logs/lerobot_scene_leakage_dgx_spark.log",
+          "sha256": "a91ba3685d310484db260dc9f9444d77b37af438e95ec85ccac61ce6355f3881"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T14:36:13Z"
+      },
+      "experiment_id": "armnet_task_scene_proxy_mlp",
+      "outputs": [
+        {
+          "bytes": 36808,
+          "path": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+          "sha256": "99ebb7a37610069bfcff38b13a2c097a9005000d4325836d22d72d659afee7b8"
+        },
+        {
+          "bytes": 100188,
+          "path": "docs/experiments/lerobot_scene_leakage/bc_episode_errors.json",
+          "sha256": "a703cfde36f97dceb37d563f64d16e5508a7c611facc879eb51c0f6c4e88b36f"
+        },
+        {
+          "bytes": 12628,
+          "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+          "sha256": "51852d83a6d6204ab03b26c5740ef11453dafbee77b4ad842e4e1f3bec6fa0d6"
+        },
+        {
+          "bytes": 18816,
+          "path": "docs/experiments/lerobot_scene_leakage/world_lineage.json",
+          "sha256": "baaff4a7254744a04e2d29bf2f52a549ca1c4ae6ea9208723314e62a16101067"
+        },
+        {
+          "bytes": 6954,
+          "path": "docs/experiments/statistical_analysis/statistical_report.json",
+          "sha256": "dc2071f80ad184e4b7fa763671ed98f65eb83d3b599d51c5775788661f22a713"
+        }
+      ],
+      "seed_policy": {
+        "kind": "optimization_seeds",
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "split": {
+        "bytes": 12628,
+        "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+        "sha256": "51852d83a6d6204ab03b26c5740ef11453dafbee77b4ad842e4e1f3bec6fa0d6"
+      },
+      "status": "measured"
+    },
+    {
+      "claim_boundary": "Measured offline temporal state/action baseline over committed compact LeRobot split packages. This is not ACT, Diffusion Policy, a vision-policy result, a simulator rollout, or a physical-robot rollout.",
+      "code": [
+        {
+          "bytes": 12659,
+          "path": "tools/lerobot_temporal_policy_baseline.py",
+          "sha256": "168345270a48d451e474c55a49b50433285660b19f88866a83499cda690ebf1b"
+        }
+      ],
+      "configuration": {
+        "policy": {
+          "action_dim": 6,
+          "family": "closed_form_temporal_ridge_state_action",
+          "feature_dim": 24,
+          "history_frames": 3,
+          "ridge_lambda": 0.01,
+          "state_dim": 6,
+          "uses_previous_ground_truth_actions": false,
+          "uses_video": false
+        },
+        "success_threshold": 0.25
+      },
+      "datasets": [
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        }
+      ],
+      "execution": {
+        "accounting_scope": "shared controlled-suite process",
+        "command": "WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE=1 python tools/run_experiments.py",
+        "compute": {
+          "cpu_utilization_percent": 140.0,
+          "max_rss_bytes": 656625664,
+          "system_cpu_seconds": 0.27,
+          "user_cpu_seconds": 5.13,
+          "wall_time_seconds": 3.84
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T14:58:52Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 324412391424,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 1725,
+          "path": "docs/experiments/run_logs/controlled_suite_dgx_spark.log",
+          "sha256": "053c10a9941f3f49b6990f36b132c9e8ac9cb65439ed7afbbdb361889cde60e0"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T14:58:48Z"
+      },
+      "experiment_id": "armnet_task_scene_proxy_temporal_ridge",
+      "outputs": [
+        {
+          "bytes": 28657,
+          "path": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
+          "sha256": "d2903766f39b08c4f5cab8d7291204e2c034c9bd6e2d17724f303c0a1a6f3155"
+        },
+        {
+          "bytes": 6954,
+          "path": "docs/experiments/statistical_analysis/statistical_report.json",
+          "sha256": "dc2071f80ad184e4b7fa763671ed98f65eb83d3b599d51c5775788661f22a713"
+        }
+      ],
+      "seed_policy": {
+        "kind": "not_applicable",
+        "reason": "deterministic closed-form ridge estimator",
+        "values": []
+      },
+      "split": {
+        "bytes": 2771,
+        "path": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+        "sha256": "999bee80b6bc28e0d65b71fcf1fe084eb7a28b65fa1bb544c67f9b7ca48c07b9"
+      },
+      "status": "measured"
+    },
+    {
+      "claim_boundary": "Small public DROID LeRobot mirror. This is a bounded offline state/action rerun, not a reproduction of a DROID leaderboard or a hardware rollout. The report is valid evidence for this subset and metric only. It is not a published-score inflation claim unless the strict proof gate accepts it.",
+      "code": [
+        {
+          "bytes": 33898,
+          "path": "tools/famous_benchmark_policy_rerun.py",
+          "sha256": "378481f06aa4d9c346cab7a48cb4bb27082b9f15f0c4fbf294bc83e199bf9aed"
+        }
+      ],
+      "configuration": {
+        "baseline_split": "random_episode",
+        "corrected_split": "lineage_disjoint",
+        "metric": "offline_action_agreement_score = 1 / (1 + action_nrmse)",
+        "policy": {
+          "family": "offline_behavior_cloning_probe",
+          "implementation": "tools/famous_benchmark_policy_rerun.py",
+          "name": "ridge_bc_state_action",
+          "random_seed": 17
+        }
+      },
+      "datasets": [
+        {
+          "repo_id": "lerobot/droid_100",
+          "revision": "87301a2d2e99340e2010c9ef0f1d8e780b08aaf9",
+          "source_digest": "1641b092efe81556b364a51630a8dbb01856b9aff1a15c52ca07f7122473829b"
+        }
+      ],
+      "execution": {
+        "command": "python tools/famous_benchmark_policy_rerun.py --benchmark droid_100 --required",
+        "compute": {
+          "cpu_utilization_percent": 398.0,
+          "max_rss_bytes": 233799680,
+          "system_cpu_seconds": 0.08,
+          "user_cpu_seconds": 2.41,
+          "wall_time_seconds": 0.62
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T14:58:10Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 324412391424,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 2140,
+          "path": "docs/experiments/run_logs/droid_100_dgx_spark.log",
+          "sha256": "74f44ca7752efaaa41968c2a91b634023542e859e59f43366c353a9a1640fdd0"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T14:58:09Z"
+      },
+      "experiment_id": "droid_100_proxy_ridge_rerun",
+      "outputs": [
+        {
+          "bytes": 3663,
+          "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
+          "sha256": "a9627558862650f5ef6107586b3f34282e0747b8a8ec4900eef3319533b66656"
+        },
+        {
+          "bytes": 3696,
+          "path": "docs/experiments/benchmark_reruns/droid_100/split_manifest.json",
+          "sha256": "62c6d72a0a8bcb1fe020fd3ccab01ae603126f07e1acfce8fc7343fc98b46248"
+        },
+        {
+          "bytes": 799,
+          "path": "docs/experiments/benchmark_reruns/droid_100/conversion_report.json",
+          "sha256": "a89360586e63ff861105de31d86facc880d740b3973b1776ebfa9f4a26e389c0"
+        },
+        {
+          "bytes": 18849,
+          "path": "docs/experiments/benchmark_reruns/droid_100/lineage_manifest.json",
+          "sha256": "c8e54a23e714e23f9f5a02a64bf89a2b8c640316f5376927b4c10de9bef64791"
+        }
+      ],
+      "seed_policy": {
+        "kind": "fixed_random_seed",
+        "values": [
+          17
+        ]
+      },
+      "split": {
+        "bytes": 3696,
+        "path": "docs/experiments/benchmark_reruns/droid_100/split_manifest.json",
+        "sha256": "62c6d72a0a8bcb1fe020fd3ccab01ae603126f07e1acfce8fc7343fc98b46248"
+      },
+      "status": "measured_no_inflation_evidence"
+    },
+    {
+      "claim_boundary": "Shared deterministic suite covering contract checks, conversions, replay, controlled proxies, and report generation; individual boundaries remain in docs/experiments/results.json.",
+      "code": [
+        {
+          "bytes": 108907,
+          "path": "tools/run_experiments.py",
+          "sha256": "bddb4a10c639b5e653814633ee68e75298becb39990ac73d7949412afe22810a"
+        }
+      ],
+      "configuration": {
+        "contained_result_sections": [
+          "baseline_schema_errors",
+          "baseline_semantic_errors",
+          "benchmark_callout_audit",
+          "benchmark_inflation_gate",
+          "cleanroom_reader",
+          "dataset_scale_audit",
+          "dataset_scale_performance",
+          "independent_fixture_check",
+          "lerobot_active_roundtrip",
+          "lerobot_conversion_scale",
+          "lerobot_multitrajectory_timing",
+          "lerobot_policy_gate",
+          "lerobot_public_sample",
+          "lerobot_scene_leakage",
+          "lerobot_style_episode_set",
+          "lerobot_temporal_policy_baseline",
+          "meta_simulator_contract",
+          "natural_failure_corpus",
+          "preflight_validator",
+          "realtosim_contract_drift",
+          "replay_adapter_conformance",
+          "rq1_binding_retention",
+          "rq2_fault_detection",
+          "rq3_replay",
+          "rq4_counterfactual_robustness",
+          "rq5_split_leakage",
+          "source_example",
+          "uss_state_drift_pilots"
+        ],
+        "environment": {
+          "WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE": "1"
+        }
+      },
+      "datasets": [
+        {
+          "repo_id": "lerobot/svla_so101_pickplace",
+          "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657"
+        },
+        {
+          "repo_id": "lerobot/pusht",
+          "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+        },
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        }
+      ],
+      "execution": {
+        "command": "WORLDEPISODE_RUN_TEMPORAL_POLICY_BASELINE=1 python tools/run_experiments.py",
+        "compute": {
+          "cpu_utilization_percent": 140.0,
+          "max_rss_bytes": 656625664,
+          "system_cpu_seconds": 0.27,
+          "user_cpu_seconds": 5.13,
+          "wall_time_seconds": 3.84
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T14:58:52Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 324412391424,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 1725,
+          "path": "docs/experiments/run_logs/controlled_suite_dgx_spark.log",
+          "sha256": "053c10a9941f3f49b6990f36b132c9e8ac9cb65439ed7afbbdb361889cde60e0"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T14:58:48Z"
+      },
+      "experiment_id": "controlled_contract_suite",
+      "outputs": [
+        {
+          "bytes": 285122,
+          "path": "docs/experiments/results.json",
+          "sha256": "8997063d8e8be3f2c3859459639e49d4839034f28a001437d9149aa30db26e67"
+        },
+        {
+          "bytes": 17351,
+          "path": "docs/experiments/RESULTS.md",
+          "sha256": "2f520fce0421ce73095c26077c1f0e24ec2cca55bcbc8b1a7cc5c2697b328649"
+        }
+      ],
+      "seed_policy": {
+        "kind": "mixed_declared_in_contained_reports",
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          17
+        ]
+      },
+      "split": {
+        "artifacts": [
+          {
+            "bytes": 12628,
+            "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+            "sha256": "51852d83a6d6204ab03b26c5740ef11453dafbee77b4ad842e4e1f3bec6fa0d6"
+          },
+          {
+            "bytes": 2771,
+            "path": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+            "sha256": "999bee80b6bc28e0d65b71fcf1fe084eb7a28b65fa1bb544c67f9b7ca48c07b9"
+          }
+        ],
+        "kind": "multiple_committed_manifests"
+      },
+      "status": "measured"
+    },
+    {
+      "claim_boundary": "This measures exact low-dimensional LeRobot/WorldEpisode conversion over complete pinned Parquet shards. It does not convert video payload bytes, prove full-corpus throughput, or evaluate policy quality.",
+      "code": [
+        {
+          "bytes": 24929,
+          "path": "tools/lerobot_conversion_scale.py",
+          "sha256": "ad005fb27a5fff8b50219cb3a23df7195d9941fe0a369180022e777f46d7b0ed"
+        },
+        {
+          "bytes": 38201,
+          "path": "tools/lerobot_worldepisode_roundtrip.py",
+          "sha256": "db7546d06ab885d7e024bc47cb980ee9776b380cfe3bcab57f54eaea530f61f5"
+        }
+      ],
+      "configuration": {
+        "protocol": {
+          "roundtrip": "LeRobot source episode to WorldEpisode sidecar to exported LeRobot package, followed by exact action/state/index/timestamp comparison.",
+          "selection": "Every episode assigned to one immutable LeRobot v3 source Parquet file per dataset; no episode-level sampling.",
+          "source_media_policy": "Video stream metadata is audited, but source video payloads are not downloaded or redistributed."
+        },
+        "software": {
+          "pyarrow": "25.0.0",
+          "python": "3.12.13",
+          "requests": "2.34.2"
+        }
+      },
+      "datasets": [
+        {
+          "repo_id": "lerobot/svla_so101_pickplace",
+          "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+          "source_digest": "579ad57e2454359fa9f2c0e83525991bd2e0305b7b2914d0b1181da3c6ad9949"
+        },
+        {
+          "repo_id": "lerobot/pusht",
+          "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+          "source_digest": "9abc0431f12d10c33b5b37b1bf1e6e557c8ae1c8c29fb86658969e48fcbbbf01"
+        },
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "source_digest": "04ed5e41be3fc2f1b51b1a11aa51e6e2e846abcb1c8a04e29831ebdb80d2a18a"
+        }
+      ],
+      "execution": {
+        "command": "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required",
+        "compute": {
+          "cpu_utilization_percent": 98.0,
+          "max_rss_bytes": 412426240,
+          "system_cpu_seconds": 1.75,
+          "user_cpu_seconds": 45.72,
+          "wall_time_seconds": 48.24
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T15:49:46Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 324410212352,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 2253,
+          "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log",
+          "sha256": "2c77da4a84617c0f10ffa1d5a24eb9f2493f0ad216cc506e535681ff3bd85ddb"
+        },
+        "preliminary_runs": [
+          {
+            "command": "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required",
+            "compute": {
+              "cpu_utilization_percent": 75.0,
+              "max_rss_bytes": 142352384,
+              "system_cpu_seconds": 0.11,
+              "user_cpu_seconds": 0.39,
+              "wall_time_seconds": 0.67
+            },
+            "exit_status": 1,
+            "finished_utc": "2026-07-20T15:47:15Z",
+            "host": {
+              "cpu_logical_count": 20,
+              "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+              "machine": "aarch64",
+              "storage_free_bytes": 324412166144,
+              "storage_total_bytes": 3937360351232,
+              "total_ram_bytes": 130663170048,
+              "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+            },
+            "log": {
+              "bytes": 1847,
+              "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
+              "sha256": "7bf27bfacf30a8af68aeddd1a0812a2f92cfc2879e2d189704306aa48415db1c"
+            },
+            "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+            "started_utc": "2026-07-20T15:47:15Z",
+            "status": "failed_preliminary"
+          },
+          {
+            "command": "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required",
+            "compute": {
+              "cpu_utilization_percent": 101.0,
+              "max_rss_bytes": 350621696,
+              "system_cpu_seconds": 0.24,
+              "user_cpu_seconds": 4.5,
+              "wall_time_seconds": 4.66
+            },
+            "exit_status": 1,
+            "finished_utc": "2026-07-20T15:48:13Z",
+            "host": {
+              "cpu_logical_count": 20,
+              "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+              "machine": "aarch64",
+              "storage_free_bytes": 324410216448,
+              "storage_total_bytes": 3937360351232,
+              "total_ram_bytes": 130663170048,
+              "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+            },
+            "log": {
+              "bytes": 1666,
+              "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
+              "sha256": "3f4333ff1a86fbf2c6415d044c9c92ae2490b39867fa0d88165663557c90bf21"
+            },
+            "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+            "started_utc": "2026-07-20T15:48:08Z",
+            "status": "failed_preliminary"
+          }
+        ],
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T15:48:57Z"
+      },
+      "experiment_id": "lerobot_conversion_scale",
+      "outputs": [
+        {
+          "bytes": 20821,
+          "path": "docs/experiments/lerobot_conversion_scale/scale_report.json",
+          "sha256": "6064340fa41730413954a0d21e3a80b0de337b529237ef6d06b817ca0e27571e"
+        },
+        {
+          "bytes": 1228,
+          "path": "docs/experiments/lerobot_conversion_scale/README.md",
+          "sha256": "77be0fe4026c691668e12e78998075d39da15cb87ae05d406d60b4c0bb57c69a"
+        },
+        {
+          "bytes": 1847,
+          "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
+          "sha256": "7bf27bfacf30a8af68aeddd1a0812a2f92cfc2879e2d189704306aa48415db1c"
+        },
+        {
+          "bytes": 1666,
+          "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
+          "sha256": "3f4333ff1a86fbf2c6415d044c9c92ae2490b39867fa0d88165663557c90bf21"
+        }
+      ],
+      "seed_policy": {
+        "kind": "not_applicable",
+        "reason": "deterministic exact conversion and comparison",
+        "values": []
+      },
+      "split": {
+        "kind": "complete_pinned_source_parquet_files",
+        "subsets": [
+          {
+            "data_chunk_index": 0,
+            "data_file_index": 0,
+            "dataset_id": "svla_so101_pickplace",
+            "episode_count": 50,
+            "episode_index_sha256": "4eaf9c1cc03c11d6d219275fb69dec3375e8139949b7c6bbc1664b2089298378"
+          },
+          {
+            "data_chunk_index": 0,
+            "data_file_index": 0,
+            "dataset_id": "pusht",
+            "episode_count": 206,
+            "episode_index_sha256": "5579579a9def9d04eecefd7df8004db96744f50e20bf32c680920cb859f8193c"
+          },
+          {
+            "data_chunk_index": 0,
+            "data_file_index": 0,
+            "dataset_id": "armnetbench_file_000",
+            "episode_count": 15,
+            "episode_index_sha256": "e994167b45cad6081dd187620abc417759e9f5459b5dcbc0ac8d96ef3a7c7ba2"
+          }
+        ]
+      },
+      "status": "measured"
+    },
+    {
+      "claim_boundary": "The audit measures lag between same-named action targets and observed joint-state telemetry on one SO-101 dataset. The source has one frame timestamp and no command-enqueue, queue-consume, or motor-effective timestamps, so this is not measured motor latency or evidence across robot/controller configurations. Timestamp scheduling uses the same sampled frame timestamps rather than independent queue observations; its result is interpolation-sensitive under float32 timestamp quantization.",
+      "code": [
+        {
+          "bytes": 34547,
+          "path": "tools/lerobot_multitrajectory_timing_audit.py",
+          "sha256": "f9e094e5397d888684314bbbfc05bf6d1094d7b34cdfbfd74ddece86be958ed7"
+        }
+      ],
+      "configuration": {
+        "effective_motor_timestamp_available": false,
+        "metric_unit": "source_position_units",
+        "protocol": {
+          "bootstrap_resamples": 20000,
+          "bootstrap_seed": 2027,
+          "calibration_partition": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "comparison": "For delay d, compare action[t] and action[t-d] against state[t] on the identical within-episode target rows t >= d; no cross-episode padding.",
+          "confidence_level": 0.95,
+          "evaluation_partition": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "max_delay_frames": 8,
+          "selection": "Choose the integer delay minimizing sample-weighted joint RMSE over calibration episodes; freeze it before reading held-out metrics.",
+          "source_interpolation_policy": "not declared",
+          "source_missing_command_policy": "not declared",
+          "timestamp_scheduler": "latest command at or before state_timestamp - frozen_delay"
+        }
+      },
+      "datasets": [
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "source_digest": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc"
+        }
+      ],
+      "execution": {
+        "command": "uv run --no-project --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required",
+        "compute": {
+          "cpu_utilization_percent": 205.0,
+          "max_rss_bytes": 259661824,
+          "system_cpu_seconds": 0.11,
+          "user_cpu_seconds": 2.36,
+          "wall_time_seconds": 1.2
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T17:43:57Z",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10, [N/A]",
+          "machine": "aarch64",
+          "storage_free_bytes": 320401072128,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux"
+        },
+        "log": {
+          "bytes": 2392,
+          "path": "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
+          "sha256": "1c2cbd5b1c236d59d3d5d01d91ba08c920e9e614801815d3209fef5ab1e5edff"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "started_utc": "2026-07-20T17:43:55Z"
+      },
+      "experiment_id": "lerobot_multitrajectory_timing",
+      "outputs": [
+        {
+          "bytes": 46036,
+          "path": "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+          "sha256": "f3d5cd5d7b81bd027e587687eaeafe2b01a5db4406485c04191bd909c387c79e"
+        },
+        {
+          "bytes": 1878,
+          "path": "docs/experiments/lerobot_multitrajectory_timing/README.md",
+          "sha256": "f7fe5a2b2b699922182cb6bce516ee6d1413cd514aec5d6470823983d5a81943"
+        }
+      ],
+      "seed_policy": {
+        "kind": "fixed_analysis_seed",
+        "reason": "deterministic paired episode bootstrap",
+        "values": [
+          2027
+        ]
+      },
+      "split": {
+        "calibration": {
+          "artifacts": {
+            "data": {
+              "bytes": 2115046,
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/data/chunk-000/file-000.parquet",
+              "sha256": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc"
+            },
+            "package_manifest": {
+              "bytes": 52173,
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/worldepisode_split_package.json",
+              "sha256": "8a1abf52d6b3f80a41bf19fda6e95ecc8d514c1feea108adeb1b547ec3f01c02"
+            }
+          },
+          "episode_count": 320,
+          "frame_count": 98990,
+          "partition": "train",
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+          "source_dataset": {
+            "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+            "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+          },
+          "source_episode_count": 320,
+          "task_count": 8
+        },
+        "evaluation": {
+          "artifacts": {
+            "data": {
+              "bytes": 512944,
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/data/chunk-000/file-000.parquet",
+              "sha256": "a3134ede097612b7b0489d4bfb4ce5a961c1d5a9ee0c3b7d8dbafe1b30380167"
+            },
+            "package_manifest": {
+              "bytes": 27875,
+              "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/worldepisode_split_package.json",
+              "sha256": "6c28f76583a1aebc24a156b2fc227a3b5b0a23b44969dba40954aa6d471f8776"
+            }
+          },
+          "episode_count": 80,
+          "frame_count": 21745,
+          "partition": "test",
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+          "source_dataset": {
+            "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+            "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+          },
+          "source_episode_count": 80,
+          "task_count": 8
+        },
+        "kind": "source_episode_disjoint_calibration_evaluation",
+        "source_episode_overlap_count": 0
+      },
+      "status": "measured_partial_action_002"
+    },
+    {
+      "claim_boundary": "This probe validates the committed low-dimensional package loader and the pinned LeRobot ACT/Diffusion model-construction path. It is not a policy result. Both policies stop before training because joint proprioception alone does not satisfy their observation contract. Source videos were not mirrored, and joint positions must not be relabeled as environment state.",
+      "code": [
+        {
+          "bytes": 17049,
+          "path": "tools/lerobot_policy_compatibility_audit.py",
+          "sha256": "619070884feb10e091921febf3d512702ca6d33d48cbd6820c83aaece498f372"
+        }
+      ],
+      "configuration": {
+        "lerobot_version": "0.6.0",
+        "policy_probes": [
+          {
+            "command_template": [
+              "python",
+              "-m",
+              "lerobot.scripts.lerobot_train",
+              "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+              "--dataset.root=$DATASET_ROOT",
+              "--policy.type=act",
+              "--policy.push_to_hub=false",
+              "--output_dir=$WORK_DIR/act",
+              "--job_name=act_compatibility_smoke",
+              "--policy.device=cuda",
+              "--steps=1",
+              "--batch_size=2",
+              "--num_workers=0",
+              "--save_checkpoint=false",
+              "--wandb.enable=false",
+              "--seed=17"
+            ],
+            "policy": "act"
+          },
+          {
+            "command_template": [
+              "python",
+              "-m",
+              "lerobot.scripts.lerobot_train",
+              "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+              "--dataset.root=$DATASET_ROOT",
+              "--policy.type=diffusion",
+              "--policy.push_to_hub=false",
+              "--output_dir=$WORK_DIR/diffusion",
+              "--job_name=diffusion_compatibility_smoke",
+              "--policy.device=cuda",
+              "--steps=1",
+              "--batch_size=2",
+              "--num_workers=0",
+              "--save_checkpoint=false",
+              "--wandb.enable=false",
+              "--seed=17"
+            ],
+            "policy": "diffusion"
+          }
+        ],
+        "required_missing_modality": "observation image or semantically valid observation.environment_state"
+      },
+      "datasets": [
+        {
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        }
+      ],
+      "execution": {
+        "command": "uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' python tools/lerobot_policy_compatibility_audit.py --strict",
+        "compute": {
+          "cpu_utilization_percent": 160.01738,
+          "max_rss_bytes": 937803776,
+          "system_cpu_seconds": 1.085951,
+          "user_cpu_seconds": 15.898041,
+          "wall_time_seconds": 10.613842
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T17:38:26.998870+00:00",
+        "host": {
+          "cpu_logical_count": 20,
+          "gpu_info": "NVIDIA GB10",
+          "machine": "aarch64",
+          "storage_free_bytes": 320152395776,
+          "storage_total_bytes": 3937360351232,
+          "total_ram_bytes": 130663170048,
+          "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+        },
+        "log": {
+          "bytes": 4298,
+          "path": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+          "sha256": "9fc33440d9c8e757eb3e3ef69867943d77c5404102b83c2f19995ebe28d162e8"
+        },
+        "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+        "runner": "remote_dgx_spark_uv_isolated",
+        "started_utc": "2026-07-20T17:38:16.242627+00:00"
+      },
+      "experiment_id": "lerobot_act_diffusion_compatibility_preflight",
+      "outputs": [
+        {
+          "bytes": 6858,
+          "path": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+          "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
+        },
+        {
+          "bytes": 41218,
+          "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+          "sha256": "621a0527964d0c8644c8399b150aaeea3207d104278c8cc652aabcd192da2e25"
+        }
+      ],
+      "seed_policy": {
+        "kind": "fixed_compatibility_smoke_seed",
+        "values": [
+          17
+        ]
+      },
+      "split": {
+        "kind": "representative_random_episode_train_package",
+        "package_role": "random_episode_train_smoke_representative",
+        "physical_split_manifest": {
+          "bytes": 2771,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+          "sha256": "999bee80b6bc28e0d65b71fcf1fe084eb7a28b65fa1bb544c67f9b7ca48c07b9"
+        },
+        "source_split": {
+          "bytes": 12628,
+          "path": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
+          "sha256": "51852d83a6d6204ab03b26c5740ef11453dafbee77b4ad842e4e1f3bec6fa0d6"
+        }
+      },
+      "status": "blocked_missing_required_observation_modality"
+    }
+  ],
+  "generated_from": [
+    {
+      "bytes": 285122,
+      "path": "docs/experiments/results.json",
+      "sha256": "8997063d8e8be3f2c3859459639e49d4839034f28a001437d9149aa30db26e67"
+    },
+    {
+      "bytes": 36808,
+      "path": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+      "sha256": "99ebb7a37610069bfcff38b13a2c097a9005000d4325836d22d72d659afee7b8"
+    },
+    {
+      "bytes": 28657,
+      "path": "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json",
+      "sha256": "d2903766f39b08c4f5cab8d7291204e2c034c9bd6e2d17724f303c0a1a6f3155"
+    },
+    {
+      "bytes": 3663,
+      "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
+      "sha256": "a9627558862650f5ef6107586b3f34282e0747b8a8ec4900eef3319533b66656"
+    },
+    {
+      "bytes": 6954,
+      "path": "docs/experiments/statistical_analysis/statistical_report.json",
+      "sha256": "dc2071f80ad184e4b7fa763671ed98f65eb83d3b599d51c5775788661f22a713"
+    },
+    {
+      "bytes": 1732,
+      "path": "docs/experiments/run_logs/lerobot_scene_leakage_dgx_spark.log",
+      "sha256": "a91ba3685d310484db260dc9f9444d77b37af438e95ec85ccac61ce6355f3881"
+    },
+    {
+      "bytes": 2140,
+      "path": "docs/experiments/run_logs/droid_100_dgx_spark.log",
+      "sha256": "74f44ca7752efaaa41968c2a91b634023542e859e59f43366c353a9a1640fdd0"
+    },
+    {
+      "bytes": 1725,
+      "path": "docs/experiments/run_logs/controlled_suite_dgx_spark.log",
+      "sha256": "053c10a9941f3f49b6990f36b132c9e8ac9cb65439ed7afbbdb361889cde60e0"
+    },
+    {
+      "bytes": 20821,
+      "path": "docs/experiments/lerobot_conversion_scale/scale_report.json",
+      "sha256": "6064340fa41730413954a0d21e3a80b0de337b529237ef6d06b817ca0e27571e"
+    },
+    {
+      "bytes": 1228,
+      "path": "docs/experiments/lerobot_conversion_scale/README.md",
+      "sha256": "77be0fe4026c691668e12e78998075d39da15cb87ae05d406d60b4c0bb57c69a"
+    },
+    {
+      "bytes": 2253,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log",
+      "sha256": "2c77da4a84617c0f10ffa1d5a24eb9f2493f0ad216cc506e535681ff3bd85ddb"
+    },
+    {
+      "bytes": 46036,
+      "path": "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+      "sha256": "f3d5cd5d7b81bd027e587687eaeafe2b01a5db4406485c04191bd909c387c79e"
+    },
+    {
+      "bytes": 1878,
+      "path": "docs/experiments/lerobot_multitrajectory_timing/README.md",
+      "sha256": "f7fe5a2b2b699922182cb6bce516ee6d1413cd514aec5d6470823983d5a81943"
+    },
+    {
+      "bytes": 2392,
+      "path": "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
+      "sha256": "1c2cbd5b1c236d59d3d5d01d91ba08c920e9e614801815d3209fef5ab1e5edff"
+    },
+    {
+      "bytes": 6858,
+      "path": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+      "sha256": "a1eb99c74ebb7ff979345cd7e40dbd4c1d5dc442c7e98405e1917654050b1a41"
+    },
+    {
+      "bytes": 41218,
+      "path": "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
+      "sha256": "621a0527964d0c8644c8399b150aaeea3207d104278c8cc652aabcd192da2e25"
+    },
+    {
+      "bytes": 2771,
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+      "sha256": "999bee80b6bc28e0d65b71fcf1fe084eb7a28b65fa1bb544c67f9b7ca48c07b9"
+    },
+    {
+      "bytes": 4298,
+      "path": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+      "sha256": "9fc33440d9c8e757eb3e3ef69867943d77c5404102b83c2f19995ebe28d162e8"
+    },
+    {
+      "bytes": 1847,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
+      "sha256": "7bf27bfacf30a8af68aeddd1a0812a2f92cfc2879e2d189704306aa48415db1c"
+    },
+    {
+      "bytes": 1666,
+      "path": "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
+      "sha256": "3f4333ff1a86fbf2c6415d044c9c92ae2490b39867fa0d88165663557c90bf21"
+    }
+  ],
+  "schema": "worldepisode_experiment_manifest_v1",
+  "scope": "Principal paper experiments and the shared controlled suite. Derived paper rendering is tracked separately by the release manifest.",
+  "validation": {
+    "errors": [],
+    "passed": true
+  }
+}

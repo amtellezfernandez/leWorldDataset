@@ -4,14 +4,14 @@
   "case_count": 19,
   "cases": [
     {
-      "case_id": "armnet__armnetbench_v01_lerobot_so101::random_episode_scene_lineage_leakage",
+      "case_id": "armnet__armnetbench_v01_lerobot_so101::random_episode_proxy_lineage_overlap",
       "diagnostic_status": "lineage_disjoint_split_required_for_valid_evaluation",
       "evidence_files": [
         "docs/experiments/lerobot_scene_leakage/leakage_report.json"
       ],
       "evidence_type": "natural_split_lineage_leakage",
       "maintainer_feedback": "not_requested",
-      "observation": "A standard random episode split leaks all tested world-lineage groups (leakage rate 1.000).",
+      "observation": "A standard random episode split overlaps all tested task--scene proxy groups (proxy overlap rate 1.000).",
       "observed_episodes": 400,
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
       "requirement_ids": [
@@ -376,7 +376,7 @@
       "evidence_files": [
         "docs/experiments/lerobot_scene_leakage/leakage_report.json"
       ],
-      "evidence_type": "active_lerobot_scene_leakage_audit",
+      "evidence_type": "active_lerobot_task_scene_proxy_audit",
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
       "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
       "source_absent_fields": {},
@@ -510,7 +510,7 @@
   ],
   "evidence_tiers": {
     "active_lerobot_conversion_reports": 2,
-    "active_lerobot_scene_leakage_audit": 1,
+    "active_lerobot_task_scene_proxy_audit": 1,
     "source_level_public_metadata_audit": 2
   },
   "full_gate": {

@@ -15,10 +15,12 @@ within that space over time without silent data corruption.
 ## Paper
 
 - [WorldEpisode.pdf](WorldEpisode.pdf) - publication build
-- [WorldEpisode-collab.pdf](WorldEpisode-collab.pdf) - working build with the C1--C7
-  open-contribution task cards for collaborators
-- [arXiv LaTeX source](paper/arxiv/main.tex) (`make -C paper/arxiv root-pdf` for the publication
-  build, `make -C paper/arxiv collab-pdf` for the collab build)
+- [arXiv LaTeX source](paper/arxiv/main.tex) (`make -C paper/arxiv root-pdf`)
+- [Experiment roadmap](TODO.md) - prioritized work required to close the paper's open gates
+
+Paper measurements are generated from the committed JSON reports by
+`tools/paper_experiment_values.py`. The build fails when a required result is missing; unfinished
+gates render as `Not defined yet`.
 
 ## Quickstart: Preflight Validation
 
@@ -70,9 +72,9 @@ stress test.
 Measured results committed in this repository (details and boundaries in
 [docs/experiments/RESULTS.md](docs/experiments/RESULTS.md)):
 
-- **Scene leakage**: on a public SO-101 LeRobot release, a random episode split scores 0.850
-  offline BC success and a scene-disjoint split drops the same probe to 0.000 (temporal ridge
-  baseline: 0.925 to 0.420).
+- **Task-scene proxy shift**: on a public SO-101 LeRobot release, a random episode split overlaps
+  all task-scene proxy lineages. A task-disjoint proxy holdout changes the offline probes
+  materially, but does not isolate scene leakage from task shift.
 - **Action timing**: declaring the inferred 133 ms actuation delay cuts validation joint RMSE from
   4.732 to 1.862 degrees, and same-trace MuJoCo/Genesis replay RMSE from 3.425 to 1.563 degrees.
 - **Loss-explicit conversion**: a LeRobot v3 round trip over ten public episodes preserves 1,935
@@ -83,8 +85,8 @@ Measured results committed in this repository (details and boundaries in
 Stronger claims are intentionally open and fail-closed: ACT/Diffusion rollouts, famous-benchmark
 inflation (the one executed DROID subset rerun does **not** show inflation), Isaac/SAPIEN replay,
 external adoption. They are indexed with reproduction commands in
-[docs/experiments/open_reproduction_gates](docs/experiments/open_reproduction_gates) and staged as
-task cards C1--C7 in [WorldEpisode-collab.pdf](WorldEpisode-collab.pdf).
+[docs/experiments/open_reproduction_gates](docs/experiments/open_reproduction_gates) and as
+prioritized experiments in [TODO.md](TODO.md).
 
 Reproduce everything:
 
@@ -95,7 +97,15 @@ python3 tools/release_readiness.py --strict-rfc
 ```
 
 Full walkthrough: [docs/reproduction.md](docs/reproduction.md). Complete artifact index:
-[docs/artifacts-index.md](docs/artifacts-index.md).
+[docs/artifacts-index.md](docs/artifacts-index.md). Pinned datasets, split and code digests, seeds,
+hardware, wall time, memory, logs, and outputs for the principal runs are joined in the
+[experiment provenance manifest](docs/experiments/experiment_manifest/experiment_manifest.json).
+The submission-ready [anonymous supplement](WorldEpisode-supplement.zip) is built and checked with
+`make supplement`; its audit report is in
+[docs/experiments/anonymity_audit](docs/experiments/anonymity_audit).
+Every paper citation and third-party asset is checked by generated audits in
+[docs/experiments/citation_source_audit](docs/experiments/citation_source_audit) and
+[docs/experiments/third_party_asset_audit](docs/experiments/third_party_asset_audit).
 
 ## Repository Layout
 
@@ -110,16 +120,11 @@ Full walkthrough: [docs/reproduction.md](docs/reproduction.md). Complete artifac
 - `examples/` - small valid examples.
 - `notes/` - research notes, decisions, and open questions.
 
-## Relationship To URDF Studio
-
-URDF Studio implements the practical base (world format, scene packages, cross-simulator transfer
-into MuJoCo, Genesis, PyBullet, MJX/MJLab, and Blender). WorldEpisode extracts the interoperable
-robotics contract and frames that world-layout work as one profile within the broader USS
-spatial-state norm.
-
 ## License
 
 Specification text, schemas, examples, and paper-adjacent documentation are released under CC0 1.0
 Universal (`LICENSE`). The `worldepisode` reference validator, preflight CLI, and Python API are
-released under Apache License 2.0 (`LICENSE-APACHE`). Dataset assets should declare their own
-licenses.
+released under Apache License 2.0 (`LICENSE-APACHE`). Source-derived dataset rows retain their
+upstream licenses and every redistributed package carries `SOURCE_LICENSE.json`; attribution,
+pinned evidence, installed-software licenses, and third-party notices are recorded in
+[THIRD_PARTY_ASSETS.md](THIRD_PARTY_ASSETS.md).

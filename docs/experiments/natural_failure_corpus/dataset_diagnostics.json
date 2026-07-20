@@ -1,5 +1,5 @@
 {
-  "active_dataset_report_count": 3,
+  "active_dataset_report_count": 2,
   "artifact": "docs/experiments/natural_failure_corpus/dataset_diagnostics.json",
   "available": true,
   "case_count": 19,
@@ -17,8 +17,8 @@
   "reports": [
     {
       "case_count": 1,
-      "conversion_status": "active_lineage_split_audit",
-      "evidence_type": "active_lerobot_scene_leakage_audit",
+      "conversion_status": "active_task_scene_proxy_split_audit",
+      "evidence_type": "active_lerobot_task_scene_proxy_audit",
       "repo_id": "armnet/armnetbench_v01_lerobot_so101",
       "report": "docs/experiments/natural_failure_corpus/datasets/armnet_armnetbench_v01_lerobot_so101_2e5e89aee0e7.json",
       "requirement_counts": {

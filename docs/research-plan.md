@@ -87,10 +87,9 @@ The claim is replay within a declared tolerance envelope, not bit-identical phys
 Meta-simulator artifact: `tools/meta_simulator_contract.py` defines the runtime-neutral adapter
 contract. It separates the invariant interface, asynchronous schema extensions, and deterministic
 replay accountability. The current matrix records WorldEpisode's tested MuJoCo and Genesis replay
-adapters for the same LeRobot trace, URDF Studio's tested MuJoCo/Genesis episode-backend
-conformance and one-episode comparison, Isaac as an adapter-ready but untested mapping, and SAPIEN
-as adapter-required. The next scientific step is contact-rich replay with event agreement, task
-outcome agreement, and declared tolerance envelopes.
+adapters for the same LeRobot trace, Isaac as an adapter-ready but untested mapping, and SAPIEN as
+adapter-required. External collaboration is Not defined yet. The next scientific step is
+contact-rich replay with event agreement, task outcome agreement, and declared tolerance envelopes.
 
 Replay-adapter conformance artifact: `tools/replay_adapter_conformance.py` adds a dependency-free
 reference scheduler for delay, zero-order hold, missing-command, and asynchronous queue semantics.
@@ -125,11 +124,11 @@ generalization when reconstructed rooms, objects, Gaussian assets, source videos
 asset families leak across train and evaluation.
 
 Current executable artifact: `tools/lerobot_scene_leakage_experiment.py` runs this audit on
-`armnet/armnetbench_v01_lerobot_so101`, derives `world_lineage` hashes for task-scene/camera-layout
-groups, and compares random-episode against scene-disjoint splits with a Torch MLP BC baseline.
-`tools/lerobot_temporal_policy_baseline.py` then executes a temporal ridge state/action baseline on
-the committed compact LeRobot packages, dropping from 0.925 random-episode success to 0.420
-scene-disjoint success. ACT/Diffusion and rollout claims remain gated by
+`armnet/armnetbench_v01_lerobot_so101`. Its legacy `world_lineage` proxy includes task identity, so
+the current `scene_disjoint`-named holdout is also task-disjoint and cannot identify scene-only
+leakage. `tools/lerobot_temporal_policy_baseline.py` executes a second offline state/action
+diagnostic on the same compact packages. The next protocol must use physical scene/source IDs while
+preserving task support. ACT/Diffusion and rollout claims remain gated by
 `tools/lerobot_policy_leakage_gate.py`.
 
 Scale-out artifact: `tools/benchmark_callout_audit.py` creates a source-level audit over Open

@@ -4,6 +4,7 @@ __pycache__/
 node_modules/
 dist/
 build/
+*.egg-info/
 *.aux
 *.bbl
 *.bcf
@@ -15,5 +16,6 @@ build/
 *.pdf
 !/WorldEpisode.pdf
 !/WorldEpisode-collab.pdf
+/WorldEpisode-supplement.zip
 *.run.xml
 *.synctex.gz

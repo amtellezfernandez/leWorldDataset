@@ -1,7 +1,7 @@
 {
   "all_membership_counts_match": true,
   "all_train_test_overlaps_zero": true,
-  "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. They are ready for state/action ACT or Diffusion reruns and still require external video mirroring before any vision-policy result can be claimed.",
+  "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. Their state/action rows are ready for policies that support proprioception-only input. LeRobot 0.6.0 ACT and Diffusion require an image or environment-state input, so source videos or a semantically valid environment-state feature must be materialized before those jobs can run.",
   "package_count": 4,
   "package_root": "docs/experiments/lerobot_policy_gate/physical_splits",
   "packages": [
@@ -48,6 +48,6 @@
   "source_files_verified": true,
   "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
   "status": "physical_split_packages_ready",
-  "total_output_bytes": 6245649,
+  "total_output_bytes": 6261016,
   "total_output_frames": 241470
 }

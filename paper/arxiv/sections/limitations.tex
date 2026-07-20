@@ -8,24 +8,44 @@ acceptance rules are boxed in Appendix~\ref{app:gates}; this section states what
 
 \paragraph{Beyond robotics (future work).}
 All measured evidence in this paper is the WorldEpisode robotics profile; the broader Universal
-Spatial State framing is proposed, not demonstrated outside robotics. Two deterministic pilots only
+Spatial State framing is proposed, not demonstrated outside robotics. \ExpNonrobotPilotCount{}
+deterministic pilots only
 illustrate that the same vocabulary can express non-robotics drift. In a game-engine collision pilot,
 a client loads a stale arena collision asset after an authoritative patch, which the asset-digest,
 state-revision, and role checks catch. In an autonomous-driving clock pilot, camera and lidar logs
-deserialize correctly, but a 50 ms undeclared clock offset at 15 m/s creates a 0.75 m fusion error
-against a 0.20 m tolerance, which the declared clock mapping corrects to 0.0 m. These are
+deserialize correctly, but a \ExpAvClockOffsetMilliseconds{} ms undeclared clock offset at
+\ExpAvSpeedMetersPerSecond{} m/s creates a \ExpAvFusionErrorMeters{} m fusion error against a
+\ExpAvToleranceMeters{} m tolerance, which the declared clock mapping corrects to
+\ExpAvCorrectedErrorMeters{} m. These are
 illustrative pilots, not production game-engine or AV benchmark results. A stronger paper should add
-at least one public non-robotics corpus and an independently maintained adapter.\collabmark{C6}
+at least one public non-robotics corpus and an independently maintained adapter.
 
 \paragraph{Principal limitations.}
-First, the leakage result is an offline behavioral-cloning audit, not a physical rollout: the Torch
-MLP probe and the temporal ridge baseline demonstrate that random splits can leak world lineage and
-inflate offline evaluation, but ACT and Diffusion Policy must be run on the committed split
-manifest (and the split packages' source videos mirrored with digests) before claiming impact on
-common LeRobot training recipes. Second, the reference implementation is single-sourced: the
-clean-room reader reduces the risk that the fixtures only work through the reference SDK, but it is
-an internal artifact, and the \texttt{worldepisode} package is not yet a released PyPI package or
-merged into upstream LeRobot or Rerun examples. The pilot natural-source corpus adds 19 cases from
-five public robot-learning datasets but does not prove prevalence in the wild; a stronger version
-of this paper should record whether dataset maintainers agree with representative
-diagnostics.\collabmark{C4}
+The headline holdout is confounded: task identity is part of the proxy-lineage key, so it measures a
+task--scene shift and cannot attribute the change to scene overlap alone. The MLP uses
+\ExpMlpSeedCount{} optimization seeds and task one-hot features; crossed bootstrap intervals capture
+seed and held-out-episode variation, but \ExpMlpSeedCount{} seeds remain a small training sample and
+the \ExpOfflineSuccessThreshold{} nRMSE threshold is reported only as a secondary diagnostic rather
+than task success. ACT/Diffusion training and rollout evidence remain open; the pinned compatibility
+probe stops both policy paths before training because source images were not materialized. The timing audit calibrates on
+\ExpTimingCalibrationEpisodes{} trajectories and evaluates \ExpTimingHeldoutEpisodes{} held-out
+trajectories, but it has no motor-effective timestamps and covers
+\ExpTimingRobotTypeCount{} robot type and \ExpTimingControllerConfigurationCount{} controller
+configuration. MuJoCo and Genesis still execute the same minimal servo model on
+\ExpReplayTraceCount{} \ExpReplayTraceNoun{}, not independent contact-rich physics. Conversion
+covers complete selected Parquet shards from
+\ExpConversionScaleDatasetCount{} datasets, not their full corpora or source video payloads. Injected faults establish
+detection on known mutations, not natural prevalence or false-positive rates in deployment.
+
+The implementation is also single-sourced. The clean-room reader is internal, the package is not
+yet an upstream LeRobot/Rerun integration, and no external compatible dataset is available. The
+\ExpNaturalDatasetCount-dataset natural-source audit mixes \ExpNaturalActiveDatasetCount{} active
+artifacts with \ExpNaturalSourceLevelDatasetCount{} source-level metadata reviews and has no
+maintainer adjudication.
+
+\paragraph{Societal impact.}
+Fail-closed state checks may reduce unsafe or irreproducible robot evaluations and wasted training
+compute. Conversely, an incomplete contract can create false assurance, provenance fields can expose
+sensitive capture locations or operators, and content-addressed lineage can aid dataset linkage.
+Deployments should minimize or access-control provenance, retain native safety interlocks, and treat
+conformance as an audit aid rather than a safety certificate.

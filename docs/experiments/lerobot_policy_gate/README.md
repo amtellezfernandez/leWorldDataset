@@ -1,6 +1,6 @@
 # LeRobot ACT/Diffusion Leakage Gate
 
-Status: ready_not_executed
+Status: blocked_missing_required_observation_modality
 
 This directory is the executable gate for the reviewer concern that the leakage result must be
 tested with stronger LeRobot-native policies. It is intentionally not marked closed until ACT or
@@ -22,7 +22,17 @@ Source split manifest: `docs/experiments/lerobot_scene_leakage/split_manifest.js
 
 Boundary: Virtual manifests make split materialization deterministic for LeRobot-native policy jobs. They do not replace committed train/eval metrics or physical rollout reports.
 
-Physical package boundary: Physical split packages are committed compact low-dimensional LeRobot folders. They are ready for state/action ACT or Diffusion reruns and still require external video mirroring before any vision-policy result can be claimed.
+Physical package boundary: Physical split packages are committed compact low-dimensional LeRobot folders. Their state/action rows are ready for policies that support proprioception-only input. LeRobot 0.6.0 ACT and Diffusion require an image or environment-state input, so source videos or a semantically valid environment-state feature must be materialized before those jobs can run.
+
+## Policy Compatibility
+
+- Pinned LeRobot requirement version: 0.6.0
+- Compatibility report: `docs/experiments/lerobot_policy_gate/policy_compatibility_report.json`
+- Current package digests match the probe: True
+- ACT/Diffusion completed a training step: False
+- Probe status: blocked_missing_required_observation_modality
+
+This probe validates the committed low-dimensional package loader and the pinned LeRobot ACT/Diffusion model-construction path. It is not a policy result. Both policies stop before training because joint proprioception alone does not satisfy their observation contract. Source videos were not mirrored, and joint positions must not be relabeled as environment state.
 
 ## Jobs
 
@@ -35,10 +45,11 @@ Physical package boundary: Physical split packages are committed compact low-dim
 
 ## Run
 
-1. Use the local train/test packages listed in `train_eval_jobs.json`, or upload those folders as the matching LeRobot repo IDs.
-2. Run `bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh` in an environment with LeRobot installed.
-3. Evaluate each checkpoint with the offline action-evaluation contract.
-4. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
-5. Save the required result files listed per job. Mirror source videos first if the policy consumes images.
+1. Materialize source images or a semantically valid environment-state input and regenerate the split packages.
+2. Rerun the compatibility audit until both policies complete the one-step smoke test.
+3. Run `bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh` in an environment with LeRobot installed.
+4. Evaluate each checkpoint with the offline action-evaluation contract.
+5. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
+6. Save the required result files listed per job.
 
 The gate remains open while `policy_gate_report.json` has `"pass": false`.

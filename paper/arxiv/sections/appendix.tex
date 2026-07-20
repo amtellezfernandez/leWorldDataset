@@ -1,3 +1,4 @@
+\clearpage
 \appendix
 
 \section{Evidence Boundaries}
@@ -6,9 +7,10 @@
 Table~\ref{tab:evidence-boundaries} states the boundary of each empirical claim in
 Section~\ref{sec:evidence}.
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
 \footnotesize
+\renewcommand{\arraystretch}{0.92}
 \caption{What the current evidence supports, and what it does not yet support.}
 \label{tab:evidence-boundaries}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}
@@ -17,35 +19,45 @@ Section~\ref{sec:evidence}.
 \toprule
 Claim area & Current evidence & Boundary \\
 \midrule
-Leakage & Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable
+Leakage & Public ArmnetBench LeRobot audit with \ExpSceneEpisodeCount{} teleoperated reference episodes, an executable
 Torch BC probe, a measured temporal ridge state/action baseline, an ACT/Diffusion gate harness, and
-four compact digest-verified LeRobot state/action split packages totaling 241{,}470 frames &
-Stronger ACT/Diffusion jobs are prepared but not run; the compact split packages omit video
-payloads, so no vision-policy, real-robot, or high-fidelity rollout result is claimed yet \\
-Conversion & Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor,
-index, and timestamp equality & Two datasets; broader LeRobot coverage remains future work \\
-Replay timing & Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis
-position-servo replay adapters, URDF Studio MuJoCo/Genesis episode-backend evidence, and a
-dependency-free scheduler conformance harness & One LeRobot trace with minimal joint replay
-adapters; no contact-rich task rollout, Isaac runtime result, or SAPIEN runtime result is claimed \\
+\ExpPolicySplitPackageCount{} compact digest-verified LeRobot state/action split packages totaling
+\ExpPolicySplitFrameCount{} frames &
+Lineage is a task--scene proxy and the holdout is task-disjoint; scene-only leakage is not
+identified. The LeRobot \ExpPolicyCompatibilityLeRobotVersion{} preflight loads the representative
+package, but \ExpPolicyCompatibilityTrainingStepCount{}/\ExpPolicyCompatibilityProbeCount{} policy
+paths complete a training step because split packages omit the required image/environment-state
+modality; rollouts are not run \\
+Conversion & Complete pinned source Parquet shards from \ExpConversionScaleDatasetCount{} public
+LeRobotDataset v3 datasets: \ExpConversionScaleEpisodeCount{} episodes and
+\ExpConversionScaleRowCount{} paired state/action samples with exact tensor, index, and timestamp
+equality & Selected Parquet shards rather than full corpora; source video payloads are not converted
+or used for a throughput claim \\
+Replay timing & Lag calibration on \ExpTimingCalibrationEpisodes{} SO-101 trajectories,
+\ExpTimingHeldoutEpisodes{} source-episode-disjoint evaluations across \ExpTimingTaskCount{} tasks,
+tested same-trace MuJoCo and Genesis position-servo adapters, and scheduler conformance & Telemetry
+proxy with no motor-effective timestamps, \ExpTimingRobotTypeCount{} robot type, and
+\ExpTimingControllerConfigurationCount{} controller configuration; simulator adapters use
+\ExpReplayTraceCount{} \ExpReplayTraceNoun{}, with no contact-rich task rollout, Isaac result, or
+SAPIEN result \\
 Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN
-plus same-trace MuJoCo/Genesis replay evidence, URDF Studio \texttt{SimBackend} conformance, and a
-one-episode MuJoCo--Genesis comparison & MuJoCo and Genesis are tested for the minimal replay
+plus same-trace MuJoCo/Genesis replay evidence & MuJoCo and Genesis are tested for the minimal replay
 profile; Isaac and SAPIEN are not replay-tested in this paper, and equal physics is not claimed \\
 Generalization beyond robotics & Deterministic game-engine collision-patch and autonomous-driving
 clock-domain pilots using the same invariant vocabulary & Not measured on production game engines,
 public AV datasets, or fleet logs \\
-Validation & Fourteen injected requirement faults, two independent hand-authored fixtures, and a
-pilot natural-source corpus over five public datasets & Five-dataset count is met through active
+Validation & \ExpFaultCaseCount{} injected requirement faults, \ExpIndependentFixtureCount{}
+independent hand-authored fixtures, and a pilot natural-source corpus over
+\ExpNaturalDatasetCount{} public datasets & The \ExpNaturalDatasetCount-dataset count is met through active
 LeRobot artifacts plus source-level public benchmark metadata; dataset-specific diagnostic reports
-now cover all cases, but no maintainer feedback is recorded yet \\
+now cover all cases. Maintainer validation: \ExpMaintainerValidationResult \\
 Binding retention & Versioned \texttt{uss-core-23} semantic projection checked by executable
 artifacts & Pilot projection; not a universal score of each storage format \\
 Famous benchmark call-out & Source-level audit over Open X-Embodiment, DROID, BridgeData V2,
 LIBERO, and CALVIN, plus a targeted DROID subset rerun tool and a separate inflation-proof gate &
-Missing public controls are not measured score inflation; the proof gate currently has one
-executed DROID subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
-inflation claims \\
+Missing public controls are not measured score inflation; the proof gate currently has
+\ExpDroidRerunEpisodes{}-episode DROID subset evidence but \ExpBenchmarkInflationClaimCount{}
+measured inflation claims \\
 Real-to-sim drift & Controlled action-contract and representation-role ablations where drifted
 contracts succeed in simulation and fail under deployment proxies & Deterministic proxy; not a
 RoboSnap/DROID-Sim rerun or physical hardware deployment \\
@@ -54,7 +66,7 @@ files, and an internal clean-room reader that does not import the reference SDK 
 upstream LeRobot/Rerun integration, external independent implementation, or external dataset release
 yet \\
 Scale architecture & Dataset manifest schema, scalable example, executable audit, and a generated
-32{,}768-shard catalog benchmark describing 1{,}073{,}741{,}824 episodes for open/index latency,
+\ExpScaleTraceShardCount-shard catalog benchmark describing \ExpScaleEpisodeCapacity{} episodes for open/index latency,
 partition pruning, digest-cache behavior, and resolver routing & Catalog-side benchmark only; no
 billion episode rows, payload bytes, distributed storage, concurrent readers, or institutional
 federation are measured \\
@@ -63,6 +75,76 @@ federation are measured \\
 \end{table}
 
 \FloatBarrier
+
+\section{Experiment and Compute Provenance}
+\label{app:provenance}
+
+The supplementary artifact includes a machine-readable experiment manifest at
+\path{docs/experiments/experiment_manifest/experiment_manifest.json}. It joins
+\ExpProvenanceExperimentCount{} principal runs
+to pinned dataset revisions, split and code digests, effective configuration, seed policy, output
+digests, and the remote execution log. The measured environment provides an
+\ExpComputeAccelerator{} accelerator, \ExpComputeCpuCount{} logical CPUs, and
+\ExpComputeRamGiB{} GiB RAM. The MLP run takes \ExpMlpWallSeconds{} s with
+\ExpMlpPeakMemoryMiB{} MiB peak resident memory; the DROID and controlled-suite processes take
+\ExpDroidWallSeconds{} s and \ExpControlledWallSeconds{} s. The conversion-scale process takes
+\ExpConversionScaleWallSeconds{} s with \ExpConversionScalePeakMemoryMiB{} MiB peak resident memory;
+its \ExpConversionScaleFailedRunCount{} preliminary failed runs are retained with their nonzero exit
+status and logs. The multi-trajectory timing audit takes \ExpTimingWallSeconds{} s with
+\ExpTimingPeakMemoryMiB{} MiB peak resident memory. The logs also record storage and exit status.
+Temporal ridge shares the controlled-suite process and is labeled with that accounting scope rather
+than assigned invented per-subtest compute.
+
+The anonymous supplementary ZIP is built from an explicit allowlist with deterministic entry
+digests. Source-control history and local environments are excluded; text payloads are anonymized
+before hashing, binary payloads are scanned, and a separate audit checks extracted PDF text and
+metadata plus every ZIP path and payload.
+
+\section{Third-Party Assets}
+\label{app:third-party-assets}
+
+The generated inventory at
+\path{docs/experiments/third_party_asset_audit/asset_audit.json} joins the experiment manifest to
+immutable dataset-card evidence. The \ExpAssetActiveDatasetCount{} active datasets are licensed as
+follows: ArmnetBench under \ExpAssetArmnetLicense{}, SVLA SO-101 pick-place under
+\ExpAssetSvlaLicense{}, PushT under \ExpAssetPushtLicense{}, and the LeRobot DROID-100 mirror under
+\ExpAssetDroidLicense{} (retaining both the mirror and upstream DROID obligations).
+
+The supplement contains \ExpAssetRedistributedParquetCount{} source-derived Parquet files in
+round-trip and split packages, covered by \ExpAssetSourceLicenseFileCount{} adjacent
+\texttt{SOURCE\_LICENSE.json} records. It contains \ExpAssetSourceMediaCount{} source image or video
+files. Source-derived rows retain their source expression; WorldEpisode-authored manifests,
+diagnostics, and aggregate reports are CC0-1.0 unless stated otherwise. The generated
+\path{THIRD_PARTY_ASSETS.md} records attributions, immutable card digests, installed software
+licenses, and context-only datasets. Apache-2.0 and PushT MIT texts are distributed with the
+artifact.
+
+The official NeurIPS 2026 style is pinned by digest. Because its distributed file contains no
+separate SPDX or license statement, the inventory records its license as \texttt{NOASSERTION} and
+states the author-kit submission use instead of inventing a license. This inventory is provenance
+documentation, not legal advice.
+
+\section{Pilot Binding Retention}
+
+\begin{table}[htbp]
+\centering
+\caption{Semantic field retention in the versioned \ExpBindingFieldCount-field pilot projection.
+The reference binding retains \ExpBindingReferenceNative{} natively and is omitted. Sidecar recovery
+is by construction.}
+\label{tab:binding-retention}
+\begin{tabular}{lrr}
+\toprule
+Binding & Native & With WorldEpisode \\
+\midrule
+LeRobot v3 & \ExpBindingLerobotNative & \ExpBindingLerobotSidecar \\
+Rerun RRD & \ExpBindingRerunNative & \ExpBindingRerunSidecar \\
+NCore & \ExpBindingNcoreNative & \ExpBindingNcoreSidecar \\
+MCAP/ROS2 & \ExpBindingMcapNative & \ExpBindingMcapSidecar \\
+OpenUSD/SimReady & \ExpBindingOpenusdNative & \ExpBindingOpenusdSidecar \\
+glTF Gaussian asset & \ExpBindingGltfNative & \ExpBindingGltfSidecar \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Open Gates: Commands and Acceptance Rules}
 \label{app:gates}
@@ -79,22 +161,25 @@ least one externally published WorldEpisode-compatible dataset. The same gates a
 \end{openresult}
 
 \begin{openresult}{ACT/Diffusion and rollout impact}
-Status: open (referenced from Case 1). To close this gate, first regenerate the split packages and
-LeRobot job specs with \texttt{python3 tools/lerobot\_policy\_leakage\_gate.py}. Then run the
-generated jobs with \texttt{bash docs/experiments/lerobot\_policy\_gate/run\_lerobot\_policy\_jobs.sh}
-inside a LeRobot training environment.
+Result: \ExpActDiffusionResult. Rollout impact: \ExpRolloutImpactResult. Scene-only leakage:
+\ExpSceneOnlyLeakageResult. First replace the task-derived proxy with physical
+scene/source-capture IDs and construct task-stratified random and scene-lineage-disjoint splits.
+Then regenerate split packages and LeRobot job specs and run ACT/Diffusion inside a LeRobot training
+environment. Before training, materialize source images or a semantically valid environment-state
+feature and require the compatibility preflight to complete a training step.
 
-Required artifacts: policy checkpoint digests, train/eval configs and seeds, offline action
-metrics for random and scene-disjoint splits, rollout traces or videos with content digests, and an
-updated \path{docs/experiments/lerobot_policy_gate/policy_gate_report.json}.
+Required artifacts: a proof that task support is identical across protocols and scene lineage is
+disjoint, policy checkpoint digests, train/eval configs with at least five seeds, offline action
+metrics, rollout traces or videos with content digests, and an updated policy-gate report.
 
-Acceptance rule: at least one ACT or Diffusion Policy run must report both split protocols, and at
-least one simulator or physical rollout report must use the same split manifest. Until then, the
-paper claims only the offline Torch probe and the prepared gate.
+Acceptance rule: both split protocols must preserve task support, at least one ACT or Diffusion
+Policy must report both protocols over multiple seeds, and at least one simulator or physical
+rollout must use the same manifests. Running the current task-confounded jobs does not close this
+gate.
 \end{openresult}
 
 \begin{openresult}{famous-benchmark score-inflation proof}
-Status: open (referenced from Case 7). A targeted DROID subset rerun can be attempted with
+Result: \ExpBenchmarkInflationResult. A targeted DROID subset rerun can be attempted with
 \texttt{uv run --with pyarrow --with requests --with numpy python
 tools/famous\_benchmark\_policy\_rerun.py --benchmark droid\_100 --required}. The proof contract is
 then enforced with \texttt{python3 tools/benchmark\_inflation\_gate.py --required}.
@@ -112,13 +197,16 @@ controls, not evidence that published scores are inflated.
 \label{app:scale}
 
 To address production scale, we audit the dataset manifest in
-\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates five namespaces,
-three resolver schemes, three registries, three shards, two indexes, one append-only version, and
-nine digest-addressed asset descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
+\path{examples/scalable-corpus.worldepisode-dataset.json}. The audit validates
+\ExpScaleNamespaceCount{} namespaces, \ExpScaleResolverCount{} resolver schemes,
+\ExpScaleRegistryCount{} registries, \ExpScaleShardCount{} shards, \ExpScaleIndexCount{} indexes,
+\ExpScaleVersionCount{} append-only version, and \ExpScaleAssetCount{} digest-addressed asset
+descriptors spanning Hugging Face, S3, and OCI URIs with local mirrors.
 It also checks that the manifest includes a world-lineage index, an asset-digest index, and a
-split-manifest shard. We then run a generated catalog benchmark with 32{,}768 trace shards
-describing 1{,}073{,}741{,}824 episodes. The committed report records the measured time for parsing
-and indexing the generated JSON catalog, eight partition-pruning queries, digest-cache resolution,
+split-manifest shard. We then run a generated catalog benchmark with
+\ExpScaleTraceShardCount{} trace shards describing \ExpScaleEpisodeCapacity{} episodes. The
+committed report records the measured time for parsing and indexing the generated JSON catalog,
+\ExpScaleQueryCount{} partition-pruning queries, digest-cache resolution,
 and resolver routing over all asset descriptors. This is catalog-side evidence only, but it makes
 the scale claim executable: opening a corpus starts from the manifest and indexes rather than from
 recursive storage discovery.

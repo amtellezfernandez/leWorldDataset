@@ -17,10 +17,10 @@
     "described_episode_capacity": 1073741824,
     "episodes_materialized": 0,
     "index_count": 3,
-    "json_catalog_bytes": 24588169,
+    "json_catalog_bytes": 24588182,
     "registry_count": 6,
     "resolver_count": 5,
-    "sha256": "11a190f76a6b5c29401aee5e6fd07952ac94ce7a91a117ee8920a081ac65e861",
+    "sha256": "79817b5772ae4df6e215dd48c7b5a6c824877e9ea738f4d827580b5a4444b090",
     "total_shard_count": 32769,
     "trace_shard_count": 32768
   },
@@ -119,9 +119,9 @@
   },
   "status": "pass",
   "timings_ms": {
-    "catalog_open_parse_and_index": 152.408,
-    "digest_cache_resolution": 6.256,
-    "partition_pruning_queries": 0.191,
-    "resolver_routing": 62.79
+    "catalog_open_parse_and_index": 514.232,
+    "digest_cache_resolution": 28.153,
+    "partition_pruning_queries": 0.595,
+    "resolver_routing": 176.155
   }
 }

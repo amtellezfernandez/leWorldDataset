@@ -684,11 +684,14 @@
   "claim_boundary": "Findings identify missing or unverified public evidence for WorldEpisode controls. They are not claims that benchmark scores are inflated.",
   "contrast_measured_case": {
     "artifact": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
+    "available": true,
     "dataset": "armnet/armnetbench_v01_lerobot_so101",
-    "random_offline_bc_success": 0.85,
+    "random_offline_bc_success": 0.8525,
     "random_split_leakage": 1.0,
+    "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
     "scene_disjoint_leakage": 0.0,
-    "scene_disjoint_offline_bc_success": 0.0
+    "scene_disjoint_offline_bc_success": 0.0,
+    "seed_count": 5
   },
   "profile": "worldepisode-famous-benchmark-callout-0.1",
   "required_next_steps": [

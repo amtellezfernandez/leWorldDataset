@@ -1,96 +1,123 @@
 \section{Evidence: What the Audit Finds}
 \label{sec:evidence}
 
-The experiments are written as failure investigations rather than as isolated unit tests, and they
-run in three acts: what drift costs when it goes uncaught (Cases 1--3), what the contract catches
-and repairs (Cases 4--6), and how the same audit scales beyond one dataset (Case 7, with the
-dataset-scale audit in Appendix~\ref{app:scale}). All measured evidence here is robotics; two
-deterministic non-robotics pilots are deferred to Section~\ref{sec:limits}. Results that are
-executable but not yet measured are marked open inline; their commands, required artifacts, and
-acceptance rules are consolidated in Appendix~\ref{app:gates}, and the boundary of every claim is
-tabulated in Appendix~\ref{app:boundaries}.
+We test what drift changes (Cases 1--3), what the contract detects or preserves (Cases 4--6), and
+which controls remain unavailable in \ExpBenchmarkCount{} public benchmarks (Case 7). All measured data are
+robotics. Appendix~\ref{app:boundaries} records claim boundaries and Appendix~\ref{app:gates}
+records unexecuted gates.
 
 \subsection{What drift costs}
 
-\paragraph{Case 1: scene-lineage leakage in evaluation splits (\texttt{SPLIT.001}).}
-The most dangerous failure is not a crash; it is a benchmark that looks successful for the wrong
-reason. We audit ArmnetBench v0.1's single-arm SO-101 LeRobot release~\citep{armnetbench_lerobot_so101}
-by deriving eight WorldEpisode-style \texttt{world\_lineage} hashes, one for each task-scene and
-camera-layout group. A standard random episode split trains on 320 episodes, tests on 80, and leaks
-all test scene lineages into training. The same Torch MLP state-action behavioral-cloning probe
-then reaches 0.850 offline imitation success under a fixed normalized-RMSE tolerance of 0.25.
+\paragraph{Case 1: task--scene proxy leakage in evaluation splits (\texttt{SPLIT.001}).}
+We audit \ExpSceneEpisodeCount{} teleoperated episodes from ArmnetBench v0.1's SO-101 LeRobot
+release~\citep{armnetbench_lerobot_so101}. Public metadata does not expose physical scene IDs, so we
+hash source revision, robot type, task ID/text, and camera schema into
+\ExpSceneLineageCount{} \emph{task--scene proxy} lineages. A seeded
+\ExpSceneRandomTrainPercent/\ExpSceneRandomTestPercent{} episode split
+(\ExpSceneRandomTrainEpisodes/\ExpSceneRandomTestEpisodes{} episodes) puts every test proxy in
+training. The comparison split holds out task IDs \ExpSceneHeldoutTaskIndices{}
+(\ExpSceneHeldoutTrainEpisodes/\ExpSceneHeldoutTestEpisodes{} episodes), yielding
+\ExpSceneHeldoutOverlap{} proxy overlap.
+\emph{This is also a task-disjoint shift}; it cannot identify the causal effect of scene overlap.
 
-When the split is made scene-disjoint, the apparent success disappears. The held-out eye-drop scene
-lineages have zero overlap with training, the test set contains 100 episodes, and offline BC success
-drops to 0.000. Mean episode normalized RMSE rises from 0.183 to 0.363, a \(1.98\times\) increase.
-This is an offline action-imitation benchmark, not a physical rollout claim or a claim about
-state-of-the-art LeRobot policies. Its purpose is narrower and diagnostic: it exposes that a
-conventional split can reward memorizing a background world rather than learning a transferable
-manipulation behavior: the number moved with the split, not the policy.\collabmark{C1}
+A \ExpMlpLayerCount-layer Torch MLP (\ExpMlpHiddenUnits{} units/layer, AdamW,
+\ExpMlpEpochCount{} epochs, \ExpMlpSeedCount{} seeds) maps state, episode phase, timestamp, and task
+one-hot features to action. The primary metric, mean episode nRMSE, changes from
+\ExpMlpRandomNrmse{} ($\pm\ExpMlpRandomNrmseSeedStd$ seed SD;
+\ExpConfidencePercent\% crossed seed--episode bootstrap CI
+[\ExpMlpRandomNrmseCiLow, \ExpMlpRandomNrmseCiHigh]) to \ExpMlpHeldoutNrmse{}
+($\pm\ExpMlpHeldoutNrmseSeedStd$;
+[\ExpMlpHeldoutNrmseCiLow, \ExpMlpHeldoutNrmseCiHigh]); the increase is
+\ExpMlpNrmseDifference{} [\ExpMlpNrmseDifferenceCiLow, \ExpMlpNrmseDifferenceCiHigh].
+As a secondary diagnostic, the rate below a fixed \ExpOfflineSuccessThreshold{} nRMSE threshold is
+\ExpMlpRandomSuccessRate{} ($\pm\ExpMlpRandomSuccessSeedStd$ seed SD) versus
+\ExpMlpHeldoutSuccessRate{} ($\pm\ExpMlpHeldoutSuccessSeedStd$). This threshold was not selected on
+a validation set and is not task success. Task one-hot features make this probe particularly
+sensitive to the task shift.
 
-The leakage penalty survives a second model class: a closed-form temporal ridge baseline with a
-three-frame state history, executed directly on the committed compact LeRobot state/action split
-packages, reaches 0.925 offline success on the random episode split and 0.420 on the scene-disjoint
-split, a 0.505 success-rate drop (mean episode normalized RMSE 0.157 to 0.255); this is still not
-ACT or Diffusion and not a rollout result. A generated
-memorization pilot with world/entity lineage labels shows the same shape: random splits reach 1.000
-accuracy while world-disjoint and entity-disjoint splits fall to 0.500 and 0.562.
+A deterministic ridge policy using only a \ExpTemporalHistoryFrames-frame state history has mean
+episode nRMSE \ExpTemporalRandomNrmse{}
+[\ExpTemporalRandomNrmseCiLow, \ExpTemporalRandomNrmseCiHigh] versus
+\ExpTemporalHeldoutNrmse{} [\ExpTemporalHeldoutNrmseCiLow,
+\ExpTemporalHeldoutNrmseCiHigh]; the increase is \ExpTemporalNrmseDifference{}
+[\ExpTemporalNrmseDifferenceCiLow, \ExpTemporalNrmseDifferenceCiHigh]. Its secondary thresholded
+rates are \ExpTemporalRandomSuccessRate{}
+(\ExpTemporalRandomSuccessCount/\ExpSceneRandomTestEpisodes{};
+[\ExpTemporalRandomSuccessCiLow, \ExpTemporalRandomSuccessCiHigh]) versus
+\ExpTemporalHeldoutSuccessRate{}
+(\ExpTemporalHeldoutSuccessCount/\ExpSceneHeldoutTestEpisodes{};
+[\ExpTemporalHeldoutSuccessCiLow, \ExpTemporalHeldoutSuccessCiHigh]); its independently bootstrapped
+rate difference is \ExpTemporalSuccessDifference{}
+[\ExpTemporalSuccessDifferenceCiLow, \ExpTemporalSuccessDifferenceCiHigh]. We use
+\ExpBootstrapResamples{} resamples. MLP intervals cross optimization seeds with held-out episodes,
+pair sampled seeds across protocols, and resample the different episode sets independently; ridge
+intervals resample episodes only. Thus the experiment establishes that the random split is not
+proxy-lineage-disjoint and that evaluation changes materially under a harder task--scene holdout;
+it does not establish scene-only leakage, policy rollout impact, or benchmark inflation.
 
-To keep the stronger claim from being implied before it is measured, the repository also emits an
-ACT/Diffusion gate from the same split manifest: train/test episode allowlists, four virtual split
-manifests with 27 digest-verified source files, four compact physical LeRobot state/action split
-packages totaling 241{,}470 rows, four LeRobot-native training jobs (\texttt{act} and
-\texttt{diffusion} on random and scene-disjoint splits), and a simulator or physical rollout
-contract. The gate is intentionally open in this release; no ACT, Diffusion Policy, IsaacLab, or
-hardware success number is claimed, and the compact packages omit video payloads until source
-videos are mirrored with committed digests. The command path and acceptance rule are stated in
-Appendix~\ref{app:gates}.
+The artifact includes digest-verified split packages and ACT/Diffusion job specifications. A pinned
+LeRobot \ExpPolicyCompatibilityLeRobotVersion{} compatibility probe loads the representative
+package, but \ExpPolicyCompatibilityTrainingStepCount{}/\ExpPolicyCompatibilityProbeCount{} policy
+paths complete a training step: all \ExpPolicyCompatibilityExpectedBlockerCount{} stop during model
+construction because the low-dimensional package has neither an observation image nor an
+environment-state feature. We do not relabel joint proprioception to bypass that input contract.
+Policy results and rollouts therefore remain open (Appendix~\ref{app:gates}).
 
 \paragraph{Case 2: action-timing and replay drift (\texttt{ACTION.002}).}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:
-commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}. On
-the public SO-101 trajectory, WorldEpisode records policy-output, enqueue, queue-consume, and
-motor-receive timestamp semantics, plus zero-order-hold interpolation and a constant-frame latency
-model.
+commands may be queued, chunked, interpolated, or consumed after policy output~\citep{lerobot}.
+We estimate an integer action/state lag from \ExpTimingCalibrationEpisodes{} calibration
+trajectories spanning \ExpTimingTaskCount{} tasks, freeze it, and test
+\ExpTimingHeldoutEpisodes{} source-episode-disjoint trajectories with
+\ExpTimingSourceEpisodeOverlap{} source-episode overlap.
+The selected lag is \ExpTimingDelayFrames{} frames (\ExpTimingDelayMilliseconds{} ms). On identical
+within-episode target rows, zero-delay alignment has pooled RMSE \ExpTimingZeroRmse{} source
+position units and frozen-delay alignment has \ExpTimingFrozenRmse{}. The mean paired episode
+improvement is \ExpTimingImprovement{} (\ExpConfidencePercent\% CI
+[\ExpTimingImprovementCiLow, \ExpTimingImprovementCiHigh]); all
+\ExpTimingImprovedEpisodeCount/\ExpTimingHeldoutEpisodes{} held-out trajectories improve.
 
-Estimating the effective delay on the calibration prefix gives four 30 Hz frames, or 133 ms. On the
-validation suffix, naive command-time alignment has joint RMSE 4.732 degrees. Timestamp-aware
-alignment has RMSE 1.862 degrees, a \(2.54\times\) improvement. We then execute the same
-WorldEpisode action contract through two minimal six-joint position-servo replay adapters. In
-MuJoCo, naive command-time replay has RMSE 3.425 degrees and timestamp-aware replay has 1.563
-degrees, a \(2.19\times\) improvement. Genesis same-trace replay gives the same measured profile:
-3.425 degrees under naive command-time replay and 1.563 degrees under timestamp-aware replay, also
-a \(2.19\times\) improvement. The two engines agree to roughly seven significant figures
-(MuJoCo 3.4247237 versus Genesis 3.4247236 naive) precisely because both integrate the same minimal
-six-joint position-servo model; we therefore report this as an adapter-conformance result --- the
-same action contract executes consistently across runtimes --- and explicitly not as evidence that
-the engines' underlying physics agree. The Isaac adapter is emitted as a ready mapping from the same
-contract, but is not tested in this environment. The failure avoided here is a common one: blaming
-a simulator or controller when the dataset never said when the command actually took effect.
+This is an action/state telemetry-lag proxy, not measured motor latency. The source exposes
+\ExpTimingTimestampColumnCount{} float32 frame-timestamp column, no motor-effective timestamps,
+\ExpTimingRobotTypeCount{} robot type, and \ExpTimingControllerConfigurationCount{} controller
+configuration.
+Using the derived time shift, timestamp zero-order hold gives \ExpTimingTimestampZohRmse{} RMSE
+whereas linear interpolation gives \ExpTimingTimestampLinearRmse{}, showing that the timestamp
+comparison is interpolation-sensitive rather than independent queue evidence.
 
-A dependency-free replay-adapter conformance harness guards additional runtime adapters: on
+Separately, \ExpReplayTraceCount{} \ExpReplayTraceNoun{} has \ExpReplaySampleCount{}
+\ExpReplayJointCount-joint samples at
+\ExpReplayRateHz{} Hz; its calibration prefix selects \ExpReplayDelayFrames{} frames, or
+\ExpReplayDelayMilliseconds{} ms, and its held-out suffix changes alignment RMSE from
+\ExpAlignmentNaiveRmse{} to \ExpAlignmentTimedRmse{} degrees. A WorldEpisode contract declares the
+estimated command/effective semantics, interpolation, and latency model. We execute it through
+\ExpReplayTestedSimulatorCount{} minimal position-servo adapters: MuJoCo changes from
+\ExpMujocoNaiveRmse{} to \ExpMujocoTimedRmse{} degrees, while Genesis same-trace replay changes
+from \ExpGenesisNaiveRmse{} to \ExpGenesisTimedRmse{}. Their naive values
+(\ExpMujocoNaiveRmsePrecise{} and \ExpGenesisNaiveRmsePrecise{}) are nearly identical because both
+integrate the same minimal servo model, not because their physics agree. The Isaac adapter is
+emitted as a ready mapping from the same contract, but is not tested in this environment.
+
+A dependency-free replay-adapter conformance harness guards additional runtime adapters: across
+\ExpAdapterConformanceCaseCount{} scheduling cases, including
 constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
 naive scheduler fails while the contract-aware scheduler matches the expected trace with zero
-numerical error. Together with URDF Studio's shared \texttt{SimBackend} conformance suite and its
-one-episode MuJoCo--Genesis comparison report, these results close the narrow same-trace
-second-runtime replay gate for the minimal joint replay profile; they do not claim contact-rich
-task replay, Isaac/SAPIEN execution, or simulator-independent behavior.\collabmark{C5}
+numerical error (\ExpAdapterConformanceMaxError{} maximum RMSE). This validates scheduler and
+same-trace adapter semantics only; it does not claim
+contact-rich task replay, Isaac/SAPIEN execution, or simulator-independent
+behavior.
 
-\paragraph{Case 3: real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
-Recent Gaussian/OpenUSD real-to-sim systems correctly separate visual reconstruction from
-interactive physical assets. WorldEpisode targets the contract between those layers and the source
-robot episode. We therefore add two deterministic ablations. In the action-contract ablation, a
-policy succeeds in a simulator that interprets its output as absolute joint-radian targets, but the
-same vector fails under a deployment proxy whose controller expects delta-degree commands. In the
-representation-role ablation, an appearance-only Gaussian export drops the collision proxy; the
-straight-line policy succeeds in simulation and collides with the real foreground geometry under
-the deployment proxy. In both ablations the drifted contract has 2/2 simulated successes and 0/2
-deployment successes, while the WorldEpisode contract recovers 2/2 deployment successes. This is a
-controlled proxy, not a RoboSnap or hardware rerun, but it shows why visual reconstruction is not
-enough without action contracts and representation roles: appearance alone does not make a scene
-replay-safe.
+\paragraph{Case 3: controlled real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
+\ExpDriftAblationCount{} deterministic proxies isolate an absolute-radian versus delta-degree
+controller mismatch and an appearance-only Gaussian export that drops collision geometry. Drifted
+contracts produce \ExpDriftSimulationSuccessCount/\ExpDriftAblationCount{} proxy simulation
+successes and
+\ExpDriftDeploymentSuccessCount/\ExpDriftAblationCount{} deployment-proxy successes; explicit
+action and representation-role contracts recover
+\ExpDriftCorrectedSuccessCount/\ExpDriftAblationCount{}. This is a mechanism check, not a hardware
+or RoboSnap rerun.
 
-Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for three experiment
+Figure~\ref{fig:evaluation-dashboard} summarizes the measured changes for the displayed experiment
 families where explicit state semantics alter the outcome.
 
 \begin{figure}[!htbp]
@@ -118,14 +145,14 @@ families where explicit state semantics alter the outcome.
     every axis plot/.append style={draw=none},
   ]
     \nextgroupplot[
-      title={(a) Scene leakage},
-      ylabel={leakage rate},
+      title={(a) Proxy overlap},
+      ylabel={overlap rate},
       ymax=1.25,
       symbolic x coords={Random,Heldout},
       xtick={Random,Heldout},
     ]
-      \addplot+[fill=weRose!72] coordinates {(Random,1.00)};
-      \addplot+[fill=weGreen!68] coordinates {(Heldout,0.00)};
+      \addplot+[fill=weRose!72] coordinates {(Random,\ExpSceneRandomOverlapPlot)};
+      \addplot+[fill=weGreen!68] coordinates {(Heldout,\ExpSceneHeldoutOverlapPlot)};
 
     \nextgroupplot[
       title={(b) Replay alignment},
@@ -134,8 +161,8 @@ families where explicit state semantics alter the outcome.
       symbolic x coords={Naive,Timed},
       xtick={Naive,Timed},
     ]
-      \addplot+[fill=weAmber!82] coordinates {(Naive,4.73)};
-      \addplot+[fill=weGreen!68] coordinates {(Timed,1.86)};
+      \addplot+[fill=weAmber!82] coordinates {(Naive,\ExpAlignmentNaiveRmsePlot)};
+      \addplot+[fill=weGreen!68] coordinates {(Timed,\ExpAlignmentTimedRmsePlot)};
 
     \nextgroupplot[
       title={(c) Semantic retention},
@@ -144,132 +171,88 @@ families where explicit state semantics alter the outcome.
       symbolic x coords={Native,Sidecar},
       xtick={Native,Sidecar},
     ]
-      \addplot+[fill=weBlue!70] coordinates {(Native,0.26)};
-      \addplot+[fill=weGreen!68] coordinates {(Sidecar,1.00)};
+      \addplot+[fill=weBlue!70] coordinates {(Native,\ExpBindingLerobotNative)};
+      \addplot+[fill=weGreen!68] coordinates {(Sidecar,\ExpBindingLerobotSidecar)};
   \end{groupplot}
 \end{tikzpicture}%
 }
-\caption{Quantitative summary of the three measured effects used in the evaluation. Lower is
-better for leakage and replay RMSE; higher is better for semantic retention.}
+\caption{Summary of the displayed audits. The proxy-overlap result is confounded with task holdout;
+replay uses \ExpReplayTraceCount{} \ExpReplayTraceNoun{}; sidecar retention is by construction.}
 \label{fig:evaluation-dashboard}
 \end{figure}
 
 \subsection{What the contract catches}
 
 \paragraph{Case 4: validator fault detection (all requirement IDs).}
-We inject 14 faults into the baseline package: missing clock domains, incomplete cross-clock
+We inject \ExpFaultCaseCount{} faults into the baseline package: missing clock domains, incomplete cross-clock
 mappings, unknown frames, missing transform intervals, unknown event entities, missing
 representation roles, digest errors, action-contract omissions, non-content-addressed worlds,
 missing delta sequences, missing provenance, and missing quality records. The validator detects all
-14 expected requirement failures with 1.000 recall and 0.933 precision. Two hand-authored
+\ExpFaultTruePositiveCount{} expected requirement failures with \ExpFaultRecall{} recall and
+\ExpFaultPrecision{} precision. \ExpIndependentFixtureCount{} hand-authored
 independent fixtures also trigger the expected diagnostics. The single false-positive requirement is
 useful rather than harmful: removing an action reference frame triggers both \texttt{ACTION.001} and
 the downstream \texttt{FRAME.001} reference check. The same suite includes a unit sanity check from
-\path{lerobot/svla_so101_pickplace}: the first mirrored SO-101 frame has six joint values with
-maximum magnitude 98.924 in degrees and 1.727 after radian conversion, so treating those degree
-values as radians would violate the action/state unit contract even though the tensor shape is
-valid.
+\path{lerobot/svla_so101_pickplace}: the first mirrored SO-101 frame has
+\ExpJointSampleCount{} joint values with maximum magnitude \ExpJointSampleMaxDegrees{} in degrees
+and \ExpJointSampleMaxRadians{} after radian conversion, so treating those degree values as radians
+would violate the action/state unit contract even though the tensor shape is valid.
 
-To move beyond synthetic mutations, the experiment runner also writes a pilot natural-source corpus
-from committed public LeRobot artifacts and source-level public benchmark metadata. Across
-\path{lerobot/svla_so101_pickplace}, \path{lerobot/pusht},
-\path{armnet/armnetbench_v01_lerobot_so101}, DROID, and BridgeData V2, it records 19 observed
-cases: source-absent camera extrinsics, calibration transforms, action units, controller-latency
-models, a random split with measured scene-lineage leakage, and public evidence gaps from the
-famous-benchmark call-out audit. These are naturally occurring source omissions and evaluation
-risks, not claimed as maintainer-confirmed dataset bugs or measured score-inflation results. The
-runner emits dataset-specific diagnostic reports for all five datasets; the DROID and BridgeData V2
-reports are marked source-level-only until pinned WorldEpisode conversions and false-positive
-review are available.\collabmark{C3}
-
-The same validator is exposed as a pre-training command rather than only as an experiment script.
-The preflight regression covers four cases: a valid WorldEpisode manifest passes, an invalid
-WorldEpisode fixture fails, a native LeRobot v3 folder without a WorldEpisode sidecar fails closed,
-and a Rerun \texttt{.rrd} recording without a sidecar fails closed. This is the intended usage
-pattern for labs: run one blocking line before launching a multi-day policy training job.
-To reduce single-implementation risk, we also run an internal clean-room reader that does not import
-the \texttt{worldepisode} package. It parses the public schema, summarizes the minimal example, and
-catches all 18 expected requirement instances across 17 fixtures with 1.000 recall (the 14
-injected-fault fixtures above plus one valid baseline and two independently authored fixtures; one
-independent fixture expects three requirement failures, so 17 fixtures carry 18 expected
-instances). This is not external adoption, but it verifies that the public artifacts are
-readable outside the reference SDK path.
+A pilot natural-source audit records \ExpNaturalFindingCount{} source omissions or evaluation risks
+across \ExpNaturalActiveDatasetCount{} active
+LeRobot artifacts plus source-level DROID and BridgeData V2 metadata. These are not
+maintainer-confirmed bugs or prevalence estimates. A \ExpPreflightCaseCount-case preflight regression
+passes a valid sidecar and rejects an invalid manifest plus native LeRobot/Rerun artifacts that lack
+sidecars. An internal reader independent of the SDK path detects all
+\ExpCleanroomRequirementCount{} expected requirement instances across
+\ExpCleanroomFixtureCount{} fixtures; this tests artifact readability, not external adoption.
 
 \paragraph{Case 5: loss-explicit dataset conversion (\texttt{CONVERT.001}).}
 To test an actual LeRobotDataset rather than only a capability model, we implement
 \(\text{LeRobotDataset v3} \rightarrow \text{WorldEpisode} \rightarrow \text{LeRobotDataset v3}\)
-on five-episode batches from two pinned public datasets:
+on \ExpRoundtripBatchEpisodes-episode batches from \ExpRoundtripDatasetCount{} pinned public datasets:
 \path{lerobot/svla_so101_pickplace}~\citep{lerobot_svla_so101_pickplace} and
 \path{lerobot/pusht}~\citep{lerobot_pusht}. The converter downloads the real Parquet metadata and
 data shards, builds a schema-valid WorldEpisode manifest and sidecar, exports a compact
-LeRobotDataset v3 package, reads it back, and asserts exact equality.
+LeRobotDataset v3 package, reads it back, and asserts exact equality. These
+\ExpRoundtripEpisodeCount{} committed episode packages provide inspectable per-episode evidence.
 
-This is a two-dataset batch audit for active conversion, not a coverage claim for all LeRobot
-datasets. Across ten episodes, the round trip preserves 1,935 rows of source-native action tensors,
-1,935 state rows, sample timestamps, frame indices, episode indices, global sample indices, task
-indices, and camera video timestamp ranges with maximum absolute error 0.0. It also preserves the
-derived physical-frame records through the sidecar. More importantly, it does not fake missing
-semantics: camera extrinsics, robot/world calibration, action units, and controller latency are
-reported as source-absent rather than guessed. This is the difference between a convenient
-conversion and an auditable one.\collabmark{C7}
+For scale, we convert every episode assigned to one immutable source Parquet shard from each of
+\ExpConversionScaleDatasetCount{} datasets: the two above and ArmnetBench
+v0.1~\citep{armnetbench_lerobot_so101}. No episode-level sampling is used. Across
+\ExpConversionScaleEpisodeCount{} episodes, including \ExpConversionScaleMultiCameraDatasetCount{}
+multi-camera datasets, the round trip preserves \ExpConversionScaleRowCount{} source-native paired
+action/state samples, indices, sample timestamps, and video timestamp ranges with maximum absolute
+error \ExpConversionScaleMaxError{}. The \ExpConversionScaleSourceInputMiB{} MiB input produces
+\ExpConversionScaleTemporaryOutputMiB{} MiB of temporary packages in
+\ExpConversionScaleWallSeconds{} s with \ExpConversionScalePeakMemoryMiB{} MiB peak resident memory.
+Source video payloads are neither downloaded nor converted; only their stream and timestamp metadata
+are audited. This is a complete-selected-shard measurement, not full-corpus throughput.
 
-\paragraph{Case 6: binding retention across containers (\texttt{CONVERT.001}).}
-The same executable artifacts measure how much of the semantic contract is preserved by native
-containers alone. Each binding writes a native payload and a WorldEpisode sidecar, then the
-experiment reimports both and checks exact equality against the versioned \texttt{uss-core-23}
-projection in \path{conformance/projections/uss-core-23.v0.json}: episode identity/task outcome,
-world revision and asset descriptor, embodiment identity and URDF~\citep{urdf} asset, frames/transforms,
-clocks/mappings, entity identity/roles/assets, action control and timing contracts, trace binding
-and asset descriptor, events, ordered deltas, provenance, quality, split lineage, and replay
-assumptions. This is an executable pilot projection, not a universal score of each format's value.
-Across seven pilot bindings, Table~\ref{tab:binding-retention} shows that common
-containers preserve 17--39\% of this projection natively, while WorldEpisode sidecars recover that
-projection for the tested dataset/log/world bindings. The sidecar column is by construction: because
-the sidecar serializes the projection fields directly, the 1.000 entries verify lossless round-trip
-of the contract, not an emergent property; the informative measurement is the native gap each
-container leaves. A
-Gaussian asset binding alone preserves 17\% natively and 30\% with limited sidecar metadata,
-confirming that an asset format is not an episode--world contract.
+Both audits preserve derived physical-frame records through the sidecar and do not fake missing
+semantics. The same \ExpConversionScaleSemanticLossFieldCount{} source-absent fields---camera
+extrinsics, robot/world calibration, action units, and controller latency---are reported as
+conversion loss rather than guessed.
 
-\begin{table}[htbp]
-\centering
-\caption{Semantic field retention in the pilot binding model.}
-\label{tab:binding-retention}
-\begin{tabular}{lrr}
-\toprule
-Binding & Native & With WorldEpisode \\
-\midrule
-LeRobot v3 & 0.261 & 1.000 \\
-Rerun RRD & 0.348 & 1.000 \\
-NCore & 0.304 & 1.000 \\
-MCAP/ROS2 & 0.261 & 1.000 \\
-OpenUSD/SimReady & 0.391 & 1.000 \\
-glTF Gaussian asset & 0.174 & 0.304 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\paragraph{Case 6: binding retention (\texttt{CONVERT.001}).}
+\ExpBindingCount{} pilot bindings are compared against a versioned \ExpBindingFieldCount-field
+projection. Non-reference native retention ranges from \ExpBindingNativeMin{} to
+\ExpBindingNativeMax{}; sidecars recover \ExpBindingLerobotSidecar{} for tested dataset/log/world
+bindings by serializing the missing fields. This is a round-trip check and gap inventory, not a
+universal format ranking; Appendix Table~\ref{tab:binding-retention} reports the per-binding values.
 
 \subsection{Scaling the audit}
 
-\paragraph{Case 7: source-level audit of famous benchmarks (\texttt{SPLIT.001}).}
-The ArmnetBench result is the measured leakage case. To scale the same diagnostic, we add a
-source-level call-out audit over five famous public robot-learning benchmarks: Open
+\paragraph{Case 7: source-level benchmark audit (\texttt{SPLIT.001}).}
+We audit public metadata for Open
 X-Embodiment/RT-X~\citep{openx}, DROID~\citep{droid}, BridgeData V2~\citep{bridgedata},
 LIBERO~\citep{libero}, and CALVIN~\citep{calvin}. The audit asks whether public metadata exposes
 lineage splits, content-addressed world revisions, persistent entity identity, action timing
-contracts, frame/clock graphs, and replay or conversion-loss reports. All five benchmarks have at
-least one high-severity open control; the three real-robot datasets have five each. This is a
-call-out target list, not a claim that their published scores are inflated: a separate
-inflation-proof gate requires a benchmark-specific WorldEpisode conversion, lineage/timing audit,
-published-policy rerun, corrected evaluation, and measured score drop before any famous benchmark
-can be labeled inflated. A targeted DROID-100 LeRobot-subset rerun tool executes that path over 100
-public episodes and 32{,}212 frames. Its lineage source is only a task/camera-schema proxy, not a
-physical scene identifier; the corrected proxy split scores 0.516 versus 0.496 for the random
-split, so the measured score drop is negative. The proof gate therefore records one executed DROID
-subset rerun, zero inflation-proof famous-benchmark rerun reports, and zero measured
-famous-benchmark inflation claims in this release; its command path and acceptance rule are stated
-in Appendix~\ref{app:gates}.\collabmark{C2} The benchmarks lack the public controls needed to rule
-out leakage; we flag that gap but refuse to call any score inflated without a measured rerun.
+contracts, frame/clock graphs, and loss reports. Each has at least one high-severity open control.
+A DROID-100 proxy rerun over \ExpDroidRerunEpisodes{} episodes and \ExpDroidRerunFrames{} frames
+scores \ExpDroidCorrectedScore{} under its corrected proxy split versus \ExpDroidRandomScore{}
+randomly, so it provides no inflation evidence. The proof gate therefore records
+\ExpBenchmarkInflationClaimCount{} famous-benchmark inflation claims.
 
 The same audit protocol also runs above the episode level: a dataset-scale manifest audit and a
 generated catalog benchmark (Appendix~\ref{app:scale}) make the \texttt{DATASET.001} scale claim

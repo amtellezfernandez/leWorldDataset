@@ -8,7 +8,7 @@ bug records, or benchmark score-inflation evidence.
 
 | Dataset | Evidence Status | Cases | Report |
 | --- | --- | ---: | --- |
-| armnet/armnetbench_v01_lerobot_so101 | active_lineage_split_audit | 1 | `docs/experiments/natural_failure_corpus/datasets/armnet_armnetbench_v01_lerobot_so101_2e5e89aee0e7.json` |
+| armnet/armnetbench_v01_lerobot_so101 | active_task_scene_proxy_split_audit | 1 | `docs/experiments/natural_failure_corpus/datasets/armnet_armnetbench_v01_lerobot_so101_2e5e89aee0e7.json` |
 | benchmark/bridgedata_v2 | source_level_public_metadata_only | 5 | `docs/experiments/natural_failure_corpus/datasets/benchmark_bridgedata_v2_source_level.json` |
 | benchmark/droid | source_level_public_metadata_only | 5 | `docs/experiments/natural_failure_corpus/datasets/benchmark_droid_source_level.json` |
 | lerobot/pusht | active_worldepisode_conversion_reports | 4 | `docs/experiments/natural_failure_corpus/datasets/lerobot_pusht_7628202a2180.json` |
@@ -18,7 +18,7 @@ Summary:
 
 - Dataset reports: 5
 - Cases covered: 19
-- Active LeRobot reports: 3
+- Active LeRobot reports: 2
 - Source-level-only reports: 2
 - Maintainer feedback satisfied: False
 

@@ -54,10 +54,10 @@
   "rerun_dir": "docs/experiments/benchmark_reruns",
   "rerun_reports": [
     {
-      "baseline_score": 0.4958081537296595,
+      "baseline_score": 0.495808153684657,
       "benchmark_id": "droid",
       "claim_boundary": "Valid rerun evidence can support an inflation claim only for this benchmark, policy, protocol, subset, metric, and seed set.",
-      "corrected_score": 0.515540983544114,
+      "corrected_score": 0.5155409835289252,
       "errors": [
         "lineage_source.sufficient_for_score_inflation_claim must be true for split-leakage inflation claims",
         "published_protocol must mark published_leaderboard_reproduction or faithful_published_protocol_reproduction true",
@@ -68,7 +68,7 @@
       "measured_inflation": false,
       "path": "docs/experiments/benchmark_reruns/droid_100/rerun_report.json",
       "published_protocol_sufficient": false,
-      "score_drop": -0.019732829814454567,
+      "score_drop": -0.019732829844268163,
       "valid": false
     }
   ],

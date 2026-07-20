@@ -11,48 +11,9 @@ layer (namespaces, URI resolvers, shard catalogs, materialized indexes, split ma
 append-only snapshots) so that opening a corpus starts from the manifest and its indexes rather
 than from a recursive storage scan.
 
-Figure~\ref{fig:worldepisode-bridge} shows the intended data flow. Dataset, log, and telemetry
-containers plug in on the left; world assets and replay targets plug in on the right; the
-WorldEpisode sidecar holds the semantics that would otherwise be scattered across undocumented
-loader assumptions. This gives the paper its central rule: keep native containers for the data they
-are good at storing, but make the cross-container assumptions explicit, checkable, and loss-aware.
-
-\begin{figure}[t]
-\centering
-\resizebox{0.98\linewidth}{!}{%
-\begin{tikzpicture}[font=\sffamily]
-  \node[wecard=weBlue, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (lerobot) at (0,1.8) {\textbf{LeRobot v3}\\state/action/video};
-  \node[wecard=weCyan, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (rerun) at (0,0.45) {\textbf{Rerun / MCAP}\\multirate logs};
-  \node[wecard=weViolet, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (ncore) at (0,-0.9) {\textbf{NCore}\\capture, pose graphs};
-
-  \node[wecard=weInk, fill=wePanel, text width=4.75cm, minimum height=3.65cm] (core) at (5.0,0.45) {};
-  \node[font=\sffamily\bfseries\small, text=weInk, align=center] at (core.north) [yshift=-0.34cm] {WorldEpisode};
-  \node[font=\sffamily\tiny, text=weSlate] at (5.0,1.29) {state-integrity sidecar};
-  \node[wechip=weBlue, font=\sffamily\tiny, text width=1.25cm] at (3.85,0.65) {identity};
-  \node[wechip=weCyan, font=\sffamily\tiny, text width=1.45cm] at (6.08,0.65) {space + time};
-  \node[wechip=weAmber, font=\sffamily\tiny, text width=1.75cm] at (3.82,-0.05) {transition rules};
-  \node[wechip=weGreen, font=\sffamily\tiny, text width=1.50cm] at (6.08,-0.05) {roles + events};
-  \node[wechip=weRose, font=\sffamily\tiny, text width=2.25cm] at (4.95,-0.75) {provenance + lineage};
-
-  \node[wecard=weGreen, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (usd) at (10.0,1.8) {\textbf{OpenUSD}\\world composition};
-  \node[wecard=weAmber, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (gltf) at (10.0,0.45) {\textbf{glTF / SPZ}\\Gaussian splats};
-  \node[wecard=weRose, font=\sffamily\scriptsize, text width=2.65cm, minimum height=0.92cm] (sim) at (10.0,-0.9) {\textbf{Runtime adapters}\\replay targets};
-
-  \draw[wearrow=weBlue] (lerobot.east) -- ($(core.west)+(0,1.0)$);
-  \draw[wearrow=weCyan] (rerun.east) -- (core.west);
-  \draw[wearrow=weViolet] (ncore.east) -- ($(core.west)+(0,-1.0)$);
-  \draw[wearrow=weGreen] ($(core.east)+(0,1.0)$) -- (usd.west);
-  \draw[wearrow=weAmber] (core.east) -- (gltf.west);
-  \draw[wearrow=weRose] ($(core.east)+(0,-1.0)$) -- (sim.west);
-
-  \node[wechip=weInk, fill=wePanel, font=\sffamily\tiny, text width=10.7cm, minimum height=0.43cm, align=center] at (5,-2.05)
-    {validator diagnostics \(\cdot\) conversion-loss reports \(\cdot\) lineage-safe splits \(\cdot\) replay assumptions};
-\end{tikzpicture}%
-}
-\caption{WorldEpisode is the semantic bridge between spatial data containers, state/world assets, and
-runtime targets.}
-\label{fig:worldepisode-bridge}
-\end{figure}
+Native containers continue to store the arrays, video, logs, worlds, and assets for which they were
+designed. The sidecar stores only the relationships otherwise scattered across loader assumptions,
+making cross-container identity, timing, role, lineage, and conversion loss checkable.
 
 \subsection{Runtime adapters}
 
@@ -72,10 +33,9 @@ reports against the sidecar. The adapter contract has three layers:
   envelopes, and measured drift.
 \end{itemize}
 
-The current implementation reflects this boundary across two codebases: WorldEpisode has tested
-minimal MuJoCo~\citep{mujoco} and Genesis replay adapters for the same LeRobot control-loop trace,
-and URDF Studio, the companion simulator-transfer workbench, passes a shared \texttt{SimBackend}
-conformance suite for both engines with a one-episode MuJoCo--Genesis comparison report. The Isaac
+The current implementation includes tested minimal MuJoCo~\citep{mujoco} and
+Genesis~\citep{genesis} replay adapters
+for the same LeRobot control-loop trace. The Isaac
 mapping is emitted but untested, and SAPIEN remains adapter-required. The claim is therefore not
 simulator-independent physics but runtime-neutral accountability: every simulator reports against
 the same state contract, so cross-runtime drift becomes measurable rather than hidden inside loader
@@ -100,9 +60,8 @@ experiment runner. The validator maps each diagnostic to a stable requirement id
 WorldEpisode package, exports binding-native artifacts plus sidecars, reimports them, compares a
 versioned semantic projection, injects controlled faults, and writes reproducible result artifacts.
 The projection itself is published as \path{conformance/projections/uss-core-23.v0.json} and
-validated against \path{schemas/semantic-projection-v0.schema.json}. URDF Studio remains the initial
-implementation root, but the contract is represented independently in the public schema and
-validator.
+validated against \path{schemas/semantic-projection-v0.schema.json}. The contract is represented
+independently in the public schema and validator rather than only in its initial implementation.
 
 \paragraph{One-line preflight.}
 The validator is packaged as \texttt{worldepisode}. A blocking preflight can be run from the shell

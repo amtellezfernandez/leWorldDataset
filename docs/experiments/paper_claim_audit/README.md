@@ -6,24 +6,25 @@ This report ties the main quantitative and boundary claims in the paper source t
 
 ## Summary
 
-- Claims checked: 13
-- Passed: 13
+- Claims checked: 14
+- Passed: 14
 - Failed: 0
 
 ## Claims
 
 | Claim ID | Pass | Claim | Boundary |
 |---|---:|---|---|
-| CLAIM.LEAKAGE.001 | True | ArmnetBench random split leaks lineages and offline BC drops under scene-disjoint split. | Offline action-imitation result; not ACT/Diffusion or physical rollout success. |
+| CLAIM.LEAKAGE.001 | True | ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded holdout changes offline imitation metrics. | Task--scene proxy shift confounded with task identity; offline action imitation only, not scene-only leakage, ACT/Diffusion, or rollout success. |
+| CLAIM.TIMING.001 | True | A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks. | Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller. |
 | CLAIM.REPLAY.001 | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
-| CLAIM.ROUNDTRIP.001 | True | Two public LeRobotDataset batches round-trip exactly through WorldEpisode. | Two five-episode batch audits; not full LeRobot coverage. |
-| CLAIM.TEMPORAL_POLICY.001 | True | Temporal state/action baseline still drops under scene-disjoint LeRobot evaluation. | Offline temporal state/action baseline; not ACT, Diffusion, vision policy, or rollout. |
-| CLAIM.BINDING.001 | True | Seven pilot bindings preserve 17--39% natively outside the reference binding, with sidecars recovering dataset/log/world projections. | Pilot projection score, not a universal storage-format ranking. |
+| CLAIM.ROUNDTRIP.001 | True | Complete pinned source shards from multiple public LeRobotDatasets round-trip exactly through WorldEpisode. | One complete pinned Parquet shard per dataset; not full corpora or source-video conversion throughput. |
+| CLAIM.TEMPORAL_POLICY.001 | True | Temporal state/action baseline changes under the task--scene proxy holdout. | Task-confounded offline temporal state/action baseline; not a scene-only, vision-policy, ACT, Diffusion, or rollout result. |
+| CLAIM.BINDING.001 | True | Pilot bindings inventory native and sidecar retention for a versioned projection. | Pilot projection score, not a universal storage-format ranking. |
 | CLAIM.VALIDATOR.001 | True | Validator detects all injected fault classes and independent fixture failures. | Injected and hand-authored fixtures; natural prevalence remains open. |
-| CLAIM.NATURAL.001 | True | Pilot natural-source corpus records 19 cases across five public robot-learning datasets. | Scoped natural-source corpus, not maintainer-confirmed prevalence. |
-| CLAIM.NATURAL_DIAGNOSTICS.001 | True | Natural-source corpus has dataset-specific diagnostic reports for all five datasets. | Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence. |
-| CLAIM.USS.001 | True | Two deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
+| CLAIM.NATURAL.001 | True | Pilot natural-source audit records scoped cases across public dataset sources. | Scoped natural-source corpus, not maintainer-confirmed prevalence. |
+| CLAIM.NATURAL_DIAGNOSTICS.001 | True | Natural-source audit distinguishes active artifacts from source-level metadata reviews. | Dataset-specific diagnostics, not prevalence or maintainer-confirmed bug evidence. |
+| CLAIM.USS.001 | True | Deterministic non-robotics USS pilots demonstrate collision-patch and clock-domain drift. | Deterministic pilots, not production game or AV dataset results. |
 | CLAIM.REALTOSIM.001 | True | Controlled real-to-sim contract drift ablations fail under drifted contracts and recover with WorldEpisode. | Controlled proxy; not a hardware or RoboSnap/DROID-Sim rerun. |
-| CLAIM.SCALE.001 | True | Generated catalog benchmark describes a billion-episode-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |
+| CLAIM.SCALE.001 | True | Generated catalog benchmark describes a large-capacity sharded corpus. | Catalog-side evidence only; does not materialize a billion rows or payload bytes. |
 | CLAIM.BENCHMARK_BOUNDARY.001 | True | Famous benchmark audit is fail-closed and makes zero inflation claims in this release. | Source-level call-out audit; no published-score inflation claim. |
 | CLAIM.OPEN_GATES.001 | True | Open results are visibly and machine-readably marked as not claimed. | Open gates are unclaimed results, not paper results. |

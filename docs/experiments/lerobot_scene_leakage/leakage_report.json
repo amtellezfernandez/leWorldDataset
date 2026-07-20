@@ -7,6 +7,13 @@
   },
   "available": true,
   "bc_policy_family": "torch_mlp_bc_state_action",
+  "bc_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
   "dataset": {
     "policy_types": [
       "act",
@@ -23,6 +30,27 @@
     "total_episodes": 2499,
     "total_frames": 1127881,
     "total_tasks": 8
+  },
+  "experiment": {
+    "config": {
+      "epochs": 12,
+      "offline_bc_success_threshold": 0.25,
+      "random_split_seed": 17,
+      "requested_device": "cuda",
+      "scene_holdout_task_indices": [
+        3,
+        4
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "script": "tools/lerobot_scene_leakage_experiment.py",
+    "script_sha256": "28af6fa76943d3ccdea2967e0ec84c3d5b8efd63775258036aa22e65b575b391"
   },
   "heldout_scene_task_indices": [
     3,
@@ -41,6 +69,21 @@
   "pass": true,
   "repo_id": "armnet/armnetbench_v01_lerobot_so101",
   "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+  "runtime": {
+    "cpu_logical_count": 20,
+    "machine": "aarch64",
+    "numpy": "2.5.1",
+    "platform": "Linux-6.17.0-1026-nvidia-aarch64-with-glibc2.39",
+    "processor": "aarch64",
+    "pyarrow": "25.0.0",
+    "python": "3.12.13",
+    "requested_device": "cuda",
+    "requests": "2.34.2",
+    "resolved_device": "cuda",
+    "storage_free_bytes": 324418568192,
+    "storage_total_bytes": 3937360351232,
+    "total_ram_bytes": 130663170048
+  },
   "source_files": {
     "data/chunk-000/file-013.parquet": {
       "bytes": 168964,
@@ -181,25 +224,57 @@
   "splits": {
     "random_episode": {
       "bc": {
-        "episode_normalized_rmse_mean": 0.18338675796985626,
-        "episode_normalized_rmse_median": 0.1649058759212494,
-        "episode_normalized_rmse_p75": 0.22310929000377655,
-        "frame_normalized_rmse": 0.17923957109451294,
-        "frame_rmse": 4.2352752685546875,
-        "offline_bc_success_count": 68,
-        "offline_bc_success_rate": 0.85,
+        "episode_normalized_rmse_mean": 0.18315773606300353,
+        "episode_normalized_rmse_median": 0.16563816070556642,
+        "episode_normalized_rmse_p75": 0.22353005707263945,
+        "frame_normalized_rmse": 0.17910169661045075,
+        "frame_rmse": 4.197093200683594,
+        "offline_bc_evaluation_count_total": 400,
+        "offline_bc_success_count_total": 341,
+        "offline_bc_success_rate": 0.8525,
         "offline_bc_success_threshold": 0.25,
         "policy": {
           "batch_size": 2048,
+          "deterministic_algorithms": true,
           "epochs": 12,
-          "final_train_loss": 0.03062331596655505,
+          "final_train_loss": {
+            "max": 0.031135945865998462,
+            "mean": 0.030648013363991467,
+            "min": 0.030020178884876018,
+            "sample_std": 0.0004242336505984573
+          },
           "hidden_units": [
             64,
             64
           ],
           "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
           "policy_family": "torch_mlp_bc_state_action",
-          "seed": 0,
+          "runtime": {
+            "cublas_workspace_config": ":4096:8",
+            "cuda": "13.0",
+            "cuda_device_capability": [
+              12,
+              1
+            ],
+            "cuda_device_name": "NVIDIA GB10",
+            "cuda_total_memory_bytes": 130663170048,
+            "cudnn": 92000,
+            "cudnn_allow_tf32": false,
+            "device": "cuda",
+            "matmul_allow_tf32": false,
+            "numpy": "2.5.1",
+            "python": "3.12.13",
+            "torch": "2.13.0+cu130",
+            "torch_num_threads": 20
+          },
+          "seed_count": 5,
+          "seeds": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
           "target_std": [
             18.854467391967773,
             46.47117233276367,
@@ -208,6 +283,296 @@
             43.842960357666016,
             11.578439712524414
           ]
+        },
+        "seed_runs": [
+          {
+            "episode_normalized_rmse_mean": 0.18338662385940552,
+            "episode_normalized_rmse_median": 0.16489730775356293,
+            "episode_normalized_rmse_p75": 0.22311466932296753,
+            "frame_normalized_rmse": 0.17923951148986816,
+            "frame_rmse": 4.235315799713135,
+            "offline_bc_success_count": 68,
+            "offline_bc_success_rate": 0.85,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.03062300840202643,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 0,
+              "target_std": [
+                18.854467391967773,
+                46.47117233276367,
+                43.48992156982422,
+                21.27655029296875,
+                43.842960357666016,
+                11.578439712524414
+              ]
+            },
+            "test_frames": 21745,
+            "train_frames": 98990
+          },
+          {
+            "episode_normalized_rmse_mean": 0.18127606809139252,
+            "episode_normalized_rmse_median": 0.1650383174419403,
+            "episode_normalized_rmse_p75": 0.22191104292869568,
+            "frame_normalized_rmse": 0.1774073988199234,
+            "frame_rmse": 4.162742614746094,
+            "offline_bc_success_count": 70,
+            "offline_bc_success_rate": 0.875,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.030020178884876018,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 1,
+              "target_std": [
+                18.854467391967773,
+                46.47117233276367,
+                43.48992156982422,
+                21.27655029296875,
+                43.842960357666016,
+                11.578439712524414
+              ]
+            },
+            "test_frames": 21745,
+            "train_frames": 98990
+          },
+          {
+            "episode_normalized_rmse_mean": 0.18387961387634277,
+            "episode_normalized_rmse_median": 0.16511476039886475,
+            "episode_normalized_rmse_p75": 0.22500553727149963,
+            "frame_normalized_rmse": 0.17976337671279907,
+            "frame_rmse": 4.197226524353027,
+            "offline_bc_success_count": 67,
+            "offline_bc_success_rate": 0.8375,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.030922065508000706,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 2,
+              "target_std": [
+                18.854467391967773,
+                46.47117233276367,
+                43.48992156982422,
+                21.27655029296875,
+                43.842960357666016,
+                11.578439712524414
+              ]
+            },
+            "test_frames": 21745,
+            "train_frames": 98990
+          },
+          {
+            "episode_normalized_rmse_mean": 0.18256713449954987,
+            "episode_normalized_rmse_median": 0.16583208739757538,
+            "episode_normalized_rmse_p75": 0.22479546070098877,
+            "frame_normalized_rmse": 0.17847305536270142,
+            "frame_rmse": 4.13982629776001,
+            "offline_bc_success_count": 67,
+            "offline_bc_success_rate": 0.8375,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.03053886815905571,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 3,
+              "target_std": [
+                18.854467391967773,
+                46.47117233276367,
+                43.48992156982422,
+                21.27655029296875,
+                43.842960357666016,
+                11.578439712524414
+              ]
+            },
+            "test_frames": 21745,
+            "train_frames": 98990
+          },
+          {
+            "episode_normalized_rmse_mean": 0.18467923998832703,
+            "episode_normalized_rmse_median": 0.16730833053588867,
+            "episode_normalized_rmse_p75": 0.22282357513904572,
+            "frame_normalized_rmse": 0.18062514066696167,
+            "frame_rmse": 4.250354766845703,
+            "offline_bc_success_count": 69,
+            "offline_bc_success_rate": 0.8625,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.031135945865998462,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 4,
+              "target_std": [
+                18.854467391967773,
+                46.47117233276367,
+                43.48992156982422,
+                21.27655029296875,
+                43.842960357666016,
+                11.578439712524414
+              ]
+            },
+            "test_frames": 21745,
+            "train_frames": 98990
+          }
+        ],
+        "seed_variation": {
+          "episode_normalized_rmse_mean": {
+            "max": 0.18467923998832703,
+            "mean": 0.18315773606300353,
+            "min": 0.18127606809139252,
+            "sample_std": 0.0013017253894013734
+          },
+          "episode_normalized_rmse_median": {
+            "max": 0.16730833053588867,
+            "mean": 0.16563816070556642,
+            "min": 0.16489730775356293,
+            "sample_std": 0.0010012114839604966
+          },
+          "episode_normalized_rmse_p75": {
+            "max": 0.22500553727149963,
+            "mean": 0.22353005707263945,
+            "min": 0.22191104292869568,
+            "sample_std": 0.0013295825156068668
+          },
+          "frame_normalized_rmse": {
+            "max": 0.18062514066696167,
+            "mean": 0.17910169661045075,
+            "min": 0.1774073988199234,
+            "sample_std": 0.0012291796159948174
+          },
+          "frame_rmse": {
+            "max": 4.250354766845703,
+            "mean": 4.197093200683594,
+            "min": 4.13982629776001,
+            "sample_std": 0.04679006359934612
+          },
+          "offline_bc_success_rate": {
+            "max": 0.875,
+            "mean": 0.8525,
+            "min": 0.8375,
+            "sample_std": 0.01629800601300662
+          }
         },
         "test_frames": 21745,
         "train_frames": 98990
@@ -233,25 +598,57 @@
     },
     "scene_disjoint": {
       "bc": {
-        "episode_normalized_rmse_mean": 0.36347562074661255,
-        "episode_normalized_rmse_median": 0.3662126958370209,
-        "episode_normalized_rmse_p75": 0.3970993757247925,
-        "frame_normalized_rmse": 0.3599465787410736,
-        "frame_rmse": 9.032227516174316,
-        "offline_bc_success_count": 0,
+        "episode_normalized_rmse_mean": 0.3805086135864258,
+        "episode_normalized_rmse_median": 0.383290034532547,
+        "episode_normalized_rmse_p75": 0.4123450338840485,
+        "frame_normalized_rmse": 0.3779532849788666,
+        "frame_rmse": 9.290529441833495,
+        "offline_bc_evaluation_count_total": 500,
+        "offline_bc_success_count_total": 0,
         "offline_bc_success_rate": 0.0,
         "offline_bc_success_threshold": 0.25,
         "policy": {
           "batch_size": 2048,
+          "deterministic_algorithms": true,
           "epochs": 12,
-          "final_train_loss": 0.025517686121165752,
+          "final_train_loss": {
+            "max": 0.02551768481731415,
+            "mean": 0.025033284328877924,
+            "min": 0.02453105553984642,
+            "sample_std": 0.00037094358683519756
+          },
           "hidden_units": [
             64,
             64
           ],
           "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
           "policy_family": "torch_mlp_bc_state_action",
-          "seed": 0,
+          "runtime": {
+            "cublas_workspace_config": ":4096:8",
+            "cuda": "13.0",
+            "cuda_device_capability": [
+              12,
+              1
+            ],
+            "cuda_device_name": "NVIDIA GB10",
+            "cuda_total_memory_bytes": 130663170048,
+            "cudnn": 92000,
+            "cudnn_allow_tf32": false,
+            "device": "cuda",
+            "matmul_allow_tf32": false,
+            "numpy": "2.5.1",
+            "python": "3.12.13",
+            "torch": "2.13.0+cu130",
+            "torch_num_threads": 20
+          },
+          "seed_count": 5,
+          "seeds": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
           "target_std": [
             17.841846466064453,
             45.34649658203125,
@@ -260,6 +657,296 @@
             45.71479415893555,
             10.971376419067383
           ]
+        },
+        "seed_runs": [
+          {
+            "episode_normalized_rmse_mean": 0.36347508430480957,
+            "episode_normalized_rmse_median": 0.3662121891975403,
+            "episode_normalized_rmse_p75": 0.39709919691085815,
+            "frame_normalized_rmse": 0.3599461019039154,
+            "frame_rmse": 9.032261848449707,
+            "offline_bc_success_count": 0,
+            "offline_bc_success_rate": 0.0,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.02551768481731415,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 0,
+              "target_std": [
+                17.841846466064453,
+                45.34649658203125,
+                42.26961898803711,
+                21.681333541870117,
+                45.71479415893555,
+                10.971376419067383
+              ]
+            },
+            "test_frames": 20313,
+            "train_frames": 100422
+          },
+          {
+            "episode_normalized_rmse_mean": 0.37882372736930847,
+            "episode_normalized_rmse_median": 0.38437286019325256,
+            "episode_normalized_rmse_p75": 0.4122343063354492,
+            "frame_normalized_rmse": 0.3755122423171997,
+            "frame_rmse": 9.168266296386719,
+            "offline_bc_success_count": 0,
+            "offline_bc_success_rate": 0.0,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.02483729839324951,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 1,
+              "target_std": [
+                17.841846466064453,
+                45.34649658203125,
+                42.26961898803711,
+                21.681333541870117,
+                45.71479415893555,
+                10.971376419067383
+              ]
+            },
+            "test_frames": 20313,
+            "train_frames": 100422
+          },
+          {
+            "episode_normalized_rmse_mean": 0.41153475642204285,
+            "episode_normalized_rmse_median": 0.4157353639602661,
+            "episode_normalized_rmse_p75": 0.4493323266506195,
+            "frame_normalized_rmse": 0.4083627760410309,
+            "frame_rmse": 9.487796783447266,
+            "offline_bc_success_count": 0,
+            "offline_bc_success_rate": 0.0,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.02510664865374565,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 2,
+              "target_std": [
+                17.841846466064453,
+                45.34649658203125,
+                42.26961898803711,
+                21.681333541870117,
+                45.71479415893555,
+                10.971376419067383
+              ]
+            },
+            "test_frames": 20313,
+            "train_frames": 100422
+          },
+          {
+            "episode_normalized_rmse_mean": 0.3618621528148651,
+            "episode_normalized_rmse_median": 0.360271692276001,
+            "episode_normalized_rmse_p75": 0.38437753915786743,
+            "frame_normalized_rmse": 0.36154064536094666,
+            "frame_rmse": 8.4805326461792,
+            "offline_bc_success_count": 0,
+            "offline_bc_success_rate": 0.0,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.02453105553984642,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 3,
+              "target_std": [
+                17.841846466064453,
+                45.34649658203125,
+                42.26961898803711,
+                21.681333541870117,
+                45.71479415893555,
+                10.971376419067383
+              ]
+            },
+            "test_frames": 20313,
+            "train_frames": 100422
+          },
+          {
+            "episode_normalized_rmse_mean": 0.3868473470211029,
+            "episode_normalized_rmse_median": 0.38985806703567505,
+            "episode_normalized_rmse_p75": 0.418681800365448,
+            "frame_normalized_rmse": 0.38440465927124023,
+            "frame_rmse": 10.28378963470459,
+            "offline_bc_success_count": 0,
+            "offline_bc_success_rate": 0.0,
+            "offline_bc_success_threshold": 0.25,
+            "policy": {
+              "batch_size": 2048,
+              "epochs": 12,
+              "final_train_loss": 0.0251737342402339,
+              "hidden_units": [
+                64,
+                64
+              ],
+              "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
+              "policy_family": "torch_mlp_bc_state_action",
+              "runtime": {
+                "cublas_workspace_config": ":4096:8",
+                "cuda": "13.0",
+                "cuda_device_capability": [
+                  12,
+                  1
+                ],
+                "cuda_device_name": "NVIDIA GB10",
+                "cuda_total_memory_bytes": 130663170048,
+                "cudnn": 92000,
+                "cudnn_allow_tf32": false,
+                "device": "cuda",
+                "matmul_allow_tf32": false,
+                "numpy": "2.5.1",
+                "python": "3.12.13",
+                "torch": "2.13.0+cu130",
+                "torch_num_threads": 20
+              },
+              "seed": 4,
+              "target_std": [
+                17.841846466064453,
+                45.34649658203125,
+                42.26961898803711,
+                21.681333541870117,
+                45.71479415893555,
+                10.971376419067383
+              ]
+            },
+            "test_frames": 20313,
+            "train_frames": 100422
+          }
+        ],
+        "seed_variation": {
+          "episode_normalized_rmse_mean": {
+            "max": 0.41153475642204285,
+            "mean": 0.3805086135864258,
+            "min": 0.3618621528148651,
+            "sample_std": 0.020269876303702902
+          },
+          "episode_normalized_rmse_median": {
+            "max": 0.4157353639602661,
+            "mean": 0.383290034532547,
+            "min": 0.360271692276001,
+            "sample_std": 0.021900387242996113
+          },
+          "episode_normalized_rmse_p75": {
+            "max": 0.4493323266506195,
+            "mean": 0.4123450338840485,
+            "min": 0.38437753915786743,
+            "sample_std": 0.0246111915726459
+          },
+          "frame_normalized_rmse": {
+            "max": 0.4083627760410309,
+            "mean": 0.3779532849788666,
+            "min": 0.3599461019039154,
+            "sample_std": 0.01978603957161937
+          },
+          "frame_rmse": {
+            "max": 10.28378963470459,
+            "mean": 9.290529441833495,
+            "min": 8.4805326461792,
+            "sample_std": 0.6639324985092063
+          },
+          "offline_bc_success_rate": {
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "sample_std": 0.0
+          }
         },
         "test_frames": 20313,
         "train_frames": 100422
@@ -279,13 +966,13 @@
     }
   },
   "summary": {
-    "episode_nrmse_ratio_scene_over_random": 1.9820167212201762,
-    "random_episode_nrmse_mean": 0.18338675796985626,
+    "episode_nrmse_ratio_scene_over_random": 2.077491356715266,
+    "random_episode_nrmse_mean": 0.18315773606300353,
     "random_leakage_rate": 1.0,
-    "random_offline_bc_success_rate": 0.85,
-    "scene_disjoint_episode_nrmse_mean": 0.36347562074661255,
+    "random_offline_bc_success_rate": 0.8525,
+    "scene_disjoint_episode_nrmse_mean": 0.3805086135864258,
     "scene_disjoint_leakage_rate": 0.0,
     "scene_disjoint_offline_bc_success_rate": 0.0,
-    "success_rate_drop": 0.85
+    "success_rate_drop": 0.8525
   }
 }

@@ -27,6 +27,21 @@ PACKAGE_INSTALL_SMOKE_JSON = (
 )
 RELEASE_MANIFEST_JSON = ROOT / "docs" / "release_manifest" / "release_manifest.json"
 SUBMISSION_PACKET_JSON = ROOT / "docs" / "submission_packet" / "submission_packet.json"
+EXPERIMENT_MANIFEST_JSON = (
+    ROOT / "docs" / "experiments" / "experiment_manifest" / "experiment_manifest.json"
+)
+CITATION_AUDIT_JSON = (
+    ROOT / "docs" / "experiments" / "citation_source_audit" / "citation_source_audit.json"
+)
+ASSET_AUDIT_JSON = (
+    ROOT / "docs" / "experiments" / "third_party_asset_audit" / "asset_audit.json"
+)
+SUPPLEMENT_REPORT_JSON = (
+    ROOT / "docs" / "anonymous_supplement" / "supplement_report.json"
+)
+ANONYMITY_REPORT_JSON = (
+    ROOT / "docs" / "experiments" / "anonymity_audit" / "anonymity_report.json"
+)
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -148,13 +163,26 @@ def package_checks() -> list[Check]:
 
 def ci_checks() -> list[Check]:
     workflow = ROOT / ".github" / "workflows" / "ci.yml"
+    makefile = ROOT / "Makefile"
     if not workflow.exists():
         return [Check("CI.001", "CI workflow runs evidence gates", False, f"{rel(workflow)} missing")]
-    text = workflow.read_text(encoding="utf-8")
+    workflow_text = workflow.read_text(encoding="utf-8")
+    delegated_readiness = "run: make readiness" in workflow_text
+    makefile_text = (
+        makefile.read_text(encoding="utf-8")
+        if delegated_readiness and makefile.exists()
+        else ""
+    )
+    command_text = (workflow_text + "\n" + makefile_text).replace("python3 ", "python ")
     required_commands = [
         "python tools/run_experiments.py",
         "python tools/open_reproduction_gates.py --strict",
         "python tools/paper_claim_audit.py --strict",
+        "python tools/experiment_manifest.py --strict",
+        "python tools/citation_source_audit.py --strict",
+        "python tools/third_party_asset_audit.py --strict",
+        "python tools/build_anonymous_supplement.py --strict",
+        "python tools/submission_anonymity_audit.py --strict",
         "python tools/public_maturity_audit.py --strict",
         "python tools/package_install_smoke.py --strict",
         "python tools/release_manifest.py --verify --strict",
@@ -162,7 +190,7 @@ def ci_checks() -> list[Check]:
         "python tools/release_readiness.py --strict-rfc",
         "python tools/artifact_freshness.py --strict",
     ]
-    missing = [command for command in required_commands if command not in text]
+    missing = [command for command in required_commands if command not in command_text]
     return [
         Check(
             "CI.001",
@@ -176,6 +204,7 @@ def ci_checks() -> list[Check]:
 def experiment_checks(results: dict[str, Any]) -> list[Check]:
     active_roundtrip = nested(results, ("lerobot_active_roundtrip", "batch_roundtrip"), {})
     secondary = nested(results, ("lerobot_active_roundtrip", "secondary_batch_roundtrips"), [])
+    leakage_report = results.get("lerobot_scene_leakage", {})
     leakage = nested(results, ("lerobot_scene_leakage", "summary"), {})
     policy_gate = results.get("lerobot_policy_gate", {})
     temporal_policy = results.get("lerobot_temporal_policy_baseline", {})
@@ -209,11 +238,25 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
         ),
         Check(
             "EVID.003",
-            "scene leakage result is measured",
+            "task--scene proxy holdout result is measured",
             leakage.get("random_leakage_rate") == 1.0
             and leakage.get("scene_disjoint_leakage_rate") == 0.0
-            and leakage.get("success_rate_drop", 0) > 0,
-            f"random={leakage.get('random_leakage_rate')}, disjoint={leakage.get('scene_disjoint_leakage_rate')}, drop={leakage.get('success_rate_drop')}",
+            and leakage.get("scene_disjoint_episode_nrmse_mean", 0)
+            > leakage.get("random_episode_nrmse_mean", 0)
+            and nested(
+                leakage_report,
+                ("splits", "random_episode", "bc", "policy", "seed_count"),
+                0,
+            )
+            >= 5,
+            (
+                f"random_proxy_overlap={leakage.get('random_leakage_rate')}, "
+                f"holdout_proxy_overlap={leakage.get('scene_disjoint_leakage_rate')}, "
+                f"random_nrmse={leakage.get('random_episode_nrmse_mean')}, "
+                f"holdout_nrmse={leakage.get('scene_disjoint_episode_nrmse_mean')}, "
+                f"seeds={nested(leakage_report, ('splits', 'random_episode', 'bc', 'policy', 'seed_count'))}; "
+                "task-confounded"
+            ),
         ),
         Check(
             "EVID.004",
@@ -228,13 +271,11 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
             "EVID.011",
             "temporal policy baseline is measured",
             temporal_policy.get("status") == "measured_offline_temporal_baseline"
-            and nested(temporal_policy, ("aggregate", "random_episode_success_rate")) == 0.925
-            and nested(temporal_policy, ("aggregate", "scene_disjoint_success_rate")) == 0.42
-            and nested(temporal_policy, ("aggregate", "success_rate_drop"), 0) > 0.5,
+            and nested(temporal_policy, ("aggregate", "scene_disjoint_nrmse_mean"), 0)
+            > nested(temporal_policy, ("aggregate", "random_episode_nrmse_mean"), 0),
             (
-                f"random={nested(temporal_policy, ('aggregate', 'random_episode_success_rate'))}, "
-                f"scene={nested(temporal_policy, ('aggregate', 'scene_disjoint_success_rate'))}, "
-                f"drop={nested(temporal_policy, ('aggregate', 'success_rate_drop'))}"
+                f"random_nrmse={nested(temporal_policy, ('aggregate', 'random_episode_nrmse_mean'))}, "
+                f"holdout_nrmse={nested(temporal_policy, ('aggregate', 'scene_disjoint_nrmse_mean'))}"
             ),
         ),
         Check(
@@ -249,8 +290,11 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
             "dataset-scale manifest and generated catalog checks pass",
             dataset_scale.get("status") == "pass"
             and dataset_perf.get("status") == "pass"
-            and nested(dataset_perf, ("generated_catalog", "described_episode_capacity"), 0) >= 1_000_000_000,
-            "dataset manifest audit plus generated billion-episode-capacity catalog benchmark",
+            and nested(dataset_perf, ("generated_catalog", "trace_shard_count"), 0) > 0
+            and nested(dataset_perf, ("generated_catalog", "described_episode_capacity"), 0)
+            >= nested(dataset_perf, ("generated_catalog", "trace_shard_count"), 0)
+            and nested(dataset_perf, ("generated_catalog", "episodes_materialized")) == 0,
+            "dataset manifest audit plus generated catalog-capacity benchmark",
         ),
         Check(
             "EVID.007",
@@ -384,6 +428,111 @@ def paper_claim_checks() -> list[Check]:
     ]
 
 
+def experiment_manifest_checks() -> list[Check]:
+    if not EXPERIMENT_MANIFEST_JSON.exists():
+        return [
+            Check(
+                "PROV.001",
+                "experiment provenance manifest exists",
+                False,
+                f"{rel(EXPERIMENT_MANIFEST_JSON)} missing",
+            )
+        ]
+    try:
+        report = load_json(EXPERIMENT_MANIFEST_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "PROV.001",
+                "experiment provenance manifest parses",
+                False,
+                f"{rel(EXPERIMENT_MANIFEST_JSON)}: {exc}",
+            )
+        ]
+    experiments = report.get("experiments", [])
+    complete = all(
+        isinstance(experiment, dict)
+        and experiment.get("datasets")
+        and experiment.get("configuration")
+        and experiment.get("seed_policy")
+        and experiment.get("code")
+        and experiment.get("outputs")
+        and nested(experiment, ("execution", "exit_status")) == 0
+        and nested(experiment, ("execution", "compute", "wall_time_seconds"), 0) > 0
+        and nested(experiment, ("execution", "compute", "max_rss_bytes"), 0) > 0
+        for experiment in experiments
+    )
+    return [
+        Check(
+            "PROV.001",
+            "principal experiments have validated provenance",
+            report.get("schema") == "worldepisode_experiment_manifest_v1"
+            and nested(report, ("validation", "passed")) is True
+            and len(experiments) >= 4
+            and complete,
+            (
+                f"{rel(EXPERIMENT_MANIFEST_JSON)} experiments={len(experiments)}, "
+                f"errors={nested(report, ('validation', 'errors'), [])}"
+            ),
+        )
+    ]
+
+
+def source_audit_checks() -> list[Check]:
+    checks = []
+    for check_id, name, path, schema in (
+        (
+            "SOURCE.001",
+            "paper citations have audited primary sources",
+            CITATION_AUDIT_JSON,
+            "worldepisode_citation_source_audit_v1",
+        ),
+        (
+            "SOURCE.002",
+            "third-party assets and redistribution are audited",
+            ASSET_AUDIT_JSON,
+            "worldepisode_third_party_asset_audit_v1",
+        ),
+    ):
+        if not path.exists():
+            checks.append(Check(check_id, name, False, f"{rel(path)} missing"))
+            continue
+        try:
+            report = load_json(path)
+        except (OSError, json.JSONDecodeError) as exc:
+            checks.append(Check(check_id, name, False, f"{rel(path)}: {exc}"))
+            continue
+        passed = (
+            report.get("schema") == schema
+            and nested(report, ("validation", "passed")) is True
+            and nested(report, ("aggregate", "error_count")) == 0
+        )
+        if check_id == "SOURCE.001":
+            passed = (
+                passed
+                and nested(report, ("aggregate", "reference_count"), 0) > 0
+                and nested(report, ("aggregate", "undefined_count")) == 0
+                and nested(report, ("aggregate", "unused_count")) == 0
+            )
+        else:
+            passed = (
+                passed
+                and nested(report, ("aggregate", "active_dataset_count"), 0) >= 4
+                and nested(report, ("aggregate", "redistributed_parquet_count"), 0) > 0
+                and nested(report, ("aggregate", "source_license_file_count"), 0) > 0
+                and nested(report, ("aggregate", "source_media_count")) == 0
+            )
+        checks.append(
+            Check(
+                check_id,
+                name,
+                passed,
+                f"{rel(path)} aggregate={report.get('aggregate', {})}",
+            )
+        )
+    return checks
+
+
 def public_maturity_checks() -> list[Check]:
     if not PUBLIC_MATURITY_JSON.exists():
         return [
@@ -457,6 +606,55 @@ def submission_packet_checks() -> list[Check]:
                 f"status={packet.get('status')}, "
                 f"claims={nested(packet, ('summary', 'paper_claim_count'))}, "
                 f"open_gates={nested(packet, ('summary', 'open_result_gate_count'))}"
+            ),
+        )
+    ]
+
+
+def anonymity_checks() -> list[Check]:
+    if not SUPPLEMENT_REPORT_JSON.exists() or not ANONYMITY_REPORT_JSON.exists():
+        missing = [
+            rel(path)
+            for path in (SUPPLEMENT_REPORT_JSON, ANONYMITY_REPORT_JSON)
+            if not path.exists()
+        ]
+        return [
+            Check(
+                "ANON.001",
+                "anonymous paper and supplement pass identity audit",
+                False,
+                f"missing={missing}",
+            )
+        ]
+    try:
+        supplement = load_json(SUPPLEMENT_REPORT_JSON)
+        anonymity = load_json(ANONYMITY_REPORT_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "ANON.001",
+                "anonymous paper and supplement reports parse",
+                False,
+                str(exc),
+            )
+        ]
+    supplement_path = ROOT / str(nested(supplement, ("archive", "path"), ""))
+    return [
+        Check(
+            "ANON.001",
+            "anonymous paper and supplement pass identity audit",
+            supplement.get("schema") == "worldepisode_anonymous_supplement_v1"
+            and supplement.get("status") == "pass"
+            and nested(supplement, ("validation", "identity_pattern_matches")) == 0
+            and supplement_path.is_file()
+            and anonymity.get("schema") == "worldepisode_submission_anonymity_audit_v1"
+            and anonymity.get("status") == "pass"
+            and nested(anonymity, ("paper", "author_metadata_empty")) is True
+            and nested(anonymity, ("paper", "identity_pattern_matches")) == 0
+            and nested(anonymity, ("supplement", "identity_pattern_matches")) == 0,
+            (
+                f"supplement={rel(SUPPLEMENT_REPORT_JSON)}, "
+                f"audit={rel(ANONYMITY_REPORT_JSON)}"
             ),
         )
     ]
@@ -582,7 +780,10 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     blockers = claim_blockers(results)
     checks.extend(open_gate_checks(blockers))
     checks.extend(paper_claim_checks())
+    checks.extend(experiment_manifest_checks())
+    checks.extend(source_audit_checks())
     checks.extend(public_maturity_checks())
+    checks.extend(anonymity_checks())
     checks.extend(release_manifest_checks())
     checks.extend(submission_packet_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}

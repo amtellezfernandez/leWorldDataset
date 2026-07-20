@@ -4,12 +4,14 @@ This directory contains the arXiv-ready LaTeX paper source.
 
 ## Build
 
-Two builds exist:
+Two paper variants exist:
 
-- **Publication build** (default): strips the collaborator Open Contributions appendix and the
-  inline HELP markers by defining `\collaboff` on the command line.
-- **Collab build**: the working build with the C1--C7 task cards and HELP markers, for
-  collaborators picking up open experiments.
+- **Anonymous submission** (default): official conference style with anonymous authors.
+- **Preprint**: official preprint style with the author block.
+
+Both variants regenerate `generated/experiment_values.tex` from the committed JSON experiment
+reports before LaTeX runs. Missing required measurements fail the build. Results for unfinished
+gates are shown as `Not defined yet`.
 
 Generate the public publication PDF at the repository root:
 
@@ -18,30 +20,29 @@ cd paper/arxiv
 make root-pdf
 ```
 
-Generate the collaborator working PDF at the repository root:
+Generate the named preprint PDF at the repository root:
 
 ```bash
 cd paper/arxiv
-make collab-pdf
+make preprint-pdf
 ```
 
-Generate both (`WorldEpisode-collab.pdf` first, then `WorldEpisode.pdf`):
+Generate both variants:
 
 ```bash
 cd paper/arxiv
 make pdfs
 ```
 
-Fallback if `make` is unavailable (publication build without `latexmk`):
+Fallback if `make` is unavailable (anonymous build without `latexmk`):
 
 ```bash
-pdflatex '\def\collaboff{}\input{main.tex}'
+python3 ../../tools/paper_experiment_values.py
+pdflatex main.tex
 bibtex main
-pdflatex '\def\collaboff{}\input{main.tex}'
-pdflatex '\def\collaboff{}\input{main.tex}'
+pdflatex main.tex
+pdflatex main.tex
 ```
-
-Omit the `\def\collaboff{}` prefix for the collab build.
 
 ## arXiv Notes
 
@@ -49,10 +50,8 @@ Omit the `\def\collaboff{}` prefix for the collab build.
 - `main.tex` is the entry point.
 - `references.bib` is the BibTeX database.
 - Section files live in `sections/`.
+- `generated/experiment_values.tex` is generated and must not be edited manually.
 - Generated files such as `.aux`, `.bbl`, `.log`, and `paper/arxiv/main.pdf` should not be committed.
-- Upload the **publication build** source state to arXiv (the `\collaboff` define is a build-time
-  flag, so the same source tree works; just do not upload a PDF built with the collab appendix).
-- The release PDF `WorldEpisode.pdf` (publication build) and the collaborator working PDF
-  `WorldEpisode-collab.pdf` at the repository root are intentionally committed. The paper title is
-  "WorldEpisode: Auditing Silent State Drift in Robot-Learning Datasets"; the filenames remain
-  stable for repository links.
+- The release PDF `WorldEpisode.pdf` at the repository root is the anonymous submission build.
+- Before uploading source, replace the provisional 2026 style with the official 2027 files when
+  they become available and remove identifying source metadata.

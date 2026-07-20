@@ -10,6 +10,11 @@ that.
 ```bash
 python3 -m pip install -r requirements-experiments.txt
 WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT=1 python3 tools/run_experiments.py
+python3 tools/experiment_statistics.py
+python3 tools/experiment_manifest.py --strict
+python3 tools/paper_experiment_values.py
+python3 tools/build_anonymous_supplement.py --strict
+python3 tools/submission_anonymity_audit.py --strict
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
 python3 tools/package_install_smoke.py --strict
@@ -39,6 +44,8 @@ The experiment runner writes:
 - `docs/experiments/results.json` and `docs/experiments/RESULTS.md`
 - `docs/experiments/bindings/*`
 - `docs/experiments/lerobot_worldepisode_roundtrip/*`
+- `docs/experiments/lerobot_conversion_scale/*`
+- `docs/experiments/lerobot_multitrajectory_timing/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
 - `docs/experiments/dataset_scale_audit/*` and `docs/experiments/dataset_scale_performance/*`
@@ -47,6 +54,9 @@ The experiment runner writes:
 - `docs/experiments/uss_state_drift_pilots/*`
 - `docs/experiments/natural_failure_corpus/*`
 - `docs/experiments/recorded_episodes/*`
+- `docs/experiments/experiment_manifest/*`
+- `WorldEpisode-supplement.zip`, `docs/anonymous_supplement/*`, and
+  `docs/experiments/anonymity_audit/*`
 - `conformance/fixtures/pilot/*`
 
 ## Active LeRobot conversion (round trip)
@@ -71,47 +81,84 @@ python3 tools/lerobot_worldepisode_roundtrip.py --required \
 The active converter downloads bounded metadata/data shards from `lerobot/svla_so101_pickplace`,
 converts episode 0 through `LeRobotDataset v3 -> WorldEpisode -> LeRobotDataset v3`, and can extend
 the audit to episodes 0--4. A second committed batch repeats the same audit on `lerobot/pusht`.
-Together, the two public LeRobot batches preserve 1,935 action/state rows plus sample timestamps,
+Together, the two public LeRobot batches preserve all action/state rows plus sample timestamps,
 frame indices, episode indices, global sample indices, task indices, video timestamp ranges, and
 physical-frame records with zero numerical loss. LeRobot source fields that are absent, such as
 camera extrinsics and controller latency, are reported explicitly rather than silently invented.
 
-## Scene-leakage audit and policy gates
+### Complete-shard conversion-scale audit
 
 ```bash
-python3 tools/lerobot_scene_leakage_experiment.py --required
-python3 tools/lerobot_policy_leakage_gate.py
-uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict
+uv run --with pyarrow --with requests \
+  python tools/lerobot_conversion_scale.py --required
 ```
 
-The scene-leakage audit uses `armnet/armnetbench_v01_lerobot_so101`, derives WorldEpisode-style
-`world_lineage` hashes for task-scene/camera-layout groups, compares a random episode split against
-a scene-disjoint split, and trains the same Torch MLP behavioral-cloning baseline on both. In the
-committed run, the random split leaks all test scene lineages and obtains 0.850 offline BC success;
-the scene-disjoint split has zero lineage leakage and drops to 0.000. The committed compact LeRobot
-split packages are also executed by a temporal ridge state/action baseline with a three-frame state
-history: random-episode success is 0.925, scene-disjoint success is 0.420, and the success-rate
-drop is 0.505. This remains a low-dimensional offline result, not ACT, Diffusion, vision-policy,
+This deterministic command converts every episode assigned to one complete immutable source
+Parquet shard from each of the pinned SVLA, PushT, and ArmnetBench releases. It checks exact
+action/state/index/timestamp equality, records input and temporary-output bytes, wall time, peak
+resident memory, and source-absent semantics, then deletes the temporary packages. Source video
+payloads are not downloaded; only stream and timestamp metadata are audited. The committed report
+is `docs/experiments/lerobot_conversion_scale/scale_report.json`, and `--check --required` validates
+it without rerunning or downloading data.
+
+## Task--scene proxy audit and policy gates
+
+```bash
+uv run --with torch --with pyarrow --with requests --with numpy \
+  python tools/lerobot_scene_leakage_experiment.py \
+  --seeds 0,1,2,3,4 --epochs 12 --device auto --required
+python3 tools/lerobot_policy_leakage_gate.py
+python3 tools/lerobot_policy_compatibility_audit.py --check --strict
+uv run --with pyarrow --with numpy python tools/lerobot_temporal_policy_baseline.py --strict
+python3 tools/experiment_statistics.py
+```
+
+The audit uses `armnet/armnetbench_v01_lerobot_so101` and derives `world_lineage` hashes from task
+identity as well as source and camera metadata. It compares a random episode split with a
+task--scene proxy holdout (stored under the legacy `scene_disjoint` key) and trains the same Torch
+MLP baseline with five matched optimization seeds on both. The statistical report uses a crossed
+seed--episode bootstrap for the MLP, pairing sampled seeds across protocols while independently
+resampling their different held-out episode sets. Because the proxy contains task identity and the
+holdout removes tasks, the measured metric changes do not isolate scene leakage from task shift.
+The compact LeRobot split packages are also executed by a deterministic temporal ridge state/action
+baseline. Both are low-dimensional offline diagnostics, not ACT, Diffusion, vision-policy,
 simulator, or hardware evidence.
 
-The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs,
-episode allowlists, virtual split manifests, compact physical state/action LeRobot split packages,
-and high-fidelity/physical rollout requirements; it is intentionally marked open until real
-ACT/Diffusion metrics and rollout reports are committed. The compact packages omit source videos,
-so vision-policy claims require mirrored video assets with digests.
+The ACT/Diffusion gate converts that same split manifest into LeRobot-native `lerobot-train` jobs
+with explicit local dataset roots, episode allowlists, virtual split manifests, compact physical
+state/action LeRobot split packages, and high-fidelity/physical rollout requirements. The compact
+packages include split-specific normalization statistics and pass the pinned LeRobot 0.6.0 loader.
+The remote compatibility report records that ACT and Diffusion both stop before training because
+their input contract requires an image or environment-state feature in addition to the available
+joint proprioception. Joint positions are not relabeled to bypass that contract. Reproduce the
+remote probe in a pinned environment with:
+
+```bash
+uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
+  python tools/lerobot_policy_compatibility_audit.py --strict
+```
+
+The gate remains blocked until source images or a semantically valid environment-state feature are
+materialized. Vision-policy claims also require mirrored video assets with committed digests.
 
 ## Control-loop replay
 
 ```bash
+uv run --with pyarrow --with numpy \
+  python tools/lerobot_multitrajectory_timing_audit.py --required
 python3 tools/lerobot_control_replay_experiment.py --required
 ```
 
-Reads the exported SO-101 LeRobot v3 trajectory, estimates the effective action delay from the
-timestamped action/state streams, writes a WorldEpisode action contract, and tests timestamp-aware
-replay in MuJoCo and Genesis. In the committed run, the inferred delay is four 30 Hz frames
-(133 ms), validation alignment improves from 4.732 deg to 1.862 deg RMSE, and both tested
-same-trace replay adapters improve from 3.425 deg to 1.563 deg RMSE. The Isaac adapter contract is
-emitted and marked ready, but Isaac is intentionally untested here.
+The multi-trajectory audit estimates one action/state telemetry lag on the calibration split,
+freezes it, and evaluates source-episode-disjoint trajectories with paired episode bootstrap
+intervals, per-joint and per-task metrics, and interpolation/missing-command sensitivity. It does
+not measure motor latency: the source has only a frame timestamp and covers one SO-101 controller
+configuration.
+
+The separate replay command reads one exported SO-101 LeRobot v3 trajectory, writes a WorldEpisode
+action contract around an estimated delay, and tests that contract in MuJoCo and Genesis. Those
+same-trace adapters improve alignment under the declared contract, but both use the same minimal
+servo model. The Isaac adapter is emitted and marked ready but remains untested.
 
 ## Famous-benchmark call-out and inflation gate
 

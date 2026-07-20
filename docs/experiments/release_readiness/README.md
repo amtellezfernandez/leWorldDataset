@@ -19,40 +19,44 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (6198 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (6853 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1298 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (12268 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (477191 bytes) |
-| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (6519 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18269 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (180738 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (303767 bytes) |
+| DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (6291 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18515 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (285122 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (427 bytes) |
-| DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1402 bytes) |
+| DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1654 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
-| PKG.001 | pyproject exists | True | error | pyproject.toml (1324 bytes) |
+| PKG.001 | pyproject exists | True | error | pyproject.toml (1339 bytes) |
 | PKG.002 | package metadata parses | True | error | name='worldepisode', version='0.1.0' |
 | PKG.003 | console script is exposed | True | error | worldepisode='worldepisode.cli:main' |
 | PKG.004 | license and authors are declared | True | error | license and authors present in pyproject.toml |
 | PKG.005 | wheel install smoke passes | True | error | docs/experiments/package_install_smoke/package_install_smoke_report.json wheel=worldepisode-0.1.0-py3-none-any.whl |
 | EVID.001 | baseline manifest validates | True | error | schema_errors=0 and semantic_errors=0 |
 | EVID.002 | active LeRobot round trips are exact | True | error | two pinned public LeRobot batch reports with zero source-native errors |
-| EVID.003 | scene leakage result is measured | True | error | random=1.0, disjoint=0.0, drop=0.85 |
-| EVID.004 | ACT/Diffusion gate is explicit and not overclaimed | True | warning | policy jobs and compact split packages exist; metrics are not claimed |
-| EVID.011 | temporal policy baseline is measured | True | error | random=0.925, scene=0.42, drop=0.5050000000000001 |
+| EVID.003 | task--scene proxy holdout result is measured | True | error | random_proxy_overlap=1.0, holdout_proxy_overlap=0.0, random_nrmse=0.18315773606300353, holdout_nrmse=0.3805086135864258, seeds=5; task-confounded |
+| EVID.004 | ACT/Diffusion gate is explicit and not overclaimed | False | warning | policy jobs and compact split packages exist; metrics are not claimed |
+| EVID.011 | temporal policy baseline is measured | True | error | random_nrmse=0.15726148523804215, holdout_nrmse=0.254574342488933 |
 | EVID.005 | famous benchmark inflation gate is fail-closed | True | error | reruns=1, valid=0, claims=0 |
-| EVID.006 | dataset-scale manifest and generated catalog checks pass | True | error | dataset manifest audit plus generated billion-episode-capacity catalog benchmark |
+| EVID.006 | dataset-scale manifest and generated catalog checks pass | True | error | dataset manifest audit plus generated catalog-capacity benchmark |
 | EVID.007 | clean-room reader consumes public schema/fixtures | True | error | status=pass, recall=1.0 |
 | EVID.008 | replay timing evidence is executable | True | error | LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance |
 | EVID.009 | real-to-sim and meta-simulator boundaries are explicit | True | error | controlled proxy and runtime-neutral contract, not hardware/Isaac claim |
 | EVID.010 | natural failure corpus has scoped evidence | True | warning | datasets=5, reports=5, source_level_only=2; maintainer feedback still open |
 | GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=4 |
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
-| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=13, failed=0 |
+| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=14, failed=0 |
+| PROV.001 | principal experiments have validated provenance | True | error | docs/experiments/experiment_manifest/experiment_manifest.json experiments=7, errors=[] |
+| SOURCE.001 | paper citations have audited primary sources | True | error | docs/experiments/citation_source_audit/citation_source_audit.json aggregate={'archival_reference_count': 11, 'citation_occurrence_count': 28, 'error_count': 0, 'reference_count': 21, 'undefined_count': 0, 'unused_count': 0} |
+| SOURCE.002 | third-party assets and redistribution are audited | True | error | docs/experiments/third_party_asset_audit/asset_audit.json aggregate={'active_dataset_count': 4, 'authored_parquet_fixture_count': 1, 'context_only_dataset_count': 4, 'error_count': 0, 'external_software_count': 6, 'redistributed_parquet_bytes': 6736270, 'redistributed_parquet_count': 48, 'source_license_file_count': 16, 'source_media_count': 0} |
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=61, normalized=4 |
-| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=13, open_gates=4 |
+| ANON.001 | anonymous paper and supplement pass identity audit | True | error | supplement=docs/anonymous_supplement/supplement_report.json, audit=docs/experiments/anonymity_audit/anonymity_report.json |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=126, normalized=4 |
+| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=14, open_gates=4 |
 
 ## Blocked Stronger Claims
 

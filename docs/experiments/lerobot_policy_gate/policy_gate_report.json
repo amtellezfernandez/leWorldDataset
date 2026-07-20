@@ -3,6 +3,8 @@
     "jobs": "docs/experiments/lerobot_policy_gate/train_eval_jobs.json",
     "materialized_split_manifest": "docs/experiments/lerobot_policy_gate/materialized_splits/manifest.json",
     "physical_split_manifest": "docs/experiments/lerobot_policy_gate/physical_splits/manifest.json",
+    "policy_compatibility_log": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+    "policy_compatibility_report": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
     "random_episode_combined": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/split_episodes.json",
     "random_episode_test": "docs/experiments/lerobot_policy_gate/episode_allowlists/random_episode/test_episodes.json",
     "random_episode_test_materialization": "docs/experiments/lerobot_policy_gate/materialized_splits/random_episode_test.lerobot_split_manifest.json",
@@ -19,6 +21,7 @@
   },
   "available": true,
   "closure_required": [
+    "materialize source observation images or a semantically valid observation.environment_state feature required by LeRobot 0.6.0 ACT and Diffusion",
     "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
     "evaluate each checkpoint on the corresponding test split with action-error metrics",
     "run at least one high-fidelity simulator or physical rollout using the same split manifest",
@@ -33,6 +36,7 @@
     "lerobot_train": null,
     "python": "/usr/bin/python3"
   },
+  "environment_ready": false,
   "executions": [],
   "jobs": [
     {
@@ -90,23 +94,41 @@
       ],
       "source_dataset": {
         "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "source_license": {
+          "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+              "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "schema": "worldepisode_source_license_v1"
+        }
       },
       "split": "random_episode",
       "train": {
         "command": [
           "lerobot-train",
           "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
           "--policy.type=act",
           "--output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage",
           "--job_name=act_random_episode_worldepisode_leakage",
           "--policy.device=cuda",
+          "--policy.push_to_hub=false",
           "--steps=20000",
           "--seed=17",
           "--wandb.enable=false"
         ],
         "expected_checkpoint": "outputs/policy_leakage/act_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
-        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train --policy.type=act --output_dir=outputs/policy_leakage/act_random_episode_worldepisode_leakage --job_name=act_random_episode_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
       }
     },
     {
@@ -164,23 +186,41 @@
       ],
       "source_dataset": {
         "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "source_license": {
+          "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+              "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "schema": "worldepisode_source_license_v1"
+        }
       },
       "split": "random_episode",
       "train": {
         "command": [
           "lerobot-train",
           "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
           "--policy.type=diffusion",
           "--output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage",
           "--job_name=diffusion_random_episode_worldepisode_leakage",
           "--policy.device=cuda",
+          "--policy.push_to_hub=false",
           "--steps=20000",
           "--seed=17",
           "--wandb.enable=false"
         ],
         "expected_checkpoint": "outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage/checkpoints/last/pretrained_model",
-        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_random_episode_worldepisode_leakage --job_name=diffusion_random_episode_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
       }
     },
     {
@@ -238,23 +278,41 @@
       ],
       "source_dataset": {
         "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "source_license": {
+          "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+              "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "schema": "worldepisode_source_license_v1"
+        }
       },
       "split": "scene_disjoint",
       "train": {
         "command": [
           "lerobot-train",
           "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+          "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
           "--policy.type=act",
           "--output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage",
           "--job_name=act_scene_disjoint_worldepisode_leakage",
           "--policy.device=cuda",
+          "--policy.push_to_hub=false",
           "--steps=20000",
           "--seed=17",
           "--wandb.enable=false"
         ],
         "expected_checkpoint": "outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
-        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train --policy.type=act --output_dir=outputs/policy_leakage/act_scene_disjoint_worldepisode_leakage --job_name=act_scene_disjoint_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
       }
     },
     {
@@ -312,23 +370,41 @@
       ],
       "source_dataset": {
         "repo_id": "armnet/armnetbench_v01_lerobot_so101",
-        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+        "source_license": {
+          "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+              "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "schema": "worldepisode_source_license_v1"
+        }
       },
       "split": "scene_disjoint",
       "train": {
         "command": [
           "lerobot-train",
           "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train",
+          "--dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train",
           "--policy.type=diffusion",
           "--output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage",
           "--job_name=diffusion_scene_disjoint_worldepisode_leakage",
           "--policy.device=cuda",
+          "--policy.push_to_hub=false",
           "--steps=20000",
           "--seed=17",
           "--wandb.enable=false"
         ],
         "expected_checkpoint": "outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage/checkpoints/last/pretrained_model",
-        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --steps=20000 --seed=17 --wandb.enable=false"
+        "shell": "lerobot-train --dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_scene_disjoint_train --dataset.root=docs/experiments/lerobot_policy_gate/physical_splits/scene_disjoint_train --policy.type=diffusion --output_dir=outputs/policy_leakage/diffusion_scene_disjoint_worldepisode_leakage --job_name=diffusion_scene_disjoint_worldepisode_leakage --policy.device=cuda --policy.push_to_hub=false --steps=20000 --seed=17 --wandb.enable=false"
       }
     }
   ],
@@ -368,7 +444,7 @@
   "physical_split_packages": {
     "all_membership_counts_match": true,
     "all_train_test_overlaps_zero": true,
-    "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. They are ready for state/action ACT or Diffusion reruns and still require external video mirroring before any vision-policy result can be claimed.",
+    "claim_boundary": "Physical split packages are committed compact low-dimensional LeRobot folders. Their state/action rows are ready for policies that support proprioception-only input. LeRobot 0.6.0 ACT and Diffusion require an image or environment-state input, so source videos or a semantically valid environment-state feature must be materialized before those jobs can run.",
     "package_count": 4,
     "package_root": "docs/experiments/lerobot_policy_gate/physical_splits",
     "packages": [
@@ -415,13 +491,203 @@
     "source_files_verified": true,
     "source_split_manifest": "docs/experiments/lerobot_scene_leakage/split_manifest.json",
     "status": "physical_split_packages_ready",
-    "total_output_bytes": 6245649,
+    "total_output_bytes": 6261016,
     "total_output_frames": 241470
   },
   "policies": [
     "act",
     "diffusion"
   ],
+  "policy_compatibility": {
+    "all_policy_probes_blocked_for_expected_reason": true,
+    "all_policy_probes_completed_training_step": false,
+    "artifacts": {
+      "report": "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+      "run_log": "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log"
+    },
+    "audit_valid": true,
+    "claim_boundary": "This probe validates the committed low-dimensional package loader and the pinned LeRobot ACT/Diffusion model-construction path. It is not a policy result. Both policies stop before training because joint proprioception alone does not satisfy their observation contract. Source videos were not mirrored, and joint positions must not be relabeled as environment state.",
+    "dataset": {
+      "loader": {
+        "episode_count": 320,
+        "feature_keys": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "next.done",
+          "next.reward",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "frame_count": 98990,
+        "sample_shapes": {
+          "action": [
+            6
+          ],
+          "episode_index": [],
+          "frame_index": [],
+          "index": [],
+          "next.done": [],
+          "next.reward": [],
+          "observation.state": [
+            6
+          ],
+          "task_index": [],
+          "timestamp": []
+        },
+        "stats_feature_keys": [
+          "action",
+          "observation.state"
+        ],
+        "success": true
+      },
+      "package_files": [
+        {
+          "bytes": 2115046,
+          "path": "data/chunk-000/file-000.parquet",
+          "sha256": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc"
+        },
+        {
+          "bytes": 345970,
+          "path": "meta/episodes/chunk-000/file-000.parquet",
+          "sha256": "3493f4554ef47cff7bc7c2cc0c1f4f3fb49b4f9eed07c69c8942a0a2d12e1757"
+        },
+        {
+          "bytes": 1684,
+          "path": "meta/info.json",
+          "sha256": "d5339e4823b7fbe8cb0fd376df4762b8dcee4e324c004d7d8cf3b19c7dec38f6"
+        },
+        {
+          "bytes": 3211,
+          "path": "meta/stats.json",
+          "sha256": "f8127cd4879a71c344afadd07909d296a9de7368f506918ca2e6f9d9f0999c4d"
+        },
+        {
+          "bytes": 2534,
+          "path": "meta/tasks.parquet",
+          "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f"
+        }
+      ],
+      "package_role": "random_episode_train_smoke_representative",
+      "repo_id": "worldepisode/armnetbench_v01_lerobot_so101_random_episode_train"
+    },
+    "environment": {
+      "cuda_available": true,
+      "cuda_device_count": 1,
+      "cuda_devices": [
+        {
+          "compute_capability": "12.1",
+          "index": 0,
+          "name": "NVIDIA GB10",
+          "total_memory_bytes": 130663170048
+        }
+      ],
+      "hostname": "golden-apple",
+      "lerobot_version": "0.6.0",
+      "machine": "aarch64",
+      "platform": "Linux-6.17.0-1026-nvidia-aarch64-with-glibc2.39",
+      "python_version": "3.12.13",
+      "torch_version": "2.11.0+cu130"
+    },
+    "execution": {
+      "command": "uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' python tools/lerobot_policy_compatibility_audit.py --strict",
+      "compute": {
+        "cpu_utilization_percent": 160.01738,
+        "max_rss_bytes": 937803776,
+        "system_cpu_seconds": 1.085951,
+        "user_cpu_seconds": 15.898041,
+        "wall_time_seconds": 10.613842
+      },
+      "exit_status": 0,
+      "finished_utc": "2026-07-20T17:38:26.998870+00:00",
+      "host": {
+        "cpu_logical_count": 20,
+        "gpu_info": "NVIDIA GB10",
+        "machine": "aarch64",
+        "storage_free_bytes": 320152395776,
+        "storage_total_bytes": 3937360351232,
+        "total_ram_bytes": 130663170048,
+        "uname": "Linux golden-apple 6.17.0-1026-nvidia #26-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 25 00:57:17 UTC 2026 aarch64 aarch64"
+      },
+      "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+      "runner": "remote_dgx_spark_uv_isolated",
+      "started_utc": "2026-07-20T17:38:16.242627+00:00"
+    },
+    "fresh_for_current_package": true,
+    "freshness_errors": [],
+    "lerobot_policy_requirements_version": "0.6.0",
+    "pass": false,
+    "policy_probes": [
+      {
+        "command_template": [
+          "python",
+          "-m",
+          "lerobot.scripts.lerobot_train",
+          "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "--dataset.root=$DATASET_ROOT",
+          "--policy.type=act",
+          "--policy.push_to_hub=false",
+          "--output_dir=$WORK_DIR/act",
+          "--job_name=act_compatibility_smoke",
+          "--policy.device=cuda",
+          "--steps=1",
+          "--batch_size=2",
+          "--num_workers=0",
+          "--save_checkpoint=false",
+          "--wandb.enable=false",
+          "--seed=17"
+        ],
+        "duration_seconds": 4.599967,
+        "expected_modality_error_observed": true,
+        "normalized_traceback_sha256": "cbdaf7f4afd2418cf2c1909546e95d94758d731d96184de27f0747890c9542d2",
+        "policy": "act",
+        "return_code": 1,
+        "status": "blocked_missing_required_observation_modality",
+        "terminal_error": "ValueError: You must provide at least one image or the environment state among the inputs.",
+        "training_step_completed": false
+      },
+      {
+        "command_template": [
+          "python",
+          "-m",
+          "lerobot.scripts.lerobot_train",
+          "--dataset.repo_id=worldepisode/armnetbench_v01_lerobot_so101_random_episode_train",
+          "--dataset.root=$DATASET_ROOT",
+          "--policy.type=diffusion",
+          "--policy.push_to_hub=false",
+          "--output_dir=$WORK_DIR/diffusion",
+          "--job_name=diffusion_compatibility_smoke",
+          "--policy.device=cuda",
+          "--steps=1",
+          "--batch_size=2",
+          "--num_workers=0",
+          "--save_checkpoint=false",
+          "--wandb.enable=false",
+          "--seed=17"
+        ],
+        "duration_seconds": 4.490151,
+        "expected_modality_error_observed": true,
+        "normalized_traceback_sha256": "79e32a8024ec1aa44100ffa72c981b2ac609df407c8f89ba4e2efa867f0b9fb2",
+        "policy": "diffusion",
+        "return_code": 1,
+        "status": "blocked_missing_required_observation_modality",
+        "terminal_error": "ValueError: You must provide at least one image or the environment state among the inputs.",
+        "training_step_completed": false
+      }
+    ],
+    "profile": "worldepisode-lerobot-policy-compatibility-audit-0.1",
+    "required_missing_modality": "observation image or semantically valid observation.environment_state",
+    "script": "tools/lerobot_policy_compatibility_audit.py",
+    "script_sha256": "619070884feb10e091921febf3d512702ca6d33d48cbd6820c83aaece498f372",
+    "status": "blocked_missing_required_observation_modality",
+    "upstream_requirement_sources": {
+      "act": "https://github.com/huggingface/lerobot/blob/v0.6.0/src/lerobot/policies/act/configuration_act.py",
+      "diffusion": "https://github.com/huggingface/lerobot/blob/v0.6.0/src/lerobot/policies/diffusion/configuration_diffusion.py"
+    }
+  },
+  "policy_inputs_ready": false,
   "profile": "worldepisode-act-diffusion-leakage-gate-0.1",
   "ready_to_execute": false,
   "result_files_present": {
@@ -457,6 +723,22 @@
     "repo_id": "armnet/armnetbench_v01_lerobot_so101",
     "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
     "robot_type": "so-101",
+    "source_license": {
+      "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+      "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+      "evidence": {
+        "dataset_card": {
+          "declared_license": "apache-2.0",
+          "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+          "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+        },
+        "upstream": []
+      },
+      "license_expression": "Apache-2.0",
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "schema": "worldepisode_source_license_v1"
+    },
     "teleoperated_reference_episodes": 400
   },
   "source_leakage_report": "docs/experiments/lerobot_scene_leakage/leakage_report.json",
@@ -484,5 +766,5 @@
       "train_world_lineage_count": 6
     }
   },
-  "status": "ready_not_executed"
+  "status": "blocked_missing_required_observation_modality"
 }

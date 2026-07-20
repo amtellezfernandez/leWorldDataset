@@ -53,6 +53,22 @@
     "action units",
     "controller latency model"
   ],
+  "source_license": {
+    "attribution": "svla_so101_pickplace, LeRobot, pinned revision f641879e22172be7e8161d5e6c1503c2d2feb657.",
+    "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+    "evidence": {
+      "dataset_card": {
+        "declared_license": "apache-2.0",
+        "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+        "url": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace/resolve/f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+      },
+      "upstream": []
+    },
+    "license_expression": "Apache-2.0",
+    "repo_id": "lerobot/svla_so101_pickplace",
+    "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+    "schema": "worldepisode_source_license_v1"
+  },
   "source_profile": "lerobot-v3",
   "source_repo_id": "lerobot/svla_so101_pickplace",
   "source_revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",

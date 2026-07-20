@@ -18,15 +18,22 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+try:
+    from dataset_license_registry import license_record, source_license_payload
+except ImportError:  # Imported as tools.lerobot_policy_leakage_gate in tests.
+    from tools.dataset_license_registry import license_record, source_license_payload
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SPLIT_MANIFEST = ROOT / "docs" / "experiments" / "lerobot_scene_leakage" / "split_manifest.json"
 DEFAULT_LEAKAGE_REPORT = ROOT / "docs" / "experiments" / "lerobot_scene_leakage" / "leakage_report.json"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "lerobot_policy_gate"
+DEFAULT_POLICY_COMPATIBILITY_REPORT = DEFAULT_OUTPUT_DIR / "policy_compatibility_report.json"
 DEFAULT_POLICIES = ("act", "diffusion")
 DEFAULT_DEVICE = "cuda"
 DEFAULT_STEPS = 20000
 DEFAULT_SEED = 17
+LEROBOT_POLICY_REQUIREMENTS_VERSION = "0.6.0"
 
 
 def load_json(path: Path) -> Any:
@@ -79,6 +86,23 @@ def output_file_descriptor(path: Path, media_type: str) -> dict[str, Any]:
         "sha256": sha256_file(path),
         "media_type": media_type,
     }
+
+
+def compatibility_report_fresh(report: dict[str, Any], dataset_root: Path) -> tuple[bool, list[str]]:
+    errors = []
+    descriptors = report.get("dataset", {}).get("package_files", [])
+    if not descriptors:
+        return False, ["compatibility report has no package descriptors"]
+    for descriptor in descriptors:
+        path = dataset_root / descriptor["path"]
+        if not path.exists():
+            errors.append(f"missing compatibility input: {descriptor['path']}")
+            continue
+        if path.stat().st_size != descriptor.get("bytes"):
+            errors.append(f"byte count changed: {descriptor['path']}")
+        if sha256_file(path) != descriptor.get("sha256"):
+            errors.append(f"digest changed: {descriptor['path']}")
+    return not errors, errors
 
 
 def detect_environment() -> dict[str, Any]:
@@ -159,12 +183,16 @@ def split_partition_manifest(
     episode_indices = split[f"{partition}_episodes"]
     source_files = leakage_report.get("source_files", {})
     total_source_bytes = sum(int(descriptor.get("bytes", 0)) for descriptor in source_files.values())
+    source_license = source_license_payload(
+        license_record(split_manifest["repo_id"], split_manifest["revision"])
+    )
     return {
         "profile": "worldepisode-virtual-lerobot-split-0.1",
         "status": "virtual_materialization_manifest",
         "source_dataset": {
             "repo_id": split_manifest["repo_id"],
             "revision": split_manifest["revision"],
+            "source_license": source_license,
         },
         "target_dataset": {
             "repo_id": materialized_repo_id(split_manifest["repo_id"], split_name, partition),
@@ -400,13 +428,52 @@ def update_episode_stats(pa: Any, table: Any, lengths: list[int]) -> Any:
     return table
 
 
+def aggregate_episode_feature_stats(table: Any, feature_names: list[str]) -> dict[str, Any]:
+    import numpy as np
+
+    aggregate: dict[str, Any] = {}
+    stat_names = ("min", "max", "mean", "std", "count", "q01", "q10", "q50", "q90", "q99")
+    for feature_name in feature_names:
+        columns = {stat: f"stats/{feature_name}/{stat}" for stat in stat_names}
+        if any(column not in table.column_names for column in columns.values()):
+            continue
+
+        values = {
+            stat: np.asarray(table[column].to_pylist(), dtype=np.float64)
+            for stat, column in columns.items()
+        }
+        counts = values["count"]
+        means = values["mean"]
+        while counts.ndim < means.ndim:
+            counts = np.expand_dims(counts, axis=-1)
+        total_count = counts.sum(axis=0)
+        total_mean = (means * counts).sum(axis=0) / total_count
+        total_variance = (((values["std"] ** 2) + (means - total_mean) ** 2) * counts).sum(
+            axis=0
+        ) / total_count
+
+        feature_stats = {
+            "min": values["min"].min(axis=0),
+            "max": values["max"].max(axis=0),
+            "mean": total_mean,
+            "std": np.sqrt(total_variance),
+            "count": total_count,
+        }
+        for quantile in ("q01", "q10", "q50", "q90", "q99"):
+            feature_stats[quantile] = (values[quantile] * counts).sum(axis=0) / total_count
+        aggregate[feature_name] = {
+            stat: np.atleast_1d(value).tolist()
+            for stat, value in feature_stats.items()
+        }
+    return aggregate
+
+
 def compact_info_payload(
     source_info: dict[str, Any],
     split_name: str,
     partition: str,
     episode_count: int,
     frame_count: int,
-    output_data_bytes: int,
 ) -> dict[str, Any]:
     info = dict(source_info)
     features = {
@@ -418,16 +485,8 @@ def compact_info_payload(
     info["total_episodes"] = episode_count
     info["total_frames"] = frame_count
     info["splits"] = {"train": f"0:{episode_count}"}
-    info["data_files_size_in_mb"] = round(output_data_bytes / 1_000_000, 6)
-    info["video_files_size_in_mb"] = 0
-    info["worldepisode_split_package"] = {
-        "split_name": split_name,
-        "partition": partition,
-        "local_split_alias": "train",
-        "mode": "low_dimensional_state_action_package",
-        "video_payloads": "external_not_materialized",
-    }
     info.pop("video_path", None)
+    info["video_path"] = None
     return info
 
 
@@ -492,6 +551,13 @@ def write_physical_split_package(
     meta_path = target_dir / "meta" / "episodes" / "chunk-000" / "file-000.parquet"
     pq.write_table(meta_table, meta_path, compression="zstd")
 
+    feature_stats = aggregate_episode_feature_stats(
+        meta_table,
+        ["action", "observation.state"],
+    )
+    stats_path = target_dir / "meta" / "stats.json"
+    write_json(stats_path, feature_stats)
+
     tasks_source = source_root / "meta" / "tasks.parquet"
     tasks_path = target_dir / "meta" / "tasks.parquet"
     shutil.copy2(tasks_source, tasks_path)
@@ -503,10 +569,14 @@ def write_physical_split_package(
         partition=partition,
         episode_count=len(episode_indices),
         frame_count=data_table.num_rows,
-        output_data_bytes=data_path.stat().st_size,
     )
     info_path = target_dir / "meta" / "info.json"
     write_json(info_path, info_payload)
+    source_license = source_license_payload(
+        license_record(split_manifest["repo_id"], split_manifest["revision"])
+    )
+    source_license_path = target_dir / "SOURCE_LICENSE.json"
+    write_json(source_license_path, source_license)
 
     local_episode_map = [
         {"local_episode_index": local_index, "source_episode_index": source_index}
@@ -519,6 +589,7 @@ def write_physical_split_package(
             "repo_id": split_manifest["repo_id"],
             "revision": split_manifest["revision"],
             "local_cache_root": rel(source_root),
+            "source_license": source_license,
         },
         "target_dataset": {
             "repo_id": materialized_repo_id(split_manifest["repo_id"], split_name, partition),
@@ -552,7 +623,12 @@ def write_physical_split_package(
             "data": output_file_descriptor(data_path, "application/vnd.apache.parquet"),
             "episodes": output_file_descriptor(meta_path, "application/vnd.apache.parquet"),
             "tasks": output_file_descriptor(tasks_path, "application/vnd.apache.parquet"),
+            "stats": output_file_descriptor(stats_path, "application/json"),
             "info": output_file_descriptor(info_path, "application/json"),
+            "source_license": output_file_descriptor(
+                source_license_path,
+                "application/json",
+            ),
         },
         "preserved_without_numeric_change": [
             "action",
@@ -676,8 +752,10 @@ def write_physical_split_packages(
             ],
             "claim_boundary": (
                 "Physical split packages are committed compact low-dimensional LeRobot folders. "
-                "They are ready for state/action ACT or Diffusion reruns and still require external "
-                "video mirroring before any vision-policy result can be claimed."
+                "Their state/action rows are ready for policies that support proprioception-only input. "
+                "LeRobot 0.6.0 ACT and Diffusion require an image or environment-state input, so source "
+                "videos or a semantically valid environment-state feature must be materialized before "
+                "those jobs can run."
             ),
         }
         write_json(summary_path, summary)
@@ -713,6 +791,7 @@ def materialized_repo_id(source_repo_id: str, split_name: str, partition: str) -
 def train_command(
     policy: str,
     dataset_repo_id: str,
+    dataset_root: str,
     output_dir: str,
     job_name: str,
     device: str,
@@ -723,10 +802,12 @@ def train_command(
     return [
         "lerobot-train",
         f"--dataset.repo_id={dataset_repo_id}",
+        f"--dataset.root={dataset_root}",
         f"--policy.type={policy}",
         f"--output_dir={output_dir}",
         f"--job_name={job_name}",
         f"--policy.device={device}",
+        "--policy.push_to_hub=false",
         f"--steps={steps}",
         f"--seed={seed}",
         f"--wandb.enable={str(wandb).lower()}",
@@ -772,7 +853,8 @@ def make_jobs(
         "set -euo pipefail",
         "",
         "# Local compact split packages are under docs/experiments/lerobot_policy_gate/physical_splits.",
-        "# Upload them as the listed repo IDs or point your LeRobot job at the local package paths.",
+        "# LeRobot 0.6.0 ACT and Diffusion also require an image or environment-state input.",
+        "# Do not run these jobs until a semantically valid required modality has been materialized.",
         "",
     ]
 
@@ -794,6 +876,7 @@ def make_jobs(
             train = train_command(
                 policy=policy,
                 dataset_repo_id=train_repo,
+                dataset_root=train_local_path,
                 output_dir=policy_output,
                 job_name=job_name,
                 device=device,
@@ -844,6 +927,9 @@ def make_jobs(
                     "source_dataset": {
                         "repo_id": repo_id,
                         "revision": revision,
+                        "source_license": source_license_payload(
+                            license_record(repo_id, revision)
+                        ),
                     },
                     "materialized_datasets_required": {
                         "train_repo_id": train_repo,
@@ -982,8 +1068,50 @@ def build_policy_gate(
     artifacts.update(physical_packages["artifacts"])
     environment = detect_environment()
     result_files = existing_result_files(jobs)
-    ready_to_execute = bool(environment["lerobot_train"]) and environment["lerobot_importable"]
-    executions = execute_jobs(jobs, dry_run=not execute)
+    compatibility_path = output_dir / DEFAULT_POLICY_COMPATIBILITY_REPORT.name
+    if compatibility_path.exists():
+        compatibility = load_json(compatibility_path)
+        compatibility_fresh, compatibility_errors = compatibility_report_fresh(
+            compatibility,
+            physical_package_path(output_dir, "random_episode", "train"),
+        )
+    else:
+        compatibility = {
+            "status": "not_run",
+            "audit_valid": False,
+            "all_policy_probes_completed_training_step": False,
+            "all_policy_probes_blocked_for_expected_reason": False,
+        }
+        compatibility_fresh = False
+        compatibility_errors = ["compatibility report has not been generated"]
+    compatibility_evidence = {
+        **compatibility,
+        "fresh_for_current_package": compatibility_fresh,
+        "freshness_errors": compatibility_errors,
+    }
+    policy_inputs_ready = bool(
+        compatibility_fresh
+        and compatibility.get("all_policy_probes_completed_training_step")
+    )
+    known_modality_blocker = bool(
+        compatibility_fresh
+        and compatibility.get("audit_valid")
+        and compatibility.get("all_policy_probes_blocked_for_expected_reason")
+    )
+    environment_ready = bool(environment["lerobot_train"]) and environment["lerobot_importable"]
+    ready_to_execute = environment_ready and policy_inputs_ready
+    if execute and not ready_to_execute:
+        executions = [
+            {
+                "status": "blocked_by_preflight",
+                "reason": compatibility_evidence.get(
+                    "claim_boundary",
+                    "Policy compatibility preflight did not pass.",
+                ),
+            }
+        ]
+    else:
+        executions = execute_jobs(jobs, dry_run=not execute)
     if execute:
         result_files = existing_result_files(jobs)
 
@@ -991,23 +1119,40 @@ def build_policy_gate(
         name: split_counts(split)
         for name, split in sorted(split_manifest["splits"].items())
     }
+    gate_pass = gate_satisfied(jobs, result_files)
+    status = (
+        "closed"
+        if gate_pass
+        else "blocked_missing_required_observation_modality"
+        if known_modality_blocker
+        else "ready_not_executed"
+    )
     report = {
         "profile": "worldepisode-act-diffusion-leakage-gate-0.1",
         "available": True,
-        "pass": gate_satisfied(jobs, result_files),
-        "status": "closed" if gate_satisfied(jobs, result_files) else "ready_not_executed",
+        "pass": gate_pass,
+        "status": status,
         "source_split_manifest": rel(split_manifest_path),
         "source_leakage_report": rel(leakage_report_path),
         "source_dataset": {
             "repo_id": split_manifest["repo_id"],
             "revision": split_manifest["revision"],
+            "source_license": source_license_payload(
+                license_record(
+                    split_manifest["repo_id"],
+                    split_manifest["revision"],
+                )
+            ),
             "teleoperated_reference_episodes": leakage_report.get("dataset", {}).get("teleoperated_reference_episodes"),
             "robot_type": leakage_report.get("dataset", {}).get("robot_type", "so101"),
         },
         "splits": split_summary,
         "policies": policies,
         "environment": environment,
+        "environment_ready": environment_ready,
+        "policy_inputs_ready": policy_inputs_ready,
         "ready_to_execute": ready_to_execute,
+        "policy_compatibility": compatibility_evidence,
         "jobs": jobs,
         "materialized_split_manifests": materialization["summary"],
         "physical_split_packages": physical_packages["summary"],
@@ -1015,6 +1160,10 @@ def build_policy_gate(
         "result_files_present": result_files,
         "executions": executions,
         "closure_required": [
+            (
+                "materialize source observation images or a semantically valid observation.environment_state "
+                f"feature required by LeRobot {LEROBOT_POLICY_REQUIREMENTS_VERSION} ACT and Diffusion"
+            ),
             "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
             "evaluate each checkpoint on the corresponding test split with action-error metrics",
             "run at least one high-fidelity simulator or physical rollout using the same split manifest",
@@ -1025,6 +1174,11 @@ def build_policy_gate(
             "report": rel(output_dir / "policy_gate_report.json"),
             "jobs": rel(output_dir / "train_eval_jobs.json"),
             "rollout_contract": rel(output_dir / "rollout_contract.json"),
+            "policy_compatibility_report": rel(compatibility_path),
+            "policy_compatibility_log": compatibility.get("artifacts", {}).get(
+                "run_log",
+                "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+            ),
             **artifacts,
         },
     }
@@ -1045,6 +1199,7 @@ def render_readme(report: dict[str, Any]) -> str:
     )
     materialization = report["materialized_split_manifests"]
     physical = report.get("physical_split_packages", {})
+    compatibility = report.get("policy_compatibility", {})
     return f"""# LeRobot ACT/Diffusion Leakage Gate
 
 Status: {report["status"]}
@@ -1071,6 +1226,16 @@ Boundary: {materialization["claim_boundary"]}
 
 Physical package boundary: {physical.get("claim_boundary", "Unavailable.")}
 
+## Policy Compatibility
+
+- Pinned LeRobot requirement version: {compatibility.get("lerobot_policy_requirements_version", "not probed")}
+- Compatibility report: `{report["artifacts"]["policy_compatibility_report"]}`
+- Current package digests match the probe: {compatibility.get("fresh_for_current_package", False)}
+- ACT/Diffusion completed a training step: {compatibility.get("all_policy_probes_completed_training_step", False)}
+- Probe status: {compatibility.get("status", "not_run")}
+
+{compatibility.get("claim_boundary", "No compatibility probe has been recorded.")}
+
 ## Jobs
 
 | Job | Policy | Split | Local train package |
@@ -1079,11 +1244,12 @@ Physical package boundary: {physical.get("claim_boundary", "Unavailable.")}
 
 ## Run
 
-1. Use the local train/test packages listed in `train_eval_jobs.json`, or upload those folders as the matching LeRobot repo IDs.
-2. Run `bash {report["artifacts"]["run_script"]}` in an environment with LeRobot installed.
-3. Evaluate each checkpoint with the offline action-evaluation contract.
-4. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
-5. Save the required result files listed per job. Mirror source videos first if the policy consumes images.
+1. Materialize source images or a semantically valid environment-state input and regenerate the split packages.
+2. Rerun the compatibility audit until both policies complete the one-step smoke test.
+3. Run `bash {report["artifacts"]["run_script"]}` in an environment with LeRobot installed.
+4. Evaluate each checkpoint with the offline action-evaluation contract.
+5. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
+6. Save the required result files listed per job.
 
 The gate remains open while `policy_gate_report.json` has `"pass": false`.
 """

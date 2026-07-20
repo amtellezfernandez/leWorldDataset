@@ -9,17 +9,17 @@ It does not materialize episode rows or payload bytes.
 - Described episode capacity: 1073741824
 - Episodes materialized: 0
 - Asset descriptors: 32779
-- JSON catalog bytes opened: 24588169
-- Generated catalog SHA-256: `11a190f76a6b5c29401aee5e6fd07952ac94ce7a91a117ee8920a081ac65e861`
+- JSON catalog bytes opened: 24588182
+- Generated catalog SHA-256: `79817b5772ae4df6e215dd48c7b5a6c824877e9ea738f4d827580b5a4444b090`
 
 ## Timings
 
 | Operation | Milliseconds |
 |---|---:|
-| Catalog open, parse, and index | 152.408 |
-| Partition-pruning queries | 0.191 |
-| Digest-cache resolution | 6.256 |
-| Resolver routing | 62.790 |
+| Catalog open, parse, and index | 514.232 |
+| Partition-pruning queries | 0.595 |
+| Digest-cache resolution | 28.153 |
+| Resolver routing | 176.155 |
 
 ## Partition Pruning
 

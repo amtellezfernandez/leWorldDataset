@@ -1,0 +1,664 @@
+{
+  "aggregate": {
+    "action_row_count": 43601,
+    "dataset_count": 3,
+    "episode_count": 271,
+    "maximum_numerical_error": 0.0,
+    "maximum_worker_rss_bytes": 412426240,
+    "multi_camera_dataset_count": 2,
+    "orchestrator_wall_time_seconds": 48.11816880101105,
+    "semantic_loss_field_count": 4,
+    "semantic_loss_occurrence_count": 1084,
+    "source_input_bytes": 5485027,
+    "state_row_count": 43601,
+    "temporary_output_bytes": 18354903,
+    "worker_wall_time_seconds": 47.851019216061104
+  },
+  "artifacts": {
+    "json": "docs/experiments/lerobot_conversion_scale/scale_report.json",
+    "markdown": "docs/experiments/lerobot_conversion_scale/README.md"
+  },
+  "claim_boundary": "This measures exact low-dimensional LeRobot/WorldEpisode conversion over complete pinned Parquet shards. It does not convert video payload bytes, prove full-corpus throughput, or evaluate policy quality.",
+  "datasets": [
+    {
+      "conversion": {
+        "action_row_count": 11939,
+        "discarded_fields": [],
+        "episode_count": 50,
+        "max_errors": {
+          "max_abs_action_error": 0.0,
+          "max_abs_episode_index_error": 0.0,
+          "max_abs_frame_index_error": 0.0,
+          "max_abs_index_error": 0.0,
+          "max_abs_state_error": 0.0,
+          "max_abs_task_index_error": 0.0,
+          "max_abs_timestamp_error": 0.0,
+          "max_abs_video_timestamp_error": 0.0
+        },
+        "semantic_loss_field_count": 4,
+        "semantic_loss_fields": [
+          "action units",
+          "camera extrinsics",
+          "controller latency model",
+          "robot/world calibration transform"
+        ],
+        "semantic_loss_occurrence_count": 200,
+        "state_row_count": 11939,
+        "temporary_output_bytes": 3537803,
+        "temporary_output_file_count": 600,
+        "temporary_outputs_retained": false
+      },
+      "dataset_id": "svla_so101_pickplace",
+      "modality": {
+        "source_video_payload_downloaded": false,
+        "video_stream_count": 2,
+        "video_streams": [
+          "observation.images.side",
+          "observation.images.up"
+        ]
+      },
+      "performance": {
+        "episodes_per_second": 11.040482802024274,
+        "max_rss_bytes": 352735232,
+        "rows_per_second": 2636.246483467356,
+        "system_cpu_seconds": 0.211942,
+        "user_cpu_seconds": 4.388939,
+        "wall_time_seconds": 4.528787454008125
+      },
+      "repo_id": "lerobot/svla_so101_pickplace",
+      "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+      "schema": "worldepisode_lerobot_conversion_scale_worker_v1",
+      "source_subset": {
+        "complete_source_file": true,
+        "data_chunk_index": 0,
+        "data_file_index": 0,
+        "episode_index_sha256": "4eaf9c1cc03c11d6d219275fb69dec3375e8139949b7c6bbc1664b2089298378",
+        "episode_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        "source_data_rows": 11939,
+        "source_files": {
+          "README.md": {
+            "bytes": 3710,
+            "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+          },
+          "data/chunk-000/file-000.parquet": {
+            "bytes": 369943,
+            "sha256": "579ad57e2454359fa9f2c0e83525991bd2e0305b7b2914d0b1181da3c6ad9949",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/data/chunk-000/file-000.parquet"
+          },
+          "meta/episodes/chunk-000/file-000.parquet": {
+            "bytes": 72560,
+            "sha256": "191998bffd2680c477a4000270cf943bc423ba5fb54ee8b8244b57db062c5209",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/episodes/chunk-000/file-000.parquet"
+          },
+          "meta/info.json": {
+            "bytes": 3401,
+            "sha256": "254909942a6cbfb4692a239e4d0aa5c68ec8eb16f81b6593985ea7f2bb2823e3",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/info.json"
+          },
+          "meta/stats.json": {
+            "bytes": 5914,
+            "sha256": "4ae86bed785e0f98914812e87736e216139a22b43cf2b990e68384d85168c3c8",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/stats.json"
+          },
+          "meta/tasks.parquet": {
+            "bytes": 2246,
+            "sha256": "1040cdef3328ec4376587152647df8e725e80a04210c426f891719e691c88533",
+            "uri": "hf://lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657/meta/tasks.parquet"
+          }
+        },
+        "source_input_bytes": 457774,
+        "source_license": {
+          "attribution": "svla_so101_pickplace, LeRobot, pinned revision f641879e22172be7e8161d5e6c1503c2d2feb657.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+              "url": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace/resolve/f641879e22172be7e8161d5e6c1503c2d2feb657/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "lerobot/svla_so101_pickplace",
+          "revision": "f641879e22172be7e8161d5e6c1503c2d2feb657",
+          "schema": "worldepisode_source_license_v1"
+        }
+      },
+      "validation": {
+        "errors": [],
+        "passed": true
+      }
+    },
+    {
+      "conversion": {
+        "action_row_count": 25650,
+        "discarded_fields": [],
+        "episode_count": 206,
+        "max_errors": {
+          "max_abs_action_error": 0.0,
+          "max_abs_episode_index_error": 0.0,
+          "max_abs_frame_index_error": 0.0,
+          "max_abs_index_error": 0.0,
+          "max_abs_state_error": 0.0,
+          "max_abs_task_index_error": 0.0,
+          "max_abs_timestamp_error": 0.0,
+          "max_abs_video_timestamp_error": 0.0
+        },
+        "semantic_loss_field_count": 4,
+        "semantic_loss_fields": [
+          "action units",
+          "camera extrinsics",
+          "controller latency model",
+          "robot/world calibration transform"
+        ],
+        "semantic_loss_occurrence_count": 824,
+        "state_row_count": 25650,
+        "temporary_output_bytes": 12913080,
+        "temporary_output_file_count": 2472,
+        "temporary_outputs_retained": false
+      },
+      "dataset_id": "pusht",
+      "modality": {
+        "source_video_payload_downloaded": false,
+        "video_stream_count": 1,
+        "video_streams": [
+          "observation.image"
+        ]
+      },
+      "performance": {
+        "episodes_per_second": 7.054410252802068,
+        "max_rss_bytes": 170397696,
+        "rows_per_second": 878.3768106037527,
+        "system_cpu_seconds": 1.062348,
+        "user_cpu_seconds": 31.300154,
+        "wall_time_seconds": 29.201590582029894
+      },
+      "repo_id": "lerobot/pusht",
+      "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+      "schema": "worldepisode_lerobot_conversion_scale_worker_v1",
+      "source_subset": {
+        "complete_source_file": true,
+        "data_chunk_index": 0,
+        "data_file_index": 0,
+        "episode_index_sha256": "5579579a9def9d04eecefd7df8004db96744f50e20bf32c680920cb859f8193c",
+        "episode_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205
+        ],
+        "source_data_rows": 25650,
+        "source_files": {
+          "README.md": {
+            "bytes": 3538,
+            "sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/README.md"
+          },
+          "data/chunk-000/file-000.parquet": {
+            "bytes": 674393,
+            "sha256": "9abc0431f12d10c33b5b37b1bf1e6e557c8ae1c8c29fb86658969e48fcbbbf01",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/data/chunk-000/file-000.parquet"
+          },
+          "meta/episodes/chunk-000/file-000.parquet": {
+            "bytes": 106584,
+            "sha256": "bc1226f33d3d1635ec1954f9942073709be8e106fde5f4f16b9d52edc4e0ebc4",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/meta/episodes/chunk-000/file-000.parquet"
+          },
+          "meta/info.json": {
+            "bytes": 2261,
+            "sha256": "0b46becc21ad92b117da1e95daf44110bb21d0bde75638b4ad167c8ccd959d38",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/meta/info.json"
+          },
+          "meta/stats.json": {
+            "bytes": 4371,
+            "sha256": "2a58f97df48893274c587fdf09f5cecb31fe385b1e188a82197a8972ccfb9d6d",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/meta/stats.json"
+          },
+          "meta/tasks.parquet": {
+            "bytes": 2265,
+            "sha256": "95535f5152771bc0a6ab0fd93d23d7c1fecd9b7a13dc117852dfdd94f5b2c711",
+            "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/meta/tasks.parquet"
+          }
+        },
+        "source_input_bytes": 793412,
+        "source_license": {
+          "attribution": "PushT LeRobot conversion, pinned revision 7628202a2180972f291ba1bc6723834921e72c19; PushT data and task from Diffusion Policy, Columbia Artificial Intelligence and Robotics Lab.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "mit",
+              "sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+              "url": "https://huggingface.co/datasets/lerobot/pusht/resolve/7628202a2180972f291ba1bc6723834921e72c19/README.md"
+            },
+            "upstream": [
+              {
+                "copyright": "Copyright (c) 2023 Columbia Artificial Intelligence and Robotics Lab",
+                "license": "MIT",
+                "url": "https://github.com/real-stanford/diffusion_policy/blob/main/LICENSE"
+              }
+            ]
+          },
+          "license_expression": "MIT",
+          "repo_id": "lerobot/pusht",
+          "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+          "schema": "worldepisode_source_license_v1"
+        }
+      },
+      "validation": {
+        "errors": [],
+        "passed": true
+      }
+    },
+    {
+      "conversion": {
+        "action_row_count": 6012,
+        "discarded_fields": [],
+        "episode_count": 15,
+        "max_errors": {
+          "max_abs_action_error": 0.0,
+          "max_abs_episode_index_error": 0.0,
+          "max_abs_frame_index_error": 0.0,
+          "max_abs_index_error": 0.0,
+          "max_abs_state_error": 0.0,
+          "max_abs_task_index_error": 0.0,
+          "max_abs_timestamp_error": 0.0,
+          "max_abs_video_timestamp_error": 0.0
+        },
+        "semantic_loss_field_count": 4,
+        "semantic_loss_fields": [
+          "action units",
+          "camera extrinsics",
+          "controller latency model",
+          "robot/world calibration transform"
+        ],
+        "semantic_loss_occurrence_count": 60,
+        "state_row_count": 6012,
+        "temporary_output_bytes": 1904020,
+        "temporary_output_file_count": 180,
+        "temporary_outputs_retained": false
+      },
+      "dataset_id": "armnetbench_file_000",
+      "modality": {
+        "source_video_payload_downloaded": false,
+        "video_stream_count": 3,
+        "video_streams": [
+          "observation.images.front",
+          "observation.images.top",
+          "observation.images.wrist"
+        ]
+      },
+      "performance": {
+        "episodes_per_second": 1.0622747089715,
+        "max_rss_bytes": 412426240,
+        "rows_per_second": 425.75970335577716,
+        "system_cpu_seconds": 0.345879,
+        "user_cpu_seconds": 9.762868,
+        "wall_time_seconds": 14.120641180023085
+      },
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+      "schema": "worldepisode_lerobot_conversion_scale_worker_v1",
+      "source_subset": {
+        "complete_source_file": true,
+        "data_chunk_index": 0,
+        "data_file_index": 0,
+        "episode_index_sha256": "e994167b45cad6081dd187620abc417759e9f5459b5dcbc0ac8d96ef3a7c7ba2",
+        "episode_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "source_data_rows": 6012,
+        "source_files": {
+          "README.md": {
+            "bytes": 12854,
+            "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+          },
+          "data/chunk-000/file-000.parquet": {
+            "bytes": 330302,
+            "sha256": "04ed5e41be3fc2f1b51b1a11aa51e6e2e846abcb1c8a04e29831ebdb80d2a18a",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/data/chunk-000/file-000.parquet"
+          },
+          "meta/episodes/chunk-000/file-000.parquet": {
+            "bytes": 3865933,
+            "sha256": "13500b8e45ec14536dfb2a4bbe29f1be70de7bae521db094c498bb6bcd710b45",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/episodes/chunk-000/file-000.parquet"
+          },
+          "meta/info.json": {
+            "bytes": 4878,
+            "sha256": "2bba6714747f578d6d5afe0376e6dd001e59dcdd600f2d70d8cbdd98a74a8cab",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/info.json"
+          },
+          "meta/stats.json": {
+            "bytes": 17340,
+            "sha256": "686c9f336c960cd574dd4672f1d27cdb4ceacce26aa518dad4dbe2ca20a7c024",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/stats.json"
+          },
+          "meta/tasks.parquet": {
+            "bytes": 2534,
+            "sha256": "8c9c3638070217c2181bf47ff93fda69722c7386a75eb83465ba8280c93a752f",
+            "uri": "hf://armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/meta/tasks.parquet"
+          }
+        },
+        "source_input_bytes": 4233841,
+        "source_license": {
+          "attribution": "ArmnetBench v0.1 (LeRobot, single-arm SO-101), Armnet, pinned revision 2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84.",
+          "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+          "evidence": {
+            "dataset_card": {
+              "declared_license": "apache-2.0",
+              "sha256": "a561f1f10cc7792a0b4e0e44df6a1e95ef562c31c9633ed38fdef107975eccfd",
+              "url": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101/resolve/2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84/README.md"
+            },
+            "upstream": []
+          },
+          "license_expression": "Apache-2.0",
+          "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+          "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84",
+          "schema": "worldepisode_source_license_v1"
+        }
+      },
+      "validation": {
+        "errors": [],
+        "passed": true
+      }
+    }
+  ],
+  "execution": {
+    "command": "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required",
+    "host": {
+      "cpu_logical_count": 20,
+      "gpu_info": "NVIDIA GB10, 580.159.03, [N/A]",
+      "machine": "aarch64",
+      "storage_free_bytes": 324410085376,
+      "storage_total_bytes": 3937360351232,
+      "total_ram_bytes": 130663170048,
+      "uname": "Linux-6.17.0-1026-nvidia-aarch64-with-glibc2.39"
+    },
+    "repository_commit": "ce90f3e062656194f8eecec5f74f8820b177e6f7",
+    "script": "tools/lerobot_conversion_scale.py",
+    "script_sha256": "ad005fb27a5fff8b50219cb3a23df7195d9941fe0a369180022e777f46d7b0ed",
+    "software": {
+      "pyarrow": "25.0.0",
+      "python": "3.12.13",
+      "requests": "2.34.2"
+    }
+  },
+  "protocol": {
+    "roundtrip": "LeRobot source episode to WorldEpisode sidecar to exported LeRobot package, followed by exact action/state/index/timestamp comparison.",
+    "selection": "Every episode assigned to one immutable LeRobot v3 source Parquet file per dataset; no episode-level sampling.",
+    "source_media_policy": "Video stream metadata is audited, but source video payloads are not downloaded or redistributed."
+  },
+  "schema": "worldepisode_lerobot_conversion_scale_v1",
+  "validation": {
+    "errors": [],
+    "passed": true
+  }
+}

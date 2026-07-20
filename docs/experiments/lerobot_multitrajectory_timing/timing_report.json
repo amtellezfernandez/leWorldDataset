@@ -1,0 +1,1328 @@
+{
+  "acceptance": {
+    "action_002_fully_satisfied": false,
+    "heldout_multiple_tasks": true,
+    "heldout_multiple_trajectories": true,
+    "motor_timestamp_error_measured": false,
+    "not_driven_by_one_trajectory": true,
+    "paired_ci_excludes_zero": true,
+    "remaining_gates": [
+      "motor-effective timestamps or an independently instrumented latency target",
+      "a second robot or controller configuration",
+      "an independently distinguishable queue-aware scheduler comparison"
+    ],
+    "second_robot_or_controller_measured": false
+  },
+  "artifacts": {
+    "json": "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+    "readme": "docs/experiments/lerobot_multitrajectory_timing/README.md"
+  },
+  "calibration": {
+    "by_delay": [
+      {
+        "compared_rows": 98990,
+        "delay_frames": 0,
+        "episode_rmse_mean": 4.8822729571203975,
+        "episode_rmse_median": 4.595007553380275,
+        "per_joint_rmse": [
+          2.4739464327412004,
+          5.963641955388102,
+          5.71188514549682,
+          3.565486310661114,
+          4.498938739205493,
+          5.003555002900984
+        ],
+        "pooled_joint_rmse": 4.695738729904957
+      },
+      {
+        "compared_rows": 98670,
+        "delay_frames": 1,
+        "episode_rmse_mean": 3.6855574958975814,
+        "episode_rmse_median": 3.4935871693156835,
+        "per_joint_rmse": [
+          1.7615987450324324,
+          4.425873036835926,
+          4.287918372243033,
+          2.5061799168941836,
+          3.2472539609731412,
+          4.231444092040051
+        ],
+        "pooled_joint_rmse": 3.5545403221483407
+      },
+      {
+        "compared_rows": 98350,
+        "delay_frames": 2,
+        "episode_rmse_mean": 2.584030765896426,
+        "episode_rmse_median": 2.4623845443523678,
+        "per_joint_rmse": [
+          1.0870910173536084,
+          3.0340524424742226,
+          3.003578781739617,
+          1.4553345857533586,
+          2.010184257410341,
+          3.5460806412003563
+        ],
+        "pooled_joint_rmse": 2.521317579525215
+      },
+      {
+        "compared_rows": 98030,
+        "delay_frames": 3,
+        "episode_rmse_mean": 1.8750014506127002,
+        "episode_rmse_median": 1.6860074186900424,
+        "per_joint_rmse": [
+          0.6644245975412915,
+          2.1370935650366722,
+          2.1703144847441544,
+          0.7245200810502207,
+          1.0537532119790722,
+          3.187025460191142
+        ],
+        "pooled_joint_rmse": 1.8934690551884363
+      },
+      {
+        "compared_rows": 97710,
+        "delay_frames": 4,
+        "episode_rmse_mean": 2.1030237872490765,
+        "episode_rmse_median": 1.9133794253838845,
+        "per_joint_rmse": [
+          0.9398339505593668,
+          2.429597893385999,
+          2.3723801279058896,
+          1.2736579450145713,
+          1.3930518869099886,
+          3.207779431554789
+        ],
+        "pooled_joint_rmse": 2.0923299712473917
+      },
+      {
+        "compared_rows": 97390,
+        "delay_frames": 5,
+        "episode_rmse_mean": 3.0356095065680546,
+        "episode_rmse_median": 2.9224140978743725,
+        "per_joint_rmse": [
+          1.5612398445507,
+          3.635072560647159,
+          3.4255058343351843,
+          2.293875326915621,
+          2.531307858175958,
+          3.574662278628652
+        ],
+        "pooled_joint_rmse": 2.939186579338836
+      },
+      {
+        "compared_rows": 97070,
+        "delay_frames": 6,
+        "episode_rmse_mean": 4.186457164099968,
+        "episode_rmse_median": 4.0924098252617975,
+        "per_joint_rmse": [
+          2.242155503304355,
+          5.139140912729548,
+          4.784465716640496,
+          3.3473352212276297,
+          3.7744794287443106,
+          4.1391181422172005
+        ],
+        "pooled_joint_rmse": 4.018971465688569
+      },
+      {
+        "compared_rows": 96750,
+        "delay_frames": 7,
+        "episode_rmse_mean": 5.392037148002818,
+        "episode_rmse_median": 5.279890251014418,
+        "per_joint_rmse": [
+          2.9267081675649673,
+          6.730264741012423,
+          6.234034568582478,
+          4.378143253663285,
+          5.012168312184392,
+          4.775568669919349
+        ],
+        "pooled_joint_rmse": 5.161093179499633
+      },
+      {
+        "compared_rows": 96430,
+        "delay_frames": 8,
+        "episode_rmse_mean": 6.600692870862922,
+        "episode_rmse_median": 6.375957934092824,
+        "per_joint_rmse": [
+          3.6013855803352937,
+          8.34468433741108,
+          7.706144761127469,
+          5.373148907390799,
+          6.218926415551125,
+          5.414631163126092
+        ],
+        "pooled_joint_rmse": 6.309416341792424
+      }
+    ],
+    "episode_count": 320,
+    "episode_macro_selected_delay_frames": 3,
+    "frame_count": 98990,
+    "sample_period_s": 0.05,
+    "sample_rate_hz": 20.0,
+    "sample_weighted_selection": {
+      "compared_rows": 98030,
+      "delay_frames": 3,
+      "episode_rmse_mean": 1.8750014506127002,
+      "episode_rmse_median": 1.6860074186900424,
+      "per_joint_rmse": [
+        0.6644245975412915,
+        2.1370935650366722,
+        2.1703144847441544,
+        0.7245200810502207,
+        1.0537532119790722,
+        3.187025460191142
+      ],
+      "pooled_joint_rmse": 1.8934690551884363
+    },
+    "selected_delay_frames": 3,
+    "selected_delay_s": 0.15000000000000002,
+    "task_count": 8
+  },
+  "claim_boundary": "The audit measures lag between same-named action targets and observed joint-state telemetry on one SO-101 dataset. The source has one frame timestamp and no command-enqueue, queue-consume, or motor-effective timestamps, so this is not measured motor latency or evidence across robot/controller configurations. Timestamp scheduling uses the same sampled frame timestamps rather than independent queue observations; its result is interpolation-sensitive under float32 timestamp quantization.",
+  "evaluation": {
+    "by_task": [
+      {
+        "episode_count": 10,
+        "frozen_delay_rmse_mean": 1.3092571354955622,
+        "improved_episode_count": 10,
+        "rmse_improvement_mean": 2.673160498537732,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse_mean": 3.982417634033294
+      },
+      {
+        "episode_count": 11,
+        "frozen_delay_rmse_mean": 1.6343741058700958,
+        "improved_episode_count": 11,
+        "rmse_improvement_mean": 2.4352951657661106,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse_mean": 4.069669271636207
+      },
+      {
+        "episode_count": 6,
+        "frozen_delay_rmse_mean": 1.6595579984378235,
+        "improved_episode_count": 6,
+        "rmse_improvement_mean": 2.474266826983911,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse_mean": 4.133824825421734
+      },
+      {
+        "episode_count": 13,
+        "frozen_delay_rmse_mean": 2.2794498956571303,
+        "improved_episode_count": 13,
+        "rmse_improvement_mean": 4.211642376868705,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse_mean": 6.491092272525834
+      },
+      {
+        "episode_count": 8,
+        "frozen_delay_rmse_mean": 2.150382522369343,
+        "improved_episode_count": 8,
+        "rmse_improvement_mean": 4.007599788533604,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse_mean": 6.157982310902947
+      },
+      {
+        "episode_count": 11,
+        "frozen_delay_rmse_mean": 1.5174115188304105,
+        "improved_episode_count": 11,
+        "rmse_improvement_mean": 3.1737295908023637,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse_mean": 4.691141109632774
+      },
+      {
+        "episode_count": 11,
+        "frozen_delay_rmse_mean": 2.0090534565871723,
+        "improved_episode_count": 11,
+        "rmse_improvement_mean": 3.4540117766008325,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse_mean": 5.463065233188005
+      },
+      {
+        "episode_count": 10,
+        "frozen_delay_rmse_mean": 2.5503286453339906,
+        "improved_episode_count": 10,
+        "rmse_improvement_mean": 1.888683088870169,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse_mean": 4.4390117342041595
+      }
+    ],
+    "compared_row_count": 21505,
+    "episode_count": 80,
+    "frame_count": 21745,
+    "frozen_frame_delay": {
+      "delay_frames": 3,
+      "delay_s": 0.15000000000000002,
+      "episode_rmse_mean": 1.9019793064448045,
+      "episode_rmse_median": 1.7597248743969562,
+      "per_joint_rmse": [
+        0.7223608155993899,
+        2.094878256570346,
+        2.128320958026482,
+        0.922933644183768,
+        1.0542188346735513,
+        3.3226992011893053
+      ],
+      "pooled_joint_rmse": 1.934062391387199
+    },
+    "paired_episode_improvement": {
+      "ci_high": 3.286379900096777,
+      "ci_low": 2.890437421707884,
+      "confidence_level": 0.95,
+      "direction": "zero_delay_rmse_minus_frozen_delay_rmse",
+      "estimate": 3.0871198488550853,
+      "improved_episode_count": 80,
+      "method": "paired_percentile_episode_bootstrap",
+      "non_improved_episode_count": 0,
+      "resamples": 20000,
+      "sample_size_episodes": 80,
+      "seed": 2027
+    },
+    "per_episode": [
+      {
+        "compared_rows": 187,
+        "frozen_delay_rmse": 1.486113739804302,
+        "improved": true,
+        "local_episode_index": 0,
+        "rmse_improvement": 2.7116220803174516,
+        "source_episode_index": 257,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 4.197735820121753
+      },
+      {
+        "compared_rows": 197,
+        "frozen_delay_rmse": 1.096116257354642,
+        "improved": true,
+        "local_episode_index": 1,
+        "rmse_improvement": 2.8183855910226594,
+        "source_episode_index": 264,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.9145018483773013
+      },
+      {
+        "compared_rows": 227,
+        "frozen_delay_rmse": 1.430193519560489,
+        "improved": true,
+        "local_episode_index": 2,
+        "rmse_improvement": 1.8735711502195223,
+        "source_episode_index": 268,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.303764669780011
+      },
+      {
+        "compared_rows": 220,
+        "frozen_delay_rmse": 0.9859057846016078,
+        "improved": true,
+        "local_episode_index": 3,
+        "rmse_improvement": 2.9579049005827693,
+        "source_episode_index": 280,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.9438106851843773
+      },
+      {
+        "compared_rows": 199,
+        "frozen_delay_rmse": 1.416651102619078,
+        "improved": true,
+        "local_episode_index": 4,
+        "rmse_improvement": 2.4688331909705106,
+        "source_episode_index": 281,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.8854842935895886
+      },
+      {
+        "compared_rows": 181,
+        "frozen_delay_rmse": 1.4721573760510696,
+        "improved": true,
+        "local_episode_index": 5,
+        "rmse_improvement": 2.877412997546365,
+        "source_episode_index": 284,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 4.349570373597435
+      },
+      {
+        "compared_rows": 234,
+        "frozen_delay_rmse": 1.1981220911467765,
+        "improved": true,
+        "local_episode_index": 6,
+        "rmse_improvement": 2.5111816894988492,
+        "source_episode_index": 286,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.7093037806456257
+      },
+      {
+        "compared_rows": 220,
+        "frozen_delay_rmse": 1.076441779677168,
+        "improved": true,
+        "local_episode_index": 7,
+        "rmse_improvement": 3.4816008668644916,
+        "source_episode_index": 287,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 4.55804264654166
+      },
+      {
+        "compared_rows": 203,
+        "frozen_delay_rmse": 1.4605579517029241,
+        "improved": true,
+        "local_episode_index": 8,
+        "rmse_improvement": 2.3350920982723777,
+        "source_episode_index": 290,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 3.795650049975302
+      },
+      {
+        "compared_rows": 229,
+        "frozen_delay_rmse": 1.4703117524375642,
+        "improved": true,
+        "local_episode_index": 9,
+        "rmse_improvement": 2.6960004200823233,
+        "source_episode_index": 296,
+        "task": "Insert the colourful ring into the central wooden peg",
+        "task_index": 0,
+        "zero_delay_rmse": 4.166312172519888
+      },
+      {
+        "compared_rows": 216,
+        "frozen_delay_rmse": 1.8266266601071481,
+        "improved": true,
+        "local_episode_index": 10,
+        "rmse_improvement": 2.1918105490620268,
+        "source_episode_index": 566,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.018437209169175
+      },
+      {
+        "compared_rows": 254,
+        "frozen_delay_rmse": 3.0034662328410175,
+        "improved": true,
+        "local_episode_index": 11,
+        "rmse_improvement": 1.5925420445843437,
+        "source_episode_index": 569,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.596008277425361
+      },
+      {
+        "compared_rows": 249,
+        "frozen_delay_rmse": 2.367990929125248,
+        "improved": true,
+        "local_episode_index": 12,
+        "rmse_improvement": 1.7127538004711025,
+        "source_episode_index": 573,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.080744729596351
+      },
+      {
+        "compared_rows": 227,
+        "frozen_delay_rmse": 1.9481297459824307,
+        "improved": true,
+        "local_episode_index": 13,
+        "rmse_improvement": 2.046624082872993,
+        "source_episode_index": 576,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 3.9947538288554236
+      },
+      {
+        "compared_rows": 281,
+        "frozen_delay_rmse": 2.2387310691587947,
+        "improved": true,
+        "local_episode_index": 14,
+        "rmse_improvement": 2.023382244594904,
+        "source_episode_index": 580,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.262113313753699
+      },
+      {
+        "compared_rows": 266,
+        "frozen_delay_rmse": 3.332998503282029,
+        "improved": true,
+        "local_episode_index": 15,
+        "rmse_improvement": 1.552240986088076,
+        "source_episode_index": 581,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.885239489370105
+      },
+      {
+        "compared_rows": 242,
+        "frozen_delay_rmse": 3.097563444026468,
+        "improved": true,
+        "local_episode_index": 16,
+        "rmse_improvement": 1.8405893050283728,
+        "source_episode_index": 582,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.938152749054841
+      },
+      {
+        "compared_rows": 213,
+        "frozen_delay_rmse": 2.6824119432691993,
+        "improved": true,
+        "local_episode_index": 17,
+        "rmse_improvement": 1.6725367916347342,
+        "source_episode_index": 587,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.3549487349039335
+      },
+      {
+        "compared_rows": 229,
+        "frozen_delay_rmse": 2.1406806050809024,
+        "improved": true,
+        "local_episode_index": 18,
+        "rmse_improvement": 2.189299243517806,
+        "source_episode_index": 599,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.329979848598708
+      },
+      {
+        "compared_rows": 230,
+        "frozen_delay_rmse": 2.864687320466668,
+        "improved": true,
+        "local_episode_index": 19,
+        "rmse_improvement": 2.0650518408473304,
+        "source_episode_index": 608,
+        "task": "Stack the colouful blocks on top of each other",
+        "task_index": 7,
+        "zero_delay_rmse": 4.929739161313998
+      },
+      {
+        "compared_rows": 605,
+        "frozen_delay_rmse": 1.0827569242261892,
+        "improved": true,
+        "local_episode_index": 20,
+        "rmse_improvement": 1.7862944131608094,
+        "source_episode_index": 910,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 2.8690513373869986
+      },
+      {
+        "compared_rows": 381,
+        "frozen_delay_rmse": 1.1873101647219695,
+        "improved": true,
+        "local_episode_index": 21,
+        "rmse_improvement": 2.6343500902295305,
+        "source_episode_index": 917,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 3.8216602549515
+      },
+      {
+        "compared_rows": 416,
+        "frozen_delay_rmse": 1.5580262744593834,
+        "improved": true,
+        "local_episode_index": 22,
+        "rmse_improvement": 2.1871241413962403,
+        "source_episode_index": 919,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 3.7451504158556235
+      },
+      {
+        "compared_rows": 414,
+        "frozen_delay_rmse": 1.6459915587083545,
+        "improved": true,
+        "local_episode_index": 23,
+        "rmse_improvement": 2.4171276258289778,
+        "source_episode_index": 932,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.0631191845373325
+      },
+      {
+        "compared_rows": 435,
+        "frozen_delay_rmse": 1.5054496501668468,
+        "improved": true,
+        "local_episode_index": 24,
+        "rmse_improvement": 2.187984647150654,
+        "source_episode_index": 937,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 3.693434297317501
+      },
+      {
+        "compared_rows": 306,
+        "frozen_delay_rmse": 1.594650135273871,
+        "improved": true,
+        "local_episode_index": 25,
+        "rmse_improvement": 2.882459969132854,
+        "source_episode_index": 938,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.477110104406725
+      },
+      {
+        "compared_rows": 630,
+        "frozen_delay_rmse": 2.6397779224835993,
+        "improved": true,
+        "local_episode_index": 26,
+        "rmse_improvement": 1.3914098502353278,
+        "source_episode_index": 939,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.031187772718927
+      },
+      {
+        "compared_rows": 347,
+        "frozen_delay_rmse": 1.807125865175577,
+        "improved": true,
+        "local_episode_index": 27,
+        "rmse_improvement": 2.684841349986805,
+        "source_episode_index": 946,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.491967215162382
+      },
+      {
+        "compared_rows": 379,
+        "frozen_delay_rmse": 1.5969234283696478,
+        "improved": true,
+        "local_episode_index": 28,
+        "rmse_improvement": 2.634324996526554,
+        "source_episode_index": 951,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.231248424896202
+      },
+      {
+        "compared_rows": 275,
+        "frozen_delay_rmse": 1.4683220456935469,
+        "improved": true,
+        "local_episode_index": 29,
+        "rmse_improvement": 3.6808559289979503,
+        "source_episode_index": 952,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 5.149177974691497
+      },
+      {
+        "compared_rows": 475,
+        "frozen_delay_rmse": 1.8917811952920693,
+        "improved": true,
+        "local_episode_index": 30,
+        "rmse_improvement": 2.3014738107815136,
+        "source_episode_index": 958,
+        "task": "Insert the missing tool into the empty slot on the toolbox",
+        "task_index": 1,
+        "zero_delay_rmse": 4.193255006073583
+      },
+      {
+        "compared_rows": 320,
+        "frozen_delay_rmse": 1.8971290713924116,
+        "improved": true,
+        "local_episode_index": 31,
+        "rmse_improvement": 2.41437518612502,
+        "source_episode_index": 1205,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 4.311504257517432
+      },
+      {
+        "compared_rows": 269,
+        "frozen_delay_rmse": 1.725637614834239,
+        "improved": true,
+        "local_episode_index": 32,
+        "rmse_improvement": 3.1745541392580754,
+        "source_episode_index": 1208,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 4.900191754092314
+      },
+      {
+        "compared_rows": 482,
+        "frozen_delay_rmse": 1.7520368820672916,
+        "improved": true,
+        "local_episode_index": 33,
+        "rmse_improvement": 2.539814482207629,
+        "source_episode_index": 1212,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 4.291851364274921
+      },
+      {
+        "compared_rows": 213,
+        "frozen_delay_rmse": 2.5402544354036385,
+        "improved": true,
+        "local_episode_index": 34,
+        "rmse_improvement": 4.426051353322617,
+        "source_episode_index": 1219,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 6.966305788726255
+      },
+      {
+        "compared_rows": 229,
+        "frozen_delay_rmse": 1.8014539478500367,
+        "improved": true,
+        "local_episode_index": 35,
+        "rmse_improvement": 3.9493922262062484,
+        "source_episode_index": 1222,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 5.750846174056285
+      },
+      {
+        "compared_rows": 280,
+        "frozen_delay_rmse": 2.252095946141393,
+        "improved": true,
+        "local_episode_index": 36,
+        "rmse_improvement": 2.876653755609221,
+        "source_episode_index": 1231,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 5.128749701750614
+      },
+      {
+        "compared_rows": 311,
+        "frozen_delay_rmse": 1.6044087910602358,
+        "improved": true,
+        "local_episode_index": 37,
+        "rmse_improvement": 3.2545132697928048,
+        "source_episode_index": 1234,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 4.858922060853041
+      },
+      {
+        "compared_rows": 189,
+        "frozen_delay_rmse": 2.160394061111037,
+        "improved": true,
+        "local_episode_index": 38,
+        "rmse_improvement": 4.522183412508861,
+        "source_episode_index": 1237,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 6.682577473619897
+      },
+      {
+        "compared_rows": 348,
+        "frozen_delay_rmse": 2.284352171135367,
+        "improved": true,
+        "local_episode_index": 39,
+        "rmse_improvement": 2.811642635270973,
+        "source_episode_index": 1240,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 5.09599480640634
+      },
+      {
+        "compared_rows": 223,
+        "frozen_delay_rmse": 1.7740220284787154,
+        "improved": true,
+        "local_episode_index": 40,
+        "rmse_improvement": 3.7559063909725574,
+        "source_episode_index": 1241,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 5.529928419451273
+      },
+      {
+        "compared_rows": 195,
+        "frozen_delay_rmse": 2.3078030729845325,
+        "improved": true,
+        "local_episode_index": 41,
+        "rmse_improvement": 4.26904269133515,
+        "source_episode_index": 1246,
+        "task": "Remove the small middle tool (3/8 Extension Bar 75mm) from the toolbox",
+        "task_index": 6,
+        "zero_delay_rmse": 6.576845764319683
+      },
+      {
+        "compared_rows": 222,
+        "frozen_delay_rmse": 1.5459958558267841,
+        "improved": true,
+        "local_episode_index": 42,
+        "rmse_improvement": 3.8504738280997355,
+        "source_episode_index": 1554,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 5.39646968392652
+      },
+      {
+        "compared_rows": 255,
+        "frozen_delay_rmse": 2.5900118619607957,
+        "improved": true,
+        "local_episode_index": 43,
+        "rmse_improvement": 2.80651888878187,
+        "source_episode_index": 1556,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 5.396530750742666
+      },
+      {
+        "compared_rows": 236,
+        "frozen_delay_rmse": 2.2296346452472777,
+        "improved": true,
+        "local_episode_index": 44,
+        "rmse_improvement": 3.545895453833843,
+        "source_episode_index": 1558,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 5.775530099081121
+      },
+      {
+        "compared_rows": 223,
+        "frozen_delay_rmse": 1.4540664615064824,
+        "improved": true,
+        "local_episode_index": 45,
+        "rmse_improvement": 4.219520762060336,
+        "source_episode_index": 1561,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 5.673587223566819
+      },
+      {
+        "compared_rows": 228,
+        "frozen_delay_rmse": 3.0394993218454975,
+        "improved": true,
+        "local_episode_index": 46,
+        "rmse_improvement": 4.011869124493899,
+        "source_episode_index": 1563,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 7.051368446339396
+      },
+      {
+        "compared_rows": 203,
+        "frozen_delay_rmse": 1.767412866726621,
+        "improved": true,
+        "local_episode_index": 47,
+        "rmse_improvement": 4.390348674120265,
+        "source_episode_index": 1570,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 6.157761540846886
+      },
+      {
+        "compared_rows": 165,
+        "frozen_delay_rmse": 1.8918747117860841,
+        "improved": true,
+        "local_episode_index": 48,
+        "rmse_improvement": 4.931816403877546,
+        "source_episode_index": 1591,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 6.82369111566363
+      },
+      {
+        "compared_rows": 186,
+        "frozen_delay_rmse": 2.6845644540552,
+        "improved": true,
+        "local_episode_index": 49,
+        "rmse_improvement": 4.304355173001333,
+        "source_episode_index": 1593,
+        "task": "Put the eye drops on the shelf",
+        "task_index": 4,
+        "zero_delay_rmse": 6.988919627056533
+      },
+      {
+        "compared_rows": 143,
+        "frozen_delay_rmse": 1.6368533920447164,
+        "improved": true,
+        "local_episode_index": 50,
+        "rmse_improvement": 4.927406365416288,
+        "source_episode_index": 1845,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.564259757461004
+      },
+      {
+        "compared_rows": 199,
+        "frozen_delay_rmse": 1.8292895760101267,
+        "improved": true,
+        "local_episode_index": 51,
+        "rmse_improvement": 4.31193721543764,
+        "source_episode_index": 1848,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.1412267914477665
+      },
+      {
+        "compared_rows": 178,
+        "frozen_delay_rmse": 2.8472089689131286,
+        "improved": true,
+        "local_episode_index": 52,
+        "rmse_improvement": 4.238664572760664,
+        "source_episode_index": 1856,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 7.085873541673792
+      },
+      {
+        "compared_rows": 153,
+        "frozen_delay_rmse": 2.5291984254136155,
+        "improved": true,
+        "local_episode_index": 53,
+        "rmse_improvement": 4.24764012402246,
+        "source_episode_index": 1858,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.776838549436076
+      },
+      {
+        "compared_rows": 155,
+        "frozen_delay_rmse": 1.7422394379486765,
+        "improved": true,
+        "local_episode_index": 54,
+        "rmse_improvement": 4.7892681939155946,
+        "source_episode_index": 1861,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.531507631864271
+      },
+      {
+        "compared_rows": 155,
+        "frozen_delay_rmse": 2.2910447933581364,
+        "improved": true,
+        "local_episode_index": 55,
+        "rmse_improvement": 4.003950485456173,
+        "source_episode_index": 1865,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.2949952788143095
+      },
+      {
+        "compared_rows": 166,
+        "frozen_delay_rmse": 2.4954272621678295,
+        "improved": true,
+        "local_episode_index": 56,
+        "rmse_improvement": 3.6804808488539194,
+        "source_episode_index": 1871,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.175908111021749
+      },
+      {
+        "compared_rows": 171,
+        "frozen_delay_rmse": 3.132594206182862,
+        "improved": true,
+        "local_episode_index": 57,
+        "rmse_improvement": 4.238152402274298,
+        "source_episode_index": 1872,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 7.37074660845716
+      },
+      {
+        "compared_rows": 166,
+        "frozen_delay_rmse": 2.374126129230409,
+        "improved": true,
+        "local_episode_index": 58,
+        "rmse_improvement": 4.5131150551379715,
+        "source_episode_index": 1873,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.8872411843683805
+      },
+      {
+        "compared_rows": 166,
+        "frozen_delay_rmse": 2.7518078630588665,
+        "improved": true,
+        "local_episode_index": 59,
+        "rmse_improvement": 3.965705071212982,
+        "source_episode_index": 1874,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.7175129342718485
+      },
+      {
+        "compared_rows": 169,
+        "frozen_delay_rmse": 1.612607574822636,
+        "improved": true,
+        "local_episode_index": 60,
+        "rmse_improvement": 4.306526327230125,
+        "source_episode_index": 1875,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 5.919133902052761
+      },
+      {
+        "compared_rows": 319,
+        "frozen_delay_rmse": 1.798789067998003,
+        "improved": true,
+        "local_episode_index": 61,
+        "rmse_improvement": 3.4279328962622717,
+        "source_episode_index": 1881,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 5.226721964260275
+      },
+      {
+        "compared_rows": 164,
+        "frozen_delay_rmse": 2.591661946393688,
+        "improved": true,
+        "local_episode_index": 62,
+        "rmse_improvement": 4.10057134131277,
+        "source_episode_index": 1885,
+        "task": "Put the eye drops into the basket",
+        "task_index": 3,
+        "zero_delay_rmse": 6.692233287706458
+      },
+      {
+        "compared_rows": 564,
+        "frozen_delay_rmse": 1.445058621563562,
+        "improved": true,
+        "local_episode_index": 63,
+        "rmse_improvement": 2.2430466676082257,
+        "source_episode_index": 2166,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 3.6881052891717876
+      },
+      {
+        "compared_rows": 393,
+        "frozen_delay_rmse": 2.2302279803673057,
+        "improved": true,
+        "local_episode_index": 64,
+        "rmse_improvement": 2.344654815168421,
+        "source_episode_index": 2168,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 4.574882795535727
+      },
+      {
+        "compared_rows": 598,
+        "frozen_delay_rmse": 1.6861887657242214,
+        "improved": true,
+        "local_episode_index": 65,
+        "rmse_improvement": 2.2813253006725187,
+        "source_episode_index": 2186,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 3.96751406639674
+      },
+      {
+        "compared_rows": 540,
+        "frozen_delay_rmse": 1.3712395047334136,
+        "improved": true,
+        "local_episode_index": 66,
+        "rmse_improvement": 3.1032510423454553,
+        "source_episode_index": 2196,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 4.474490547078869
+      },
+      {
+        "compared_rows": 389,
+        "frozen_delay_rmse": 1.3151885681299282,
+        "improved": true,
+        "local_episode_index": 67,
+        "rmse_improvement": 2.731553697467157,
+        "source_episode_index": 2197,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 4.046742265597085
+      },
+      {
+        "compared_rows": 348,
+        "frozen_delay_rmse": 1.9094445501085093,
+        "improved": true,
+        "local_episode_index": 68,
+        "rmse_improvement": 2.1417694386416883,
+        "source_episode_index": 2208,
+        "task": "Push the Displayport cable into the cable holder on the white block",
+        "task_index": 2,
+        "zero_delay_rmse": 4.051213988750198
+      },
+      {
+        "compared_rows": 238,
+        "frozen_delay_rmse": 1.5741616069823905,
+        "improved": true,
+        "local_episode_index": 69,
+        "rmse_improvement": 3.497312947245126,
+        "source_episode_index": 2449,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 5.071474554227517
+      },
+      {
+        "compared_rows": 221,
+        "frozen_delay_rmse": 1.4806362377509656,
+        "improved": true,
+        "local_episode_index": 70,
+        "rmse_improvement": 3.376104348671379,
+        "source_episode_index": 2450,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.856740586422345
+      },
+      {
+        "compared_rows": 215,
+        "frozen_delay_rmse": 1.5400587371141803,
+        "improved": true,
+        "local_episode_index": 71,
+        "rmse_improvement": 3.1011732763384723,
+        "source_episode_index": 2459,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.641232013452653
+      },
+      {
+        "compared_rows": 199,
+        "frozen_delay_rmse": 1.5720198612807905,
+        "improved": true,
+        "local_episode_index": 72,
+        "rmse_improvement": 3.0982932325214323,
+        "source_episode_index": 2460,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.670313093802223
+      },
+      {
+        "compared_rows": 205,
+        "frozen_delay_rmse": 1.4030486367621129,
+        "improved": true,
+        "local_episode_index": 73,
+        "rmse_improvement": 2.801754155850006,
+        "source_episode_index": 2465,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.204802792612119
+      },
+      {
+        "compared_rows": 237,
+        "frozen_delay_rmse": 1.3326532993191684,
+        "improved": true,
+        "local_episode_index": 74,
+        "rmse_improvement": 3.342970318231208,
+        "source_episode_index": 2469,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.675623617550376
+      },
+      {
+        "compared_rows": 239,
+        "frozen_delay_rmse": 1.3803356632060424,
+        "improved": true,
+        "local_episode_index": 75,
+        "rmse_improvement": 3.2368635464139164,
+        "source_episode_index": 2477,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.617199209619959
+      },
+      {
+        "compared_rows": 238,
+        "frozen_delay_rmse": 1.9763437278877884,
+        "improved": true,
+        "local_episode_index": 76,
+        "rmse_improvement": 3.246405587350325,
+        "source_episode_index": 2481,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 5.222749315238113
+      },
+      {
+        "compared_rows": 234,
+        "frozen_delay_rmse": 1.4854495079905459,
+        "improved": true,
+        "local_episode_index": 77,
+        "rmse_improvement": 2.8843710650845447,
+        "source_episode_index": 2484,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.36982057307509
+      },
+      {
+        "compared_rows": 188,
+        "frozen_delay_rmse": 1.5300769963357506,
+        "improved": true,
+        "local_episode_index": 78,
+        "rmse_improvement": 3.1176654571960714,
+        "source_episode_index": 2491,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.647742453531822
+      },
+      {
+        "compared_rows": 211,
+        "frozen_delay_rmse": 1.416742432504779,
+        "improved": true,
+        "local_episode_index": 79,
+        "rmse_improvement": 3.2081115639235174,
+        "source_episode_index": 2495,
+        "task": "Remove the power cable from cable holder",
+        "task_index": 5,
+        "zero_delay_rmse": 4.624853996428296
+      }
+    ],
+    "scheduler_sensitivity": {
+      "source_missing_command_count": 0,
+      "synthetic_missing_command_protocol": {
+        "description": "Remove frames whose within-episode index modulo the period equals the phase; retain frame zero.",
+        "linear": {
+          "compared_rows": 21505,
+          "episode_rmse_mean": 1.8960842200796069,
+          "interpolation": "linear",
+          "pooled_joint_rmse": 1.9282142131053093,
+          "source_commands_removed": true
+        },
+        "period_frames": 10,
+        "phase": 5,
+        "zero_order_hold": {
+          "compared_rows": 21505,
+          "episode_rmse_mean": 2.0878008807773174,
+          "interpolation": "zero_order_hold",
+          "pooled_joint_rmse": 2.0912241136261334,
+          "source_commands_removed": true
+        }
+      },
+      "timestamp_linear": {
+        "compared_rows": 21505,
+        "episode_rmse_mean": 1.9019789281462778,
+        "interpolation": "linear",
+        "pooled_joint_rmse": 1.9340619968819794,
+        "source_commands_removed": false
+      },
+      "timestamp_zero_order_hold": {
+        "compared_rows": 21505,
+        "episode_rmse_mean": 2.001401149279023,
+        "interpolation": "zero_order_hold",
+        "pooled_joint_rmse": 2.021306519794079,
+        "source_commands_removed": false
+      }
+    },
+    "task_count": 8,
+    "zero_delay": {
+      "episode_rmse_mean": 4.98909915529989,
+      "episode_rmse_median": 4.644487233492237,
+      "per_joint_rmse": [
+        2.537855078816994,
+        6.189334544348112,
+        5.895576675057981,
+        3.721541145728298,
+        4.946427684975385,
+        4.799401262113099
+      ],
+      "pooled_joint_rmse": 4.845232410167721
+    }
+  },
+  "execution": {
+    "script": "tools/lerobot_multitrajectory_timing_audit.py",
+    "script_sha256": "f9e094e5397d888684314bbbfc05bf6d1094d7b34cdfbfd74ddece86be958ed7"
+  },
+  "protocol": {
+    "bootstrap_resamples": 20000,
+    "bootstrap_seed": 2027,
+    "calibration_partition": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+    "comparison": "For delay d, compare action[t] and action[t-d] against state[t] on the identical within-episode target rows t >= d; no cross-episode padding.",
+    "confidence_level": 0.95,
+    "evaluation_partition": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+    "max_delay_frames": 8,
+    "selection": "Choose the integer delay minimizing sample-weighted joint RMSE over calibration episodes; freeze it before reading held-out metrics.",
+    "source_interpolation_policy": "not declared",
+    "source_missing_command_policy": "not declared",
+    "timestamp_scheduler": "latest command at or before state_timestamp - frozen_delay"
+  },
+  "reproduce": "uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required",
+  "schema": "worldepisode_lerobot_multitrajectory_timing_v1",
+  "source": {
+    "action_names": [
+      "shoulder_pan.pos",
+      "shoulder_lift.pos",
+      "elbow_flex.pos",
+      "wrist_flex.pos",
+      "wrist_roll.pos",
+      "gripper.pos"
+    ],
+    "action_state_channel_names_match": true,
+    "calibration_package": {
+      "artifacts": {
+        "data": {
+          "bytes": 2115046,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/data/chunk-000/file-000.parquet",
+          "sha256": "277d6ab023b495f0f8c5e4db3fc2ed08ca5c7506f8d33ae8a2c80963627e2cfc"
+        },
+        "package_manifest": {
+          "bytes": 52173,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train/worldepisode_split_package.json",
+          "sha256": "8a1abf52d6b3f80a41bf19fda6e95ecc8d514c1feea108adeb1b547ec3f01c02"
+        }
+      },
+      "episode_count": 320,
+      "frame_count": 98990,
+      "partition": "train",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_train",
+      "source_dataset": {
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      },
+      "source_episode_count": 320,
+      "task_count": 8
+    },
+    "controller_configuration_count": 1,
+    "dataset": {
+      "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+      "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+    },
+    "effective_motor_timestamp_available": false,
+    "effective_motor_timestamp_columns": [],
+    "evaluation_package": {
+      "artifacts": {
+        "data": {
+          "bytes": 512944,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/data/chunk-000/file-000.parquet",
+          "sha256": "a3134ede097612b7b0489d4bfb4ce5a961c1d5a9ee0c3b7d8dbafe1b30380167"
+        },
+        "package_manifest": {
+          "bytes": 27875,
+          "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test/worldepisode_split_package.json",
+          "sha256": "6c28f76583a1aebc24a156b2fc227a3b5b0a23b44969dba40954aa6d471f8776"
+        }
+      },
+      "episode_count": 80,
+      "frame_count": 21745,
+      "partition": "test",
+      "path": "docs/experiments/lerobot_policy_gate/physical_splits/random_episode_test",
+      "source_dataset": {
+        "repo_id": "armnet/armnetbench_v01_lerobot_so101",
+        "revision": "2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84"
+      },
+      "source_episode_count": 80,
+      "task_count": 8
+    },
+    "metric_unit": "source_position_units",
+    "position_unit_declared_by_source": false,
+    "robot_type_count": 1,
+    "source_episode_overlap": [],
+    "source_episode_overlap_count": 0,
+    "state_names": [
+      "shoulder_pan.pos",
+      "shoulder_lift.pos",
+      "elbow_flex.pos",
+      "wrist_flex.pos",
+      "wrist_roll.pos",
+      "gripper.pos"
+    ],
+    "timestamp_columns": [
+      "timestamp"
+    ]
+  },
+  "status": "measured_telemetry_lag_proxy",
+  "validation": {
+    "errors": [],
+    "passed": true
+  }
+}

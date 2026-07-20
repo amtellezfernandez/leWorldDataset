@@ -1,0 +1,451 @@
+{
+  "aggregate": {
+    "archival_reference_count": 11,
+    "citation_occurrence_count": 28,
+    "error_count": 0,
+    "reference_count": 21,
+    "undefined_count": 0,
+    "unused_count": 0
+  },
+  "artifacts": {
+    "json": "docs/experiments/citation_source_audit/citation_source_audit.json",
+    "markdown": "docs/experiments/citation_source_audit/README.md"
+  },
+  "references": [
+    {
+      "entry_type": "misc",
+      "key": "armnetbench_lerobot_so101",
+      "locator": "https://huggingface.co/datasets/armnet/armnetbench_v01_lerobot_so101",
+      "occurrence_count": 2,
+      "occurrences": [
+        {
+          "line": 13,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        },
+        {
+          "line": 222,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "pinned_dataset_card",
+      "title": "{ArmnetBench v0.1}: {LeRobot} single-arm {SO-101} release",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "bridgedata",
+      "locator": "https://proceedings.mlr.press/v229/walke23a.html",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 248,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{BridgeData V2}: A Dataset for Robot Learning at Scale",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2023"
+    },
+    {
+      "entry_type": "article",
+      "key": "calvin",
+      "locator": "https://doi.org/10.1109/LRA.2022.3180108",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 249,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{CALVIN}: A Benchmark for Language-Conditioned Policy Learning for Long-Horizon Robot Manipulation Tasks",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2022"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "croissant2024",
+      "locator": "https://doi.org/10.52202/079017-2610",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 23,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "Croissant: A Metadata Format for {ML}-Ready Datasets",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2024"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "droid",
+      "locator": "https://www.roboticsproceedings.org/rss20/p120.html",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 248,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{DROID}: A Large-Scale In-the-Wild Robot Manipulation Dataset",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2024"
+    },
+    {
+      "entry_type": "article",
+      "key": "gebru2021datasheets",
+      "locator": "https://doi.org/10.1145/3458723",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 21,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "Datasheets for Datasets",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2021"
+    },
+    {
+      "entry_type": "misc",
+      "key": "genesis",
+      "locator": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 37,
+          "path": "paper/arxiv/sections/architecture.tex"
+        }
+      ],
+      "source_class": "versioned_software_documentation",
+      "title": "{Genesis}: A Generative and Universal Physics Engine for Robotics and Beyond",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2024"
+    },
+    {
+      "entry_type": "misc",
+      "key": "gltf_gs",
+      "locator": "https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md",
+      "occurrence_count": 2,
+      "occurrences": [
+        {
+          "line": 16,
+          "path": "paper/arxiv/sections/introduction.tex"
+        },
+        {
+          "line": 126,
+          "path": "paper/arxiv/sections/requirements.tex"
+        }
+      ],
+      "source_class": "normative_specification",
+      "title": "{KHR\\_gaussian\\_splatting}",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "article",
+      "key": "kapoor2023leakage",
+      "locator": "https://doi.org/10.1016/j.patter.2023.100804",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 25,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "Leakage and the Reproducibility Crisis in Machine-Learning-based Science",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2023"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "lerobot",
+      "locator": "https://arxiv.org/abs/2602.22818",
+      "occurrence_count": 2,
+      "occurrences": [
+        {
+          "line": 68,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        },
+        {
+          "line": 14,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{LeRobot}: An Open-Source Library for End-to-End Robot Learning",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "misc",
+      "key": "lerobot_pusht",
+      "locator": "https://huggingface.co/datasets/lerobot/pusht",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 215,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "pinned_dataset_card",
+      "title": "{pusht}: A public {LeRobotDataset} v3 dataset",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2025"
+    },
+    {
+      "entry_type": "misc",
+      "key": "lerobot_svla_so101_pickplace",
+      "locator": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 214,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "pinned_dataset_card",
+      "title": "{svla\\_so101\\_pickplace}: A public {LeRobotDataset} v3 dataset",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2025"
+    },
+    {
+      "entry_type": "misc",
+      "key": "lerobot_v3",
+      "locator": "https://huggingface.co/docs/lerobot/lerobot-dataset-v3",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 15,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "versioned_software_documentation",
+      "title": "{LeRobotDataset v3.0}",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "libero",
+      "locator": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/8c3c666820ea055a77726d66fc7d447f-Abstract-Datasets_and_Benchmarks.html",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 249,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{LIBERO}: Benchmarking Knowledge Transfer for Lifelong Robot Learning",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2023"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "mitchell2019modelcards",
+      "locator": "https://doi.org/10.1145/3287560.3287596",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 22,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "Model Cards for Model Reporting",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2019"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "mujoco",
+      "locator": "https://doi.org/10.1109/IROS.2012.6386109",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 36,
+          "path": "paper/arxiv/sections/architecture.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{MuJoCo}: A Physics Engine for Model-Based Control",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2012"
+    },
+    {
+      "entry_type": "misc",
+      "key": "ncore",
+      "locator": "https://nvidia.github.io/ncore/data/conventions",
+      "occurrence_count": 3,
+      "occurrences": [
+        {
+          "line": 16,
+          "path": "paper/arxiv/sections/introduction.tex"
+        },
+        {
+          "line": 99,
+          "path": "paper/arxiv/sections/requirements.tex"
+        },
+        {
+          "line": 127,
+          "path": "paper/arxiv/sections/requirements.tex"
+        }
+      ],
+      "source_class": "normative_specification",
+      "title": "{NCore Specification: Data Conventions}",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "inproceedings",
+      "key": "openx",
+      "locator": "https://doi.org/10.1109/ICRA57147.2024.10611477",
+      "occurrence_count": 2,
+      "occurrences": [
+        {
+          "line": 248,
+          "path": "paper/arxiv/sections/evaluation.tex"
+        },
+        {
+          "line": 24,
+          "path": "paper/arxiv/sections/introduction.tex"
+        }
+      ],
+      "source_class": "archival_paper",
+      "title": "{Open X-Embodiment}: Robotic Learning Datasets and RT-X Models",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2024"
+    },
+    {
+      "entry_type": "misc",
+      "key": "rerun",
+      "locator": "https://rerun.io/blog/data-layer-for-robot-learning",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 128,
+          "path": "paper/arxiv/sections/requirements.tex"
+        }
+      ],
+      "source_class": "versioned_software_documentation",
+      "title": "{A new data layer for robot learning}",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "misc",
+      "key": "rosrep103",
+      "locator": "https://www.ros.org/reps/rep-0103.html",
+      "occurrence_count": 1,
+      "occurrences": [
+        {
+          "line": 97,
+          "path": "paper/arxiv/sections/requirements.tex"
+        }
+      ],
+      "source_class": "normative_specification",
+      "title": "{ROS REP 103}: Standard Units of Measure and Coordinate Conventions",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    },
+    {
+      "entry_type": "misc",
+      "key": "usd",
+      "locator": "https://openusd.org/",
+      "occurrence_count": 2,
+      "occurrences": [
+        {
+          "line": 16,
+          "path": "paper/arxiv/sections/introduction.tex"
+        },
+        {
+          "line": 125,
+          "path": "paper/arxiv/sections/requirements.tex"
+        }
+      ],
+      "source_class": "normative_specification",
+      "title": "{OpenUSD}: Universal Scene Description",
+      "validation": {
+        "errors": [],
+        "passed": true
+      },
+      "year": "2026"
+    }
+  ],
+  "schema": "worldepisode_citation_source_audit_v1",
+  "scope": "Every citation in the anonymous LaTeX paper. Archival papers replace project pages where available; normative specifications, pinned dataset cards, and versioned software documentation remain primary web sources.",
+  "validation": {
+    "errors": [],
+    "passed": true,
+    "undefined_citations": [],
+    "unused_bibliography_entries": []
+  }
+}

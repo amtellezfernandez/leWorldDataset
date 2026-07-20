@@ -19,6 +19,19 @@ from typing import Any
 
 import requests
 
+try:
+    from dataset_license_registry import (
+        license_record,
+        source_license_payload,
+        validate_dataset_card,
+    )
+except ImportError:  # Imported as tools.lerobot_worldepisode_roundtrip in tests.
+    from tools.dataset_license_registry import (
+        license_record,
+        source_license_payload,
+        validate_dataset_card,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPO_ID = "lerobot/svla_so101_pickplace"
@@ -28,6 +41,7 @@ DEFAULT_BATCH_EPISODE_INDICES = (0, 1, 2, 3, 4)
 DEFAULT_CACHE_DIR = ROOT / ".cache" / "worldepisode" / "lerobot"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "lerobot_worldepisode_roundtrip"
 SOURCE_PATHS = (
+    "README.md",
     "meta/info.json",
     "meta/stats.json",
     "meta/tasks.parquet",
@@ -82,6 +96,13 @@ def load_json(path: Path) -> Any:
 
 def repo_path(path: Path) -> Path:
     return path if path.is_absolute() else ROOT / path
+
+
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def portable_uri(uri: str) -> str:
@@ -206,6 +227,7 @@ class LeRobotNativeEpisode:
     video_timestamp_ranges: list[dict[str, Any]]
     physical_frames: list[dict[str, Any]]
     source_files: dict[str, dict[str, Any]]
+    license_record: dict[str, Any]
 
 
 @dataclass
@@ -274,6 +296,15 @@ def load_lerobot_episode(
     episode_index: int,
 ) -> LeRobotNativeEpisode:
     _, pq = require_pyarrow()
+    dataset_license = (
+        validate_dataset_card(
+            Path(source_files["README.md"]["local_path"]),
+            repo_id,
+            revision,
+        )
+        if "README.md" in source_files
+        else license_record(repo_id, revision)
+    )
     info = load_json(Path(source_files["meta/info.json"]["local_path"]))
     stats = load_json(Path(source_files["meta/stats.json"]["local_path"]))
     data_rows = table_to_rows(pq.read_table(source_files["data/chunk-000/file-000.parquet"]["local_path"]))
@@ -327,6 +358,7 @@ def load_lerobot_episode(
         video_timestamp_ranges=ranges,
         physical_frames=build_physical_frames(info),
         source_files=source_files,
+        license_record=dataset_license,
     )
 
 
@@ -337,6 +369,7 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
     episode_end_s = float(max(native.rows["timestamp"]))
     action_names = native.info["features"]["action"].get("names", [])
     task_text = ", ".join(native.episode_metadata.get("tasks", []))
+    source_license = native.license_record["license_expression"]
 
     manifest = {
         "schema_version": "worldepisode-0.1",
@@ -353,7 +386,7 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
                 "media_type": "application/json",
                 "sha256": source_info["sha256"],
                 "mirrors": ["meta/info.json"],
-                "license": "Apache-2.0",
+                "license": source_license,
             },
             "binding": "lerobot-v3-source-metadata",
         },
@@ -391,11 +424,11 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
                             "media_type": "application/json",
                             "sha256": source_info["sha256"],
                             "mirrors": ["meta/info.json"],
-                            "license": "Apache-2.0",
+                            "license": source_license,
                         },
                         "coordinate_frame": f"{robot_type}_joint_space",
                         "valid_interval": {"start": 0, "end": episode_end_s, "clock_id": "episode_time"},
-                        "license": "Apache-2.0",
+                        "license": source_license,
                     }
                 ],
             }
@@ -426,7 +459,7 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
                 "media_type": "application/vnd.apache.parquet",
                 "sha256": source_data["sha256"],
                 "mirrors": ["data/chunk-000/file-000.parquet"],
-                "license": "Apache-2.0",
+                "license": source_license,
             },
         },
         "events": [],
@@ -435,7 +468,10 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
             "source": f"{native.repo_id}@{native.revision}",
             "creator": "WorldEpisode active LeRobot converter",
             "software": "tools/lerobot_worldepisode_roundtrip.py",
-            "license": "Apache-2.0 source dataset; derived metadata CC0-1.0",
+            "license": (
+                f"{source_license} source-derived rows; WorldEpisode-authored "
+                "metadata CC0-1.0"
+            ),
         },
         "quality": {
             "conformance_profiles": ["WE-Core"],
@@ -472,6 +508,7 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
         "profile": "worldepisode-lerobot-v3-sidecar-0.1",
         "source_repo_id": native.repo_id,
         "source_revision": native.revision,
+        "source_license": source_license_payload(native.license_record),
         "episode_index": native.episode_index,
         "physical_frames": native.physical_frames,
         "action_components": action_names,
@@ -482,6 +519,7 @@ def lerobot_to_worldepisode(native: LeRobotNativeEpisode) -> WorldEpisodePackage
         "target_profile": "worldepisode-0.1",
         "source_repo_id": native.repo_id,
         "source_revision": native.revision,
+        "source_license": source_license_payload(native.license_record),
         "episode_index": native.episode_index,
         "preserved_zero_loss": [
             "action tensor",
@@ -531,6 +569,10 @@ def worldepisode_to_lerobot(
     exported_info["splits"] = {"train": "0:1"}
     write_json(export_dir / "meta" / "info.json", exported_info)
     write_json(export_dir / "meta" / "stats.json", stats_from_episode_metadata(source.episode_metadata))
+    write_json(
+        export_dir / "SOURCE_LICENSE.json",
+        source_license_payload(source.license_record),
+    )
 
     task_table = pa.table(
         {
@@ -591,6 +633,12 @@ def worldepisode_to_lerobot(
             "local_path": str(export_dir / "data" / "chunk-000" / "file-000.parquet"),
             "bytes": (export_dir / "data" / "chunk-000" / "file-000.parquet").stat().st_size,
             "sha256": sha256_file(export_dir / "data" / "chunk-000" / "file-000.parquet"),
+        },
+        "SOURCE_LICENSE.json": {
+            "uri": str(export_dir / "SOURCE_LICENSE.json"),
+            "local_path": str(export_dir / "SOURCE_LICENSE.json"),
+            "bytes": (export_dir / "SOURCE_LICENSE.json").stat().st_size,
+            "sha256": sha256_file(export_dir / "SOURCE_LICENSE.json"),
         },
     }
     return load_lerobot_episode(
@@ -676,12 +724,14 @@ def write_artifacts(
         "source_files": portable_file_descriptors(source.source_files),
         "source_dataset_total_episodes": source.info["total_episodes"],
         "source_dataset_total_frames": source.info["total_frames"],
+        "source_license": source_license_payload(source.license_record),
     }
     exported_manifest = {
         "repo_id": exported.repo_id,
         "revision": exported.revision,
         "episode_index": exported.episode_index,
-        "export_dir": str(export_dir.relative_to(ROOT)),
+        "source_license": source_license_payload(exported.license_record),
+        "export_dir": display_path(export_dir),
         "files": portable_file_descriptors(exported.source_files),
     }
     package.conversion_report["metrics"] = metrics
@@ -699,11 +749,11 @@ def write_artifacts(
         "revision": source.revision,
         "episode_index": source.episode_index,
         "artifacts": {
-            "source_manifest": str((output_dir / "source_manifest.json").relative_to(ROOT)),
-            "worldepisode_manifest": str((output_dir / "worldepisode.manifest.json").relative_to(ROOT)),
-            "worldepisode_sidecar": str((output_dir / "worldepisode.sidecar.json").relative_to(ROOT)),
-            "exported_lerobot_v3": str(export_dir.relative_to(ROOT)),
-            "conversion_report": str((output_dir / "conversion_report.json").relative_to(ROOT)),
+            "source_manifest": display_path(output_dir / "source_manifest.json"),
+            "worldepisode_manifest": display_path(output_dir / "worldepisode.manifest.json"),
+            "worldepisode_sidecar": display_path(output_dir / "worldepisode.sidecar.json"),
+            "exported_lerobot_v3": display_path(export_dir),
+            "conversion_report": display_path(output_dir / "conversion_report.json"),
         },
         "metrics": metrics,
         "explicitly_tracked_source_absent_fields": package.conversion_report["source_absent"],
@@ -816,7 +866,12 @@ def run_batch_roundtrip_experiment(
             }
         ),
         "reports": [
-            str((output_dir / "batch" / f"episode_{report['episode_index']:06d}" / "roundtrip_report.json").relative_to(ROOT))
+            display_path(
+                output_dir
+                / "batch"
+                / f"episode_{report['episode_index']:06d}"
+                / "roundtrip_report.json"
+            )
             for report in reports
         ],
     }

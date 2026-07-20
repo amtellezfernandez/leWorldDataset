@@ -232,7 +232,7 @@ def build_generated_manifest(config: dict[str, Any]) -> dict[str, Any]:
             "versioning_policy": "append_only_snapshots",
             "description": "Generated catalog for operational scale measurements; no episode rows are materialized.",
             "license": "CC-BY-4.0",
-            "owners": ["URDF Studio"],
+            "owners": ["WorldEpisode maintainers"],
         },
         "namespaces": namespaces,
         "resolvers": resolvers,

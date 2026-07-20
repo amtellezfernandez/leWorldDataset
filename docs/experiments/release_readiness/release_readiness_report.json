@@ -2,9 +2,9 @@
   "aggregate": {
     "blocked_stronger_claim_count": 4,
     "blocking_error_count": 0,
-    "check_count": 34,
-    "passed_count": 34,
-    "warning_failure_count": 0
+    "check_count": 38,
+    "passed_count": 37,
+    "warning_failure_count": 1
   },
   "artifacts": {
     "markdown": "docs/experiments/release_readiness/README.md",
@@ -17,12 +17,12 @@
       "blocker_id": "POLICY.ROLL.001",
       "claim": "state-of-the-art policy or physical rollout impact",
       "current_evidence": {
-        "act_diffusion_gate": "ready_not_executed",
+        "act_diffusion_gate": "blocked_missing_required_observation_modality",
         "temporal_policy_baseline": {
-          "episode_nrmse_ratio_scene_over_random": 1.618796503820404,
-          "random_episode_nrmse_mean": 0.1572614852380231,
+          "episode_nrmse_ratio_scene_over_random": 1.618796503820317,
+          "random_episode_nrmse_mean": 0.15726148523804215,
           "random_episode_success_rate": 0.925,
-          "scene_disjoint_nrmse_mean": 0.25457434248891586,
+          "scene_disjoint_nrmse_mean": 0.254574342488933,
           "scene_disjoint_success_rate": 0.42,
           "success_rate_drop": 0.5050000000000001
         }
@@ -85,7 +85,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (6198 bytes)",
+      "evidence": "README.md (6853 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -125,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (477191 bytes)",
+      "evidence": "WorldEpisode.pdf (303767 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -133,7 +133,7 @@
     {
       "boundary": "",
       "check_id": "DOC.007",
-      "evidence": "paper/arxiv/main.tex (6519 bytes)",
+      "evidence": "paper/arxiv/main.tex (6291 bytes)",
       "name": "paper source exists",
       "passed": true,
       "severity": "error"
@@ -141,7 +141,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18269 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18515 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -149,7 +149,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (180738 bytes)",
+      "evidence": "docs/experiments/results.json (285122 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -165,7 +165,7 @@
     {
       "boundary": "",
       "check_id": "DOC.011",
-      "evidence": ".github/workflows/ci.yml (1402 bytes)",
+      "evidence": ".github/workflows/ci.yml (1654 bytes)",
       "name": "CI workflow exists",
       "passed": true,
       "severity": "error"
@@ -181,7 +181,7 @@
     {
       "boundary": "",
       "check_id": "PKG.001",
-      "evidence": "pyproject.toml (1324 bytes)",
+      "evidence": "pyproject.toml (1339 bytes)",
       "name": "pyproject exists",
       "passed": true,
       "severity": "error"
@@ -237,8 +237,8 @@
     {
       "boundary": "",
       "check_id": "EVID.003",
-      "evidence": "random=1.0, disjoint=0.0, drop=0.85",
-      "name": "scene leakage result is measured",
+      "evidence": "random_proxy_overlap=1.0, holdout_proxy_overlap=0.0, random_nrmse=0.18315773606300353, holdout_nrmse=0.3805086135864258, seeds=5; task-confounded",
+      "name": "task--scene proxy holdout result is measured",
       "passed": true,
       "severity": "error"
     },
@@ -247,13 +247,13 @@
       "check_id": "EVID.004",
       "evidence": "policy jobs and compact split packages exist; metrics are not claimed",
       "name": "ACT/Diffusion gate is explicit and not overclaimed",
-      "passed": true,
+      "passed": false,
       "severity": "warning"
     },
     {
       "boundary": "",
       "check_id": "EVID.011",
-      "evidence": "random=0.925, scene=0.42, drop=0.5050000000000001",
+      "evidence": "random_nrmse=0.15726148523804215, holdout_nrmse=0.254574342488933",
       "name": "temporal policy baseline is measured",
       "passed": true,
       "severity": "error"
@@ -269,7 +269,7 @@
     {
       "boundary": "",
       "check_id": "EVID.006",
-      "evidence": "dataset manifest audit plus generated billion-episode-capacity catalog benchmark",
+      "evidence": "dataset manifest audit plus generated catalog-capacity benchmark",
       "name": "dataset-scale manifest and generated catalog checks pass",
       "passed": true,
       "severity": "error"
@@ -325,8 +325,32 @@
     {
       "boundary": "",
       "check_id": "CLAIM.001",
-      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=13, failed=0",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=14, failed=0",
       "name": "paper claims are evidence-backed",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "PROV.001",
+      "evidence": "docs/experiments/experiment_manifest/experiment_manifest.json experiments=7, errors=[]",
+      "name": "principal experiments have validated provenance",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "SOURCE.001",
+      "evidence": "docs/experiments/citation_source_audit/citation_source_audit.json aggregate={'archival_reference_count': 11, 'citation_occurrence_count': 28, 'error_count': 0, 'reference_count': 21, 'undefined_count': 0, 'unused_count': 0}",
+      "name": "paper citations have audited primary sources",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
+      "check_id": "SOURCE.002",
+      "evidence": "docs/experiments/third_party_asset_audit/asset_audit.json aggregate={'active_dataset_count': 4, 'authored_parquet_fixture_count': 1, 'context_only_dataset_count': 4, 'error_count': 0, 'external_software_count': 6, 'redistributed_parquet_bytes': 6736270, 'redistributed_parquet_count': 48, 'source_license_file_count': 16, 'source_media_count': 0}",
+      "name": "third-party assets and redistribution are audited",
       "passed": true,
       "severity": "error"
     },
@@ -340,8 +364,16 @@
     },
     {
       "boundary": "",
+      "check_id": "ANON.001",
+      "evidence": "supplement=docs/anonymous_supplement/supplement_report.json, audit=docs/experiments/anonymity_audit/anonymity_report.json",
+      "name": "anonymous paper and supplement pass identity audit",
+      "passed": true,
+      "severity": "error"
+    },
+    {
+      "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=61, normalized=4",
+      "evidence": "status=pass, entries=126, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
@@ -349,7 +381,7 @@
     {
       "boundary": "",
       "check_id": "SUBMIT.001",
-      "evidence": "status=pass, claims=13, open_gates=4",
+      "evidence": "status=pass, claims=14, open_gates=4",
       "name": "submission packet validates",
       "passed": true,
       "severity": "error"
@@ -371,11 +403,11 @@
   },
   "paper_claim_audit": {
     "aggregate": {
-      "claim_count": 13,
+      "claim_count": 14,
       "failed_claim_ids": [],
       "failed_count": 0,
       "missing_paper_pattern_count": 0,
-      "passed_count": 13
+      "passed_count": 14
     },
     "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "status": "pass"

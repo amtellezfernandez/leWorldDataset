@@ -38,7 +38,7 @@
       "representations": [
         {
           "asset": {
-            "license": "Apache-2.0",
+            "license": "MIT",
             "media_type": "application/json",
             "mirrors": [
               "meta/info.json"
@@ -47,7 +47,7 @@
             "uri": "hf://lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19/meta/info.json"
           },
           "coordinate_frame": "unknown_joint_space",
-          "license": "Apache-2.0",
+          "license": "MIT",
           "representation_id": "unknown_lerobot_schema",
           "role": "semantics",
           "valid_interval": {
@@ -83,7 +83,7 @@
   },
   "provenance": {
     "creator": "WorldEpisode active LeRobot converter",
-    "license": "Apache-2.0 source dataset; derived metadata CC0-1.0",
+    "license": "MIT source-derived rows; WorldEpisode-authored metadata CC0-1.0",
     "software": "tools/lerobot_worldepisode_roundtrip.py",
     "source": "lerobot/pusht@7628202a2180972f291ba1bc6723834921e72c19"
   },
@@ -115,7 +115,7 @@
   },
   "trace": {
     "asset": {
-      "license": "Apache-2.0",
+      "license": "MIT",
       "media_type": "application/vnd.apache.parquet",
       "mirrors": [
         "data/chunk-000/file-000.parquet"
@@ -128,7 +128,7 @@
   "world_deltas": [],
   "world_revision": {
     "asset": {
-      "license": "Apache-2.0",
+      "license": "MIT",
       "media_type": "application/json",
       "mirrors": [
         "meta/info.json"

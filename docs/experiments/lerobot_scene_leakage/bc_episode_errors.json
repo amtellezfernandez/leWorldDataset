@@ -1,726 +1,3666 @@
 {
-  "random_episode": [
-    {
-      "episode_index": 257,
-      "normalized_rmse": 0.178597092628479
-    },
-    {
-      "episode_index": 264,
-      "normalized_rmse": 0.13038668036460876
-    },
-    {
-      "episode_index": 268,
-      "normalized_rmse": 0.11745372414588928
-    },
-    {
-      "episode_index": 280,
-      "normalized_rmse": 0.14719167351722717
-    },
-    {
-      "episode_index": 281,
-      "normalized_rmse": 0.12956342101097107
-    },
-    {
-      "episode_index": 284,
-      "normalized_rmse": 0.12978538870811462
-    },
-    {
-      "episode_index": 286,
-      "normalized_rmse": 0.13766305148601532
-    },
-    {
-      "episode_index": 287,
-      "normalized_rmse": 0.15739832818508148
-    },
-    {
-      "episode_index": 290,
-      "normalized_rmse": 0.12835738062858582
-    },
-    {
-      "episode_index": 296,
-      "normalized_rmse": 0.16418306529521942
-    },
-    {
-      "episode_index": 566,
-      "normalized_rmse": 0.19868038594722748
-    },
-    {
-      "episode_index": 569,
-      "normalized_rmse": 0.20057028532028198
-    },
-    {
-      "episode_index": 573,
-      "normalized_rmse": 0.20154555141925812
-    },
-    {
-      "episode_index": 576,
-      "normalized_rmse": 0.1696496307849884
-    },
-    {
-      "episode_index": 580,
-      "normalized_rmse": 0.19794757664203644
-    },
-    {
-      "episode_index": 581,
-      "normalized_rmse": 0.21704068779945374
-    },
-    {
-      "episode_index": 582,
-      "normalized_rmse": 0.24116237461566925
-    },
-    {
-      "episode_index": 587,
-      "normalized_rmse": 0.19269433617591858
-    },
-    {
-      "episode_index": 599,
-      "normalized_rmse": 0.23888695240020752
-    },
-    {
-      "episode_index": 608,
-      "normalized_rmse": 0.24126122891902924
-    },
-    {
-      "episode_index": 910,
-      "normalized_rmse": 0.08988678455352783
-    },
-    {
-      "episode_index": 917,
-      "normalized_rmse": 0.11054677516222
-    },
-    {
-      "episode_index": 919,
-      "normalized_rmse": 0.11644537001848221
-    },
-    {
-      "episode_index": 932,
-      "normalized_rmse": 0.1506742238998413
-    },
-    {
-      "episode_index": 937,
-      "normalized_rmse": 0.10636436194181442
-    },
-    {
-      "episode_index": 938,
-      "normalized_rmse": 0.14124909043312073
-    },
-    {
-      "episode_index": 939,
-      "normalized_rmse": 0.14410443603992462
-    },
-    {
-      "episode_index": 946,
-      "normalized_rmse": 0.14724992215633392
-    },
-    {
-      "episode_index": 951,
-      "normalized_rmse": 0.14014016091823578
-    },
-    {
-      "episode_index": 952,
-      "normalized_rmse": 0.14581267535686493
-    },
-    {
-      "episode_index": 958,
-      "normalized_rmse": 0.16433219611644745
-    },
-    {
-      "episode_index": 1205,
-      "normalized_rmse": 0.11404555290937424
-    },
-    {
-      "episode_index": 1208,
-      "normalized_rmse": 0.1330275684595108
-    },
-    {
-      "episode_index": 1212,
-      "normalized_rmse": 0.15418259799480438
-    },
-    {
-      "episode_index": 1219,
-      "normalized_rmse": 0.18498651683330536
-    },
-    {
-      "episode_index": 1222,
-      "normalized_rmse": 0.1642577052116394
-    },
-    {
-      "episode_index": 1231,
-      "normalized_rmse": 0.12785370647907257
-    },
-    {
-      "episode_index": 1234,
-      "normalized_rmse": 0.17439594864845276
-    },
-    {
-      "episode_index": 1237,
-      "normalized_rmse": 0.15323805809020996
-    },
-    {
-      "episode_index": 1240,
-      "normalized_rmse": 0.14605137705802917
-    },
-    {
-      "episode_index": 1241,
-      "normalized_rmse": 0.12372095882892609
-    },
-    {
-      "episode_index": 1246,
-      "normalized_rmse": 0.16476209461688995
-    },
-    {
-      "episode_index": 1554,
-      "normalized_rmse": 0.19568072259426117
-    },
-    {
-      "episode_index": 1556,
-      "normalized_rmse": 0.2246837466955185
-    },
-    {
-      "episode_index": 1558,
-      "normalized_rmse": 0.2146192342042923
-    },
-    {
-      "episode_index": 1561,
-      "normalized_rmse": 0.19137223064899445
-    },
-    {
-      "episode_index": 1563,
-      "normalized_rmse": 0.25349846482276917
-    },
-    {
-      "episode_index": 1570,
-      "normalized_rmse": 0.25016316771507263
-    },
-    {
-      "episode_index": 1591,
-      "normalized_rmse": 0.2663096785545349
-    },
-    {
-      "episode_index": 1593,
-      "normalized_rmse": 0.24543356895446777
-    },
-    {
-      "episode_index": 1845,
-      "normalized_rmse": 0.3440357744693756
-    },
-    {
-      "episode_index": 1848,
-      "normalized_rmse": 0.28252822160720825
-    },
-    {
-      "episode_index": 1856,
-      "normalized_rmse": 0.3131779432296753
-    },
-    {
-      "episode_index": 1858,
-      "normalized_rmse": 0.3013632893562317
-    },
-    {
-      "episode_index": 1861,
-      "normalized_rmse": 0.24036933481693268
-    },
-    {
-      "episode_index": 1865,
-      "normalized_rmse": 0.2841753661632538
-    },
-    {
-      "episode_index": 1871,
-      "normalized_rmse": 0.25009608268737793
-    },
-    {
-      "episode_index": 1872,
-      "normalized_rmse": 0.26891446113586426
-    },
-    {
-      "episode_index": 1873,
-      "normalized_rmse": 0.2611065208911896
-    },
-    {
-      "episode_index": 1874,
-      "normalized_rmse": 0.24675710499286652
-    },
-    {
-      "episode_index": 1875,
-      "normalized_rmse": 0.22258447110652924
-    },
-    {
-      "episode_index": 1881,
-      "normalized_rmse": 0.23204106092453003
-    },
-    {
-      "episode_index": 1885,
-      "normalized_rmse": 0.3032199442386627
-    },
-    {
-      "episode_index": 2166,
-      "normalized_rmse": 0.12594325840473175
-    },
-    {
-      "episode_index": 2168,
-      "normalized_rmse": 0.15114369988441467
-    },
-    {
-      "episode_index": 2186,
-      "normalized_rmse": 0.15051081776618958
-    },
-    {
-      "episode_index": 2196,
-      "normalized_rmse": 0.17726203799247742
-    },
-    {
-      "episode_index": 2197,
-      "normalized_rmse": 0.15517474710941315
-    },
-    {
-      "episode_index": 2208,
-      "normalized_rmse": 0.1441122591495514
-    },
-    {
-      "episode_index": 2449,
-      "normalized_rmse": 0.1454659253358841
-    },
-    {
-      "episode_index": 2450,
-      "normalized_rmse": 0.14993448555469513
-    },
-    {
-      "episode_index": 2459,
-      "normalized_rmse": 0.14312200248241425
-    },
-    {
-      "episode_index": 2460,
-      "normalized_rmse": 0.17863315343856812
-    },
-    {
-      "episode_index": 2465,
-      "normalized_rmse": 0.13161049783229828
-    },
-    {
-      "episode_index": 2469,
-      "normalized_rmse": 0.1601407378911972
-    },
-    {
-      "episode_index": 2477,
-      "normalized_rmse": 0.16955195367336273
-    },
-    {
-      "episode_index": 2481,
-      "normalized_rmse": 0.16185814142227173
-    },
-    {
-      "episode_index": 2484,
-      "normalized_rmse": 0.18405814468860626
-    },
-    {
-      "episode_index": 2491,
-      "normalized_rmse": 0.16504967212677002
-    },
-    {
-      "episode_index": 2495,
-      "normalized_rmse": 0.16789261996746063
-    }
+  "profile": "worldepisode-seeded-bc-errors-0.2",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
   ],
-  "scene_disjoint": [
-    {
-      "episode_index": 1549,
-      "normalized_rmse": 0.28730836510658264
-    },
-    {
-      "episode_index": 1550,
-      "normalized_rmse": 0.26693224906921387
-    },
-    {
-      "episode_index": 1551,
-      "normalized_rmse": 0.3015010952949524
-    },
-    {
-      "episode_index": 1552,
-      "normalized_rmse": 0.29454416036605835
-    },
-    {
-      "episode_index": 1553,
-      "normalized_rmse": 0.3319056034088135
-    },
-    {
-      "episode_index": 1554,
-      "normalized_rmse": 0.2808150053024292
-    },
-    {
-      "episode_index": 1555,
-      "normalized_rmse": 0.3024686574935913
-    },
-    {
-      "episode_index": 1556,
-      "normalized_rmse": 0.2898646891117096
-    },
-    {
-      "episode_index": 1557,
-      "normalized_rmse": 0.32375094294548035
-    },
-    {
-      "episode_index": 1558,
-      "normalized_rmse": 0.2972353994846344
-    },
-    {
-      "episode_index": 1559,
-      "normalized_rmse": 0.2815907597541809
-    },
-    {
-      "episode_index": 1560,
-      "normalized_rmse": 0.3057236969470978
-    },
-    {
-      "episode_index": 1561,
-      "normalized_rmse": 0.2916291356086731
-    },
-    {
-      "episode_index": 1562,
-      "normalized_rmse": 0.3486988842487335
-    },
-    {
-      "episode_index": 1563,
-      "normalized_rmse": 0.3430105447769165
-    },
-    {
-      "episode_index": 1564,
-      "normalized_rmse": 0.2895391881465912
-    },
-    {
-      "episode_index": 1565,
-      "normalized_rmse": 0.29956889152526855
-    },
-    {
-      "episode_index": 1566,
-      "normalized_rmse": 0.32264575362205505
-    },
-    {
-      "episode_index": 1567,
-      "normalized_rmse": 0.3070988357067108
-    },
-    {
-      "episode_index": 1568,
-      "normalized_rmse": 0.3026691973209381
-    },
-    {
-      "episode_index": 1569,
-      "normalized_rmse": 0.352004736661911
-    },
-    {
-      "episode_index": 1570,
-      "normalized_rmse": 0.34003883600234985
-    },
-    {
-      "episode_index": 1571,
-      "normalized_rmse": 0.34041106700897217
-    },
-    {
-      "episode_index": 1572,
-      "normalized_rmse": 0.3413463234901428
-    },
-    {
-      "episode_index": 1573,
-      "normalized_rmse": 0.33190035820007324
-    },
-    {
-      "episode_index": 1574,
-      "normalized_rmse": 0.2876424491405487
-    },
-    {
-      "episode_index": 1575,
-      "normalized_rmse": 0.33438557386398315
-    },
-    {
-      "episode_index": 1576,
-      "normalized_rmse": 0.3465384840965271
-    },
-    {
-      "episode_index": 1577,
-      "normalized_rmse": 0.3514968156814575
-    },
-    {
-      "episode_index": 1578,
-      "normalized_rmse": 0.35519731044769287
-    },
-    {
-      "episode_index": 1579,
-      "normalized_rmse": 0.3321297764778137
-    },
-    {
-      "episode_index": 1580,
-      "normalized_rmse": 0.33415454626083374
-    },
-    {
-      "episode_index": 1581,
-      "normalized_rmse": 0.3439869284629822
-    },
-    {
-      "episode_index": 1582,
-      "normalized_rmse": 0.35985133051872253
-    },
-    {
-      "episode_index": 1583,
-      "normalized_rmse": 0.36759352684020996
-    },
-    {
-      "episode_index": 1584,
-      "normalized_rmse": 0.3454265296459198
-    },
-    {
-      "episode_index": 1585,
-      "normalized_rmse": 0.3751751482486725
-    },
-    {
-      "episode_index": 1586,
-      "normalized_rmse": 0.3069314956665039
-    },
-    {
-      "episode_index": 1587,
-      "normalized_rmse": 0.37852320075035095
-    },
-    {
-      "episode_index": 1588,
-      "normalized_rmse": 0.390463650226593
-    },
-    {
-      "episode_index": 1589,
-      "normalized_rmse": 0.40530920028686523
-    },
-    {
-      "episode_index": 1590,
-      "normalized_rmse": 0.4194222390651703
-    },
-    {
-      "episode_index": 1591,
-      "normalized_rmse": 0.372391939163208
-    },
-    {
-      "episode_index": 1592,
-      "normalized_rmse": 0.32406267523765564
-    },
-    {
-      "episode_index": 1593,
-      "normalized_rmse": 0.34025418758392334
-    },
-    {
-      "episode_index": 1594,
-      "normalized_rmse": 0.379685640335083
-    },
-    {
-      "episode_index": 1595,
-      "normalized_rmse": 0.363335520029068
-    },
-    {
-      "episode_index": 1596,
-      "normalized_rmse": 0.4256265461444855
-    },
-    {
-      "episode_index": 1597,
-      "normalized_rmse": 0.41841423511505127
-    },
-    {
-      "episode_index": 1598,
-      "normalized_rmse": 0.4001699388027191
-    },
-    {
-      "episode_index": 1839,
-      "normalized_rmse": 0.32374832034111023
-    },
-    {
-      "episode_index": 1840,
-      "normalized_rmse": 0.40314942598342896
-    },
-    {
-      "episode_index": 1841,
-      "normalized_rmse": 0.4451315104961395
-    },
-    {
-      "episode_index": 1842,
-      "normalized_rmse": 0.4150470793247223
-    },
-    {
-      "episode_index": 1843,
-      "normalized_rmse": 0.42649123072624207
-    },
-    {
-      "episode_index": 1844,
-      "normalized_rmse": 0.41149890422821045
-    },
-    {
-      "episode_index": 1845,
-      "normalized_rmse": 0.438672810792923
-    },
-    {
-      "episode_index": 1846,
-      "normalized_rmse": 0.3896642327308655
-    },
-    {
-      "episode_index": 1847,
-      "normalized_rmse": 0.3781651556491852
-    },
-    {
-      "episode_index": 1848,
-      "normalized_rmse": 0.38781988620758057
-    },
-    {
-      "episode_index": 1849,
-      "normalized_rmse": 0.3648318648338318
-    },
-    {
-      "episode_index": 1850,
-      "normalized_rmse": 0.35675036907196045
-    },
-    {
-      "episode_index": 1851,
-      "normalized_rmse": 0.38331371545791626
-    },
-    {
-      "episode_index": 1852,
-      "normalized_rmse": 0.38548043370246887
-    },
-    {
-      "episode_index": 1853,
-      "normalized_rmse": 0.3781469762325287
-    },
-    {
-      "episode_index": 1854,
-      "normalized_rmse": 0.3637053072452545
-    },
-    {
-      "episode_index": 1855,
-      "normalized_rmse": 0.34596583247184753
-    },
-    {
-      "episode_index": 1856,
-      "normalized_rmse": 0.410867303609848
-    },
-    {
-      "episode_index": 1857,
-      "normalized_rmse": 0.39942124485969543
-    },
-    {
-      "episode_index": 1858,
-      "normalized_rmse": 0.44057461619377136
-    },
-    {
-      "episode_index": 1859,
-      "normalized_rmse": 0.37177419662475586
-    },
-    {
-      "episode_index": 1860,
-      "normalized_rmse": 0.4063073396682739
-    },
-    {
-      "episode_index": 1861,
-      "normalized_rmse": 0.3031023144721985
-    },
-    {
-      "episode_index": 1862,
-      "normalized_rmse": 0.4665152132511139
-    },
-    {
-      "episode_index": 1863,
-      "normalized_rmse": 0.3554946482181549
-    },
-    {
-      "episode_index": 1864,
-      "normalized_rmse": 0.3678160309791565
-    },
-    {
-      "episode_index": 1865,
-      "normalized_rmse": 0.3941309452056885
-    },
-    {
-      "episode_index": 1866,
-      "normalized_rmse": 0.39632540941238403
-    },
-    {
-      "episode_index": 1867,
-      "normalized_rmse": 0.3576470911502838
-    },
-    {
-      "episode_index": 1868,
-      "normalized_rmse": 0.39090609550476074
-    },
-    {
-      "episode_index": 1869,
-      "normalized_rmse": 0.37576863169670105
-    },
-    {
-      "episode_index": 1870,
-      "normalized_rmse": 0.4388965368270874
-    },
-    {
-      "episode_index": 1871,
-      "normalized_rmse": 0.3868120014667511
-    },
-    {
-      "episode_index": 1872,
-      "normalized_rmse": 0.40043509006500244
-    },
-    {
-      "episode_index": 1873,
-      "normalized_rmse": 0.39329993724823
-    },
-    {
-      "episode_index": 1874,
-      "normalized_rmse": 0.39291492104530334
-    },
-    {
-      "episode_index": 1875,
-      "normalized_rmse": 0.35693222284317017
-    },
-    {
-      "episode_index": 1876,
-      "normalized_rmse": 0.418526828289032
-    },
-    {
-      "episode_index": 1877,
-      "normalized_rmse": 0.3767692446708679
-    },
-    {
-      "episode_index": 1878,
-      "normalized_rmse": 0.4253002107143402
-    },
-    {
-      "episode_index": 1879,
-      "normalized_rmse": 0.40821003913879395
-    },
-    {
-      "episode_index": 1880,
-      "normalized_rmse": 0.36875486373901367
-    },
-    {
-      "episode_index": 1881,
-      "normalized_rmse": 0.3141937553882599
-    },
-    {
-      "episode_index": 1882,
-      "normalized_rmse": 0.37300100922584534
-    },
-    {
-      "episode_index": 1883,
-      "normalized_rmse": 0.3747401833534241
-    },
-    {
-      "episode_index": 1884,
-      "normalized_rmse": 0.35782161355018616
-    },
-    {
-      "episode_index": 1885,
-      "normalized_rmse": 0.4272795021533966
-    },
-    {
-      "episode_index": 1886,
-      "normalized_rmse": 0.4545554518699646
-    },
-    {
-      "episode_index": 1887,
-      "normalized_rmse": 0.4086666703224182
-    },
-    {
-      "episode_index": 1888,
-      "normalized_rmse": 0.40384113788604736
-    }
-  ]
+  "splits": {
+    "random_episode": [
+      {
+        "episode_errors": [
+          {
+            "episode_index": 257,
+            "normalized_rmse": 0.17858752608299255
+          },
+          {
+            "episode_index": 264,
+            "normalized_rmse": 0.13040179014205933
+          },
+          {
+            "episode_index": 268,
+            "normalized_rmse": 0.11743634939193726
+          },
+          {
+            "episode_index": 280,
+            "normalized_rmse": 0.1471828818321228
+          },
+          {
+            "episode_index": 281,
+            "normalized_rmse": 0.12956085801124573
+          },
+          {
+            "episode_index": 284,
+            "normalized_rmse": 0.1297902762889862
+          },
+          {
+            "episode_index": 286,
+            "normalized_rmse": 0.13764670491218567
+          },
+          {
+            "episode_index": 287,
+            "normalized_rmse": 0.15739721059799194
+          },
+          {
+            "episode_index": 290,
+            "normalized_rmse": 0.12835948169231415
+          },
+          {
+            "episode_index": 296,
+            "normalized_rmse": 0.164184108376503
+          },
+          {
+            "episode_index": 566,
+            "normalized_rmse": 0.19869500398635864
+          },
+          {
+            "episode_index": 569,
+            "normalized_rmse": 0.2005673497915268
+          },
+          {
+            "episode_index": 573,
+            "normalized_rmse": 0.20153124630451202
+          },
+          {
+            "episode_index": 576,
+            "normalized_rmse": 0.16962465643882751
+          },
+          {
+            "episode_index": 580,
+            "normalized_rmse": 0.1979360431432724
+          },
+          {
+            "episode_index": 581,
+            "normalized_rmse": 0.21705450117588043
+          },
+          {
+            "episode_index": 582,
+            "normalized_rmse": 0.24118298292160034
+          },
+          {
+            "episode_index": 587,
+            "normalized_rmse": 0.19266512989997864
+          },
+          {
+            "episode_index": 599,
+            "normalized_rmse": 0.23892055451869965
+          },
+          {
+            "episode_index": 608,
+            "normalized_rmse": 0.2412617802619934
+          },
+          {
+            "episode_index": 910,
+            "normalized_rmse": 0.08988000452518463
+          },
+          {
+            "episode_index": 917,
+            "normalized_rmse": 0.11054922640323639
+          },
+          {
+            "episode_index": 919,
+            "normalized_rmse": 0.11644954979419708
+          },
+          {
+            "episode_index": 932,
+            "normalized_rmse": 0.15066936612129211
+          },
+          {
+            "episode_index": 937,
+            "normalized_rmse": 0.10637795925140381
+          },
+          {
+            "episode_index": 938,
+            "normalized_rmse": 0.14125089347362518
+          },
+          {
+            "episode_index": 939,
+            "normalized_rmse": 0.1440860480070114
+          },
+          {
+            "episode_index": 946,
+            "normalized_rmse": 0.14724549651145935
+          },
+          {
+            "episode_index": 951,
+            "normalized_rmse": 0.14015789330005646
+          },
+          {
+            "episode_index": 952,
+            "normalized_rmse": 0.14582394063472748
+          },
+          {
+            "episode_index": 958,
+            "normalized_rmse": 0.1643470823764801
+          },
+          {
+            "episode_index": 1205,
+            "normalized_rmse": 0.11403679102659225
+          },
+          {
+            "episode_index": 1208,
+            "normalized_rmse": 0.13301868736743927
+          },
+          {
+            "episode_index": 1212,
+            "normalized_rmse": 0.15416376292705536
+          },
+          {
+            "episode_index": 1219,
+            "normalized_rmse": 0.18499785661697388
+          },
+          {
+            "episode_index": 1222,
+            "normalized_rmse": 0.16424612700939178
+          },
+          {
+            "episode_index": 1231,
+            "normalized_rmse": 0.1278260350227356
+          },
+          {
+            "episode_index": 1234,
+            "normalized_rmse": 0.17440812289714813
+          },
+          {
+            "episode_index": 1237,
+            "normalized_rmse": 0.15324926376342773
+          },
+          {
+            "episode_index": 1240,
+            "normalized_rmse": 0.146035835146904
+          },
+          {
+            "episode_index": 1241,
+            "normalized_rmse": 0.12370692193508148
+          },
+          {
+            "episode_index": 1246,
+            "normalized_rmse": 0.1647532433271408
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.19569545984268188
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.2246943712234497
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.2146291583776474
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.19137924909591675
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.2535252869129181
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.2501421570777893
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.26630356907844543
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.24544532597064972
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.34405675530433655
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.28253504633903503
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.31316593289375305
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.3013887107372284
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.24035689234733582
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.284197598695755
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.25008851289749146
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.268922358751297
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.26112669706344604
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.2467685341835022
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.22258810698986053
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.23200683295726776
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.30322548747062683
+          },
+          {
+            "episode_index": 2166,
+            "normalized_rmse": 0.12596409022808075
+          },
+          {
+            "episode_index": 2168,
+            "normalized_rmse": 0.1511385440826416
+          },
+          {
+            "episode_index": 2186,
+            "normalized_rmse": 0.15049713850021362
+          },
+          {
+            "episode_index": 2196,
+            "normalized_rmse": 0.17726105451583862
+          },
+          {
+            "episode_index": 2197,
+            "normalized_rmse": 0.15516875684261322
+          },
+          {
+            "episode_index": 2208,
+            "normalized_rmse": 0.14410439133644104
+          },
+          {
+            "episode_index": 2449,
+            "normalized_rmse": 0.1454731523990631
+          },
+          {
+            "episode_index": 2450,
+            "normalized_rmse": 0.14994846284389496
+          },
+          {
+            "episode_index": 2459,
+            "normalized_rmse": 0.14312636852264404
+          },
+          {
+            "episode_index": 2460,
+            "normalized_rmse": 0.17863556742668152
+          },
+          {
+            "episode_index": 2465,
+            "normalized_rmse": 0.13159948587417603
+          },
+          {
+            "episode_index": 2469,
+            "normalized_rmse": 0.1601436585187912
+          },
+          {
+            "episode_index": 2477,
+            "normalized_rmse": 0.16955575346946716
+          },
+          {
+            "episode_index": 2481,
+            "normalized_rmse": 0.1618482768535614
+          },
+          {
+            "episode_index": 2484,
+            "normalized_rmse": 0.1840423047542572
+          },
+          {
+            "episode_index": 2491,
+            "normalized_rmse": 0.16504137217998505
+          },
+          {
+            "episode_index": 2495,
+            "normalized_rmse": 0.16787301003932953
+          }
+        ],
+        "seed": 0
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 257,
+            "normalized_rmse": 0.17077942192554474
+          },
+          {
+            "episode_index": 264,
+            "normalized_rmse": 0.12472975254058838
+          },
+          {
+            "episode_index": 268,
+            "normalized_rmse": 0.111945241689682
+          },
+          {
+            "episode_index": 280,
+            "normalized_rmse": 0.1430443525314331
+          },
+          {
+            "episode_index": 281,
+            "normalized_rmse": 0.12969058752059937
+          },
+          {
+            "episode_index": 284,
+            "normalized_rmse": 0.1294196993112564
+          },
+          {
+            "episode_index": 286,
+            "normalized_rmse": 0.13540767133235931
+          },
+          {
+            "episode_index": 287,
+            "normalized_rmse": 0.15974096953868866
+          },
+          {
+            "episode_index": 290,
+            "normalized_rmse": 0.12359429895877838
+          },
+          {
+            "episode_index": 296,
+            "normalized_rmse": 0.16081444919109344
+          },
+          {
+            "episode_index": 566,
+            "normalized_rmse": 0.1877422034740448
+          },
+          {
+            "episode_index": 569,
+            "normalized_rmse": 0.1941334456205368
+          },
+          {
+            "episode_index": 573,
+            "normalized_rmse": 0.19380207359790802
+          },
+          {
+            "episode_index": 576,
+            "normalized_rmse": 0.1735433042049408
+          },
+          {
+            "episode_index": 580,
+            "normalized_rmse": 0.1996757835149765
+          },
+          {
+            "episode_index": 581,
+            "normalized_rmse": 0.22294527292251587
+          },
+          {
+            "episode_index": 582,
+            "normalized_rmse": 0.2332182079553604
+          },
+          {
+            "episode_index": 587,
+            "normalized_rmse": 0.18735986948013306
+          },
+          {
+            "episode_index": 599,
+            "normalized_rmse": 0.2283494919538498
+          },
+          {
+            "episode_index": 608,
+            "normalized_rmse": 0.22892343997955322
+          },
+          {
+            "episode_index": 910,
+            "normalized_rmse": 0.10334011167287827
+          },
+          {
+            "episode_index": 917,
+            "normalized_rmse": 0.11506999284029007
+          },
+          {
+            "episode_index": 919,
+            "normalized_rmse": 0.11470546573400497
+          },
+          {
+            "episode_index": 932,
+            "normalized_rmse": 0.14360326528549194
+          },
+          {
+            "episode_index": 937,
+            "normalized_rmse": 0.10057029128074646
+          },
+          {
+            "episode_index": 938,
+            "normalized_rmse": 0.13267949223518372
+          },
+          {
+            "episode_index": 939,
+            "normalized_rmse": 0.13757473230361938
+          },
+          {
+            "episode_index": 946,
+            "normalized_rmse": 0.1435801386833191
+          },
+          {
+            "episode_index": 951,
+            "normalized_rmse": 0.13676172494888306
+          },
+          {
+            "episode_index": 952,
+            "normalized_rmse": 0.13888666033744812
+          },
+          {
+            "episode_index": 958,
+            "normalized_rmse": 0.18377895653247833
+          },
+          {
+            "episode_index": 1205,
+            "normalized_rmse": 0.1173185482621193
+          },
+          {
+            "episode_index": 1208,
+            "normalized_rmse": 0.1311345398426056
+          },
+          {
+            "episode_index": 1212,
+            "normalized_rmse": 0.15967020392417908
+          },
+          {
+            "episode_index": 1219,
+            "normalized_rmse": 0.18548649549484253
+          },
+          {
+            "episode_index": 1222,
+            "normalized_rmse": 0.1646021455526352
+          },
+          {
+            "episode_index": 1231,
+            "normalized_rmse": 0.12341092526912689
+          },
+          {
+            "episode_index": 1234,
+            "normalized_rmse": 0.16547450423240662
+          },
+          {
+            "episode_index": 1237,
+            "normalized_rmse": 0.1511254906654358
+          },
+          {
+            "episode_index": 1240,
+            "normalized_rmse": 0.1407322883605957
+          },
+          {
+            "episode_index": 1241,
+            "normalized_rmse": 0.1255323886871338
+          },
+          {
+            "episode_index": 1246,
+            "normalized_rmse": 0.16206438839435577
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.19391590356826782
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.221566304564476
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.21569396555423737
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.18588955700397491
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.259220153093338
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.2538742423057556
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.2677229940891266
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.24865981936454773
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.3403770625591278
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.28589218854904175
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.2981194257736206
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.3056666851043701
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.22585391998291016
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.2724757194519043
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.24387754499912262
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.271369069814682
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.2476090043783188
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.24651502072811127
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.2151104211807251
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.227760449051857
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.3019966781139374
+          },
+          {
+            "episode_index": 2166,
+            "normalized_rmse": 0.12020896375179291
+          },
+          {
+            "episode_index": 2168,
+            "normalized_rmse": 0.14832650125026703
+          },
+          {
+            "episode_index": 2186,
+            "normalized_rmse": 0.1475718766450882
+          },
+          {
+            "episode_index": 2196,
+            "normalized_rmse": 0.1764947474002838
+          },
+          {
+            "episode_index": 2197,
+            "normalized_rmse": 0.15719327330589294
+          },
+          {
+            "episode_index": 2208,
+            "normalized_rmse": 0.1382865309715271
+          },
+          {
+            "episode_index": 2449,
+            "normalized_rmse": 0.1530001163482666
+          },
+          {
+            "episode_index": 2450,
+            "normalized_rmse": 0.16375328600406647
+          },
+          {
+            "episode_index": 2459,
+            "normalized_rmse": 0.15305018424987793
+          },
+          {
+            "episode_index": 2460,
+            "normalized_rmse": 0.18737255036830902
+          },
+          {
+            "episode_index": 2465,
+            "normalized_rmse": 0.13132113218307495
+          },
+          {
+            "episode_index": 2469,
+            "normalized_rmse": 0.16073210537433624
+          },
+          {
+            "episode_index": 2477,
+            "normalized_rmse": 0.16556859016418457
+          },
+          {
+            "episode_index": 2481,
+            "normalized_rmse": 0.16777567565441132
+          },
+          {
+            "episode_index": 2484,
+            "normalized_rmse": 0.1749737560749054
+          },
+          {
+            "episode_index": 2491,
+            "normalized_rmse": 0.15257854759693146
+          },
+          {
+            "episode_index": 2495,
+            "normalized_rmse": 0.15874938666820526
+          }
+        ],
+        "seed": 1
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 257,
+            "normalized_rmse": 0.1712115854024887
+          },
+          {
+            "episode_index": 264,
+            "normalized_rmse": 0.12273845821619034
+          },
+          {
+            "episode_index": 268,
+            "normalized_rmse": 0.11143914610147476
+          },
+          {
+            "episode_index": 280,
+            "normalized_rmse": 0.13965784013271332
+          },
+          {
+            "episode_index": 281,
+            "normalized_rmse": 0.12511548399925232
+          },
+          {
+            "episode_index": 284,
+            "normalized_rmse": 0.1257331818342209
+          },
+          {
+            "episode_index": 286,
+            "normalized_rmse": 0.13441240787506104
+          },
+          {
+            "episode_index": 287,
+            "normalized_rmse": 0.15221913158893585
+          },
+          {
+            "episode_index": 290,
+            "normalized_rmse": 0.12366896122694016
+          },
+          {
+            "episode_index": 296,
+            "normalized_rmse": 0.16062231361865997
+          },
+          {
+            "episode_index": 566,
+            "normalized_rmse": 0.1932263970375061
+          },
+          {
+            "episode_index": 569,
+            "normalized_rmse": 0.19621576368808746
+          },
+          {
+            "episode_index": 573,
+            "normalized_rmse": 0.20104634761810303
+          },
+          {
+            "episode_index": 576,
+            "normalized_rmse": 0.17745475471019745
+          },
+          {
+            "episode_index": 580,
+            "normalized_rmse": 0.20907491445541382
+          },
+          {
+            "episode_index": 581,
+            "normalized_rmse": 0.2264179289340973
+          },
+          {
+            "episode_index": 582,
+            "normalized_rmse": 0.23812629282474518
+          },
+          {
+            "episode_index": 587,
+            "normalized_rmse": 0.19635410606861115
+          },
+          {
+            "episode_index": 599,
+            "normalized_rmse": 0.2245347499847412
+          },
+          {
+            "episode_index": 608,
+            "normalized_rmse": 0.23864777386188507
+          },
+          {
+            "episode_index": 910,
+            "normalized_rmse": 0.09301058202981949
+          },
+          {
+            "episode_index": 917,
+            "normalized_rmse": 0.11334996670484543
+          },
+          {
+            "episode_index": 919,
+            "normalized_rmse": 0.12004543840885162
+          },
+          {
+            "episode_index": 932,
+            "normalized_rmse": 0.15181554853916168
+          },
+          {
+            "episode_index": 937,
+            "normalized_rmse": 0.10578813403844833
+          },
+          {
+            "episode_index": 938,
+            "normalized_rmse": 0.14120180904865265
+          },
+          {
+            "episode_index": 939,
+            "normalized_rmse": 0.142153799533844
+          },
+          {
+            "episode_index": 946,
+            "normalized_rmse": 0.14574702084064484
+          },
+          {
+            "episode_index": 951,
+            "normalized_rmse": 0.133828267455101
+          },
+          {
+            "episode_index": 952,
+            "normalized_rmse": 0.13859641551971436
+          },
+          {
+            "episode_index": 958,
+            "normalized_rmse": 0.1600775569677353
+          },
+          {
+            "episode_index": 1205,
+            "normalized_rmse": 0.11580333113670349
+          },
+          {
+            "episode_index": 1208,
+            "normalized_rmse": 0.13660885393619537
+          },
+          {
+            "episode_index": 1212,
+            "normalized_rmse": 0.15738579630851746
+          },
+          {
+            "episode_index": 1219,
+            "normalized_rmse": 0.191574364900589
+          },
+          {
+            "episode_index": 1222,
+            "normalized_rmse": 0.16186265647411346
+          },
+          {
+            "episode_index": 1231,
+            "normalized_rmse": 0.12553812563419342
+          },
+          {
+            "episode_index": 1234,
+            "normalized_rmse": 0.1666032075881958
+          },
+          {
+            "episode_index": 1237,
+            "normalized_rmse": 0.15424449741840363
+          },
+          {
+            "episode_index": 1240,
+            "normalized_rmse": 0.14263124763965607
+          },
+          {
+            "episode_index": 1241,
+            "normalized_rmse": 0.13150432705879211
+          },
+          {
+            "episode_index": 1246,
+            "normalized_rmse": 0.1639004945755005
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.20141972601413727
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.22792169451713562
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.21942166984081268
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.18989983201026917
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.2632138729095459
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.2449156790971756
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.26765507459640503
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.2512783706188202
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.34482765197753906
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.28562936186790466
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.3034176230430603
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.3095548450946808
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.22898180782794952
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.2792196571826935
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.256519079208374
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.27381548285484314
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.2704610228538513
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.25007763504981995
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.22392621636390686
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.23697002232074738
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.31523633003234863
+          },
+          {
+            "episode_index": 2166,
+            "normalized_rmse": 0.12273867428302765
+          },
+          {
+            "episode_index": 2168,
+            "normalized_rmse": 0.15459862351417542
+          },
+          {
+            "episode_index": 2186,
+            "normalized_rmse": 0.15058979392051697
+          },
+          {
+            "episode_index": 2196,
+            "normalized_rmse": 0.17425671219825745
+          },
+          {
+            "episode_index": 2197,
+            "normalized_rmse": 0.1549827605485916
+          },
+          {
+            "episode_index": 2208,
+            "normalized_rmse": 0.14453339576721191
+          },
+          {
+            "episode_index": 2449,
+            "normalized_rmse": 0.14960670471191406
+          },
+          {
+            "episode_index": 2450,
+            "normalized_rmse": 0.16238939762115479
+          },
+          {
+            "episode_index": 2459,
+            "normalized_rmse": 0.15204527974128723
+          },
+          {
+            "episode_index": 2460,
+            "normalized_rmse": 0.19209374487400055
+          },
+          {
+            "episode_index": 2465,
+            "normalized_rmse": 0.13483944535255432
+          },
+          {
+            "episode_index": 2469,
+            "normalized_rmse": 0.166329026222229
+          },
+          {
+            "episode_index": 2477,
+            "normalized_rmse": 0.1635139286518097
+          },
+          {
+            "episode_index": 2481,
+            "normalized_rmse": 0.15937690436840057
+          },
+          {
+            "episode_index": 2484,
+            "normalized_rmse": 0.18102091550827026
+          },
+          {
+            "episode_index": 2491,
+            "normalized_rmse": 0.17122076451778412
+          },
+          {
+            "episode_index": 2495,
+            "normalized_rmse": 0.17068247497081757
+          }
+        ],
+        "seed": 2
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 257,
+            "normalized_rmse": 0.1697162538766861
+          },
+          {
+            "episode_index": 264,
+            "normalized_rmse": 0.12577533721923828
+          },
+          {
+            "episode_index": 268,
+            "normalized_rmse": 0.10791879147291183
+          },
+          {
+            "episode_index": 280,
+            "normalized_rmse": 0.142319917678833
+          },
+          {
+            "episode_index": 281,
+            "normalized_rmse": 0.1212533637881279
+          },
+          {
+            "episode_index": 284,
+            "normalized_rmse": 0.12125281244516373
+          },
+          {
+            "episode_index": 286,
+            "normalized_rmse": 0.13299551606178284
+          },
+          {
+            "episode_index": 287,
+            "normalized_rmse": 0.1599123477935791
+          },
+          {
+            "episode_index": 290,
+            "normalized_rmse": 0.12463933974504471
+          },
+          {
+            "episode_index": 296,
+            "normalized_rmse": 0.16586753726005554
+          },
+          {
+            "episode_index": 566,
+            "normalized_rmse": 0.19024810194969177
+          },
+          {
+            "episode_index": 569,
+            "normalized_rmse": 0.20177821815013885
+          },
+          {
+            "episode_index": 573,
+            "normalized_rmse": 0.2027975469827652
+          },
+          {
+            "episode_index": 576,
+            "normalized_rmse": 0.1701442003250122
+          },
+          {
+            "episode_index": 580,
+            "normalized_rmse": 0.20461112260818481
+          },
+          {
+            "episode_index": 581,
+            "normalized_rmse": 0.21927762031555176
+          },
+          {
+            "episode_index": 582,
+            "normalized_rmse": 0.23903176188468933
+          },
+          {
+            "episode_index": 587,
+            "normalized_rmse": 0.19809599220752716
+          },
+          {
+            "episode_index": 599,
+            "normalized_rmse": 0.2318355292081833
+          },
+          {
+            "episode_index": 608,
+            "normalized_rmse": 0.22624489665031433
+          },
+          {
+            "episode_index": 910,
+            "normalized_rmse": 0.09717709571123123
+          },
+          {
+            "episode_index": 917,
+            "normalized_rmse": 0.11264815181493759
+          },
+          {
+            "episode_index": 919,
+            "normalized_rmse": 0.11038880795240402
+          },
+          {
+            "episode_index": 932,
+            "normalized_rmse": 0.14518016576766968
+          },
+          {
+            "episode_index": 937,
+            "normalized_rmse": 0.10328109562397003
+          },
+          {
+            "episode_index": 938,
+            "normalized_rmse": 0.1251797080039978
+          },
+          {
+            "episode_index": 939,
+            "normalized_rmse": 0.14243559539318085
+          },
+          {
+            "episode_index": 946,
+            "normalized_rmse": 0.14182309806346893
+          },
+          {
+            "episode_index": 951,
+            "normalized_rmse": 0.13107281923294067
+          },
+          {
+            "episode_index": 952,
+            "normalized_rmse": 0.13742591440677643
+          },
+          {
+            "episode_index": 958,
+            "normalized_rmse": 0.15658612549304962
+          },
+          {
+            "episode_index": 1205,
+            "normalized_rmse": 0.11290273815393448
+          },
+          {
+            "episode_index": 1208,
+            "normalized_rmse": 0.13246238231658936
+          },
+          {
+            "episode_index": 1212,
+            "normalized_rmse": 0.15314041078090668
+          },
+          {
+            "episode_index": 1219,
+            "normalized_rmse": 0.19258564710617065
+          },
+          {
+            "episode_index": 1222,
+            "normalized_rmse": 0.16210345923900604
+          },
+          {
+            "episode_index": 1231,
+            "normalized_rmse": 0.12017207592725754
+          },
+          {
+            "episode_index": 1234,
+            "normalized_rmse": 0.17551583051681519
+          },
+          {
+            "episode_index": 1237,
+            "normalized_rmse": 0.15728062391281128
+          },
+          {
+            "episode_index": 1240,
+            "normalized_rmse": 0.13968093693256378
+          },
+          {
+            "episode_index": 1241,
+            "normalized_rmse": 0.12327580153942108
+          },
+          {
+            "episode_index": 1246,
+            "normalized_rmse": 0.15799668431282043
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.1998429298400879
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.22440007328987122
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.21636982262134552
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.1923244148492813
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.25843745470046997
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.2520376443862915
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.2682434320449829
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.24489328265190125
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.35509565472602844
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.29588061571121216
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.30534881353378296
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.31029438972473145
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.24203571677207947
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.2804030478000641
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.25770774483680725
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.272203266620636
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.252641886472702
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.25425276160240173
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.22598162293434143
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.23411798477172852
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.31468725204467773
+          },
+          {
+            "episode_index": 2166,
+            "normalized_rmse": 0.11698516458272934
+          },
+          {
+            "episode_index": 2168,
+            "normalized_rmse": 0.14684441685676575
+          },
+          {
+            "episode_index": 2186,
+            "normalized_rmse": 0.14970532059669495
+          },
+          {
+            "episode_index": 2196,
+            "normalized_rmse": 0.1693427562713623
+          },
+          {
+            "episode_index": 2197,
+            "normalized_rmse": 0.15871290862560272
+          },
+          {
+            "episode_index": 2208,
+            "normalized_rmse": 0.13900461792945862
+          },
+          {
+            "episode_index": 2449,
+            "normalized_rmse": 0.14934265613555908
+          },
+          {
+            "episode_index": 2450,
+            "normalized_rmse": 0.15157824754714966
+          },
+          {
+            "episode_index": 2459,
+            "normalized_rmse": 0.14723163843154907
+          },
+          {
+            "episode_index": 2460,
+            "normalized_rmse": 0.1839762181043625
+          },
+          {
+            "episode_index": 2465,
+            "normalized_rmse": 0.13420560956001282
+          },
+          {
+            "episode_index": 2469,
+            "normalized_rmse": 0.15501105785369873
+          },
+          {
+            "episode_index": 2477,
+            "normalized_rmse": 0.17504912614822388
+          },
+          {
+            "episode_index": 2481,
+            "normalized_rmse": 0.16579663753509521
+          },
+          {
+            "episode_index": 2484,
+            "normalized_rmse": 0.18362338840961456
+          },
+          {
+            "episode_index": 2491,
+            "normalized_rmse": 0.16456076502799988
+          },
+          {
+            "episode_index": 2495,
+            "normalized_rmse": 0.17116908729076385
+          }
+        ],
+        "seed": 3
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 257,
+            "normalized_rmse": 0.1728510558605194
+          },
+          {
+            "episode_index": 264,
+            "normalized_rmse": 0.12206104397773743
+          },
+          {
+            "episode_index": 268,
+            "normalized_rmse": 0.1150059849023819
+          },
+          {
+            "episode_index": 280,
+            "normalized_rmse": 0.1444121152162552
+          },
+          {
+            "episode_index": 281,
+            "normalized_rmse": 0.1307026445865631
+          },
+          {
+            "episode_index": 284,
+            "normalized_rmse": 0.12596307694911957
+          },
+          {
+            "episode_index": 286,
+            "normalized_rmse": 0.13455671072006226
+          },
+          {
+            "episode_index": 287,
+            "normalized_rmse": 0.15154485404491425
+          },
+          {
+            "episode_index": 290,
+            "normalized_rmse": 0.12491615861654282
+          },
+          {
+            "episode_index": 296,
+            "normalized_rmse": 0.16201582551002502
+          },
+          {
+            "episode_index": 566,
+            "normalized_rmse": 0.20126228034496307
+          },
+          {
+            "episode_index": 569,
+            "normalized_rmse": 0.20510783791542053
+          },
+          {
+            "episode_index": 573,
+            "normalized_rmse": 0.19811931252479553
+          },
+          {
+            "episode_index": 576,
+            "normalized_rmse": 0.18746519088745117
+          },
+          {
+            "episode_index": 580,
+            "normalized_rmse": 0.2146792858839035
+          },
+          {
+            "episode_index": 581,
+            "normalized_rmse": 0.22215363383293152
+          },
+          {
+            "episode_index": 582,
+            "normalized_rmse": 0.23542767763137817
+          },
+          {
+            "episode_index": 587,
+            "normalized_rmse": 0.18925946950912476
+          },
+          {
+            "episode_index": 599,
+            "normalized_rmse": 0.2248334139585495
+          },
+          {
+            "episode_index": 608,
+            "normalized_rmse": 0.22753570973873138
+          },
+          {
+            "episode_index": 910,
+            "normalized_rmse": 0.09400646388530731
+          },
+          {
+            "episode_index": 917,
+            "normalized_rmse": 0.11561628431081772
+          },
+          {
+            "episode_index": 919,
+            "normalized_rmse": 0.11767078191041946
+          },
+          {
+            "episode_index": 932,
+            "normalized_rmse": 0.14999321103096008
+          },
+          {
+            "episode_index": 937,
+            "normalized_rmse": 0.10901212692260742
+          },
+          {
+            "episode_index": 938,
+            "normalized_rmse": 0.13311640918254852
+          },
+          {
+            "episode_index": 939,
+            "normalized_rmse": 0.14612306654453278
+          },
+          {
+            "episode_index": 946,
+            "normalized_rmse": 0.1584545373916626
+          },
+          {
+            "episode_index": 951,
+            "normalized_rmse": 0.1392560601234436
+          },
+          {
+            "episode_index": 952,
+            "normalized_rmse": 0.13595899939537048
+          },
+          {
+            "episode_index": 958,
+            "normalized_rmse": 0.18170279264450073
+          },
+          {
+            "episode_index": 1205,
+            "normalized_rmse": 0.12120937556028366
+          },
+          {
+            "episode_index": 1208,
+            "normalized_rmse": 0.13493779301643372
+          },
+          {
+            "episode_index": 1212,
+            "normalized_rmse": 0.151308074593544
+          },
+          {
+            "episode_index": 1219,
+            "normalized_rmse": 0.19409707188606262
+          },
+          {
+            "episode_index": 1222,
+            "normalized_rmse": 0.1664663851261139
+          },
+          {
+            "episode_index": 1231,
+            "normalized_rmse": 0.13343308866024017
+          },
+          {
+            "episode_index": 1234,
+            "normalized_rmse": 0.16946253180503845
+          },
+          {
+            "episode_index": 1237,
+            "normalized_rmse": 0.1588415652513504
+          },
+          {
+            "episode_index": 1240,
+            "normalized_rmse": 0.14451587200164795
+          },
+          {
+            "episode_index": 1241,
+            "normalized_rmse": 0.13505518436431885
+          },
+          {
+            "episode_index": 1246,
+            "normalized_rmse": 0.16585899889469147
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.20603489875793457
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.22632326185703278
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.21407771110534668
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.1959836333990097
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.2685340344905853
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.24781392514705658
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.2701140344142914
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.24761441349983215
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.34797370433807373
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.27917930483818054
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.30021506547927856
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.3083704113960266
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.2276974320411682
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.27162811160087585
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.25562095642089844
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.2749190032482147
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.2634488046169281
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.24302171170711517
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.21945209801197052
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.2315252125263214
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.3117128014564514
+          },
+          {
+            "episode_index": 2166,
+            "normalized_rmse": 0.11868569999933243
+          },
+          {
+            "episode_index": 2168,
+            "normalized_rmse": 0.15116141736507416
+          },
+          {
+            "episode_index": 2186,
+            "normalized_rmse": 0.14835089445114136
+          },
+          {
+            "episode_index": 2196,
+            "normalized_rmse": 0.1813986450433731
+          },
+          {
+            "episode_index": 2197,
+            "normalized_rmse": 0.16410687565803528
+          },
+          {
+            "episode_index": 2208,
+            "normalized_rmse": 0.1433614194393158
+          },
+          {
+            "episode_index": 2449,
+            "normalized_rmse": 0.15465396642684937
+          },
+          {
+            "episode_index": 2450,
+            "normalized_rmse": 0.16137565672397614
+          },
+          {
+            "episode_index": 2459,
+            "normalized_rmse": 0.14996473491191864
+          },
+          {
+            "episode_index": 2460,
+            "normalized_rmse": 0.1839594841003418
+          },
+          {
+            "episode_index": 2465,
+            "normalized_rmse": 0.13386790454387665
+          },
+          {
+            "episode_index": 2469,
+            "normalized_rmse": 0.1661396473646164
+          },
+          {
+            "episode_index": 2477,
+            "normalized_rmse": 0.16244500875473022
+          },
+          {
+            "episode_index": 2481,
+            "normalized_rmse": 0.16785505414009094
+          },
+          {
+            "episode_index": 2484,
+            "normalized_rmse": 0.19111010432243347
+          },
+          {
+            "episode_index": 2491,
+            "normalized_rmse": 0.1667616069316864
+          },
+          {
+            "episode_index": 2495,
+            "normalized_rmse": 0.1719096302986145
+          }
+        ],
+        "seed": 4
+      }
+    ],
+    "scene_disjoint": [
+      {
+        "episode_errors": [
+          {
+            "episode_index": 1549,
+            "normalized_rmse": 0.2873068153858185
+          },
+          {
+            "episode_index": 1550,
+            "normalized_rmse": 0.2669318616390228
+          },
+          {
+            "episode_index": 1551,
+            "normalized_rmse": 0.30149877071380615
+          },
+          {
+            "episode_index": 1552,
+            "normalized_rmse": 0.2945416271686554
+          },
+          {
+            "episode_index": 1553,
+            "normalized_rmse": 0.3319031596183777
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.28081443905830383
+          },
+          {
+            "episode_index": 1555,
+            "normalized_rmse": 0.3024675250053406
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.2898629903793335
+          },
+          {
+            "episode_index": 1557,
+            "normalized_rmse": 0.3237513601779938
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.2972351610660553
+          },
+          {
+            "episode_index": 1559,
+            "normalized_rmse": 0.2815918028354645
+          },
+          {
+            "episode_index": 1560,
+            "normalized_rmse": 0.3057236075401306
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.29162895679473877
+          },
+          {
+            "episode_index": 1562,
+            "normalized_rmse": 0.3486972451210022
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.3430095314979553
+          },
+          {
+            "episode_index": 1564,
+            "normalized_rmse": 0.28953951597213745
+          },
+          {
+            "episode_index": 1565,
+            "normalized_rmse": 0.29956814646720886
+          },
+          {
+            "episode_index": 1566,
+            "normalized_rmse": 0.3226441442966461
+          },
+          {
+            "episode_index": 1567,
+            "normalized_rmse": 0.3070979714393616
+          },
+          {
+            "episode_index": 1568,
+            "normalized_rmse": 0.30267333984375
+          },
+          {
+            "episode_index": 1569,
+            "normalized_rmse": 0.3520110249519348
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.3400386571884155
+          },
+          {
+            "episode_index": 1571,
+            "normalized_rmse": 0.3404088020324707
+          },
+          {
+            "episode_index": 1572,
+            "normalized_rmse": 0.34134531021118164
+          },
+          {
+            "episode_index": 1573,
+            "normalized_rmse": 0.33190011978149414
+          },
+          {
+            "episode_index": 1574,
+            "normalized_rmse": 0.2876459062099457
+          },
+          {
+            "episode_index": 1575,
+            "normalized_rmse": 0.3343847692012787
+          },
+          {
+            "episode_index": 1576,
+            "normalized_rmse": 0.3465362787246704
+          },
+          {
+            "episode_index": 1577,
+            "normalized_rmse": 0.3514947295188904
+          },
+          {
+            "episode_index": 1578,
+            "normalized_rmse": 0.3551963269710541
+          },
+          {
+            "episode_index": 1579,
+            "normalized_rmse": 0.33212900161743164
+          },
+          {
+            "episode_index": 1580,
+            "normalized_rmse": 0.3341546356678009
+          },
+          {
+            "episode_index": 1581,
+            "normalized_rmse": 0.34398531913757324
+          },
+          {
+            "episode_index": 1582,
+            "normalized_rmse": 0.3598516881465912
+          },
+          {
+            "episode_index": 1583,
+            "normalized_rmse": 0.3675936162471771
+          },
+          {
+            "episode_index": 1584,
+            "normalized_rmse": 0.3454262614250183
+          },
+          {
+            "episode_index": 1585,
+            "normalized_rmse": 0.3751731216907501
+          },
+          {
+            "episode_index": 1586,
+            "normalized_rmse": 0.3069303333759308
+          },
+          {
+            "episode_index": 1587,
+            "normalized_rmse": 0.37852057814598083
+          },
+          {
+            "episode_index": 1588,
+            "normalized_rmse": 0.3904629051685333
+          },
+          {
+            "episode_index": 1589,
+            "normalized_rmse": 0.405307799577713
+          },
+          {
+            "episode_index": 1590,
+            "normalized_rmse": 0.41942137479782104
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.37239181995391846
+          },
+          {
+            "episode_index": 1592,
+            "normalized_rmse": 0.3240622878074646
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.3402522802352905
+          },
+          {
+            "episode_index": 1594,
+            "normalized_rmse": 0.3796881139278412
+          },
+          {
+            "episode_index": 1595,
+            "normalized_rmse": 0.3633366823196411
+          },
+          {
+            "episode_index": 1596,
+            "normalized_rmse": 0.42562517523765564
+          },
+          {
+            "episode_index": 1597,
+            "normalized_rmse": 0.4184139370918274
+          },
+          {
+            "episode_index": 1598,
+            "normalized_rmse": 0.40017127990722656
+          },
+          {
+            "episode_index": 1839,
+            "normalized_rmse": 0.3237481117248535
+          },
+          {
+            "episode_index": 1840,
+            "normalized_rmse": 0.4031496047973633
+          },
+          {
+            "episode_index": 1841,
+            "normalized_rmse": 0.4451320469379425
+          },
+          {
+            "episode_index": 1842,
+            "normalized_rmse": 0.41504690051078796
+          },
+          {
+            "episode_index": 1843,
+            "normalized_rmse": 0.42649149894714355
+          },
+          {
+            "episode_index": 1844,
+            "normalized_rmse": 0.4114983081817627
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.4386730194091797
+          },
+          {
+            "episode_index": 1846,
+            "normalized_rmse": 0.38966313004493713
+          },
+          {
+            "episode_index": 1847,
+            "normalized_rmse": 0.37816473841667175
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.38781747221946716
+          },
+          {
+            "episode_index": 1849,
+            "normalized_rmse": 0.36483076214790344
+          },
+          {
+            "episode_index": 1850,
+            "normalized_rmse": 0.3567498028278351
+          },
+          {
+            "episode_index": 1851,
+            "normalized_rmse": 0.3833143711090088
+          },
+          {
+            "episode_index": 1852,
+            "normalized_rmse": 0.38548043370246887
+          },
+          {
+            "episode_index": 1853,
+            "normalized_rmse": 0.3781451880931854
+          },
+          {
+            "episode_index": 1854,
+            "normalized_rmse": 0.363705575466156
+          },
+          {
+            "episode_index": 1855,
+            "normalized_rmse": 0.3459646701812744
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.41086846590042114
+          },
+          {
+            "episode_index": 1857,
+            "normalized_rmse": 0.39942076802253723
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.4405759274959564
+          },
+          {
+            "episode_index": 1859,
+            "normalized_rmse": 0.3717745840549469
+          },
+          {
+            "episode_index": 1860,
+            "normalized_rmse": 0.40630608797073364
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.3031024634838104
+          },
+          {
+            "episode_index": 1862,
+            "normalized_rmse": 0.4665154814720154
+          },
+          {
+            "episode_index": 1863,
+            "normalized_rmse": 0.35549408197402954
+          },
+          {
+            "episode_index": 1864,
+            "normalized_rmse": 0.3678152859210968
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.3941326439380646
+          },
+          {
+            "episode_index": 1866,
+            "normalized_rmse": 0.39632534980773926
+          },
+          {
+            "episode_index": 1867,
+            "normalized_rmse": 0.3576469123363495
+          },
+          {
+            "episode_index": 1868,
+            "normalized_rmse": 0.39090487360954285
+          },
+          {
+            "episode_index": 1869,
+            "normalized_rmse": 0.37576764822006226
+          },
+          {
+            "episode_index": 1870,
+            "normalized_rmse": 0.43889397382736206
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.3868112564086914
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.400433748960495
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.39329949021339417
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.3929126262664795
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.3569304943084717
+          },
+          {
+            "episode_index": 1876,
+            "normalized_rmse": 0.4185246527194977
+          },
+          {
+            "episode_index": 1877,
+            "normalized_rmse": 0.37676793336868286
+          },
+          {
+            "episode_index": 1878,
+            "normalized_rmse": 0.42530032992362976
+          },
+          {
+            "episode_index": 1879,
+            "normalized_rmse": 0.4082092046737671
+          },
+          {
+            "episode_index": 1880,
+            "normalized_rmse": 0.36875274777412415
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.3141931891441345
+          },
+          {
+            "episode_index": 1882,
+            "normalized_rmse": 0.3730013072490692
+          },
+          {
+            "episode_index": 1883,
+            "normalized_rmse": 0.37473827600479126
+          },
+          {
+            "episode_index": 1884,
+            "normalized_rmse": 0.35781896114349365
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.42727991938591003
+          },
+          {
+            "episode_index": 1886,
+            "normalized_rmse": 0.45455417037010193
+          },
+          {
+            "episode_index": 1887,
+            "normalized_rmse": 0.40866753458976746
+          },
+          {
+            "episode_index": 1888,
+            "normalized_rmse": 0.40384024381637573
+          }
+        ],
+        "seed": 0
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 1549,
+            "normalized_rmse": 0.314771831035614
+          },
+          {
+            "episode_index": 1550,
+            "normalized_rmse": 0.25839051604270935
+          },
+          {
+            "episode_index": 1551,
+            "normalized_rmse": 0.33378222584724426
+          },
+          {
+            "episode_index": 1552,
+            "normalized_rmse": 0.28834643959999084
+          },
+          {
+            "episode_index": 1553,
+            "normalized_rmse": 0.34271636605262756
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.2819230258464813
+          },
+          {
+            "episode_index": 1555,
+            "normalized_rmse": 0.2930409014225006
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.340325266122818
+          },
+          {
+            "episode_index": 1557,
+            "normalized_rmse": 0.32326558232307434
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.34028691053390503
+          },
+          {
+            "episode_index": 1559,
+            "normalized_rmse": 0.282238632440567
+          },
+          {
+            "episode_index": 1560,
+            "normalized_rmse": 0.3147513270378113
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.27141353487968445
+          },
+          {
+            "episode_index": 1562,
+            "normalized_rmse": 0.38162142038345337
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.3820156157016754
+          },
+          {
+            "episode_index": 1564,
+            "normalized_rmse": 0.3148394823074341
+          },
+          {
+            "episode_index": 1565,
+            "normalized_rmse": 0.33576637506484985
+          },
+          {
+            "episode_index": 1566,
+            "normalized_rmse": 0.3620029091835022
+          },
+          {
+            "episode_index": 1567,
+            "normalized_rmse": 0.3523337244987488
+          },
+          {
+            "episode_index": 1568,
+            "normalized_rmse": 0.26528140902519226
+          },
+          {
+            "episode_index": 1569,
+            "normalized_rmse": 0.3413158655166626
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.34132373332977295
+          },
+          {
+            "episode_index": 1571,
+            "normalized_rmse": 0.3676653206348419
+          },
+          {
+            "episode_index": 1572,
+            "normalized_rmse": 0.37184804677963257
+          },
+          {
+            "episode_index": 1573,
+            "normalized_rmse": 0.39533498883247375
+          },
+          {
+            "episode_index": 1574,
+            "normalized_rmse": 0.2774125933647156
+          },
+          {
+            "episode_index": 1575,
+            "normalized_rmse": 0.3210277855396271
+          },
+          {
+            "episode_index": 1576,
+            "normalized_rmse": 0.38354867696762085
+          },
+          {
+            "episode_index": 1577,
+            "normalized_rmse": 0.37579962611198425
+          },
+          {
+            "episode_index": 1578,
+            "normalized_rmse": 0.35811954736709595
+          },
+          {
+            "episode_index": 1579,
+            "normalized_rmse": 0.3568180501461029
+          },
+          {
+            "episode_index": 1580,
+            "normalized_rmse": 0.3442401587963104
+          },
+          {
+            "episode_index": 1581,
+            "normalized_rmse": 0.38269710540771484
+          },
+          {
+            "episode_index": 1582,
+            "normalized_rmse": 0.38442176580429077
+          },
+          {
+            "episode_index": 1583,
+            "normalized_rmse": 0.37713542580604553
+          },
+          {
+            "episode_index": 1584,
+            "normalized_rmse": 0.38432395458221436
+          },
+          {
+            "episode_index": 1585,
+            "normalized_rmse": 0.4046313762664795
+          },
+          {
+            "episode_index": 1586,
+            "normalized_rmse": 0.3040653467178345
+          },
+          {
+            "episode_index": 1587,
+            "normalized_rmse": 0.4213959276676178
+          },
+          {
+            "episode_index": 1588,
+            "normalized_rmse": 0.3923909366130829
+          },
+          {
+            "episode_index": 1589,
+            "normalized_rmse": 0.4303765892982483
+          },
+          {
+            "episode_index": 1590,
+            "normalized_rmse": 0.4516426622867584
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.3801738917827606
+          },
+          {
+            "episode_index": 1592,
+            "normalized_rmse": 0.3668527603149414
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.4002709984779358
+          },
+          {
+            "episode_index": 1594,
+            "normalized_rmse": 0.3458396792411804
+          },
+          {
+            "episode_index": 1595,
+            "normalized_rmse": 0.3666236400604248
+          },
+          {
+            "episode_index": 1596,
+            "normalized_rmse": 0.4454188942909241
+          },
+          {
+            "episode_index": 1597,
+            "normalized_rmse": 0.4317845106124878
+          },
+          {
+            "episode_index": 1598,
+            "normalized_rmse": 0.40194836258888245
+          },
+          {
+            "episode_index": 1839,
+            "normalized_rmse": 0.31514352560043335
+          },
+          {
+            "episode_index": 1840,
+            "normalized_rmse": 0.3999546766281128
+          },
+          {
+            "episode_index": 1841,
+            "normalized_rmse": 0.43352383375167847
+          },
+          {
+            "episode_index": 1842,
+            "normalized_rmse": 0.4192081093788147
+          },
+          {
+            "episode_index": 1843,
+            "normalized_rmse": 0.4200790524482727
+          },
+          {
+            "episode_index": 1844,
+            "normalized_rmse": 0.41009679436683655
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.4307282865047455
+          },
+          {
+            "episode_index": 1846,
+            "normalized_rmse": 0.3899650275707245
+          },
+          {
+            "episode_index": 1847,
+            "normalized_rmse": 0.3805558979511261
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.3903222978115082
+          },
+          {
+            "episode_index": 1849,
+            "normalized_rmse": 0.3568231165409088
+          },
+          {
+            "episode_index": 1850,
+            "normalized_rmse": 0.3707070052623749
+          },
+          {
+            "episode_index": 1851,
+            "normalized_rmse": 0.3959656059741974
+          },
+          {
+            "episode_index": 1852,
+            "normalized_rmse": 0.3832148611545563
+          },
+          {
+            "episode_index": 1853,
+            "normalized_rmse": 0.385430246591568
+          },
+          {
+            "episode_index": 1854,
+            "normalized_rmse": 0.3837204575538635
+          },
+          {
+            "episode_index": 1855,
+            "normalized_rmse": 0.36673468351364136
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.4548875093460083
+          },
+          {
+            "episode_index": 1857,
+            "normalized_rmse": 0.43309077620506287
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.46481096744537354
+          },
+          {
+            "episode_index": 1859,
+            "normalized_rmse": 0.3811664879322052
+          },
+          {
+            "episode_index": 1860,
+            "normalized_rmse": 0.41906800866127014
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.33523499965667725
+          },
+          {
+            "episode_index": 1862,
+            "normalized_rmse": 0.48972803354263306
+          },
+          {
+            "episode_index": 1863,
+            "normalized_rmse": 0.3926410973072052
+          },
+          {
+            "episode_index": 1864,
+            "normalized_rmse": 0.3884788751602173
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.41767260432243347
+          },
+          {
+            "episode_index": 1866,
+            "normalized_rmse": 0.4205877184867859
+          },
+          {
+            "episode_index": 1867,
+            "normalized_rmse": 0.3865578770637512
+          },
+          {
+            "episode_index": 1868,
+            "normalized_rmse": 0.4074864983558655
+          },
+          {
+            "episode_index": 1869,
+            "normalized_rmse": 0.4119454622268677
+          },
+          {
+            "episode_index": 1870,
+            "normalized_rmse": 0.45574864745140076
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.4166308641433716
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.41310083866119385
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.400814026594162
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.39151906967163086
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.3566577434539795
+          },
+          {
+            "episode_index": 1876,
+            "normalized_rmse": 0.4313472509384155
+          },
+          {
+            "episode_index": 1877,
+            "normalized_rmse": 0.39565491676330566
+          },
+          {
+            "episode_index": 1878,
+            "normalized_rmse": 0.4452480971813202
+          },
+          {
+            "episode_index": 1879,
+            "normalized_rmse": 0.39579126238822937
+          },
+          {
+            "episode_index": 1880,
+            "normalized_rmse": 0.40115174651145935
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.3327011466026306
+          },
+          {
+            "episode_index": 1882,
+            "normalized_rmse": 0.391103595495224
+          },
+          {
+            "episode_index": 1883,
+            "normalized_rmse": 0.38462671637535095
+          },
+          {
+            "episode_index": 1884,
+            "normalized_rmse": 0.39427903294563293
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.44948670268058777
+          },
+          {
+            "episode_index": 1886,
+            "normalized_rmse": 0.46758249402046204
+          },
+          {
+            "episode_index": 1887,
+            "normalized_rmse": 0.4206366539001465
+          },
+          {
+            "episode_index": 1888,
+            "normalized_rmse": 0.417204350233078
+          }
+        ],
+        "seed": 1
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 1549,
+            "normalized_rmse": 0.33470213413238525
+          },
+          {
+            "episode_index": 1550,
+            "normalized_rmse": 0.2982587516307831
+          },
+          {
+            "episode_index": 1551,
+            "normalized_rmse": 0.3757779598236084
+          },
+          {
+            "episode_index": 1552,
+            "normalized_rmse": 0.3437027335166931
+          },
+          {
+            "episode_index": 1553,
+            "normalized_rmse": 0.407693088054657
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.32330936193466187
+          },
+          {
+            "episode_index": 1555,
+            "normalized_rmse": 0.3495015799999237
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.37124156951904297
+          },
+          {
+            "episode_index": 1557,
+            "normalized_rmse": 0.364879846572876
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.3580729365348816
+          },
+          {
+            "episode_index": 1559,
+            "normalized_rmse": 0.3131239414215088
+          },
+          {
+            "episode_index": 1560,
+            "normalized_rmse": 0.34769055247306824
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.32192862033843994
+          },
+          {
+            "episode_index": 1562,
+            "normalized_rmse": 0.42602649331092834
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.4063495099544525
+          },
+          {
+            "episode_index": 1564,
+            "normalized_rmse": 0.32415345311164856
+          },
+          {
+            "episode_index": 1565,
+            "normalized_rmse": 0.3688508868217468
+          },
+          {
+            "episode_index": 1566,
+            "normalized_rmse": 0.4042350947856903
+          },
+          {
+            "episode_index": 1567,
+            "normalized_rmse": 0.3774784803390503
+          },
+          {
+            "episode_index": 1568,
+            "normalized_rmse": 0.3145584464073181
+          },
+          {
+            "episode_index": 1569,
+            "normalized_rmse": 0.3817829489707947
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.35998067259788513
+          },
+          {
+            "episode_index": 1571,
+            "normalized_rmse": 0.4275388717651367
+          },
+          {
+            "episode_index": 1572,
+            "normalized_rmse": 0.3767080008983612
+          },
+          {
+            "episode_index": 1573,
+            "normalized_rmse": 0.40494856238365173
+          },
+          {
+            "episode_index": 1574,
+            "normalized_rmse": 0.3166448771953583
+          },
+          {
+            "episode_index": 1575,
+            "normalized_rmse": 0.3539521396160126
+          },
+          {
+            "episode_index": 1576,
+            "normalized_rmse": 0.42018601298332214
+          },
+          {
+            "episode_index": 1577,
+            "normalized_rmse": 0.42599186301231384
+          },
+          {
+            "episode_index": 1578,
+            "normalized_rmse": 0.4091847538948059
+          },
+          {
+            "episode_index": 1579,
+            "normalized_rmse": 0.3852822184562683
+          },
+          {
+            "episode_index": 1580,
+            "normalized_rmse": 0.36057403683662415
+          },
+          {
+            "episode_index": 1581,
+            "normalized_rmse": 0.41686832904815674
+          },
+          {
+            "episode_index": 1582,
+            "normalized_rmse": 0.4222763478755951
+          },
+          {
+            "episode_index": 1583,
+            "normalized_rmse": 0.39158159494400024
+          },
+          {
+            "episode_index": 1584,
+            "normalized_rmse": 0.4110429286956787
+          },
+          {
+            "episode_index": 1585,
+            "normalized_rmse": 0.46277284622192383
+          },
+          {
+            "episode_index": 1586,
+            "normalized_rmse": 0.3433052897453308
+          },
+          {
+            "episode_index": 1587,
+            "normalized_rmse": 0.45011988282203674
+          },
+          {
+            "episode_index": 1588,
+            "normalized_rmse": 0.4205561578273773
+          },
+          {
+            "episode_index": 1589,
+            "normalized_rmse": 0.4515000581741333
+          },
+          {
+            "episode_index": 1590,
+            "normalized_rmse": 0.4787500500679016
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.40176042914390564
+          },
+          {
+            "episode_index": 1592,
+            "normalized_rmse": 0.38958361744880676
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.4126826524734497
+          },
+          {
+            "episode_index": 1594,
+            "normalized_rmse": 0.3919735848903656
+          },
+          {
+            "episode_index": 1595,
+            "normalized_rmse": 0.35199588537216187
+          },
+          {
+            "episode_index": 1596,
+            "normalized_rmse": 0.4837772250175476
+          },
+          {
+            "episode_index": 1597,
+            "normalized_rmse": 0.4376969039440155
+          },
+          {
+            "episode_index": 1598,
+            "normalized_rmse": 0.4330520033836365
+          },
+          {
+            "episode_index": 1839,
+            "normalized_rmse": 0.345715194940567
+          },
+          {
+            "episode_index": 1840,
+            "normalized_rmse": 0.42143720388412476
+          },
+          {
+            "episode_index": 1841,
+            "normalized_rmse": 0.4713006317615509
+          },
+          {
+            "episode_index": 1842,
+            "normalized_rmse": 0.432902067899704
+          },
+          {
+            "episode_index": 1843,
+            "normalized_rmse": 0.46583205461502075
+          },
+          {
+            "episode_index": 1844,
+            "normalized_rmse": 0.42871975898742676
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.46106788516044617
+          },
+          {
+            "episode_index": 1846,
+            "normalized_rmse": 0.4294837415218353
+          },
+          {
+            "episode_index": 1847,
+            "normalized_rmse": 0.40250110626220703
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.41947662830352783
+          },
+          {
+            "episode_index": 1849,
+            "normalized_rmse": 0.39946627616882324
+          },
+          {
+            "episode_index": 1850,
+            "normalized_rmse": 0.39119675755500793
+          },
+          {
+            "episode_index": 1851,
+            "normalized_rmse": 0.4400709569454193
+          },
+          {
+            "episode_index": 1852,
+            "normalized_rmse": 0.4096938967704773
+          },
+          {
+            "episode_index": 1853,
+            "normalized_rmse": 0.4245074391365051
+          },
+          {
+            "episode_index": 1854,
+            "normalized_rmse": 0.4036884903907776
+          },
+          {
+            "episode_index": 1855,
+            "normalized_rmse": 0.42111724615097046
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.45182448625564575
+          },
+          {
+            "episode_index": 1857,
+            "normalized_rmse": 0.46855831146240234
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.49109265208244324
+          },
+          {
+            "episode_index": 1859,
+            "normalized_rmse": 0.3999260365962982
+          },
+          {
+            "episode_index": 1860,
+            "normalized_rmse": 0.452892005443573
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.3774222135543823
+          },
+          {
+            "episode_index": 1862,
+            "normalized_rmse": 0.5097630620002747
+          },
+          {
+            "episode_index": 1863,
+            "normalized_rmse": 0.3960818350315094
+          },
+          {
+            "episode_index": 1864,
+            "normalized_rmse": 0.43705815076828003
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.4380813241004944
+          },
+          {
+            "episode_index": 1866,
+            "normalized_rmse": 0.47693151235580444
+          },
+          {
+            "episode_index": 1867,
+            "normalized_rmse": 0.4146023988723755
+          },
+          {
+            "episode_index": 1868,
+            "normalized_rmse": 0.44979795813560486
+          },
+          {
+            "episode_index": 1869,
+            "normalized_rmse": 0.42361101508140564
+          },
+          {
+            "episode_index": 1870,
+            "normalized_rmse": 0.49124258756637573
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.42929011583328247
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.4613073170185089
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.4491771161556244
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.455767422914505
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.4029098451137543
+          },
+          {
+            "episode_index": 1876,
+            "normalized_rmse": 0.4520353078842163
+          },
+          {
+            "episode_index": 1877,
+            "normalized_rmse": 0.4634319841861725
+          },
+          {
+            "episode_index": 1878,
+            "normalized_rmse": 0.48365604877471924
+          },
+          {
+            "episode_index": 1879,
+            "normalized_rmse": 0.4435183107852936
+          },
+          {
+            "episode_index": 1880,
+            "normalized_rmse": 0.4086610674858093
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.3878887891769409
+          },
+          {
+            "episode_index": 1882,
+            "normalized_rmse": 0.398772656917572
+          },
+          {
+            "episode_index": 1883,
+            "normalized_rmse": 0.4376688301563263
+          },
+          {
+            "episode_index": 1884,
+            "normalized_rmse": 0.4241403043270111
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.47890526056289673
+          },
+          {
+            "episode_index": 1886,
+            "normalized_rmse": 0.504144012928009
+          },
+          {
+            "episode_index": 1887,
+            "normalized_rmse": 0.46471107006073
+          },
+          {
+            "episode_index": 1888,
+            "normalized_rmse": 0.45482516288757324
+          }
+        ],
+        "seed": 2
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 1549,
+            "normalized_rmse": 0.34258797764778137
+          },
+          {
+            "episode_index": 1550,
+            "normalized_rmse": 0.32233965396881104
+          },
+          {
+            "episode_index": 1551,
+            "normalized_rmse": 0.34822288155555725
+          },
+          {
+            "episode_index": 1552,
+            "normalized_rmse": 0.33510681986808777
+          },
+          {
+            "episode_index": 1553,
+            "normalized_rmse": 0.3605607748031616
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.3298053443431854
+          },
+          {
+            "episode_index": 1555,
+            "normalized_rmse": 0.32538530230522156
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.36414414644241333
+          },
+          {
+            "episode_index": 1557,
+            "normalized_rmse": 0.3688814043998718
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.3416886031627655
+          },
+          {
+            "episode_index": 1559,
+            "normalized_rmse": 0.2962583005428314
+          },
+          {
+            "episode_index": 1560,
+            "normalized_rmse": 0.33312514424324036
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.33005478978157043
+          },
+          {
+            "episode_index": 1562,
+            "normalized_rmse": 0.38330078125
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.40010306239128113
+          },
+          {
+            "episode_index": 1564,
+            "normalized_rmse": 0.3185149133205414
+          },
+          {
+            "episode_index": 1565,
+            "normalized_rmse": 0.3239346742630005
+          },
+          {
+            "episode_index": 1566,
+            "normalized_rmse": 0.35958412289619446
+          },
+          {
+            "episode_index": 1567,
+            "normalized_rmse": 0.35770800709724426
+          },
+          {
+            "episode_index": 1568,
+            "normalized_rmse": 0.34274041652679443
+          },
+          {
+            "episode_index": 1569,
+            "normalized_rmse": 0.38507235050201416
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.367136687040329
+          },
+          {
+            "episode_index": 1571,
+            "normalized_rmse": 0.37101030349731445
+          },
+          {
+            "episode_index": 1572,
+            "normalized_rmse": 0.36559540033340454
+          },
+          {
+            "episode_index": 1573,
+            "normalized_rmse": 0.39534738659858704
+          },
+          {
+            "episode_index": 1574,
+            "normalized_rmse": 0.34876352548599243
+          },
+          {
+            "episode_index": 1575,
+            "normalized_rmse": 0.3653987646102905
+          },
+          {
+            "episode_index": 1576,
+            "normalized_rmse": 0.3864594101905823
+          },
+          {
+            "episode_index": 1577,
+            "normalized_rmse": 0.3840115964412689
+          },
+          {
+            "episode_index": 1578,
+            "normalized_rmse": 0.3777972161769867
+          },
+          {
+            "episode_index": 1579,
+            "normalized_rmse": 0.3699081242084503
+          },
+          {
+            "episode_index": 1580,
+            "normalized_rmse": 0.3780392110347748
+          },
+          {
+            "episode_index": 1581,
+            "normalized_rmse": 0.37588560581207275
+          },
+          {
+            "episode_index": 1582,
+            "normalized_rmse": 0.40212175250053406
+          },
+          {
+            "episode_index": 1583,
+            "normalized_rmse": 0.4026288390159607
+          },
+          {
+            "episode_index": 1584,
+            "normalized_rmse": 0.37911728024482727
+          },
+          {
+            "episode_index": 1585,
+            "normalized_rmse": 0.40909531712532043
+          },
+          {
+            "episode_index": 1586,
+            "normalized_rmse": 0.3293844759464264
+          },
+          {
+            "episode_index": 1587,
+            "normalized_rmse": 0.40660977363586426
+          },
+          {
+            "episode_index": 1588,
+            "normalized_rmse": 0.4167414605617523
+          },
+          {
+            "episode_index": 1589,
+            "normalized_rmse": 0.4442773163318634
+          },
+          {
+            "episode_index": 1590,
+            "normalized_rmse": 0.4310586154460907
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.381306916475296
+          },
+          {
+            "episode_index": 1592,
+            "normalized_rmse": 0.3973407447338104
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.38227391242980957
+          },
+          {
+            "episode_index": 1594,
+            "normalized_rmse": 0.41926825046539307
+          },
+          {
+            "episode_index": 1595,
+            "normalized_rmse": 0.38414591550827026
+          },
+          {
+            "episode_index": 1596,
+            "normalized_rmse": 0.45534348487854004
+          },
+          {
+            "episode_index": 1597,
+            "normalized_rmse": 0.44314584136009216
+          },
+          {
+            "episode_index": 1598,
+            "normalized_rmse": 0.42053234577178955
+          },
+          {
+            "episode_index": 1839,
+            "normalized_rmse": 0.26379942893981934
+          },
+          {
+            "episode_index": 1840,
+            "normalized_rmse": 0.36124545335769653
+          },
+          {
+            "episode_index": 1841,
+            "normalized_rmse": 0.41270774602890015
+          },
+          {
+            "episode_index": 1842,
+            "normalized_rmse": 0.37181735038757324
+          },
+          {
+            "episode_index": 1843,
+            "normalized_rmse": 0.38799238204956055
+          },
+          {
+            "episode_index": 1844,
+            "normalized_rmse": 0.38036486506462097
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.41617828607559204
+          },
+          {
+            "episode_index": 1846,
+            "normalized_rmse": 0.3514762818813324
+          },
+          {
+            "episode_index": 1847,
+            "normalized_rmse": 0.33547544479370117
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.35221630334854126
+          },
+          {
+            "episode_index": 1849,
+            "normalized_rmse": 0.32249388098716736
+          },
+          {
+            "episode_index": 1850,
+            "normalized_rmse": 0.31831949949264526
+          },
+          {
+            "episode_index": 1851,
+            "normalized_rmse": 0.3436223566532135
+          },
+          {
+            "episode_index": 1852,
+            "normalized_rmse": 0.3546478748321533
+          },
+          {
+            "episode_index": 1853,
+            "normalized_rmse": 0.33830025792121887
+          },
+          {
+            "episode_index": 1854,
+            "normalized_rmse": 0.32266223430633545
+          },
+          {
+            "episode_index": 1855,
+            "normalized_rmse": 0.3184404671192169
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.38355204463005066
+          },
+          {
+            "episode_index": 1857,
+            "normalized_rmse": 0.3730262219905853
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.4180641174316406
+          },
+          {
+            "episode_index": 1859,
+            "normalized_rmse": 0.3298776149749756
+          },
+          {
+            "episode_index": 1860,
+            "normalized_rmse": 0.3597036898136139
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.2759951651096344
+          },
+          {
+            "episode_index": 1862,
+            "normalized_rmse": 0.431651771068573
+          },
+          {
+            "episode_index": 1863,
+            "normalized_rmse": 0.3142445385456085
+          },
+          {
+            "episode_index": 1864,
+            "normalized_rmse": 0.3289538621902466
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.35998260974884033
+          },
+          {
+            "episode_index": 1866,
+            "normalized_rmse": 0.36192652583122253
+          },
+          {
+            "episode_index": 1867,
+            "normalized_rmse": 0.3134841024875641
+          },
+          {
+            "episode_index": 1868,
+            "normalized_rmse": 0.3577280342578888
+          },
+          {
+            "episode_index": 1869,
+            "normalized_rmse": 0.3225761651992798
+          },
+          {
+            "episode_index": 1870,
+            "normalized_rmse": 0.4027184545993805
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.3453170657157898
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.3538207709789276
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.33652830123901367
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.343281090259552
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.2926594614982605
+          },
+          {
+            "episode_index": 1876,
+            "normalized_rmse": 0.3582954704761505
+          },
+          {
+            "episode_index": 1877,
+            "normalized_rmse": 0.34251201152801514
+          },
+          {
+            "episode_index": 1878,
+            "normalized_rmse": 0.39216089248657227
+          },
+          {
+            "episode_index": 1879,
+            "normalized_rmse": 0.3558517396450043
+          },
+          {
+            "episode_index": 1880,
+            "normalized_rmse": 0.3256317377090454
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.2640821039676666
+          },
+          {
+            "episode_index": 1882,
+            "normalized_rmse": 0.33268383145332336
+          },
+          {
+            "episode_index": 1883,
+            "normalized_rmse": 0.3257550299167633
+          },
+          {
+            "episode_index": 1884,
+            "normalized_rmse": 0.3331362307071686
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.39605215191841125
+          },
+          {
+            "episode_index": 1886,
+            "normalized_rmse": 0.4149142801761627
+          },
+          {
+            "episode_index": 1887,
+            "normalized_rmse": 0.3650670349597931
+          },
+          {
+            "episode_index": 1888,
+            "normalized_rmse": 0.3643553853034973
+          }
+        ],
+        "seed": 3
+      },
+      {
+        "episode_errors": [
+          {
+            "episode_index": 1549,
+            "normalized_rmse": 0.32363659143447876
+          },
+          {
+            "episode_index": 1550,
+            "normalized_rmse": 0.2986120879650116
+          },
+          {
+            "episode_index": 1551,
+            "normalized_rmse": 0.31602942943573
+          },
+          {
+            "episode_index": 1552,
+            "normalized_rmse": 0.32087603211402893
+          },
+          {
+            "episode_index": 1553,
+            "normalized_rmse": 0.3158056139945984
+          },
+          {
+            "episode_index": 1554,
+            "normalized_rmse": 0.3158991038799286
+          },
+          {
+            "episode_index": 1555,
+            "normalized_rmse": 0.3105536699295044
+          },
+          {
+            "episode_index": 1556,
+            "normalized_rmse": 0.3421631157398224
+          },
+          {
+            "episode_index": 1557,
+            "normalized_rmse": 0.3495442569255829
+          },
+          {
+            "episode_index": 1558,
+            "normalized_rmse": 0.3077146112918854
+          },
+          {
+            "episode_index": 1559,
+            "normalized_rmse": 0.34064799547195435
+          },
+          {
+            "episode_index": 1560,
+            "normalized_rmse": 0.3121662139892578
+          },
+          {
+            "episode_index": 1561,
+            "normalized_rmse": 0.313891738653183
+          },
+          {
+            "episode_index": 1562,
+            "normalized_rmse": 0.35336142778396606
+          },
+          {
+            "episode_index": 1563,
+            "normalized_rmse": 0.3839227557182312
+          },
+          {
+            "episode_index": 1564,
+            "normalized_rmse": 0.3031731843948364
+          },
+          {
+            "episode_index": 1565,
+            "normalized_rmse": 0.34552380442619324
+          },
+          {
+            "episode_index": 1566,
+            "normalized_rmse": 0.34631749987602234
+          },
+          {
+            "episode_index": 1567,
+            "normalized_rmse": 0.32241904735565186
+          },
+          {
+            "episode_index": 1568,
+            "normalized_rmse": 0.3442362844944
+          },
+          {
+            "episode_index": 1569,
+            "normalized_rmse": 0.3985787630081177
+          },
+          {
+            "episode_index": 1570,
+            "normalized_rmse": 0.3423515558242798
+          },
+          {
+            "episode_index": 1571,
+            "normalized_rmse": 0.36223289370536804
+          },
+          {
+            "episode_index": 1572,
+            "normalized_rmse": 0.35264962911605835
+          },
+          {
+            "episode_index": 1573,
+            "normalized_rmse": 0.3726787567138672
+          },
+          {
+            "episode_index": 1574,
+            "normalized_rmse": 0.33223190903663635
+          },
+          {
+            "episode_index": 1575,
+            "normalized_rmse": 0.3625960946083069
+          },
+          {
+            "episode_index": 1576,
+            "normalized_rmse": 0.3698235750198364
+          },
+          {
+            "episode_index": 1577,
+            "normalized_rmse": 0.36439839005470276
+          },
+          {
+            "episode_index": 1578,
+            "normalized_rmse": 0.38773930072784424
+          },
+          {
+            "episode_index": 1579,
+            "normalized_rmse": 0.3615335524082184
+          },
+          {
+            "episode_index": 1580,
+            "normalized_rmse": 0.33790233731269836
+          },
+          {
+            "episode_index": 1581,
+            "normalized_rmse": 0.3411707878112793
+          },
+          {
+            "episode_index": 1582,
+            "normalized_rmse": 0.4035443067550659
+          },
+          {
+            "episode_index": 1583,
+            "normalized_rmse": 0.3862517774105072
+          },
+          {
+            "episode_index": 1584,
+            "normalized_rmse": 0.40187549591064453
+          },
+          {
+            "episode_index": 1585,
+            "normalized_rmse": 0.3812589943408966
+          },
+          {
+            "episode_index": 1586,
+            "normalized_rmse": 0.3409816324710846
+          },
+          {
+            "episode_index": 1587,
+            "normalized_rmse": 0.3751124441623688
+          },
+          {
+            "episode_index": 1588,
+            "normalized_rmse": 0.39002615213394165
+          },
+          {
+            "episode_index": 1589,
+            "normalized_rmse": 0.42387962341308594
+          },
+          {
+            "episode_index": 1590,
+            "normalized_rmse": 0.44870901107788086
+          },
+          {
+            "episode_index": 1591,
+            "normalized_rmse": 0.38666093349456787
+          },
+          {
+            "episode_index": 1592,
+            "normalized_rmse": 0.37836211919784546
+          },
+          {
+            "episode_index": 1593,
+            "normalized_rmse": 0.3554469048976898
+          },
+          {
+            "episode_index": 1594,
+            "normalized_rmse": 0.4115945100784302
+          },
+          {
+            "episode_index": 1595,
+            "normalized_rmse": 0.3919471204280853
+          },
+          {
+            "episode_index": 1596,
+            "normalized_rmse": 0.42589807510375977
+          },
+          {
+            "episode_index": 1597,
+            "normalized_rmse": 0.4190971851348877
+          },
+          {
+            "episode_index": 1598,
+            "normalized_rmse": 0.4185887277126312
+          },
+          {
+            "episode_index": 1839,
+            "normalized_rmse": 0.33133235573768616
+          },
+          {
+            "episode_index": 1840,
+            "normalized_rmse": 0.4131954312324524
+          },
+          {
+            "episode_index": 1841,
+            "normalized_rmse": 0.4536273777484894
+          },
+          {
+            "episode_index": 1842,
+            "normalized_rmse": 0.4303223192691803
+          },
+          {
+            "episode_index": 1843,
+            "normalized_rmse": 0.4296700954437256
+          },
+          {
+            "episode_index": 1844,
+            "normalized_rmse": 0.4347110390663147
+          },
+          {
+            "episode_index": 1845,
+            "normalized_rmse": 0.44251617789268494
+          },
+          {
+            "episode_index": 1846,
+            "normalized_rmse": 0.40806519985198975
+          },
+          {
+            "episode_index": 1847,
+            "normalized_rmse": 0.3881361782550812
+          },
+          {
+            "episode_index": 1848,
+            "normalized_rmse": 0.40075528621673584
+          },
+          {
+            "episode_index": 1849,
+            "normalized_rmse": 0.36791518330574036
+          },
+          {
+            "episode_index": 1850,
+            "normalized_rmse": 0.38818755745887756
+          },
+          {
+            "episode_index": 1851,
+            "normalized_rmse": 0.39997971057891846
+          },
+          {
+            "episode_index": 1852,
+            "normalized_rmse": 0.3993159830570221
+          },
+          {
+            "episode_index": 1853,
+            "normalized_rmse": 0.4089442789554596
+          },
+          {
+            "episode_index": 1854,
+            "normalized_rmse": 0.3771342933177948
+          },
+          {
+            "episode_index": 1855,
+            "normalized_rmse": 0.38548487424850464
+          },
+          {
+            "episode_index": 1856,
+            "normalized_rmse": 0.4502037763595581
+          },
+          {
+            "episode_index": 1857,
+            "normalized_rmse": 0.4587034583091736
+          },
+          {
+            "episode_index": 1858,
+            "normalized_rmse": 0.4661848247051239
+          },
+          {
+            "episode_index": 1859,
+            "normalized_rmse": 0.3913848102092743
+          },
+          {
+            "episode_index": 1860,
+            "normalized_rmse": 0.426565021276474
+          },
+          {
+            "episode_index": 1861,
+            "normalized_rmse": 0.3442642092704773
+          },
+          {
+            "episode_index": 1862,
+            "normalized_rmse": 0.49882322549819946
+          },
+          {
+            "episode_index": 1863,
+            "normalized_rmse": 0.38969001173973083
+          },
+          {
+            "episode_index": 1864,
+            "normalized_rmse": 0.40003296732902527
+          },
+          {
+            "episode_index": 1865,
+            "normalized_rmse": 0.41867494583129883
+          },
+          {
+            "episode_index": 1866,
+            "normalized_rmse": 0.43971049785614014
+          },
+          {
+            "episode_index": 1867,
+            "normalized_rmse": 0.3922469913959503
+          },
+          {
+            "episode_index": 1868,
+            "normalized_rmse": 0.4338594079017639
+          },
+          {
+            "episode_index": 1869,
+            "normalized_rmse": 0.4121862053871155
+          },
+          {
+            "episode_index": 1870,
+            "normalized_rmse": 0.48158594965934753
+          },
+          {
+            "episode_index": 1871,
+            "normalized_rmse": 0.41304630041122437
+          },
+          {
+            "episode_index": 1872,
+            "normalized_rmse": 0.4332174062728882
+          },
+          {
+            "episode_index": 1873,
+            "normalized_rmse": 0.4062431752681732
+          },
+          {
+            "episode_index": 1874,
+            "normalized_rmse": 0.40479472279548645
+          },
+          {
+            "episode_index": 1875,
+            "normalized_rmse": 0.36268654465675354
+          },
+          {
+            "episode_index": 1876,
+            "normalized_rmse": 0.4302626848220825
+          },
+          {
+            "episode_index": 1877,
+            "normalized_rmse": 0.4065219759941101
+          },
+          {
+            "episode_index": 1878,
+            "normalized_rmse": 0.4544248878955841
+          },
+          {
+            "episode_index": 1879,
+            "normalized_rmse": 0.41178062558174133
+          },
+          {
+            "episode_index": 1880,
+            "normalized_rmse": 0.39649441838264465
+          },
+          {
+            "episode_index": 1881,
+            "normalized_rmse": 0.34699687361717224
+          },
+          {
+            "episode_index": 1882,
+            "normalized_rmse": 0.3738918900489807
+          },
+          {
+            "episode_index": 1883,
+            "normalized_rmse": 0.390072226524353
+          },
+          {
+            "episode_index": 1884,
+            "normalized_rmse": 0.4212307035923004
+          },
+          {
+            "episode_index": 1885,
+            "normalized_rmse": 0.45779716968536377
+          },
+          {
+            "episode_index": 1886,
+            "normalized_rmse": 0.47634002566337585
+          },
+          {
+            "episode_index": 1887,
+            "normalized_rmse": 0.4187023341655731
+          },
+          {
+            "episode_index": 1888,
+            "normalized_rmse": 0.425199955701828
+          }
+        ],
+        "seed": 4
+      }
+    ]
+  }
 }

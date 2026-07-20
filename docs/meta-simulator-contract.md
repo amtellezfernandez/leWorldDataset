@@ -41,22 +41,13 @@ The generated artifact is:
 The current evidence is intentionally scoped:
 
 - MuJoCo: tested minimal six-joint WorldEpisode position-servo replay adapter on the same LeRobot
-  trace, plus URDF Studio episode-backend conformance and one carton-sorting scenario run.
+  trace.
 - Isaac Sim: adapter mapping emitted and ready, but untested in this environment.
 - Genesis: tested minimal six-joint WorldEpisode position-servo replay adapter on the same
-  LeRobot trace, plus URDF Studio episode-backend conformance and one MuJoCo--Genesis
-  carton-sorting comparison.
+  LeRobot trace.
 - SAPIEN: adapter required; no replay runtime result claimed.
 
-URDF Studio evidence recorded in the generated report:
-
-- Branch/commit observed locally: `paper/cross-sim-benchmark` at `99f1bf0`.
-- Conformance command: `.venv/bin/python3 -m pytest backend/tests/test_sim_backend_conformance.py backend/tests/test_scenario_run_orchestrator.py backend/tests/test_scenario_runner_mujoco.py backend/tests/test_world_layout_transfer_check_script.py`
-- Result: `24 passed, 12 warnings in 27.22s`.
-- Cross-sim command: `.venv/bin/python3 -m backend.scripts.scenario_run scenarios/carton_sorting_0001 --sim mujoco --sim genesis --out /tmp/urdf-studio-cross-sim-smoke --episodes 1`.
-- Result: both MuJoCo and Genesis completed one episode successfully; task-success agreement was
-  `1.0`, final carton position delta was `0.0597 m`, and divergence onset was localized at
-  `60 ms` on joint RMSE.
+External collaboration status: **Not defined yet**.
 
 This is the useful power move: WorldEpisode judges adapter compliance, not simulator brand. A
 runtime can be fast, photorealistic, or physically rich and still be unusable for auditable robot

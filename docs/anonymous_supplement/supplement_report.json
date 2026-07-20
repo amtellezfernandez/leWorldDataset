@@ -1,0 +1,26 @@
+{
+  "archive": {
+    "bytes": 6594140,
+    "entry_count": 406,
+    "path": "WorldEpisode-supplement.zip",
+    "sha256": "5f85d61a9d3390479861c0d4200b21fe41ba4d049ec0795fe58071813454acbe"
+  },
+  "artifacts": {
+    "json": "docs/anonymous_supplement/supplement_report.json",
+    "markdown": "docs/anonymous_supplement/README.md"
+  },
+  "policy": {
+    "binary_payloads_identity_scanned": true,
+    "local_environment_included": false,
+    "source_control_history_included": false,
+    "source_selection": "explicit allowlist",
+    "text_payloads_transformed_before_hashing": true
+  },
+  "schema": "worldepisode_anonymous_supplement_v1",
+  "status": "pass",
+  "validation": {
+    "errors": [],
+    "identity_pattern_matches": 0,
+    "passed": true
+  }
+}

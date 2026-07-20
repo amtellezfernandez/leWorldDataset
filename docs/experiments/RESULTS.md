@@ -18,15 +18,15 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
-| Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
-| Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
+| Conversion | Complete pinned source Parquet shards from 3 public LeRobotDataset v3 datasets, covering 271 episodes and 43601 paired action/state rows with exact tensor, index, and timestamp equality. | Selected shards rather than full corpora; source video payloads are not converted. |
+| Replay timing | A frozen action/state telemetry lag calibrated on 320 SO-101 trajectories and evaluated on 80 source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration; simulator adapters still use one trace. No contact-rich task rollout, Isaac runtime result, or SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata. Dataset-specific diagnostic reports cover every case, but source-level benchmark cases still need pinned conversions and maintainer review before prevalence claims. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
-| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, same-trace MuJoCo/Genesis replay evidence, and URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers and same-trace MuJoCo/Genesis replay evidence. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; external collaboration is Not defined yet, Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
 | Generalization beyond robotics | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `uss-core-23` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | One bounded DROID subset rerun executes, but it is not inflation-proof; `benchmark_inflation_gate` requires an inflation-proof valid benchmark-specific rerun report before any published score is accused of inflation. |
@@ -72,27 +72,58 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 
 
-## Active LeRobot Scene Leakage Audit
+## Complete-Shard LeRobot Conversion Scale
+
+- Datasets: 3
+- Multi-camera datasets: 2
+- Episodes: 271
+- Paired action/state rows: 43601
+- Source input bytes: 5485027
+- Temporary output bytes: 18354903
+- Orchestrator wall time: 48.118 s
+- Maximum worker resident memory: 412426240 bytes
+- Unique source-absent semantic fields: 4
+- Maximum numerical error: 0.0
+- Boundary: This measures exact low-dimensional LeRobot/WorldEpisode conversion over complete pinned Parquet shards. It does not convert video payload bytes, prove full-corpus throughput, or evaluate policy quality.
+
+
+## Multi-Trajectory SO-101 Telemetry-Lag Audit
+
+- Calibration episodes: 320
+- Held-out episodes: 80
+- Held-out tasks: 8
+- Frozen lag: 3 frames
+- Held-out zero-delay pooled RMSE: 4.845232 source position units
+- Held-out frozen-delay pooled RMSE: 1.934062 source position units
+- Mean paired episode improvement: 3.087120
+- Paired episode 95% CI: [2.890437, 3.286380]
+- Improved held-out episodes: 80/80
+- Boundary: The audit measures lag between same-named action targets and observed joint-state telemetry on one SO-101 dataset. The source has one frame timestamp and no command-enqueue, queue-consume, or motor-effective timestamps, so this is not measured motor latency or evidence across robot/controller configurations. Timestamp scheduling uses the same sampled frame timestamps rather than independent queue observations; its result is interpolation-sensitive under float32 timestamp quantization.
+
+
+## Active LeRobot Task--Scene Proxy Holdout Audit
 
 - Source: `armnet/armnetbench_v01_lerobot_so101@2e5e89aee0e7f081078d9d6ab3b279fc4b83ea84`
 - Teleoperated reference episodes: 400
-- World-lineage groups: 8
-- Held-out scene tasks: Put the eye drops into the basket, Put the eye drops on the shelf
+- Task--scene proxy groups: 8
+- Held-out task groups: Put the eye drops into the basket, Put the eye drops on the shelf
 - BC policy: torch_mlp_bc_state_action
+- BC optimization seeds: 5
 
-| Split | Leakage Rate | Test Episodes | Offline BC Success | Episode nRMSE Mean |
+| Split | Proxy Overlap Rate | Test Episodes | Episode nRMSE Mean | Secondary Thresholded Rate |
 |---|---:|---:|---:|---:|
-| Random episode | 1.000 | 80 | 0.850 | 0.183 |
-| Scene-disjoint | 0.000 | 100 | 0.000 | 0.363 |
+| Random episode | 1.000 | 80 | 0.183 | 0.853 |
+| Task--scene proxy holdout (`scene_disjoint` key) | 0.000 | 100 | 0.381 | 0.000 |
 
-- Offline BC success drop: 0.850
-- Scene-disjoint/random episode nRMSE ratio: 1.98x
+- Primary holdout/random episode nRMSE ratio: 2.08x
+- Secondary thresholded imitation-rate drop: 0.853
+- Boundary: task identity is part of the proxy key, so this holdout does not isolate scene leakage from task shift.
 
 
 ## ACT/Diffusion Policy Leakage Gate
 
 - Gate artifact: `docs/experiments/lerobot_policy_gate/policy_gate_report.json`
-- Status: ready_not_executed
+- Status: blocked_missing_required_observation_modality
 - Gate satisfied: False
 - Policies: act, diffusion
 - Jobs prepared: 4
@@ -102,16 +133,21 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Physical split packages: 4
 - Physical source files verified: True
 - Physical package frames: 241470
+- Compatibility probe: blocked_missing_required_observation_modality
+- Compatibility probe matches current package: True
+- ACT/Diffusion completed a smoke training step: False
 - Ready to execute in this environment: False
 
 ## Temporal Policy Baseline on LeRobot Split Packages
 
 - Artifact: `docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json`
 - Status: measured_offline_temporal_baseline
-- Random episode offline success: 0.925
-- Scene-disjoint offline success: 0.420
-- Success-rate drop: 0.505
-- Scene/random nRMSE ratio: 1.62x
+- Primary random episode nRMSE: 0.157
+- Primary task--scene proxy holdout nRMSE: 0.255
+- Primary holdout/random nRMSE ratio: 1.62x
+- Random episode thresholded imitation rate: 0.925
+- Task--scene proxy holdout imitation rate: 0.420
+- Secondary thresholded imitation-rate drop: 0.505
 - Boundary: Measured offline temporal state/action baseline over committed compact LeRobot split packages. This is not ACT, Diffusion Policy, a vision-policy result, a simulator rollout, or a physical-robot rollout.
 
 ## Famous Benchmark Call-Out Audit
@@ -163,9 +199,9 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Status: pass
 - Trace shards: 32768
 - Described episode capacity: 1073741824
-- JSON catalog bytes opened: 24588169
-- Catalog open, parse, and index: 152.408 ms
-- Partition-pruning query time: 0.191 ms
+- JSON catalog bytes opened: 24588182
+- Catalog open, parse, and index: 514.232 ms
+- Partition-pruning query time: 0.595 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0
@@ -221,7 +257,7 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Independent fixture cases: 2
 - Independent fixture recall: 1.000
 - Natural-source corpus: 5 public datasets, 19 cases
-- Natural-source evidence tiers: active_lerobot_conversion_reports=2, active_lerobot_scene_leakage_audit=1, source_level_public_metadata_audit=2
+- Natural-source evidence tiers: active_lerobot_conversion_reports=2, active_lerobot_task_scene_proxy_audit=1, source_level_public_metadata_audit=2
 - Natural-source artifact: `docs/experiments/natural_failure_corpus/manifest.json`
 - Natural-source dataset diagnostics: `docs/experiments/natural_failure_corpus/dataset_diagnostics.json`
 - Natural-source dataset reports: 5 reports covering 19 cases

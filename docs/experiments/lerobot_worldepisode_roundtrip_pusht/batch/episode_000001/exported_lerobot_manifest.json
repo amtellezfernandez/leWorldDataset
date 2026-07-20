@@ -2,6 +2,11 @@
   "episode_index": 1,
   "export_dir": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3",
   "files": {
+    "SOURCE_LICENSE.json": {
+      "bytes": 1074,
+      "sha256": "bebed5ee571191af5997082fd837782d090ba5f43c308f1f0248d0cb84c903fb",
+      "uri": "docs/experiments/lerobot_worldepisode_roundtrip_pusht/batch/episode_000001/exported_lerobot_v3/SOURCE_LICENSE.json"
+    },
     "data/chunk-000/file-000.parquet": {
       "bytes": 6352,
       "sha256": "3a48e8366bb48aaf84fdef0264a089b839f782f59c10ebdde92c1a8c99b55196",
@@ -29,5 +34,27 @@
     }
   },
   "repo_id": "lerobot/pusht",
-  "revision": "7628202a2180972f291ba1bc6723834921e72c19"
+  "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+  "source_license": {
+    "attribution": "PushT LeRobot conversion, pinned revision 7628202a2180972f291ba1bc6723834921e72c19; PushT data and task from Diffusion Policy, Columbia Artificial Intelligence and Robotics Lab.",
+    "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+    "evidence": {
+      "dataset_card": {
+        "declared_license": "mit",
+        "sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+        "url": "https://huggingface.co/datasets/lerobot/pusht/resolve/7628202a2180972f291ba1bc6723834921e72c19/README.md"
+      },
+      "upstream": [
+        {
+          "copyright": "Copyright (c) 2023 Columbia Artificial Intelligence and Robotics Lab",
+          "license": "MIT",
+          "url": "https://github.com/real-stanford/diffusion_policy/blob/main/LICENSE"
+        }
+      ]
+    },
+    "license_expression": "MIT",
+    "repo_id": "lerobot/pusht",
+    "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+    "schema": "worldepisode_source_license_v1"
+  }
 }

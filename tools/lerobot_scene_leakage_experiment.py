@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
-"""Expose scene-lineage leakage in a public LeRobot v3 benchmark.
+"""Audit a task--scene proxy holdout in a public LeRobot v3 benchmark.
 
-The experiment uses ArmnetBench's native LeRobot v3 release, derives WorldEpisode-style
-world_lineage hashes for task-scene/camera-layout groups, compares a random episode split against a
-scene-disjoint split, and trains the same lightweight state-action BC policy on both splits.
+The experiment uses ArmnetBench's native LeRobot v3 release and derives legacy-named
+``world_lineage`` hashes that include task identity. It compares a random episode split against a
+task--scene proxy holdout and trains the same lightweight state-action BC policy on both splits.
 
 The committed artifact is intentionally an offline BC benchmark: it measures action imitation on
-real LeRobot tensors. It does not claim physical rollout success for the newly trained policy.
+real LeRobot tensors. It does not isolate scene leakage from task shift or claim physical rollout
+success for the newly trained policy.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
+import os
+import platform
 import random
 import re
 import shutil
+import statistics
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -32,7 +37,7 @@ DEFAULT_CACHE_DIR = ROOT / ".cache" / "worldepisode" / "lerobot_scene_leakage"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "lerobot_scene_leakage"
 SCENE_HOLDOUT_TASK_INDICES = {3, 4}
 RANDOM_SEED = 17
-BC_SEED = 0
+DEFAULT_BC_SEEDS = (0, 1, 2, 3, 4)
 SUCCESS_NRMSE_THRESHOLD = 0.25
 
 
@@ -78,9 +83,29 @@ def require_torch() -> Any:
     return torch
 
 
+def resolve_torch_device(torch: Any, requested: str) -> str:
+    requested = requested.lower()
+    if requested not in {"auto", "cpu", "cuda"}:
+        raise ValueError("device must be one of: auto, cpu, cuda")
+    if requested == "auto":
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    if requested == "cuda" and not torch.cuda.is_available():
+        raise LeakageExperimentUnavailable(
+            "CUDA was requested but is unavailable in the installed Torch runtime."
+        )
+    return requested
+
+
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path.resolve())
 
 
 def load_json(path: Path) -> Any:
@@ -350,10 +375,20 @@ def train_torch_mlp_bc(
     y_train: np.ndarray,
     x_test: np.ndarray,
     epochs: int,
+    seed: int,
+    device: str,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     torch = require_torch()
-    torch.manual_seed(BC_SEED)
-    np.random.seed(BC_SEED)
+    torch_device = torch.device(device)
+    if device == "cuda":
+        os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
+    torch.manual_seed(seed)
+    if device == "cuda":
+        torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    torch.use_deterministic_algorithms(True)
 
     x_mean = x_train.mean(axis=0)
     x_std = x_train.std(axis=0)
@@ -372,14 +407,15 @@ def train_torch_mlp_bc(
         torch.nn.Linear(64, 64),
         torch.nn.ReLU(),
         torch.nn.Linear(64, y_train.shape[1]),
-    )
+    ).to(torch_device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
     dataset = torch.utils.data.TensorDataset(torch.tensor(x_train_n), torch.tensor(y_train_n))
     loader = torch.utils.data.DataLoader(
         dataset,
         batch_size=2048,
         shuffle=True,
-        generator=torch.Generator().manual_seed(BC_SEED),
+        generator=torch.Generator().manual_seed(seed),
+        pin_memory=device == "cuda",
     )
 
     epoch_losses = []
@@ -387,6 +423,8 @@ def train_torch_mlp_bc(
     for _epoch in range(epochs):
         losses = []
         for x_batch, y_batch in loader:
+            x_batch = x_batch.to(torch_device, non_blocking=device == "cuda")
+            y_batch = y_batch.to(torch_device, non_blocking=device == "cuda")
             optimizer.zero_grad()
             loss = torch.nn.functional.mse_loss(model(x_batch), y_batch)
             loss.backward()
@@ -396,15 +434,36 @@ def train_torch_mlp_bc(
 
     model.eval()
     with torch.no_grad():
-        pred_n = model(torch.tensor(x_test_n)).cpu().numpy()
+        pred_n = model(torch.tensor(x_test_n, device=torch_device)).cpu().numpy()
     pred = pred_n * y_std + y_mean
+    runtime = {
+        "device": device,
+        "python": platform.python_version(),
+        "numpy": np.__version__,
+        "torch": torch.__version__,
+        "torch_num_threads": torch.get_num_threads(),
+    }
+    if device == "cuda":
+        runtime.update(
+            {
+                "cuda": torch.version.cuda,
+                "cuda_device_name": torch.cuda.get_device_name(torch_device),
+                "cuda_device_capability": list(torch.cuda.get_device_capability(torch_device)),
+                "cuda_total_memory_bytes": torch.cuda.get_device_properties(torch_device).total_memory,
+                "cudnn": torch.backends.cudnn.version(),
+                "cublas_workspace_config": os.environ["CUBLAS_WORKSPACE_CONFIG"],
+                "matmul_allow_tf32": torch.backends.cuda.matmul.allow_tf32,
+                "cudnn_allow_tf32": torch.backends.cudnn.allow_tf32,
+            }
+        )
     return pred.astype(np.float32), {
         "policy_family": "torch_mlp_bc_state_action",
         "epochs": epochs,
         "batch_size": 2048,
         "hidden_units": [64, 64],
         "optimizer": "AdamW(lr=1e-3, weight_decay=1e-4)",
-        "seed": BC_SEED,
+        "seed": seed,
+        "runtime": runtime,
         "final_train_loss": epoch_losses[-1],
         "target_std": y_std.tolist(),
     }
@@ -416,6 +475,8 @@ def evaluate_bc_split(
     actions: np.ndarray,
     episode_ids: np.ndarray,
     epochs: int,
+    seed: int,
+    device: str,
 ) -> dict[str, Any]:
     train_ids = set(split["train_episodes"])
     test_ids = set(split["test_episodes"])
@@ -427,7 +488,14 @@ def evaluate_bc_split(
     y_test = actions[test_mask]
     test_episode_ids = episode_ids[test_mask]
 
-    predictions, policy_info = train_torch_mlp_bc(x_train, y_train, x_test, epochs)
+    predictions, policy_info = train_torch_mlp_bc(
+        x_train,
+        y_train,
+        x_test,
+        epochs,
+        seed,
+        device,
+    )
     target_std = np.asarray(policy_info["target_std"], dtype=np.float32)
     normalized_sq_error = ((predictions - y_test) / target_std) ** 2
     episode_errors = []
@@ -454,6 +522,79 @@ def evaluate_bc_split(
         "offline_bc_success_count": success_count,
         "offline_bc_success_rate": success_count / len(episode_values) if len(episode_values) else 0.0,
         "episode_errors": episode_errors,
+    }
+
+
+def seed_variation(values: list[float]) -> dict[str, float]:
+    return {
+        "mean": statistics.fmean(values),
+        "sample_std": statistics.stdev(values) if len(values) > 1 else 0.0,
+        "min": min(values),
+        "max": max(values),
+    }
+
+
+def aggregate_bc_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    if not runs:
+        raise ValueError("at least one BC run is required")
+
+    first = runs[0]
+    invariant_fields = ("train_frames", "test_frames", "offline_bc_success_threshold")
+    for run in runs[1:]:
+        for field in invariant_fields:
+            if run[field] != first[field]:
+                raise ValueError(f"BC seed runs disagree on {field}")
+        if run["policy"]["target_std"] != first["policy"]["target_std"]:
+            raise ValueError("BC seed runs disagree on target normalization")
+
+    metric_fields = (
+        "frame_normalized_rmse",
+        "frame_rmse",
+        "episode_normalized_rmse_mean",
+        "episode_normalized_rmse_median",
+        "episode_normalized_rmse_p75",
+        "offline_bc_success_rate",
+    )
+    variations = {
+        field: seed_variation([float(run[field]) for run in runs])
+        for field in metric_fields
+    }
+    policy = {
+        key: value
+        for key, value in first["policy"].items()
+        if key not in {"seed", "final_train_loss"}
+    }
+    policy.update(
+        {
+            "seeds": [int(run["policy"]["seed"]) for run in runs],
+            "seed_count": len(runs),
+            "deterministic_algorithms": True,
+            "final_train_loss": seed_variation(
+                [float(run["policy"]["final_train_loss"]) for run in runs]
+            ),
+        }
+    )
+    return {
+        "policy": policy,
+        "train_frames": first["train_frames"],
+        "test_frames": first["test_frames"],
+        **{field: variation["mean"] for field, variation in variations.items()},
+        "offline_bc_success_threshold": first["offline_bc_success_threshold"],
+        "offline_bc_success_count_total": sum(
+            int(run["offline_bc_success_count"]) for run in runs
+        ),
+        "offline_bc_evaluation_count_total": sum(
+            len(run["episode_errors"]) for run in runs
+        ),
+        "seed_variation": variations,
+        "seed_runs": [
+            {
+                key: value
+                for key, value in run.items()
+                if key != "episode_errors"
+            }
+            for run in runs
+        ],
     }
 
 
@@ -487,9 +628,18 @@ def run_scene_leakage_experiment(
     repo_id: str = DEFAULT_REPO_ID,
     revision: str = DEFAULT_REVISION,
     epochs: int = 12,
+    bc_seeds: tuple[int, ...] = DEFAULT_BC_SEEDS,
+    device: str = "auto",
 ) -> dict[str, Any]:
+    if not bc_seeds:
+        raise ValueError("at least one BC seed is required")
+    if len(set(bc_seeds)) != len(bc_seeds):
+        raise ValueError("BC seeds must be unique")
+    if device in {"auto", "cuda"}:
+        os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     require_pyarrow()
-    require_torch()
+    torch = require_torch()
+    resolved_device = resolve_torch_device(torch, device)
     info, task_by_index, records, lineage_payloads, metadata_files = load_benchmark_metadata(
         repo_id,
         revision,
@@ -500,8 +650,37 @@ def run_scene_leakage_experiment(
     splits = make_splits(records)
     features, actions, episode_ids = load_bc_tensors(data_files, records, task_count=len(task_by_index))
 
-    bc_random = evaluate_bc_split(splits["random_episode"], features, actions, episode_ids, epochs)
-    bc_scene = evaluate_bc_split(splits["scene_disjoint"], features, actions, episode_ids, epochs)
+    random_runs = [
+        evaluate_bc_split(
+            splits["random_episode"],
+            features,
+            actions,
+            episode_ids,
+            epochs,
+            seed,
+            resolved_device,
+        )
+        for seed in bc_seeds
+    ]
+    heldout_runs = [
+        evaluate_bc_split(
+            splits["scene_disjoint"],
+            features,
+            actions,
+            episode_ids,
+            epochs,
+            seed,
+            resolved_device,
+        )
+        for seed in bc_seeds
+    ]
+    bc_random = aggregate_bc_runs(random_runs)
+    bc_scene = aggregate_bc_runs(heldout_runs)
+    storage = shutil.disk_usage(ROOT)
+    try:
+        total_ram_bytes = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+    except (AttributeError, OSError, ValueError):
+        total_ram_bytes = None
 
     output_dir.mkdir(parents=True, exist_ok=True)
     lineages = lineage_records(records, lineage_payloads)
@@ -537,6 +716,34 @@ def run_scene_leakage_experiment(
             "recommended_next_run": "Install LeRobot and repeat the split manifest with ACT or Diffusion Policy.",
         },
         "bc_policy_family": "torch_mlp_bc_state_action",
+        "bc_seeds": list(bc_seeds),
+        "experiment": {
+            "script": display_path(Path(__file__)),
+            "script_sha256": sha256_file(Path(__file__)),
+            "config": {
+                "epochs": epochs,
+                "seeds": list(bc_seeds),
+                "requested_device": device,
+                "offline_bc_success_threshold": SUCCESS_NRMSE_THRESHOLD,
+                "random_split_seed": RANDOM_SEED,
+                "scene_holdout_task_indices": sorted(SCENE_HOLDOUT_TASK_INDICES),
+            },
+        },
+        "runtime": {
+            "python": platform.python_version(),
+            "platform": platform.platform(),
+            "machine": platform.machine(),
+            "processor": platform.processor(),
+            "cpu_logical_count": os.cpu_count(),
+            "total_ram_bytes": total_ram_bytes,
+            "storage_total_bytes": storage.total,
+            "storage_free_bytes": storage.free,
+            "numpy": np.__version__,
+            "pyarrow": importlib.metadata.version("pyarrow"),
+            "requests": requests.__version__,
+            "requested_device": device,
+            "resolved_device": resolved_device,
+        },
         "splits": {
             "random_episode": {
                 **{key: value for key, value in splits["random_episode"].items() if not key.endswith("_episodes")},
@@ -560,15 +767,31 @@ def run_scene_leakage_experiment(
             ),
         },
         "artifacts": {
-            "report": str((output_dir / "leakage_report.json").relative_to(ROOT)),
-            "world_lineage": str((output_dir / "world_lineage.json").relative_to(ROOT)),
-            "split_manifest": str((output_dir / "split_manifest.json").relative_to(ROOT)),
-            "bc_episode_errors": str((output_dir / "bc_episode_errors.json").relative_to(ROOT)),
+            "report": display_path(output_dir / "leakage_report.json"),
+            "world_lineage": display_path(output_dir / "world_lineage.json"),
+            "split_manifest": display_path(output_dir / "split_manifest.json"),
+            "bc_episode_errors": display_path(output_dir / "bc_episode_errors.json"),
         },
     }
     bc_episode_errors = {
-        "random_episode": bc_random["episode_errors"],
-        "scene_disjoint": bc_scene["episode_errors"],
+        "profile": "worldepisode-seeded-bc-errors-0.2",
+        "seeds": list(bc_seeds),
+        "splits": {
+            "random_episode": [
+                {
+                    "seed": int(run["policy"]["seed"]),
+                    "episode_errors": run["episode_errors"],
+                }
+                for run in random_runs
+            ],
+            "scene_disjoint": [
+                {
+                    "seed": int(run["policy"]["seed"]),
+                    "episode_errors": run["episode_errors"],
+                }
+                for run in heldout_runs
+            ],
+        },
     }
     write_json(output_dir / "world_lineage.json", lineages)
     write_json(output_dir / "split_manifest.json", split_manifest)
@@ -587,6 +810,18 @@ def unavailable_report(error: Exception) -> dict[str, Any]:
     }
 
 
+def parse_seeds(value: str) -> tuple[int, ...]:
+    try:
+        seeds = tuple(int(part.strip()) for part in value.split(",") if part.strip())
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("seeds must be comma-separated integers") from exc
+    if not seeds:
+        raise argparse.ArgumentTypeError("at least one seed is required")
+    if len(set(seeds)) != len(seeds):
+        raise argparse.ArgumentTypeError("seeds must be unique")
+    return seeds
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
@@ -594,6 +829,18 @@ def main() -> int:
     parser.add_argument("--repo-id", default=DEFAULT_REPO_ID)
     parser.add_argument("--revision", default=DEFAULT_REVISION)
     parser.add_argument("--epochs", type=int, default=12)
+    parser.add_argument(
+        "--device",
+        choices=("auto", "cpu", "cuda"),
+        default="auto",
+        help="Torch execution device; auto selects CUDA when available",
+    )
+    parser.add_argument(
+        "--seeds",
+        type=parse_seeds,
+        default=DEFAULT_BC_SEEDS,
+        help="comma-separated optimization seeds",
+    )
     parser.add_argument("--required", action="store_true")
     args = parser.parse_args()
     try:
@@ -603,6 +850,8 @@ def main() -> int:
             repo_id=args.repo_id,
             revision=args.revision,
             epochs=args.epochs,
+            bc_seeds=args.seeds,
+            device=args.device,
         )
     except LeakageExperimentUnavailable as exc:
         report = unavailable_report(exc)

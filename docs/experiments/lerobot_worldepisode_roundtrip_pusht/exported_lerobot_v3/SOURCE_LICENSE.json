@@ -1,0 +1,22 @@
+{
+  "attribution": "PushT LeRobot conversion, pinned revision 7628202a2180972f291ba1bc6723834921e72c19; PushT data and task from Diffusion Policy, Columbia Artificial Intelligence and Robotics Lab.",
+  "derived_artifact_policy": "Source-derived rows remain under the source license expression. WorldEpisode-authored manifests, diagnostics, and aggregate reports are CC0-1.0.",
+  "evidence": {
+    "dataset_card": {
+      "declared_license": "mit",
+      "sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+      "url": "https://huggingface.co/datasets/lerobot/pusht/resolve/7628202a2180972f291ba1bc6723834921e72c19/README.md"
+    },
+    "upstream": [
+      {
+        "copyright": "Copyright (c) 2023 Columbia Artificial Intelligence and Robotics Lab",
+        "license": "MIT",
+        "url": "https://github.com/real-stanford/diffusion_policy/blob/main/LICENSE"
+      }
+    ]
+  },
+  "license_expression": "MIT",
+  "repo_id": "lerobot/pusht",
+  "revision": "7628202a2180972f291ba1bc6723834921e72c19",
+  "schema": "worldepisode_source_license_v1"
+}

@@ -43,6 +43,10 @@ SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.j
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 TEMPORAL_POLICY_REPORT = RESULTS_DIR / "lerobot_temporal_policy_baseline" / "temporal_policy_report.json"
+CONVERSION_SCALE_REPORT = RESULTS_DIR / "lerobot_conversion_scale" / "scale_report.json"
+MULTITRAJECTORY_TIMING_REPORT = (
+    RESULTS_DIR / "lerobot_multitrajectory_timing" / "timing_report.json"
+)
 BENCHMARK_CALLOUT_REPORT = RESULTS_DIR / "benchmark_callout_audit" / "benchmark_callout_report.json"
 BENCHMARK_INFLATION_GATE_REPORT = RESULTS_DIR / "benchmark_inflation_gate" / "gate_report.json"
 PREFLIGHT_REPORT = RESULTS_DIR / "preflight" / "preflight_report.json"
@@ -401,7 +405,7 @@ def experiment_lerobot_scene_leakage() -> dict[str, Any]:
         except LeakageExperimentUnavailable as exc:
             return unavailable_report(exc)
         except Exception as exc:  # noqa: BLE001 - preservation/training failures should stop required runs.
-            raise RuntimeError("active LeRobot scene leakage experiment failed") from exc
+            raise RuntimeError("active LeRobot task--scene proxy holdout audit failed") from exc
     if SCENE_LEAKAGE_REPORT.exists():
         return load_json(SCENE_LEAKAGE_REPORT)
     return {
@@ -594,6 +598,42 @@ def experiment_preflight_validator() -> dict[str, Any]:
     }
     write_json(PREFLIGHT_REPORT, report)
     return report
+
+
+def experiment_lerobot_conversion_scale() -> dict[str, Any]:
+    if CONVERSION_SCALE_REPORT.exists():
+        return load_json(CONVERSION_SCALE_REPORT)
+    return {
+        "schema": "worldepisode_lerobot_conversion_scale_v1",
+        "validation": {
+            "passed": False,
+            "errors": [f"missing report: {CONVERSION_SCALE_REPORT.relative_to(ROOT)}"],
+        },
+        "aggregate": {},
+        "datasets": [],
+        "reproduce": (
+            "uv run --with pyarrow --with requests "
+            "python tools/lerobot_conversion_scale.py --required"
+        ),
+    }
+
+
+def experiment_lerobot_multitrajectory_timing() -> dict[str, Any]:
+    if MULTITRAJECTORY_TIMING_REPORT.exists():
+        return load_json(MULTITRAJECTORY_TIMING_REPORT)
+    return {
+        "schema": "worldepisode_lerobot_multitrajectory_timing_v1",
+        "validation": {
+            "passed": False,
+            "errors": [f"missing report: {MULTITRAJECTORY_TIMING_REPORT.relative_to(ROOT)}"],
+        },
+        "calibration": {},
+        "evaluation": {},
+        "reproduce": (
+            "uv run --with pyarrow --with numpy python "
+            "tools/lerobot_multitrajectory_timing_audit.py --required"
+        ),
+    }
 
 
 def experiment_realtosim_contract_drift() -> dict[str, Any]:
@@ -860,13 +900,14 @@ def natural_evidence_status(evidence_type: str) -> tuple[str, str, list[str]]:
                 "request maintainer review of representative diagnostics",
             ],
         )
-    if evidence_type == "active_lerobot_scene_leakage_audit":
+    if evidence_type == "active_lerobot_task_scene_proxy_audit":
         return (
-            "active_lineage_split_audit",
-            "lineage split behavior was measured from the committed LeRobot audit artifact",
+            "active_task_scene_proxy_split_audit",
+            "task--scene proxy split behavior was measured from the committed LeRobot audit artifact",
             [
                 "run policy evaluations beyond the offline probes before making rollout claims",
-                "request maintainer review of the split-lineage grouping",
+                "obtain physical scene/source IDs while preserving task support",
+                "request maintainer review of the proxy-lineage grouping",
             ],
         )
     if evidence_type == "source_level_public_metadata_audit":
@@ -1096,7 +1137,7 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
                 "repo_id": repo_id,
                 "revision": revision,
                 "source_profile": "lerobot-v3",
-                "evidence_type": "active_lerobot_scene_leakage_audit",
+                "evidence_type": "active_lerobot_task_scene_proxy_audit",
                 "episode_indices": set(),
                 "action_rows": None,
                 "state_rows": None,
@@ -1108,12 +1149,12 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
             random_split = leakage["splits"]["random_episode"]
             cases.append(
                 {
-                    "case_id": f"{repo_id.replace('/', '__')}::random_episode_scene_lineage_leakage",
+                    "case_id": f"{repo_id.replace('/', '__')}::random_episode_proxy_lineage_overlap",
                     "repo_id": repo_id,
                     "revision": revision,
                     "observation": (
-                        "A standard random episode split leaks all tested world-lineage groups "
-                        f"(leakage rate {random_split['leakage_rate']:.3f})."
+                        "A standard random episode split overlaps all tested task--scene proxy groups "
+                        f"(proxy overlap rate {random_split['leakage_rate']:.3f})."
                     ),
                     "requirement_ids": ["SPLIT.001"],
                     "evidence_type": "natural_split_lineage_leakage",
@@ -1209,8 +1250,10 @@ def experiment_natural_failure_corpus() -> dict[str, Any]:
             "active_lerobot_conversion_reports": sum(
                 1 for dataset in normalized_datasets if dataset.get("evidence_type") == "active_lerobot_conversion_reports"
             ),
-            "active_lerobot_scene_leakage_audit": sum(
-                1 for dataset in normalized_datasets if dataset.get("evidence_type") == "active_lerobot_scene_leakage_audit"
+            "active_lerobot_task_scene_proxy_audit": sum(
+                1
+                for dataset in normalized_datasets
+                if dataset.get("evidence_type") == "active_lerobot_task_scene_proxy_audit"
             ),
             "source_level_public_metadata_audit": sum(
                 1 for dataset in normalized_datasets if dataset.get("evidence_type") == "source_level_public_metadata_audit"
@@ -1278,11 +1321,11 @@ def experiment_replay() -> dict[str, Any]:
 
 
 def experiment_lerobot_public_sample() -> dict[str, Any]:
-    # First frame of episode 0 from lerobot/svla_so101_pickplace, mirrored in
-    # URDF Studio's offline tests to avoid network-dependent evaluation.
+    # First frame of episode 0 from lerobot/svla_so101_pickplace, mirrored in a
+    # committed offline fixture to avoid network-dependent evaluation.
     joint_deg = [1.9560878, -98.74372, 98.92424, 74.81983, -51.45299, 1.40939]
     joint_rad = [math.radians(value) for value in joint_deg]
-    # FK position from URDF Studio's SO-101 offline fixture.
+    # FK position from the committed SO-101 offline fixture.
     ee_xyz_m = [0.1044, -0.00242, 0.07292]
     degree_interpreted_as_radian_max_abs = max(abs(value) for value in joint_deg)
     return {
@@ -1476,6 +1519,8 @@ def write_report(results: dict[str, Any]) -> None:
     public_sample = results["lerobot_public_sample"]
     episode_set = results["lerobot_style_episode_set"]
     active_lerobot = results["lerobot_active_roundtrip"]
+    conversion_scale = results["lerobot_conversion_scale"]
+    multitrajectory_timing = results["lerobot_multitrajectory_timing"]
     scene_leakage = results["lerobot_scene_leakage"]
     policy_gate = results["lerobot_policy_gate"]
     temporal_policy = results["lerobot_temporal_policy_baseline"]
@@ -1554,28 +1599,75 @@ def write_report(results: dict[str, Any]) -> None:
 - Reason: {active_lerobot.get("reason", "unknown")}
 - Reproduce: `{active_lerobot.get("reproduce", "python3 tools/lerobot_worldepisode_roundtrip.py --required")}`
 """
+    conversion_scale_aggregate = conversion_scale.get("aggregate", {})
+    if conversion_scale.get("validation", {}).get("passed") is True:
+        conversion_scale_section = f"""## Complete-Shard LeRobot Conversion Scale
+
+- Datasets: {conversion_scale_aggregate["dataset_count"]}
+- Multi-camera datasets: {conversion_scale_aggregate["multi_camera_dataset_count"]}
+- Episodes: {conversion_scale_aggregate["episode_count"]}
+- Paired action/state rows: {conversion_scale_aggregate["action_row_count"]}
+- Source input bytes: {conversion_scale_aggregate["source_input_bytes"]}
+- Temporary output bytes: {conversion_scale_aggregate["temporary_output_bytes"]}
+- Orchestrator wall time: {conversion_scale_aggregate["orchestrator_wall_time_seconds"]:.3f} s
+- Maximum worker resident memory: {conversion_scale_aggregate["maximum_worker_rss_bytes"]} bytes
+- Unique source-absent semantic fields: {conversion_scale_aggregate["semantic_loss_field_count"]}
+- Maximum numerical error: {conversion_scale_aggregate["maximum_numerical_error"]:.1f}
+- Boundary: {conversion_scale["claim_boundary"]}
+"""
+    else:
+        conversion_scale_section = f"""## Complete-Shard LeRobot Conversion Scale
+
+- Available: false
+- Reproduce: `{conversion_scale.get("reproduce", "uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required")}`
+"""
+    if multitrajectory_timing.get("validation", {}).get("passed") is True:
+        timing_calibration = multitrajectory_timing["calibration"]
+        timing_evaluation = multitrajectory_timing["evaluation"]
+        timing_improvement = timing_evaluation["paired_episode_improvement"]
+        timing_section = f"""## Multi-Trajectory SO-101 Telemetry-Lag Audit
+
+- Calibration episodes: {timing_calibration["episode_count"]}
+- Held-out episodes: {timing_evaluation["episode_count"]}
+- Held-out tasks: {timing_evaluation["task_count"]}
+- Frozen lag: {timing_calibration["selected_delay_frames"]} frames
+- Held-out zero-delay pooled RMSE: {timing_evaluation["zero_delay"]["pooled_joint_rmse"]:.6f} source position units
+- Held-out frozen-delay pooled RMSE: {timing_evaluation["frozen_frame_delay"]["pooled_joint_rmse"]:.6f} source position units
+- Mean paired episode improvement: {timing_improvement["estimate"]:.6f}
+- Paired episode 95% CI: [{timing_improvement["ci_low"]:.6f}, {timing_improvement["ci_high"]:.6f}]
+- Improved held-out episodes: {timing_improvement["improved_episode_count"]}/{timing_evaluation["episode_count"]}
+- Boundary: {multitrajectory_timing["claim_boundary"]}
+"""
+    else:
+        timing_section = f"""## Multi-Trajectory SO-101 Telemetry-Lag Audit
+
+- Available: false
+- Reproduce: `{multitrajectory_timing.get("reproduce", "uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required")}`
+"""
     if scene_leakage.get("available"):
         random_split = scene_leakage["splits"]["random_episode"]
         disjoint_split = scene_leakage["splits"]["scene_disjoint"]
         scene_summary = scene_leakage["summary"]
-        scene_section = f"""## Active LeRobot Scene Leakage Audit
+        scene_section = f"""## Active LeRobot Task--Scene Proxy Holdout Audit
 
 - Source: `{scene_leakage["repo_id"]}@{scene_leakage["revision"]}`
 - Teleoperated reference episodes: {scene_leakage["dataset"]["teleoperated_reference_episodes"]}
-- World-lineage groups: {scene_leakage["lineage_count"]}
-- Held-out scene tasks: {", ".join(scene_leakage["heldout_scene_tasks"])}
+- Task--scene proxy groups: {scene_leakage["lineage_count"]}
+- Held-out task groups: {", ".join(scene_leakage["heldout_scene_tasks"])}
 - BC policy: {scene_leakage["bc_policy_family"]}
+- BC optimization seeds: {random_split["bc"]["policy"]["seed_count"]}
 
-| Split | Leakage Rate | Test Episodes | Offline BC Success | Episode nRMSE Mean |
+| Split | Proxy Overlap Rate | Test Episodes | Episode nRMSE Mean | Secondary Thresholded Rate |
 |---|---:|---:|---:|---:|
-| Random episode | {random_split["leakage_rate"]:.3f} | {random_split["test_count"]} | {random_split["bc"]["offline_bc_success_rate"]:.3f} | {random_split["bc"]["episode_normalized_rmse_mean"]:.3f} |
-| Scene-disjoint | {disjoint_split["leakage_rate"]:.3f} | {disjoint_split["test_count"]} | {disjoint_split["bc"]["offline_bc_success_rate"]:.3f} | {disjoint_split["bc"]["episode_normalized_rmse_mean"]:.3f} |
+| Random episode | {random_split["leakage_rate"]:.3f} | {random_split["test_count"]} | {random_split["bc"]["episode_normalized_rmse_mean"]:.3f} | {random_split["bc"]["offline_bc_success_rate"]:.3f} |
+| Task--scene proxy holdout (`scene_disjoint` key) | {disjoint_split["leakage_rate"]:.3f} | {disjoint_split["test_count"]} | {disjoint_split["bc"]["episode_normalized_rmse_mean"]:.3f} | {disjoint_split["bc"]["offline_bc_success_rate"]:.3f} |
 
-- Offline BC success drop: {scene_summary["success_rate_drop"]:.3f}
-- Scene-disjoint/random episode nRMSE ratio: {scene_summary["episode_nrmse_ratio_scene_over_random"]:.2f}x
+- Primary holdout/random episode nRMSE ratio: {scene_summary["episode_nrmse_ratio_scene_over_random"]:.2f}x
+- Secondary thresholded imitation-rate drop: {scene_summary["success_rate_drop"]:.3f}
+- Boundary: task identity is part of the proxy key, so this holdout does not isolate scene leakage from task shift.
 """
     else:
-        scene_section = f"""## Active LeRobot Scene Leakage Audit
+        scene_section = f"""## Active LeRobot Task--Scene Proxy Holdout Audit
 
 - Available: false
 - Reason: {scene_leakage.get("reason", "unknown")}
@@ -1623,15 +1715,15 @@ def write_report(results: dict[str, Any]) -> None:
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
-| Conversion | Two pinned public LeRobotDataset v3 five-episode batch round trips with exact tensor, index, and timestamp equality. | Two datasets; broader LeRobot coverage remains future work. |
-| Replay timing | Real SO-101 trajectory alignment, tested same-trace MuJoCo and Genesis position-servo replay, and URDF Studio MuJoCo/Genesis episode-backend evidence. | One WorldEpisode LeRobot replay trace with minimal joint replay adapters; no contact-rich task rollout, no Isaac runtime result, and no SAPIEN result is claimed. |
+| Conversion | Complete pinned source Parquet shards from {conversion_scale_aggregate.get("dataset_count", 0)} public LeRobotDataset v3 datasets, covering {conversion_scale_aggregate.get("episode_count", 0)} episodes and {conversion_scale_aggregate.get("action_row_count", 0)} paired action/state rows with exact tensor, index, and timestamp equality. | Selected shards rather than full corpora; source video payloads are not converted. |
+| Replay timing | A frozen action/state telemetry lag calibrated on {multitrajectory_timing.get("calibration", {}).get("episode_count", 0)} SO-101 trajectories and evaluated on {multitrajectory_timing.get("evaluation", {}).get("episode_count", 0)} source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration; simulator adapters still use one trace. No contact-rich task rollout, Isaac runtime result, or SAPIEN result is claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
 | Dataset scale | Executable dataset manifest audit plus a generated 32,768-shard catalog benchmark describing 1,073,741,824 episodes. | Catalog-side benchmark only; no billion episode rows, payload bytes, network storage, or multi-institution deployment are measured. |
 | Clean-room reader | A separate reader script that does not import the `worldepisode` package parses the public schema and catches expected requirements across pilot and independent fixtures. | Internal clean-room artifact only; not an external implementation or adoption claim. |
 | Real-to-sim drift | Controlled action-contract and representation-role ablations: drifted contracts succeed in sim and fail under deployment proxies; WorldEpisode contracts pass. | Deterministic proxy, not a physical hardware rollout or a RoboSnap/DROID-Sim rerun. |
-| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers, same-trace MuJoCo/Genesis replay evidence, and URDF Studio MuJoCo/Genesis backend conformance. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
+| Meta-simulator contract | Runtime-neutral adapter matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN with three compliance layers and same-trace MuJoCo/Genesis replay evidence. | MuJoCo and Genesis are tested for the minimal LeRobot replay profile; external collaboration is Not defined yet, Isaac and SAPIEN are not replay-tested here, and equal physics is not claimed. |
 | Generalization beyond robotics | Deterministic game-engine collision-patch and autonomous-driving clock-domain pilots using the same state-invariant vocabulary. | Not measured Epic/Unity/Waymo data, not a production game or AV benchmark result. |
 | Binding retention | Versioned `{projection_profile["profile_id"]}` semantic projection checked by executable artifacts. | Pilot projection; not a universal score of each storage format. |
 | Famous benchmark call-out | Source-level audit over Open X-Embodiment, DROID, BridgeData V2, LIBERO, and CALVIN, a targeted DROID subset rerun tool, and an executable inflation-proof gate. | One bounded DROID subset rerun executes, but it is not inflation-proof; `benchmark_inflation_gate` requires an inflation-proof valid benchmark-specific rerun report before any published score is accused of inflation. |
@@ -1667,6 +1759,10 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 {active_section}
 
+{conversion_scale_section}
+
+{timing_section}
+
 {scene_section}
 
 ## ACT/Diffusion Policy Leakage Gate
@@ -1682,16 +1778,21 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Physical split packages: {policy_gate.get("physical_split_packages", {}).get("package_count", 0)}
 - Physical source files verified: {policy_gate.get("physical_split_packages", {}).get("source_files_verified", False)}
 - Physical package frames: {policy_gate.get("physical_split_packages", {}).get("total_output_frames", 0)}
+- Compatibility probe: {policy_gate.get("policy_compatibility", {}).get("status", "not_run")}
+- Compatibility probe matches current package: {policy_gate.get("policy_compatibility", {}).get("fresh_for_current_package", False)}
+- ACT/Diffusion completed a smoke training step: {policy_gate.get("policy_compatibility", {}).get("all_policy_probes_completed_training_step", False)}
 - Ready to execute in this environment: {policy_gate.get("ready_to_execute", False)}
 
 ## Temporal Policy Baseline on LeRobot Split Packages
 
 - Artifact: `{temporal_policy.get("artifacts", {}).get("json", "docs/experiments/lerobot_temporal_policy_baseline/temporal_policy_report.json")}`
 - Status: {temporal_policy.get("status", "unavailable")}
-- Random episode offline success: {temporal_policy.get("aggregate", {}).get("random_episode_success_rate", 0):.3f}
-- Scene-disjoint offline success: {temporal_policy.get("aggregate", {}).get("scene_disjoint_success_rate", 0):.3f}
-- Success-rate drop: {temporal_policy.get("aggregate", {}).get("success_rate_drop", 0):.3f}
-- Scene/random nRMSE ratio: {temporal_policy.get("aggregate", {}).get("episode_nrmse_ratio_scene_over_random", 0):.2f}x
+- Primary random episode nRMSE: {temporal_policy.get("aggregate", {}).get("random_episode_nrmse_mean", 0):.3f}
+- Primary task--scene proxy holdout nRMSE: {temporal_policy.get("aggregate", {}).get("scene_disjoint_nrmse_mean", 0):.3f}
+- Primary holdout/random nRMSE ratio: {temporal_policy.get("aggregate", {}).get("episode_nrmse_ratio_scene_over_random", 0):.2f}x
+- Random episode thresholded imitation rate: {temporal_policy.get("aggregate", {}).get("random_episode_success_rate", 0):.3f}
+- Task--scene proxy holdout imitation rate: {temporal_policy.get("aggregate", {}).get("scene_disjoint_success_rate", 0):.3f}
+- Secondary thresholded imitation-rate drop: {temporal_policy.get("aggregate", {}).get("success_rate_drop", 0):.3f}
 - Boundary: {temporal_policy.get("claim_boundary", "No temporal policy baseline result is available.")}
 
 ## Famous Benchmark Call-Out Audit
@@ -1880,6 +1981,8 @@ def main() -> int:
         "baseline_semantic_errors": len(semantic_errors),
         "rq1_binding_retention": experiment_binding_retention(base),
         "lerobot_active_roundtrip": experiment_lerobot_active_roundtrip(),
+        "lerobot_conversion_scale": experiment_lerobot_conversion_scale(),
+        "lerobot_multitrajectory_timing": experiment_lerobot_multitrajectory_timing(),
         "lerobot_scene_leakage": experiment_lerobot_scene_leakage(),
         "lerobot_policy_gate": experiment_lerobot_policy_gate(),
         "lerobot_temporal_policy_baseline": experiment_lerobot_temporal_policy_baseline(),
@@ -1940,9 +2043,17 @@ def main() -> int:
     if os.environ.get("WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT") == "1" and not active_lerobot.get("pass"):
         print("Active LeRobot round-trip is required but did not pass.")
         return 1
+    conversion_scale = results["lerobot_conversion_scale"]
+    if conversion_scale.get("validation", {}).get("passed") is not True:
+        print("Committed LeRobot conversion-scale report is missing or invalid.")
+        return 1
+    multitrajectory_timing = results["lerobot_multitrajectory_timing"]
+    if multitrajectory_timing.get("validation", {}).get("passed") is not True:
+        print("Committed multi-trajectory timing report is missing or invalid.")
+        return 1
     scene_leakage = results["lerobot_scene_leakage"]
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_LEAKAGE") == "1" and not scene_leakage.get("pass"):
-        print("Active LeRobot scene leakage experiment is required but did not pass.")
+        print("Active LeRobot task--scene proxy holdout audit is required but did not pass.")
         return 1
     benchmark_inflation = results["benchmark_inflation_gate"]
     if (
@@ -1985,7 +2096,7 @@ def main() -> int:
     if temporal_policy.get("status") == "measured_offline_temporal_baseline":
         aggregate = temporal_policy.get("aggregate", {})
         if aggregate.get("success_rate_drop", 0) <= 0:
-            print("Temporal policy baseline did not drop under scene-disjoint evaluation.")
+            print("Temporal policy baseline did not drop under the task--scene proxy holdout.")
             return 1
     preflight_result = results["preflight_validator"]
     if not preflight_result.get("pass"):

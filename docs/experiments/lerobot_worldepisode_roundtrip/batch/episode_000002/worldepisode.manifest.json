@@ -83,7 +83,7 @@
   },
   "provenance": {
     "creator": "WorldEpisode active LeRobot converter",
-    "license": "Apache-2.0 source dataset; derived metadata CC0-1.0",
+    "license": "Apache-2.0 source-derived rows; WorldEpisode-authored metadata CC0-1.0",
     "software": "tools/lerobot_worldepisode_roundtrip.py",
     "source": "lerobot/svla_so101_pickplace@f641879e22172be7e8161d5e6c1503c2d2feb657"
   },

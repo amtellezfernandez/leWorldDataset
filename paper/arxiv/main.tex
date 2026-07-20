@@ -1,26 +1,34 @@
-\documentclass[11pt]{article}
+\documentclass{article}
 
+\PassOptionsToPackage{numbers,sort&compress}{natbib}
+\ifdefined\wepreprint
+  \usepackage[eandd,preprint]{neurips_2026}
+\else
+  % NeurIPS 2027 files do not exist yet. Use the latest official E\&D style as
+  % the submission baseline, then replace it with neurips_2027 when released.
+  \usepackage[eandd]{neurips_2026}
+\fi
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[margin=1in]{geometry}
 \usepackage{microtype}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsfonts}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{nicefrac}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{placeins}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage[numbers,sort&compress]{natbib}
 \usetikzlibrary{arrows.meta,calc,fit,positioning,shapes.geometric}
 \usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.18}
+\input{generated/experiment_values}
 
 \definecolor{weBlue}{HTML}{2563EB}
 \definecolor{weCyan}{HTML}{0891B2}
@@ -102,42 +110,11 @@
   urlcolor=blue
 }
 
-% ---- Collaborator task-map switch (working build only) ----
-% \collabtrue renders the Open Contributions appendix and the inline HELP markers so
-% colleagues can pick up open work. The publication build (`make root-pdf`, the default)
-% defines \collaboff on the command line to hide all of it; `make collab-pdf` keeps it.
-\newif\ifcollab
-\collabtrue
-\ifdefined\collaboff\collabfalse\fi
-
 % One-line skimmable summary placed under a result or a dense section.
 \newcommand{\takeaway}[1]{\par\smallskip\noindent{\small\textcolor{weInk}{\textbf{Takeaway.}}~\textit{\textcolor{weSlate}{#1}}}\par\smallskip}
 
 % Section lead-in: one italic line stating the argument move and threading the spine.
 \newcommand{\lead}[1]{\par\vspace{-3pt}\noindent{\small\itshape\textcolor{weSlate}{#1}}\par\medskip}
-
-% Inline pointer placed next to a claim that is blocked on an open contribution.
-\newcommand{\collabmark}[1]{\ifcollab\,\colorbox{weViolet!16}{\scriptsize\sffamily\textbf{\textcolor{weViolet!75!black}{HELP: #1}}}\fi}
-
-% Boxed task card used in the Open Contributions appendix.
-\newcommand{\collabcard}[6]{%
-  \ifcollab
-  \par\smallskip\noindent
-  \setlength{\fboxsep}{7pt}%
-  \noindent\fcolorbox{weViolet!70!black}{weViolet!7}{%
-    \begin{minipage}{0.93\linewidth}
-      \footnotesize\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}%
-      \textbf{\textcolor{weViolet!72!black}{[#1] #2}}\par
-      \textbf{Where:} #3\par
-      \textbf{What is missing:} #4\par
-      \textbf{How to close it:} #5\par
-      \textbf{Needs:} #6\par
-      \textbf{Owner:} \underline{\hspace{4.5cm}}\quad\textbf{Target:} \underline{\hspace{3cm}}
-    \end{minipage}%
-  }%
-  \par\smallskip
-  \fi
-}
 
 \title{WorldEpisode: Auditing Silent State Drift in Robot-Learning Datasets}
 
@@ -162,16 +139,27 @@ machine-checkable invariants per episode (persistent identity, frame and clock m
 representation roles, temporal events, provenance) plus the two corpus-level obligations that carry
 the headline results, lineage-disjoint evaluation splits and loss-explicit conversion.
 
-On a public SO-101 LeRobot release, a random episode split leaks every tested world lineage and
-yields 0.850 offline success for a behavioral-cloning probe; a scene-disjoint split reduces
-measured leakage to zero (0.000) and the same probe to 0.000. Declaring the inferred four-frame,
-133 ms actuation delay on a real trajectory reduces validation joint RMSE from 4.732 to 1.862
-degrees and same-trace MuJoCo/Genesis replay RMSE from 3.425 to 1.563 degrees. A round trip over
-ten public LeRobot episodes preserves 1,935 state/action rows with maximum numerical error 0.0
-while reporting source-absent semantics as explicit conversion loss, and the validator detects all
-14 injected fault classes. The paper claims no universal file format, no simulator-independent
-physics, and no benchmark score inflation without policy reruns; ACT/Diffusion rollouts,
-famous-benchmark reruns, Isaac/SAPIEN execution, and external adoption remain explicit open gates.
+On a public SO-101 LeRobot release, a random episode split overlaps every tested task--scene proxy
+lineage. Across \ExpMlpSeedCount{} optimization seeds, mean episode nRMSE is
+\ExpMlpRandomNrmse{} [\ExpMlpRandomNrmseCiLow, \ExpMlpRandomNrmseCiHigh]; holding out
+\ExpSceneHeldoutGroupCount{} task--scene groups reduces measured proxy-lineage overlap to
+\ExpSceneHeldoutOverlap{} and increases nRMSE to \ExpMlpHeldoutNrmse{}
+[\ExpMlpHeldoutNrmseCiLow, \ExpMlpHeldoutNrmseCiHigh], a
+\ExpMlpNrmseDifference{} increase [\ExpMlpNrmseDifferenceCiLow,
+\ExpMlpNrmseDifferenceCiHigh]. Because task identity is part of the lineage key, this result does
+not isolate scene leakage from task shift. A \ExpTimingDelayFrames-frame lag frozen on
+\ExpTimingCalibrationEpisodes{} trajectories reduces held-out pooled action/state telemetry RMSE
+from \ExpTimingZeroRmse{} to \ExpTimingFrozenRmse{} source position units on
+\ExpTimingHeldoutEpisodes{} trajectories; the mean paired episode improvement is
+\ExpTimingImprovement{} [\ExpTimingImprovementCiLow, \ExpTimingImprovementCiHigh]. This is a
+telemetry proxy spanning \ExpTimingControllerConfigurationCount{} controller configuration and
+without motor-effective timestamps. A complete-shard round-trip audit
+over \ExpConversionScaleEpisodeCount{} public LeRobot episodes from
+\ExpConversionScaleDatasetCount{} datasets preserves \ExpConversionScaleRowCount{} paired
+state/action samples with maximum numerical error \ExpConversionScaleMaxError{} while reporting
+source-absent semantics as conversion loss; the validator detects all \ExpFaultCaseCount{} injected
+fault classes. We claim neither simulator-independent physics nor benchmark inflation without
+faithful policy reruns.
 \end{abstract}
 
 % Spine order: failure (+ related work) -> the contract (questions, graphs, obligations)
@@ -184,10 +172,10 @@ famous-benchmark reruns, Isaac/SAPIEN execution, and external adoption remain ex
 \input{sections/limitations}
 \input{sections/conclusion}
 
-\input{sections/appendix}
-\input{sections/open_contributions}
-
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+\input{sections/appendix}
+\input{checklist}
 
 \end{document}

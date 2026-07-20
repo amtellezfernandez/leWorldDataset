@@ -29,14 +29,22 @@ jobs:
       - name: Regenerate controlled experiment summary
         run: python tools/run_experiments.py
 
-      - name: Check open reproduction gates
-        run: python tools/open_reproduction_gates.py --strict
+      - name: Regenerate uncertainty intervals
+        run: python tools/experiment_statistics.py
 
-      - name: Check paper claims against evidence
-        run: python tools/paper_claim_audit.py --strict
+      - name: Regenerate and validate experiment provenance
+        run: python tools/experiment_manifest.py --strict
 
-      - name: Build submission packet
-        run: python tools/submission_packet.py --strict
+      - name: Audit citations and third-party assets
+        run: |
+          python tools/citation_source_audit.py --strict
+          python tools/third_party_asset_audit.py --strict
+
+      - name: Regenerate paper values
+        run: python tools/paper_experiment_values.py
+
+      - name: Install PDF inspection tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
 
       - name: Check public maturity language
         run: python tools/public_maturity_audit.py --strict
@@ -44,11 +52,11 @@ jobs:
       - name: Smoke-test wheel install
         run: python tools/package_install_smoke.py --strict
 
-      - name: Verify release manifest
-        run: python tools/release_manifest.py --verify --strict
+      - name: Build and verify submission artifacts
+        run: make readiness
 
-      - name: Check RFC release readiness
-        run: python tools/release_readiness.py --strict-rfc
+      - name: Validate final generated state
+        run: make validate
 
       - name: Check generated artifact freshness
         run: python tools/artifact_freshness.py --strict
