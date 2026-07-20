@@ -111,3 +111,14 @@ def test_numeric_normalization_is_stable_across_libm_scale_noise():
     right = {"metric": 40.598045013859824, "nested": [0.009006994767988991]}
 
     assert MODULE.normalize_numeric(left) == MODULE.normalize_numeric(right)
+
+
+def test_analysis_equivalence_tolerates_only_negligible_float_noise():
+    baseline = {"metric": 0.0031753911418, "count": 32, "passed": True}
+    libm_variant = {"metric": 0.00317539068269, "count": 32, "passed": True}
+    material_change = {"metric": 0.0032, "count": 32, "passed": True}
+    discrete_change = {"metric": 0.0031753911418, "count": 31, "passed": True}
+
+    assert MODULE.analyses_equivalent(baseline, libm_variant)
+    assert not MODULE.analyses_equivalent(baseline, material_change)
+    assert not MODULE.analyses_equivalent(baseline, discrete_change)

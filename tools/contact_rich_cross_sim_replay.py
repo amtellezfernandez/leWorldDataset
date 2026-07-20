@@ -15,6 +15,8 @@ import math
 import os
 import platform
 import random
+import resource
+import shutil
 import statistics
 import subprocess
 import sys
@@ -78,6 +80,22 @@ def normalize_numeric(payload: Any) -> Any:
             raise ContactReplayError("derived analysis contains a non-finite value")
         return float(f"{payload:.12g}")
     return payload
+
+
+def analyses_equivalent(left: Any, right: Any) -> bool:
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(
+            analyses_equivalent(left[key], right[key]) for key in left
+        )
+    if isinstance(left, list):
+        return len(left) == len(right) and all(
+            analyses_equivalent(a, b) for a, b in zip(left, right)
+        )
+    if isinstance(left, float):
+        return math.isclose(left, right, rel_tol=1e-10, abs_tol=1e-8)
+    return left == right
 
 
 def relative(path: Path) -> str:
@@ -263,6 +281,9 @@ def machine_manifest() -> dict[str, Any]:
             if line.lower().startswith("model name"):
                 cpu_model = line.split(":", 1)[-1].strip()
                 break
+    storage = shutil.disk_usage(ROOT)
+    max_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    max_rss_bytes = int(max_rss * 1024) if sys.platform != "darwin" else int(max_rss)
     return {
         "hostname_sha256": hashlib.sha256(platform.node().encode("utf-8")).hexdigest(),
         "platform": platform.platform(),
@@ -271,6 +292,10 @@ def machine_manifest() -> dict[str, Any]:
         "logical_cpu_count": os.cpu_count(),
         "ram_bytes": memory_bytes,
         "gpu": "not_used_cpu_protocol",
+        "gpu_vram_bytes": "not_used_cpu_protocol",
+        "storage_total_bytes": storage.total,
+        "storage_free_bytes": storage.free,
+        "max_rss_bytes": max_rss_bytes,
     }
 
 
@@ -317,6 +342,7 @@ def mujoco_xml(protocol: dict[str, Any], task: dict[str, Any]) -> str:
 
 def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
     started = time.monotonic()
+    started_utc = datetime.now(timezone.utc).isoformat()
     try:
         import mujoco
         import numpy as np
@@ -430,7 +456,16 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
             "solver": "Newton",
             "integrator": "implicitfast",
             "contact_role": "reference_not_physical_ground_truth",
+            "started_utc": started_utc,
+            "finished_utc": datetime.now(timezone.utc).isoformat(),
             "wall_time_seconds": time.monotonic() - started,
+        },
+        "execution": {
+            "script": relative(Path(__file__)),
+            "script_sha256": sha256_file(Path(__file__)),
+            "repository_commit": git_output("rev-parse", "HEAD"),
+            "exit_status": 0,
+            "preliminary_runs": [],
         },
         "tasks": tasks_payload,
         "tested": True,
@@ -439,6 +474,7 @@ def run_mujoco(protocol: dict[str, Any]) -> dict[str, Any]:
 
 def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
     started = time.monotonic()
+    started_utc = datetime.now(timezone.utc).isoformat()
     try:
         import genesis as gs
         import numpy as np
@@ -564,7 +600,16 @@ def run_genesis(protocol: dict[str, Any]) -> dict[str, Any]:
             "precision": str(protocol["runtime_environment"]["genesis"]["precision"]),
             "solver": "Newton",
             "contact_role": "comparison_not_physical_ground_truth",
+            "started_utc": started_utc,
+            "finished_utc": datetime.now(timezone.utc).isoformat(),
             "wall_time_seconds": time.monotonic() - started,
+        },
+        "execution": {
+            "script": relative(Path(__file__)),
+            "script_sha256": sha256_file(Path(__file__)),
+            "repository_commit": git_output("rev-parse", "HEAD"),
+            "exit_status": 0,
+            "preliminary_runs": [],
         },
         "tasks": tasks_payload,
         "tested": True,
@@ -1121,7 +1166,7 @@ def check_committed_report(
     expected_analysis["acceptance"]["pass"] = all(
         expected_analysis["acceptance"]["checks"].values()
     )
-    if report.get("analysis") != expected_analysis:
+    if not analyses_equivalent(report.get("analysis"), expected_analysis):
         raise ContactReplayError("committed report analysis is not reproducible from raw reports")
     if required and report["analysis"]["acceptance"]["pass"] is not True:
         raise ContactReplayError("required contact-rich replay acceptance gate did not pass")
