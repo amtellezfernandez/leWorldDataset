@@ -128,10 +128,17 @@ baseline.
 
 - [x] Use the latest official NeurIPS E&D style provisionally and produce an anonymous build.
 - [x] Fit the main content within the current nine-page limit; references currently start on page 9.
+- [x] Add a machine-checkable provisional-format gate for style digest, double-blind mode, page
+  boundary, references/appendix order, and checklist placement.
 - [x] Put references before appendices and the mandatory checklist last.
 - [x] Correct the scene-only leakage overclaim and state the task-shift confound.
 - [ ] Replace `neurips_2026.sty` with the official 2027 style when released and re-audit the page
   limit/checklist.
+- [ ] Reconcile the paper against the complete NeurIPS 2027 E&D call, handbook, and checklist when
+  published; the current configuration records the official 2026 rules only as a baseline.
+- [ ] Provide a reviewer-accessible anonymous code URL in the OpenReview submission form. The
+  deterministic anonymous supplement contains the executable artifact but is not itself the portal
+  URL.
 - [x] Create a deterministic anonymized code/data supplement with an automated PDF/ZIP identity
   audit.
 - [x] Resolve and report licenses/terms for every third-party dataset and derived artifact; enforce
@@ -139,6 +146,8 @@ baseline.
 - [ ] Complete the author ethics attestation after reviewing the NeurIPS 2027 Code of Ethics.
 - [x] Remove identifying text and metadata from the submission PDF and supplement, enforced by
   `tools/submission_anonymity_audit.py`.
+- [x] Remove split author-name fields from citation metadata and regression-test standalone identity
+  tokens in the anonymous supplement.
 - [x] Run a citation-by-citation source audit; replace project-page citations with archival papers
   where available.
 - [x] Run `make check`.

@@ -372,14 +372,14 @@
       "experiment_id": "controlled_contract_suite",
       "outputs": [
         {
-          "bytes": 336537,
+          "bytes": 336536,
           "path": "docs/experiments/results.json",
-          "sha256": "8d9457899f55b80798b5f57fb1fef23c6419c7b4fa350cbe2e05e3c84ae16e9f"
+          "sha256": "0db53e6a98465f6e66ec859800b60d212560ec6a6e307c4c8e8bbb267cef2453"
         },
         {
           "bytes": 17331,
           "path": "docs/experiments/RESULTS.md",
-          "sha256": "9c2d38558d1abea54906c56813801ff21f7d1947f2a9601ed166b696f828fd35"
+          "sha256": "786e6a6757d213ff76e23052bd95a2fda77c9e96a5c06858e7120eee0fe0ec58"
         }
       ],
       "seed_policy": {
@@ -1051,9 +1051,9 @@
   ],
   "generated_from": [
     {
-      "bytes": 336537,
+      "bytes": 336536,
       "path": "docs/experiments/results.json",
-      "sha256": "8d9457899f55b80798b5f57fb1fef23c6419c7b4fa350cbe2e05e3c84ae16e9f"
+      "sha256": "0db53e6a98465f6e66ec859800b60d212560ec6a6e307c4c8e8bbb267cef2453"
     },
     {
       "bytes": 36808,

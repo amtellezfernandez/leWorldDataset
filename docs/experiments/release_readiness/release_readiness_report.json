@@ -2,8 +2,8 @@
   "aggregate": {
     "blocked_stronger_claim_count": 4,
     "blocking_error_count": 0,
-    "check_count": 38,
-    "passed_count": 38,
+    "check_count": 39,
+    "passed_count": 39,
     "warning_failure_count": 0
   },
   "artifacts": {
@@ -125,7 +125,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (304032 bytes)",
+      "evidence": "WorldEpisode.pdf (304112 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -149,7 +149,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (336537 bytes)",
+      "evidence": "docs/experiments/results.json (336536 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -371,9 +371,17 @@
       "severity": "error"
     },
     {
+      "boundary": "The official NeurIPS 2027 instructions and style are not available; the official 2026 E&D author kit is the provisional baseline.",
+      "check_id": "FORMAT.001",
+      "evidence": "status=provisional_ready_pending_target_author_kit, main_content_last_page=9, page_limit=9, target_requirements_final=False",
+      "name": "NeurIPS submission format is audited",
+      "passed": true,
+      "severity": "error"
+    },
+    {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=135, normalized=4",
+      "evidence": "status=pass, entries=139, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"

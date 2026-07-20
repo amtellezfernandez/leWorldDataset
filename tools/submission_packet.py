@@ -32,6 +32,7 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "paper/arxiv/main.tex",
     "paper/arxiv/checklist.tex",
     "paper/arxiv/generated/experiment_values.tex",
+    "paper/arxiv/submission_config.json",
     "schemas/worldepisode-core-v0.schema.json",
     "schemas/worldepisode-dataset-v0.schema.json",
     "conformance/requirements.v0.json",
@@ -65,6 +66,7 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "docs/experiments/third_party_asset_audit/asset_audit.json",
     "docs/anonymous_supplement/supplement_report.json",
     "docs/experiments/anonymity_audit/anonymity_report.json",
+    "docs/experiments/neurips_submission/submission_format_report.json",
     "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "docs/experiments/package_install_smoke/package_install_smoke_report.json",
     "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
@@ -145,6 +147,10 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "audit PDF and supplement anonymity",
         "command": "python3 tools/submission_anonymity_audit.py --strict",
+    },
+    {
+        "name": "audit provisional NeurIPS submission formatting",
+        "command": "python3 tools/neurips_submission_audit.py --strict",
     },
     {
         "name": "regenerate paper values from experiment reports",

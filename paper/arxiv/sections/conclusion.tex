@@ -11,12 +11,14 @@ In the reference experiments, a random split overlaps every task--scene proxy li
 task-confounded holdout increases mean episode nRMSE from \ExpMlpRandomNrmse{} to
 \ExpMlpHeldoutNrmse{} for the MLP and from \ExpTemporalRandomNrmse{} to
 \ExpTemporalHeldoutNrmse{} for deterministic temporal ridge. This diagnoses an invalid random split
-but does not isolate scene leakage. Modeling a \ExpReplayDelayFrames-frame action delay
-reduces held-out alignment error on \ExpReplayTraceCount{} SO-101 \ExpReplayTraceNoun{}, and the
-validator catches every injected fault class. The contribution is the auditable contract and its
-failure boundaries, not a claim of physical rollout improvement.
+but does not isolate scene leakage. Freezing a \ExpTimingDelayFrames-frame telemetry lag on
+\ExpTimingCalibrationEpisodes{} calibration trajectories reduces pooled RMSE from
+\ExpTimingZeroRmse{} to \ExpTimingFrozenRmse{} over \ExpTimingHeldoutEpisodes{} held-out
+trajectories. This does not measure motor-effective latency. The validator catches every injected
+fault class. The contribution is the auditable contract and its failure boundaries, not a claim of
+physical rollout improvement.
 
 The next experiments must disentangle task from physical scene lineage, run ACT/Diffusion and
-rollouts over matched seeds, test delay on multiple trajectories, and add contact-rich replay.
-Until then, the paper makes no famous-benchmark inflation, simulator-independent physics, or
-mature-standard claim.
+rollouts over matched seeds, instrument command and motor-effective timestamps on another controller,
+and add contact-rich replay. Until then, the paper makes no famous-benchmark inflation,
+simulator-independent physics, or mature-standard claim.

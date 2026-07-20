@@ -29,6 +29,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `paper/arxiv/main.tex` | True | True |
 | `paper/arxiv/checklist.tex` | True | True |
 | `paper/arxiv/generated/experiment_values.tex` | True | True |
+| `paper/arxiv/submission_config.json` | True | True |
 | `schemas/worldepisode-core-v0.schema.json` | True | True |
 | `schemas/worldepisode-dataset-v0.schema.json` | True | True |
 | `conformance/requirements.v0.json` | True | True |
@@ -62,6 +63,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `docs/experiments/third_party_asset_audit/asset_audit.json` | True | True |
 | `docs/anonymous_supplement/supplement_report.json` | True | True |
 | `docs/experiments/anonymity_audit/anonymity_report.json` | True | True |
+| `docs/experiments/neurips_submission/submission_format_report.json` | True | True |
 | `docs/experiments/paper_claim_audit/paper_claim_audit_report.json` | True | True |
 | `docs/experiments/package_install_smoke/package_install_smoke_report.json` | True | True |
 | `docs/experiments/open_reproduction_gates/open_reproduction_gates.json` | True | True |
@@ -119,6 +121,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | audit third-party assets and redistributed source rows | `python3 tools/third_party_asset_audit.py --strict` |
 | build the anonymous supplementary archive | `python3 tools/build_anonymous_supplement.py --strict` |
 | audit PDF and supplement anonymity | `python3 tools/submission_anonymity_audit.py --strict` |
+| audit provisional NeurIPS submission formatting | `python3 tools/neurips_submission_audit.py --strict` |
 | regenerate paper values from experiment reports | `python3 tools/paper_experiment_values.py` |
 | validate open unclaimed-result gates | `python3 tools/open_reproduction_gates.py --strict` |
 | audit paper claims against evidence | `python3 tools/paper_claim_audit.py --strict` |

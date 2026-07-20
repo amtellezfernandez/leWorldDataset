@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 135,
+    "entry_count": 139,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 105,
-    "release_script_count": 30
+    "public_evidence_count": 108,
+    "release_script_count": 31
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "dd74f362cc53b48f086cce3741682d261e4a8b505978b908cbdf758d29fa36a2"
+      "sha256": "20a7bec3e54b9efb72901cf492a6120f40a8a7ecd1b3e5b368529fa0abff88fc"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "d4a7becbe3214107ae0ab5489ac5861532b3e81df046a354d39a51dfd78e26b5"
+      "sha256": "1d19d6dcbe0f6acf0302503a03276fd15e0b9da4b6f52398cdd43bcb967ecc27"
     },
     {
       "category": "public_evidence",
@@ -61,7 +61,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "TODO.md",
-      "sha256": "f3fff9061925c50360f23001db10221b60405438b4c1025afb4bf1b19aa575f1"
+      "sha256": "985777f2f66b5a9b45ed083d1911f15f4a8de255c22e97da53e44551c73e9a9a"
     },
     {
       "category": "public_evidence",
@@ -133,7 +133,16 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/generated/experiment_values.tex",
-      "sha256": "5b5e36b20af5016de94987ccd88b1298750a22afa6f20f64ef0892fd995656ae"
+      "sha256": "7a8b4b3bb1f7047c60d20f7d50b830a2cbc243932533e938128d08f687c9c554"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "paper/arxiv/submission_config.json",
+      "sha256": "7104c3c269013ab0db07aa4d541cb52a1f77a34b877a6f09abc4dc08a0d541e3"
     },
     {
       "category": "public_evidence",
@@ -214,7 +223,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/conclusion.tex",
-      "sha256": "dbac558b857e6e9e69c5fb91fee05720a0da984ff51b747d85512bc5a8f1620d"
+      "sha256": "69860cc5ce3ebe363bfef03a7eb4f0f4997b625a850521d2b98401f4d2e558b8"
     },
     {
       "category": "public_evidence",
@@ -610,7 +619,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/experiment_manifest.json",
-      "sha256": "fd5f6bb0bff26ff024aa740949559a5695d728acdbd81002df57fa328e276fda"
+      "sha256": "ec0485cb5b6167438bc348f0de5fee6435e834d1e9cd79a40e530106057ab2a3"
     },
     {
       "category": "public_evidence",
@@ -655,7 +664,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "05f4121609ec9db88ab1dd452a93119c137e5c2ab83f7722b1cf6e4622e239cb"
+      "sha256": "5c1bef02e824dbba1bb3c7941bed7a38b25a063ccfe65e93f2d39c33cb29f919"
     },
     {
       "category": "public_evidence",
@@ -664,7 +673,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "b00d68d65e122a0bfa561c913d17330649e12d38524ba8c582df48d800014007"
+      "sha256": "e17f87591ca2dceb50c2a5dc7ece2070f457783823460c26f26e4006c81b0f3a"
     },
     {
       "category": "public_evidence",
@@ -683,6 +692,24 @@
       "normalizers_applied": [],
       "path": "docs/experiments/anonymity_audit/anonymity_report.json",
       "sha256": "8f2c3a7e055dbd8e06a42999dd8defed7050207f5b8e8abda729560f3c92853a"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/neurips_submission/README.md",
+      "sha256": "680f51a6f742f7374e18f8bbf6a49f6eec67ea1242f6366aefcd895d47758253"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/neurips_submission/submission_format_report.json",
+      "sha256": "72a3bfc19bd2ac584f079e1593ff854548d86fadf79a17d14e28f4eff9f46683"
     },
     {
       "category": "public_evidence",
@@ -988,7 +1015,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "1f93ce9fe4b242d6b81c3ca09517c3d1e54cea0b2aa862ad9e5cd740ca47652d"
+      "sha256": "7e0c66fe071046263019bbc3d12cfffad03bd8b7d1764aaf10e0c2ab21338529"
     },
     {
       "category": "release_script",
@@ -1078,7 +1105,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/build_anonymous_supplement.py",
-      "sha256": "458dd3c52e8fdae2335e27912b994cd951f5eff2756e955a461dfe11cd8aa72c"
+      "sha256": "e64373010c2c85954dd5c579d2e9b4a3e70a502e93359b968fb92e593cc5084a"
     },
     {
       "category": "release_script",
@@ -1088,6 +1115,15 @@
       "normalizers_applied": [],
       "path": "tools/submission_anonymity_audit.py",
       "sha256": "558fd94fa7f2ea02aaf0f4fd3d30479407878d4a9758e7647ba0cfc2affaaa67"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/neurips_submission_audit.py",
+      "sha256": "29589728ac28eaed8326630922d4368fb5c542e733af3b4bad29f69461a4ee77"
     },
     {
       "category": "release_script",
@@ -1213,7 +1249,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "df6e36fce14e299ef34e0afbbefb6913469c2b92b5488fc4e037761dc3d093df"
+      "sha256": "880a12b022133330de8e7139611144cca9d95250187b99c5efd08b187a83db91"
     },
     {
       "category": "release_script",
@@ -1222,7 +1258,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "8dcaa7c94c3ac65b30dad417de4a690b936339b3a1f5d355f77b4f525b5a7719"
+      "sha256": "55df61ebfab80a652ea0bc5779b82bcfef1c76d41e50c0362ae3d6174e89ea19"
     },
     {
       "category": "release_script",
@@ -1231,7 +1267,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "d6b9ea5996f4144f8be807ca60e951d8d3e3234ca90a5e9a524c53ebe2447519"
+      "sha256": "deb67d41e0ddd9e6e788908e201138d057d95ab2f2a9ac3c9e0135df109caab2"
     },
     {
       "category": "release_script",

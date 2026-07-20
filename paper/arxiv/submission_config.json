@@ -1,0 +1,47 @@
+{
+  "schema": "worldepisode_neurips_submission_config_v1",
+  "venue": "NeurIPS",
+  "target_year": 2027,
+  "track": "Evaluations & Datasets",
+  "review_mode": "double_blind",
+  "target_author_kit": {
+    "instructions_published": false,
+    "style_available": false
+  },
+  "provisional_baseline": {
+    "year": 2026,
+    "style_file": "paper/arxiv/neurips_2026.sty",
+    "style_sha256": "c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a",
+    "package_options": [
+      "eandd"
+    ],
+    "main_content_page_limit": 9,
+    "paper_template_url": "https://media.neurips.cc/Conferences/NeurIPS2026/Styles.zip",
+    "track_call_url": "https://neurips.cc/Conferences/2026/CallForEvaluationsDatasets",
+    "track_faq_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsFAQ",
+    "reviewer_guidelines_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines"
+  },
+  "submission_classification": {
+    "introduces_new_dataset": false,
+    "introduces_reusable_executable_artifact": true,
+    "croissant_required_under_baseline": false,
+    "anonymous_executable_code_required_under_baseline": true
+  },
+  "external_tasks": [
+    {
+      "id": "FORMAT.2027",
+      "status": "pending_author_kit",
+      "requirement": "Replace the provisional style and re-audit the page limit and checklist against the official NeurIPS 2027 author kit."
+    },
+    {
+      "id": "PORTAL.CODE",
+      "status": "pending_submission_portal",
+      "requirement": "Provide reviewers a documented, executable, anonymous code URL in the submission form."
+    },
+    {
+      "id": "ETHICS.2027",
+      "status": "pending_author_review",
+      "requirement": "Complete the author ethics attestation against the NeurIPS 2027 Code of Ethics."
+    }
+  ]
+}

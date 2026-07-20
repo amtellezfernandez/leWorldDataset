@@ -1,0 +1,108 @@
+{
+  "artifacts": {
+    "configuration": "paper/arxiv/submission_config.json",
+    "json": "docs/experiments/neurips_submission/submission_format_report.json",
+    "markdown": "docs/experiments/neurips_submission/README.md"
+  },
+  "baseline": {
+    "main_content_page_limit": 9,
+    "migration_required": true,
+    "package_options": [
+      "eandd"
+    ],
+    "paper_template_url": "https://media.neurips.cc/Conferences/NeurIPS2026/Styles.zip",
+    "reviewer_guidelines_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines",
+    "style_actual_sha256": "c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a",
+    "style_file": "paper/arxiv/neurips_2026.sty",
+    "style_sha256": "c3fc2894e83d2517ca18b66741d6c595986d97957dc08ec08bb2125a7ec4555a",
+    "track_call_url": "https://neurips.cc/Conferences/2026/CallForEvaluationsDatasets",
+    "track_faq_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsFAQ",
+    "year": 2026
+  },
+  "external_tasks": [
+    {
+      "id": "FORMAT.2027",
+      "requirement": "Replace the provisional style and re-audit the page limit and checklist against the official NeurIPS 2027 author kit.",
+      "status": "pending_author_kit"
+    },
+    {
+      "id": "PORTAL.CODE",
+      "requirement": "Provide reviewers a documented, executable, anonymous code URL in the submission form.",
+      "status": "pending_submission_portal"
+    },
+    {
+      "id": "ETHICS.2027",
+      "requirement": "Complete the author ethics attestation against the NeurIPS 2027 Code of Ethics.",
+      "status": "pending_author_review"
+    }
+  ],
+  "paper": {
+    "format_source_paths": [
+      "paper/arxiv/main.tex",
+      "paper/arxiv/checklist.tex",
+      "paper/arxiv/sections/appendix.tex",
+      "paper/arxiv/sections/architecture.tex",
+      "paper/arxiv/sections/conclusion.tex",
+      "paper/arxiv/sections/discussion.tex",
+      "paper/arxiv/sections/evaluation.tex",
+      "paper/arxiv/sections/introduction.tex",
+      "paper/arxiv/sections/limitations.tex",
+      "paper/arxiv/sections/requirements.tex"
+    ],
+    "format_source_tree_sha256": "6d3900c9cab4a69c1a0ed62ff4d73d7bf948d6f8164d8f8f0f3ea1579ba626cf",
+    "heading_pages": {
+      "appendix": 12,
+      "checklist": 14,
+      "conclusion": 9,
+      "references": 9
+    },
+    "main_content_last_page": 9,
+    "main_content_page_limit": 9,
+    "manual_format_override_hits": {},
+    "page_size": "612 x 792 pts (letter)",
+    "pages": 21,
+    "path": "WorldEpisode.pdf",
+    "sha256": "20a7bec3e54b9efb72901cf492a6120f40a8a7ecd1b3e5b368529fa0abff88fc",
+    "source_path": "paper/arxiv/main.tex",
+    "source_sha256": "ed2ec4671ae9c0bc27460c25f27ea8fd717b8660eeb887fd09ce3cf3c33f67f2"
+  },
+  "schema": "worldepisode_neurips_submission_audit_v1",
+  "status": "provisional_ready_pending_target_author_kit",
+  "submission_classification": {
+    "anonymous_executable_code_required_under_baseline": true,
+    "croissant_required_under_baseline": false,
+    "introduces_new_dataset": false,
+    "introduces_reusable_executable_artifact": true
+  },
+  "target": {
+    "author_kit": {
+      "instructions_published": false,
+      "style_available": false
+    },
+    "requirements_final": false,
+    "review_mode": "double_blind",
+    "track": "Evaluations & Datasets",
+    "venue": "NeurIPS",
+    "year": 2027
+  },
+  "validation": {
+    "checks": {
+      "appendix_precedes_checklist": true,
+      "checklist_is_last": true,
+      "conclusion_precedes_references": true,
+      "configuration_schema_valid": true,
+      "configured_style_digest_matches": true,
+      "default_build_uses_configured_double_blind_style": true,
+      "main_content_fits_provisional_page_limit": true,
+      "manual_margin_and_font_overrides_absent": true,
+      "paper_and_supplement_anonymity_audit_passes": true,
+      "paper_pdf_author_metadata_is_empty": true,
+      "paper_pdf_is_letter_sized": true,
+      "paper_source_order_is_body_references_appendix_checklist": true,
+      "references_precede_appendix": true,
+      "required_pdf_boundaries_are_detected": true
+    },
+    "errors": [],
+    "passed": true
+  }
+}

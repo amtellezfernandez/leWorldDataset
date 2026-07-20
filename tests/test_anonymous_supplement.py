@@ -6,6 +6,7 @@ import zipfile
 
 from tools.build_anonymous_supplement import (
     ARCHIVE_ROOT,
+    FORBIDDEN_PATTERNS,
     OUTPUT_PATH,
     README_PATH,
     REPORT_PATH,
@@ -38,3 +39,15 @@ def test_archive_has_no_history_or_local_environment() -> None:
     assert f"{ARCHIVE_ROOT}/ANONYMITY.md" in names
     assert not any("/.git/" in name or "/.venv/" in name for name in names)
     assert not any("__pycache__" in name or name.endswith(".pyc") for name in names)
+
+
+def test_archive_removes_split_author_name_fields() -> None:
+    archive_bytes, _ = build_archive()
+    citation_path = f"{ARCHIVE_ROOT}/CITATION.cff"
+    with zipfile.ZipFile(io.BytesIO(archive_bytes), mode="r") as archive:
+        citation = archive.read(citation_path).decode("utf-8")
+
+    assert 'family-names: "Anonymous Author"' in citation
+    assert 'given-names: "Anonymous"' in citation
+    assert 'repository-code: "https://github.com/anonymous/leWorldDataset"' in citation
+    assert all(pattern.search(citation) is None for pattern in FORBIDDEN_PATTERNS)

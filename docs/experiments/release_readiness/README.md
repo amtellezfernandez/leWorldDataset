@@ -24,10 +24,10 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1298 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (12268 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (304032 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (304112 bytes) |
 | DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (6291 bytes) |
 | DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18762 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (336537 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (336536 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (427 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1654 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
@@ -55,7 +55,8 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | SOURCE.002 | third-party assets and redistribution are audited | True | error | docs/experiments/third_party_asset_audit/asset_audit.json aggregate={'active_dataset_count': 4, 'authored_parquet_fixture_count': 1, 'context_only_dataset_count': 4, 'error_count': 0, 'external_software_count': 6, 'redistributed_parquet_bytes': 6736270, 'redistributed_parquet_count': 48, 'source_license_file_count': 16, 'source_media_count': 0} |
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
 | ANON.001 | anonymous paper and supplement pass identity audit | True | error | supplement=docs/anonymous_supplement/supplement_report.json, audit=docs/experiments/anonymity_audit/anonymity_report.json |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=135, normalized=4 |
+| FORMAT.001 | NeurIPS submission format is audited | True | error | status=provisional_ready_pending_target_author_kit, main_content_last_page=9, page_limit=9, target_requirements_final=False |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=139, normalized=4 |
 | SUBMIT.001 | submission packet validates | True | error | status=pass, claims=15, open_gates=4 |
 
 ## Blocked Stronger Claims

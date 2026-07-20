@@ -70,12 +70,15 @@ EXCLUDED_SUFFIXES = {
 # These substitutions apply only to the archive payload, never to the source worktree.
 REPLACEMENTS = (
     ("Alba Tellez Fernandez", "Anonymous Author"),
-    ("Tellez Fernandez", "Anonymous Author"),
-    ("URDF Studio maintainers", "Anonymous WorldEpisode contributors"),
-    ("URDF Studio", "Anonymous reference implementation"),
     ("amtellezfernandez", "anonymous"),
     ("atellez", "anonymous"),
     ("amdev", "anonymous"),
+    ("Tellez Fernandez", "Anonymous Author"),
+    ("Alba", "Anonymous"),
+    ("Tellez", "Anonymous"),
+    ("Fernandez", "Anonymous"),
+    ("URDF Studio maintainers", "Anonymous WorldEpisode contributors"),
+    ("URDF Studio", "Anonymous reference implementation"),
     ("golden-apple", "anonymous-host"),
     ("100.78.242.49", "anonymous-host"),
 )

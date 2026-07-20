@@ -49,9 +49,11 @@ pdflatex main.tex
 - Keep all source files under this directory for upload.
 - `main.tex` is the entry point.
 - `references.bib` is the BibTeX database.
+- `submission_config.json` records the target venue and the pinned provisional author-kit baseline.
 - Section files live in `sections/`.
 - `generated/experiment_values.tex` is generated and must not be edited manually.
 - Generated files such as `.aux`, `.bbl`, `.log`, and `paper/arxiv/main.pdf` should not be committed.
 - The release PDF `WorldEpisode.pdf` at the repository root is the anonymous submission build.
+- Run `python3 ../../tools/neurips_submission_audit.py --strict` before packaging a submission.
 - Before uploading source, replace the provisional 2026 style with the official 2027 files when
-  they become available and remove identifying source metadata.
+  they become available, update `submission_config.json`, and remove identifying source metadata.

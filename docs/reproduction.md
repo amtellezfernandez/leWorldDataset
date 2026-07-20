@@ -15,6 +15,7 @@ python3 tools/experiment_manifest.py --strict
 python3 tools/paper_experiment_values.py
 python3 tools/build_anonymous_supplement.py --strict
 python3 tools/submission_anonymity_audit.py --strict
+python3 tools/neurips_submission_audit.py --strict
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
 python3 tools/package_install_smoke.py --strict
@@ -57,6 +58,7 @@ The experiment runner writes:
 - `docs/experiments/experiment_manifest/*`
 - `WorldEpisode-supplement.zip`, `docs/anonymous_supplement/*`, and
   `docs/experiments/anonymity_audit/*`
+- `docs/experiments/neurips_submission/*`
 - `conformance/fixtures/pilot/*`
 
 ## Active LeRobot conversion (round trip)
@@ -235,6 +237,7 @@ is not an external implementation or adoption claim.
 ```bash
 python3 tools/open_reproduction_gates.py --strict
 python3 tools/paper_claim_audit.py --strict
+python3 tools/neurips_submission_audit.py --strict
 python3 tools/package_install_smoke.py --strict
 python3 tools/submission_packet.py --strict
 python3 tools/public_maturity_audit.py --strict
@@ -247,6 +250,9 @@ such as ACT/Diffusion rollout impact, famous-benchmark inflation, external adopt
 cross-simulator replay. `tools/open_reproduction_gates.py` indexes every stronger result that is
 intentionally not claimed yet and records the commands needed to produce the missing evidence.
 `tools/paper_claim_audit.py` checks the paper's numerical and boundary claims against committed
-artifacts. `tools/release_manifest.py` records SHA-256 digests for stable public evidence.
+artifacts. `tools/neurips_submission_audit.py` checks the configured official-style digest,
+double-blind mode, main-content page boundary, references/appendix order, and final checklist
+placement while keeping the unreleased 2027 author kit explicit. `tools/release_manifest.py`
+records SHA-256 digests for stable public evidence.
 `tools/submission_packet.py` renders the reviewer-facing packet tying measured claims, open
 results, required artifacts, and reproduction commands together.

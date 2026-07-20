@@ -1,4 +1,4 @@
-.PHONY: validate test experiments conversion-scale timing-audit policy-compatibility policy-vision-smoke statistics experiment-manifest source-audits paper paper-values supplement open-gates paper-claims release-manifest verify-release-manifest submission-packet readiness freshness check
+.PHONY: validate test experiments conversion-scale timing-audit policy-compatibility policy-vision-smoke statistics experiment-manifest source-audits paper paper-values supplement submission-format open-gates paper-claims release-manifest verify-release-manifest submission-packet readiness freshness check
 
 validate:
 	python3 tools/validate_examples.py
@@ -14,6 +14,7 @@ validate:
 	python3 tools/third_party_asset_audit.py --check --strict
 	python3 tools/build_anonymous_supplement.py --check --strict
 	python3 tools/submission_anonymity_audit.py --check --strict
+	python3 tools/neurips_submission_audit.py --check --strict
 
 test:
 	python3 -m pytest
@@ -56,6 +57,9 @@ supplement:
 	python3 tools/build_anonymous_supplement.py --strict
 	python3 tools/submission_anonymity_audit.py --strict
 
+submission-format:
+	python3 tools/neurips_submission_audit.py --strict
+
 open-gates:
 	python3 tools/open_reproduction_gates.py --strict
 
@@ -74,11 +78,13 @@ submission-packet: release-manifest
 readiness: open-gates paper-claims
 	python3 tools/build_anonymous_supplement.py --strict
 	python3 tools/submission_anonymity_audit.py --strict
+	python3 tools/neurips_submission_audit.py --strict
 	python3 tools/release_manifest.py --strict
 	python3 tools/submission_packet.py --strict
 	python3 tools/release_readiness.py --strict-rfc
 	python3 tools/build_anonymous_supplement.py --strict
 	python3 tools/submission_anonymity_audit.py --strict
+	python3 tools/neurips_submission_audit.py --strict
 	python3 tools/release_manifest.py --strict
 	python3 tools/release_manifest.py --verify --strict
 	python3 tools/submission_packet.py --strict

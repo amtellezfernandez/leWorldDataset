@@ -8,6 +8,7 @@ this `docs/` directory; run commands from the repository root.
 - [Paper PDF (publication build)](../WorldEpisode.pdf)
 - [arXiv LaTeX paper](../paper/arxiv/main.tex)
 - [Generated paper experiment values](../paper/arxiv/generated/experiment_values.tex)
+- [NeurIPS submission configuration](../paper/arxiv/submission_config.json)
 - [Experiment roadmap](../TODO.md)
 - [Markdown paper notes](../paper/le-world-layout.md)
 - [USS framing note](universal-spatial-state.md)
@@ -72,6 +73,7 @@ this `docs/` directory; run commands from the repository root.
 - [Third-party asset notices](../THIRD_PARTY_ASSETS.md)
 - [Anonymous supplementary archive report](anonymous_supplement)
 - [Submission PDF and ZIP anonymity audit](experiments/anonymity_audit)
+- [NeurIPS submission format audit](experiments/neurips_submission)
 - [Maintainer recovery snapshots](huggingface-recovery.md)
 
 ## Release gates and packets

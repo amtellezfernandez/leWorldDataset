@@ -42,6 +42,9 @@ SUPPLEMENT_REPORT_JSON = (
 ANONYMITY_REPORT_JSON = (
     ROOT / "docs" / "experiments" / "anonymity_audit" / "anonymity_report.json"
 )
+NEURIPS_SUBMISSION_REPORT_JSON = (
+    ROOT / "docs" / "experiments" / "neurips_submission" / "submission_format_report.json"
+)
 READINESS_SCHEMA = "worldepisode_release_readiness_v1"
 AUDIT_DATE = "2026-07-13"
 
@@ -183,6 +186,7 @@ def ci_checks() -> list[Check]:
         "python tools/third_party_asset_audit.py --strict",
         "python tools/build_anonymous_supplement.py --strict",
         "python tools/submission_anonymity_audit.py --strict",
+        "python tools/neurips_submission_audit.py --strict",
         "python tools/public_maturity_audit.py --strict",
         "python tools/package_install_smoke.py --strict",
         "python tools/release_manifest.py --verify --strict",
@@ -666,6 +670,57 @@ def anonymity_checks() -> list[Check]:
     ]
 
 
+def submission_format_checks() -> list[Check]:
+    if not NEURIPS_SUBMISSION_REPORT_JSON.exists():
+        return [
+            Check(
+                "FORMAT.001",
+                "NeurIPS submission format is audited",
+                False,
+                f"{rel(NEURIPS_SUBMISSION_REPORT_JSON)} missing",
+            )
+        ]
+    try:
+        report = load_json(NEURIPS_SUBMISSION_REPORT_JSON)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [
+            Check(
+                "FORMAT.001",
+                "NeurIPS submission format report parses",
+                False,
+                f"{rel(NEURIPS_SUBMISSION_REPORT_JSON)}: {exc}",
+            )
+        ]
+    target_final = nested(report, ("target", "requirements_final")) is True
+    passed = (
+        report.get("schema") == "worldepisode_neurips_submission_audit_v1"
+        and report.get("status")
+        in {"provisional_ready_pending_target_author_kit", "target_ready"}
+        and nested(report, ("validation", "passed")) is True
+        and nested(report, ("paper", "main_content_last_page"), 0)
+        <= nested(report, ("paper", "main_content_page_limit"), -1)
+    )
+    return [
+        Check(
+            "FORMAT.001",
+            "NeurIPS submission format is audited",
+            passed,
+            (
+                f"status={report.get('status')}, "
+                f"main_content_last_page={nested(report, ('paper', 'main_content_last_page'))}, "
+                f"page_limit={nested(report, ('paper', 'main_content_page_limit'))}, "
+                f"target_requirements_final={target_final}"
+            ),
+            boundary=(
+                "The official NeurIPS 2027 instructions and style are not available; "
+                "the official 2026 E&D author kit is the provisional baseline."
+                if not target_final
+                else ""
+            ),
+        )
+    ]
+
+
 def release_manifest_checks() -> list[Check]:
     if not RELEASE_MANIFEST_JSON.exists():
         return [
@@ -790,6 +845,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
     checks.extend(source_audit_checks())
     checks.extend(public_maturity_checks())
     checks.extend(anonymity_checks())
+    checks.extend(submission_format_checks())
     checks.extend(release_manifest_checks())
     checks.extend(submission_packet_checks())
     open_gate_report = load_json(OPEN_GATES_JSON) if OPEN_GATES_JSON.exists() else {}

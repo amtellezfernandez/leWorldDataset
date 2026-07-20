@@ -344,6 +344,10 @@
       "name": "audit PDF and supplement anonymity"
     },
     {
+      "command": "python3 tools/neurips_submission_audit.py --strict",
+      "name": "audit provisional NeurIPS submission formatting"
+    },
+    {
       "command": "python3 tools/paper_experiment_values.py",
       "name": "regenerate paper values from experiment reports"
     },
@@ -449,6 +453,11 @@
       "exists": true,
       "nonempty": true,
       "path": "paper/arxiv/generated/experiment_values.tex"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "paper/arxiv/submission_config.json"
     },
     {
       "exists": true,
@@ -614,6 +623,11 @@
       "exists": true,
       "nonempty": true,
       "path": "docs/experiments/anonymity_audit/anonymity_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/neurips_submission/submission_format_report.json"
     },
     {
       "exists": true,
