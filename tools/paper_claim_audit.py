@@ -376,7 +376,93 @@ def build_claims(
             text=text,
             boundary=(
                 "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; "
-                "Isaac is not claimed tested and contact-rich rollout remains open."
+                "Isaac is not claimed tested; contact physics is evaluated separately."
+            ),
+        )
+    )
+
+    contact_replay = results.get("contact_rich_replay", {})
+    contact_analysis = nested(contact_replay, ("analysis",), {})
+    contact_aggregate = nested(contact_analysis, ("aggregate",), {})
+    contact_tasks = nested(contact_analysis, ("tasks",), {})
+    claims.append(
+        claim_result(
+            claim_id="CLAIM.REPLAY.CONTACT.001",
+            claim=(
+                "A preregistered two-runtime contact protocol measures trajectory, contact, "
+                "grasp, pose, and outcome agreement without claiming equivalent physics."
+            ),
+            evidence_artifacts=[
+                "docs/experiments/contact_rich_replay/protocol.json",
+                "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+                "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+                "docs/experiments/contact_rich_replay/genesis_runtime_report.json",
+            ],
+            paper_patterns=[
+                "\\ExpContactReplayScenariosPerTask{} initial states per task",
+                "\\ExpContactReplayTrajectoryRmseMm",
+                "\\ExpContactReplayPrecision",
+                "\\ExpContactReplayRecall",
+                "\\ExpContactReplayFOne",
+                "\\ExpContactReplayGraspAgreement",
+                "\\ExpContactReplayOutcomeAgreement",
+                "\\ExpContactReplayFinalOrientationDeg",
+                "\\ExpContactReplayCaptureOrientationDeg",
+                "preclude an equivalent-physics claim",
+            ],
+            evidence_passed=(
+                nested(contact_analysis, ("acceptance", "pass")) is True
+                and nested(
+                    contact_replay,
+                    ("protocol", "committed_before_required_execution"),
+                )
+                is True
+                and isinstance(contact_tasks, dict)
+                and len(contact_tasks) >= 2
+                and nested(contact_aggregate, ("scenario_count",), 0) >= 16
+                and 0.0 <= nested(contact_aggregate, ("contact_f1", "estimate"), -1.0) <= 1.0
+                and 0.0
+                <= nested(
+                    contact_aggregate,
+                    ("grasp_state_agreement", "estimate"),
+                    -1.0,
+                )
+                <= 1.0
+                and nested(
+                    contact_aggregate,
+                    ("final_orientation_error_deg", "estimate"),
+                    0.0,
+                )
+                > 0.0
+            ),
+            evidence={
+                "protocol_first_commit": nested(
+                    contact_replay, ("protocol", "first_committed_revision")
+                ),
+                "task_count": len(contact_tasks) if isinstance(contact_tasks, dict) else 0,
+                "scenario_count": nested(contact_aggregate, ("scenario_count",)),
+                "trajectory_position_rmse_m": nested(
+                    contact_aggregate,
+                    ("trajectory_position_rmse_m", "estimate"),
+                ),
+                "contact_f1": nested(contact_aggregate, ("contact_f1", "estimate")),
+                "grasp_state_agreement": nested(
+                    contact_aggregate,
+                    ("grasp_state_agreement", "estimate"),
+                ),
+                "task_outcome_agreement": nested(
+                    contact_aggregate,
+                    ("task_outcome_agreement", "estimate"),
+                ),
+                "final_orientation_error_deg": nested(
+                    contact_aggregate,
+                    ("final_orientation_error_deg", "estimate"),
+                ),
+            },
+            text=text,
+            boundary=(
+                "Two scripted primitive tasks with kinematic actors and no hardware ground truth; "
+                "the observed orientation divergence blocks equivalent-physics claims."
             ),
         )
     )

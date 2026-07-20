@@ -1,6 +1,6 @@
 {
   "aggregate": {
-    "blocked_stronger_claim_count": 4,
+    "blocked_stronger_claim_count": 5,
     "blocking_error_count": 0,
     "check_count": 39,
     "passed_count": 39,
@@ -58,20 +58,25 @@
       "required_evidence": "maintainer agreement/disagreement records for prevalence; pinned dataset-specific conversions for source-level benchmark gaps."
     },
     {
-      "blocked": false,
+      "blocked": true,
       "blocker_id": "SIM.001",
-      "claim": "runtime-neutral replay equivalence across contact-rich simulator rollouts",
+      "claim": "simulator-equivalent contact physics",
       "current_evidence": {
+        "contact_replay_complete": true,
+        "contact_replay_final_orientation_error_deg": 26.2353405742,
         "genesis_same_trace_tested": true,
         "meta_simulator_aggregate": {
           "adapter_required_count": 1,
           "compliance_layer_count": 3,
+          "contact_rich_scenario_count": 32,
+          "contact_rich_task_count": 2,
+          "contact_rich_tested_runtime_count": 2,
           "ready_untested_adapter_count": 1,
           "runtime_target_count": 4,
           "tested_adapter_count": 2
         }
       },
-      "required_evidence": "same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter."
+      "required_evidence": "articulated contact tasks anchored to hardware observations, with a predeclared physical tolerance envelope; current orientation drift contradicts an equivalence claim."
     },
     {
       "blocked": true,
@@ -85,7 +90,7 @@
     {
       "boundary": "",
       "check_id": "DOC.001",
-      "evidence": "README.md (6853 bytes)",
+      "evidence": "README.md (7166 bytes)",
       "name": "top-level README exists",
       "passed": true,
       "severity": "error"
@@ -125,7 +130,7 @@
     {
       "boundary": "",
       "check_id": "DOC.006",
-      "evidence": "WorldEpisode.pdf (304112 bytes)",
+      "evidence": "WorldEpisode.pdf (321363 bytes)",
       "name": "paper PDF exists",
       "passed": true,
       "severity": "error"
@@ -141,7 +146,7 @@
     {
       "boundary": "",
       "check_id": "DOC.008",
-      "evidence": "docs/reviewer-concern-matrix.md (18762 bytes)",
+      "evidence": "docs/reviewer-concern-matrix.md (18869 bytes)",
       "name": "reviewer concern matrix exists",
       "passed": true,
       "severity": "error"
@@ -149,7 +154,7 @@
     {
       "boundary": "",
       "check_id": "DOC.009",
-      "evidence": "docs/experiments/results.json (336536 bytes)",
+      "evidence": "docs/experiments/results.json (385216 bytes)",
       "name": "controlled results exist",
       "passed": true,
       "severity": "error"
@@ -285,8 +290,8 @@
     {
       "boundary": "",
       "check_id": "EVID.008",
-      "evidence": "LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance",
-      "name": "replay timing evidence is executable",
+      "evidence": "LeRobot control replay, scheduler conformance, and preregistered MuJoCo/Genesis primitive contact replay",
+      "name": "replay timing and contact evidence are executable",
       "passed": true,
       "severity": "error"
     },
@@ -309,7 +314,7 @@
     {
       "boundary": "",
       "check_id": "GATE.001",
-      "evidence": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=4",
+      "evidence": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5",
       "name": "open reproduction gate index validates",
       "passed": true,
       "severity": "error"
@@ -325,7 +330,7 @@
     {
       "boundary": "",
       "check_id": "CLAIM.001",
-      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=15, failed=0",
+      "evidence": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=16, failed=0",
       "name": "paper claims are evidence-backed",
       "passed": true,
       "severity": "error"
@@ -333,7 +338,7 @@
     {
       "boundary": "",
       "check_id": "PROV.001",
-      "evidence": "docs/experiments/experiment_manifest/experiment_manifest.json experiments=8, errors=[]",
+      "evidence": "docs/experiments/experiment_manifest/experiment_manifest.json experiments=9, errors=[]",
       "name": "principal experiments have validated provenance",
       "passed": true,
       "severity": "error"
@@ -381,7 +386,7 @@
     {
       "boundary": "",
       "check_id": "MANIFEST.001",
-      "evidence": "status=pass, entries=139, normalized=4",
+      "evidence": "status=pass, entries=145, normalized=4",
       "name": "release manifest validates",
       "passed": true,
       "severity": "error"
@@ -389,19 +394,19 @@
     {
       "boundary": "",
       "check_id": "SUBMIT.001",
-      "evidence": "status=pass, claims=15, open_gates=4",
+      "evidence": "status=pass, claims=16, open_gates=5",
       "name": "submission packet validates",
       "passed": true,
       "severity": "error"
     }
   ],
-  "claim_boundary": "A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full contact-rich simulator-neutral rollout claims are complete.",
+  "claim_boundary": "A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full simulator-equivalent contact-physics claims are complete.",
   "full_standard_ready": false,
   "open_reproduction_gates": {
     "aggregate": {
-      "command_count": 8,
-      "gate_count": 4,
-      "open_not_claimed_count": 4
+      "command_count": 9,
+      "gate_count": 5,
+      "open_not_claimed_count": 5
     },
     "artifact": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
     "validation": {
@@ -411,11 +416,11 @@
   },
   "paper_claim_audit": {
     "aggregate": {
-      "claim_count": 15,
+      "claim_count": 16,
       "failed_claim_ids": [],
       "failed_count": 0,
       "missing_paper_pattern_count": 0,
-      "passed_count": 15
+      "passed_count": 16
     },
     "artifact": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
     "status": "pass"

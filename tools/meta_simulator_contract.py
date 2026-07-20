@@ -17,6 +17,13 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "meta_simulator_contract"
 CONTROL_REPLAY_REPORT = ROOT / "docs" / "experiments" / "lerobot_control_replay" / "control_replay_report.json"
+CONTACT_RICH_REPLAY_REPORT = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "contact_rich_replay"
+    / "contact_rich_replay_report.json"
+)
 
 
 LAYERS = [
@@ -85,9 +92,36 @@ def replay_evidence() -> dict[str, Any]:
     mujoco = report.get("simulators", {}).get("mujoco", {})
     genesis = report.get("simulators", {}).get("genesis", {})
     isaac = report.get("simulators", {}).get("isaac", {})
+    contact = {}
+    if CONTACT_RICH_REPLAY_REPORT.exists():
+        contact_report = load_json(CONTACT_RICH_REPLAY_REPORT)
+        if (
+            contact_report.get("analysis", {})
+            .get("acceptance", {})
+            .get("pass")
+            is True
+        ):
+            contact = {
+                "artifact": str(CONTACT_RICH_REPLAY_REPORT.relative_to(ROOT)),
+                "task_count": len(contact_report["analysis"]["tasks"]),
+                "scenario_count": contact_report["analysis"]["aggregate"][
+                    "scenario_count"
+                ],
+                "contact_f1": contact_report["analysis"]["aggregate"][
+                    "contact_f1"
+                ]["estimate"],
+                "task_outcome_agreement": contact_report["analysis"]["aggregate"][
+                    "task_outcome_agreement"
+                ]["estimate"],
+                "final_orientation_error_deg": contact_report["analysis"][
+                    "aggregate"
+                ]["final_orientation_error_deg"]["estimate"],
+                "claim_boundary": contact_report["claim_boundary"],
+            }
     return {
         "available": bool(report.get("available")),
         "artifact": str(CONTROL_REPLAY_REPORT.relative_to(ROOT)),
+        "contact_rich": contact,
         "mujoco": {
             "tested": bool(mujoco.get("tested")),
             "rmse_improvement_over_naive": mujoco.get("rmse_improvement_over_naive"),
@@ -115,6 +149,7 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
     mujoco_evidence = evidence.get("mujoco", {})
     genesis_evidence = evidence.get("genesis", {})
     isaac_evidence = evidence.get("isaac", {})
+    contact_evidence = evidence.get("contact_rich", {})
     return [
         {
             "runtime_id": "mujoco",
@@ -126,10 +161,11 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
                 "artifact": evidence.get("artifact"),
                 "tested": mujoco_evidence.get("tested", False),
                 "rmse_improvement_over_naive": mujoco_evidence.get("rmse_improvement_over_naive"),
+                "contact_rich_replay": contact_evidence,
             },
             "claim_boundary": (
-                "WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace. "
-                "This is not a contact-rich task rollout."
+                "MuJoCo executes the LeRobot timing trace and a primitive contact protocol. "
+                "Scripted actors and no hardware reference preclude a physical-accuracy claim."
             ),
         },
         {
@@ -172,10 +208,11 @@ def target_rows(evidence: dict[str, Any]) -> list[dict[str, Any]]:
                     "rmse_improvement_over_naive": genesis_evidence.get("rmse_improvement_over_naive"),
                     "claim_boundary": genesis_evidence.get("claim_boundary"),
                 },
+                "contact_rich_replay": contact_evidence,
             },
             "claim_boundary": (
-                "Genesis is tested on the same LeRobot trace with a minimal position-servo adapter. "
-                "This is not a contact-rich task rollout and does not claim Isaac or SAPIEN coverage."
+                "Genesis executes the LeRobot timing trace and primitive contact protocol. "
+                "Observed orientation drift precludes equal physics and no Isaac/SAPIEN result is claimed."
             ),
         },
         {
@@ -265,6 +302,15 @@ def build_meta_simulator_contract(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict
             "ready_untested_adapter_count": ready_untested,
             "adapter_required_count": len(targets) - tested - ready_untested,
             "compliance_layer_count": len(LAYERS),
+            "contact_rich_tested_runtime_count": (
+                2 if evidence.get("contact_rich") else 0
+            ),
+            "contact_rich_task_count": evidence.get("contact_rich", {}).get(
+                "task_count", 0
+            ),
+            "contact_rich_scenario_count": evidence.get("contact_rich", {}).get(
+                "scenario_count", 0
+            ),
         },
         "artifacts": {
             "report": str((output_dir / "adapter_contract_report.json").relative_to(ROOT)),

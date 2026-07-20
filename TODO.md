@@ -60,14 +60,16 @@ baseline.
   - Acceptance: measured motor-delay error and a queue-aware scheduler improve held-out behavior
     with a 95% CI excluding zero across at least two controller configurations.
 
-- [ ] **Add contact-rich cross-simulator replay (`REPLAY.001`).**
+- [x] **Add contact-rich cross-simulator replay (`REPLAY.001`).**
   - Preregistered protocol: `docs/experiments/contact_rich_replay/protocol.json` fixes two tasks,
     16 seeded initial states per task, runtime versions, kinematic action trajectories, metrics,
     bootstrap procedure, claim boundary, and completion checks before the required runtime run.
     `tools/contact_rich_cross_sim_replay.py` keeps MuJoCo and Genesis execution in separate
     processes and derives every comparison from retained raw trajectories and contact traces.
-  - Execute the committed protocol in both pinned runtimes; do not tune task geometry, actions,
-    outcomes, or analysis after inspecting the required run.
+  - Completed without changing the preregistered protocol: both pinned runtimes execute all 32
+    paired scenarios, retain raw pose/contact/grasp/outcome traces, and pass the independent
+    cross-interpreter verifier. Contact F1 is high and outcomes agree, while substantial capture
+    orientation drift correctly keeps equivalent-physics claims blocked.
   - Use the same world revision, initial state, action contract, and tolerance envelope in MuJoCo and
     Genesis; add Isaac Sim or SAPIEN only after the core two-runtime protocol is stable.
   - Measure object trajectory error, contact precision/recall/F1, grasp-state agreement, final pose
@@ -121,8 +123,9 @@ baseline.
   experiment.
   - Completed for the five-seed leakage run, DROID rerun, controlled suite, conversion scale,
     multi-trajectory timing audit, ACT/Diffusion compatibility preflight, and remote test suite on
-    the DGX Spark. The conversion-scale run additionally retains two failed preliminary attempts;
-    older committed experiments still need the same provenance backfilled.
+    the DGX Spark, plus the local preregistered contact-rich MuJoCo/Genesis replay. The
+    conversion-scale run additionally retains two failed preliminary attempts; older committed
+    experiments still need the same provenance backfilled.
 - [x] Add a validated machine-readable experiment manifest linking dataset revision, split digest,
   config, seed policy, exact code digest, repository commit, output report, and compute use.
 - [x] Store a verified recovery snapshot of the Git history, paper, supplement, and retained run

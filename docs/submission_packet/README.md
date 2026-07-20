@@ -6,9 +6,9 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 
 ## Summary
 
-- Paper claims checked: 15
+- Paper claims checked: 16
 - Failed checked claims: 0
-- Open results not claimed: 4
+- Open results not claimed: 5
 - Missing required public artifacts: 0
 - Release gate: `python3 tools/release_readiness.py --strict-rfc`
 
@@ -43,6 +43,11 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `docs/experiments/lerobot_conversion_scale/scale_report.json` | True | True |
 | `docs/experiments/lerobot_multitrajectory_timing/README.md` | True | True |
 | `docs/experiments/lerobot_multitrajectory_timing/timing_report.json` | True | True |
+| `docs/experiments/contact_rich_replay/protocol.json` | True | True |
+| `docs/experiments/contact_rich_replay/README.md` | True | True |
+| `docs/experiments/contact_rich_replay/contact_rich_replay_report.json` | True | True |
+| `docs/experiments/contact_rich_replay/mujoco_runtime_report.json` | True | True |
+| `docs/experiments/contact_rich_replay/genesis_runtime_report.json` | True | True |
 | `docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log` | True | True |
 | `docs/experiments/lerobot_policy_gate/policy_gate_report.json` | True | True |
 | `docs/experiments/lerobot_policy_gate/policy_compatibility_report.json` | True | True |
@@ -81,7 +86,8 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `CLAIM.LEAKAGE.001` | True | ArmnetBench random split overlaps task--scene proxy lineages; the task-confounded holdout changes offline imitation metrics. | Task--scene proxy shift confounded with task identity; offline action imitation only, not scene-only leakage, ACT/Diffusion, or rollout success. |
 | `CLAIM.POLICY_VISION_SMOKE.001` | True | Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera and complete the CUDA smoke optimization step. | Input compatibility only; no trained checkpoint, held-out policy metric, simulator rollout, or physical rollout. |
 | `CLAIM.TIMING.001` | True | A lag frozen on calibration trajectories improves held-out SO-101 action/state telemetry alignment across multiple tasks. | Action/state telemetry-lag proxy on one SO-101 dataset; no independently instrumented motor latency or second robot/controller. |
-| `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open. |
+| `CLAIM.REPLAY.001` | True | Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters. | One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested; contact physics is evaluated separately. |
+| `CLAIM.REPLAY.CONTACT.001` | True | A preregistered two-runtime contact protocol measures trajectory, contact, grasp, pose, and outcome agreement without claiming equivalent physics. | Two scripted primitive tasks with kinematic actors and no hardware ground truth; the observed orientation divergence blocks equivalent-physics claims. |
 | `CLAIM.ROUNDTRIP.001` | True | Complete pinned source shards from multiple public LeRobotDatasets round-trip exactly through WorldEpisode. | One complete pinned Parquet shard per dataset; not full corpora or source-video conversion throughput. |
 | `CLAIM.TEMPORAL_POLICY.001` | True | Temporal state/action baseline changes under the task--scene proxy holdout. | Task-confounded offline temporal state/action baseline; not a scene-only, vision-policy, ACT, Diffusion, or rollout result. |
 | `CLAIM.BINDING.001` | True | Pilot bindings inventory native and sidecar retention for a versioned projection. | Pilot projection score, not a universal storage-format ranking. |
@@ -101,6 +107,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | `POLICY.ROLL.001` | state-of-the-art policy or physical rollout impact | open_not_claimed | At least one ACT or Diffusion Policy run must report both random_episode and scene_disjoint metrics, and at least one rollout report must use the same split manifest before the stronger policy-impact claim can be made. |
 | `BENCH.INFLATE.001` | famous benchmark published scores are inflated | open_not_claimed | The gate must contain at least one inflation-proof valid rerun report with measured_inflation=true. Source-level metadata gaps alone are not score-inflation evidence. |
 | `NATURAL.001` | natural failure prevalence is maintainer-confirmed | open_not_claimed | Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps. |
+| `SIM.001` | simulator-equivalent contact physics | open_not_claimed | Equivalent-physics language remains blocked until both simulators satisfy a predeclared hardware-anchored tolerance envelope on articulated contact tasks. Agreement between simulators alone is insufficient. |
 | `ADOPT.001` | mature external standard adoption | open_not_claimed | Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite. |
 
 ## Reproduction Commands
@@ -114,6 +121,7 @@ Only claims listed as passed in the paper claim audit are treated as measured. O
 | regenerate seed-and-episode uncertainty intervals | `python3 tools/experiment_statistics.py` |
 | regenerate complete-shard LeRobot conversion-scale evidence | `uv run --with pyarrow --with requests python tools/lerobot_conversion_scale.py --required` |
 | regenerate held-out multi-trajectory timing evidence | `uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required` |
+| regenerate preregistered contact-rich cross-simulator replay | `UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu uv run --isolated --python 3.11 --index-strategy unsafe-best-match --with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' --with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' python tools/contact_rich_cross_sim_replay.py --required` |
 | validate pinned LeRobot policy compatibility evidence | `python3 tools/lerobot_policy_compatibility_audit.py --check --strict` |
 | validate pinned LeRobot front-camera and policy smoke evidence | `python3 tools/lerobot_policy_video_materialization.py --check --strict && python3 tools/lerobot_policy_vision_smoke.py --check --strict` |
 | regenerate and validate experiment provenance | `python3 tools/experiment_manifest.py --strict` |

@@ -49,6 +49,7 @@ The experiment runner writes:
 - `docs/experiments/lerobot_multitrajectory_timing/*`
 - `docs/experiments/lerobot_scene_leakage/*`
 - `docs/experiments/lerobot_control_replay/*`
+- `docs/experiments/contact_rich_replay/*`
 - `docs/experiments/dataset_scale_audit/*` and `docs/experiments/dataset_scale_performance/*`
 - `docs/experiments/cleanroom_reader/*`
 - `docs/experiments/replay_adapter_conformance/*`
@@ -183,6 +184,25 @@ action contract around an estimated delay, and tests that contract in MuJoCo and
 same-trace adapters improve alignment under the declared contract, but both use the same minimal
 servo model. The Isaac adapter is emitted and marked ready but remains untested.
 
+### Contact-rich cross-simulator replay
+
+```bash
+UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu \
+  uv run --isolated --python 3.11 --index-strategy unsafe-best-match \
+  --with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' \
+  --with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' \
+  python tools/contact_rich_cross_sim_replay.py --required
+python3 tools/contact_rich_cross_sim_replay.py --check --required
+```
+
+The protocol was committed before the required runtime execution. It fixes a straight push and a
+parallel-jaw capture, 16 seeded initial states per task, primitive geometry and material values,
+sampled kinematic actor trajectories, task outcomes, and a scenario-bootstrap analysis. Both raw
+runtime reports retain every object pose, contact channel, grasp state, and outcome. MuJoCo is the
+metric reference only, not physical ground truth. High contact/outcome agreement coexists with
+substantial capture-orientation drift, so the experiment measures simulator disagreement and does
+not claim equivalent physics.
+
 ## Famous-benchmark call-out and inflation gate
 
 ```bash
@@ -246,8 +266,8 @@ python3 tools/release_readiness.py --strict-rfc
 ```
 
 The gate currently passes the executable RFC-release checks and still blocks full standard claims
-such as ACT/Diffusion rollout impact, famous-benchmark inflation, external adoption, and full
-cross-simulator replay. `tools/open_reproduction_gates.py` indexes every stronger result that is
+such as ACT/Diffusion rollout impact, famous-benchmark inflation, external adoption, and
+simulator-equivalent contact physics. `tools/open_reproduction_gates.py` indexes every stronger result that is
 intentionally not claimed yet and records the commands needed to produce the missing evidence.
 `tools/paper_claim_audit.py` checks the paper's numerical and boundary claims against committed
 artifacts. `tools/neurips_submission_audit.py` checks the configured official-style digest,

@@ -55,6 +55,9 @@ this `docs/` directory; run commands from the repository root.
   materialization report, and a successful remote ACT/Diffusion smoke report. These establish
   training-input compatibility, not policy quality or rollout impact.
 - [Active LeRobot control-replay artifacts](experiments/lerobot_control_replay)
+- [Preregistered contact-rich MuJoCo/Genesis replay](experiments/contact_rich_replay)
+  The directory retains the protocol, both raw runtime reports, generated comparison, and
+  scenario-bootstrap intervals. Substantial capture-orientation drift blocks equal-physics claims.
 - [Famous benchmark call-out artifacts](experiments/benchmark_callout_audit)
 - [Famous benchmark inflation-gate artifacts](experiments/benchmark_inflation_gate)
 - [Real-to-sim contract-drift artifacts](experiments/realtosim_contract_drift)

@@ -19,7 +19,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Complete pinned source Parquet shards from 3 public LeRobotDataset v3 datasets, covering 271 episodes and 43601 paired action/state rows with exact tensor, index, and timestamp equality. | Selected shards rather than full corpora; source video payloads are not converted. |
-| Replay timing | A frozen action/state telemetry lag calibrated on 320 SO-101 trajectories and evaluated on 80 source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration; simulator adapters still use one trace. No contact-rich task rollout, Isaac runtime result, or SAPIEN result is claimed. |
+| Replay timing | A frozen action/state telemetry lag calibrated on 320 SO-101 trajectories and evaluated on 80 source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration. |
+| Contact-rich replay | Two preregistered primitive manipulation tasks over 32 initial-state scenarios in MuJoCo and Genesis, retaining object poses, contacts, grasp states, outcomes, and scenario-bootstrap intervals. | Scripted kinematic actors rather than an articulated robot; neither simulator is hardware ground truth, Isaac/SAPIEN remain untested, and equal physics is not claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over 5 public datasets. | Five-dataset count is met through active LeRobot artifacts plus source-level public benchmark metadata. Dataset-specific diagnostic reports cover every case, but source-level benchmark cases still need pinned conversions and maintainer review before prevalence claims. |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
@@ -200,8 +201,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Trace shards: 32768
 - Described episode capacity: 1073741824
 - JSON catalog bytes opened: 24588182
-- Catalog open, parse, and index: 249.221 ms
-- Partition-pruning query time: 0.270 ms
+- Catalog open, parse, and index: 419.727 ms
+- Partition-pruning query time: 0.341 ms
 - Max pruning reduction ratio: 9.155e-05
 - Digest-cache hit rate: 0.749992
 - Missing resolver count: 0
@@ -302,6 +303,17 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 - Genesis same-trace replay timestamp-aware RMSE: 1.563 deg
 - Genesis same-trace replay improvement: 2.19x
 - Isaac adapter ready: True; tested: False
+
+
+## RQ3: Contact-Rich Cross-Simulator Replay
+
+- Tasks / initial-state scenarios: 2 / 32
+- Object trajectory position RMSE: 9.007 mm
+- Contact precision / recall / F1: 0.995 / 0.964 / 0.979
+- Grasp-state agreement: 0.997
+- Final position / orientation error: 8.791 mm / 26.235 deg
+- Task-outcome agreement: 1.000
+- Boundary: This protocol measures agreement between two simulators under the same declared primitive world, initial states, kinematic actor poses, and sample clock. Neither simulator is physical ground truth, and the protocol does not claim equivalent physics.
 
 
 ## Replay Adapter Conformance

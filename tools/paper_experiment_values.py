@@ -291,6 +291,32 @@ def generate_tex(
         if isinstance(simulator, dict) and simulator.get("tested") is True
     )
     replay_trace_count = len({_get(replay, "source_trace")})
+    contact_replay = _get(results, "contact_rich_replay")
+    if _get(contact_replay, "analysis.acceptance.pass") is not True:
+        raise PaperValueError("contact-rich cross-simulator replay did not pass")
+    if _get(
+        contact_replay,
+        "protocol.committed_before_required_execution",
+    ) is not True:
+        raise PaperValueError("contact-rich replay protocol was not preregistered")
+    contact_tasks = _get(contact_replay, "analysis.tasks")
+    contact_runtimes = _get(contact_replay, "runtime_manifests")
+    if not isinstance(contact_tasks, dict) or len(contact_tasks) < 2:
+        raise PaperValueError("contact-rich replay must contain at least two tasks")
+    if not isinstance(contact_runtimes, dict) or set(contact_runtimes) != {
+        "mujoco",
+        "genesis",
+    }:
+        raise PaperValueError("contact-rich replay must contain MuJoCo and Genesis manifests")
+    contact_scenarios_per_task = {
+        _as_int(_get(task, "scenario_count"), "contact replay task scenario count")
+        for task in contact_tasks.values()
+    }
+    if len(contact_scenarios_per_task) != 1:
+        raise PaperValueError("paper prose requires equal scenarios per contact task")
+    contact_scenarios_per_task_value = next(iter(contact_scenarios_per_task))
+    contact_aggregate = _get(contact_replay, "analysis.aggregate")
+    capture_contact = _get(contact_tasks, "parallel_jaw_capture")
     timing_calibration = _get(multitrajectory_timing, "calibration")
     timing_evaluation = _get(multitrajectory_timing, "evaluation")
     timing_improvement = _get(timing_evaluation, "paired_episode_improvement")
@@ -522,6 +548,33 @@ def generate_tex(
         ("ExpGenesisTimedRmse", _fixed(_get(genesis, "timestamp_aware.joint_rmse_deg"), 3, "Genesis timed RMSE")),
         ("ExpGenesisImprovement", _fixed(_get(genesis, "rmse_improvement_over_naive"), 2, "Genesis improvement")),
         ("ExpGenesisNaiveRmsePrecise", _fixed(_get(genesis, "naive_command_time.joint_rmse_deg"), 7, "Genesis precise RMSE")),
+        ("ExpContactReplayRuntimeCount", _tex_int(len(contact_runtimes), "contact replay runtime count")),
+        ("ExpContactReplayTaskCount", _tex_int(len(contact_tasks), "contact replay task count")),
+        ("ExpContactReplayScenariosPerTask", _tex_int(contact_scenarios_per_task_value, "contact replay scenarios per task")),
+        ("ExpContactReplayScenarioCount", _tex_int(_get(contact_aggregate, "scenario_count"), "contact replay scenario count")),
+        ("ExpContactReplayTrajectoryRmseMm", _fixed(1000 * _as_number(_get(contact_aggregate, "trajectory_position_rmse_m.estimate"), "contact trajectory RMSE"), 2, "contact trajectory RMSE mm")),
+        ("ExpContactReplayTrajectoryRmseCiLowMm", _fixed(1000 * _as_number(_get(contact_aggregate, "trajectory_position_rmse_m.ci_low"), "contact trajectory RMSE CI low"), 2, "contact trajectory RMSE CI low mm")),
+        ("ExpContactReplayTrajectoryRmseCiHighMm", _fixed(1000 * _as_number(_get(contact_aggregate, "trajectory_position_rmse_m.ci_high"), "contact trajectory RMSE CI high"), 2, "contact trajectory RMSE CI high mm")),
+        ("ExpContactReplayPrecision", _fixed(_get(contact_aggregate, "contact_precision.estimate"), 3, "contact precision")),
+        ("ExpContactReplayRecall", _fixed(_get(contact_aggregate, "contact_recall.estimate"), 3, "contact recall")),
+        ("ExpContactReplayFOne", _fixed(_get(contact_aggregate, "contact_f1.estimate"), 3, "contact F1")),
+        ("ExpContactReplayFOneCiLow", _fixed(_get(contact_aggregate, "contact_f1.ci_low"), 3, "contact F1 CI low")),
+        ("ExpContactReplayFOneCiHigh", _fixed(_get(contact_aggregate, "contact_f1.ci_high"), 3, "contact F1 CI high")),
+        ("ExpContactReplayGraspAgreement", _fixed(_get(contact_aggregate, "grasp_state_agreement.estimate"), 3, "grasp-state agreement")),
+        ("ExpContactReplayGraspAgreementCiLow", _fixed(_get(contact_aggregate, "grasp_state_agreement.ci_low"), 3, "grasp-state agreement CI low")),
+        ("ExpContactReplayGraspAgreementCiHigh", _fixed(_get(contact_aggregate, "grasp_state_agreement.ci_high"), 3, "grasp-state agreement CI high")),
+        ("ExpContactReplayFinalPositionMm", _fixed(1000 * _as_number(_get(contact_aggregate, "final_position_error_m.estimate"), "contact final position error"), 2, "contact final position error mm")),
+        ("ExpContactReplayFinalPositionCiLowMm", _fixed(1000 * _as_number(_get(contact_aggregate, "final_position_error_m.ci_low"), "contact final position CI low"), 2, "contact final position CI low mm")),
+        ("ExpContactReplayFinalPositionCiHighMm", _fixed(1000 * _as_number(_get(contact_aggregate, "final_position_error_m.ci_high"), "contact final position CI high"), 2, "contact final position CI high mm")),
+        ("ExpContactReplayFinalOrientationDeg", _fixed(_get(contact_aggregate, "final_orientation_error_deg.estimate"), 1, "contact final orientation error")),
+        ("ExpContactReplayFinalOrientationCiLowDeg", _fixed(_get(contact_aggregate, "final_orientation_error_deg.ci_low"), 1, "contact final orientation CI low")),
+        ("ExpContactReplayFinalOrientationCiHighDeg", _fixed(_get(contact_aggregate, "final_orientation_error_deg.ci_high"), 1, "contact final orientation CI high")),
+        ("ExpContactReplayCaptureOrientationDeg", _fixed(_get(capture_contact, "final_orientation_error_deg.estimate"), 1, "capture final orientation error")),
+        ("ExpContactReplayCaptureOrientationCiLowDeg", _fixed(_get(capture_contact, "final_orientation_error_deg.ci_low"), 1, "capture final orientation CI low")),
+        ("ExpContactReplayCaptureOrientationCiHighDeg", _fixed(_get(capture_contact, "final_orientation_error_deg.ci_high"), 1, "capture final orientation CI high")),
+        ("ExpContactReplayOutcomeAgreement", _fixed(_get(contact_aggregate, "task_outcome_agreement.estimate"), 3, "contact task outcome agreement")),
+        ("ExpContactReplayOutcomeAgreementCiLow", _fixed(_get(contact_aggregate, "task_outcome_agreement.ci_low"), 3, "contact task outcome agreement CI low")),
+        ("ExpContactReplayOutcomeAgreementCiHigh", _fixed(_get(contact_aggregate, "task_outcome_agreement.ci_high"), 3, "contact task outcome agreement CI high")),
         ("ExpAdapterConformanceCaseCount", _tex_int(_get(results, "replay_adapter_conformance.aggregate.case_count"), "adapter conformance case count")),
         ("ExpAdapterConformanceMaxError", _fixed(max(_as_number(_get(case, "contract_aware.rmse"), "adapter conformance RMSE") for case in _get(results, "replay_adapter_conformance.cases")), 1, "adapter conformance max error")),
         ("ExpDriftAblationCount", _tex_int(_get(results, "realtosim_contract_drift.aggregate.ablation_count"), "drift ablation count")),

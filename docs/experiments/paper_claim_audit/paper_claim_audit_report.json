@@ -4,11 +4,11 @@
     "docs/experiments/lerobot_multitrajectory_timing/timing_report.json"
   ],
   "aggregate": {
-    "claim_count": 15,
+    "claim_count": 16,
     "failed_claim_ids": [],
     "failed_count": 0,
     "missing_paper_pattern_count": 0,
-    "passed_count": 15
+    "passed_count": 16
   },
   "artifacts": {
     "json": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
@@ -106,7 +106,7 @@
       "passed": true
     },
     {
-      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open.",
+      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested; contact physics is evaluated separately.",
       "claim": "Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
       "claim_id": "CLAIM.REPLAY.001",
       "evidence": {
@@ -137,6 +137,42 @@
         "\\ExpGenesisTimedRmse",
         "Isaac adapter is emitted as a ready mapping",
         "not tested in this environment"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Two scripted primitive tasks with kinematic actors and no hardware ground truth; the observed orientation divergence blocks equivalent-physics claims.",
+      "claim": "A preregistered two-runtime contact protocol measures trajectory, contact, grasp, pose, and outcome agreement without claiming equivalent physics.",
+      "claim_id": "CLAIM.REPLAY.CONTACT.001",
+      "evidence": {
+        "contact_f1": 0.978956283797,
+        "final_orientation_error_deg": 26.2353405742,
+        "grasp_state_agreement": 0.996614583333,
+        "protocol_first_commit": "700bcbd13cb08ec9d9247a7dbd782a9651e8cc07",
+        "scenario_count": 32,
+        "task_count": 2,
+        "task_outcome_agreement": 1.0,
+        "trajectory_position_rmse_m": 0.00900699476799
+      },
+      "evidence_artifacts": [
+        "docs/experiments/contact_rich_replay/protocol.json",
+        "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+        "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+        "docs/experiments/contact_rich_replay/genesis_runtime_report.json"
+      ],
+      "evidence_passed": true,
+      "missing_paper_patterns": [],
+      "paper_patterns": [
+        "\\ExpContactReplayScenariosPerTask{} initial states per task",
+        "\\ExpContactReplayTrajectoryRmseMm",
+        "\\ExpContactReplayPrecision",
+        "\\ExpContactReplayRecall",
+        "\\ExpContactReplayFOne",
+        "\\ExpContactReplayGraspAgreement",
+        "\\ExpContactReplayOutcomeAgreement",
+        "\\ExpContactReplayFinalOrientationDeg",
+        "\\ExpContactReplayCaptureOrientationDeg",
+        "preclude an equivalent-physics claim"
       ],
       "passed": true
     },
@@ -393,9 +429,9 @@
       "claim_id": "CLAIM.OPEN_GATES.001",
       "evidence": {
         "aggregate": {
-          "command_count": 8,
-          "gate_count": 4,
-          "open_not_claimed_count": 4
+          "command_count": 9,
+          "gate_count": 5,
+          "open_not_claimed_count": 5
         },
         "schema": "worldepisode_open_reproduction_gates_v1",
         "validation": {

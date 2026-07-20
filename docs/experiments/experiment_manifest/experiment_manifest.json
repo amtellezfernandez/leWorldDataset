@@ -1,8 +1,8 @@
 {
   "aggregate": {
-    "experiment_count": 8,
+    "experiment_count": 9,
     "measured_count": 6,
-    "remote_run_count": 7
+    "remote_run_count": 8
   },
   "experiments": [
     {
@@ -287,9 +287,9 @@
       "claim_boundary": "Shared deterministic suite covering contract checks, conversions, replay, controlled proxies, and report generation; individual boundaries remain in docs/experiments/results.json.",
       "code": [
         {
-          "bytes": 108907,
+          "bytes": 112106,
           "path": "tools/run_experiments.py",
-          "sha256": "bddb4a10c639b5e653814633ee68e75298becb39990ac73d7949412afe22810a"
+          "sha256": "d7a838e8a03b29f375c5fe0f0fcb5b0847bae5e266af97935b629bd28086e8ba"
         }
       ],
       "configuration": {
@@ -299,6 +299,7 @@
           "benchmark_callout_audit",
           "benchmark_inflation_gate",
           "cleanroom_reader",
+          "contact_rich_replay",
           "dataset_scale_audit",
           "dataset_scale_performance",
           "independent_fixture_check",
@@ -372,14 +373,14 @@
       "experiment_id": "controlled_contract_suite",
       "outputs": [
         {
-          "bytes": 336536,
+          "bytes": 385216,
           "path": "docs/experiments/results.json",
-          "sha256": "0db53e6a98465f6e66ec859800b60d212560ec6a6e307c4c8e8bbb267cef2453"
+          "sha256": "1a7ed39384e91f8cf5e470a62a30c7331200ace30673d9035cc80576a19aaf08"
         },
         {
-          "bytes": 17331,
+          "bytes": 18175,
           "path": "docs/experiments/RESULTS.md",
-          "sha256": "786e6a6757d213ff76e23052bd95a2fda77c9e96a5c06858e7120eee0fe0ec58"
+          "sha256": "a5d2cfdd4d6b4c2e99c6c588708d843190108bd2d3c67e27531d86bee916d052"
         }
       ],
       "seed_policy": {
@@ -733,6 +734,135 @@
       "status": "measured_partial_action_002"
     },
     {
+      "authored_inputs": [
+        {
+          "bytes": 4580,
+          "kind": "content_addressed_primitive_world_protocol",
+          "path": "docs/experiments/contact_rich_replay/protocol.json",
+          "protocol_id": "REPLAY.001.contact-rich.v1",
+          "sha256": "5f6e3e853cb6219104382507a91196fba408ec59f0ea69f3a0d852ee13defdac"
+        }
+      ],
+      "claim_boundary": "This protocol measures agreement between two simulators under the same declared primitive world, initial states, kinematic actor poses, and sample clock. Neither simulator is physical ground truth, and the protocol does not claim equivalent physics.",
+      "code": [
+        {
+          "bytes": 48995,
+          "path": "tools/contact_rich_cross_sim_replay.py",
+          "sha256": "f259fe72aa5035f9c529d0e8c168a1749ecd172d51e3baacd7616866a9a40bf7"
+        }
+      ],
+      "configuration": {
+        "protocol_id": "REPLAY.001.contact-rich.v1",
+        "protocol_profile": "worldepisode-contact-rich-cross-simulator-replay-protocol-0.1",
+        "runtime_environment": {
+          "genesis": {
+            "backend": "cpu",
+            "genesis_world_version": "1.2.2",
+            "precision": "64",
+            "torch_version": "2.8.0+cpu"
+          },
+          "mujoco": {
+            "mujoco_version": "3.3.7",
+            "precision": "float64"
+          },
+          "numpy_version": "2.4.6",
+          "python_version": "3.11"
+        },
+        "simulation": {
+          "actor_contract": "sampled_kinematic_pose",
+          "gravity_m_s2": [
+            0.0,
+            0.0,
+            -9.81
+          ],
+          "object_density_kg_m3": 500.0,
+          "settle_steps": 50,
+          "surface_friction": 0.5,
+          "time_step_s": 0.005
+        },
+        "task_ids": [
+          "straight_push",
+          "parallel_jaw_capture"
+        ]
+      },
+      "datasets": [],
+      "execution": {
+        "command": "UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu uv run --isolated --python 3.11 --index-strategy unsafe-best-match --with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' --with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' python tools/contact_rich_cross_sim_replay.py --required",
+        "compute": {
+          "cpu_utilization_percent": 97.92717918523348,
+          "max_rss_bytes": 878104576,
+          "system_cpu_seconds": 0.7189319999999999,
+          "user_cpu_seconds": 21.558628000000002,
+          "wall_time_seconds": 22.749108251000507
+        },
+        "exit_status": 0,
+        "finished_utc": "2026-07-20T19:21:17.430361+00:00",
+        "host": {
+          "cpu_logical_count": 24,
+          "gpu_info": "not_used_cpu_protocol",
+          "machine": "Intel(R) Core(TM) Ultra 9 275HX",
+          "storage_free_bytes": 371671195648,
+          "storage_total_bytes": 1081101176832,
+          "total_ram_bytes": 33344380928,
+          "uname": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+        },
+        "log": {
+          "bytes": 44749,
+          "path": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+          "sha256": "f73b7856e892b3cdca0ea4b99339d46e9843f6cb719bfc3b5ed6d0c26b8ce11a"
+        },
+        "preliminary_runs": [],
+        "repository_commit": "bae0d00b0bd403589fce8c1060d65dab3ac7e162",
+        "started_utc": "2026-07-20T19:20:58.201088+00:00"
+      },
+      "experiment_id": "contact_rich_cross_simulator_replay",
+      "outputs": [
+        {
+          "bytes": 4580,
+          "path": "docs/experiments/contact_rich_replay/protocol.json",
+          "sha256": "5f6e3e853cb6219104382507a91196fba408ec59f0ea69f3a0d852ee13defdac"
+        },
+        {
+          "bytes": 44749,
+          "path": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+          "sha256": "f73b7856e892b3cdca0ea4b99339d46e9843f6cb719bfc3b5ed6d0c26b8ce11a"
+        },
+        {
+          "bytes": 1249,
+          "path": "docs/experiments/contact_rich_replay/README.md",
+          "sha256": "db0e4d7e4687c7578d56a633550a2a564119be6fcc1a407830d207c7752e529d"
+        },
+        {
+          "bytes": 3470372,
+          "path": "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+          "sha256": "e9caa5a159812c7f49980d7257ca04838b3f00608e8081c62ad77ec1fb756474"
+        },
+        {
+          "bytes": 3348648,
+          "path": "docs/experiments/contact_rich_replay/genesis_runtime_report.json",
+          "sha256": "875985e3728adbd199d894d51f7b6fa82e68a15b1ae37f54d499cdac546ac546"
+        }
+      ],
+      "seed_policy": {
+        "kind": "fixed_scenario_and_bootstrap_seeds",
+        "values": [
+          2027,
+          2027
+        ]
+      },
+      "split": {
+        "kind": "seeded_initial_state_scenarios",
+        "protocol": {
+          "bytes": 4580,
+          "path": "docs/experiments/contact_rich_replay/protocol.json",
+          "sha256": "5f6e3e853cb6219104382507a91196fba408ec59f0ea69f3a0d852ee13defdac"
+        },
+        "scenario_count": 32,
+        "scenario_count_per_task": 16
+      },
+      "status": "contact_rich_cross_simulator_replay_complete"
+    },
+    {
       "claim_boundary": "This probe validates the committed low-dimensional package loader and the pinned LeRobot ACT/Diffusion model-construction path. It is not a policy result. Both policies stop before training because joint proprioception alone does not satisfy their observation contract. Source videos were not mirrored, and joint positions must not be relabeled as environment state.",
       "code": [
         {
@@ -1051,9 +1181,9 @@
   ],
   "generated_from": [
     {
-      "bytes": 336536,
+      "bytes": 385216,
       "path": "docs/experiments/results.json",
-      "sha256": "0db53e6a98465f6e66ec859800b60d212560ec6a6e307c4c8e8bbb267cef2453"
+      "sha256": "1a7ed39384e91f8cf5e470a62a30c7331200ace30673d9035cc80576a19aaf08"
     },
     {
       "bytes": 36808,

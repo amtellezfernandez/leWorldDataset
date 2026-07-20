@@ -6,7 +6,7 @@ RFC release ready: `True`.
 
 Full standard ready: `False`.
 
-A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full contact-rich simulator-neutral rollout claims are complete.
+A ready RFC release means the repository is executable and evidence-gated. It does not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full simulator-equivalent contact-physics claims are complete.
 
 Open reproduction gate index: `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
 
@@ -19,15 +19,15 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 
 | Check | Name | Pass | Severity | Evidence |
 |---|---|---:|---|---|
-| DOC.001 | top-level README exists | True | error | README.md (6853 bytes) |
+| DOC.001 | top-level README exists | True | error | README.md (7166 bytes) |
 | DOC.002 | license exists | True | error | LICENSE (254 bytes) |
 | DOC.003 | governance exists | True | error | GOVERNANCE.md (1298 bytes) |
 | DOC.004 | WorldEpisode RFC spec exists | True | error | spec/worldepisode-v0.1.md (12268 bytes) |
 | DOC.005 | world layout RFC spec exists | True | error | spec/le-world-layout-v0.1.md (5602 bytes) |
-| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (304112 bytes) |
+| DOC.006 | paper PDF exists | True | error | WorldEpisode.pdf (321363 bytes) |
 | DOC.007 | paper source exists | True | error | paper/arxiv/main.tex (6291 bytes) |
-| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18762 bytes) |
-| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (336536 bytes) |
+| DOC.008 | reviewer concern matrix exists | True | error | docs/reviewer-concern-matrix.md (18869 bytes) |
+| DOC.009 | controlled results exist | True | error | docs/experiments/results.json (385216 bytes) |
 | DOC.010 | public citation metadata exists | True | error | CITATION.cff (427 bytes) |
 | DOC.011 | CI workflow exists | True | error | .github/workflows/ci.yml (1654 bytes) |
 | CI.001 | CI workflow runs evidence gates | True | error | missing=[] |
@@ -44,20 +44,20 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | EVID.005 | famous benchmark inflation gate is fail-closed | True | error | reruns=1, valid=0, claims=0 |
 | EVID.006 | dataset-scale manifest and generated catalog checks pass | True | error | dataset manifest audit plus generated catalog-capacity benchmark |
 | EVID.007 | clean-room reader consumes public schema/fixtures | True | error | status=pass, recall=1.0 |
-| EVID.008 | replay timing evidence is executable | True | error | LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance |
+| EVID.008 | replay timing and contact evidence are executable | True | error | LeRobot control replay, scheduler conformance, and preregistered MuJoCo/Genesis primitive contact replay |
 | EVID.009 | real-to-sim and meta-simulator boundaries are explicit | True | error | controlled proxy and runtime-neutral contract, not hardware/Isaac claim |
 | EVID.010 | natural failure corpus has scoped evidence | True | warning | datasets=5, reports=5, source_level_only=2; maintainer feedback still open |
-| GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=4 |
+| GATE.001 | open reproduction gate index validates | True | error | docs/experiments/open_reproduction_gates/open_reproduction_gates.json gates=5 |
 | GATE.002 | blocked claims have reproduction commands | True | error | uncovered=[], commandless=[] |
-| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=15, failed=0 |
-| PROV.001 | principal experiments have validated provenance | True | error | docs/experiments/experiment_manifest/experiment_manifest.json experiments=8, errors=[] |
+| CLAIM.001 | paper claims are evidence-backed | True | error | docs/experiments/paper_claim_audit/paper_claim_audit_report.json claims=16, failed=0 |
+| PROV.001 | principal experiments have validated provenance | True | error | docs/experiments/experiment_manifest/experiment_manifest.json experiments=9, errors=[] |
 | SOURCE.001 | paper citations have audited primary sources | True | error | docs/experiments/citation_source_audit/citation_source_audit.json aggregate={'archival_reference_count': 11, 'citation_occurrence_count': 28, 'error_count': 0, 'reference_count': 21, 'undefined_count': 0, 'unused_count': 0} |
 | SOURCE.002 | third-party assets and redistribution are audited | True | error | docs/experiments/third_party_asset_audit/asset_audit.json aggregate={'active_dataset_count': 4, 'authored_parquet_fixture_count': 1, 'context_only_dataset_count': 4, 'error_count': 0, 'external_software_count': 6, 'redistributed_parquet_bytes': 6736270, 'redistributed_parquet_count': 48, 'source_license_file_count': 16, 'source_media_count': 0} |
 | PUBLIC.001 | public surface avoids draft-only framing | True | error | docs/experiments/public_maturity/public_maturity_report.json violations=0 |
 | ANON.001 | anonymous paper and supplement pass identity audit | True | error | supplement=docs/anonymous_supplement/supplement_report.json, audit=docs/experiments/anonymity_audit/anonymity_report.json |
 | FORMAT.001 | NeurIPS submission format is audited | True | error | status=provisional_ready_pending_target_author_kit, main_content_last_page=9, page_limit=9, target_requirements_final=False |
-| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=139, normalized=4 |
-| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=15, open_gates=4 |
+| MANIFEST.001 | release manifest validates | True | error | status=pass, entries=145, normalized=4 |
+| SUBMIT.001 | submission packet validates | True | error | status=pass, claims=16, open_gates=5 |
 
 ## Blocked Stronger Claims
 
@@ -66,5 +66,5 @@ strict claim gates, and explicit blockers for claims that are not yet proven.
 | `POLICY.ROLL.001` | state-of-the-art policy or physical rollout impact | True | ACT or Diffusion Policy metrics plus high-fidelity simulator or hardware rollout reports. |
 | `BENCH.INFLATE.001` | famous benchmark published scores are inflated | True | valid benchmark-specific conversion, lineage/timing audit, published-protocol rerun, corrected evaluation, and score delta. |
 | `NATURAL.001` | natural failure prevalence is maintainer-confirmed | True | maintainer agreement/disagreement records for prevalence; pinned dataset-specific conversions for source-level benchmark gaps. |
-| `SIM.001` | runtime-neutral replay equivalence across contact-rich simulator rollouts | False | same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter. |
+| `SIM.001` | simulator-equivalent contact physics | True | articulated contact tasks anchored to hardware observations, with a predeclared physical tolerance envelope; current orientation drift contradicts an equivalence claim. |
 | `ADOPT.001` | mature external standard adoption | True | external independent implementation or external compatible dataset release. |

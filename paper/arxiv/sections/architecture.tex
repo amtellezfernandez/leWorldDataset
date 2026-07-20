@@ -33,9 +33,9 @@ reports against the sidecar. The adapter contract has three layers:
   envelopes, and measured drift.
 \end{itemize}
 
-The current implementation includes tested minimal MuJoCo~\citep{mujoco} and
-Genesis~\citep{genesis} replay adapters
-for the same LeRobot control-loop trace. The Isaac
+The current implementation includes tested MuJoCo~\citep{mujoco} and
+Genesis~\citep{genesis} adapters for the same LeRobot control-loop trace and a preregistered
+two-task primitive contact protocol. The Isaac
 mapping is emitted but untested, and SAPIEN remains adapter-required. The claim is therefore not
 simulator-independent physics but runtime-neutral accountability: every simulator reports against
 the same state contract, so cross-runtime drift becomes measurable rather than hidden inside loader

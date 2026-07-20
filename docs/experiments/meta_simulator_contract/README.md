@@ -18,9 +18,9 @@ invariants and emits replay/loss evidence.
 
 | Runtime | Adapter Status | Implemented Layers | Claim Boundary |
 |---|---|---|---|
-| mujoco | tested_replay | META-SIM.001, META-SIM.003 | WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace. This is not a contact-rich task rollout. |
+| mujoco | tested_replay | META-SIM.001, META-SIM.003 | MuJoCo executes the LeRobot timing trace and a primitive contact protocol. Scripted actors and no hardware reference preclude a physical-accuracy claim. |
 | isaac_sim | adapter_contract_ready_untested | META-SIM.001, META-SIM.003 | Adapter mapping only; no Isaac runtime result is claimed. |
-| genesis | tested_replay | META-SIM.001, META-SIM.003 | Genesis is tested on the same LeRobot trace with a minimal position-servo adapter. This is not a contact-rich task rollout and does not claim Isaac or SAPIEN coverage. |
+| genesis | tested_replay | META-SIM.001, META-SIM.003 | Genesis executes the LeRobot timing trace and primitive contact protocol. Observed orientation drift precludes equal physics and no Isaac/SAPIEN result is claimed. |
 | sapien | adapter_required | none | No SAPIEN adapter or runtime result is claimed. |
 
 ## External Collaboration

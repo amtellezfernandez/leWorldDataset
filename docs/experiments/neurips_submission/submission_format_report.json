@@ -49,12 +49,12 @@
       "paper/arxiv/sections/limitations.tex",
       "paper/arxiv/sections/requirements.tex"
     ],
-    "format_source_tree_sha256": "6d3900c9cab4a69c1a0ed62ff4d73d7bf948d6f8164d8f8f0f3ea1579ba626cf",
+    "format_source_tree_sha256": "b4e4b6a5a0e8c72693f7fd3b851214b91db20e31cecd1e9dc193dd253158624f",
     "heading_pages": {
       "appendix": 12,
       "checklist": 14,
       "conclusion": 9,
-      "references": 9
+      "references": 10
     },
     "main_content_last_page": 9,
     "main_content_page_limit": 9,
@@ -62,7 +62,7 @@
     "page_size": "612 x 792 pts (letter)",
     "pages": 21,
     "path": "WorldEpisode.pdf",
-    "sha256": "20a7bec3e54b9efb72901cf492a6120f40a8a7ecd1b3e5b368529fa0abff88fc",
+    "sha256": "551f2ef501a7c430acf80ccc711c285951c82f513ccf7de4c9af82f41814305a",
     "source_path": "paper/arxiv/main.tex",
     "source_sha256": "ed2ec4671ae9c0bc27460c25f27ea8fd717b8660eeb887fd09ce3cf3c33f67f2"
   },

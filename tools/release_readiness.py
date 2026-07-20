@@ -218,6 +218,7 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
     dataset_perf = results.get("dataset_scale_performance", {})
     cleanroom = results.get("cleanroom_reader", {})
     replay = results.get("rq3_replay", {})
+    contact_replay = results.get("contact_rich_replay", {})
     replay_adapter = results.get("replay_adapter_conformance", {})
     realtosim = results.get("realtosim_contract_drift", {})
     meta_sim = results.get("meta_simulator_contract", {})
@@ -314,14 +315,23 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
         ),
         Check(
             "EVID.008",
-            "replay timing evidence is executable",
+            "replay timing and contact evidence are executable",
             nested(replay, ("alignment", "validation_improvement_over_naive")) is not None
             and nested(replay, ("alignment", "validation_improvement_over_naive"), 0) > 1.0
             and nested(replay, ("simulators", "mujoco", "tested")) is True
             and nested(replay, ("simulators", "genesis", "tested")) is True
             and nested(replay, ("simulators", "genesis", "rmse_improvement_over_naive"), 0) > 2.0
-            and replay_adapter.get("status") == "tested_reference_scheduler_not_physics_simulator",
-            "LeRobot control replay through MuJoCo and Genesis plus adapter scheduler conformance",
+            and replay_adapter.get("status") == "tested_reference_scheduler_not_physics_simulator"
+            and nested(contact_replay, ("analysis", "acceptance", "pass")) is True
+            and nested(
+                contact_replay,
+                ("protocol", "committed_before_required_execution"),
+            )
+            is True,
+            (
+                "LeRobot control replay, scheduler conformance, and preregistered "
+                "MuJoCo/Genesis primitive contact replay"
+            ),
         ),
         Check(
             "EVID.009",
@@ -462,7 +472,7 @@ def experiment_manifest_checks() -> list[Check]:
     experiments = report.get("experiments", [])
     complete = all(
         isinstance(experiment, dict)
-        and experiment.get("datasets")
+        and (experiment.get("datasets") or experiment.get("authored_inputs"))
         and experiment.get("configuration")
         and experiment.get("seed_policy")
         and experiment.get("code")
@@ -767,6 +777,7 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
     temporal_policy = results.get("lerobot_temporal_policy_baseline", {})
     natural = results.get("natural_failure_corpus", {})
     replay = results.get("rq3_replay", {})
+    contact_replay = results.get("contact_rich_replay", {})
     meta_sim = results.get("meta_simulator_contract", {})
     genesis_tested = nested(replay, ("simulators", "genesis", "tested")) is True
     return [
@@ -802,13 +813,30 @@ def claim_blockers(results: dict[str, Any]) -> list[dict[str, Any]]:
         },
         {
             "blocker_id": "SIM.001",
-            "claim": "runtime-neutral replay equivalence across contact-rich simulator rollouts",
-            "blocked": not genesis_tested,
+            "claim": "simulator-equivalent contact physics",
+            "blocked": True,
             "current_evidence": {
                 "genesis_same_trace_tested": genesis_tested,
+                "contact_replay_complete": nested(
+                    contact_replay,
+                    ("analysis", "acceptance", "pass"),
+                ),
+                "contact_replay_final_orientation_error_deg": nested(
+                    contact_replay,
+                    (
+                        "analysis",
+                        "aggregate",
+                        "final_orientation_error_deg",
+                        "estimate",
+                    ),
+                ),
                 "meta_simulator_aggregate": meta_sim.get("aggregate", {}),
             },
-            "required_evidence": "same WorldEpisode LeRobot replay trace through at least one additional tested simulator adapter.",
+            "required_evidence": (
+                "articulated contact tasks anchored to hardware observations, with a "
+                "predeclared physical tolerance envelope; current orientation drift "
+                "contradicts an equivalence claim."
+            ),
         },
         {
             "blocker_id": "ADOPT.001",
@@ -863,7 +891,7 @@ def build_report(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
         "claim_boundary": (
             "A ready RFC release means the repository is executable and evidence-gated. It does "
             "not mean ACT/Diffusion, famous benchmark inflation, external adoption, or full "
-            "contact-rich simulator-neutral rollout claims are complete."
+            "simulator-equivalent contact-physics claims are complete."
         ),
         "checks": [check.__dict__ for check in checks],
         "aggregate": {

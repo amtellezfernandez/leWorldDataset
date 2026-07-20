@@ -102,6 +102,31 @@ Required artifacts:
 
 Acceptance rule: Dataset-specific diagnostic reports support representative diagnostics only. A prevalence or maintainer-confirmed claim still requires recorded maintainer feedback, false-positive review, and pinned conversions for source-level benchmark gaps.
 
+### `SIM.001`
+
+Claim: simulator-equivalent contact physics
+
+Status: `open_not_claimed`.
+
+Boundary: The preregistered primitive contact protocol measures MuJoCo/Genesis disagreement. Its capture-orientation divergence and lack of hardware ground truth preclude an equivalent-physics claim.
+
+Commands:
+
+- verify the retained primitive contact evidence
+
+  ```bash
+  python3 tools/contact_rich_cross_sim_replay.py --check --required
+  ```
+
+Required artifacts:
+
+- articulated-robot contact trajectories in at least two simulators
+- matched hardware-reference object and contact observations
+- predeclared physical trajectory, contact, pose, and outcome tolerances
+- scenario-level uncertainty intervals and failure traces
+
+Acceptance rule: Equivalent-physics language remains blocked until both simulators satisfy a predeclared hardware-anchored tolerance envelope on articulated contact tasks. Agreement between simulators alone is insufficient.
+
 ### `ADOPT.001`
 
 Claim: mature external standard adoption

@@ -41,6 +41,8 @@ INDEPENDENT_FIXTURE_DIR = ROOT / "conformance" / "fixtures" / "independent"
 RECORDED_EPISODES_DIR = RESULTS_DIR / "recorded_episodes"
 SCENE_LEAKAGE_REPORT = RESULTS_DIR / "lerobot_scene_leakage" / "leakage_report.json"
 CONTROL_REPLAY_REPORT = RESULTS_DIR / "lerobot_control_replay" / "control_replay_report.json"
+CONTACT_RICH_REPLAY_REPORT = RESULTS_DIR / "contact_rich_replay" / "contact_rich_replay_report.json"
+CONTACT_RICH_REPLAY_PROTOCOL = RESULTS_DIR / "contact_rich_replay" / "protocol.json"
 POLICY_GATE_REPORT = RESULTS_DIR / "lerobot_policy_gate" / "policy_gate_report.json"
 TEMPORAL_POLICY_REPORT = RESULTS_DIR / "lerobot_temporal_policy_baseline" / "temporal_policy_report.json"
 CONVERSION_SCALE_REPORT = RESULTS_DIR / "lerobot_conversion_scale" / "scale_report.json"
@@ -1320,6 +1322,30 @@ def experiment_replay() -> dict[str, Any]:
     }
 
 
+def experiment_contact_rich_replay() -> dict[str, Any]:
+    if not CONTACT_RICH_REPLAY_REPORT.exists():
+        return {
+            "status": "unavailable",
+            "analysis": {"acceptance": {"pass": False}},
+            "reason": "No committed contact-rich cross-simulator replay report exists.",
+            "reproduce": (
+                "UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu "
+                "uv run --isolated --python 3.11 --index-strategy unsafe-best-match "
+                "--with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' "
+                "--with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' "
+                "python tools/contact_rich_cross_sim_replay.py --required"
+            ),
+        }
+    from contact_rich_cross_sim_replay import check_committed_report
+
+    check_committed_report(
+        CONTACT_RICH_REPLAY_PROTOCOL,
+        CONTACT_RICH_REPLAY_REPORT,
+        required=True,
+    )
+    return load_json(CONTACT_RICH_REPLAY_REPORT)
+
+
 def experiment_lerobot_public_sample() -> dict[str, Any]:
     # First frame of episode 0 from lerobot/svla_so101_pickplace, mirrored in a
     # committed offline fixture to avoid network-dependent evaluation.
@@ -1512,6 +1538,7 @@ def write_report(results: dict[str, Any]) -> None:
     )
     fault = results["rq2_fault_detection"]
     replay = results["rq3_replay"]
+    contact_replay = results["contact_rich_replay"]
     splits = results["rq5_split_leakage"]
     robust = results["rq4_counterfactual_robustness"]
     independent = results["independent_fixture_check"]
@@ -1710,13 +1737,33 @@ def write_report(results: dict[str, Any]) -> None:
 - Reason: {replay.get("reason", "unknown")}
 - Reproduce: `{replay.get("reproduce", "python3 tools/lerobot_control_replay_experiment.py --required")}`
 """
+    contact_aggregate = contact_replay.get("analysis", {}).get("aggregate", {})
+    if contact_replay.get("analysis", {}).get("acceptance", {}).get("pass"):
+        contact_section = f"""## RQ3: Contact-Rich Cross-Simulator Replay
+
+- Tasks / initial-state scenarios: {len(contact_replay["analysis"]["tasks"])} / {contact_aggregate["scenario_count"]}
+- Object trajectory position RMSE: {1000 * contact_aggregate["trajectory_position_rmse_m"]["estimate"]:.3f} mm
+- Contact precision / recall / F1: {contact_aggregate["contact_precision"]["estimate"]:.3f} / {contact_aggregate["contact_recall"]["estimate"]:.3f} / {contact_aggregate["contact_f1"]["estimate"]:.3f}
+- Grasp-state agreement: {contact_aggregate["grasp_state_agreement"]["estimate"]:.3f}
+- Final position / orientation error: {1000 * contact_aggregate["final_position_error_m"]["estimate"]:.3f} mm / {contact_aggregate["final_orientation_error_deg"]["estimate"]:.3f} deg
+- Task-outcome agreement: {contact_aggregate["task_outcome_agreement"]["estimate"]:.3f}
+- Boundary: {contact_replay["claim_boundary"]}
+"""
+    else:
+        contact_section = f"""## RQ3: Contact-Rich Cross-Simulator Replay
+
+- Available: false
+- Reason: {contact_replay.get("reason", "unknown")}
+- Reproduce: `{contact_replay.get("reproduce", "python3 tools/contact_rich_cross_sim_replay.py --required")}`
+"""
     evidence_boundaries = f"""## Evidence Boundaries
 
 | Claim Area | Current Evidence | Boundary |
 |---|---|---|
 | Leakage | Public ArmnetBench LeRobot audit with 400 teleoperated reference episodes, an executable Torch BC probe, a measured temporal ridge state/action baseline, and an ACT/Diffusion gate harness with compact physical state/action split packages. | ACT/Diffusion jobs and high-fidelity or physical rollouts are prepared but not executed; source videos must be mirrored before vision-policy claims. |
 | Conversion | Complete pinned source Parquet shards from {conversion_scale_aggregate.get("dataset_count", 0)} public LeRobotDataset v3 datasets, covering {conversion_scale_aggregate.get("episode_count", 0)} episodes and {conversion_scale_aggregate.get("action_row_count", 0)} paired action/state rows with exact tensor, index, and timestamp equality. | Selected shards rather than full corpora; source video payloads are not converted. |
-| Replay timing | A frozen action/state telemetry lag calibrated on {multitrajectory_timing.get("calibration", {}).get("episode_count", 0)} SO-101 trajectories and evaluated on {multitrajectory_timing.get("evaluation", {}).get("episode_count", 0)} source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration; simulator adapters still use one trace. No contact-rich task rollout, Isaac runtime result, or SAPIEN result is claimed. |
+| Replay timing | A frozen action/state telemetry lag calibrated on {multitrajectory_timing.get("calibration", {}).get("episode_count", 0)} SO-101 trajectories and evaluated on {multitrajectory_timing.get("evaluation", {}).get("episode_count", 0)} source-episode-disjoint trajectories, plus tested same-trace MuJoCo and Genesis position-servo replay. | The multi-trajectory source has no motor-effective timestamps and covers one robot/controller configuration. |
+| Contact-rich replay | Two preregistered primitive manipulation tasks over {contact_aggregate.get("scenario_count", 0)} initial-state scenarios in MuJoCo and Genesis, retaining object poses, contacts, grasp states, outcomes, and scenario-bootstrap intervals. | Scripted kinematic actors rather than an articulated robot; neither simulator is hardware ground truth, Isaac/SAPIEN remain untested, and equal physics is not claimed. |
 | Replay adapter conformance | Dependency-free reference scheduler validates delay, zero-order hold, missing-command, and asynchronous queue semantics. | Scheduler conformance only; not a second physics simulator. |
 | Validation | Fourteen injected requirement faults, two independent hand-authored fixtures, and a pilot natural-source corpus over {natural["dataset_count"]} public datasets. | {natural_boundary} |
 | Preflight adoption | Installable `worldepisode` package, CLI entry point, Python one-liners, and four committed preflight cases. | Package metadata is ready for local/pip installation, but no PyPI release or upstream LeRobot/Rerun PR is merged yet. |
@@ -1933,6 +1980,8 @@ conformance corpus in `conformance/fixtures/pilot/`, and checks hand-authored in
 
 {replay_section}
 
+{contact_section}
+
 ## Replay Adapter Conformance
 
 - Artifact: `{replay_adapter.get("artifacts", {}).get("report", "docs/experiments/replay_adapter_conformance/adapter_conformance_report.json")}`
@@ -1993,6 +2042,7 @@ def main() -> int:
         "meta_simulator_contract": experiment_meta_simulator_contract(),
         "uss_state_drift_pilots": experiment_uss_state_drift_pilots(),
         "replay_adapter_conformance": experiment_replay_adapter_conformance(),
+        "contact_rich_replay": experiment_contact_rich_replay(),
         "dataset_scale_audit": experiment_dataset_scale_audit(),
         "dataset_scale_performance": experiment_dataset_scale_performance(),
         "cleanroom_reader": experiment_cleanroom_reader(),
@@ -2011,6 +2061,7 @@ def main() -> int:
     fault = results["rq2_fault_detection"]
     robust = results["rq4_counterfactual_robustness"]
     replay = results["rq3_replay"]
+    contact_replay = results["contact_rich_replay"]
     if fault["recall"] < 1.0:
         print("Fault detection recall is below the required pilot threshold.")
         return 1
@@ -2038,6 +2089,9 @@ def main() -> int:
             return 1
     if os.environ.get("WORLDEPISODE_REQUIRE_LEROBOT_REPLAY") == "1" and not replay.get("pass"):
         print("Active LeRobot replay experiment is required but did not pass.")
+        return 1
+    if contact_replay.get("analysis", {}).get("acceptance", {}).get("pass") is not True:
+        print("Committed contact-rich cross-simulator replay is missing or invalid.")
         return 1
     active_lerobot = results["lerobot_active_roundtrip"]
     if os.environ.get("WORLDEPISODE_REQUIRE_ACTIVE_LEROBOT") == "1" and not active_lerobot.get("pass"):

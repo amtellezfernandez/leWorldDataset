@@ -46,6 +46,11 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "docs/experiments/lerobot_conversion_scale/scale_report.json",
     "docs/experiments/lerobot_multitrajectory_timing/README.md",
     "docs/experiments/lerobot_multitrajectory_timing/timing_report.json",
+    "docs/experiments/contact_rich_replay/protocol.json",
+    "docs/experiments/contact_rich_replay/README.md",
+    "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+    "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+    "docs/experiments/contact_rich_replay/genesis_runtime_report.json",
     "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
     "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
     "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
@@ -115,6 +120,16 @@ REPRODUCTION_COMMANDS = [
         "command": (
             "uv run --with pyarrow --with numpy "
             "python tools/lerobot_multitrajectory_timing_audit.py --required"
+        ),
+    },
+    {
+        "name": "regenerate preregistered contact-rich cross-simulator replay",
+        "command": (
+            "UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu "
+            "uv run --isolated --python 3.11 --index-strategy unsafe-best-match "
+            "--with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' "
+            "--with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' "
+            "python tools/contact_rich_cross_sim_replay.py --required"
         ),
     },
     {

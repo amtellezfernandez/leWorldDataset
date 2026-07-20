@@ -3,9 +3,9 @@
 Status: `pass`.
 
 - Archive: `WorldEpisode-supplement.zip`
-- SHA-256: `1d19d6dcbe0f6acf0302503a03276fd15e0b9da4b6f52398cdd43bcb967ecc27`
-- Bytes: `6642669`
-- ZIP entries: `417`
+- SHA-256: `e86929d7201324a4983f71c8ab705b6be487dad24f466bacd789c0ad8d716233`
+- Bytes: `7747520`
+- ZIP entries: `424`
 - Identity-pattern matches: `0`
 - Source-control history included: `False`
 - Local environment included: `False`

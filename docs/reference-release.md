@@ -16,7 +16,7 @@ The current gate passes the RFC-release checks: package metadata, public docs, p
 schema/examples, controlled experiments, fail-closed benchmark claims, dataset-scale evidence, and
 clean-room reader evidence. It deliberately does not mark the full standard complete. Stronger
 claims remain blocked until ACT/Diffusion or rollout results, inflation-proof famous-benchmark reruns,
-maintainer feedback, external adoption, and broader simulator replay evidence exist.
+maintainer feedback, external adoption, and hardware-anchored articulated contact evidence exist.
 Each blocked stronger claim is mapped to a command-backed open reproduction gate in
 `docs/experiments/open_reproduction_gates/open_reproduction_gates.json`.
 The main numerical and boundary claims in the paper are separately checked against committed

@@ -1,8 +1,8 @@
 {
   "aggregate": {
-    "command_count": 8,
-    "gate_count": 4,
-    "open_not_claimed_count": 4
+    "command_count": 9,
+    "gate_count": 5,
+    "open_not_claimed_count": 5
   },
   "artifacts": {
     "json": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
@@ -109,6 +109,30 @@
         "false-positive review records",
         "maintainer agreement, disagreement, or no-response evidence",
         "updated natural failure corpus manifest"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
+      "acceptance_rule": "Equivalent-physics language remains blocked until both simulators satisfy a predeclared hardware-anchored tolerance envelope on articulated contact tasks. Agreement between simulators alone is insufficient.",
+      "blocker_id": "SIM.001",
+      "claim": "simulator-equivalent contact physics",
+      "commands": [
+        {
+          "command": "python3 tools/contact_rich_cross_sim_replay.py --check --required",
+          "expected_outputs": [
+            "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+            "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+            "docs/experiments/contact_rich_replay/genesis_runtime_report.json"
+          ],
+          "purpose": "verify the retained primitive contact evidence"
+        }
+      ],
+      "paper_boundary": "The preregistered primitive contact protocol measures MuJoCo/Genesis disagreement. Its capture-orientation divergence and lack of hardware ground truth preclude an equivalent-physics claim.",
+      "required_artifacts": [
+        "articulated-robot contact trajectories in at least two simulators",
+        "matched hardware-reference object and contact observations",
+        "predeclared physical trajectory, contact, pose, and outcome tolerances",
+        "scenario-level uncertainty intervals and failure traces"
       ],
       "status": "open_not_claimed"
     },

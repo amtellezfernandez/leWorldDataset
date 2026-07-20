@@ -152,6 +152,40 @@ GATES: list[dict[str, Any]] = [
         ),
     },
     {
+        "blocker_id": "SIM.001",
+        "claim": "simulator-equivalent contact physics",
+        "status": "open_not_claimed",
+        "paper_boundary": (
+            "The preregistered primitive contact protocol measures MuJoCo/Genesis disagreement. "
+            "Its capture-orientation divergence and lack of hardware ground truth preclude an "
+            "equivalent-physics claim."
+        ),
+        "commands": [
+            {
+                "purpose": "verify the retained primitive contact evidence",
+                "command": (
+                    "python3 tools/contact_rich_cross_sim_replay.py --check --required"
+                ),
+                "expected_outputs": [
+                    "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+                    "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+                    "docs/experiments/contact_rich_replay/genesis_runtime_report.json",
+                ],
+            }
+        ],
+        "required_artifacts": [
+            "articulated-robot contact trajectories in at least two simulators",
+            "matched hardware-reference object and contact observations",
+            "predeclared physical trajectory, contact, pose, and outcome tolerances",
+            "scenario-level uncertainty intervals and failure traces",
+        ],
+        "acceptance_rule": (
+            "Equivalent-physics language remains blocked until both simulators satisfy a "
+            "predeclared hardware-anchored tolerance envelope on articulated contact tasks. "
+            "Agreement between simulators alone is insufficient."
+        ),
+    },
+    {
         "blocker_id": "ADOPT.001",
         "claim": "mature external standard adoption",
         "status": "open_not_claimed",

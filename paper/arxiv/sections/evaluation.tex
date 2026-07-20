@@ -103,14 +103,24 @@ from \ExpGenesisNaiveRmse{} to \ExpGenesisTimedRmse{}. Their naive values
 integrate the same minimal servo model, not because their physics agree. The Isaac adapter is
 emitted as a ready mapping from the same contract, but is not tested in this environment.
 
-A dependency-free replay-adapter conformance harness guards additional runtime adapters: across
-\ExpAdapterConformanceCaseCount{} scheduling cases, including
-constant frame delay, zero-order hold for missing commands, and asynchronous queue selection, a
-naive scheduler fails while the contract-aware scheduler matches the expected trace with zero
-numerical error (\ExpAdapterConformanceMaxError{} maximum RMSE). This validates scheduler and
-same-trace adapter semantics only; it does not claim
-contact-rich task replay, Isaac/SAPIEN execution, or simulator-independent
-behavior.
+A dependency-free replay-adapter harness covers \ExpAdapterConformanceCaseCount{} delay, hold, and
+queue cases; the contract-aware scheduler has \ExpAdapterConformanceMaxError{} maximum RMSE.
+Separately, a preregistered contact protocol executes a straight push and parallel-jaw capture in
+MuJoCo and Genesis using the same content-addressed primitive world, sampled actor poses, clock, and
+\ExpContactReplayScenariosPerTask{} initial states per task
+(\ExpContactReplayScenarioCount{} paired scenarios). Object-trajectory RMSE is
+\ExpContactReplayTrajectoryRmseMm{}\,mm
+[\ExpContactReplayTrajectoryRmseCiLowMm, \ExpContactReplayTrajectoryRmseCiHighMm];
+frame-aligned contact precision/recall/F1 are \ExpContactReplayPrecision/\ExpContactReplayRecall/
+\ExpContactReplayFOne{} (F1 CI [\ExpContactReplayFOneCiLow, \ExpContactReplayFOneCiHigh]).
+Grasp-state and task-outcome agreement are \ExpContactReplayGraspAgreement{} and
+\ExpContactReplayOutcomeAgreement{}, respectively. Yet final orientation differs by
+\ExpContactReplayFinalOrientationDeg$^\circ$ overall
+[\ExpContactReplayFinalOrientationCiLowDeg, \ExpContactReplayFinalOrientationCiHighDeg] and
+\ExpContactReplayCaptureOrientationDeg$^\circ$ on capture
+[\ExpContactReplayCaptureOrientationCiLowDeg, \ExpContactReplayCaptureOrientationCiHighDeg].
+Thus the result makes contact drift measurable; scripted actors, no hardware ground truth, and this
+orientation divergence preclude an equivalent-physics claim.
 
 \paragraph{Case 3: controlled real-to-sim contract drift (\texttt{ACTION.001}, \texttt{REP.001}).}
 \ExpDriftAblationCount{} deterministic proxies isolate an absolute-radian versus delta-degree
@@ -160,14 +170,19 @@ families where explicit state semantics alter the outcome.
       \addplot+[fill=weGreen!68] coordinates {(Heldout,\ExpSceneHeldoutOverlapPlot)};
 
     \nextgroupplot[
-      title={(b) Replay alignment},
-      ylabel={joint RMSE (deg)},
-      ymax=5.70,
-      symbolic x coords={Naive,Timed},
-      xtick={Naive,Timed},
+      title={(b) Contact agreement},
+      ylabel={agreement rate},
+      ymax=1.25,
+      symbolic x coords={Prec.,Recall,F1},
+      xtick={Prec.,Recall,F1},
+      nodes near coords={
+        \pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}
+      },
     ]
-      \addplot+[fill=weAmber!82] coordinates {(Naive,\ExpAlignmentNaiveRmsePlot)};
-      \addplot+[fill=weGreen!68] coordinates {(Timed,\ExpAlignmentTimedRmsePlot)};
+      \addplot+[fill=weAmber!82] coordinates
+        {(Prec.,\ExpContactReplayPrecision)
+         (Recall,\ExpContactReplayRecall)
+         (F1,\ExpContactReplayFOne)};
 
     \nextgroupplot[
       title={(c) Semantic retention},
@@ -181,8 +196,9 @@ families where explicit state semantics alter the outcome.
   \end{groupplot}
 \end{tikzpicture}%
 }
-\caption{Summary of the displayed audits. The proxy-overlap result is confounded with task holdout;
-replay uses \ExpReplayTraceCount{} \ExpReplayTraceNoun{}; sidecar retention is by construction.}
+\caption{Summary of the displayed audits. Proxy overlap is confounded with task holdout; contact
+agreement pools \ExpContactReplayScenarioCount{} paired scenarios; sidecar retention is by
+construction.}
 \label{fig:evaluation-dashboard}
 \end{figure}
 

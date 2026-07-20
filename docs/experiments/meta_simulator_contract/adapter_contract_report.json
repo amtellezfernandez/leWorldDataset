@@ -2,6 +2,9 @@
   "aggregate": {
     "adapter_required_count": 1,
     "compliance_layer_count": 3,
+    "contact_rich_scenario_count": 32,
+    "contact_rich_task_count": 2,
+    "contact_rich_tested_runtime_count": 2,
     "ready_untested_adapter_count": 1,
     "runtime_target_count": 4,
     "tested_adapter_count": 2
@@ -63,9 +66,18 @@
   "runtime_targets": [
     {
       "adapter_status": "tested_replay",
-      "claim_boundary": "WorldEpisode has a minimal six-joint MuJoCo replay adapter for the LeRobot trace. This is not a contact-rich task rollout.",
+      "claim_boundary": "MuJoCo executes the LeRobot timing trace and a primitive contact protocol. Scripted actors and no hardware reference preclude a physical-accuracy claim.",
       "evidence": {
         "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",
+        "contact_rich_replay": {
+          "artifact": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+          "claim_boundary": "This protocol measures agreement between two simulators under the same declared primitive world, initial states, kinematic actor poses, and sample clock. Neither simulator is physical ground truth, and the protocol does not claim equivalent physics.",
+          "contact_f1": 0.978956283797,
+          "final_orientation_error_deg": 26.2353405742,
+          "scenario_count": 32,
+          "task_count": 2,
+          "task_outcome_agreement": 1.0
+        },
         "rmse_improvement_over_naive": 2.191019226228591,
         "tested": true
       },
@@ -96,8 +108,17 @@
     },
     {
       "adapter_status": "tested_replay",
-      "claim_boundary": "Genesis is tested on the same LeRobot trace with a minimal position-servo adapter. This is not a contact-rich task rollout and does not claim Isaac or SAPIEN coverage.",
+      "claim_boundary": "Genesis executes the LeRobot timing trace and primitive contact protocol. Observed orientation drift precludes equal physics and no Isaac/SAPIEN result is claimed.",
       "evidence": {
+        "contact_rich_replay": {
+          "artifact": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+          "claim_boundary": "This protocol measures agreement between two simulators under the same declared primitive world, initial states, kinematic actor poses, and sample clock. Neither simulator is physical ground truth, and the protocol does not claim equivalent physics.",
+          "contact_f1": 0.978956283797,
+          "final_orientation_error_deg": 26.2353405742,
+          "scenario_count": 32,
+          "task_count": 2,
+          "task_outcome_agreement": 1.0
+        },
         "ready": true,
         "same_trace_replay": {
           "artifact": "docs/experiments/lerobot_control_replay/control_replay_report.json",

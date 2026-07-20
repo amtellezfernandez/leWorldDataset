@@ -34,7 +34,11 @@ checkpoint, held-out policy metric, or rollout. The timing audit calibrates on
 trajectories, but it has no motor-effective timestamps and covers
 \ExpTimingRobotTypeCount{} robot type and \ExpTimingControllerConfigurationCount{} controller
 configuration. MuJoCo and Genesis still execute the same minimal servo model on
-\ExpReplayTraceCount{} \ExpReplayTraceNoun{}, not independent contact-rich physics. Conversion
+\ExpReplayTraceCount{} \ExpReplayTraceNoun{} for the timing result. The separate contact-rich audit
+covers \ExpContactReplayTaskCount{} scripted primitive tasks rather than an articulated robot or
+hardware reference; despite \ExpContactReplayOutcomeAgreement{} task-outcome agreement, its
+\ExpContactReplayFinalOrientationDeg$^\circ$ aggregate final-orientation error rules out equivalent
+physics. Conversion
 covers complete selected Parquet shards from
 \ExpConversionScaleDatasetCount{} datasets, not their full corpora or source video payloads. Injected faults establish
 detection on known mutations, not natural prevalence or false-positive rates in deployment.

@@ -49,6 +49,14 @@ MULTITRAJECTORY_TIMING_REPORT_PATH = (
 MULTITRAJECTORY_TIMING_README_PATH = (
     ROOT / "docs" / "experiments" / "lerobot_multitrajectory_timing" / "README.md"
 )
+CONTACT_RICH_REPLAY_DIR = ROOT / "docs" / "experiments" / "contact_rich_replay"
+CONTACT_RICH_REPLAY_PROTOCOL_PATH = CONTACT_RICH_REPLAY_DIR / "protocol.json"
+CONTACT_RICH_REPLAY_REPORT_PATH = (
+    CONTACT_RICH_REPLAY_DIR / "contact_rich_replay_report.json"
+)
+CONTACT_RICH_REPLAY_README_PATH = CONTACT_RICH_REPLAY_DIR / "README.md"
+CONTACT_RICH_MUJOCO_REPORT_PATH = CONTACT_RICH_REPLAY_DIR / "mujoco_runtime_report.json"
+CONTACT_RICH_GENESIS_REPORT_PATH = CONTACT_RICH_REPLAY_DIR / "genesis_runtime_report.json"
 POLICY_COMPATIBILITY_REPORT_PATH = (
     ROOT / "docs" / "experiments" / "lerobot_policy_gate" / "policy_compatibility_report.json"
 )
@@ -302,6 +310,10 @@ def build_manifest() -> dict[str, Any]:
     droid = read_json(DROID_REPORT_PATH)
     conversion_scale = read_json(CONVERSION_SCALE_REPORT_PATH)
     multitrajectory_timing = read_json(MULTITRAJECTORY_TIMING_REPORT_PATH)
+    contact_protocol = read_json(CONTACT_RICH_REPLAY_PROTOCOL_PATH)
+    contact_replay = read_json(CONTACT_RICH_REPLAY_REPORT_PATH)
+    contact_mujoco = read_json(CONTACT_RICH_MUJOCO_REPORT_PATH)
+    contact_genesis = read_json(CONTACT_RICH_GENESIS_REPORT_PATH)
     policy_compatibility = read_json(POLICY_COMPATIBILITY_REPORT_PATH)
     policy_vision_smoke = read_json(POLICY_VISION_SMOKE_REPORT_PATH)
     policy_vision_failed = read_json(POLICY_VISION_FAILED_REPORT_PATH)
@@ -381,6 +393,54 @@ def build_manifest() -> dict[str, Any]:
                 "status": "failed_preliminary",
             }
         ],
+    }
+    contact_runtime_reports = [contact_mujoco, contact_genesis]
+    contact_runtime_manifests = [
+        report["runtime_manifest"] for report in contact_runtime_reports
+    ]
+    contact_compute = [report["execution"]["compute"] for report in contact_runtime_reports]
+    contact_repository_commits = {
+        report["execution"]["repository_commit"] for report in contact_runtime_reports
+    }
+    contact_script_digests = {
+        report["execution"]["script_sha256"] for report in contact_runtime_reports
+    }
+    if len(contact_repository_commits) != 1 or len(contact_script_digests) != 1:
+        raise ExperimentManifestError(
+            "contact-rich runtime reports do not use identical source revisions"
+        )
+    contact_wall_time = float(contact_replay["wall_time_seconds"])
+    contact_user_time = sum(float(item["user_cpu_seconds"]) for item in contact_compute)
+    contact_system_time = sum(float(item["system_cpu_seconds"]) for item in contact_compute)
+    contact_host = contact_runtime_manifests[1]
+    contact_execution = {
+        "started_utc": min(item["started_utc"] for item in contact_runtime_manifests),
+        "finished_utc": max(item["finished_utc"] for item in contact_runtime_manifests),
+        "command": contact_replay["reproduce"],
+        "repository_commit": next(iter(contact_repository_commits)),
+        "host": {
+            "uname": contact_host["platform"],
+            "machine": contact_host["cpu_model"],
+            "cpu_logical_count": contact_host["logical_cpu_count"],
+            "total_ram_bytes": contact_host["ram_bytes"],
+            "storage_total_bytes": contact_host["storage_total_bytes"],
+            "storage_free_bytes": contact_host["storage_free_bytes"],
+            "gpu_info": contact_host["gpu"],
+        },
+        "compute": {
+            "wall_time_seconds": contact_wall_time,
+            "user_cpu_seconds": contact_user_time,
+            "system_cpu_seconds": contact_system_time,
+            "cpu_utilization_percent": (
+                100.0 * (contact_user_time + contact_system_time) / contact_wall_time
+            ),
+            "max_rss_bytes": max(
+                int(item["max_rss_bytes"]) for item in contact_runtime_manifests
+            ),
+        },
+        "exit_status": 0,
+        "preliminary_runs": [],
+        "log": artifact(CONTACT_RICH_REPLAY_REPORT_PATH),
     }
 
     experiments = [
@@ -616,6 +676,59 @@ def build_manifest() -> dict[str, Any]:
             ],
         },
         {
+            "experiment_id": "contact_rich_cross_simulator_replay",
+            "status": contact_replay["status"],
+            "claim_boundary": contact_replay["claim_boundary"],
+            "datasets": [],
+            "authored_inputs": [
+                {
+                    **artifact(CONTACT_RICH_REPLAY_PROTOCOL_PATH),
+                    "kind": "content_addressed_primitive_world_protocol",
+                    "protocol_id": contact_protocol["protocol_id"],
+                }
+            ],
+            "split": {
+                "kind": "seeded_initial_state_scenarios",
+                "scenario_count": contact_replay["analysis"]["aggregate"][
+                    "scenario_count"
+                ],
+                "scenario_count_per_task": contact_protocol["scenario_generation"][
+                    "scenario_count_per_task"
+                ],
+                "protocol": artifact(CONTACT_RICH_REPLAY_PROTOCOL_PATH),
+            },
+            "configuration": {
+                "protocol_profile": contact_protocol["profile"],
+                "protocol_id": contact_protocol["protocol_id"],
+                "runtime_environment": contact_protocol["runtime_environment"],
+                "simulation": contact_protocol["simulation"],
+                "task_ids": [
+                    task["task_id"] for task in contact_protocol["tasks"]
+                ],
+            },
+            "seed_policy": {
+                "kind": "fixed_scenario_and_bootstrap_seeds",
+                "values": [
+                    contact_protocol["scenario_generation"]["seed"],
+                    contact_protocol["analysis"]["bootstrap_seed"],
+                ],
+            },
+            "code": [
+                code_artifact(
+                    contact_mujoco["execution"]["script"],
+                    next(iter(contact_script_digests)),
+                )
+            ],
+            "execution": contact_execution,
+            "outputs": [
+                artifact(CONTACT_RICH_REPLAY_PROTOCOL_PATH),
+                artifact(CONTACT_RICH_REPLAY_REPORT_PATH),
+                artifact(CONTACT_RICH_REPLAY_README_PATH),
+                artifact(CONTACT_RICH_MUJOCO_REPORT_PATH),
+                artifact(CONTACT_RICH_GENESIS_REPORT_PATH),
+            ],
+        },
+        {
             "experiment_id": "lerobot_act_diffusion_compatibility_preflight",
             "status": policy_compatibility["status"],
             "claim_boundary": policy_compatibility["claim_boundary"],
@@ -719,8 +832,8 @@ def build_manifest() -> dict[str, Any]:
         execution = experiment["execution"]
         host = execution["host"]
         compute = execution["compute"]
-        if not experiment["datasets"]:
-            errors.append(f"{experiment_id}: no dataset revision")
+        if not experiment["datasets"] and not experiment.get("authored_inputs"):
+            errors.append(f"{experiment_id}: no pinned dataset or authored input")
         if not experiment["configuration"]:
             errors.append(f"{experiment_id}: no effective configuration")
         if not experiment["code"]:
@@ -815,14 +928,23 @@ def render_markdown(manifest: dict[str, Any]) -> str:
     rows = []
     for experiment in manifest["experiments"]:
         execution = experiment["execution"]
-        rows.append(
-            "| `{id}` | {status} | {datasets} | {wall:.2f} | {rss:.1f} | `{log}` |".format(
-                id=experiment["experiment_id"],
-                status=experiment["status"],
-                datasets=", ".join(
+        input_summary = ", ".join(
+            [
+                *(
                     f"{item['repo_id']}@{item['revision'][:12]}"
                     for item in experiment["datasets"]
                 ),
+                *(
+                    f"{item['kind']}@{item['sha256'][:12]}"
+                    for item in experiment.get("authored_inputs", [])
+                ),
+            ]
+        )
+        rows.append(
+            "| `{id}` | {status} | {inputs} | {wall:.2f} | {rss:.1f} | `{log}` |".format(
+                id=experiment["experiment_id"],
+                status=experiment["status"],
+                inputs=input_summary,
                 wall=execution["compute"]["wall_time_seconds"],
                 rss=execution["compute"]["max_rss_bytes"] / (1024 * 1024),
                 log=execution["log"]["path"],
@@ -836,7 +958,7 @@ Schema: `{manifest["schema"]}`.
 
 {manifest["scope"]}
 
-| Experiment | Status | Pinned datasets | Wall time (s) | Max RSS (MiB) | Run log |
+| Experiment | Status | Pinned or authored inputs | Wall time (s) | Max RSS (MiB) | Run log |
 |---|---|---|---:|---:|---|
 {chr(10).join(rows)}
 

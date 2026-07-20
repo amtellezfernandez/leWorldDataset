@@ -75,16 +75,19 @@ Measured results committed in this repository (details and boundaries in
 - **Task-scene proxy shift**: on a public SO-101 LeRobot release, a random episode split overlaps
   all task-scene proxy lineages. A task-disjoint proxy holdout changes the offline probes
   materially, but does not isolate scene leakage from task shift.
-- **Action timing**: declaring the inferred 133 ms actuation delay cuts validation joint RMSE from
-  4.732 to 1.862 degrees, and same-trace MuJoCo/Genesis replay RMSE from 3.425 to 1.563 degrees.
+- **Action timing**: a lag frozen on 320 calibration trajectories improves all 80
+  source-episode-disjoint evaluations; this is a telemetry-lag result, not measured motor latency.
+- **Contact replay**: a preregistered 32-scenario MuJoCo/Genesis primitive manipulation protocol
+  measures object, contact, grasp, pose, and outcome drift. High contact/outcome agreement coexists
+  with substantial capture-orientation divergence, so equivalent physics is not claimed.
 - **Loss-explicit conversion**: a LeRobot v3 round trip over ten public episodes preserves 1,935
   rows with maximum numerical error 0.0 while reporting source-absent fields as explicit loss.
 - **Validator**: all 14 injected fault classes detected (1.000 recall, 0.933 precision); a
   clean-room reader reproduces the results without importing the package.
 
 Stronger claims are intentionally open and fail-closed: ACT/Diffusion rollouts, famous-benchmark
-inflation (the one executed DROID subset rerun does **not** show inflation), Isaac/SAPIEN replay,
-external adoption. They are indexed with reproduction commands in
+inflation (the one executed DROID subset rerun does **not** show inflation), simulator-equivalent
+contact physics, Isaac/SAPIEN replay, and external adoption. They are indexed with reproduction commands in
 [docs/experiments/open_reproduction_gates](docs/experiments/open_reproduction_gates) and as
 prioritized experiments in [TODO.md](TODO.md).
 

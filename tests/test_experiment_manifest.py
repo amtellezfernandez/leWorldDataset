@@ -30,11 +30,12 @@ def test_principal_experiments_have_reproducibility_fields() -> None:
         "controlled_contract_suite",
         "lerobot_conversion_scale",
         "lerobot_multitrajectory_timing",
+        "contact_rich_cross_simulator_replay",
         "lerobot_act_diffusion_compatibility_preflight",
         "lerobot_act_diffusion_front_camera_smoke",
     }
     for experiment in manifest["experiments"]:
-        assert experiment["datasets"]
+        assert experiment["datasets"] or experiment.get("authored_inputs")
         assert experiment["configuration"]
         assert experiment["seed_policy"]["kind"]
         assert experiment["code"]

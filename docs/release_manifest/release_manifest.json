@@ -1,11 +1,11 @@
 {
   "aggregate": {
     "empty_count": 0,
-    "entry_count": 139,
+    "entry_count": 145,
     "missing_count": 0,
     "normalized_digest_count": 4,
-    "public_evidence_count": 108,
-    "release_script_count": 31
+    "public_evidence_count": 113,
+    "release_script_count": 32
   },
   "artifacts": {
     "json": "docs/release_manifest/release_manifest.json",
@@ -25,7 +25,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode.pdf",
-      "sha256": "20a7bec3e54b9efb72901cf492a6120f40a8a7ecd1b3e5b368529fa0abff88fc"
+      "sha256": "551f2ef501a7c430acf80ccc711c285951c82f513ccf7de4c9af82f41814305a"
     },
     {
       "category": "public_evidence",
@@ -34,7 +34,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "WorldEpisode-supplement.zip",
-      "sha256": "1d19d6dcbe0f6acf0302503a03276fd15e0b9da4b6f52398cdd43bcb967ecc27"
+      "sha256": "e86929d7201324a4983f71c8ab705b6be487dad24f466bacd789c0ad8d716233"
     },
     {
       "category": "public_evidence",
@@ -43,7 +43,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "README.md",
-      "sha256": "5b460141589124013a5668ef8e2660a143da6c91fbb94b4aaace72f6b98cdc14"
+      "sha256": "fc19d507a4367b50cf2c4b6d14180873d96d7ddfac50a687166cf4f2a0cd93b7"
     },
     {
       "category": "public_evidence",
@@ -61,7 +61,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "TODO.md",
-      "sha256": "985777f2f66b5a9b45ed083d1911f15f4a8de255c22e97da53e44551c73e9a9a"
+      "sha256": "b99ad067d147ebacc45cc1da0777c65313b0741a9f2f386244afb996808c9071"
     },
     {
       "category": "public_evidence",
@@ -133,7 +133,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/generated/experiment_values.tex",
-      "sha256": "7a8b4b3bb1f7047c60d20f7d50b830a2cbc243932533e938128d08f687c9c554"
+      "sha256": "66db5beebc32a4064f5bb348420240396bf771ac1e525fdb3ba3f7676d936e74"
     },
     {
       "category": "public_evidence",
@@ -169,7 +169,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/introduction.tex",
-      "sha256": "0c72cc31579dcb2a24b66b60ff2c2abb4aa1aaf64927bb2cb8c7a734258850fa"
+      "sha256": "d6322255485d8f77afa14d458e201725043c9cba80fe9b363ffa9b510e325ce9"
     },
     {
       "category": "public_evidence",
@@ -187,7 +187,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/architecture.tex",
-      "sha256": "316c2b41d460a67bd2a15434620491aa4a407b4f8945a35e848b9a6b8bbf944d"
+      "sha256": "2b0ffe7c9ae2de72967b0b8a3345f056e01026e3671ea803504d9d470ad1e486"
     },
     {
       "category": "public_evidence",
@@ -196,7 +196,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/evaluation.tex",
-      "sha256": "c014baad4b024bd3d9fd584a0c35e3c5104347c2b18576e5d19f92ffc4941458"
+      "sha256": "c6bb6443858383b938a5a61da1699d5de165997071b97a3c44d606f3f441bea3"
     },
     {
       "category": "public_evidence",
@@ -214,7 +214,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/limitations.tex",
-      "sha256": "2ed32f34daba086ba85fc8089326eb2d1df1530b7f36be550abe23f7820784ed"
+      "sha256": "bf558d878c8fbee533c6cc4f94ef8296290393b2f65b074c629de0c9eabdec78"
     },
     {
       "category": "public_evidence",
@@ -223,7 +223,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/conclusion.tex",
-      "sha256": "69860cc5ce3ebe363bfef03a7eb4f0f4997b625a850521d2b98401f4d2e558b8"
+      "sha256": "bd1155644e659a8e3135727bb0e7184fa81ea2ccff540014568784f0df2ae9a4"
     },
     {
       "category": "public_evidence",
@@ -232,7 +232,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "paper/arxiv/sections/appendix.tex",
-      "sha256": "69df2d07f5ec274324779d1334f6f14df14f34fca789c6a7258561c2b23b0d7d"
+      "sha256": "58118ab75154eb64b8acf08704c8ee02bfc8b7013065a33f0720076fa84a8ed0"
     },
     {
       "category": "public_evidence",
@@ -289,7 +289,7 @@
         "(Partition-pruning query time: )[0-9]+(?:\\.[0-9]+)?( ms)"
       ],
       "path": "docs/experiments/RESULTS.md",
-      "sha256": "5891919fabedd6f26a0ff641701ce07f860f1d4d0a574ba3edb4a8a64fa79b99"
+      "sha256": "b8f7cf3959f41aa706eaea742ce53ed6618422998a81430df217240734324591"
     },
     {
       "category": "public_evidence",
@@ -300,7 +300,7 @@
         "(\"(catalog_open_parse_and_index|digest_cache_resolution|partition_pruning_queries|resolver_routing)\": )[0-9]+(?:\\.[0-9]+)?"
       ],
       "path": "docs/experiments/results.json",
-      "sha256": "a3b5d0c4a353487cfe6ec7ab657769cf55f19423b84cedf052373f23ab4d68b0"
+      "sha256": "0c0c3318140b668bb12fcfb823018f20a4e0125fcada5dc111c6134b36ea28b9"
     },
     {
       "category": "public_evidence",
@@ -331,7 +331,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/paper_claim_audit/paper_claim_audit_report.json",
-      "sha256": "77e402376142bd6dca7e24702e6545e6f29e18a3f44a886a289e40ccd18284a4"
+      "sha256": "77a8a5278d10536b953ff531ec659e3db1f634a3995d40360b5e234d90cded1e"
     },
     {
       "category": "public_evidence",
@@ -358,7 +358,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/open_reproduction_gates/open_reproduction_gates.json",
-      "sha256": "0034253a0d20c76a3b7907ec003d7f2621348cc963d3e5ead7507ab4d69b5b03"
+      "sha256": "64b533cf64bfeebb0ba14c1d9d975d4ff690d45174e7ae7ad6923a3aac9d365e"
     },
     {
       "category": "public_evidence",
@@ -610,7 +610,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/README.md",
-      "sha256": "339fe0bef8376488066ced7109b71f63e6cf977e32a712e1a7c9a4debd006094"
+      "sha256": "a4c1505804734a523a2b844eeda3a87338fcb571f46130d32ec3916e787dd4cb"
     },
     {
       "category": "public_evidence",
@@ -619,7 +619,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/experiment_manifest/experiment_manifest.json",
-      "sha256": "ec0485cb5b6167438bc348f0de5fee6435e834d1e9cd79a40e530106057ab2a3"
+      "sha256": "09e8fe2dd4e1d3084fe3ecb0a226521481c8f952709aa84924c5854dee529d69"
     },
     {
       "category": "public_evidence",
@@ -637,7 +637,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/citation_source_audit/citation_source_audit.json",
-      "sha256": "05336e0e759916fe6677fb091ba16627c0ca78acdf03210e69780d2a2d5514c1"
+      "sha256": "12ae377d0d2148286505e510ee53a2d1b921992e0ada1e2d4700a4428a084a87"
     },
     {
       "category": "public_evidence",
@@ -664,7 +664,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/README.md",
-      "sha256": "5c1bef02e824dbba1bb3c7941bed7a38b25a063ccfe65e93f2d39c33cb29f919"
+      "sha256": "a645be36b2ccb7e103fa355091f070404781ca897623cbcde7ee4aa4a53a43f4"
     },
     {
       "category": "public_evidence",
@@ -673,7 +673,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/anonymous_supplement/supplement_report.json",
-      "sha256": "e17f87591ca2dceb50c2a5dc7ece2070f457783823460c26f26e4006c81b0f3a"
+      "sha256": "db9024dfb59e3d088d984a91dee640b8412ee92bee54282e86682aa691d86a3c"
     },
     {
       "category": "public_evidence",
@@ -700,7 +700,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/neurips_submission/README.md",
-      "sha256": "680f51a6f742f7374e18f8bbf6a49f6eec67ea1242f6366aefcd895d47758253"
+      "sha256": "3c0b007df5d94cfd3f3c834616e4599b52b97079ce5da68b53bdbe36d9c1b9a3"
     },
     {
       "category": "public_evidence",
@@ -709,7 +709,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/experiments/neurips_submission/submission_format_report.json",
-      "sha256": "72a3bfc19bd2ac584f079e1593ff854548d86fadf79a17d14e28f4eff9f46683"
+      "sha256": "ac0cd685c728cd6742d59e50542499e00bf2d08451015d18301c6c63a6f02a21"
     },
     {
       "category": "public_evidence",
@@ -861,8 +861,53 @@
       "exists": true,
       "nonempty": true,
       "normalizers_applied": [],
+      "path": "docs/experiments/contact_rich_replay/protocol.json",
+      "sha256": "5f6e3e853cb6219104382507a91196fba408ec59f0ea69f3a0d852ee13defdac"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/contact_rich_replay/README.md",
+      "sha256": "db0e4d7e4687c7578d56a633550a2a564119be6fcc1a407830d207c7752e529d"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+      "sha256": "f73b7856e892b3cdca0ea4b99339d46e9843f6cb719bfc3b5ed6d0c26b8ce11a"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+      "sha256": "e9caa5a159812c7f49980d7257ca04838b3f00608e8081c62ad77ec1fb756474"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "docs/experiments/contact_rich_replay/genesis_runtime_report.json",
+      "sha256": "875985e3728adbd199d894d51f7b6fa82e68a15b1ae37f54d499cdac546ac546"
+    },
+    {
+      "category": "public_evidence",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
       "path": "docs/experiments/meta_simulator_contract/adapter_contract_report.json",
-      "sha256": "797193a841df02b23eb1e0019fa4383a6e6caaaedf8993c2368ddcf68064e9ca"
+      "sha256": "f1bd79e4953dace594d94afdbe453a1430cbad234b5b7048d4e8cf6cccdeee92"
     },
     {
       "category": "public_evidence",
@@ -970,7 +1015,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reviewer-concern-matrix.md",
-      "sha256": "56e0ef96764fa7b5a4580ed1e766602d1a2df8cb781a6a1f60d743407450dc1c"
+      "sha256": "e0f171507f24a8bad0690a34b9b1054f34814cbf42b0b6459bbe4106294287cc"
     },
     {
       "category": "public_evidence",
@@ -979,7 +1024,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "docs/reference-release.md",
-      "sha256": "17e95cff3912f3c2f553d5afb8bf4b155808f2a9678b627783e3ce88047a0c13"
+      "sha256": "abcaddf9e1368a463a5488d50de3f8040b108610fad9e817d7386bf56bc8fb77"
     },
     {
       "category": "public_evidence",
@@ -1015,7 +1060,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "Makefile",
-      "sha256": "7e0c66fe071046263019bbc3d12cfffad03bd8b7d1764aaf10e0c2ab21338529"
+      "sha256": "4c806ca4ee0569e41f5f342167430a982b5badfc5774b4e9ad1eec530a27b921"
     },
     {
       "category": "release_script",
@@ -1024,7 +1069,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/run_experiments.py",
-      "sha256": "bddb4a10c639b5e653814633ee68e75298becb39990ac73d7949412afe22810a"
+      "sha256": "d7a838e8a03b29f375c5fe0f0fcb5b0847bae5e266af97935b629bd28086e8ba"
     },
     {
       "category": "release_script",
@@ -1033,7 +1078,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/open_reproduction_gates.py",
-      "sha256": "7699b39f9f398b6c2fed555d51bb3fff4f1b5f62824af1a48b60cb66510e8057"
+      "sha256": "3875d4b4b215f320bf6bfeec7cde0a061160bc9d114864a7e9b3957e383a6490"
     },
     {
       "category": "release_script",
@@ -1042,7 +1087,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_claim_audit.py",
-      "sha256": "6e13f3da1cbd7614d9e2d17c371c94a6a8eabdf6b60b9e3bb266d5d635b410d5"
+      "sha256": "50af447f3641950ed5f9ec2da24dff73dc530018633580fb0332a83641b94c8d"
     },
     {
       "category": "release_script",
@@ -1060,7 +1105,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/experiment_manifest.py",
-      "sha256": "7c0ea0920062a31559d5c48c27a4e414b097014ee120023139a630f830332a24"
+      "sha256": "e783f52557f957f2acf99a38d7cf632a8b902784177c77e556d733a46678e02f"
     },
     {
       "category": "release_script",
@@ -1096,7 +1141,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/paper_experiment_values.py",
-      "sha256": "d75877d37f58133778fcb11f41a1810100ff7980854b9d322479b3f1aaabc2cc"
+      "sha256": "ccb48ca318748f9ce7255eb1fad30bd331c2e15cf34dfb80dc221bcec41c267a"
     },
     {
       "category": "release_script",
@@ -1160,6 +1205,15 @@
       "normalizers_applied": [],
       "path": "tools/lerobot_multitrajectory_timing_audit.py",
       "sha256": "f9e094e5397d888684314bbbfc05bf6d1094d7b34cdfbfd74ddece86be958ed7"
+    },
+    {
+      "category": "release_script",
+      "digest_mode": "exact",
+      "exists": true,
+      "nonempty": true,
+      "normalizers_applied": [],
+      "path": "tools/contact_rich_cross_sim_replay.py",
+      "sha256": "f259fe72aa5035f9c529d0e8c168a1749ecd172d51e3baacd7616866a9a40bf7"
     },
     {
       "category": "release_script",
@@ -1249,7 +1303,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_manifest.py",
-      "sha256": "880a12b022133330de8e7139611144cca9d95250187b99c5efd08b187a83db91"
+      "sha256": "5bd9ece61c9f3933b75392b562dda6db52e9c2da1507ca378832708edfc34207"
     },
     {
       "category": "release_script",
@@ -1258,7 +1312,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/submission_packet.py",
-      "sha256": "55df61ebfab80a652ea0bc5779b82bcfef1c76d41e50c0362ae3d6174e89ea19"
+      "sha256": "fdb2811ee5b1b125df84c61cfe0bc31a9c49e31fe3551545dfe73e9e2df0a37a"
     },
     {
       "category": "release_script",
@@ -1267,7 +1321,7 @@
       "nonempty": true,
       "normalizers_applied": [],
       "path": "tools/release_readiness.py",
-      "sha256": "deb67d41e0ddd9e6e788908e201138d057d95ab2f2a9ac3c9e0135df109caab2"
+      "sha256": "2adffeaebbde3fbf2ca59d4409f6bcc16a957573491c4f65e4fd5e4b88b5d45f"
     },
     {
       "category": "release_script",

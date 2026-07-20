@@ -39,12 +39,16 @@ Replay timing & Lag calibration on \ExpTimingCalibrationEpisodes{} SO-101 trajec
 \ExpTimingHeldoutEpisodes{} source-episode-disjoint evaluations across \ExpTimingTaskCount{} tasks,
 tested same-trace MuJoCo and Genesis position-servo adapters, and scheduler conformance & Telemetry
 proxy with no motor-effective timestamps, \ExpTimingRobotTypeCount{} robot type, and
-\ExpTimingControllerConfigurationCount{} controller configuration; simulator adapters use
-\ExpReplayTraceCount{} \ExpReplayTraceNoun{}, with no contact-rich task rollout, Isaac result, or
-SAPIEN result \\
+\ExpTimingControllerConfigurationCount{} controller configuration; timing adapters use
+\ExpReplayTraceCount{} \ExpReplayTraceNoun{} \\
+Contact-rich replay & Preregistered straight-push and parallel-jaw-capture protocol in MuJoCo and
+Genesis over \ExpContactReplayScenarioCount{} paired initial-state scenarios, with object, contact,
+grasp, pose, and outcome metrics & Scripted primitive actors, no articulated robot or hardware
+ground truth; final orientation differs by \ExpContactReplayFinalOrientationDeg$^\circ$ overall, so
+equal physics is not claimed \\
 Meta-simulator neutrality & Adapter contract matrix over MuJoCo, Isaac Sim, Genesis, and SAPIEN
-plus same-trace MuJoCo/Genesis replay evidence & MuJoCo and Genesis are tested for the minimal replay
-profile; Isaac and SAPIEN are not replay-tested in this paper, and equal physics is not claimed \\
+plus same-trace and contact-rich MuJoCo/Genesis evidence & Isaac and SAPIEN are not replay-tested in
+this paper, and equal physics is not claimed \\
 Generalization beyond robotics & Deterministic game-engine collision-patch and autonomous-driving
 clock-domain pilots using the same invariant vocabulary & Not measured on production game engines,
 public AV datasets, or fleet logs \\
@@ -156,9 +160,8 @@ The artifact keeps unfinished claims executable instead of hiding them. The curr
 is:
 \texttt{python3 tools/release\_readiness.py --strict-rfc}. The full-standard gate is:
 \texttt{python3 tools/release\_readiness.py --strict-full}. The latter is expected to fail until
-the two gates boxed below are backed by committed reports and, additionally, external standard
-evidence exists: maintainer-reviewed diagnostics, an independently written reader/exporter, and at
-least one externally published WorldEpisode-compatible dataset. The same gates are indexed in
+the policy and benchmark gates boxed below are backed by committed reports and the machine-indexed
+maintainer, adoption, and simulator-equivalence gates are also closed. The same gates are indexed in
 \path{docs/experiments/open_reproduction_gates/open_reproduction_gates.json}.
 \end{openresult}
 

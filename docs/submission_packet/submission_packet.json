@@ -41,11 +41,23 @@
       "passed": true
     },
     {
-      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested and contact-rich rollout remains open.",
+      "boundary": "One LeRobot trace with minimal MuJoCo and Genesis position-servo adapters; Isaac is not claimed tested; contact physics is evaluated separately.",
       "claim": "Timestamp-aware LeRobot replay reduces joint RMSE in tested MuJoCo and Genesis adapters.",
       "claim_id": "CLAIM.REPLAY.001",
       "evidence_artifacts": [
         "docs/experiments/lerobot_control_replay/control_replay_report.json"
+      ],
+      "passed": true
+    },
+    {
+      "boundary": "Two scripted primitive tasks with kinematic actors and no hardware ground truth; the observed orientation divergence blocks equivalent-physics claims.",
+      "claim": "A preregistered two-runtime contact protocol measures trajectory, contact, grasp, pose, and outcome agreement without claiming equivalent physics.",
+      "claim_id": "CLAIM.REPLAY.CONTACT.001",
+      "evidence_artifacts": [
+        "docs/experiments/contact_rich_replay/protocol.json",
+        "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+        "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+        "docs/experiments/contact_rich_replay/genesis_runtime_report.json"
       ],
       "passed": true
     },
@@ -253,6 +265,30 @@
       "status": "open_not_claimed"
     },
     {
+      "acceptance_rule": "Equivalent-physics language remains blocked until both simulators satisfy a predeclared hardware-anchored tolerance envelope on articulated contact tasks. Agreement between simulators alone is insufficient.",
+      "blocker_id": "SIM.001",
+      "boundary": "The preregistered primitive contact protocol measures MuJoCo/Genesis disagreement. Its capture-orientation divergence and lack of hardware ground truth preclude an equivalent-physics claim.",
+      "claim": "simulator-equivalent contact physics",
+      "commands": [
+        {
+          "command": "python3 tools/contact_rich_cross_sim_replay.py --check --required",
+          "expected_outputs": [
+            "docs/experiments/contact_rich_replay/contact_rich_replay_report.json",
+            "docs/experiments/contact_rich_replay/mujoco_runtime_report.json",
+            "docs/experiments/contact_rich_replay/genesis_runtime_report.json"
+          ],
+          "purpose": "verify the retained primitive contact evidence"
+        }
+      ],
+      "required_artifacts": [
+        "articulated-robot contact trajectories in at least two simulators",
+        "matched hardware-reference object and contact observations",
+        "predeclared physical trajectory, contact, pose, and outcome tolerances",
+        "scenario-level uncertainty intervals and failure traces"
+      ],
+      "status": "open_not_claimed"
+    },
+    {
       "acceptance_rule": "Mature-standard language requires at least one independently written implementation or externally published compatible dataset that passes the public conformance suite.",
       "blocker_id": "ADOPT.001",
       "boundary": "The repository contains an internal clean-room reader, but no external independent implementation or externally published compatible dataset is claimed.",
@@ -314,6 +350,10 @@
     {
       "command": "uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --required",
       "name": "regenerate held-out multi-trajectory timing evidence"
+    },
+    {
+      "command": "UV_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu uv run --isolated --python 3.11 --index-strategy unsafe-best-match --with 'torch==2.8.0+cpu' --with 'numpy==2.4.6' --with 'mujoco==3.3.7' --with 'genesis-world==1.2.2' python tools/contact_rich_cross_sim_replay.py --required",
+      "name": "regenerate preregistered contact-rich cross-simulator replay"
     },
     {
       "command": "python3 tools/lerobot_policy_compatibility_audit.py --check --strict",
@@ -527,6 +567,31 @@
     {
       "exists": true,
       "nonempty": true,
+      "path": "docs/experiments/contact_rich_replay/protocol.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/contact_rich_replay/README.md"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/contact_rich_replay/contact_rich_replay_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/contact_rich_replay/mujoco_runtime_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
+      "path": "docs/experiments/contact_rich_replay/genesis_runtime_report.json"
+    },
+    {
+      "exists": true,
+      "nonempty": true,
       "path": "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log"
     },
     {
@@ -680,14 +745,15 @@
   "summary": {
     "failed_claim_count": 0,
     "missing_required_artifact_count": 0,
-    "open_result_gate_count": 4,
-    "paper_claim_count": 15,
+    "open_result_gate_count": 5,
+    "paper_claim_count": 16,
     "results_sections": [
       "baseline_schema_errors",
       "baseline_semantic_errors",
       "benchmark_callout_audit",
       "benchmark_inflation_gate",
       "cleanroom_reader",
+      "contact_rich_replay",
       "dataset_scale_audit",
       "dataset_scale_performance",
       "independent_fixture_check",

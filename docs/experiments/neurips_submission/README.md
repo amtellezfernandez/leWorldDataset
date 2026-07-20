@@ -14,7 +14,7 @@ NeurIPS 2026 Evaluations & Datasets requirements as a provisional baseline.
 - Style migration required: `True`
 - Main-content last page: `9`
 - Provisional main-content page limit: `9`
-- References page: `9`
+- References page: `10`
 - Appendix page: `12`
 - Checklist page: `14`
 - Total PDF pages: `21`
