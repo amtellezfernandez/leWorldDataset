@@ -419,7 +419,12 @@ def aggregate_episode_stats(
     source_episodes: list[int],
     feature_name: str,
 ) -> dict[str, Any]:
-    import numpy as np
+    try:
+        import numpy as np
+    except ImportError as exc:
+        raise RuntimeError(
+            "numpy is required for split statistics; run with `uv run --with numpy ...`"
+        ) from exc
 
     stat_names = ("min", "max", "mean", "std", "count", "q01", "q10", "q50", "q90", "q99")
     values = {
@@ -606,7 +611,7 @@ def materialize(
             "finished_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
             "repository_commit": repository_commit,
             "command": (
-                "uv run --with pyarrow --with huggingface-hub "
+                "uv run --with pyarrow --with numpy --with huggingface-hub "
                 "python tools/lerobot_policy_video_materialization.py --materialize"
                 + (" --download" if download else "")
             ),

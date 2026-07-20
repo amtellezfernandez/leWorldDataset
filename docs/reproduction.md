@@ -152,7 +152,7 @@ On the remote training host, materialize only the files in that plan and run the
 smoke test:
 
 ```bash
-uv run --with pyarrow --with huggingface-hub \
+uv run --with pyarrow --with numpy --with huggingface-hub \
   python tools/lerobot_policy_video_materialization.py --materialize --download
 uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
   python tools/lerobot_policy_vision_smoke.py --strict
