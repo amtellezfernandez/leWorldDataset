@@ -27,7 +27,9 @@ task--scene shift and cannot attribute the change to scene overlap alone. The ML
 seed and held-out-episode variation, but \ExpMlpSeedCount{} seeds remain a small training sample and
 the \ExpOfflineSuccessThreshold{} nRMSE threshold is reported only as a secondary diagnostic rather
 than task success. ACT/Diffusion training and rollout evidence remain open; the pinned compatibility
-probe stops both policy paths before training because source images were not materialized. The timing audit calibrates on
+probe now completes \ExpPolicyVisionTrainingStepCount{}/\ExpPolicyVisionProbeCount{}
+smoke-training paths after digest-pinned source-image materialization, but it produces no trained
+checkpoint, held-out policy metric, or rollout. The timing audit calibrates on
 \ExpTimingCalibrationEpisodes{} trajectories and evaluates \ExpTimingHeldoutEpisodes{} held-out
 trajectories, but it has no motor-effective timestamps and covers
 \ExpTimingRobotTypeCount{} robot type and \ExpTimingControllerConfigurationCount{} controller

@@ -202,6 +202,54 @@ def build_claims(
         )
     )
 
+    policy_gate = results.get("lerobot_policy_gate", {})
+    vision_smoke = policy_gate.get("policy_vision_smoke", {})
+    video_materialization = policy_gate.get("video_materialization", {})
+    claims.append(
+        claim_result(
+            claim_id="CLAIM.POLICY_VISION_SMOKE.001",
+            claim=(
+                "Pinned LeRobot ACT and Diffusion paths decode the materialized source front camera "
+                "and complete the CUDA smoke optimization step."
+            ),
+            evidence_artifacts=[
+                "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+                "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+                "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+                "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+            ],
+            paper_patterns=[
+                "\\ExpPolicyVisionAssetCount{} source front-camera files",
+                "\\ExpPolicyVisionTrainingStepCount{}/\\ExpPolicyVisionProbeCount{} pinned",
+                "closes input compatibility only",
+                "no trained checkpoint",
+            ],
+            evidence_passed=(
+                vision_smoke.get("status") == "training_step_smoke_passed"
+                and vision_smoke.get("pass") is True
+                and vision_smoke.get("all_policy_probes_completed_training_step") is True
+                and video_materialization.get("pass") is True
+                and int(video_materialization.get("verified_asset_count", 0)) > 0
+                and policy_gate.get("pass") is False
+            ),
+            evidence={
+                "vision_smoke_status": vision_smoke.get("status"),
+                "training_step_count": sum(
+                    bool(probe.get("training_step_completed"))
+                    for probe in vision_smoke.get("policy_probes", [])
+                ),
+                "probe_count": len(vision_smoke.get("policy_probes", [])),
+                "verified_asset_count": video_materialization.get("verified_asset_count"),
+                "policy_gate_pass": policy_gate.get("pass"),
+            },
+            text=text,
+            boundary=(
+                "Input compatibility only; no trained checkpoint, held-out policy metric, "
+                "simulator rollout, or physical rollout."
+            ),
+        )
+    )
+
     timing_calibration = multitrajectory_timing.get("calibration", {})
     timing_evaluation = multitrajectory_timing.get("evaluation", {})
     timing_improvement = timing_evaluation.get("paired_episode_improvement", {})

@@ -525,7 +525,7 @@ def materialize_package(
             target_path.symlink_to(source_path)
         links.append(
             {
-                "path": relative(target_path),
+                "path": f"{relative(package_dir)}/{relative_path}",
                 "source_path": relative(source_path),
             }
         )

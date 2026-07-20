@@ -27,7 +27,9 @@ Lineage is a task--scene proxy and the holdout is task-disjoint; scene-only leak
 identified. The LeRobot \ExpPolicyCompatibilityLeRobotVersion{} preflight loads the representative
 package, but \ExpPolicyCompatibilityTrainingStepCount{}/\ExpPolicyCompatibilityProbeCount{} policy
 paths complete a training step because split packages omit the required image/environment-state
-modality; rollouts are not run \\
+modality. After digest-pinned front-camera materialization,
+\ExpPolicyVisionTrainingStepCount{}/\ExpPolicyVisionProbeCount{} policy paths complete a CUDA
+optimization step; held-out policy evaluation and rollouts are not run \\
 Conversion & Complete pinned source Parquet shards from \ExpConversionScaleDatasetCount{} public
 LeRobotDataset v3 datasets: \ExpConversionScaleEpisodeCount{} episodes and
 \ExpConversionScaleRowCount{} paired state/action samples with exact tensor, index, and timestamp

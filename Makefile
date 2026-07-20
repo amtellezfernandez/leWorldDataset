@@ -1,4 +1,4 @@
-.PHONY: validate test experiments conversion-scale timing-audit policy-compatibility statistics experiment-manifest source-audits paper paper-values supplement open-gates paper-claims release-manifest verify-release-manifest submission-packet readiness freshness check
+.PHONY: validate test experiments conversion-scale timing-audit policy-compatibility policy-vision-smoke statistics experiment-manifest source-audits paper paper-values supplement open-gates paper-claims release-manifest verify-release-manifest submission-packet readiness freshness check
 
 validate:
 	python3 tools/validate_examples.py
@@ -8,6 +8,7 @@ validate:
 	uv run --with pyarrow --with numpy python tools/lerobot_multitrajectory_timing_audit.py --check --required
 	python3 tools/lerobot_policy_compatibility_audit.py --check --strict
 	python3 tools/lerobot_policy_video_materialization.py --check --strict
+	python3 tools/lerobot_policy_vision_smoke.py --check --strict
 	python3 tools/experiment_manifest.py --check --strict
 	python3 tools/citation_source_audit.py --check --strict
 	python3 tools/third_party_asset_audit.py --check --strict
@@ -30,6 +31,10 @@ timing-audit:
 
 policy-compatibility:
 	python3 tools/lerobot_policy_compatibility_audit.py --check --strict
+
+policy-vision-smoke:
+	python3 tools/lerobot_policy_video_materialization.py --check --strict
+	python3 tools/lerobot_policy_vision_smoke.py --check --strict
 
 statistics:
 	python3 tools/experiment_statistics.py

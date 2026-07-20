@@ -31,6 +31,7 @@ def test_principal_experiments_have_reproducibility_fields() -> None:
         "lerobot_conversion_scale",
         "lerobot_multitrajectory_timing",
         "lerobot_act_diffusion_compatibility_preflight",
+        "lerobot_act_diffusion_front_camera_smoke",
     }
     for experiment in manifest["experiments"]:
         assert experiment["datasets"]

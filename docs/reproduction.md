@@ -130,17 +130,16 @@ state/action LeRobot split packages, and high-fidelity/physical rollout requirem
 packages include split-specific normalization statistics and pass the pinned LeRobot 0.6.0 loader.
 The remote compatibility report records that ACT and Diffusion both stop before training because
 their input contract requires an image or environment-state feature in addition to the available
-joint proprioception. Joint positions are not relabeled to bypass that contract. Reproduce the
-remote probe in a pinned environment with:
+joint proprioception in the compact package. Joint positions are not relabeled to bypass that
+contract. Reproduce the historical fail-closed probe in a pinned environment with:
 
 ```bash
 uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
   python tools/lerobot_policy_compatibility_audit.py --strict
 ```
 
-The gate remains blocked until source images or a semantically valid environment-state feature are
-materialized. Vision-policy claims also require mirrored video assets with committed digests.
-Generate and validate the pinned front-camera asset plan without downloading video payloads:
+The generated front-camera plan now closes that input blocker without changing feature semantics.
+Generate and validate the pinned asset plan without downloading video payloads:
 
 ```bash
 uv run --with pyarrow --with huggingface-hub \
@@ -160,7 +159,8 @@ uv run --isolated --with 'lerobot[training,diffusion]==0.6.0' \
 
 The asset manifest pins the source repository revision, source metadata digests, and every required
 MP4 LFS SHA-256. The materializer preserves source video timestamps and file indices; it does not
-copy image values into a different semantic feature.
+copy image values into a different semantic feature. The committed smoke report records successful
+ACT and Diffusion optimization steps, but full training, held-out metrics, and rollouts remain open.
 
 ## Control-loop replay
 

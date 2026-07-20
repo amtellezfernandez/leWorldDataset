@@ -269,6 +269,14 @@ def generate_tex(
         bool(probe.get("expected_modality_error_observed"))
         for probe in policy_probes
     )
+    policy_vision_smoke = _get(results, "lerobot_policy_gate.policy_vision_smoke")
+    policy_vision_probes = _get(policy_vision_smoke, "policy_probes")
+    policy_vision_probe_count = len(policy_vision_probes)
+    policy_vision_training_step_count = sum(
+        bool(probe.get("training_step_completed"))
+        for probe in policy_vision_probes
+    )
+    video_materialization = _get(results, "lerobot_policy_gate.video_materialization")
 
     replay = _get(results, "rq3_replay")
     alignment = _get(replay, "alignment")
@@ -468,6 +476,12 @@ def generate_tex(
         ("ExpPolicyCompatibilityProbeCount", _tex_int(policy_probe_count, "policy compatibility probe count")),
         ("ExpPolicyCompatibilityTrainingStepCount", _tex_int(policy_training_step_count, "policy compatibility training-step count")),
         ("ExpPolicyCompatibilityExpectedBlockerCount", _tex_int(policy_expected_blocker_count, "policy compatibility expected-blocker count")),
+        ("ExpPolicyVisionLeRobotVersion", str(_get(policy_vision_smoke, "lerobot_version"))),
+        ("ExpPolicyVisionProbeCount", _tex_int(policy_vision_probe_count, "policy vision probe count")),
+        ("ExpPolicyVisionTrainingStepCount", _tex_int(policy_vision_training_step_count, "policy vision training-step count")),
+        ("ExpPolicyVisionAssetCount", _tex_int(_get(video_materialization, "verified_asset_count"), "policy vision asset count")),
+        ("ExpPolicyVisionAssetGiB", _fixed(_as_number(_get(video_materialization, "verified_total_size_bytes"), "policy vision asset bytes") / (1024**3), 2, "policy vision asset GiB")),
+        ("ExpPolicyVisionPackageCount", _tex_int(len(_get(video_materialization, "packages")), "policy vision package count")),
         ("ExpReplaySampleCount", _tex_int(_get(replay, "sample_count"), "replay sample count")),
         ("ExpReplayTraceCount", _tex_int(replay_trace_count, "replay trace count")),
         ("ExpReplayTraceNoun", "trajectory" if replay_trace_count == 1 else "trajectories"),

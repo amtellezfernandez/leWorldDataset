@@ -56,12 +56,17 @@ proxy-lineage-disjoint and that evaluation changes materially under a harder tas
 it does not establish scene-only leakage, policy rollout impact, or benchmark inflation.
 
 The artifact includes digest-verified split packages and ACT/Diffusion job specifications. A pinned
-LeRobot \ExpPolicyCompatibilityLeRobotVersion{} compatibility probe loads the representative
-package, but \ExpPolicyCompatibilityTrainingStepCount{}/\ExpPolicyCompatibilityProbeCount{} policy
-paths complete a training step: all \ExpPolicyCompatibilityExpectedBlockerCount{} stop during model
-construction because the low-dimensional package has neither an observation image nor an
-environment-state feature. We do not relabel joint proprioception to bypass that input contract.
-Policy results and rollouts therefore remain open (Appendix~\ref{app:gates}).
+LeRobot \ExpPolicyCompatibilityLeRobotVersion{} preflight first loads the representative
+low-dimensional package; \ExpPolicyCompatibilityTrainingStepCount{}/\ExpPolicyCompatibilityProbeCount{}
+policy paths complete a training step, and all \ExpPolicyCompatibilityExpectedBlockerCount{} stop
+because the package has neither an observation image nor an environment-state feature. We do not
+relabel joint proprioception to bypass that contract. A subsequent generated plan pins
+\ExpPolicyVisionAssetCount{} source front-camera files (\ExpPolicyVisionAssetGiB{} GiB) and
+materializes split-specific video metadata and statistics for all \ExpPolicyVisionPackageCount{}
+packages. With those inputs, \ExpPolicyVisionTrainingStepCount{}/\ExpPolicyVisionProbeCount{} pinned
+LeRobot \ExpPolicyVisionLeRobotVersion{} ACT/Diffusion paths complete the CUDA smoke optimization step.
+This closes input compatibility only: checkpoint training, held-out policy metrics, and rollouts
+remain open (Appendix~\ref{app:gates}).
 
 \paragraph{Case 2: action-timing and replay drift (\texttt{ACTION.002}).}
 LeRobot's control stack can decouple policy inference from the fixed-rate low-level controller:

@@ -44,6 +44,18 @@ GATES: list[dict[str, Any]] = [
                 ],
             },
             {
+                "purpose": "validate the pinned front-camera training-input preflight",
+                "command": (
+                    "python3 tools/lerobot_policy_video_materialization.py --check --strict && "
+                    "python3 tools/lerobot_policy_vision_smoke.py --check --strict"
+                ),
+                "expected_outputs": [
+                    "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+                    "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+                    "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+                ],
+            },
+            {
                 "purpose": "run generated ACT/Diffusion jobs in a LeRobot environment",
                 "command": "bash docs/experiments/lerobot_policy_gate/run_lerobot_policy_jobs.sh",
                 "expected_outputs": [

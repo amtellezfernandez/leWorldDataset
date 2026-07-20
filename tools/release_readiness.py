@@ -261,10 +261,16 @@ def experiment_checks(results: dict[str, Any]) -> list[Check]:
         Check(
             "EVID.004",
             "ACT/Diffusion gate is explicit and not overclaimed",
-            policy_gate.get("status") == "ready_not_executed"
-            and not policy_gate.get("executions")
+            policy_gate.get("status") == "ready_for_policy_training"
+            and policy_gate.get("policy_inputs_ready") is True
+            and nested(
+                policy_gate,
+                ("policy_vision_smoke", "all_policy_probes_completed_training_step"),
+            )
+            is True
+            and policy_gate.get("pass") is False
             and nested(policy_gate, ("physical_split_packages", "package_count"), 0) >= 4,
-            "policy jobs and compact split packages exist; metrics are not claimed",
+            "front-camera ACT/Diffusion smoke passes; policy metrics and rollouts are not claimed",
             severity="warning",
         ),
         Check(

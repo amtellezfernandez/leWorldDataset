@@ -37,12 +37,14 @@ the claim at the same scope as the evidence.
      requirements, and `docs/experiments/lerobot_policy_gate/policy_gate_report.json`.
      `tools/lerobot_policy_compatibility_audit.py` records a pinned DGX Spark probe in
      `docs/experiments/lerobot_policy_gate/policy_compatibility_report.json`; both policies reject
-     the state-only input contract before the first training step. The separate
+     the state-only input contract before the first training step. The generated front-camera asset
+     plan and `tools/lerobot_policy_video_materialization.py` then preserve source video semantics,
+     timestamps, and split statistics; `tools/lerobot_policy_vision_smoke.py` records successful
+     ACT and Diffusion CUDA smoke steps on the DGX Spark. The separate
      `tools/lerobot_temporal_policy_baseline.py` report measures a temporal ridge baseline on the
      current task-confounded packages.
-   - Remaining output: mirrored source images or a semantically valid environment-state feature,
-     trained checkpoints, offline action metrics, and high-fidelity simulator or physical rollout
-     reports.
+   - Remaining output: matched-seed trained checkpoints, offline action metrics for both split
+     protocols, and high-fidelity simulator or physical rollout reports.
    - Claim unlocked: lineage-safe splitting affects a stronger robot-learning baseline, not only a
      Torch MLP probe.
 

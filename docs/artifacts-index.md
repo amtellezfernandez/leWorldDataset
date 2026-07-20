@@ -50,8 +50,9 @@ this `docs/` directory; run commands from the repository root.
 - [Held-out multi-trajectory timing audit](experiments/lerobot_multitrajectory_timing)
 - [Active LeRobot scene-leakage artifacts](experiments/lerobot_scene_leakage)
 - [ACT/Diffusion leakage gate artifacts](experiments/lerobot_policy_gate)
-  The directory includes a pinned remote compatibility report; the prepared jobs are blocked by
-  missing image/environment-state inputs and are not policy results.
+  The directory includes the historical fail-closed modality probe, a digest-pinned front-camera
+  materialization report, and a successful remote ACT/Diffusion smoke report. These establish
+  training-input compatibility, not policy quality or rollout impact.
 - [Active LeRobot control-replay artifacts](experiments/lerobot_control_replay)
 - [Famous benchmark call-out artifacts](experiments/benchmark_callout_audit)
 - [Famous benchmark inflation-gate artifacts](experiments/benchmark_inflation_gate)

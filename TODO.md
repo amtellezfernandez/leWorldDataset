@@ -28,14 +28,17 @@ baseline.
   - Completed preflight: the compact packages now preserve LeRobot storage-limit metadata, include
     split-specific `meta/stats.json`, and load locally by explicit `dataset.root`.
   - Completed remote compatibility audit: pinned LeRobot 0.6.0 loads the representative package on
-    the DGX Spark, but both ACT and Diffusion stop before the first training step because the
-    package has only joint proprioception and neither an observation image nor a semantically valid
-    `observation.environment_state`.
+    the DGX Spark. The initial low-dimensional package makes both ACT and Diffusion stop before the
+    first training step because it has only joint proprioception and neither an observation image
+    nor a semantically valid `observation.environment_state`.
   - Do not relabel joint positions as environment state to bypass the policy contract. The generated
-    jobs remain blocked until the required source modality is materialized.
-  - Completed media plan: the generated front-camera asset manifest pins the source revision,
-    metadata, required MP4 paths, byte sizes, and LFS SHA-256 digests. Remote materialization and
-    the one-step vision smoke remain to be executed.
+    jobs use the source front camera instead.
+  - Completed media preflight: the generated front-camera asset manifest pins the source revision,
+    metadata, required MP4 paths, byte sizes, and LFS SHA-256 digests. Remote materialization
+    verifies every asset and all four split packages; pinned ACT and Diffusion paths both complete
+    their CUDA smoke optimization step.
+  - The preflight closes training-input compatibility only. Full matched-seed training, held-out
+    action metrics, checkpoints, and rollouts remain open.
   - Execute ACT and Diffusion jobs for both split protocols with matched hyperparameters and seeds.
   - Evaluate checkpoints in one high-fidelity simulator or on the source robot using the same split
     manifest.

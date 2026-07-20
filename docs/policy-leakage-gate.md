@@ -1,6 +1,6 @@
 # ACT/Diffusion Policy Leakage Gate
 
-Status: prepared, not executed.
+Status: training-input preflight executed; policy-result gate open.
 
 The current result uses an offline Torch MLP behavioral-cloning probe and a measured temporal ridge
 state/action baseline over the committed compact LeRobot split packages. The legacy
@@ -25,7 +25,14 @@ and writes:
 - compact low-dimensional LeRobot split packages in `physical_splits/`, with source-file digest
   verification and explicit source-to-local episode maps;
 - a rollout contract requiring high-fidelity simulation or physical robot evaluation;
-- `run_lerobot_policy_jobs.sh`, which contains the LeRobot `lerobot-train` commands.
+- `run_lerobot_policy_jobs.sh`, which materializes the pinned front camera before running the
+  LeRobot `lerobot-train` commands.
+
+The initial pinned LeRobot compatibility probe fails closed on the compact state-only package. A
+generated front-camera asset plan then pins every required source MP4 by revision, bytes, and
+SHA-256. The remote materialization report verifies those assets and produces split-specific video
+metadata/statistics; the ACT and Diffusion smoke report records successful CUDA optimization steps.
+This establishes training-input compatibility only.
 
 The related measured temporal baseline is regenerated separately with:
 
@@ -49,8 +56,9 @@ This is not a completed ACT/Diffusion empirical result. It is the executable gat
 paper from overclaiming the MLP and temporal-ridge proxy-holdout results as if they isolated scene
 leakage or already covered ACT, Diffusion Policy, IsaacLab, or hardware rollouts.
 
-The committed physical split packages are also bounded: they are state/action packages for
+The committed physical split packages are also bounded: they remain compact state/action packages for
 low-dimensional policy reruns. They preserve action, state, timestamp, frame, task, reward, and
 done values from the cached public Parquet source and remap `episode_index`/`index` into contiguous
-local LeRobot packages. They do not include video payloads; vision-policy results require mirroring
-the source videos and committing their digests before any such result can be claimed.
+local LeRobot packages. Video payloads stay external; the generated materializer retrieves only the
+digest-pinned source files required by the selected episodes. The smoke result is not a trained
+policy, held-out evaluation, or rollout result.

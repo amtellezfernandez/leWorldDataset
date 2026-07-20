@@ -42,6 +42,11 @@ def test_generated_values_include_open_result_placeholder() -> None:
     assert r"\newcommand{\ExpPolicyCompatibilityLeRobotVersion}{0.6.0}" in rendered
     assert r"\newcommand{\ExpPolicyCompatibilityTrainingStepCount}{0}" in rendered
     assert r"\newcommand{\ExpPolicyCompatibilityExpectedBlockerCount}{2}" in rendered
+    assert r"\newcommand{\ExpPolicyVisionLeRobotVersion}{0.6.0}" in rendered
+    assert r"\newcommand{\ExpPolicyVisionProbeCount}{2}" in rendered
+    assert r"\newcommand{\ExpPolicyVisionTrainingStepCount}{2}" in rendered
+    assert r"\newcommand{\ExpPolicyVisionAssetCount}{24}" in rendered
+    assert r"\newcommand{\ExpPolicyVisionPackageCount}{4}" in rendered
     assert r"\newcommand{\ExpSceneOnlyLeakageResult}{\PaperNotDefinedYet}" in rendered
     assert r"\newcommand{\ExpTemporalNrmseDifference}" in rendered
     assert r"\newcommand{\ExpConversionScaleEpisodeCount}{271}" in rendered

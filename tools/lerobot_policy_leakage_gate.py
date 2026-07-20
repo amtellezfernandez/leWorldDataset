@@ -29,6 +29,10 @@ DEFAULT_SPLIT_MANIFEST = ROOT / "docs" / "experiments" / "lerobot_scene_leakage"
 DEFAULT_LEAKAGE_REPORT = ROOT / "docs" / "experiments" / "lerobot_scene_leakage" / "leakage_report.json"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "experiments" / "lerobot_policy_gate"
 DEFAULT_POLICY_COMPATIBILITY_REPORT = DEFAULT_OUTPUT_DIR / "policy_compatibility_report.json"
+DEFAULT_POLICY_VISION_SMOKE_REPORT = DEFAULT_OUTPUT_DIR / "policy_vision_smoke_report.json"
+DEFAULT_VIDEO_MATERIALIZATION_REPORT = (
+    DEFAULT_OUTPUT_DIR / "front_camera_materialization_report.json"
+)
 DEFAULT_POLICIES = ("act", "diffusion")
 DEFAULT_DEVICE = "cuda"
 DEFAULT_STEPS = 20000
@@ -102,6 +106,36 @@ def compatibility_report_fresh(report: dict[str, Any], dataset_root: Path) -> tu
             errors.append(f"byte count changed: {descriptor['path']}")
         if sha256_file(path) != descriptor.get("sha256"):
             errors.append(f"digest changed: {descriptor['path']}")
+    return not errors, errors
+
+
+def vision_smoke_report_fresh(report: dict[str, Any]) -> tuple[bool, list[str]]:
+    errors = []
+    script_path = ROOT / report.get("script", "")
+    if not script_path.is_file():
+        errors.append("vision smoke script is missing")
+    elif sha256_file(script_path) != report.get("script_sha256"):
+        errors.append("vision smoke script digest changed")
+    for role in ("asset_plan", "materialization_report"):
+        descriptor = report.get("media_integrity", {}).get(role, {})
+        path = ROOT / descriptor.get("path", "")
+        if not path.is_file():
+            errors.append(f"vision smoke {role} is missing")
+            continue
+        if path.stat().st_size != descriptor.get("size_bytes"):
+            errors.append(f"vision smoke {role} byte count changed")
+        if sha256_file(path) != descriptor.get("sha256"):
+            errors.append(f"vision smoke {role} digest changed")
+        payload = load_json(path)
+        producer_path = ROOT / payload.get("script", "")
+        if not producer_path.is_file():
+            errors.append(f"vision smoke {role} producer script is missing")
+        elif sha256_file(producer_path) != payload.get("script_sha256"):
+            errors.append(f"vision smoke {role} producer script digest changed")
+    if not report.get("pass"):
+        errors.append("vision smoke report does not pass")
+    if not report.get("all_policy_probes_completed_training_step"):
+        errors.append("vision smoke did not complete every policy training step")
     return not errors, errors
 
 
@@ -853,8 +887,11 @@ def make_jobs(
         "set -euo pipefail",
         "",
         "# Local compact split packages are under docs/experiments/lerobot_policy_gate/physical_splits.",
-        "# LeRobot 0.6.0 ACT and Diffusion also require an image or environment-state input.",
-        "# Do not run these jobs until a semantically valid required modality has been materialized.",
+        "# Materialize the pinned source front camera before starting policy training.",
+        (
+            "uv run --with pyarrow --with numpy --with huggingface-hub "
+            "python tools/lerobot_policy_video_materialization.py --materialize --download"
+        ),
         "",
     ]
 
@@ -1089,12 +1126,42 @@ def build_policy_gate(
         "fresh_for_current_package": compatibility_fresh,
         "freshness_errors": compatibility_errors,
     }
+    vision_smoke_path = output_dir / DEFAULT_POLICY_VISION_SMOKE_REPORT.name
+    if vision_smoke_path.exists():
+        vision_smoke = load_json(vision_smoke_path)
+        vision_smoke_fresh, vision_smoke_errors = vision_smoke_report_fresh(vision_smoke)
+    else:
+        vision_smoke = {
+            "status": "not_run",
+            "pass": False,
+            "all_policy_probes_completed_training_step": False,
+        }
+        vision_smoke_fresh = False
+        vision_smoke_errors = ["vision smoke report has not been generated"]
+    vision_smoke_evidence = {
+        **vision_smoke,
+        "fresh_for_current_inputs": vision_smoke_fresh,
+        "freshness_errors": vision_smoke_errors,
+    }
+    video_materialization_path = output_dir / DEFAULT_VIDEO_MATERIALIZATION_REPORT.name
+    video_materialization = (
+        load_json(video_materialization_path)
+        if video_materialization_path.exists()
+        else {
+            "status": "not_run",
+            "pass": False,
+            "verified_asset_count": 0,
+            "verified_total_size_bytes": 0,
+            "packages": [],
+        }
+    )
     policy_inputs_ready = bool(
-        compatibility_fresh
-        and compatibility.get("all_policy_probes_completed_training_step")
+        vision_smoke_fresh
+        and vision_smoke.get("all_policy_probes_completed_training_step")
     )
     known_modality_blocker = bool(
-        compatibility_fresh
+        not policy_inputs_ready
+        and compatibility_fresh
         and compatibility.get("audit_valid")
         and compatibility.get("all_policy_probes_blocked_for_expected_reason")
     )
@@ -1123,6 +1190,8 @@ def build_policy_gate(
     status = (
         "closed"
         if gate_pass
+        else "ready_for_policy_training"
+        if policy_inputs_ready
         else "blocked_missing_required_observation_modality"
         if known_modality_blocker
         else "ready_not_executed"
@@ -1153,6 +1222,8 @@ def build_policy_gate(
         "policy_inputs_ready": policy_inputs_ready,
         "ready_to_execute": ready_to_execute,
         "policy_compatibility": compatibility_evidence,
+        "policy_vision_smoke": vision_smoke_evidence,
+        "video_materialization": video_materialization,
         "jobs": jobs,
         "materialized_split_manifests": materialization["summary"],
         "physical_split_packages": physical_packages["summary"],
@@ -1160,15 +1231,10 @@ def build_policy_gate(
         "result_files_present": result_files,
         "executions": executions,
         "closure_required": [
-            (
-                "materialize source observation images or a semantically valid observation.environment_state "
-                f"feature required by LeRobot {LEROBOT_POLICY_REQUIREMENTS_VERSION} ACT and Diffusion"
-            ),
             "train ACT and Diffusion Policy on random_episode and scene_disjoint train datasets",
             "evaluate each checkpoint on the corresponding test split with action-error metrics",
             "run at least one high-fidelity simulator or physical rollout using the same split manifest",
             "commit train metrics, offline action metrics, rollout reports, and digest-verified videos/traces",
-            "mirror source videos before claiming any vision-policy result from the compact split packages",
         ],
         "artifacts": {
             "report": rel(output_dir / "policy_gate_report.json"),
@@ -1179,6 +1245,12 @@ def build_policy_gate(
                 "run_log",
                 "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
             ),
+            "policy_vision_smoke_report": rel(vision_smoke_path),
+            "policy_vision_smoke_log": vision_smoke.get("artifacts", {}).get(
+                "run_log",
+                "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+            ),
+            "video_materialization_report": rel(video_materialization_path),
             **artifacts,
         },
     }
@@ -1200,6 +1272,7 @@ def render_readme(report: dict[str, Any]) -> str:
     materialization = report["materialized_split_manifests"]
     physical = report.get("physical_split_packages", {})
     compatibility = report.get("policy_compatibility", {})
+    vision_smoke = report.get("policy_vision_smoke", {})
     return f"""# LeRobot ACT/Diffusion Leakage Gate
 
 Status: {report["status"]}
@@ -1236,6 +1309,16 @@ Physical package boundary: {physical.get("claim_boundary", "Unavailable.")}
 
 {compatibility.get("claim_boundary", "No compatibility probe has been recorded.")}
 
+## Front-Camera Vision Smoke
+
+- Vision smoke report: `{report["artifacts"]["policy_vision_smoke_report"]}`
+- Current input descriptors match the probe: {vision_smoke.get("fresh_for_current_inputs", False)}
+- Image features: {vision_smoke.get("dataset", {}).get("loader", {}).get("image_feature_keys", [])}
+- ACT/Diffusion completed a training step: {vision_smoke.get("all_policy_probes_completed_training_step", False)}
+- Probe status: {vision_smoke.get("status", "not_run")}
+
+{vision_smoke.get("claim_boundary", "No front-camera vision smoke has been recorded.")}
+
 ## Jobs
 
 | Job | Policy | Split | Local train package |
@@ -1244,12 +1327,11 @@ Physical package boundary: {physical.get("claim_boundary", "Unavailable.")}
 
 ## Run
 
-1. Materialize source images or a semantically valid environment-state input and regenerate the split packages.
-2. Rerun the compatibility audit until both policies complete the one-step smoke test.
-3. Run `bash {report["artifacts"]["run_script"]}` in an environment with LeRobot installed.
-4. Evaluate each checkpoint with the offline action-evaluation contract.
-5. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
-6. Save the required result files listed per job.
+1. Run `bash {report["artifacts"]["run_script"]}` in an environment with LeRobot installed; it
+   materializes the pinned front camera before training.
+2. Evaluate each checkpoint with the offline action-evaluation contract.
+3. Run `lerobot-eval` in a high-fidelity environment or `lerobot-rollout` on hardware.
+4. Save the required result files listed per job.
 
 The gate remains open while `policy_gate_report.json` has `"pass": false`.
 """

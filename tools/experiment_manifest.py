@@ -52,6 +52,26 @@ MULTITRAJECTORY_TIMING_README_PATH = (
 POLICY_COMPATIBILITY_REPORT_PATH = (
     ROOT / "docs" / "experiments" / "lerobot_policy_gate" / "policy_compatibility_report.json"
 )
+POLICY_VISION_SMOKE_REPORT_PATH = (
+    ROOT / "docs" / "experiments" / "lerobot_policy_gate" / "policy_vision_smoke_report.json"
+)
+POLICY_VISION_FAILED_REPORT_PATH = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "lerobot_policy_gate"
+    / "policy_vision_smoke_failed_01_report.json"
+)
+VIDEO_ASSET_PLAN_PATH = (
+    ROOT / "docs" / "experiments" / "lerobot_policy_gate" / "front_camera_asset_manifest.json"
+)
+VIDEO_MATERIALIZATION_REPORT_PATH = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "lerobot_policy_gate"
+    / "front_camera_materialization_report.json"
+)
 POLICY_GATE_REPORT_PATH = (
     ROOT / "docs" / "experiments" / "lerobot_policy_gate" / "policy_gate_report.json"
 )
@@ -82,6 +102,20 @@ POLICY_COMPATIBILITY_LOG_PATH = (
     / "experiments"
     / "run_logs"
     / "lerobot_policy_compatibility_dgx_spark.log"
+)
+POLICY_VISION_SMOKE_LOG_PATH = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "run_logs"
+    / "lerobot_policy_vision_smoke_dgx_spark.log"
+)
+POLICY_VISION_FAILED_LOG_PATH = (
+    ROOT
+    / "docs"
+    / "experiments"
+    / "run_logs"
+    / "lerobot_policy_vision_smoke_failed_01_dgx_spark.log"
 )
 CONVERSION_SCALE_FAILED_LOG_PATHS = (
     ROOT
@@ -269,6 +303,10 @@ def build_manifest() -> dict[str, Any]:
     conversion_scale = read_json(CONVERSION_SCALE_REPORT_PATH)
     multitrajectory_timing = read_json(MULTITRAJECTORY_TIMING_REPORT_PATH)
     policy_compatibility = read_json(POLICY_COMPATIBILITY_REPORT_PATH)
+    policy_vision_smoke = read_json(POLICY_VISION_SMOKE_REPORT_PATH)
+    policy_vision_failed = read_json(POLICY_VISION_FAILED_REPORT_PATH)
+    video_asset_plan = read_json(VIDEO_ASSET_PLAN_PATH)
+    video_materialization = read_json(VIDEO_MATERIALIZATION_REPORT_PATH)
 
     leakage_run = parse_run_log(LEAKAGE_LOG_PATH, leakage.get("runtime", {}))
     droid_run = parse_run_log(DROID_LOG_PATH)
@@ -324,6 +362,25 @@ def build_manifest() -> dict[str, Any]:
     policy_compatibility_execution = {
         **policy_compatibility["execution"],
         "log": artifact(POLICY_COMPATIBILITY_LOG_PATH),
+    }
+    policy_vision_probe_seeds = sorted(
+        {
+            int(argument.split("=", 1)[1])
+            for probe in policy_vision_smoke["policy_probes"]
+            for argument in probe["command_template"]
+            if argument.startswith("--seed=")
+        }
+    )
+    policy_vision_execution = {
+        **policy_vision_smoke["execution"],
+        "log": artifact(POLICY_VISION_SMOKE_LOG_PATH),
+        "preliminary_runs": [
+            {
+                **policy_vision_failed["execution"],
+                "log": artifact(POLICY_VISION_FAILED_LOG_PATH),
+                "status": "failed_preliminary",
+            }
+        ],
     }
 
     experiments = [
@@ -600,6 +657,60 @@ def build_manifest() -> dict[str, Any]:
                 artifact(POLICY_GATE_REPORT_PATH),
             ],
         },
+        {
+            "experiment_id": "lerobot_act_diffusion_front_camera_smoke",
+            "status": policy_vision_smoke["status"],
+            "claim_boundary": policy_vision_smoke["claim_boundary"],
+            "datasets": [
+                dataset(
+                    video_asset_plan["source"]["repo_id"],
+                    video_asset_plan["source"]["revision"],
+                    video_asset_plan["assets_sha256"],
+                )
+            ],
+            "split": {
+                "kind": "front_camera_random_episode_train_smoke",
+                "source_split": leakage_split,
+                "physical_split_manifest": artifact(POLICY_PHYSICAL_SPLIT_MANIFEST_PATH),
+                "asset_plan": artifact(VIDEO_ASSET_PLAN_PATH),
+            },
+            "configuration": {
+                "lerobot_version": policy_vision_smoke["lerobot_version"],
+                "camera_key": video_asset_plan["camera_key"],
+                "source_video_asset_count": video_asset_plan["asset_count"],
+                "source_video_total_size_bytes": video_asset_plan["total_size_bytes"],
+                "materialized_package_count": len(video_materialization["packages"]),
+                "policy_probes": [
+                    {
+                        "policy": probe["policy"],
+                        "command_template": probe["command_template"],
+                    }
+                    for probe in policy_vision_smoke["policy_probes"]
+                ],
+            },
+            "seed_policy": {
+                "kind": "fixed_vision_smoke_seed",
+                "values": policy_vision_probe_seeds,
+            },
+            "code": [
+                code_artifact(
+                    video_materialization["script"],
+                    video_materialization["script_sha256"],
+                ),
+                code_artifact(
+                    policy_vision_smoke["script"],
+                    policy_vision_smoke["script_sha256"],
+                ),
+            ],
+            "execution": policy_vision_execution,
+            "outputs": [
+                artifact(VIDEO_ASSET_PLAN_PATH),
+                artifact(VIDEO_MATERIALIZATION_REPORT_PATH),
+                artifact(POLICY_VISION_SMOKE_REPORT_PATH),
+                artifact(POLICY_VISION_FAILED_REPORT_PATH),
+                artifact(POLICY_GATE_REPORT_PATH),
+            ],
+        },
     ]
 
     errors: list[str] = []
@@ -664,9 +775,15 @@ def build_manifest() -> dict[str, Any]:
             MULTITRAJECTORY_TIMING_README_PATH,
             MULTITRAJECTORY_TIMING_LOG_PATH,
             POLICY_COMPATIBILITY_REPORT_PATH,
+            POLICY_VISION_SMOKE_REPORT_PATH,
+            POLICY_VISION_FAILED_REPORT_PATH,
+            VIDEO_ASSET_PLAN_PATH,
+            VIDEO_MATERIALIZATION_REPORT_PATH,
             POLICY_GATE_REPORT_PATH,
             POLICY_PHYSICAL_SPLIT_MANIFEST_PATH,
             POLICY_COMPATIBILITY_LOG_PATH,
+            POLICY_VISION_SMOKE_LOG_PATH,
+            POLICY_VISION_FAILED_LOG_PATH,
             *CONVERSION_SCALE_FAILED_LOG_PATHS,
         )
     ]

@@ -248,7 +248,11 @@ def render_log(report: dict[str, Any], traces: dict[str, str]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def validate_report(report_path: Path, asset_plan_path: Path) -> list[str]:
+def validate_report(
+    report_path: Path,
+    asset_plan_path: Path,
+    materialization_report_path: Path,
+) -> list[str]:
     if not report_path.exists():
         return [f"missing vision smoke report: {report_path}"]
     report = json.loads(report_path.read_text(encoding="utf-8"))
@@ -266,6 +270,22 @@ def validate_report(report_path: Path, asset_plan_path: Path) -> list[str]:
     expected_plan = file_descriptor(asset_plan_path)
     if report.get("media_integrity", {}).get("asset_plan") != expected_plan:
         errors.append("vision smoke asset-plan descriptor is stale")
+    expected_materialization = file_descriptor(materialization_report_path)
+    if (
+        report.get("media_integrity", {}).get("materialization_report")
+        != expected_materialization
+    ):
+        errors.append("vision smoke materialization-report descriptor is stale")
+    for role, path in (
+        ("asset plan", asset_plan_path),
+        ("materialization report", materialization_report_path),
+    ):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        producer_path = ROOT / payload.get("script", "")
+        if not producer_path.is_file():
+            errors.append(f"{role} producer script is missing")
+        elif payload.get("script_sha256") != sha256_file(producer_path):
+            errors.append(f"{role} producer script digest is stale")
     return errors
 
 
@@ -287,7 +307,11 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.check:
-        errors = validate_report(args.report, args.asset_plan)
+        errors = validate_report(
+            args.report,
+            args.asset_plan,
+            args.materialization_report,
+        )
         print(json.dumps({"valid": not errors, "errors": errors}, indent=2))
         return 1 if args.strict and errors else 0
 

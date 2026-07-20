@@ -48,7 +48,14 @@ REQUIRED_PUBLIC_ARTIFACTS = [
     "docs/experiments/run_logs/lerobot_multitrajectory_timing_dgx_spark.log",
     "docs/experiments/lerobot_policy_gate/policy_gate_report.json",
     "docs/experiments/lerobot_policy_gate/policy_compatibility_report.json",
+    "docs/experiments/lerobot_policy_gate/front_camera_asset_manifest.json",
+    "docs/experiments/lerobot_policy_gate/front_camera_materialization_report.json",
+    "docs/experiments/lerobot_policy_gate/policy_vision_smoke_report.json",
+    "docs/experiments/lerobot_policy_gate/policy_vision_smoke_failed_01_report.json",
     "docs/experiments/run_logs/lerobot_policy_compatibility_dgx_spark.log",
+    "docs/experiments/run_logs/lerobot_policy_video_materialization_dgx_spark.log",
+    "docs/experiments/run_logs/lerobot_policy_vision_smoke_dgx_spark.log",
+    "docs/experiments/run_logs/lerobot_policy_vision_smoke_failed_01_dgx_spark.log",
     "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark.log",
     "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_01.log",
     "docs/experiments/run_logs/lerobot_conversion_scale_dgx_spark_failed_02.log",
@@ -111,6 +118,13 @@ REPRODUCTION_COMMANDS = [
     {
         "name": "validate pinned LeRobot policy compatibility evidence",
         "command": "python3 tools/lerobot_policy_compatibility_audit.py --check --strict",
+    },
+    {
+        "name": "validate pinned LeRobot front-camera and policy smoke evidence",
+        "command": (
+            "python3 tools/lerobot_policy_video_materialization.py --check --strict && "
+            "python3 tools/lerobot_policy_vision_smoke.py --check --strict"
+        ),
     },
     {
         "name": "regenerate and validate experiment provenance",
