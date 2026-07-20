@@ -11,10 +11,16 @@ import platform
 import resource
 import shutil
 import socket
+import sys
 import tempfile
 import time
 from pathlib import Path
 from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from tools.lerobot_policy_compatibility_audit import (
     DATASET_REPO_ID,
@@ -28,7 +34,6 @@ from tools.lerobot_policy_compatibility_audit import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATASET_ROOT = (
     ROOT
     / "docs"
